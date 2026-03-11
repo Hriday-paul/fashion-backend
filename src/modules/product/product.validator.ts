@@ -1,0 +1,102 @@
+import { body, ValidationChain } from "express-validator";
+
+export const addProductValidator: ValidationChain[] = [
+  // Basic Info
+  body("title")
+    .trim()
+    .notEmpty().withMessage("Title is required"),
+
+  body("description")
+    .optional()
+    .trim(),
+
+  // Pricing
+  body("price")
+    .notEmpty().withMessage("Price is required")
+    .isFloat({ min: 0 }).withMessage("Price must be a positive number"),
+
+  body("currency")
+    .optional()
+    .trim()
+    .isISO4217().withMessage("Currency must be a valid ISO 4217 currency code (e.g. USD, EUR)"),
+
+  // Relations (IDs)
+  body("brandId")
+    .trim()
+    .notEmpty().withMessage("Brand is required")
+    .isUUID().withMessage("Invalid brand ID"),
+
+  body("sizeId")
+    .trim()
+    .notEmpty().withMessage("Size is required")
+    .isUUID().withMessage("Invalid size ID"),
+
+  body("categoryId")
+    .trim()
+    .notEmpty().withMessage("Category is required")
+    .isUUID().withMessage("Invalid category ID"),
+
+  // Product Details
+  body("condition")
+    .trim()
+    .notEmpty().withMessage("Condition is required"),
+
+  body("color")
+    .trim()
+    .notEmpty().withMessage("Color is required"),
+
+  // Arrays
+  body("tags")
+    .optional()
+    .isArray().withMessage("Tags must be an array"),
+  body("tags.*")
+    .trim()
+    .notEmpty().withMessage("Tag must not be empty"),
+
+  body("meterials")
+    .optional()
+    .isArray().withMessage("Materials must be an array"),
+  body("meterials.*")
+    .trim()
+    .notEmpty().withMessage("Material must not be empty"),
+
+  body("care_instructions")
+    .optional()
+    .isArray().withMessage("Care instructions must be an array"),
+  body("care_instructions.*")
+    .trim()
+    .notEmpty().withMessage("Care instruction must not be empty"),
+
+  // Settings
+  body("allow_offer")
+    .optional()
+    .isBoolean().withMessage("allow_offer must be a boolean"),
+
+  body("return_window")
+    .optional()
+    .isInt({ min: 0, max: 365 }).withMessage("Return window must be between 0 and 365 days"),
+
+  // Charities
+  body("charities")
+    .optional()
+    .isArray().withMessage("Charities must be an array")
+    .custom((charities: { percent: number }[]) => {
+      if (charities?.length > 0) {
+        const totalPercent = charities.reduce((sum, c) => sum + (c.percent || 0), 0);
+        if (totalPercent > 100) {
+          throw new Error("Total charity percentage cannot exceed 100%");
+        }
+      }
+      return true;
+    }),
+  body("charities.*.charityId")
+    .trim()
+    .notEmpty().withMessage("Charity ID is required")
+    .isUUID().withMessage("Invalid charity ID"),
+  body("charities.*.percent")
+    .notEmpty().withMessage("Charity percent is required")
+    .isFloat({ min: 0.1, max: 100 }).withMessage("Charity percent must be between 0.1 and 100"),
+  body("charities.*.isAnonymous")
+    .optional()
+    .isBoolean().withMessage("isAnonymous must be a boolean"),
+];

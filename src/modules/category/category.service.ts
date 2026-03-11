@@ -63,6 +63,35 @@ const getCategories = async () => {
     return buildCategoryTree(categories);
 }
 
+const getParentChain = async (categoryId: string): Promise<Category[]> => {
+    const result = await prisma.$queryRaw<Category[]>`
+        WITH RECURSIVE parent_chain AS (
+            SELECT *, 1 AS level
+            FROM "categories"
+            WHERE id = ${categoryId}
+
+            UNION ALL
+
+            SELECT c.*, pc.level + 1
+            FROM "categories" c
+            JOIN parent_chain pc ON c.id = pc."parentId"
+        )
+        SELECT id, name, "parentId", "sizeGuide", "createdAt", "updatedAt" 
+        FROM parent_chain
+        ORDER BY level DESC;
+    `;
+
+    return result;
+};
+
+const haveChildCategory = async (categoryId: string) => {
+    const res = await prisma.category.findFirst({
+        where: { id: categoryId },
+        include: { children: true }
+    })
+    return res;
+}
+
 const addNewBrand = async (payload: Brand & { categoryId: string }) => {
 
     const res = await prisma.brand.create({ data: { name: payload?.name, categoryId: payload?.categoryId } });
@@ -130,6 +159,9 @@ export const categoryService = {
     deleteCategory,
     addNewCategory,
     getCategories,
+    getParentChain,
+    haveChildCategory,
+
     addNewBrand,
     deletBrand,
     allBrands,

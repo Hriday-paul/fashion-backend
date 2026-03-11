@@ -49,6 +49,7 @@ export type ProductMinAggregateOutputType = {
   color: string | null
   allow_offer: boolean | null
   return_window: number | null
+  isDeleted: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -66,6 +67,7 @@ export type ProductMaxAggregateOutputType = {
   color: string | null
   allow_offer: boolean | null
   return_window: number | null
+  isDeleted: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -87,6 +89,7 @@ export type ProductCountAggregateOutputType = {
   care_instructions: number
   allow_offer: number
   return_window: number
+  isDeleted: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -116,6 +119,7 @@ export type ProductMinAggregateInputType = {
   color?: true
   allow_offer?: true
   return_window?: true
+  isDeleted?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -133,6 +137,7 @@ export type ProductMaxAggregateInputType = {
   color?: true
   allow_offer?: true
   return_window?: true
+  isDeleted?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -154,6 +159,7 @@ export type ProductCountAggregateInputType = {
   care_instructions?: true
   allow_offer?: true
   return_window?: true
+  isDeleted?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -262,6 +268,7 @@ export type ProductGroupByOutputType = {
   care_instructions: string[]
   allow_offer: boolean
   return_window: number
+  isDeleted: boolean
   createdAt: Date
   updatedAt: Date
   _count: ProductCountAggregateOutputType | null
@@ -306,6 +313,7 @@ export type ProductWhereInput = {
   care_instructions?: Prisma.StringNullableListFilter<"Product">
   allow_offer?: Prisma.BoolFilter<"Product"> | boolean
   return_window?: Prisma.IntFilter<"Product"> | number
+  isDeleted?: Prisma.BoolFilter<"Product"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   images?: Prisma.ProductPictureListRelationFilter
@@ -333,6 +341,7 @@ export type ProductOrderByWithRelationInput = {
   care_instructions?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   images?: Prisma.ProductPictureOrderByRelationAggregateInput
@@ -363,6 +372,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   care_instructions?: Prisma.StringNullableListFilter<"Product">
   allow_offer?: Prisma.BoolFilter<"Product"> | boolean
   return_window?: Prisma.IntFilter<"Product"> | number
+  isDeleted?: Prisma.BoolFilter<"Product"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   images?: Prisma.ProductPictureListRelationFilter
@@ -390,6 +400,7 @@ export type ProductOrderByWithAggregationInput = {
   care_instructions?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProductCountOrderByAggregateInput
@@ -419,6 +430,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   care_instructions?: Prisma.StringNullableListFilter<"Product">
   allow_offer?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   return_window?: Prisma.IntWithAggregatesFilter<"Product"> | number
+  isDeleted?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
 }
@@ -437,6 +449,7 @@ export type ProductCreateInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
@@ -464,6 +477,7 @@ export type ProductUncheckedCreateInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
@@ -485,6 +499,7 @@ export type ProductUpdateInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
@@ -512,6 +527,7 @@ export type ProductUncheckedUpdateInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
@@ -536,6 +552,7 @@ export type ProductCreateManyInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -554,6 +571,7 @@ export type ProductUpdateManyMutationInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -575,6 +593,7 @@ export type ProductUncheckedUpdateManyInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -614,6 +633,7 @@ export type ProductCountOrderByAggregateInput = {
   care_instructions?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -636,6 +656,7 @@ export type ProductMaxOrderByAggregateInput = {
   color?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -653,6 +674,7 @@ export type ProductMinOrderByAggregateInput = {
   color?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -893,6 +915,7 @@ export type ProductCreateWithoutCategoryInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
@@ -918,6 +941,7 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
@@ -971,6 +995,7 @@ export type ProductScalarWhereInput = {
   care_instructions?: Prisma.StringNullableListFilter<"Product">
   allow_offer?: Prisma.BoolFilter<"Product"> | boolean
   return_window?: Prisma.IntFilter<"Product"> | number
+  isDeleted?: Prisma.BoolFilter<"Product"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
 }
@@ -989,6 +1014,7 @@ export type ProductCreateWithoutBrandInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
@@ -1014,6 +1040,7 @@ export type ProductUncheckedCreateWithoutBrandInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
@@ -1061,6 +1088,7 @@ export type ProductCreateWithoutSizeInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
@@ -1086,6 +1114,7 @@ export type ProductUncheckedCreateWithoutSizeInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
@@ -1133,6 +1162,7 @@ export type ProductCreateWithoutImagesInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
@@ -1159,6 +1189,7 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
@@ -1195,6 +1226,7 @@ export type ProductUpdateWithoutImagesInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
@@ -1221,6 +1253,7 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
@@ -1241,6 +1274,7 @@ export type ProductCreateWithoutCharitiesInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
@@ -1267,6 +1301,7 @@ export type ProductUncheckedCreateWithoutCharitiesInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
@@ -1303,6 +1338,7 @@ export type ProductUpdateWithoutCharitiesInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
@@ -1329,6 +1365,7 @@ export type ProductUncheckedUpdateWithoutCharitiesInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
@@ -1349,6 +1386,7 @@ export type ProductCreateWithoutMoneyDonationsInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
@@ -1375,6 +1413,7 @@ export type ProductUncheckedCreateWithoutMoneyDonationsInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
@@ -1411,6 +1450,7 @@ export type ProductUpdateWithoutMoneyDonationsInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
@@ -1437,6 +1477,7 @@ export type ProductUncheckedUpdateWithoutMoneyDonationsInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
@@ -1459,6 +1500,7 @@ export type ProductCreateManyCategoryInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1477,6 +1519,7 @@ export type ProductUpdateWithoutCategoryInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
@@ -1502,6 +1545,7 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
@@ -1525,6 +1569,7 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1545,6 +1590,7 @@ export type ProductCreateManyBrandInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1563,6 +1609,7 @@ export type ProductUpdateWithoutBrandInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
@@ -1588,6 +1635,7 @@ export type ProductUncheckedUpdateWithoutBrandInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
@@ -1611,6 +1659,7 @@ export type ProductUncheckedUpdateManyWithoutBrandInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1631,6 +1680,7 @@ export type ProductCreateManySizeInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1649,6 +1699,7 @@ export type ProductUpdateWithoutSizeInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
@@ -1674,6 +1725,7 @@ export type ProductUncheckedUpdateWithoutSizeInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
@@ -1697,6 +1749,7 @@ export type ProductUncheckedUpdateManyWithoutSizeInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1767,6 +1820,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   care_instructions?: boolean
   allow_offer?: boolean
   return_window?: boolean
+  isDeleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
@@ -1795,6 +1849,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   care_instructions?: boolean
   allow_offer?: boolean
   return_window?: boolean
+  isDeleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
@@ -1819,6 +1874,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   care_instructions?: boolean
   allow_offer?: boolean
   return_window?: boolean
+  isDeleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
@@ -1843,11 +1899,12 @@ export type ProductSelectScalar = {
   care_instructions?: boolean
   allow_offer?: boolean
   return_window?: boolean
+  isDeleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "currency" | "brandId" | "sizeId" | "categoryId" | "catagory_hierarchy" | "condition" | "tags" | "meterials" | "color" | "care_instructions" | "allow_offer" | "return_window" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "currency" | "brandId" | "sizeId" | "categoryId" | "catagory_hierarchy" | "condition" | "tags" | "meterials" | "color" | "care_instructions" | "allow_offer" | "return_window" | "isDeleted" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
@@ -1895,6 +1952,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     care_instructions: string[]
     allow_offer: boolean
     return_window: number
+    isDeleted: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["product"]>
@@ -2342,6 +2400,7 @@ export interface ProductFieldRefs {
   readonly care_instructions: Prisma.FieldRef<"Product", 'String[]'>
   readonly allow_offer: Prisma.FieldRef<"Product", 'Boolean'>
   readonly return_window: Prisma.FieldRef<"Product", 'Int'>
+  readonly isDeleted: Prisma.FieldRef<"Product", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Product", 'DateTime'>
 }

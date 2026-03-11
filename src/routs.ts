@@ -8,6 +8,7 @@ import { notificationRoutes } from './modules/notification/notification.routes';
 import { settingsRoutes } from './modules/settings/settings.rout';
 import { messagesRoutes } from './modules/messages/messages.route';
 import { categoryRouter } from './modules/category/category.rout';
+import { productRouts } from './modules/product/product.rout';
 
 const router = express.Router();
 
@@ -39,6 +40,10 @@ const moduleRoutes = [
     {
         path: '/category',
         route: categoryRouter,
+    },
+    {
+        path: '/products',
+        route: productRouts,
     },
 ];
 

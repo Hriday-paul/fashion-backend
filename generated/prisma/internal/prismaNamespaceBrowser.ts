@@ -182,6 +182,7 @@ export const ProductScalarFieldEnum = {
   care_instructions: 'care_instructions',
   allow_offer: 'allow_offer',
   return_window: 'return_window',
+  isDeleted: 'isDeleted',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -1,4 +1,4 @@
-# Swift ride app Backend
+# FASHION Ecommerce Backend
 =======
 # Setup -- TypeScript x Express x Node.js
 
