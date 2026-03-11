@@ -1,0 +1,185 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Auth {
+  id                String      @id @default(uuid())
+  email             String
+  password          String
+  role              Role     @default(INDIVIDUAL_USER)
+  status            Boolean  @default(true)
+  isDeleted         Boolean  @default(false)
+  isverified        Boolean  @default(false)
+  otp               String?
+  otp_status        Boolean  @default(true)
+  expiredAt         DateTime @default(now())
+  last_loginAt        DateTime @default(now())
+  passwordChangedAt DateTime @default(now())
+
+  approval_status Approval_Status @default(Pending)
+
+  userId String  @unique
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("auths")
+}
+
+model User {
+  id    String     @id @default(uuid())
+  fname  String
+  lname  String?
+  email String @unique
+  phone String
+
+  description String?
+
+  // ---locations---
+  country String?
+  state String?
+  city String?
+  address String?
+  zip_code String?
+
+  //----social links-----
+  instagram String?
+  facebook String?
+  twitter String?
+  tiktok String?
+  website String?
+
+  auth Auth?
+
+  notification Boolean @default(true)
+
+  fcmToken String?
+
+  picture ProfilePicture?
+  account_documents AccountDocument[]
+  mission String?
+  business_tags String[]
+
+  isOnline Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isDeleted Boolean  @default(false)
+
+  notificationReceivers Notification[] @relation("ReceivedNotifications")
+  notificationSenders   Notification[] @relation("SentNotifications")
+
+  sentMessages    Message[] @relation("sentMsgs")
+  receiveMessages Message[] @relation("receiveMsgs")
+
+  chatGroups ChatParticipant[]
+
+  payments Payment[]
+
+  sellDonations SellDonation[]
+  productCharities ProductCharity[]
+
+  @@map("users")
+}
+
+model ProfilePicture {
+  id     String    @id @default(uuid())
+  url    String
+  key    String
+  userId String    @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profile_pictures")
+}
+
+model AccountDocument {
+  id String @id @default(uuid())
+  url    String
+  key    String
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("account_documents")
+}
+
+enum Role {
+  ADMIN
+  INDIVIDUAL_USER
+  CHARITABLE_ORGANIZATION
+  CHARITY_SHOP
+  ECO_FRIENDLY_STORE
+  CELEBRITY
+  AMBASSADOR
+  PROFESSIONAL_SELLER
+  ASSISTED_SELLER
+}
+
+enum Approval_Status {
+  Pending
+  Approved
+  Rejected
+}
+
+model Notification {
+  id       String   @id @default(uuid())
+  senderId String?
+  sender   User? @relation("SentNotifications", fields: [senderId], references: [id], onDelete: Cascade)
+
+  receiverId String?
+  receiver   User? @relation("ReceivedNotifications", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  message   String
+  fcmToken  String?
+  type      NotificationType @default(Text)
+  title     String
+  isRead    Boolean          @default(false)
+  link      String?
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @default(now()) @updatedAt
+}
+
+enum NotificationType {
+  Text
+  Payment
+  Cancelled
+}
+
+model Setting {
+  id    String    @id @default(uuid())
+  key   SettingKey @unique
+  value String
+
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @default(now()) @updatedAt
+  @@map("settings")
+}
+
+enum SettingKey {
+  terms 
+  privacy 
+  about
+}
+
+model Payment {
+  id             String           @id @default(uuid())
+  userId         String?
+  user           User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount         Int           @default(0)
+  isPaid         Boolean       @default(false)
+  
+  // reservationId String @unique
+  // reservation   Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+
+  transactionId  String        @unique
+  
+  paymentData    Json?
+
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@map("payments")
+}

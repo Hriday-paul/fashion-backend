@@ -1,0 +1,56 @@
+model Chat {
+    id String @id @default(uuid())
+
+    participants ChatParticipant[]
+
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    messages  Message[]
+
+    @@map("chatGroups")
+}
+
+model ChatParticipant {
+    id     String  @id @default(uuid())
+    chatId String
+    chat   Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+    userId String
+    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("chatParticipants")
+}
+
+model Message {
+    id       String     @id @default(uuid())
+    text     String?
+    isSeen     Boolean @default(false)
+    senderId String
+    sender   User    @relation("sentMsgs",fields: [senderId], references: [id], onDelete: Cascade)
+
+    receiverId String
+    receiver   User @relation("receiveMsgs", fields: [receiverId], references: [id], onDelete: Cascade)
+
+    chatId      String
+    chat        Chat        @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+    files FileMessage[]
+
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+
+    @@map("messages")
+}
+
+model FileMessage {
+    id        String     @id @default(uuid())
+    key       String
+    url       String
+    messageId String
+    message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+    @@map("document_messages")
+}

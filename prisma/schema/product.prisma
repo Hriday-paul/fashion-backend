@@ -1,0 +1,97 @@
+model Product {
+    id          String  @id @default(uuid())
+    title       String
+    description String?
+
+    images ProductPicture[]
+
+    price    Float  @default(0)
+    currency String @default("USD")
+
+    brandId String
+    brand   Brand  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+    sizeId String
+    size   Size   @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+
+    categoryId         String
+    category           Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    catagory_hierarchy String[]
+
+    condition String
+    tags      String[]
+    meterials String[]
+    color     String
+
+    care_instructions String[]
+
+    allow_offer Boolean @default(false)
+
+    return_window Int @default(0)
+
+    charities ProductCharity[]
+
+    moneyDonations  SellDonation[]
+    
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    @@map("products")
+}
+
+model ProductPicture {
+    id        String  @id @default(uuid())
+    url       String
+    key       String
+    productId String
+    product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+    @@map("product_pictures")
+}
+
+model ProductCharity {
+    id String @id @default(uuid())
+
+    percent Float // example: 5 = 5%
+
+    isAnonymous Boolean @default(false)
+
+    productId String
+    product   Product @relation(fields: [productId], references: [id])
+
+    charityId String
+    charity   User   @relation(fields: [charityId], references: [id])
+
+    createdAt DateTime @default(now())
+
+    @@unique([productId, charityId])
+    @@map("productCharities")
+}
+
+model SellDonation {
+    id String @id @default(uuid())
+
+    orderId String
+
+    amount  Float
+    percent Float
+
+    isAnonymous Boolean @default(false)
+
+    status DonationStatus @default(PENDING)
+
+    createdAt DateTime @default(now())
+
+    productId String
+    product   Product @relation(fields: [productId], references: [id])
+
+    charityId String
+    charity   User   @relation(fields: [charityId], references: [id])
+
+    @@map("sellItemMoneyDonations")
+}
+
+enum DonationStatus {
+    PENDING
+    PAID
+    FAILED
+}
