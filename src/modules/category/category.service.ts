@@ -43,9 +43,7 @@ const buildCategoryTree = (categories: CategoryC[]) => {
 };
 
 const getCategories = async () => {
-    const categories = await prisma.$queryRaw<
-        { id: string; name: string; parentId: string | null }[]
-    >`
+    const categories = await prisma.$queryRaw<{ id: string; name: string; parentId: string | null }[]>`
   WITH RECURSIVE category_tree AS (
       SELECT id, name, "parentId"
       FROM "categories"
@@ -83,6 +81,48 @@ const getParentChain = async (categoryId: string): Promise<Category[]> => {
 
     return result;
 };
+
+const buildChildCategoryTree = (categories: CategoryC[]) => {
+    const map = new Map<string, CategoryC>();
+    const roots: CategoryC[] = [];
+
+    categories.forEach(cat => {
+        map.set(cat.id, { ...cat, children: [] });
+    });
+
+    categories.forEach(cat => {
+        const node = map.get(cat.id)!;
+
+        if (cat.parentId && map.has(cat.parentId)) {
+            // parent exists in current result set
+            map.get(cat.parentId)!.children!.push(node);
+        } else {
+            // no parent OR parent not in result set → treat as root
+            roots.push(node);
+        }
+    });
+
+    return roots;
+};
+
+const getChildChain = async (categoryId: string) => {
+    const categories = await prisma.$queryRaw<{ id: string; name: string; parentId: string | null }[]>`
+  WITH RECURSIVE category_tree AS (
+      SELECT id, name, "parentId"
+      FROM "categories"
+      WHERE "parentId" = ${categoryId}
+
+      UNION ALL
+
+      SELECT c.id, c.name, c."parentId"
+      FROM "categories" c
+      INNER JOIN category_tree ct ON c."parentId" = ct.id
+  )
+  SELECT * FROM category_tree;
+  `;
+
+    return buildChildCategoryTree(categories);
+}
 
 const haveChildCategory = async (categoryId: string) => {
     const res = await prisma.category.findFirst({
@@ -160,6 +200,7 @@ export const categoryService = {
     addNewCategory,
     getCategories,
     getParentChain,
+    getChildChain,
     haveChildCategory,
 
     addNewBrand,

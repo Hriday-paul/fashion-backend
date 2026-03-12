@@ -206,8 +206,33 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
 
 }
 
+const productDetails = async (productId: string) => {
+
+    const details = await prisma.product.findFirst({
+        where: {
+            id: productId
+        },
+        include: {
+            category: true,
+            brand: true,
+            size: true,
+            images: true,
+            charities: true
+        }
+    });
+
+    if (!details) {
+        return null
+    }
+
+    const categoryChain = await categoryService.getParentChain(details?.categoryId);
+
+    return { ...details, cat_parent_chain: categoryChain };
+}
+
 export const productService = {
     addNewProduct,
 
-    allProducts
+    allProducts,
+    productDetails
 }

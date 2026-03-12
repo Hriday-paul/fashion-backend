@@ -34,6 +34,26 @@ const getCategories = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getParentChain = catchAsync(async (req: Request, res: Response) => {
+  const result = await categoryService.getParentChain(req.params.id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Category Parents chain retrived successfully',
+    data: result,
+  });
+});
+
+const getChildChain = catchAsync(async (req: Request, res: Response) => {
+  const result = await categoryService.getChildChain(req.params.id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Category Child chain retrived successfully',
+    data: result,
+  });
+});
+
 const addNewBrand = catchAsync(async (req: Request, res: Response) => {
   const result = await categoryService.addNewBrand(req.body);
   sendResponse(res, {
@@ -98,10 +118,12 @@ export const categoryControler = {
   addNewCategory,
   deleteCategory,
   getCategories,
+  getParentChain,
+  getChildChain,
 
   addNewBrand,
   allBrands,
-   deletBrand,
+  deletBrand,
 
   allSizes,
   addSize,

@@ -1,15 +1,14 @@
 import { Prisma, User } from "../../../generated/prisma/client";
-import { Role } from "../../../generated/prisma/enums";
+import { Approval_Status, Role } from "../../../generated/prisma/enums";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import prisma from "../../shared/prisma";
 import httpStatus from 'http-status'
-import bcrypt from 'bcrypt'
 
 // update user profile
 const updateProfile = async (payload: User, userId: string, image?: { url: string, key: string }) => {
 
-    const { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken} = payload
+    const { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken } = payload
 
     const updateFields: Partial<User> = { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken };
 
@@ -174,6 +173,29 @@ const UpdateNotification = async (payload: { status: boolean, fcmToken?: string 
 
 }
 
+const allCharies = async () => {
+    const res = await prisma.user.findMany({
+        where: {
+            auth: {
+                role: {
+                    in: [Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP]
+                },
+                approval_status: Approval_Status.Approved
+            }
+        },
+        select: {
+            fname: true,
+            lname: true,
+            email: true,
+            phone: true,
+            id: true,
+            picture: true
+        }
+
+    })
+    return res;
+}
+
 export const userService = {
     updateProfile,
     getUserById,
@@ -182,4 +204,6 @@ export const userService = {
     deletemyAccount,
     userDetails,
     UpdateNotification,
+
+    allCharies,
 }

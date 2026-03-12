@@ -48,6 +48,12 @@ router.get(
 );
 
 router.get(
+    '/charities',
+     auth(...allRoles),
+    userController.allCharies,
+);
+
+router.get(
     '/:id',
      auth(Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
     userController.userDetails,

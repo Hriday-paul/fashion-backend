@@ -118,6 +118,18 @@ const UpdateNotification = catchAsync(async (req, res) => {
     });
 })
 
+const allCharies = catchAsync(async (req, res) => {
+
+    const result = await userService.allCharies();
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Charities retrived successfully',
+        data: result,
+    });
+})
+
 
 export const userController = {
     updateProfile,
@@ -128,4 +140,5 @@ export const userController = {
     deleteUser,
     userDetails,
     UpdateNotification,
+    allCharies
 }
