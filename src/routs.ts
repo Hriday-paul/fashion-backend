@@ -9,6 +9,7 @@ import { settingsRoutes } from './modules/settings/settings.rout';
 import { messagesRoutes } from './modules/messages/messages.route';
 import { categoryRouter } from './modules/category/category.rout';
 import { productRouts } from './modules/product/product.rout';
+import { favouriteRouts } from './modules/favourite/favourite.rout';
 
 const router = express.Router();
 
@@ -44,6 +45,10 @@ const moduleRoutes = [
     {
         path: '/products',
         route: productRouts,
+    },
+    {
+        path: '/favourites',
+        route: favouriteRouts,
     },
 ];
 

@@ -5,17 +5,18 @@ export const DefaultTask = async () => {
     const exist = await prisma.user.findFirst({ where: { auth: { role: Role.ADMIN } } });
 
     if (!exist) {
-        
-        const phone = "01345678901"
+
+        const email = "admin@gmail.com"
 
         await prisma.user.create({
             data: {
-                name: "Admin",
-                phone,
+                fname: "Admin",
+                phone: "423232323",
+                email,
                 auth: {
                     create: {
                         password: "$2b$15$RvFgM4f6Mz9vQN0xCPoexuqKPWZnhYm4Yyg5sP5oQx88zoo4IDFWe",
-                        phone,
+                        email,
                         isverified: true,
                         role: Role.ADMIN
                     }

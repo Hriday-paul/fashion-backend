@@ -9,6 +9,7 @@ router.delete("/:id", categoryControler.deleteCategory);
 router.get("/", categoryControler.getCategories);
 
 router.get("/child/:id", categoryControler.getChildChain);
+router.get("/parent/:id", categoryControler.getParentChain);
 
 router.post("/brands", addBrandValidator, req_validator(), categoryControler.addNewBrand);
 router.get("/brands/:id", categoryControler.allBrands);

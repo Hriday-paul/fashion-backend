@@ -5,8 +5,10 @@ model Product {
 
     images ProductPicture[]
 
-    price    Float  @default(0)
-    currency String @default("USD")
+    price       Float  @default(0) // original/main price
+    discountPct Float  @default(0) // e.g. 20 = 20%
+    finalPrice  Float  @default(0) // computed and stored
+    currency    String @default("USD")
 
     brandId String
     brand   Brand  @relation(fields: [brandId], references: [id], onDelete: Cascade)
@@ -31,12 +33,22 @@ model Product {
 
     charities ProductCharity[]
 
-    moneyDonations  SellDonation[]
+    moneyDonations SellDonation[]
 
     isDeleted Boolean @default(false)
-    
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    favourites Favourite[]
+
+    orderItems OrderItem[]
+
+    viewers ProductView[]
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
     @@map("products")
 }
 
@@ -96,4 +108,34 @@ enum DonationStatus {
     PENDING
     PAID
     FAILED
+}
+
+model Favourite {
+    id String @id @default(uuid())
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    productId String
+    product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+
+    @@unique([userId, productId])
+    @@map("favourites")
+}
+
+model ProductView {
+  id        String   @id @default(uuid())
+  productKey String
+  userkey String
+  productId String
+
+  userId    String?  // null = guest
+  user User? @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  product   Product  @relation(fields: [productId], references: [id])
+  @@map("product_views")
 }

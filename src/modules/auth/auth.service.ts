@@ -7,7 +7,6 @@ import config from "../../config"
 import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
 import { generateOtp } from "../../utils/otpGenerator"
 import moment from "moment"
-import { sendNotification } from "../notification/notification.utils"
 import prisma from "../../shared/prisma"
 import { AccountDocument, Role, User } from "../../../generated/prisma/client"
 import fs from 'fs';
@@ -21,7 +20,7 @@ type TUserMore = {
 }
 
 const createUser = async (payload: User & TUserMore) => {
-    const { phone, password, fname, lname, email, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, account_documents, role } = payload
+    const { phone, password, fname, lname, email, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, account_documents, role, userName } = payload
 
     let isExist = await prisma.user.findFirst({ where: { email }, include: { auth: true } });
 

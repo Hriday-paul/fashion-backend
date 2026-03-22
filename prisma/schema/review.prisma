@@ -1,0 +1,27 @@
+model Rating {
+  id          String   @id @default(uuid())
+  orderId     String @unique
+  fromUserId  String?
+  toUserId    String
+  rating Float @default(0)
+  comment     String?       // optional manual comment
+
+  createdAt   DateTime @default(now())
+
+  order       Order    @relation(fields: [orderId], references: [id])
+  fromUser    User?     @relation("RatingGiven", fields: [fromUserId], references: [id])
+  toUser      User     @relation("RatingReceived", fields: [toUserId], references: [id])
+
+  sellerCommunicate Float @default(0)
+  product_describe Float @default(0)
+  postage Float @default(0)
+  feedback Feedback @default(GOOD)
+
+  @@unique([orderId, fromUserId])
+  @@map("ratings")
+}
+
+enum Feedback {
+  GOOD
+  BAD
+}

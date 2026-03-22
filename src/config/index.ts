@@ -21,6 +21,12 @@ const aws = {
   spacesEndpoint: process.env.SPACES_ENDPOINT,
 };
 
+const redis = {
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  password: process.env.REDIS_PASSWORD,
+}
+
 export default {
   NODE_ENV: process.env.NODE_ENV,
   port: process.env.PORT,
@@ -49,6 +55,7 @@ export default {
   stripe,
   aws,
   message,
+  redis,
 
   flight_api_key : process.env.AEROAPI_KEY
 };

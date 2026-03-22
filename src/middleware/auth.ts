@@ -27,7 +27,7 @@ const auth = (...userRoles: Role[]) => {
         const isUserExist = await prisma.user.findFirst({ where: { id: userId }, include: { auth: true } });
 
         if (!isUserExist) {
-            throw new AppError(httpStatus.NOT_FOUND, 'user not found');
+            throw new AppError(httpStatus.NOT_FOUND, 'User does not exist');
         }
 
         if (!isUserExist?.auth?.isverified) {
@@ -52,3 +52,44 @@ const auth = (...userRoles: Role[]) => {
     });
 };
 export default auth;
+
+export const PublicAuth = () => {
+    return catchAsync(async (req, res, next) => {
+        const token = req?.headers?.authorization?.split(' ')[1];
+
+        if (!token) return next();
+
+        let decode: JwtPayload;
+
+        try {
+            decode = jwt.verify(
+                token,
+                config.jwt_access_secret as string,
+            ) as JwtPayload;
+        } catch (err) {
+            return next();
+        }
+
+        const { role, userId } = decode;
+
+        const isUserExist = await prisma.user.findFirst({
+            where: { id: userId },
+            include: { auth: true },
+        });
+
+        const auth = isUserExist?.auth;
+
+        if (
+            !isUserExist ||
+            !auth?.isverified ||
+            auth?.isDeleted ||
+            !auth?.status
+        ) {
+            return next(); // invalid user, but still public — just skip setting req.user
+        }
+
+        req.user = { id: userId, role };
+
+        return next();
+    });
+};

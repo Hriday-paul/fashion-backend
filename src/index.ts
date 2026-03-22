@@ -8,6 +8,7 @@ import multer from 'multer'
 import cookieParser from 'cookie-parser';
 import helmet from "helmet";
 import globalErrorHandler from "./middleware/globalErrorhandler";
+import { DefaultTask } from "./utils/DefaultTask";
 dotenv.config();
 
 const app: Express = express();
@@ -28,6 +29,8 @@ app.use(express.static('public'));
 app.get("/", (req: Request, res: Response) => {
   res.send("-------------------- 🎇 Server running 🎇 -------------------------");
 });
+
+DefaultTask()
 
 app.use("/api", router);
 

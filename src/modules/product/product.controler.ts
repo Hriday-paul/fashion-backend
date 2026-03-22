@@ -32,7 +32,8 @@ const addNewProduct = catchAsync(async (req: Request, res: Response) => {
         req.body.images = urls
     }
 
-    const result = await productService.addNewProduct(req.body, req.user.role);
+    const result = await productService.addNewProduct(req.body, req.user.role, req.user
+        ?.id);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -47,7 +48,7 @@ const allProducts = catchAsync(async (req: Request, res: Response) => {
     const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials"])
     const options = pick(req.query, PaginateOptions);
 
-    const result = await productService.allProducts(query, options);
+    const result = await productService.allProducts(query, options, req.user?.id);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -56,7 +57,66 @@ const allProducts = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const productDetails = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.productDetails(req.params.id, req, req.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Products details retrived successfully',
+        data: result,
+    });
+});
+
+const recentViewProducts = catchAsync(async (req: Request, res: Response) => {
+    const { userkey } = await productService.getViewKey(req)
+    const result = await productService.recentViewProducts(userkey);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Recent View Products Retrived Successfully',
+        data: result,
+    });
+});
+
+const trendingProducts = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.trendingProducts(req?.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Trending Products Retrived Successfully',
+        data: result,
+    });
+});
+
+const topSellingProducts = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.topSellingProducts(req?.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Top Selling Products Retrived Successfully',
+        data: result,
+    });
+});
+
+
+const recomendedProducts = catchAsync(async (req: Request, res: Response) => {
+    const { userkey } = await productService.getViewKey(req)
+    const result = await productService.recomendedProducts(userkey, req?.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Recomended Products Retrived Successfully',
+        data: result,
+    });
+});
+
 export const productControler = {
     addNewProduct,
-    allProducts
+    allProducts,
+    productDetails,
+
+    recentViewProducts,
+    trendingProducts,
+    topSellingProducts,
+    recomendedProducts
 }

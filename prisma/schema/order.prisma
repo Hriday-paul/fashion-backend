@@ -1,0 +1,51 @@
+model Order {
+    id String @id @default(uuid())
+
+    rating Rating?
+
+    createdAt DateTime    @default(now())
+    updatedAt DateTime    @updatedAt
+
+    status    OrderStatus @default(PENDING)
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    items     OrderItem[]
+
+    return Return[]
+
+    totalPrice Float
+
+    @@index([userId])
+    @@map("orders")
+}
+
+model OrderItem {
+    id String @id @default(uuid())
+
+    orderId String
+    order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+    productId String
+    product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+    quantity   Int
+    unitPrice  Float  // snapshot of price at time of order
+    totalPrice Float  // unitPrice * quantity
+
+    returnItems ReturnItem[]
+
+    createdAt DateTime    @default(now())
+    updatedAt DateTime    @updatedAt
+
+    @@index([orderId])
+}
+
+enum OrderStatus {
+    PENDING
+    CONFIRMED
+    SHIPPED
+    DELIVERED
+    CANCELLED
+}

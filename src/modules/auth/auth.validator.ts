@@ -3,6 +3,7 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js'
 
 export const createAccountValidator = [
     check('fname').trim().not().isEmpty().withMessage('First name is required').isString().withMessage('First name should be string').isLength({ min: 1 }).withMessage('First name min length is 1'),
+    check('userName').trim().not().isEmpty().withMessage('Username is required').isString().withMessage('Username should be string').isLength({ min: 1 }).withMessage('Username min length is 1'),
 
     check('phone').trim().not().isEmpty()
         .custom((value) => {

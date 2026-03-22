@@ -2,6 +2,7 @@ import { createServer, Server } from 'http';
 import app from '.';
 import config from './config';
 import initializeSocketIO from './socket';
+import { connectRedis } from './redis';
 
 
 let server: Server;
@@ -22,8 +23,11 @@ async function main() {
       `Socket is listening on port ${config.ip}:${config.socket_port}`,
     );
 
+    await connectRedis();
+
     //@ts-ignore
     // global.socketio = io;
+
   } catch (err) {
     console.error(err);
   }

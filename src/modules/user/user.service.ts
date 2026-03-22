@@ -184,6 +184,7 @@ const allCharies = async () => {
             }
         },
         select: {
+            userName : true,
             fname: true,
             lname: true,
             email: true,

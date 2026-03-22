@@ -5,10 +5,18 @@ import httpStatus from 'http-status'
 import { otpServices } from "../otp/otp.service";
 import catchAsync from "../../utils/catchAsync";
 import { uploadManyToS3 } from "../../utils/s3";
-import { AccountDocument } from "../../../generated/prisma/client";
+import prisma from "../../shared/prisma";
+import AppError from "../../error/AppError";
 
 //create user
 const createUser = catchAsync(async (req: Request, res: Response) => {
+
+    // check userName is exist or not
+    const exist = await prisma.user.findFirst({ where: { userName: req.body?.userName } });
+
+    if (exist) {
+        throw new AppError(httpStatus.CONFLICT, "User name already exist");
+    }
 
     const files = req.files as Express.Multer.File[];
 
@@ -46,7 +54,7 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
 const loginUser = catchAsync(async (req: Request, res: Response) => {
 
     const result = await authService.loginUser(req.body);
-    
+
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -57,7 +65,7 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
 
 const adminLogin = catchAsync(async (req: Request, res: Response) => {
     const result = await authService.adminLogin(req.body)
-    
+
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,

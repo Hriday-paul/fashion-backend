@@ -1,0 +1,84 @@
+model Return {
+    id          String       @id @default(uuid())
+    orderId     String?
+    order       Order?        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+    buyerId     String
+    buyer       User         @relation("ReturnBuyer", fields: [buyerId], references: [id])
+    sellerId    String
+    seller      User         @relation("ReturnSeller", fields: [sellerId], references: [id])
+
+    status      ReturnStatus @default(REQUESTED)
+    reason      ReturnReason
+    description String?
+
+    // Seller decline
+    declineReason String?
+
+    // Shipping back
+    trackingNumber String?
+    trackingCarrier String?
+
+    // Refund
+    refundAmount Float?
+    refundedAt   DateTime?
+
+    items     ReturnItem[]
+
+    // for attach photo or videos as reason
+    evidence  ReturnEvidence[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([orderId])
+    @@index([buyerId])
+    @@index([sellerId])
+    @@map("returns")
+}
+
+model ReturnItem {
+    id          String  @id @default(uuid())
+    returnId    String
+    return      Return  @relation(fields: [returnId], references: [id], onDelete: Cascade)
+    orderItemId String
+    orderItem   OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Restrict)
+    quantity    Int
+    createdAt   DateTime @default(now())
+
+    @@map("return_items")
+}
+
+model ReturnEvidence {
+    id       String @id @default(uuid())
+    returnId String
+    return   Return @relation(fields: [returnId], references: [id], onDelete: Cascade)
+    url      String
+    key      String
+    type     EvidenceType @default(IMAGE)
+    createdAt DateTime @default(now())
+
+    @@map("return_evidence")
+}
+
+enum ReturnStatus {
+    REQUESTED        // buyer tapped "Request return"
+    PENDING_REVIEW   // waiting on seller (no auto-approve policy)
+    APPROVED         // seller approved or auto-approved
+    DECLINED         // seller rejected with reason
+    SHIPPED          // buyer has shipped item back (tracking added)
+    COMPLETED        // seller confirmed receipt + refund issued
+}
+
+enum ReturnReason {
+    NOT_AS_DESCRIBED
+    DAMAGED_ON_ARRIVAL
+    WRONG_SIZE
+    WRONG_ITEM
+    CHANGED_MIND
+    OTHER
+}
+
+enum EvidenceType {
+    IMAGE
+    VIDEO
+}

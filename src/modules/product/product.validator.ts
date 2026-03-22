@@ -15,6 +15,10 @@ export const addProductValidator: ValidationChain[] = [
     .notEmpty().withMessage("Price is required")
     .isFloat({ min: 0 }).withMessage("Price must be a positive number"),
 
+  body("discountPct")
+    .notEmpty().withMessage("discountPct is required")
+    .isFloat({ min: 0, max: 100 }).withMessage("discountPct must be between 0 to 100"),
+
   body("currency")
     .optional()
     .trim()

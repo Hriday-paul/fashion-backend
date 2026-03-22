@@ -1,18 +1,21 @@
+import { Request } from "express";
 import { Approval_Status, Prisma, Product, Role } from "../../../generated/prisma/client";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
+import { redisPub } from "../../redis";
 import prisma from "../../shared/prisma";
 import { categoryService } from "../category/category.service";
 import httpStatus from "http-status";
+import { BuildFingerPrint } from "../../utils/BuildfingerPrint";
 
 type ProductOtherPayload = {
     images: { key: string, url: string }[],
     charities: { isAnonymous: boolean, charityId: string, percent: number }[]
 }
 
-const addNewProduct = async (payload: Product & ProductOtherPayload, role: string) => {
+const addNewProduct = async (payload: Product & ProductOtherPayload, role: string, userId: string) => {
 
-    const { images, charities, createdAt, updatedAt, catagory_hierarchy, ...morePayload } = payload;
+    const { images, charities, createdAt, updatedAt, catagory_hierarchy, finalPrice, discountPct, price, ...morePayload } = payload;
 
     const category = await categoryService.haveChildCategory(payload?.categoryId);
     //checking catalog is avaialable or not
@@ -31,7 +34,6 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
 
     const charityRoles: string[] = [Role.ECO_FRIENDLY_STORE, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP];
     const isAllowCharity = !charityRoles.includes(role);
-
 
     // check payload charities exact charity or not
     if (charities?.length > 0) {
@@ -61,19 +63,26 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
         }
     }
 
+    //calculate price
+    const lastPrice = price - (price * (discountPct / 100));
+
     const res = await prisma.product.create({
         data: {
             images: { create: images },
             charities: { create: isAllowCharity ? charities : [] },
             ...morePayload,
-            catagory_hierarchy: hierarchy
+            price,
+            discountPct,
+            finalPrice: lastPrice,
+            catagory_hierarchy: hierarchy,
+            userId
         }
     });
 
     return res;
 }
 
-const allProducts = async (query: Record<string, unknown>, options: TPaginationOptions) => {
+const allProducts = async (query: Record<string, unknown>, options: TPaginationOptions, userId?: string) => {
     const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }];
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
@@ -186,7 +195,33 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
             images: true,
             brand: true,
             size: true,
-            category: true
+            category: true,
+            user: {
+                include: {
+                    auth: {
+                        select: {
+                            role: true
+                        }
+                    },
+                    picture: true
+                },
+            },
+            _count: {
+                select: {
+                    favourites: true
+                }
+            },
+            // Add this 👇
+            favourites: userId
+                ? {
+                    where: {
+                        userId: userId,
+                    },
+                    select: {
+                        id: true,
+                    },
+                }
+                : false,
         },
     })
 
@@ -206,7 +241,18 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
 
 }
 
-const productDetails = async (productId: string) => {
+async function getViewKey(req: Request, productId?: string) {
+
+    // Guest — build fingerprint
+    const fingerprint = BuildFingerPrint(req);
+
+    return {
+        productKey: `view:guest:${fingerprint}:${productId}`,
+        userkey: `view:guest:${fingerprint}`
+    };
+}
+
+const productDetails = async (productId: string, req: Request, userId?: string,) => {
 
     const details = await prisma.product.findFirst({
         where: {
@@ -217,7 +263,33 @@ const productDetails = async (productId: string) => {
             brand: true,
             size: true,
             images: true,
-            charities: true
+            charities: true,
+            user: {
+                include: {
+                    auth: {
+                        select: {
+                            role: true
+                        }
+                    },
+                    picture: true
+                }
+            },
+            _count: {
+                select: {
+                    favourites: true
+                }
+            },
+            // Add this 👇
+            favourites: userId
+                ? {
+                    where: {
+                        userId: userId,
+                    },
+                    select: {
+                        id: true,
+                    },
+                }
+                : false,
         }
     });
 
@@ -225,14 +297,308 @@ const productDetails = async (productId: string) => {
         return null
     }
 
-    const categoryChain = await categoryService.getParentChain(details?.categoryId);
+    const { productKey: viewKey, userkey } = await getViewKey(req, productId);
 
-    return { ...details, cat_parent_chain: categoryChain };
+    // SET only if NOT exists, auto-expire after 1 hour
+    const isNew = await redisPub.set(viewKey, 1, {
+        EX: 3600,  // expire after 1 hour
+        NX: true   // only set if NOT exists
+    });
+
+    if (isNew) {
+        // Insert in DB as product views
+        await prisma.productView.create({
+            data: {
+                productKey: viewKey,
+                userkey,
+                productId,
+                userId
+            }
+        })
+    }
+
+    // const categoryChain = await categoryService.getParentChain(details?.categoryId);
+
+    // return { ...details, cat_parent_chain: categoryChain };
+    return details;
+}
+
+const recentViewProducts = async (viewKey: string) => {
+    const products = await prisma.productView.findMany({
+        where: {
+            userkey: viewKey,
+        },
+        distinct: "productId",
+        take: 10,
+        orderBy: {
+            createdAt: 'desc',
+        },
+        include: {
+            product: {
+                include: {
+                    images: true
+                }
+            }
+        }
+    })
+
+    return products;
+}
+
+const trendingProducts = async (userId?: string) => {
+    const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) // last 7 days
+
+    const [views, orders, wishlists] = await Promise.all([
+        // views in last 7 days
+        prisma.productView.groupBy({
+            by: ['productId'],
+            where: { createdAt: { gte: since } },
+            _count: { productId: true }
+        }),
+        // orders in last 7 days
+        prisma.orderItem.groupBy({
+            by: ['productId'],
+            where: { createdAt: { gte: since } },
+            _count: { productId: true }
+        }),
+        // wishlists in last 7 days
+        prisma.favourite.groupBy({
+            by: ['productId'],
+            where: { createdAt: { gte: since } },
+            _count: { productId: true }
+        }),
+    ])
+
+    // build score map
+    const scoreMap: Record<string, number> = {}
+
+    const WEIGHTS = {
+        view: 1,
+        order: 5,   // orders matter most
+        wishlist: 3
+    }
+
+    views.forEach(v => {
+        scoreMap[v.productId] = (scoreMap[v.productId] ?? 0) + v._count.productId * WEIGHTS.view
+    })
+    orders.forEach(o => {
+        scoreMap[o.productId] = (scoreMap[o.productId] ?? 0) + o._count.productId * WEIGHTS.order
+    })
+    wishlists.forEach(w => {
+        scoreMap[w.productId] = (scoreMap[w.productId] ?? 0) + w._count.productId * WEIGHTS.wishlist
+    })
+
+    // sort by score and get top 10
+    const trendingIds = Object.entries(scoreMap)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10)
+        .map(([productId]) => productId)
+
+    // fetch full product data
+    const trendingProducts = await prisma.product.findMany({
+        where: { id: { in: trendingIds } },
+        include: {
+            images: true,
+            brand: true,
+            size: true,
+            category: true,
+            user: {
+                include: {
+                    auth: {
+                        select: {
+                            role: true
+                        }
+                    },
+                    picture: true
+                },
+            },
+            // _count: {
+            //     select: {
+            //         favourites: true
+            //     }
+            // },
+            // Add this 👇
+            // favourites: userId
+            //     ? {
+            //         where: {
+            //             userId: userId,
+            //         },
+            //         select: {
+            //             id: true,
+            //         },
+            //     }
+            //     : false,
+        }
+    })
+
+    // preserve score order
+    const sorted = trendingIds.map(id =>
+        trendingProducts.find(p => p.id === id)
+    )
+
+    return sorted;
+}
+
+const topSellingProducts = async (userId?: string) => {
+
+    const products = await prisma.product.findMany({
+        where: {
+            orderItems: {
+                some: {
+                    order: {
+                        status: "DELIVERED"
+                    }
+                }
+            },
+        },
+        orderBy: {
+            orderItems: { _count: 'desc' }  // sort by number of order items
+        },
+        take: 10,
+        include: {
+            images: true,
+            brand: true,
+            size: true,
+            category: true,
+            user: {
+                include: {
+                    auth: {
+                        select: {
+                            role: true
+                        }
+                    },
+                    picture: true
+                },
+            },
+            // _count: {
+            //     select: {
+            //         favourites: true
+            //     }
+            // },
+            // Add this 👇
+            // favourites: userId
+            //     ? {
+            //         where: {
+            //             userId: userId,
+            //         },
+            //         select: {
+            //             id: true,
+            //         },
+            //     }
+            //     : false,
+        }
+    })
+
+    return products;
+}
+
+const recomendedProducts = async (viewKey: string, userId?: string) => {
+
+    // 1. Get recent viewed product IDs (last 10)
+    const recentViews = await prisma.productView.findMany({
+        where: {
+            userkey: viewKey,
+        },
+        distinct: "productId",
+        take: 10,
+        orderBy: {
+            createdAt: 'desc',
+        },
+        select: { productId: true },
+    })
+
+    // 2. Get wishlist product IDs (authenticated only)
+    const wishlistItems = userId
+        ? await prisma.favourite.findMany({
+            where: { userId },
+            select: { productId: true },
+        })
+        : [];
+
+    const viewedIds = recentViews.map((v) => v.productId);
+    const wishlistIds = wishlistItems.map((w) => w.productId);
+
+    // combine all interacted product IDs
+    const interactedIds = [...new Set([...viewedIds, ...wishlistIds])];
+
+    if (interactedIds.length === 0) {
+        // Cold start — return popular/featured products
+        return trendingProducts(userId)
+    }
+
+    // 3. Get categories & tags from interacted products
+    const interactedProducts = await prisma.product.findMany({
+        where: { id: { in: interactedIds } },
+        select: { categoryId: true, tags: true, brandId: true },
+    });
+
+    const categoryIds = [...new Set(interactedProducts.map((p) => p.categoryId))];
+    const brandIds = [...new Set(interactedProducts.map((p) => p.brandId))];
+    const tags = [...new Set(interactedProducts.flatMap((p) => p.tags))];
+
+    // 4. Find similar products — exclude already interacted ones
+    const recommended = await prisma.product.findMany({
+        where: {
+            id: { notIn: interactedIds },   // exclude seen/wishlisted
+            OR: [
+                { categoryId: { in: categoryIds } },  // same category
+                { tags: { hasSome: tags } },    // matching tags
+                { brandId: { in: brandIds } },    // matching brands
+            ],
+        },
+        orderBy: [
+            { favourites: { _count: 'desc' } },       // most wishlisted first
+            { viewers: { _count: 'desc' } },       // most viewed second
+        ],
+        take: 10,
+        include: {
+            images: true,
+            brand: true,
+            size: true,
+            category: true,
+            user: {
+                include: {
+                    auth: {
+                        select: {
+                            role: true
+                        }
+                    },
+                    picture: true
+                },
+            },
+            // _count: {
+            //     select: {
+            //         favourites: true
+            //     }
+            // },
+            // Add this 👇
+            // favourites: userId
+            //     ? {
+            //         where: {
+            //             userId: userId,
+            //         },
+            //         select: {
+            //             id: true,
+            //         },
+            //     }
+            //    
+        }
+    });
+
+    return recommended;
+
 }
 
 export const productService = {
     addNewProduct,
 
     allProducts,
-    productDetails
+    productDetails,
+
+    getViewKey,
+
+    recentViewProducts,
+    trendingProducts,
+    topSellingProducts,
+    recomendedProducts
 }
