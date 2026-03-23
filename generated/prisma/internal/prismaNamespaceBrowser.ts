@@ -57,6 +57,7 @@ export const ModelName = {
   FileMessage: 'FileMessage',
   Order: 'Order',
   OrderItem: 'OrderItem',
+  Payment: 'Payment',
   Product: 'Product',
   ProductPicture: 'ProductPicture',
   ProductCharity: 'ProductCharity',
@@ -71,9 +72,9 @@ export const ModelName = {
   User: 'User',
   ProfilePicture: 'ProfilePicture',
   AccountDocument: 'AccountDocument',
+  BillingDetails: 'BillingDetails',
   Notification: 'Notification',
-  Setting: 'Setting',
-  Payment: 'Payment'
+  Setting: 'Setting'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -196,6 +197,26 @@ export const OrderItemScalarFieldEnum = {
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  total_amount: 'total_amount',
+  paid_amount: 'paid_amount',
+  seller_required_amount: 'seller_required_amount',
+  seller_received_amount: 'seller_received_amount',
+  isPaid: 'isPaid',
+  status: 'status',
+  orderId: 'orderId',
+  transactionId: 'transactionId',
+  paymentIntentId: 'paymentIntentId',
+  paymentData: 'paymentData',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const ProductScalarFieldEnum = {
@@ -417,6 +438,21 @@ export const AccountDocumentScalarFieldEnum = {
 export type AccountDocumentScalarFieldEnum = (typeof AccountDocumentScalarFieldEnum)[keyof typeof AccountDocumentScalarFieldEnum]
 
 
+export const BillingDetailsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  country: 'country',
+  full_name: 'full_name',
+  address1: 'address1',
+  address2: 'address2',
+  zip_code: 'zip_code',
+  city: 'city',
+  contact: 'contact'
+} as const
+
+export type BillingDetailsScalarFieldEnum = (typeof BillingDetailsScalarFieldEnum)[keyof typeof BillingDetailsScalarFieldEnum]
+
+
 export const NotificationScalarFieldEnum = {
   id: 'id',
   senderId: 'senderId',
@@ -443,20 +479,6 @@ export const SettingScalarFieldEnum = {
 } as const
 
 export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
-
-
-export const PaymentScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  amount: 'amount',
-  isPaid: 'isPaid',
-  transactionId: 'transactionId',
-  paymentData: 'paymentData',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const SortOrder = {

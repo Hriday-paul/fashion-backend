@@ -1,0 +1,35 @@
+model Payment {
+  id     String   @id @default(uuid())
+  userId String?
+  user   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  total_amount      Float @default(0) // total price
+  paid_amount Float @default(0) // how much customer paid
+
+  seller_required_amount Float @default(0) // how much seller should receive
+  seller_received_amount Float @default(0) // how much seller actually received
+
+  isPaid Boolean @default(false)
+
+  status PaymentStatus @default(PENDING)
+
+  orderId String         @unique
+  order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  transactionId   String  @unique
+  paymentIntentId String?
+
+  paymentData Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("payments")
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  SUCCESSED
+  FAILED
+}

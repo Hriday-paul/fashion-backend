@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 import config from '../../config';
 import { User } from '../../../generated/prisma/client';
 
-const stripe = new Stripe(config.stripe?.stripe_api_secret as string, {
+export const stripe = new Stripe(config.stripe?.stripe_api_secret as string, {
   apiVersion: "2025-03-31.basil",
   typescript: true,
 });

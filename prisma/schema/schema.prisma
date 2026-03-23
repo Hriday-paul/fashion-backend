@@ -99,6 +99,8 @@ model User {
   orders       Order[]
   productViews ProductView[]
 
+  billingAddress BillingDetails?
+
   avgRating Float @default(0)
 
   @@map("users")
@@ -122,6 +124,22 @@ model AccountDocument {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("account_documents")
+}
+
+model BillingDetails {
+  id        String  @id @default(uuid())
+  userId    String  @unique
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  country   String
+  full_name String?
+  address1  String
+  address2  String?
+  zip_code  String
+  city      String
+
+  contact String?
+
+  @@map("billing_details")
 }
 
 enum Role {
@@ -181,24 +199,4 @@ enum SettingKey {
   terms
   privacy
   about
-}
-
-model Payment {
-  id     String  @id @default(uuid())
-  userId String?
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  amount Int     @default(0)
-  isPaid Boolean @default(false)
-
-  // reservationId String @unique
-  // reservation   Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
-
-  transactionId String @unique
-
-  paymentData Json?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("payments")
 }

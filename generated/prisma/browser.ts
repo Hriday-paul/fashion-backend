@@ -62,6 +62,11 @@ export type Order = Prisma.OrderModel
  */
 export type OrderItem = Prisma.OrderItemModel
 /**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
+/**
  * Model Product
  * 
  */
@@ -132,6 +137,11 @@ export type ProfilePicture = Prisma.ProfilePictureModel
  */
 export type AccountDocument = Prisma.AccountDocumentModel
 /**
+ * Model BillingDetails
+ * 
+ */
+export type BillingDetails = Prisma.BillingDetailsModel
+/**
  * Model Notification
  * 
  */
@@ -141,8 +151,3 @@ export type Notification = Prisma.NotificationModel
  * 
  */
 export type Setting = Prisma.SettingModel
-/**
- * Model Payment
- * 
- */
-export type Payment = Prisma.PaymentModel
