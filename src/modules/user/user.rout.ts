@@ -1,7 +1,7 @@
 import { Router } from "express";
 import auth from "../../middleware/auth";
 import { userController } from "./user.controller";
-import { statusUpdateValidator } from "./user.validator";
+import { statusUpdateValidator, validateBillingDetails } from "./user.validator";
 import req_validator from "../../middleware/req_validation";
 import { image_Upload } from "../../utils/s3";
 import parseData from "../../middleware/parseData";
@@ -15,11 +15,11 @@ router.get(
     userController.all_users,
 );
 
-export const allRoles : Role[] = [Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER]
+export const allRoles: Role[] = [Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER]
 
 router.patch(
     '/update-my-profile',
-     auth(Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
+    auth(...allRoles),
     image_Upload.single('picture'),
     parseData(),
     userController.updateProfile,
@@ -37,31 +37,45 @@ router.patch(
     '/notofication',
     statusUpdateValidator,
     req_validator(),
-     auth(Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
+    auth(Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
     userController.UpdateNotification,
 );
 
 router.get(
     '/my-profile',
-     auth(Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
+    auth(Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
     userController.getMyProfile,
 );
 
 router.get(
     '/charities',
-     auth(...allRoles),
+    auth(...allRoles),
     userController.allCharies,
+);
+
+//------Billing details--------
+router.put(
+    '/billing-details',
+    validateBillingDetails,
+    req_validator(),
+    auth(...allRoles),
+    userController.addOrUpdateBillingDetails,
+);
+router.get(
+    '/billing-details',
+    auth(...allRoles),
+    userController.billingDetailsByUser
 );
 
 router.get(
     '/:id',
-     auth(Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
+    auth(Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
     userController.userDetails,
 );
 
 router.delete(
     '/delete-account',
-     auth(Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
+    auth(Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
     userController.deletemyAccount,
 );
 

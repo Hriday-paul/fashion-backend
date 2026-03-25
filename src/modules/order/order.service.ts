@@ -59,7 +59,7 @@ const findUnpaidOrder = async (
     return matchedOrder ?? null;
 };
 
-const addNewOrder = async (payload: Order & { products: OrderItem[] }, userId: string) => {
+const addNewOrder = async (payload: Order & { products: OrderItem[] }, userId: string) : Promise<Order> => {
     const { products } = payload;
 
     // Fetch prices
@@ -120,4 +120,8 @@ const addNewOrder = async (payload: Order & { products: OrderItem[] }, userId: s
 
     return order
 
+}
+
+export const orderService = {
+    addNewOrder
 }

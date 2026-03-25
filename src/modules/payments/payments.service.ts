@@ -17,13 +17,26 @@ const stripe = new Stripe(config.stripe?.stripe_api_secret as string, {
 });
 
 //-----------------create checkout---------------------
-const checkout = async (reservationId: string, userId: string) => {
+const checkout = async (orderId: string, userId: string) => {
 
   const result = await prisma.$transaction(async (transactionClient) => {
-    const reservation = await prisma.reservation.findFirst({ where: { id: reservationId } });
 
-    if (!reservation) {
-      throw new AppError(httpStatus.NOT_FOUND, "Reservation not found")
+    const order = await transactionClient.order.findFirst({
+      where: { id: orderId }, include: {
+        items: {
+          include: {
+            product: {
+              include: {
+                images: true
+              }
+            }
+          }
+        }
+      }
+    });
+
+    if (!order) {
+      throw new AppError(httpStatus.NOT_FOUND, "Order not found")
     }
 
     let paymentData;
@@ -31,7 +44,7 @@ const checkout = async (reservationId: string, userId: string) => {
     // Check for existing unpaid payment for the reservation
     const isExistPayment = await transactionClient.payment.findFirst({
       where: {
-        reservationId: reservation?.id,
+        orderId: order?.id,
         userId: userId,
       }
     })
@@ -48,7 +61,11 @@ const checkout = async (reservationId: string, userId: string) => {
         where: { id: isExistPayment?.id },
         data: {
           transactionId: tranId,
-          amount: reservation?.final_price,
+          total_amount: order?.totalPrice,
+          paid_amount: 0,
+          seller_required_amount: 0,
+          seller_received_amount: 0,
+          isPaid: false
         },
         include: {
           user: true
@@ -63,10 +80,13 @@ const checkout = async (reservationId: string, userId: string) => {
       const createdPayment = await transactionClient.payment.create({
         data: {
           userId,
-          amount: reservation?.final_price,
+          total_amount: order?.totalPrice,
+          paid_amount: 0,
+          seller_required_amount: 0,
+          seller_received_amount: 0,
           isPaid: false,
-          reservationId: reservation?.id,
-          transactionId: tranId,
+          orderId: order?.id,
+          transactionId: tranId
         },
         include: {
           user: true
@@ -88,19 +108,18 @@ const checkout = async (reservationId: string, userId: string) => {
 
     if (!paymentData?.user) throw new AppError(httpStatus.BAD_REQUEST, 'User not found');
 
+    // order products
+    const products = order?.items?.map(item => ({
+      amount: item?.unitPrice,
+      images: item?.product?.images.map(img => img?.url),
+      name: item?.product?.title,
+      quantity: item?.quantity,
+    }))
 
     const checkoutSession = await createCheckoutSession({
       // customerId: customer.id,
-      product: {
-        amount: paymentData?.amount,
-        //@ts-ignore
-        name: reservation?.order_type + `(${reservation?.trip_type})`,
-        quantity: 1,
-      },
-
+      products,
       user: paymentData?.user,
-
-      //@ts-ignore
       paymentId: paymentData?.id,
     });
 
@@ -143,14 +162,15 @@ const confirmPayment = async (query: Record<string, any>) => {
         where: { id: paymentId },
         data: {
           isPaid: true,
+          status: "SUCCESSED",
           paymentData: PaymentSession as any,
         }
       });
 
 
       sendAdminNotifications({
-        title: "New Reservation Payment Received",
-        message: `A new reservation payment has been successfully received from Rider. Transaction id is : ${payment?.transactionId}`
+        title: "New Order Payment Received",
+        message: `A new Order payment has been successfully received from a customer. Transaction id is : ${payment?.transactionId}`
       });
 
     })
@@ -172,7 +192,6 @@ const confirmPayment = async (query: Record<string, any>) => {
   }
 
 };
-
 
 const getAllPayments = async (query: Record<string, unknown>, options: TPaginationOptions) => {
 
@@ -197,7 +216,7 @@ const getAllPayments = async (query: Record<string, unknown>, options: TPaginati
 
         {
           user: {
-            name: {
+            fname: {
               contains: searchTerm as string,
               mode: "insensitive",
             }
@@ -239,8 +258,8 @@ const getAllPayments = async (query: Record<string, unknown>, options: TPaginati
   });
 
   const total_earning = await prisma.payment.aggregate({
-    where: { isPaid: true },
-    _sum: { amount: true },
+    where: { isPaid: true, status: "SUCCESSED" },
+    _sum: { total_amount: true },
   })
 
   const startOfTodayUTC = moment.utc().startOf("day").toDate();
@@ -255,7 +274,7 @@ const getAllPayments = async (query: Record<string, unknown>, options: TPaginati
       },
     },
     _sum: {
-      amount: true,
+      total_amount: true,
     },
   });
 
@@ -291,7 +310,7 @@ const getPaymentsByUserId = async (
     select: {
       paymentData: false,
       id: true,
-      amount: true,
+      total_amount: true,
       transactionId: true,
       isPaid: true,
       createdAt: true,

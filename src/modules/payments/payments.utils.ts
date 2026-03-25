@@ -8,32 +8,33 @@ export const stripe = new Stripe(config.stripe?.stripe_api_secret as string, {
 });
 
 interface IPayload {
-  product: {
+  products: {
     amount: number;
     name: string;
+    images : string[]
     quantity: number;
-  };
+  }[];
   // customerId: string;
   paymentId: string;
   user : User
 }
+
 export const createCheckoutSession = async (payload: IPayload) => {
 
   const paymentGatewayData = await stripe.checkout.sessions.create({
-    line_items: [
-      {
+    line_items: payload?.products?.map(prod=>({
         price_data: {
           currency: 'usd',
           product_data: {
-            name: payload?.product?.name,
+            name: prod?.name,
+            images : prod?.images
           },
-          unit_amount: Math.round(payload.product?.amount * 100),
+          unit_amount: Math.round(prod?.amount * 100),
         },
-        quantity: payload.product?.quantity,
-      },
-    ],
+        quantity: prod?.quantity,
+      })),
 
-    customer_email : payload?.user?.email || undefined,
+    customer_email : payload?.user?.email ?? undefined,
 
     success_url: `${config.SERVER_URL}/payments/confirm-payment?sessionId={CHECKOUT_SESSION_ID}&paymentId=${payload?.paymentId}`,
 
@@ -57,8 +58,8 @@ export const createCheckoutSession = async (payload: IPayload) => {
     //     }),
     //   },
     // },
-    // payment_method_types: ['card', 'amazon_pay', 'cashapp', 'us_bank_account'],
-    payment_method_types: ['card'], //, 'paypal'
+    payment_method_types: ['card', "us_bank_account"],
+    // payment_method_types: ['card'], //, 'paypal'
   });
   
   return paymentGatewayData;

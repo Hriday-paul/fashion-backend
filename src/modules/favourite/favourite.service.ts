@@ -8,7 +8,8 @@ const favouritesByUser = async (userId: string) => {
         include: {
             product: {
                 include: {
-                    images: true
+                    images: true,
+                    size : true
                 }
             }
         }

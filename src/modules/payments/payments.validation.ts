@@ -1,5 +1,5 @@
 import { check } from "express-validator";
 
 export const checkoutValidator = [
-    check('reservationId').escape().not().isEmpty().withMessage('reservationId is required').isInt().withMessage("invalid reservation id").toInt()
+    check('orderId').escape().not().isEmpty().withMessage('orderId is required').isUUID().withMessage("invalid order id")
 ]

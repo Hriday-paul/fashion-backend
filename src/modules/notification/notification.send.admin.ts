@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ObjectId } from "mongoose";
 import { sendNotification } from "./notification.utils";
 import prisma from "../../shared/prisma";
 import { NotificationType, Role } from "../../../generated/prisma/enums";

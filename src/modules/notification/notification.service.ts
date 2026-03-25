@@ -31,7 +31,7 @@ const getNotificationFromDb = async (options: TPaginationOptions, userId: string
 
 const NotificationUnreadCount = async (userId: string) => {
 
-  const result = await prisma.notification.count({where: { receiverId: userId, isRead : false }})
+  const result = await prisma.notification.count({ where: { receiverId: userId, isRead: false } })
 
   return result
 };

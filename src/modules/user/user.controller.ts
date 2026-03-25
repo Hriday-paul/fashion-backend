@@ -130,6 +130,30 @@ const allCharies = catchAsync(async (req, res) => {
     });
 })
 
+const addOrUpdateBillingDetails = catchAsync(async (req, res) => {
+
+    const result = await userService.addOrUpdateBillingDetails(req.body, req?.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Billing details updated successfully',
+        data: result,
+    });
+})
+
+const billingDetailsByUser = catchAsync(async (req, res) => {
+
+    const result = await userService.billingDetailsByUser(req?.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Billing details retrived successfully',
+        data: result,
+    });
+})
+
 
 export const userController = {
     updateProfile,
@@ -140,5 +164,9 @@ export const userController = {
     deleteUser,
     userDetails,
     UpdateNotification,
-    allCharies
+    
+    allCharies,
+
+    addOrUpdateBillingDetails,
+    billingDetailsByUser
 }

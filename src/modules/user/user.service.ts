@@ -1,4 +1,4 @@
-import { Prisma, User } from "../../../generated/prisma/client";
+import { BillingDetails, Prisma, User } from "../../../generated/prisma/client";
 import { Approval_Status, Role } from "../../../generated/prisma/enums";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
@@ -184,7 +184,7 @@ const allCharies = async () => {
             }
         },
         select: {
-            userName : true,
+            userName: true,
             fname: true,
             lname: true,
             email: true,
@@ -194,6 +194,25 @@ const allCharies = async () => {
         }
 
     })
+    return res;
+}
+
+const addOrUpdateBillingDetails = async (payload: BillingDetails, userId: string) => {
+    const res = await prisma.billingDetails.upsert({
+        where: { userId },
+        create: {
+            ...payload,
+            userId
+        },
+        update: payload,
+    })
+
+    return res;
+}
+
+const billingDetailsByUser = async (userId: string) => {
+    const res = await prisma.billingDetails.findFirst({ where: { userId } });
+
     return res;
 }
 
@@ -207,4 +226,6 @@ export const userService = {
     UpdateNotification,
 
     allCharies,
+    addOrUpdateBillingDetails,
+    billingDetailsByUser
 }

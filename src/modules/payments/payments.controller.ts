@@ -9,12 +9,12 @@ import { PaginateOptions } from '../../helper/pagination.helper';
 import config from '../../config';
 
 const checkout = catchAsync(async (req: Request, res: Response) => {
-  const result = await paymentsService.checkout(req.body?.reservationId, req?.user?.id);
+  const result = await paymentsService.checkout(req.body?.orderId, req?.user?.id);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
     data: result,
-    message: 'payment link get successful',
+    message: 'Payment link get successful',
   });
 });
 
