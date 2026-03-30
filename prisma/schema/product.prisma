@@ -32,8 +32,7 @@ model Product {
     return_window Int @default(0)
 
     charities ProductCharity[]
-
-    moneyDonations SellDonation[]
+    donation_percent Float @default(0)
 
     isDeleted Boolean @default(false)
 
@@ -65,8 +64,6 @@ model ProductPicture {
 model ProductCharity {
     id String @id @default(uuid())
 
-    percent Float // example: 5 = 5%
-
     isAnonymous Boolean @default(false)
 
     productId String
@@ -79,35 +76,6 @@ model ProductCharity {
 
     @@unique([productId, charityId])
     @@map("productCharities")
-}
-
-model SellDonation {
-    id String @id @default(uuid())
-
-    orderId String
-
-    amount  Float
-    percent Float
-
-    isAnonymous Boolean @default(false)
-
-    status DonationStatus @default(PENDING)
-
-    createdAt DateTime @default(now())
-
-    productId String
-    product   Product @relation(fields: [productId], references: [id])
-
-    charityId String
-    charity   User   @relation(fields: [charityId], references: [id])
-
-    @@map("sellItemMoneyDonations")
-}
-
-enum DonationStatus {
-    PENDING
-    PAID
-    FAILED
 }
 
 model Favourite {

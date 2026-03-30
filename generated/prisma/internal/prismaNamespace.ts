@@ -398,11 +398,11 @@ export const ModelName = {
   FileMessage: 'FileMessage',
   Order: 'Order',
   OrderItem: 'OrderItem',
+  SellDonation: 'SellDonation',
   Payment: 'Payment',
   Product: 'Product',
   ProductPicture: 'ProductPicture',
   ProductCharity: 'ProductCharity',
-  SellDonation: 'SellDonation',
   Favourite: 'Favourite',
   ProductView: 'ProductView',
   Return: 'Return',
@@ -431,7 +431,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "brand" | "size" | "chat" | "chatParticipant" | "message" | "fileMessage" | "order" | "orderItem" | "payment" | "product" | "productPicture" | "productCharity" | "sellDonation" | "favourite" | "productView" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting"
+    modelProps: "category" | "brand" | "size" | "chat" | "chatParticipant" | "message" | "fileMessage" | "order" | "orderItem" | "sellDonation" | "payment" | "product" | "productPicture" | "productCharity" | "favourite" | "productView" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1101,6 +1101,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SellDonation: {
+      payload: Prisma.$SellDonationPayload<ExtArgs>
+      fields: Prisma.SellDonationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SellDonationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SellDonationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>
+        }
+        findFirst: {
+          args: Prisma.SellDonationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SellDonationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>
+        }
+        findMany: {
+          args: Prisma.SellDonationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>[]
+        }
+        create: {
+          args: Prisma.SellDonationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>
+        }
+        createMany: {
+          args: Prisma.SellDonationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SellDonationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>[]
+        }
+        delete: {
+          args: Prisma.SellDonationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>
+        }
+        update: {
+          args: Prisma.SellDonationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>
+        }
+        deleteMany: {
+          args: Prisma.SellDonationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SellDonationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SellDonationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>[]
+        }
+        upsert: {
+          args: Prisma.SellDonationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>
+        }
+        aggregate: {
+          args: Prisma.SellDonationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSellDonation>
+        }
+        groupBy: {
+          args: Prisma.SellDonationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SellDonationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SellDonationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SellDonationCountAggregateOutputType> | number
+        }
+      }
+    }
     Payment: {
       payload: Prisma.$PaymentPayload<ExtArgs>
       fields: Prisma.PaymentFieldRefs
@@ -1394,80 +1468,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ProductCharityCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ProductCharityCountAggregateOutputType> | number
-        }
-      }
-    }
-    SellDonation: {
-      payload: Prisma.$SellDonationPayload<ExtArgs>
-      fields: Prisma.SellDonationFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.SellDonationFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.SellDonationFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>
-        }
-        findFirst: {
-          args: Prisma.SellDonationFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.SellDonationFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>
-        }
-        findMany: {
-          args: Prisma.SellDonationFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>[]
-        }
-        create: {
-          args: Prisma.SellDonationCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>
-        }
-        createMany: {
-          args: Prisma.SellDonationCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.SellDonationCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>[]
-        }
-        delete: {
-          args: Prisma.SellDonationDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>
-        }
-        update: {
-          args: Prisma.SellDonationUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>
-        }
-        deleteMany: {
-          args: Prisma.SellDonationDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.SellDonationUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.SellDonationUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>[]
-        }
-        upsert: {
-          args: Prisma.SellDonationUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellDonationPayload>
-        }
-        aggregate: {
-          args: Prisma.SellDonationAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateSellDonation>
-        }
-        groupBy: {
-          args: Prisma.SellDonationGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SellDonationGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.SellDonationCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SellDonationCountAggregateOutputType> | number
         }
       }
     }
@@ -2572,10 +2572,28 @@ export const OrderItemScalarFieldEnum = {
   unitPrice: 'unitPrice',
   totalPrice: 'totalPrice',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  donation_percent: 'donation_percent',
+  donation_amount: 'donation_amount',
+  extra_donation: 'extra_donation'
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
+
+
+export const SellDonationScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  percent: 'percent',
+  extra_money: 'extra_money',
+  isAnonymous: 'isAnonymous',
+  status: 'status',
+  createdAt: 'createdAt',
+  orderItemId: 'orderItemId',
+  charityId: 'charityId'
+} as const
+
+export type SellDonationScalarFieldEnum = (typeof SellDonationScalarFieldEnum)[keyof typeof SellDonationScalarFieldEnum]
 
 
 export const PaymentScalarFieldEnum = {
@@ -2617,6 +2635,7 @@ export const ProductScalarFieldEnum = {
   care_instructions: 'care_instructions',
   allow_offer: 'allow_offer',
   return_window: 'return_window',
+  donation_percent: 'donation_percent',
   isDeleted: 'isDeleted',
   userId: 'userId',
   createdAt: 'createdAt',
@@ -2638,7 +2657,6 @@ export type ProductPictureScalarFieldEnum = (typeof ProductPictureScalarFieldEnu
 
 export const ProductCharityScalarFieldEnum = {
   id: 'id',
-  percent: 'percent',
   isAnonymous: 'isAnonymous',
   productId: 'productId',
   charityId: 'charityId',
@@ -2646,21 +2664,6 @@ export const ProductCharityScalarFieldEnum = {
 } as const
 
 export type ProductCharityScalarFieldEnum = (typeof ProductCharityScalarFieldEnum)[keyof typeof ProductCharityScalarFieldEnum]
-
-
-export const SellDonationScalarFieldEnum = {
-  id: 'id',
-  orderId: 'orderId',
-  amount: 'amount',
-  percent: 'percent',
-  isAnonymous: 'isAnonymous',
-  status: 'status',
-  createdAt: 'createdAt',
-  productId: 'productId',
-  charityId: 'charityId'
-} as const
-
-export type SellDonationScalarFieldEnum = (typeof SellDonationScalarFieldEnum)[keyof typeof SellDonationScalarFieldEnum]
 
 
 export const FavouriteScalarFieldEnum = {
@@ -2985,6 +2988,20 @@ export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMode
 
 
 /**
+ * Reference to a field of type 'DonationStatus'
+ */
+export type EnumDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DonationStatus[]'
+ */
+export type ListEnumDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'PaymentStatus'
  */
 export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus'>
@@ -3009,20 +3026,6 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
- * Reference to a field of type 'DonationStatus'
- */
-export type EnumDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationStatus'>
-    
-
-
-/**
- * Reference to a field of type 'DonationStatus[]'
- */
-export type ListEnumDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationStatus[]'>
     
 
 
@@ -3233,11 +3236,11 @@ export type GlobalOmitConfig = {
   fileMessage?: Prisma.FileMessageOmit
   order?: Prisma.OrderOmit
   orderItem?: Prisma.OrderItemOmit
+  sellDonation?: Prisma.SellDonationOmit
   payment?: Prisma.PaymentOmit
   product?: Prisma.ProductOmit
   productPicture?: Prisma.ProductPictureOmit
   productCharity?: Prisma.ProductCharityOmit
-  sellDonation?: Prisma.SellDonationOmit
   favourite?: Prisma.FavouriteOmit
   productView?: Prisma.ProductViewOmit
   return?: Prisma.ReturnOmit

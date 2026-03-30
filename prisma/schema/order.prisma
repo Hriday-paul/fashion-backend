@@ -41,6 +41,11 @@ model OrderItem {
     createdAt DateTime    @default(now())
     updatedAt DateTime    @updatedAt
 
+    donation_percent Float @default(0)
+    donation_amount Float @default(0)
+    extra_donation Float @default(0)
+    donations SellDonation[]
+
     @@index([orderId])
 }
 
@@ -50,4 +55,33 @@ enum OrderStatus {
     SHIPPED
     DELIVERED
     CANCELLED
+}
+
+model SellDonation {
+    id String @id @default(uuid())
+
+    amount  Float @default(0)
+    percent Float @default(0)
+
+    extra_money Float @default(0)
+
+    isAnonymous Boolean @default(false)
+
+    status DonationStatus @default(PENDING)
+
+    createdAt DateTime @default(now())
+
+    orderItemId String
+    orderItem   OrderItem @relation(fields: [orderItemId], references: [id])
+
+    charityId String
+    charity   User   @relation(fields: [charityId], references: [id])
+
+    @@map("sellItemMoneyDonations")
+}
+
+enum DonationStatus {
+    PENDING
+    PAID
+    FAILED
 }

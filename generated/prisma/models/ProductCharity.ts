@@ -19,23 +19,12 @@ export type ProductCharityModel = runtime.Types.Result.DefaultSelection<Prisma.$
 
 export type AggregateProductCharity = {
   _count: ProductCharityCountAggregateOutputType | null
-  _avg: ProductCharityAvgAggregateOutputType | null
-  _sum: ProductCharitySumAggregateOutputType | null
   _min: ProductCharityMinAggregateOutputType | null
   _max: ProductCharityMaxAggregateOutputType | null
 }
 
-export type ProductCharityAvgAggregateOutputType = {
-  percent: number | null
-}
-
-export type ProductCharitySumAggregateOutputType = {
-  percent: number | null
-}
-
 export type ProductCharityMinAggregateOutputType = {
   id: string | null
-  percent: number | null
   isAnonymous: boolean | null
   productId: string | null
   charityId: string | null
@@ -44,7 +33,6 @@ export type ProductCharityMinAggregateOutputType = {
 
 export type ProductCharityMaxAggregateOutputType = {
   id: string | null
-  percent: number | null
   isAnonymous: boolean | null
   productId: string | null
   charityId: string | null
@@ -53,7 +41,6 @@ export type ProductCharityMaxAggregateOutputType = {
 
 export type ProductCharityCountAggregateOutputType = {
   id: number
-  percent: number
   isAnonymous: number
   productId: number
   charityId: number
@@ -62,17 +49,8 @@ export type ProductCharityCountAggregateOutputType = {
 }
 
 
-export type ProductCharityAvgAggregateInputType = {
-  percent?: true
-}
-
-export type ProductCharitySumAggregateInputType = {
-  percent?: true
-}
-
 export type ProductCharityMinAggregateInputType = {
   id?: true
-  percent?: true
   isAnonymous?: true
   productId?: true
   charityId?: true
@@ -81,7 +59,6 @@ export type ProductCharityMinAggregateInputType = {
 
 export type ProductCharityMaxAggregateInputType = {
   id?: true
-  percent?: true
   isAnonymous?: true
   productId?: true
   charityId?: true
@@ -90,7 +67,6 @@ export type ProductCharityMaxAggregateInputType = {
 
 export type ProductCharityCountAggregateInputType = {
   id?: true
-  percent?: true
   isAnonymous?: true
   productId?: true
   charityId?: true
@@ -136,18 +112,6 @@ export type ProductCharityAggregateArgs<ExtArgs extends runtime.Types.Extensions
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: ProductCharityAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: ProductCharitySumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProductCharityMinAggregateInputType
@@ -178,22 +142,17 @@ export type ProductCharityGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   _count?: ProductCharityCountAggregateInputType | true
-  _avg?: ProductCharityAvgAggregateInputType
-  _sum?: ProductCharitySumAggregateInputType
   _min?: ProductCharityMinAggregateInputType
   _max?: ProductCharityMaxAggregateInputType
 }
 
 export type ProductCharityGroupByOutputType = {
   id: string
-  percent: number
   isAnonymous: boolean
   productId: string
   charityId: string
   createdAt: Date
   _count: ProductCharityCountAggregateOutputType | null
-  _avg: ProductCharityAvgAggregateOutputType | null
-  _sum: ProductCharitySumAggregateOutputType | null
   _min: ProductCharityMinAggregateOutputType | null
   _max: ProductCharityMaxAggregateOutputType | null
 }
@@ -218,7 +177,6 @@ export type ProductCharityWhereInput = {
   OR?: Prisma.ProductCharityWhereInput[]
   NOT?: Prisma.ProductCharityWhereInput | Prisma.ProductCharityWhereInput[]
   id?: Prisma.StringFilter<"ProductCharity"> | string
-  percent?: Prisma.FloatFilter<"ProductCharity"> | number
   isAnonymous?: Prisma.BoolFilter<"ProductCharity"> | boolean
   productId?: Prisma.StringFilter<"ProductCharity"> | string
   charityId?: Prisma.StringFilter<"ProductCharity"> | string
@@ -229,7 +187,6 @@ export type ProductCharityWhereInput = {
 
 export type ProductCharityOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  percent?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   charityId?: Prisma.SortOrder
@@ -244,7 +201,6 @@ export type ProductCharityWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ProductCharityWhereInput | Prisma.ProductCharityWhereInput[]
   OR?: Prisma.ProductCharityWhereInput[]
   NOT?: Prisma.ProductCharityWhereInput | Prisma.ProductCharityWhereInput[]
-  percent?: Prisma.FloatFilter<"ProductCharity"> | number
   isAnonymous?: Prisma.BoolFilter<"ProductCharity"> | boolean
   productId?: Prisma.StringFilter<"ProductCharity"> | string
   charityId?: Prisma.StringFilter<"ProductCharity"> | string
@@ -255,16 +211,13 @@ export type ProductCharityWhereUniqueInput = Prisma.AtLeast<{
 
 export type ProductCharityOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  percent?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   charityId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.ProductCharityCountOrderByAggregateInput
-  _avg?: Prisma.ProductCharityAvgOrderByAggregateInput
   _max?: Prisma.ProductCharityMaxOrderByAggregateInput
   _min?: Prisma.ProductCharityMinOrderByAggregateInput
-  _sum?: Prisma.ProductCharitySumOrderByAggregateInput
 }
 
 export type ProductCharityScalarWhereWithAggregatesInput = {
@@ -272,7 +225,6 @@ export type ProductCharityScalarWhereWithAggregatesInput = {
   OR?: Prisma.ProductCharityScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProductCharityScalarWhereWithAggregatesInput | Prisma.ProductCharityScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"ProductCharity"> | string
-  percent?: Prisma.FloatWithAggregatesFilter<"ProductCharity"> | number
   isAnonymous?: Prisma.BoolWithAggregatesFilter<"ProductCharity"> | boolean
   productId?: Prisma.StringWithAggregatesFilter<"ProductCharity"> | string
   charityId?: Prisma.StringWithAggregatesFilter<"ProductCharity"> | string
@@ -281,7 +233,6 @@ export type ProductCharityScalarWhereWithAggregatesInput = {
 
 export type ProductCharityCreateInput = {
   id?: string
-  percent: number
   isAnonymous?: boolean
   createdAt?: Date | string
   product: Prisma.ProductCreateNestedOneWithoutCharitiesInput
@@ -290,7 +241,6 @@ export type ProductCharityCreateInput = {
 
 export type ProductCharityUncheckedCreateInput = {
   id?: string
-  percent: number
   isAnonymous?: boolean
   productId: string
   charityId: string
@@ -299,7 +249,6 @@ export type ProductCharityUncheckedCreateInput = {
 
 export type ProductCharityUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   product?: Prisma.ProductUpdateOneRequiredWithoutCharitiesNestedInput
@@ -308,7 +257,6 @@ export type ProductCharityUpdateInput = {
 
 export type ProductCharityUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -317,7 +265,6 @@ export type ProductCharityUncheckedUpdateInput = {
 
 export type ProductCharityCreateManyInput = {
   id?: string
-  percent: number
   isAnonymous?: boolean
   productId: string
   charityId: string
@@ -326,14 +273,12 @@ export type ProductCharityCreateManyInput = {
 
 export type ProductCharityUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ProductCharityUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -357,20 +302,14 @@ export type ProductCharityProductIdCharityIdCompoundUniqueInput = {
 
 export type ProductCharityCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  percent?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   charityId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
-export type ProductCharityAvgOrderByAggregateInput = {
-  percent?: Prisma.SortOrder
-}
-
 export type ProductCharityMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  percent?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   charityId?: Prisma.SortOrder
@@ -379,15 +318,10 @@ export type ProductCharityMaxOrderByAggregateInput = {
 
 export type ProductCharityMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  percent?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   charityId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-}
-
-export type ProductCharitySumOrderByAggregateInput = {
-  percent?: Prisma.SortOrder
 }
 
 export type ProductCharityCreateNestedManyWithoutProductInput = {
@@ -476,7 +410,6 @@ export type ProductCharityUncheckedUpdateManyWithoutCharityNestedInput = {
 
 export type ProductCharityCreateWithoutProductInput = {
   id?: string
-  percent: number
   isAnonymous?: boolean
   createdAt?: Date | string
   charity: Prisma.UserCreateNestedOneWithoutProductCharitiesInput
@@ -484,7 +417,6 @@ export type ProductCharityCreateWithoutProductInput = {
 
 export type ProductCharityUncheckedCreateWithoutProductInput = {
   id?: string
-  percent: number
   isAnonymous?: boolean
   charityId: string
   createdAt?: Date | string
@@ -521,7 +453,6 @@ export type ProductCharityScalarWhereInput = {
   OR?: Prisma.ProductCharityScalarWhereInput[]
   NOT?: Prisma.ProductCharityScalarWhereInput | Prisma.ProductCharityScalarWhereInput[]
   id?: Prisma.StringFilter<"ProductCharity"> | string
-  percent?: Prisma.FloatFilter<"ProductCharity"> | number
   isAnonymous?: Prisma.BoolFilter<"ProductCharity"> | boolean
   productId?: Prisma.StringFilter<"ProductCharity"> | string
   charityId?: Prisma.StringFilter<"ProductCharity"> | string
@@ -530,7 +461,6 @@ export type ProductCharityScalarWhereInput = {
 
 export type ProductCharityCreateWithoutCharityInput = {
   id?: string
-  percent: number
   isAnonymous?: boolean
   createdAt?: Date | string
   product: Prisma.ProductCreateNestedOneWithoutCharitiesInput
@@ -538,7 +468,6 @@ export type ProductCharityCreateWithoutCharityInput = {
 
 export type ProductCharityUncheckedCreateWithoutCharityInput = {
   id?: string
-  percent: number
   isAnonymous?: boolean
   productId: string
   createdAt?: Date | string
@@ -572,7 +501,6 @@ export type ProductCharityUpdateManyWithWhereWithoutCharityInput = {
 
 export type ProductCharityCreateManyProductInput = {
   id?: string
-  percent: number
   isAnonymous?: boolean
   charityId: string
   createdAt?: Date | string
@@ -580,7 +508,6 @@ export type ProductCharityCreateManyProductInput = {
 
 export type ProductCharityUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charity?: Prisma.UserUpdateOneRequiredWithoutProductCharitiesNestedInput
@@ -588,7 +515,6 @@ export type ProductCharityUpdateWithoutProductInput = {
 
 export type ProductCharityUncheckedUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -596,7 +522,6 @@ export type ProductCharityUncheckedUpdateWithoutProductInput = {
 
 export type ProductCharityUncheckedUpdateManyWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -604,7 +529,6 @@ export type ProductCharityUncheckedUpdateManyWithoutProductInput = {
 
 export type ProductCharityCreateManyCharityInput = {
   id?: string
-  percent: number
   isAnonymous?: boolean
   productId: string
   createdAt?: Date | string
@@ -612,7 +536,6 @@ export type ProductCharityCreateManyCharityInput = {
 
 export type ProductCharityUpdateWithoutCharityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   product?: Prisma.ProductUpdateOneRequiredWithoutCharitiesNestedInput
@@ -620,7 +543,6 @@ export type ProductCharityUpdateWithoutCharityInput = {
 
 export type ProductCharityUncheckedUpdateWithoutCharityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -628,7 +550,6 @@ export type ProductCharityUncheckedUpdateWithoutCharityInput = {
 
 export type ProductCharityUncheckedUpdateManyWithoutCharityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -638,7 +559,6 @@ export type ProductCharityUncheckedUpdateManyWithoutCharityInput = {
 
 export type ProductCharitySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  percent?: boolean
   isAnonymous?: boolean
   productId?: boolean
   charityId?: boolean
@@ -649,7 +569,6 @@ export type ProductCharitySelect<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type ProductCharitySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  percent?: boolean
   isAnonymous?: boolean
   productId?: boolean
   charityId?: boolean
@@ -660,7 +579,6 @@ export type ProductCharitySelectCreateManyAndReturn<ExtArgs extends runtime.Type
 
 export type ProductCharitySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  percent?: boolean
   isAnonymous?: boolean
   productId?: boolean
   charityId?: boolean
@@ -671,14 +589,13 @@ export type ProductCharitySelectUpdateManyAndReturn<ExtArgs extends runtime.Type
 
 export type ProductCharitySelectScalar = {
   id?: boolean
-  percent?: boolean
   isAnonymous?: boolean
   productId?: boolean
   charityId?: boolean
   createdAt?: boolean
 }
 
-export type ProductCharityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "percent" | "isAnonymous" | "productId" | "charityId" | "createdAt", ExtArgs["result"]["productCharity"]>
+export type ProductCharityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "isAnonymous" | "productId" | "charityId" | "createdAt", ExtArgs["result"]["productCharity"]>
 export type ProductCharityInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -700,7 +617,6 @@ export type $ProductCharityPayload<ExtArgs extends runtime.Types.Extensions.Inte
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    percent: number
     isAnonymous: boolean
     productId: string
     charityId: string
@@ -1131,7 +1047,6 @@ export interface Prisma__ProductCharityClient<T, Null = never, ExtArgs extends r
  */
 export interface ProductCharityFieldRefs {
   readonly id: Prisma.FieldRef<"ProductCharity", 'String'>
-  readonly percent: Prisma.FieldRef<"ProductCharity", 'Float'>
   readonly isAnonymous: Prisma.FieldRef<"ProductCharity", 'Boolean'>
   readonly productId: Prisma.FieldRef<"ProductCharity", 'String'>
   readonly charityId: Prisma.FieldRef<"ProductCharity", 'String'>

@@ -62,6 +62,11 @@ export type Order = Prisma.OrderModel
  */
 export type OrderItem = Prisma.OrderItemModel
 /**
+ * Model SellDonation
+ * 
+ */
+export type SellDonation = Prisma.SellDonationModel
+/**
  * Model Payment
  * 
  */
@@ -81,11 +86,6 @@ export type ProductPicture = Prisma.ProductPictureModel
  * 
  */
 export type ProductCharity = Prisma.ProductCharityModel
-/**
- * Model SellDonation
- * 
- */
-export type SellDonation = Prisma.SellDonationModel
 /**
  * Model Favourite
  * 

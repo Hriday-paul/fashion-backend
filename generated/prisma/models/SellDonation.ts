@@ -28,46 +28,48 @@ export type AggregateSellDonation = {
 export type SellDonationAvgAggregateOutputType = {
   amount: number | null
   percent: number | null
+  extra_money: number | null
 }
 
 export type SellDonationSumAggregateOutputType = {
   amount: number | null
   percent: number | null
+  extra_money: number | null
 }
 
 export type SellDonationMinAggregateOutputType = {
   id: string | null
-  orderId: string | null
   amount: number | null
   percent: number | null
+  extra_money: number | null
   isAnonymous: boolean | null
   status: $Enums.DonationStatus | null
   createdAt: Date | null
-  productId: string | null
+  orderItemId: string | null
   charityId: string | null
 }
 
 export type SellDonationMaxAggregateOutputType = {
   id: string | null
-  orderId: string | null
   amount: number | null
   percent: number | null
+  extra_money: number | null
   isAnonymous: boolean | null
   status: $Enums.DonationStatus | null
   createdAt: Date | null
-  productId: string | null
+  orderItemId: string | null
   charityId: string | null
 }
 
 export type SellDonationCountAggregateOutputType = {
   id: number
-  orderId: number
   amount: number
   percent: number
+  extra_money: number
   isAnonymous: number
   status: number
   createdAt: number
-  productId: number
+  orderItemId: number
   charityId: number
   _all: number
 }
@@ -76,46 +78,48 @@ export type SellDonationCountAggregateOutputType = {
 export type SellDonationAvgAggregateInputType = {
   amount?: true
   percent?: true
+  extra_money?: true
 }
 
 export type SellDonationSumAggregateInputType = {
   amount?: true
   percent?: true
+  extra_money?: true
 }
 
 export type SellDonationMinAggregateInputType = {
   id?: true
-  orderId?: true
   amount?: true
   percent?: true
+  extra_money?: true
   isAnonymous?: true
   status?: true
   createdAt?: true
-  productId?: true
+  orderItemId?: true
   charityId?: true
 }
 
 export type SellDonationMaxAggregateInputType = {
   id?: true
-  orderId?: true
   amount?: true
   percent?: true
+  extra_money?: true
   isAnonymous?: true
   status?: true
   createdAt?: true
-  productId?: true
+  orderItemId?: true
   charityId?: true
 }
 
 export type SellDonationCountAggregateInputType = {
   id?: true
-  orderId?: true
   amount?: true
   percent?: true
+  extra_money?: true
   isAnonymous?: true
   status?: true
   createdAt?: true
-  productId?: true
+  orderItemId?: true
   charityId?: true
   _all?: true
 }
@@ -208,13 +212,13 @@ export type SellDonationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 
 export type SellDonationGroupByOutputType = {
   id: string
-  orderId: string
   amount: number
   percent: number
+  extra_money: number
   isAnonymous: boolean
   status: $Enums.DonationStatus
   createdAt: Date
-  productId: string
+  orderItemId: string
   charityId: string
   _count: SellDonationCountAggregateOutputType | null
   _avg: SellDonationAvgAggregateOutputType | null
@@ -243,29 +247,29 @@ export type SellDonationWhereInput = {
   OR?: Prisma.SellDonationWhereInput[]
   NOT?: Prisma.SellDonationWhereInput | Prisma.SellDonationWhereInput[]
   id?: Prisma.StringFilter<"SellDonation"> | string
-  orderId?: Prisma.StringFilter<"SellDonation"> | string
   amount?: Prisma.FloatFilter<"SellDonation"> | number
   percent?: Prisma.FloatFilter<"SellDonation"> | number
+  extra_money?: Prisma.FloatFilter<"SellDonation"> | number
   isAnonymous?: Prisma.BoolFilter<"SellDonation"> | boolean
   status?: Prisma.EnumDonationStatusFilter<"SellDonation"> | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFilter<"SellDonation"> | Date | string
-  productId?: Prisma.StringFilter<"SellDonation"> | string
+  orderItemId?: Prisma.StringFilter<"SellDonation"> | string
   charityId?: Prisma.StringFilter<"SellDonation"> | string
-  product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
+  orderItem?: Prisma.XOR<Prisma.OrderItemScalarRelationFilter, Prisma.OrderItemWhereInput>
   charity?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type SellDonationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  orderId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   percent?: Prisma.SortOrder
+  extra_money?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  productId?: Prisma.SortOrder
+  orderItemId?: Prisma.SortOrder
   charityId?: Prisma.SortOrder
-  product?: Prisma.ProductOrderByWithRelationInput
+  orderItem?: Prisma.OrderItemOrderByWithRelationInput
   charity?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -274,27 +278,27 @@ export type SellDonationWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.SellDonationWhereInput | Prisma.SellDonationWhereInput[]
   OR?: Prisma.SellDonationWhereInput[]
   NOT?: Prisma.SellDonationWhereInput | Prisma.SellDonationWhereInput[]
-  orderId?: Prisma.StringFilter<"SellDonation"> | string
   amount?: Prisma.FloatFilter<"SellDonation"> | number
   percent?: Prisma.FloatFilter<"SellDonation"> | number
+  extra_money?: Prisma.FloatFilter<"SellDonation"> | number
   isAnonymous?: Prisma.BoolFilter<"SellDonation"> | boolean
   status?: Prisma.EnumDonationStatusFilter<"SellDonation"> | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFilter<"SellDonation"> | Date | string
-  productId?: Prisma.StringFilter<"SellDonation"> | string
+  orderItemId?: Prisma.StringFilter<"SellDonation"> | string
   charityId?: Prisma.StringFilter<"SellDonation"> | string
-  product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
+  orderItem?: Prisma.XOR<Prisma.OrderItemScalarRelationFilter, Prisma.OrderItemWhereInput>
   charity?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type SellDonationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  orderId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   percent?: Prisma.SortOrder
+  extra_money?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  productId?: Prisma.SortOrder
+  orderItemId?: Prisma.SortOrder
   charityId?: Prisma.SortOrder
   _count?: Prisma.SellDonationCountOrderByAggregateInput
   _avg?: Prisma.SellDonationAvgOrderByAggregateInput
@@ -308,81 +312,81 @@ export type SellDonationScalarWhereWithAggregatesInput = {
   OR?: Prisma.SellDonationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SellDonationScalarWhereWithAggregatesInput | Prisma.SellDonationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"SellDonation"> | string
-  orderId?: Prisma.StringWithAggregatesFilter<"SellDonation"> | string
   amount?: Prisma.FloatWithAggregatesFilter<"SellDonation"> | number
   percent?: Prisma.FloatWithAggregatesFilter<"SellDonation"> | number
+  extra_money?: Prisma.FloatWithAggregatesFilter<"SellDonation"> | number
   isAnonymous?: Prisma.BoolWithAggregatesFilter<"SellDonation"> | boolean
   status?: Prisma.EnumDonationStatusWithAggregatesFilter<"SellDonation"> | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SellDonation"> | Date | string
-  productId?: Prisma.StringWithAggregatesFilter<"SellDonation"> | string
+  orderItemId?: Prisma.StringWithAggregatesFilter<"SellDonation"> | string
   charityId?: Prisma.StringWithAggregatesFilter<"SellDonation"> | string
 }
 
 export type SellDonationCreateInput = {
   id?: string
-  orderId: string
-  amount: number
-  percent: number
+  amount?: number
+  percent?: number
+  extra_money?: number
   isAnonymous?: boolean
   status?: $Enums.DonationStatus
   createdAt?: Date | string
-  product: Prisma.ProductCreateNestedOneWithoutMoneyDonationsInput
+  orderItem: Prisma.OrderItemCreateNestedOneWithoutDonationsInput
   charity: Prisma.UserCreateNestedOneWithoutSellDonationsInput
 }
 
 export type SellDonationUncheckedCreateInput = {
   id?: string
-  orderId: string
-  amount: number
-  percent: number
+  amount?: number
+  percent?: number
+  extra_money?: number
   isAnonymous?: boolean
   status?: $Enums.DonationStatus
   createdAt?: Date | string
-  productId: string
+  orderItemId: string
   charityId: string
 }
 
 export type SellDonationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  orderId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  product?: Prisma.ProductUpdateOneRequiredWithoutMoneyDonationsNestedInput
+  orderItem?: Prisma.OrderItemUpdateOneRequiredWithoutDonationsNestedInput
   charity?: Prisma.UserUpdateOneRequiredWithoutSellDonationsNestedInput
 }
 
 export type SellDonationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  orderId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SellDonationCreateManyInput = {
   id?: string
-  orderId: string
-  amount: number
-  percent: number
+  amount?: number
+  percent?: number
+  extra_money?: number
   isAnonymous?: boolean
   status?: $Enums.DonationStatus
   createdAt?: Date | string
-  productId: string
+  orderItemId: string
   charityId: string
 }
 
 export type SellDonationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  orderId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -390,13 +394,13 @@ export type SellDonationUpdateManyMutationInput = {
 
 export type SellDonationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  orderId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -412,89 +416,91 @@ export type SellDonationOrderByRelationAggregateInput = {
 
 export type SellDonationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  orderId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   percent?: Prisma.SortOrder
+  extra_money?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  productId?: Prisma.SortOrder
+  orderItemId?: Prisma.SortOrder
   charityId?: Prisma.SortOrder
 }
 
 export type SellDonationAvgOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   percent?: Prisma.SortOrder
+  extra_money?: Prisma.SortOrder
 }
 
 export type SellDonationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  orderId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   percent?: Prisma.SortOrder
+  extra_money?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  productId?: Prisma.SortOrder
+  orderItemId?: Prisma.SortOrder
   charityId?: Prisma.SortOrder
 }
 
 export type SellDonationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  orderId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   percent?: Prisma.SortOrder
+  extra_money?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  productId?: Prisma.SortOrder
+  orderItemId?: Prisma.SortOrder
   charityId?: Prisma.SortOrder
 }
 
 export type SellDonationSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   percent?: Prisma.SortOrder
+  extra_money?: Prisma.SortOrder
 }
 
-export type SellDonationCreateNestedManyWithoutProductInput = {
-  create?: Prisma.XOR<Prisma.SellDonationCreateWithoutProductInput, Prisma.SellDonationUncheckedCreateWithoutProductInput> | Prisma.SellDonationCreateWithoutProductInput[] | Prisma.SellDonationUncheckedCreateWithoutProductInput[]
-  connectOrCreate?: Prisma.SellDonationCreateOrConnectWithoutProductInput | Prisma.SellDonationCreateOrConnectWithoutProductInput[]
-  createMany?: Prisma.SellDonationCreateManyProductInputEnvelope
+export type SellDonationCreateNestedManyWithoutOrderItemInput = {
+  create?: Prisma.XOR<Prisma.SellDonationCreateWithoutOrderItemInput, Prisma.SellDonationUncheckedCreateWithoutOrderItemInput> | Prisma.SellDonationCreateWithoutOrderItemInput[] | Prisma.SellDonationUncheckedCreateWithoutOrderItemInput[]
+  connectOrCreate?: Prisma.SellDonationCreateOrConnectWithoutOrderItemInput | Prisma.SellDonationCreateOrConnectWithoutOrderItemInput[]
+  createMany?: Prisma.SellDonationCreateManyOrderItemInputEnvelope
   connect?: Prisma.SellDonationWhereUniqueInput | Prisma.SellDonationWhereUniqueInput[]
 }
 
-export type SellDonationUncheckedCreateNestedManyWithoutProductInput = {
-  create?: Prisma.XOR<Prisma.SellDonationCreateWithoutProductInput, Prisma.SellDonationUncheckedCreateWithoutProductInput> | Prisma.SellDonationCreateWithoutProductInput[] | Prisma.SellDonationUncheckedCreateWithoutProductInput[]
-  connectOrCreate?: Prisma.SellDonationCreateOrConnectWithoutProductInput | Prisma.SellDonationCreateOrConnectWithoutProductInput[]
-  createMany?: Prisma.SellDonationCreateManyProductInputEnvelope
+export type SellDonationUncheckedCreateNestedManyWithoutOrderItemInput = {
+  create?: Prisma.XOR<Prisma.SellDonationCreateWithoutOrderItemInput, Prisma.SellDonationUncheckedCreateWithoutOrderItemInput> | Prisma.SellDonationCreateWithoutOrderItemInput[] | Prisma.SellDonationUncheckedCreateWithoutOrderItemInput[]
+  connectOrCreate?: Prisma.SellDonationCreateOrConnectWithoutOrderItemInput | Prisma.SellDonationCreateOrConnectWithoutOrderItemInput[]
+  createMany?: Prisma.SellDonationCreateManyOrderItemInputEnvelope
   connect?: Prisma.SellDonationWhereUniqueInput | Prisma.SellDonationWhereUniqueInput[]
 }
 
-export type SellDonationUpdateManyWithoutProductNestedInput = {
-  create?: Prisma.XOR<Prisma.SellDonationCreateWithoutProductInput, Prisma.SellDonationUncheckedCreateWithoutProductInput> | Prisma.SellDonationCreateWithoutProductInput[] | Prisma.SellDonationUncheckedCreateWithoutProductInput[]
-  connectOrCreate?: Prisma.SellDonationCreateOrConnectWithoutProductInput | Prisma.SellDonationCreateOrConnectWithoutProductInput[]
-  upsert?: Prisma.SellDonationUpsertWithWhereUniqueWithoutProductInput | Prisma.SellDonationUpsertWithWhereUniqueWithoutProductInput[]
-  createMany?: Prisma.SellDonationCreateManyProductInputEnvelope
+export type SellDonationUpdateManyWithoutOrderItemNestedInput = {
+  create?: Prisma.XOR<Prisma.SellDonationCreateWithoutOrderItemInput, Prisma.SellDonationUncheckedCreateWithoutOrderItemInput> | Prisma.SellDonationCreateWithoutOrderItemInput[] | Prisma.SellDonationUncheckedCreateWithoutOrderItemInput[]
+  connectOrCreate?: Prisma.SellDonationCreateOrConnectWithoutOrderItemInput | Prisma.SellDonationCreateOrConnectWithoutOrderItemInput[]
+  upsert?: Prisma.SellDonationUpsertWithWhereUniqueWithoutOrderItemInput | Prisma.SellDonationUpsertWithWhereUniqueWithoutOrderItemInput[]
+  createMany?: Prisma.SellDonationCreateManyOrderItemInputEnvelope
   set?: Prisma.SellDonationWhereUniqueInput | Prisma.SellDonationWhereUniqueInput[]
   disconnect?: Prisma.SellDonationWhereUniqueInput | Prisma.SellDonationWhereUniqueInput[]
   delete?: Prisma.SellDonationWhereUniqueInput | Prisma.SellDonationWhereUniqueInput[]
   connect?: Prisma.SellDonationWhereUniqueInput | Prisma.SellDonationWhereUniqueInput[]
-  update?: Prisma.SellDonationUpdateWithWhereUniqueWithoutProductInput | Prisma.SellDonationUpdateWithWhereUniqueWithoutProductInput[]
-  updateMany?: Prisma.SellDonationUpdateManyWithWhereWithoutProductInput | Prisma.SellDonationUpdateManyWithWhereWithoutProductInput[]
+  update?: Prisma.SellDonationUpdateWithWhereUniqueWithoutOrderItemInput | Prisma.SellDonationUpdateWithWhereUniqueWithoutOrderItemInput[]
+  updateMany?: Prisma.SellDonationUpdateManyWithWhereWithoutOrderItemInput | Prisma.SellDonationUpdateManyWithWhereWithoutOrderItemInput[]
   deleteMany?: Prisma.SellDonationScalarWhereInput | Prisma.SellDonationScalarWhereInput[]
 }
 
-export type SellDonationUncheckedUpdateManyWithoutProductNestedInput = {
-  create?: Prisma.XOR<Prisma.SellDonationCreateWithoutProductInput, Prisma.SellDonationUncheckedCreateWithoutProductInput> | Prisma.SellDonationCreateWithoutProductInput[] | Prisma.SellDonationUncheckedCreateWithoutProductInput[]
-  connectOrCreate?: Prisma.SellDonationCreateOrConnectWithoutProductInput | Prisma.SellDonationCreateOrConnectWithoutProductInput[]
-  upsert?: Prisma.SellDonationUpsertWithWhereUniqueWithoutProductInput | Prisma.SellDonationUpsertWithWhereUniqueWithoutProductInput[]
-  createMany?: Prisma.SellDonationCreateManyProductInputEnvelope
+export type SellDonationUncheckedUpdateManyWithoutOrderItemNestedInput = {
+  create?: Prisma.XOR<Prisma.SellDonationCreateWithoutOrderItemInput, Prisma.SellDonationUncheckedCreateWithoutOrderItemInput> | Prisma.SellDonationCreateWithoutOrderItemInput[] | Prisma.SellDonationUncheckedCreateWithoutOrderItemInput[]
+  connectOrCreate?: Prisma.SellDonationCreateOrConnectWithoutOrderItemInput | Prisma.SellDonationCreateOrConnectWithoutOrderItemInput[]
+  upsert?: Prisma.SellDonationUpsertWithWhereUniqueWithoutOrderItemInput | Prisma.SellDonationUpsertWithWhereUniqueWithoutOrderItemInput[]
+  createMany?: Prisma.SellDonationCreateManyOrderItemInputEnvelope
   set?: Prisma.SellDonationWhereUniqueInput | Prisma.SellDonationWhereUniqueInput[]
   disconnect?: Prisma.SellDonationWhereUniqueInput | Prisma.SellDonationWhereUniqueInput[]
   delete?: Prisma.SellDonationWhereUniqueInput | Prisma.SellDonationWhereUniqueInput[]
   connect?: Prisma.SellDonationWhereUniqueInput | Prisma.SellDonationWhereUniqueInput[]
-  update?: Prisma.SellDonationUpdateWithWhereUniqueWithoutProductInput | Prisma.SellDonationUpdateWithWhereUniqueWithoutProductInput[]
-  updateMany?: Prisma.SellDonationUpdateManyWithWhereWithoutProductInput | Prisma.SellDonationUpdateManyWithWhereWithoutProductInput[]
+  update?: Prisma.SellDonationUpdateWithWhereUniqueWithoutOrderItemInput | Prisma.SellDonationUpdateWithWhereUniqueWithoutOrderItemInput[]
+  updateMany?: Prisma.SellDonationUpdateManyWithWhereWithoutOrderItemInput | Prisma.SellDonationUpdateManyWithWhereWithoutOrderItemInput[]
   deleteMany?: Prisma.SellDonationScalarWhereInput | Prisma.SellDonationScalarWhereInput[]
 }
 
@@ -544,52 +550,52 @@ export type SellDonationUncheckedUpdateManyWithoutCharityNestedInput = {
   deleteMany?: Prisma.SellDonationScalarWhereInput | Prisma.SellDonationScalarWhereInput[]
 }
 
-export type SellDonationCreateWithoutProductInput = {
+export type SellDonationCreateWithoutOrderItemInput = {
   id?: string
-  orderId: string
-  amount: number
-  percent: number
+  amount?: number
+  percent?: number
+  extra_money?: number
   isAnonymous?: boolean
   status?: $Enums.DonationStatus
   createdAt?: Date | string
   charity: Prisma.UserCreateNestedOneWithoutSellDonationsInput
 }
 
-export type SellDonationUncheckedCreateWithoutProductInput = {
+export type SellDonationUncheckedCreateWithoutOrderItemInput = {
   id?: string
-  orderId: string
-  amount: number
-  percent: number
+  amount?: number
+  percent?: number
+  extra_money?: number
   isAnonymous?: boolean
   status?: $Enums.DonationStatus
   createdAt?: Date | string
   charityId: string
 }
 
-export type SellDonationCreateOrConnectWithoutProductInput = {
+export type SellDonationCreateOrConnectWithoutOrderItemInput = {
   where: Prisma.SellDonationWhereUniqueInput
-  create: Prisma.XOR<Prisma.SellDonationCreateWithoutProductInput, Prisma.SellDonationUncheckedCreateWithoutProductInput>
+  create: Prisma.XOR<Prisma.SellDonationCreateWithoutOrderItemInput, Prisma.SellDonationUncheckedCreateWithoutOrderItemInput>
 }
 
-export type SellDonationCreateManyProductInputEnvelope = {
-  data: Prisma.SellDonationCreateManyProductInput | Prisma.SellDonationCreateManyProductInput[]
+export type SellDonationCreateManyOrderItemInputEnvelope = {
+  data: Prisma.SellDonationCreateManyOrderItemInput | Prisma.SellDonationCreateManyOrderItemInput[]
   skipDuplicates?: boolean
 }
 
-export type SellDonationUpsertWithWhereUniqueWithoutProductInput = {
+export type SellDonationUpsertWithWhereUniqueWithoutOrderItemInput = {
   where: Prisma.SellDonationWhereUniqueInput
-  update: Prisma.XOR<Prisma.SellDonationUpdateWithoutProductInput, Prisma.SellDonationUncheckedUpdateWithoutProductInput>
-  create: Prisma.XOR<Prisma.SellDonationCreateWithoutProductInput, Prisma.SellDonationUncheckedCreateWithoutProductInput>
+  update: Prisma.XOR<Prisma.SellDonationUpdateWithoutOrderItemInput, Prisma.SellDonationUncheckedUpdateWithoutOrderItemInput>
+  create: Prisma.XOR<Prisma.SellDonationCreateWithoutOrderItemInput, Prisma.SellDonationUncheckedCreateWithoutOrderItemInput>
 }
 
-export type SellDonationUpdateWithWhereUniqueWithoutProductInput = {
+export type SellDonationUpdateWithWhereUniqueWithoutOrderItemInput = {
   where: Prisma.SellDonationWhereUniqueInput
-  data: Prisma.XOR<Prisma.SellDonationUpdateWithoutProductInput, Prisma.SellDonationUncheckedUpdateWithoutProductInput>
+  data: Prisma.XOR<Prisma.SellDonationUpdateWithoutOrderItemInput, Prisma.SellDonationUncheckedUpdateWithoutOrderItemInput>
 }
 
-export type SellDonationUpdateManyWithWhereWithoutProductInput = {
+export type SellDonationUpdateManyWithWhereWithoutOrderItemInput = {
   where: Prisma.SellDonationScalarWhereInput
-  data: Prisma.XOR<Prisma.SellDonationUpdateManyMutationInput, Prisma.SellDonationUncheckedUpdateManyWithoutProductInput>
+  data: Prisma.XOR<Prisma.SellDonationUpdateManyMutationInput, Prisma.SellDonationUncheckedUpdateManyWithoutOrderItemInput>
 }
 
 export type SellDonationScalarWhereInput = {
@@ -597,36 +603,36 @@ export type SellDonationScalarWhereInput = {
   OR?: Prisma.SellDonationScalarWhereInput[]
   NOT?: Prisma.SellDonationScalarWhereInput | Prisma.SellDonationScalarWhereInput[]
   id?: Prisma.StringFilter<"SellDonation"> | string
-  orderId?: Prisma.StringFilter<"SellDonation"> | string
   amount?: Prisma.FloatFilter<"SellDonation"> | number
   percent?: Prisma.FloatFilter<"SellDonation"> | number
+  extra_money?: Prisma.FloatFilter<"SellDonation"> | number
   isAnonymous?: Prisma.BoolFilter<"SellDonation"> | boolean
   status?: Prisma.EnumDonationStatusFilter<"SellDonation"> | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFilter<"SellDonation"> | Date | string
-  productId?: Prisma.StringFilter<"SellDonation"> | string
+  orderItemId?: Prisma.StringFilter<"SellDonation"> | string
   charityId?: Prisma.StringFilter<"SellDonation"> | string
 }
 
 export type SellDonationCreateWithoutCharityInput = {
   id?: string
-  orderId: string
-  amount: number
-  percent: number
+  amount?: number
+  percent?: number
+  extra_money?: number
   isAnonymous?: boolean
   status?: $Enums.DonationStatus
   createdAt?: Date | string
-  product: Prisma.ProductCreateNestedOneWithoutMoneyDonationsInput
+  orderItem: Prisma.OrderItemCreateNestedOneWithoutDonationsInput
 }
 
 export type SellDonationUncheckedCreateWithoutCharityInput = {
   id?: string
-  orderId: string
-  amount: number
-  percent: number
+  amount?: number
+  percent?: number
+  extra_money?: number
   isAnonymous?: boolean
   status?: $Enums.DonationStatus
   createdAt?: Date | string
-  productId: string
+  orderItemId: string
 }
 
 export type SellDonationCreateOrConnectWithoutCharityInput = {
@@ -655,44 +661,44 @@ export type SellDonationUpdateManyWithWhereWithoutCharityInput = {
   data: Prisma.XOR<Prisma.SellDonationUpdateManyMutationInput, Prisma.SellDonationUncheckedUpdateManyWithoutCharityInput>
 }
 
-export type SellDonationCreateManyProductInput = {
+export type SellDonationCreateManyOrderItemInput = {
   id?: string
-  orderId: string
-  amount: number
-  percent: number
+  amount?: number
+  percent?: number
+  extra_money?: number
   isAnonymous?: boolean
   status?: $Enums.DonationStatus
   createdAt?: Date | string
   charityId: string
 }
 
-export type SellDonationUpdateWithoutProductInput = {
+export type SellDonationUpdateWithoutOrderItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  orderId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charity?: Prisma.UserUpdateOneRequiredWithoutSellDonationsNestedInput
 }
 
-export type SellDonationUncheckedUpdateWithoutProductInput = {
+export type SellDonationUncheckedUpdateWithoutOrderItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  orderId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type SellDonationUncheckedUpdateManyWithoutProductInput = {
+export type SellDonationUncheckedUpdateManyWithoutOrderItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  orderId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -701,133 +707,133 @@ export type SellDonationUncheckedUpdateManyWithoutProductInput = {
 
 export type SellDonationCreateManyCharityInput = {
   id?: string
-  orderId: string
-  amount: number
-  percent: number
+  amount?: number
+  percent?: number
+  extra_money?: number
   isAnonymous?: boolean
   status?: $Enums.DonationStatus
   createdAt?: Date | string
-  productId: string
+  orderItemId: string
 }
 
 export type SellDonationUpdateWithoutCharityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  orderId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  product?: Prisma.ProductUpdateOneRequiredWithoutMoneyDonationsNestedInput
+  orderItem?: Prisma.OrderItemUpdateOneRequiredWithoutDonationsNestedInput
 }
 
 export type SellDonationUncheckedUpdateWithoutCharityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  orderId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SellDonationUncheckedUpdateManyWithoutCharityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  orderId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
 
 export type SellDonationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  orderId?: boolean
   amount?: boolean
   percent?: boolean
+  extra_money?: boolean
   isAnonymous?: boolean
   status?: boolean
   createdAt?: boolean
-  productId?: boolean
+  orderItemId?: boolean
   charityId?: boolean
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sellDonation"]>
 
 export type SellDonationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  orderId?: boolean
   amount?: boolean
   percent?: boolean
+  extra_money?: boolean
   isAnonymous?: boolean
   status?: boolean
   createdAt?: boolean
-  productId?: boolean
+  orderItemId?: boolean
   charityId?: boolean
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sellDonation"]>
 
 export type SellDonationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  orderId?: boolean
   amount?: boolean
   percent?: boolean
+  extra_money?: boolean
   isAnonymous?: boolean
   status?: boolean
   createdAt?: boolean
-  productId?: boolean
+  orderItemId?: boolean
   charityId?: boolean
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sellDonation"]>
 
 export type SellDonationSelectScalar = {
   id?: boolean
-  orderId?: boolean
   amount?: boolean
   percent?: boolean
+  extra_money?: boolean
   isAnonymous?: boolean
   status?: boolean
   createdAt?: boolean
-  productId?: boolean
+  orderItemId?: boolean
   charityId?: boolean
 }
 
-export type SellDonationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "amount" | "percent" | "isAnonymous" | "status" | "createdAt" | "productId" | "charityId", ExtArgs["result"]["sellDonation"]>
+export type SellDonationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "percent" | "extra_money" | "isAnonymous" | "status" | "createdAt" | "orderItemId" | "charityId", ExtArgs["result"]["sellDonation"]>
 export type SellDonationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type SellDonationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type SellDonationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $SellDonationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SellDonation"
   objects: {
-    product: Prisma.$ProductPayload<ExtArgs>
+    orderItem: Prisma.$OrderItemPayload<ExtArgs>
     charity: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    orderId: string
     amount: number
     percent: number
+    extra_money: number
     isAnonymous: boolean
     status: $Enums.DonationStatus
     createdAt: Date
-    productId: string
+    orderItemId: string
     charityId: string
   }, ExtArgs["result"]["sellDonation"]>
   composites: {}
@@ -1223,7 +1229,7 @@ readonly fields: SellDonationFieldRefs;
  */
 export interface Prisma__SellDonationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  product<T extends Prisma.ProductDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  orderItem<T extends Prisma.OrderItemDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderItemDefaultArgs<ExtArgs>>): Prisma.Prisma__OrderItemClient<runtime.Types.Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   charity<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1255,13 +1261,13 @@ export interface Prisma__SellDonationClient<T, Null = never, ExtArgs extends run
  */
 export interface SellDonationFieldRefs {
   readonly id: Prisma.FieldRef<"SellDonation", 'String'>
-  readonly orderId: Prisma.FieldRef<"SellDonation", 'String'>
   readonly amount: Prisma.FieldRef<"SellDonation", 'Float'>
   readonly percent: Prisma.FieldRef<"SellDonation", 'Float'>
+  readonly extra_money: Prisma.FieldRef<"SellDonation", 'Float'>
   readonly isAnonymous: Prisma.FieldRef<"SellDonation", 'Boolean'>
   readonly status: Prisma.FieldRef<"SellDonation", 'DonationStatus'>
   readonly createdAt: Prisma.FieldRef<"SellDonation", 'DateTime'>
-  readonly productId: Prisma.FieldRef<"SellDonation", 'String'>
+  readonly orderItemId: Prisma.FieldRef<"SellDonation", 'String'>
   readonly charityId: Prisma.FieldRef<"SellDonation", 'String'>
 }
     

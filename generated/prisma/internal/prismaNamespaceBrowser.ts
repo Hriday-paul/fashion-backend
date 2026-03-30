@@ -57,11 +57,11 @@ export const ModelName = {
   FileMessage: 'FileMessage',
   Order: 'Order',
   OrderItem: 'OrderItem',
+  SellDonation: 'SellDonation',
   Payment: 'Payment',
   Product: 'Product',
   ProductPicture: 'ProductPicture',
   ProductCharity: 'ProductCharity',
-  SellDonation: 'SellDonation',
   Favourite: 'Favourite',
   ProductView: 'ProductView',
   Return: 'Return',
@@ -193,10 +193,28 @@ export const OrderItemScalarFieldEnum = {
   unitPrice: 'unitPrice',
   totalPrice: 'totalPrice',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  donation_percent: 'donation_percent',
+  donation_amount: 'donation_amount',
+  extra_donation: 'extra_donation'
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
+
+
+export const SellDonationScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  percent: 'percent',
+  extra_money: 'extra_money',
+  isAnonymous: 'isAnonymous',
+  status: 'status',
+  createdAt: 'createdAt',
+  orderItemId: 'orderItemId',
+  charityId: 'charityId'
+} as const
+
+export type SellDonationScalarFieldEnum = (typeof SellDonationScalarFieldEnum)[keyof typeof SellDonationScalarFieldEnum]
 
 
 export const PaymentScalarFieldEnum = {
@@ -238,6 +256,7 @@ export const ProductScalarFieldEnum = {
   care_instructions: 'care_instructions',
   allow_offer: 'allow_offer',
   return_window: 'return_window',
+  donation_percent: 'donation_percent',
   isDeleted: 'isDeleted',
   userId: 'userId',
   createdAt: 'createdAt',
@@ -259,7 +278,6 @@ export type ProductPictureScalarFieldEnum = (typeof ProductPictureScalarFieldEnu
 
 export const ProductCharityScalarFieldEnum = {
   id: 'id',
-  percent: 'percent',
   isAnonymous: 'isAnonymous',
   productId: 'productId',
   charityId: 'charityId',
@@ -267,21 +285,6 @@ export const ProductCharityScalarFieldEnum = {
 } as const
 
 export type ProductCharityScalarFieldEnum = (typeof ProductCharityScalarFieldEnum)[keyof typeof ProductCharityScalarFieldEnum]
-
-
-export const SellDonationScalarFieldEnum = {
-  id: 'id',
-  orderId: 'orderId',
-  amount: 'amount',
-  percent: 'percent',
-  isAnonymous: 'isAnonymous',
-  status: 'status',
-  createdAt: 'createdAt',
-  productId: 'productId',
-  charityId: 'charityId'
-} as const
-
-export type SellDonationScalarFieldEnum = (typeof SellDonationScalarFieldEnum)[keyof typeof SellDonationScalarFieldEnum]
 
 
 export const FavouriteScalarFieldEnum = {

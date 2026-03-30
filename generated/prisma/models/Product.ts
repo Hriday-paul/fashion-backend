@@ -30,6 +30,7 @@ export type ProductAvgAggregateOutputType = {
   discountPct: number | null
   finalPrice: number | null
   return_window: number | null
+  donation_percent: number | null
 }
 
 export type ProductSumAggregateOutputType = {
@@ -37,6 +38,7 @@ export type ProductSumAggregateOutputType = {
   discountPct: number | null
   finalPrice: number | null
   return_window: number | null
+  donation_percent: number | null
 }
 
 export type ProductMinAggregateOutputType = {
@@ -54,6 +56,7 @@ export type ProductMinAggregateOutputType = {
   color: string | null
   allow_offer: boolean | null
   return_window: number | null
+  donation_percent: number | null
   isDeleted: boolean | null
   userId: string | null
   createdAt: Date | null
@@ -75,6 +78,7 @@ export type ProductMaxAggregateOutputType = {
   color: string | null
   allow_offer: boolean | null
   return_window: number | null
+  donation_percent: number | null
   isDeleted: boolean | null
   userId: string | null
   createdAt: Date | null
@@ -100,6 +104,7 @@ export type ProductCountAggregateOutputType = {
   care_instructions: number
   allow_offer: number
   return_window: number
+  donation_percent: number
   isDeleted: number
   userId: number
   createdAt: number
@@ -113,6 +118,7 @@ export type ProductAvgAggregateInputType = {
   discountPct?: true
   finalPrice?: true
   return_window?: true
+  donation_percent?: true
 }
 
 export type ProductSumAggregateInputType = {
@@ -120,6 +126,7 @@ export type ProductSumAggregateInputType = {
   discountPct?: true
   finalPrice?: true
   return_window?: true
+  donation_percent?: true
 }
 
 export type ProductMinAggregateInputType = {
@@ -137,6 +144,7 @@ export type ProductMinAggregateInputType = {
   color?: true
   allow_offer?: true
   return_window?: true
+  donation_percent?: true
   isDeleted?: true
   userId?: true
   createdAt?: true
@@ -158,6 +166,7 @@ export type ProductMaxAggregateInputType = {
   color?: true
   allow_offer?: true
   return_window?: true
+  donation_percent?: true
   isDeleted?: true
   userId?: true
   createdAt?: true
@@ -183,6 +192,7 @@ export type ProductCountAggregateInputType = {
   care_instructions?: true
   allow_offer?: true
   return_window?: true
+  donation_percent?: true
   isDeleted?: true
   userId?: true
   createdAt?: true
@@ -295,6 +305,7 @@ export type ProductGroupByOutputType = {
   care_instructions: string[]
   allow_offer: boolean
   return_window: number
+  donation_percent: number
   isDeleted: boolean
   userId: string
   createdAt: Date
@@ -343,6 +354,7 @@ export type ProductWhereInput = {
   care_instructions?: Prisma.StringNullableListFilter<"Product">
   allow_offer?: Prisma.BoolFilter<"Product"> | boolean
   return_window?: Prisma.IntFilter<"Product"> | number
+  donation_percent?: Prisma.FloatFilter<"Product"> | number
   isDeleted?: Prisma.BoolFilter<"Product"> | boolean
   userId?: Prisma.StringFilter<"Product"> | string
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -352,7 +364,6 @@ export type ProductWhereInput = {
   size?: Prisma.XOR<Prisma.SizeScalarRelationFilter, Prisma.SizeWhereInput>
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   charities?: Prisma.ProductCharityListRelationFilter
-  moneyDonations?: Prisma.SellDonationListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   favourites?: Prisma.FavouriteListRelationFilter
   orderItems?: Prisma.OrderItemListRelationFilter
@@ -378,6 +389,7 @@ export type ProductOrderByWithRelationInput = {
   care_instructions?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -387,7 +399,6 @@ export type ProductOrderByWithRelationInput = {
   size?: Prisma.SizeOrderByWithRelationInput
   category?: Prisma.CategoryOrderByWithRelationInput
   charities?: Prisma.ProductCharityOrderByRelationAggregateInput
-  moneyDonations?: Prisma.SellDonationOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
   favourites?: Prisma.FavouriteOrderByRelationAggregateInput
   orderItems?: Prisma.OrderItemOrderByRelationAggregateInput
@@ -416,6 +427,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   care_instructions?: Prisma.StringNullableListFilter<"Product">
   allow_offer?: Prisma.BoolFilter<"Product"> | boolean
   return_window?: Prisma.IntFilter<"Product"> | number
+  donation_percent?: Prisma.FloatFilter<"Product"> | number
   isDeleted?: Prisma.BoolFilter<"Product"> | boolean
   userId?: Prisma.StringFilter<"Product"> | string
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -425,7 +437,6 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   size?: Prisma.XOR<Prisma.SizeScalarRelationFilter, Prisma.SizeWhereInput>
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   charities?: Prisma.ProductCharityListRelationFilter
-  moneyDonations?: Prisma.SellDonationListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   favourites?: Prisma.FavouriteListRelationFilter
   orderItems?: Prisma.OrderItemListRelationFilter
@@ -451,6 +462,7 @@ export type ProductOrderByWithAggregationInput = {
   care_instructions?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -484,6 +496,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   care_instructions?: Prisma.StringNullableListFilter<"Product">
   allow_offer?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   return_window?: Prisma.IntWithAggregatesFilter<"Product"> | number
+  donation_percent?: Prisma.FloatWithAggregatesFilter<"Product"> | number
   isDeleted?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   userId?: Prisma.StringWithAggregatesFilter<"Product"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
@@ -506,6 +519,7 @@ export type ProductCreateInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -514,7 +528,6 @@ export type ProductCreateInput = {
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
   charities?: Prisma.ProductCharityCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationCreateNestedManyWithoutProductInput
   user: Prisma.UserCreateNestedOneWithoutProductsInput
   favourites?: Prisma.FavouriteCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
@@ -540,13 +553,13 @@ export type ProductUncheckedCreateInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
@@ -568,6 +581,7 @@ export type ProductUpdateInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -576,7 +590,6 @@ export type ProductUpdateInput = {
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
   charities?: Prisma.ProductCharityUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUpdateManyWithoutProductNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProductsNestedInput
   favourites?: Prisma.FavouriteUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
@@ -602,13 +615,13 @@ export type ProductUncheckedUpdateInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
@@ -633,6 +646,7 @@ export type ProductCreateManyInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   userId: string
   createdAt?: Date | string
@@ -655,6 +669,7 @@ export type ProductUpdateManyMutationInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -679,6 +694,7 @@ export type ProductUncheckedUpdateManyInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -727,6 +743,7 @@ export type ProductCountOrderByAggregateInput = {
   care_instructions?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -738,6 +755,7 @@ export type ProductAvgOrderByAggregateInput = {
   discountPct?: Prisma.SortOrder
   finalPrice?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
 }
 
 export type ProductMaxOrderByAggregateInput = {
@@ -755,6 +773,7 @@ export type ProductMaxOrderByAggregateInput = {
   color?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -776,6 +795,7 @@ export type ProductMinOrderByAggregateInput = {
   color?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -787,6 +807,7 @@ export type ProductSumOrderByAggregateInput = {
   discountPct?: Prisma.SortOrder
   finalPrice?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
 }
 
 export type ProductCreateNestedManyWithoutCategoryInput = {
@@ -993,20 +1014,6 @@ export type ProductUpdateOneRequiredWithoutCharitiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutCharitiesInput, Prisma.ProductUpdateWithoutCharitiesInput>, Prisma.ProductUncheckedUpdateWithoutCharitiesInput>
 }
 
-export type ProductCreateNestedOneWithoutMoneyDonationsInput = {
-  create?: Prisma.XOR<Prisma.ProductCreateWithoutMoneyDonationsInput, Prisma.ProductUncheckedCreateWithoutMoneyDonationsInput>
-  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutMoneyDonationsInput
-  connect?: Prisma.ProductWhereUniqueInput
-}
-
-export type ProductUpdateOneRequiredWithoutMoneyDonationsNestedInput = {
-  create?: Prisma.XOR<Prisma.ProductCreateWithoutMoneyDonationsInput, Prisma.ProductUncheckedCreateWithoutMoneyDonationsInput>
-  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutMoneyDonationsInput
-  upsert?: Prisma.ProductUpsertWithoutMoneyDonationsInput
-  connect?: Prisma.ProductWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutMoneyDonationsInput, Prisma.ProductUpdateWithoutMoneyDonationsInput>, Prisma.ProductUncheckedUpdateWithoutMoneyDonationsInput>
-}
-
 export type ProductCreateNestedOneWithoutFavouritesInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutFavouritesInput, Prisma.ProductUncheckedCreateWithoutFavouritesInput>
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutFavouritesInput
@@ -1093,6 +1100,7 @@ export type ProductCreateWithoutCategoryInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1100,7 +1108,6 @@ export type ProductCreateWithoutCategoryInput = {
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
   charities?: Prisma.ProductCharityCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationCreateNestedManyWithoutProductInput
   user: Prisma.UserCreateNestedOneWithoutProductsInput
   favourites?: Prisma.FavouriteCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
@@ -1125,13 +1132,13 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
@@ -1185,6 +1192,7 @@ export type ProductScalarWhereInput = {
   care_instructions?: Prisma.StringNullableListFilter<"Product">
   allow_offer?: Prisma.BoolFilter<"Product"> | boolean
   return_window?: Prisma.IntFilter<"Product"> | number
+  donation_percent?: Prisma.FloatFilter<"Product"> | number
   isDeleted?: Prisma.BoolFilter<"Product"> | boolean
   userId?: Prisma.StringFilter<"Product"> | string
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -1207,6 +1215,7 @@ export type ProductCreateWithoutBrandInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1214,7 +1223,6 @@ export type ProductCreateWithoutBrandInput = {
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
   charities?: Prisma.ProductCharityCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationCreateNestedManyWithoutProductInput
   user: Prisma.UserCreateNestedOneWithoutProductsInput
   favourites?: Prisma.FavouriteCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
@@ -1239,13 +1247,13 @@ export type ProductUncheckedCreateWithoutBrandInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
@@ -1293,6 +1301,7 @@ export type ProductCreateWithoutSizeInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1300,7 +1309,6 @@ export type ProductCreateWithoutSizeInput = {
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
   charities?: Prisma.ProductCharityCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationCreateNestedManyWithoutProductInput
   user: Prisma.UserCreateNestedOneWithoutProductsInput
   favourites?: Prisma.FavouriteCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
@@ -1325,13 +1333,13 @@ export type ProductUncheckedCreateWithoutSizeInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
@@ -1379,6 +1387,7 @@ export type ProductCreateWithoutOrderItemsInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1387,7 +1396,6 @@ export type ProductCreateWithoutOrderItemsInput = {
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
   charities?: Prisma.ProductCharityCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationCreateNestedManyWithoutProductInput
   user: Prisma.UserCreateNestedOneWithoutProductsInput
   favourites?: Prisma.FavouriteCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
@@ -1412,13 +1420,13 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
 }
@@ -1455,6 +1463,7 @@ export type ProductUpdateWithoutOrderItemsInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1463,7 +1472,6 @@ export type ProductUpdateWithoutOrderItemsInput = {
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
   charities?: Prisma.ProductCharityUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUpdateManyWithoutProductNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProductsNestedInput
   favourites?: Prisma.FavouriteUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
@@ -1488,13 +1496,13 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -1515,6 +1523,7 @@ export type ProductCreateWithoutImagesInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1522,7 +1531,6 @@ export type ProductCreateWithoutImagesInput = {
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
   charities?: Prisma.ProductCharityCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationCreateNestedManyWithoutProductInput
   user: Prisma.UserCreateNestedOneWithoutProductsInput
   favourites?: Prisma.FavouriteCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
@@ -1548,12 +1556,12 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
@@ -1591,6 +1599,7 @@ export type ProductUpdateWithoutImagesInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1598,7 +1607,6 @@ export type ProductUpdateWithoutImagesInput = {
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
   charities?: Prisma.ProductCharityUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUpdateManyWithoutProductNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProductsNestedInput
   favourites?: Prisma.FavouriteUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
@@ -1624,12 +1632,12 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
@@ -1651,6 +1659,7 @@ export type ProductCreateWithoutCharitiesInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1658,7 +1667,6 @@ export type ProductCreateWithoutCharitiesInput = {
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
-  moneyDonations?: Prisma.SellDonationCreateNestedManyWithoutProductInput
   user: Prisma.UserCreateNestedOneWithoutProductsInput
   favourites?: Prisma.FavouriteCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
@@ -1684,12 +1692,12 @@ export type ProductUncheckedCreateWithoutCharitiesInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
@@ -1727,6 +1735,7 @@ export type ProductUpdateWithoutCharitiesInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1734,7 +1743,6 @@ export type ProductUpdateWithoutCharitiesInput = {
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
-  moneyDonations?: Prisma.SellDonationUpdateManyWithoutProductNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProductsNestedInput
   favourites?: Prisma.FavouriteUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
@@ -1760,148 +1768,12 @@ export type ProductUncheckedUpdateWithoutCharitiesInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutProductNestedInput
-  favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
-  orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
-  viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
-}
-
-export type ProductCreateWithoutMoneyDonationsInput = {
-  id?: string
-  title: string
-  description?: string | null
-  price?: number
-  discountPct?: number
-  finalPrice?: number
-  currency?: string
-  catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
-  condition: string
-  tags?: Prisma.ProductCreatetagsInput | string[]
-  meterials?: Prisma.ProductCreatemeterialsInput | string[]
-  color: string
-  care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
-  allow_offer?: boolean
-  return_window?: number
-  isDeleted?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
-  brand: Prisma.BrandCreateNestedOneWithoutProductsInput
-  size: Prisma.SizeCreateNestedOneWithoutProductsInput
-  category: Prisma.CategoryCreateNestedOneWithoutProductsInput
-  charities?: Prisma.ProductCharityCreateNestedManyWithoutProductInput
-  user: Prisma.UserCreateNestedOneWithoutProductsInput
-  favourites?: Prisma.FavouriteCreateNestedManyWithoutProductInput
-  orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
-  viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
-}
-
-export type ProductUncheckedCreateWithoutMoneyDonationsInput = {
-  id?: string
-  title: string
-  description?: string | null
-  price?: number
-  discountPct?: number
-  finalPrice?: number
-  currency?: string
-  brandId: string
-  sizeId: string
-  categoryId: string
-  catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
-  condition: string
-  tags?: Prisma.ProductCreatetagsInput | string[]
-  meterials?: Prisma.ProductCreatemeterialsInput | string[]
-  color: string
-  care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
-  allow_offer?: boolean
-  return_window?: number
-  isDeleted?: boolean
-  userId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
-  charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
-  favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
-  orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
-  viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
-}
-
-export type ProductCreateOrConnectWithoutMoneyDonationsInput = {
-  where: Prisma.ProductWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProductCreateWithoutMoneyDonationsInput, Prisma.ProductUncheckedCreateWithoutMoneyDonationsInput>
-}
-
-export type ProductUpsertWithoutMoneyDonationsInput = {
-  update: Prisma.XOR<Prisma.ProductUpdateWithoutMoneyDonationsInput, Prisma.ProductUncheckedUpdateWithoutMoneyDonationsInput>
-  create: Prisma.XOR<Prisma.ProductCreateWithoutMoneyDonationsInput, Prisma.ProductUncheckedCreateWithoutMoneyDonationsInput>
-  where?: Prisma.ProductWhereInput
-}
-
-export type ProductUpdateToOneWithWhereWithoutMoneyDonationsInput = {
-  where?: Prisma.ProductWhereInput
-  data: Prisma.XOR<Prisma.ProductUpdateWithoutMoneyDonationsInput, Prisma.ProductUncheckedUpdateWithoutMoneyDonationsInput>
-}
-
-export type ProductUpdateWithoutMoneyDonationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.FloatFieldUpdateOperationsInput | number
-  discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
-  finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
-  condition?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.ProductUpdatetagsInput | string[]
-  meterials?: Prisma.ProductUpdatemeterialsInput | string[]
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
-  allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  return_window?: Prisma.IntFieldUpdateOperationsInput | number
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
-  brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
-  size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
-  category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
-  charities?: Prisma.ProductCharityUpdateManyWithoutProductNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutProductsNestedInput
-  favourites?: Prisma.FavouriteUpdateManyWithoutProductNestedInput
-  orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
-  viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
-}
-
-export type ProductUncheckedUpdateWithoutMoneyDonationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.FloatFieldUpdateOperationsInput | number
-  discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
-  finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  brandId?: Prisma.StringFieldUpdateOperationsInput | string
-  sizeId?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
-  catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
-  condition?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.ProductUpdatetagsInput | string[]
-  meterials?: Prisma.ProductUpdatemeterialsInput | string[]
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
-  allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  return_window?: Prisma.IntFieldUpdateOperationsInput | number
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
-  charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
@@ -1923,6 +1795,7 @@ export type ProductCreateWithoutFavouritesInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1931,7 +1804,6 @@ export type ProductCreateWithoutFavouritesInput = {
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
   charities?: Prisma.ProductCharityCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationCreateNestedManyWithoutProductInput
   user: Prisma.UserCreateNestedOneWithoutProductsInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
@@ -1956,13 +1828,13 @@ export type ProductUncheckedCreateWithoutFavouritesInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
 }
@@ -1999,6 +1871,7 @@ export type ProductUpdateWithoutFavouritesInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2007,7 +1880,6 @@ export type ProductUpdateWithoutFavouritesInput = {
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
   charities?: Prisma.ProductCharityUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUpdateManyWithoutProductNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProductsNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
@@ -2032,13 +1904,13 @@ export type ProductUncheckedUpdateWithoutFavouritesInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -2059,6 +1931,7 @@ export type ProductCreateWithoutViewersInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2067,7 +1940,6 @@ export type ProductCreateWithoutViewersInput = {
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
   charities?: Prisma.ProductCharityCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationCreateNestedManyWithoutProductInput
   user: Prisma.UserCreateNestedOneWithoutProductsInput
   favourites?: Prisma.FavouriteCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
@@ -2092,13 +1964,13 @@ export type ProductUncheckedCreateWithoutViewersInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
 }
@@ -2135,6 +2007,7 @@ export type ProductUpdateWithoutViewersInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2143,7 +2016,6 @@ export type ProductUpdateWithoutViewersInput = {
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
   charities?: Prisma.ProductCharityUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUpdateManyWithoutProductNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProductsNestedInput
   favourites?: Prisma.FavouriteUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
@@ -2168,13 +2040,13 @@ export type ProductUncheckedUpdateWithoutViewersInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -2195,6 +2067,7 @@ export type ProductCreateWithoutUserInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2203,7 +2076,6 @@ export type ProductCreateWithoutUserInput = {
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
   charities?: Prisma.ProductCharityCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
@@ -2228,12 +2100,12 @@ export type ProductUncheckedCreateWithoutUserInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
-  moneyDonations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
@@ -2283,6 +2155,7 @@ export type ProductCreateManyCategoryInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   userId: string
   createdAt?: Date | string
@@ -2305,6 +2178,7 @@ export type ProductUpdateWithoutCategoryInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2312,7 +2186,6 @@ export type ProductUpdateWithoutCategoryInput = {
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
   charities?: Prisma.ProductCharityUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUpdateManyWithoutProductNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProductsNestedInput
   favourites?: Prisma.FavouriteUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
@@ -2337,13 +2210,13 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
@@ -2367,6 +2240,7 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2391,6 +2265,7 @@ export type ProductCreateManyBrandInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   userId: string
   createdAt?: Date | string
@@ -2413,6 +2288,7 @@ export type ProductUpdateWithoutBrandInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2420,7 +2296,6 @@ export type ProductUpdateWithoutBrandInput = {
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
   charities?: Prisma.ProductCharityUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUpdateManyWithoutProductNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProductsNestedInput
   favourites?: Prisma.FavouriteUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
@@ -2445,13 +2320,13 @@ export type ProductUncheckedUpdateWithoutBrandInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
@@ -2475,6 +2350,7 @@ export type ProductUncheckedUpdateManyWithoutBrandInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2499,6 +2375,7 @@ export type ProductCreateManySizeInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   userId: string
   createdAt?: Date | string
@@ -2521,6 +2398,7 @@ export type ProductUpdateWithoutSizeInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2528,7 +2406,6 @@ export type ProductUpdateWithoutSizeInput = {
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
   charities?: Prisma.ProductCharityUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUpdateManyWithoutProductNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProductsNestedInput
   favourites?: Prisma.FavouriteUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
@@ -2553,13 +2430,13 @@ export type ProductUncheckedUpdateWithoutSizeInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
@@ -2583,6 +2460,7 @@ export type ProductUncheckedUpdateManyWithoutSizeInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2608,6 +2486,7 @@ export type ProductCreateManyUserInput = {
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
   allow_offer?: boolean
   return_window?: number
+  donation_percent?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2629,6 +2508,7 @@ export type ProductUpdateWithoutUserInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2637,7 +2517,6 @@ export type ProductUpdateWithoutUserInput = {
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
   charities?: Prisma.ProductCharityUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
@@ -2662,12 +2541,12 @@ export type ProductUncheckedUpdateWithoutUserInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
-  moneyDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
@@ -2692,6 +2571,7 @@ export type ProductUncheckedUpdateManyWithoutUserInput = {
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2705,7 +2585,6 @@ export type ProductUncheckedUpdateManyWithoutUserInput = {
 export type ProductCountOutputType = {
   images: number
   charities: number
-  moneyDonations: number
   favourites: number
   orderItems: number
   viewers: number
@@ -2714,7 +2593,6 @@ export type ProductCountOutputType = {
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   images?: boolean | ProductCountOutputTypeCountImagesArgs
   charities?: boolean | ProductCountOutputTypeCountCharitiesArgs
-  moneyDonations?: boolean | ProductCountOutputTypeCountMoneyDonationsArgs
   favourites?: boolean | ProductCountOutputTypeCountFavouritesArgs
   orderItems?: boolean | ProductCountOutputTypeCountOrderItemsArgs
   viewers?: boolean | ProductCountOutputTypeCountViewersArgs
@@ -2742,13 +2620,6 @@ export type ProductCountOutputTypeCountImagesArgs<ExtArgs extends runtime.Types.
  */
 export type ProductCountOutputTypeCountCharitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ProductCharityWhereInput
-}
-
-/**
- * ProductCountOutputType without action
- */
-export type ProductCountOutputTypeCountMoneyDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SellDonationWhereInput
 }
 
 /**
@@ -2792,6 +2663,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   care_instructions?: boolean
   allow_offer?: boolean
   return_window?: boolean
+  donation_percent?: boolean
   isDeleted?: boolean
   userId?: boolean
   createdAt?: boolean
@@ -2801,7 +2673,6 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   size?: boolean | Prisma.SizeDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   charities?: boolean | Prisma.Product$charitiesArgs<ExtArgs>
-  moneyDonations?: boolean | Prisma.Product$moneyDonationsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   favourites?: boolean | Prisma.Product$favouritesArgs<ExtArgs>
   orderItems?: boolean | Prisma.Product$orderItemsArgs<ExtArgs>
@@ -2828,6 +2699,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   care_instructions?: boolean
   allow_offer?: boolean
   return_window?: boolean
+  donation_percent?: boolean
   isDeleted?: boolean
   userId?: boolean
   createdAt?: boolean
@@ -2857,6 +2729,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   care_instructions?: boolean
   allow_offer?: boolean
   return_window?: boolean
+  donation_percent?: boolean
   isDeleted?: boolean
   userId?: boolean
   createdAt?: boolean
@@ -2886,20 +2759,20 @@ export type ProductSelectScalar = {
   care_instructions?: boolean
   allow_offer?: boolean
   return_window?: boolean
+  donation_percent?: boolean
   isDeleted?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "discountPct" | "finalPrice" | "currency" | "brandId" | "sizeId" | "categoryId" | "catagory_hierarchy" | "condition" | "tags" | "meterials" | "color" | "care_instructions" | "allow_offer" | "return_window" | "isDeleted" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "discountPct" | "finalPrice" | "currency" | "brandId" | "sizeId" | "categoryId" | "catagory_hierarchy" | "condition" | "tags" | "meterials" | "color" | "care_instructions" | "allow_offer" | "return_window" | "donation_percent" | "isDeleted" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
   size?: boolean | Prisma.SizeDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   charities?: boolean | Prisma.Product$charitiesArgs<ExtArgs>
-  moneyDonations?: boolean | Prisma.Product$moneyDonationsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   favourites?: boolean | Prisma.Product$favouritesArgs<ExtArgs>
   orderItems?: boolean | Prisma.Product$orderItemsArgs<ExtArgs>
@@ -2927,7 +2800,6 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     size: Prisma.$SizePayload<ExtArgs>
     category: Prisma.$CategoryPayload<ExtArgs>
     charities: Prisma.$ProductCharityPayload<ExtArgs>[]
-    moneyDonations: Prisma.$SellDonationPayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs>
     favourites: Prisma.$FavouritePayload<ExtArgs>[]
     orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
@@ -2952,6 +2824,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     care_instructions: string[]
     allow_offer: boolean
     return_window: number
+    donation_percent: number
     isDeleted: boolean
     userId: string
     createdAt: Date
@@ -3355,7 +3228,6 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   size<T extends Prisma.SizeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SizeDefaultArgs<ExtArgs>>): Prisma.Prisma__SizeClient<runtime.Types.Result.GetResult<Prisma.$SizePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   charities<T extends Prisma.Product$charitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$charitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductCharityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  moneyDonations<T extends Prisma.Product$moneyDonationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$moneyDonationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SellDonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   favourites<T extends Prisma.Product$favouritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$favouritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavouritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   orderItems<T extends Prisma.Product$orderItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3407,6 +3279,7 @@ export interface ProductFieldRefs {
   readonly care_instructions: Prisma.FieldRef<"Product", 'String[]'>
   readonly allow_offer: Prisma.FieldRef<"Product", 'Boolean'>
   readonly return_window: Prisma.FieldRef<"Product", 'Int'>
+  readonly donation_percent: Prisma.FieldRef<"Product", 'Float'>
   readonly isDeleted: Prisma.FieldRef<"Product", 'Boolean'>
   readonly userId: Prisma.FieldRef<"Product", 'String'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
@@ -3852,30 +3725,6 @@ export type Product$charitiesArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ProductCharityScalarFieldEnum | Prisma.ProductCharityScalarFieldEnum[]
-}
-
-/**
- * Product.moneyDonations
- */
-export type Product$moneyDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the SellDonation
-   */
-  select?: Prisma.SellDonationSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the SellDonation
-   */
-  omit?: Prisma.SellDonationOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SellDonationInclude<ExtArgs> | null
-  where?: Prisma.SellDonationWhereInput
-  orderBy?: Prisma.SellDonationOrderByWithRelationInput | Prisma.SellDonationOrderByWithRelationInput[]
-  cursor?: Prisma.SellDonationWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.SellDonationScalarFieldEnum | Prisma.SellDonationScalarFieldEnum[]
 }
 
 /**

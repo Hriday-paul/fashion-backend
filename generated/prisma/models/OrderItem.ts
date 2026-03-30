@@ -29,12 +29,18 @@ export type OrderItemAvgAggregateOutputType = {
   quantity: number | null
   unitPrice: number | null
   totalPrice: number | null
+  donation_percent: number | null
+  donation_amount: number | null
+  extra_donation: number | null
 }
 
 export type OrderItemSumAggregateOutputType = {
   quantity: number | null
   unitPrice: number | null
   totalPrice: number | null
+  donation_percent: number | null
+  donation_amount: number | null
+  extra_donation: number | null
 }
 
 export type OrderItemMinAggregateOutputType = {
@@ -46,6 +52,9 @@ export type OrderItemMinAggregateOutputType = {
   totalPrice: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  donation_percent: number | null
+  donation_amount: number | null
+  extra_donation: number | null
 }
 
 export type OrderItemMaxAggregateOutputType = {
@@ -57,6 +66,9 @@ export type OrderItemMaxAggregateOutputType = {
   totalPrice: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  donation_percent: number | null
+  donation_amount: number | null
+  extra_donation: number | null
 }
 
 export type OrderItemCountAggregateOutputType = {
@@ -68,6 +80,9 @@ export type OrderItemCountAggregateOutputType = {
   totalPrice: number
   createdAt: number
   updatedAt: number
+  donation_percent: number
+  donation_amount: number
+  extra_donation: number
   _all: number
 }
 
@@ -76,12 +91,18 @@ export type OrderItemAvgAggregateInputType = {
   quantity?: true
   unitPrice?: true
   totalPrice?: true
+  donation_percent?: true
+  donation_amount?: true
+  extra_donation?: true
 }
 
 export type OrderItemSumAggregateInputType = {
   quantity?: true
   unitPrice?: true
   totalPrice?: true
+  donation_percent?: true
+  donation_amount?: true
+  extra_donation?: true
 }
 
 export type OrderItemMinAggregateInputType = {
@@ -93,6 +114,9 @@ export type OrderItemMinAggregateInputType = {
   totalPrice?: true
   createdAt?: true
   updatedAt?: true
+  donation_percent?: true
+  donation_amount?: true
+  extra_donation?: true
 }
 
 export type OrderItemMaxAggregateInputType = {
@@ -104,6 +128,9 @@ export type OrderItemMaxAggregateInputType = {
   totalPrice?: true
   createdAt?: true
   updatedAt?: true
+  donation_percent?: true
+  donation_amount?: true
+  extra_donation?: true
 }
 
 export type OrderItemCountAggregateInputType = {
@@ -115,6 +142,9 @@ export type OrderItemCountAggregateInputType = {
   totalPrice?: true
   createdAt?: true
   updatedAt?: true
+  donation_percent?: true
+  donation_amount?: true
+  extra_donation?: true
   _all?: true
 }
 
@@ -213,6 +243,9 @@ export type OrderItemGroupByOutputType = {
   totalPrice: number
   createdAt: Date
   updatedAt: Date
+  donation_percent: number
+  donation_amount: number
+  extra_donation: number
   _count: OrderItemCountAggregateOutputType | null
   _avg: OrderItemAvgAggregateOutputType | null
   _sum: OrderItemSumAggregateOutputType | null
@@ -247,9 +280,13 @@ export type OrderItemWhereInput = {
   totalPrice?: Prisma.FloatFilter<"OrderItem"> | number
   createdAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
+  donation_percent?: Prisma.FloatFilter<"OrderItem"> | number
+  donation_amount?: Prisma.FloatFilter<"OrderItem"> | number
+  extra_donation?: Prisma.FloatFilter<"OrderItem"> | number
   order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   returnItems?: Prisma.ReturnItemListRelationFilter
+  donations?: Prisma.SellDonationListRelationFilter
 }
 
 export type OrderItemOrderByWithRelationInput = {
@@ -261,9 +298,13 @@ export type OrderItemOrderByWithRelationInput = {
   totalPrice?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
+  donation_amount?: Prisma.SortOrder
+  extra_donation?: Prisma.SortOrder
   order?: Prisma.OrderOrderByWithRelationInput
   product?: Prisma.ProductOrderByWithRelationInput
   returnItems?: Prisma.ReturnItemOrderByRelationAggregateInput
+  donations?: Prisma.SellDonationOrderByRelationAggregateInput
 }
 
 export type OrderItemWhereUniqueInput = Prisma.AtLeast<{
@@ -278,9 +319,13 @@ export type OrderItemWhereUniqueInput = Prisma.AtLeast<{
   totalPrice?: Prisma.FloatFilter<"OrderItem"> | number
   createdAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
+  donation_percent?: Prisma.FloatFilter<"OrderItem"> | number
+  donation_amount?: Prisma.FloatFilter<"OrderItem"> | number
+  extra_donation?: Prisma.FloatFilter<"OrderItem"> | number
   order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   returnItems?: Prisma.ReturnItemListRelationFilter
+  donations?: Prisma.SellDonationListRelationFilter
 }, "id">
 
 export type OrderItemOrderByWithAggregationInput = {
@@ -292,6 +337,9 @@ export type OrderItemOrderByWithAggregationInput = {
   totalPrice?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
+  donation_amount?: Prisma.SortOrder
+  extra_donation?: Prisma.SortOrder
   _count?: Prisma.OrderItemCountOrderByAggregateInput
   _avg?: Prisma.OrderItemAvgOrderByAggregateInput
   _max?: Prisma.OrderItemMaxOrderByAggregateInput
@@ -311,6 +359,9 @@ export type OrderItemScalarWhereWithAggregatesInput = {
   totalPrice?: Prisma.FloatWithAggregatesFilter<"OrderItem"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
+  donation_percent?: Prisma.FloatWithAggregatesFilter<"OrderItem"> | number
+  donation_amount?: Prisma.FloatWithAggregatesFilter<"OrderItem"> | number
+  extra_donation?: Prisma.FloatWithAggregatesFilter<"OrderItem"> | number
 }
 
 export type OrderItemCreateInput = {
@@ -320,9 +371,13 @@ export type OrderItemCreateInput = {
   totalPrice: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  donation_percent?: number
+  donation_amount?: number
+  extra_donation?: number
   order: Prisma.OrderCreateNestedOneWithoutItemsInput
   product: Prisma.ProductCreateNestedOneWithoutOrderItemsInput
   returnItems?: Prisma.ReturnItemCreateNestedManyWithoutOrderItemInput
+  donations?: Prisma.SellDonationCreateNestedManyWithoutOrderItemInput
 }
 
 export type OrderItemUncheckedCreateInput = {
@@ -334,7 +389,11 @@ export type OrderItemUncheckedCreateInput = {
   totalPrice: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  donation_percent?: number
+  donation_amount?: number
+  extra_donation?: number
   returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutOrderItemInput
+  donations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutOrderItemInput
 }
 
 export type OrderItemUpdateInput = {
@@ -344,9 +403,13 @@ export type OrderItemUpdateInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   order?: Prisma.OrderUpdateOneRequiredWithoutItemsNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutOrderItemsNestedInput
   returnItems?: Prisma.ReturnItemUpdateManyWithoutOrderItemNestedInput
+  donations?: Prisma.SellDonationUpdateManyWithoutOrderItemNestedInput
 }
 
 export type OrderItemUncheckedUpdateInput = {
@@ -358,7 +421,11 @@ export type OrderItemUncheckedUpdateInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutOrderItemNestedInput
+  donations?: Prisma.SellDonationUncheckedUpdateManyWithoutOrderItemNestedInput
 }
 
 export type OrderItemCreateManyInput = {
@@ -370,6 +437,9 @@ export type OrderItemCreateManyInput = {
   totalPrice: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  donation_percent?: number
+  donation_amount?: number
+  extra_donation?: number
 }
 
 export type OrderItemUpdateManyMutationInput = {
@@ -379,6 +449,9 @@ export type OrderItemUpdateManyMutationInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type OrderItemUncheckedUpdateManyInput = {
@@ -390,6 +463,9 @@ export type OrderItemUncheckedUpdateManyInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type OrderItemListRelationFilter = {
@@ -411,12 +487,18 @@ export type OrderItemCountOrderByAggregateInput = {
   totalPrice?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
+  donation_amount?: Prisma.SortOrder
+  extra_donation?: Prisma.SortOrder
 }
 
 export type OrderItemAvgOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
+  donation_amount?: Prisma.SortOrder
+  extra_donation?: Prisma.SortOrder
 }
 
 export type OrderItemMaxOrderByAggregateInput = {
@@ -428,6 +510,9 @@ export type OrderItemMaxOrderByAggregateInput = {
   totalPrice?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
+  donation_amount?: Prisma.SortOrder
+  extra_donation?: Prisma.SortOrder
 }
 
 export type OrderItemMinOrderByAggregateInput = {
@@ -439,12 +524,18 @@ export type OrderItemMinOrderByAggregateInput = {
   totalPrice?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
+  donation_amount?: Prisma.SortOrder
+  extra_donation?: Prisma.SortOrder
 }
 
 export type OrderItemSumOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  donation_percent?: Prisma.SortOrder
+  donation_amount?: Prisma.SortOrder
+  extra_donation?: Prisma.SortOrder
 }
 
 export type OrderItemScalarRelationFilter = {
@@ -492,6 +583,20 @@ export type OrderItemUncheckedUpdateManyWithoutOrderNestedInput = {
   update?: Prisma.OrderItemUpdateWithWhereUniqueWithoutOrderInput | Prisma.OrderItemUpdateWithWhereUniqueWithoutOrderInput[]
   updateMany?: Prisma.OrderItemUpdateManyWithWhereWithoutOrderInput | Prisma.OrderItemUpdateManyWithWhereWithoutOrderInput[]
   deleteMany?: Prisma.OrderItemScalarWhereInput | Prisma.OrderItemScalarWhereInput[]
+}
+
+export type OrderItemCreateNestedOneWithoutDonationsInput = {
+  create?: Prisma.XOR<Prisma.OrderItemCreateWithoutDonationsInput, Prisma.OrderItemUncheckedCreateWithoutDonationsInput>
+  connectOrCreate?: Prisma.OrderItemCreateOrConnectWithoutDonationsInput
+  connect?: Prisma.OrderItemWhereUniqueInput
+}
+
+export type OrderItemUpdateOneRequiredWithoutDonationsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderItemCreateWithoutDonationsInput, Prisma.OrderItemUncheckedCreateWithoutDonationsInput>
+  connectOrCreate?: Prisma.OrderItemCreateOrConnectWithoutDonationsInput
+  upsert?: Prisma.OrderItemUpsertWithoutDonationsInput
+  connect?: Prisma.OrderItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrderItemUpdateToOneWithWhereWithoutDonationsInput, Prisma.OrderItemUpdateWithoutDonationsInput>, Prisma.OrderItemUncheckedUpdateWithoutDonationsInput>
 }
 
 export type OrderItemCreateNestedManyWithoutProductInput = {
@@ -557,8 +662,12 @@ export type OrderItemCreateWithoutOrderInput = {
   totalPrice: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  donation_percent?: number
+  donation_amount?: number
+  extra_donation?: number
   product: Prisma.ProductCreateNestedOneWithoutOrderItemsInput
   returnItems?: Prisma.ReturnItemCreateNestedManyWithoutOrderItemInput
+  donations?: Prisma.SellDonationCreateNestedManyWithoutOrderItemInput
 }
 
 export type OrderItemUncheckedCreateWithoutOrderInput = {
@@ -569,7 +678,11 @@ export type OrderItemUncheckedCreateWithoutOrderInput = {
   totalPrice: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  donation_percent?: number
+  donation_amount?: number
+  extra_donation?: number
   returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutOrderItemInput
+  donations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutOrderItemInput
 }
 
 export type OrderItemCreateOrConnectWithoutOrderInput = {
@@ -610,6 +723,85 @@ export type OrderItemScalarWhereInput = {
   totalPrice?: Prisma.FloatFilter<"OrderItem"> | number
   createdAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
+  donation_percent?: Prisma.FloatFilter<"OrderItem"> | number
+  donation_amount?: Prisma.FloatFilter<"OrderItem"> | number
+  extra_donation?: Prisma.FloatFilter<"OrderItem"> | number
+}
+
+export type OrderItemCreateWithoutDonationsInput = {
+  id?: string
+  quantity: number
+  unitPrice: number
+  totalPrice: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  donation_percent?: number
+  donation_amount?: number
+  extra_donation?: number
+  order: Prisma.OrderCreateNestedOneWithoutItemsInput
+  product: Prisma.ProductCreateNestedOneWithoutOrderItemsInput
+  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutOrderItemInput
+}
+
+export type OrderItemUncheckedCreateWithoutDonationsInput = {
+  id?: string
+  orderId: string
+  productId: string
+  quantity: number
+  unitPrice: number
+  totalPrice: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  donation_percent?: number
+  donation_amount?: number
+  extra_donation?: number
+  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutOrderItemInput
+}
+
+export type OrderItemCreateOrConnectWithoutDonationsInput = {
+  where: Prisma.OrderItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderItemCreateWithoutDonationsInput, Prisma.OrderItemUncheckedCreateWithoutDonationsInput>
+}
+
+export type OrderItemUpsertWithoutDonationsInput = {
+  update: Prisma.XOR<Prisma.OrderItemUpdateWithoutDonationsInput, Prisma.OrderItemUncheckedUpdateWithoutDonationsInput>
+  create: Prisma.XOR<Prisma.OrderItemCreateWithoutDonationsInput, Prisma.OrderItemUncheckedCreateWithoutDonationsInput>
+  where?: Prisma.OrderItemWhereInput
+}
+
+export type OrderItemUpdateToOneWithWhereWithoutDonationsInput = {
+  where?: Prisma.OrderItemWhereInput
+  data: Prisma.XOR<Prisma.OrderItemUpdateWithoutDonationsInput, Prisma.OrderItemUncheckedUpdateWithoutDonationsInput>
+}
+
+export type OrderItemUpdateWithoutDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
+  order?: Prisma.OrderUpdateOneRequiredWithoutItemsNestedInput
+  product?: Prisma.ProductUpdateOneRequiredWithoutOrderItemsNestedInput
+  returnItems?: Prisma.ReturnItemUpdateManyWithoutOrderItemNestedInput
+}
+
+export type OrderItemUncheckedUpdateWithoutDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderId?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
+  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutOrderItemNestedInput
 }
 
 export type OrderItemCreateWithoutProductInput = {
@@ -619,8 +811,12 @@ export type OrderItemCreateWithoutProductInput = {
   totalPrice: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  donation_percent?: number
+  donation_amount?: number
+  extra_donation?: number
   order: Prisma.OrderCreateNestedOneWithoutItemsInput
   returnItems?: Prisma.ReturnItemCreateNestedManyWithoutOrderItemInput
+  donations?: Prisma.SellDonationCreateNestedManyWithoutOrderItemInput
 }
 
 export type OrderItemUncheckedCreateWithoutProductInput = {
@@ -631,7 +827,11 @@ export type OrderItemUncheckedCreateWithoutProductInput = {
   totalPrice: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  donation_percent?: number
+  donation_amount?: number
+  extra_donation?: number
   returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutOrderItemInput
+  donations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutOrderItemInput
 }
 
 export type OrderItemCreateOrConnectWithoutProductInput = {
@@ -667,8 +867,12 @@ export type OrderItemCreateWithoutReturnItemsInput = {
   totalPrice: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  donation_percent?: number
+  donation_amount?: number
+  extra_donation?: number
   order: Prisma.OrderCreateNestedOneWithoutItemsInput
   product: Prisma.ProductCreateNestedOneWithoutOrderItemsInput
+  donations?: Prisma.SellDonationCreateNestedManyWithoutOrderItemInput
 }
 
 export type OrderItemUncheckedCreateWithoutReturnItemsInput = {
@@ -680,6 +884,10 @@ export type OrderItemUncheckedCreateWithoutReturnItemsInput = {
   totalPrice: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  donation_percent?: number
+  donation_amount?: number
+  extra_donation?: number
+  donations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutOrderItemInput
 }
 
 export type OrderItemCreateOrConnectWithoutReturnItemsInput = {
@@ -705,8 +913,12 @@ export type OrderItemUpdateWithoutReturnItemsInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   order?: Prisma.OrderUpdateOneRequiredWithoutItemsNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutOrderItemsNestedInput
+  donations?: Prisma.SellDonationUpdateManyWithoutOrderItemNestedInput
 }
 
 export type OrderItemUncheckedUpdateWithoutReturnItemsInput = {
@@ -718,6 +930,10 @@ export type OrderItemUncheckedUpdateWithoutReturnItemsInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
+  donations?: Prisma.SellDonationUncheckedUpdateManyWithoutOrderItemNestedInput
 }
 
 export type OrderItemCreateManyOrderInput = {
@@ -728,6 +944,9 @@ export type OrderItemCreateManyOrderInput = {
   totalPrice: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  donation_percent?: number
+  donation_amount?: number
+  extra_donation?: number
 }
 
 export type OrderItemUpdateWithoutOrderInput = {
@@ -737,8 +956,12 @@ export type OrderItemUpdateWithoutOrderInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   product?: Prisma.ProductUpdateOneRequiredWithoutOrderItemsNestedInput
   returnItems?: Prisma.ReturnItemUpdateManyWithoutOrderItemNestedInput
+  donations?: Prisma.SellDonationUpdateManyWithoutOrderItemNestedInput
 }
 
 export type OrderItemUncheckedUpdateWithoutOrderInput = {
@@ -749,7 +972,11 @@ export type OrderItemUncheckedUpdateWithoutOrderInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutOrderItemNestedInput
+  donations?: Prisma.SellDonationUncheckedUpdateManyWithoutOrderItemNestedInput
 }
 
 export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
@@ -760,6 +987,9 @@ export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type OrderItemCreateManyProductInput = {
@@ -770,6 +1000,9 @@ export type OrderItemCreateManyProductInput = {
   totalPrice: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  donation_percent?: number
+  donation_amount?: number
+  extra_donation?: number
 }
 
 export type OrderItemUpdateWithoutProductInput = {
@@ -779,8 +1012,12 @@ export type OrderItemUpdateWithoutProductInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   order?: Prisma.OrderUpdateOneRequiredWithoutItemsNestedInput
   returnItems?: Prisma.ReturnItemUpdateManyWithoutOrderItemNestedInput
+  donations?: Prisma.SellDonationUpdateManyWithoutOrderItemNestedInput
 }
 
 export type OrderItemUncheckedUpdateWithoutProductInput = {
@@ -791,7 +1028,11 @@ export type OrderItemUncheckedUpdateWithoutProductInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutOrderItemNestedInput
+  donations?: Prisma.SellDonationUncheckedUpdateManyWithoutOrderItemNestedInput
 }
 
 export type OrderItemUncheckedUpdateManyWithoutProductInput = {
@@ -802,6 +1043,9 @@ export type OrderItemUncheckedUpdateManyWithoutProductInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 
@@ -811,10 +1055,12 @@ export type OrderItemUncheckedUpdateManyWithoutProductInput = {
 
 export type OrderItemCountOutputType = {
   returnItems: number
+  donations: number
 }
 
 export type OrderItemCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   returnItems?: boolean | OrderItemCountOutputTypeCountReturnItemsArgs
+  donations?: boolean | OrderItemCountOutputTypeCountDonationsArgs
 }
 
 /**
@@ -834,6 +1080,13 @@ export type OrderItemCountOutputTypeCountReturnItemsArgs<ExtArgs extends runtime
   where?: Prisma.ReturnItemWhereInput
 }
 
+/**
+ * OrderItemCountOutputType without action
+ */
+export type OrderItemCountOutputTypeCountDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SellDonationWhereInput
+}
+
 
 export type OrderItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -844,9 +1097,13 @@ export type OrderItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   totalPrice?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  donation_percent?: boolean
+  donation_amount?: boolean
+  extra_donation?: boolean
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   returnItems?: boolean | Prisma.OrderItem$returnItemsArgs<ExtArgs>
+  donations?: boolean | Prisma.OrderItem$donationsArgs<ExtArgs>
   _count?: boolean | Prisma.OrderItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["orderItem"]>
 
@@ -859,6 +1116,9 @@ export type OrderItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   totalPrice?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  donation_percent?: boolean
+  donation_amount?: boolean
+  extra_donation?: boolean
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["orderItem"]>
@@ -872,6 +1132,9 @@ export type OrderItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   totalPrice?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  donation_percent?: boolean
+  donation_amount?: boolean
+  extra_donation?: boolean
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["orderItem"]>
@@ -885,13 +1148,17 @@ export type OrderItemSelectScalar = {
   totalPrice?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  donation_percent?: boolean
+  donation_amount?: boolean
+  extra_donation?: boolean
 }
 
-export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "productId" | "quantity" | "unitPrice" | "totalPrice" | "createdAt" | "updatedAt", ExtArgs["result"]["orderItem"]>
+export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "productId" | "quantity" | "unitPrice" | "totalPrice" | "createdAt" | "updatedAt" | "donation_percent" | "donation_amount" | "extra_donation", ExtArgs["result"]["orderItem"]>
 export type OrderItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   returnItems?: boolean | Prisma.OrderItem$returnItemsArgs<ExtArgs>
+  donations?: boolean | Prisma.OrderItem$donationsArgs<ExtArgs>
   _count?: boolean | Prisma.OrderItemCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrderItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -909,6 +1176,7 @@ export type $OrderItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     order: Prisma.$OrderPayload<ExtArgs>
     product: Prisma.$ProductPayload<ExtArgs>
     returnItems: Prisma.$ReturnItemPayload<ExtArgs>[]
+    donations: Prisma.$SellDonationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -919,6 +1187,9 @@ export type $OrderItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     totalPrice: number
     createdAt: Date
     updatedAt: Date
+    donation_percent: number
+    donation_amount: number
+    extra_donation: number
   }, ExtArgs["result"]["orderItem"]>
   composites: {}
 }
@@ -1316,6 +1587,7 @@ export interface Prisma__OrderItemClient<T, Null = never, ExtArgs extends runtim
   order<T extends Prisma.OrderDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderDefaultArgs<ExtArgs>>): Prisma.Prisma__OrderClient<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   product<T extends Prisma.ProductDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   returnItems<T extends Prisma.OrderItem$returnItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderItem$returnItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReturnItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  donations<T extends Prisma.OrderItem$donationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderItem$donationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SellDonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1353,6 +1625,9 @@ export interface OrderItemFieldRefs {
   readonly totalPrice: Prisma.FieldRef<"OrderItem", 'Float'>
   readonly createdAt: Prisma.FieldRef<"OrderItem", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"OrderItem", 'DateTime'>
+  readonly donation_percent: Prisma.FieldRef<"OrderItem", 'Float'>
+  readonly donation_amount: Prisma.FieldRef<"OrderItem", 'Float'>
+  readonly extra_donation: Prisma.FieldRef<"OrderItem", 'Float'>
 }
     
 
@@ -1770,6 +2045,30 @@ export type OrderItem$returnItemsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.ReturnItemScalarFieldEnum | Prisma.ReturnItemScalarFieldEnum[]
+}
+
+/**
+ * OrderItem.donations
+ */
+export type OrderItem$donationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SellDonation
+   */
+  select?: Prisma.SellDonationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SellDonation
+   */
+  omit?: Prisma.SellDonationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SellDonationInclude<ExtArgs> | null
+  where?: Prisma.SellDonationWhereInput
+  orderBy?: Prisma.SellDonationOrderByWithRelationInput | Prisma.SellDonationOrderByWithRelationInput[]
+  cursor?: Prisma.SellDonationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SellDonationScalarFieldEnum | Prisma.SellDonationScalarFieldEnum[]
 }
 
 /**

@@ -19,6 +19,15 @@ export const OrderStatus = {
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
 
 
+export const DonationStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  FAILED: 'FAILED'
+} as const
+
+export type DonationStatus = (typeof DonationStatus)[keyof typeof DonationStatus]
+
+
 export const PaymentStatus = {
   PENDING: 'PENDING',
   PROCESSING: 'PROCESSING',
@@ -27,15 +36,6 @@ export const PaymentStatus = {
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
-
-
-export const DonationStatus = {
-  PENDING: 'PENDING',
-  PAID: 'PAID',
-  FAILED: 'FAILED'
-} as const
-
-export type DonationStatus = (typeof DonationStatus)[keyof typeof DonationStatus]
 
 
 export const ReturnStatus = {

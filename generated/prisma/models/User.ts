@@ -1010,6 +1010,20 @@ export type UserUpdateOneRequiredWithoutOrdersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOrdersInput, Prisma.UserUpdateWithoutOrdersInput>, Prisma.UserUncheckedUpdateWithoutOrdersInput>
 }
 
+export type UserCreateNestedOneWithoutSellDonationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSellDonationsInput, Prisma.UserUncheckedCreateWithoutSellDonationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSellDonationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSellDonationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSellDonationsInput, Prisma.UserUncheckedCreateWithoutSellDonationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSellDonationsInput
+  upsert?: Prisma.UserUpsertWithoutSellDonationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSellDonationsInput, Prisma.UserUpdateWithoutSellDonationsInput>, Prisma.UserUncheckedUpdateWithoutSellDonationsInput>
+}
+
 export type UserCreateNestedOneWithoutPaymentsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaymentsInput
@@ -1052,20 +1066,6 @@ export type UserUpdateOneRequiredWithoutProductCharitiesNestedInput = {
   upsert?: Prisma.UserUpsertWithoutProductCharitiesInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProductCharitiesInput, Prisma.UserUpdateWithoutProductCharitiesInput>, Prisma.UserUncheckedUpdateWithoutProductCharitiesInput>
-}
-
-export type UserCreateNestedOneWithoutSellDonationsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSellDonationsInput, Prisma.UserUncheckedCreateWithoutSellDonationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSellDonationsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutSellDonationsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSellDonationsInput, Prisma.UserUncheckedCreateWithoutSellDonationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSellDonationsInput
-  upsert?: Prisma.UserUpsertWithoutSellDonationsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSellDonationsInput, Prisma.UserUpdateWithoutSellDonationsInput>, Prisma.UserUncheckedUpdateWithoutSellDonationsInput>
 }
 
 export type UserCreateNestedOneWithoutFavouriteProductsInput = {
@@ -2085,6 +2085,214 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   billingAddress?: Prisma.BillingDetailsUncheckedUpdateOneWithoutUserNestedInput
 }
 
+export type UserCreateWithoutSellDonationsInput = {
+  id?: string
+  fname: string
+  lname?: string | null
+  email: string
+  userName?: string
+  phone: string
+  description?: string | null
+  country?: string | null
+  state?: string | null
+  city?: string | null
+  address?: string | null
+  zip_code?: string | null
+  instagram?: string | null
+  facebook?: string | null
+  twitter?: string | null
+  tiktok?: string | null
+  website?: string | null
+  notification?: boolean
+  fcmToken?: string | null
+  mission?: string | null
+  business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
+  isOnline?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  avgRating?: number
+  auth?: Prisma.AuthCreateNestedOneWithoutUserInput
+  picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
+  account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
+  notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
+  chatGroups?: Prisma.ChatParticipantCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  products?: Prisma.ProductCreateNestedManyWithoutUserInput
+  productCharities?: Prisma.ProductCharityCreateNestedManyWithoutCharityInput
+  favouriteProducts?: Prisma.FavouriteCreateNestedManyWithoutUserInput
+  ratingsGiven?: Prisma.RatingCreateNestedManyWithoutFromUserInput
+  ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
+  returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
+  returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
+  billingAddress?: Prisma.BillingDetailsCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSellDonationsInput = {
+  id?: string
+  fname: string
+  lname?: string | null
+  email: string
+  userName?: string
+  phone: string
+  description?: string | null
+  country?: string | null
+  state?: string | null
+  city?: string | null
+  address?: string | null
+  zip_code?: string | null
+  instagram?: string | null
+  facebook?: string | null
+  twitter?: string | null
+  tiktok?: string | null
+  website?: string | null
+  notification?: boolean
+  fcmToken?: string | null
+  mission?: string | null
+  business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
+  isOnline?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  avgRating?: number
+  auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput
+  picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
+  account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
+  notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
+  chatGroups?: Prisma.ChatParticipantUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutUserInput
+  productCharities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutCharityInput
+  favouriteProducts?: Prisma.FavouriteUncheckedCreateNestedManyWithoutUserInput
+  ratingsGiven?: Prisma.RatingUncheckedCreateNestedManyWithoutFromUserInput
+  ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
+  returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
+  returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
+  billingAddress?: Prisma.BillingDetailsUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSellDonationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSellDonationsInput, Prisma.UserUncheckedCreateWithoutSellDonationsInput>
+}
+
+export type UserUpsertWithoutSellDonationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSellDonationsInput, Prisma.UserUncheckedUpdateWithoutSellDonationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSellDonationsInput, Prisma.UserUncheckedCreateWithoutSellDonationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSellDonationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSellDonationsInput, Prisma.UserUncheckedUpdateWithoutSellDonationsInput>
+}
+
+export type UserUpdateWithoutSellDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fname?: Prisma.StringFieldUpdateOperationsInput | string
+  lname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  auth?: Prisma.AuthUpdateOneWithoutUserNestedInput
+  picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
+  account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
+  notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
+  chatGroups?: Prisma.ChatParticipantUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  products?: Prisma.ProductUpdateManyWithoutUserNestedInput
+  productCharities?: Prisma.ProductCharityUpdateManyWithoutCharityNestedInput
+  favouriteProducts?: Prisma.FavouriteUpdateManyWithoutUserNestedInput
+  ratingsGiven?: Prisma.RatingUpdateManyWithoutFromUserNestedInput
+  ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
+  returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
+  returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
+  billingAddress?: Prisma.BillingDetailsUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSellDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fname?: Prisma.StringFieldUpdateOperationsInput | string
+  lname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput
+  picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
+  account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
+  notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
+  chatGroups?: Prisma.ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutUserNestedInput
+  productCharities?: Prisma.ProductCharityUncheckedUpdateManyWithoutCharityNestedInput
+  favouriteProducts?: Prisma.FavouriteUncheckedUpdateManyWithoutUserNestedInput
+  ratingsGiven?: Prisma.RatingUncheckedUpdateManyWithoutFromUserNestedInput
+  ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
+  returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
+  returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
+  billingAddress?: Prisma.BillingDetailsUncheckedUpdateOneWithoutUserNestedInput
+}
+
 export type UserCreateWithoutPaymentsInput = {
   id?: string
   fname: string
@@ -2699,214 +2907,6 @@ export type UserUncheckedUpdateWithoutProductCharitiesInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutUserNestedInput
   sellDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutCharityNestedInput
-  favouriteProducts?: Prisma.FavouriteUncheckedUpdateManyWithoutUserNestedInput
-  ratingsGiven?: Prisma.RatingUncheckedUpdateManyWithoutFromUserNestedInput
-  ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
-  returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
-  returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
-  productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
-  billingAddress?: Prisma.BillingDetailsUncheckedUpdateOneWithoutUserNestedInput
-}
-
-export type UserCreateWithoutSellDonationsInput = {
-  id?: string
-  fname: string
-  lname?: string | null
-  email: string
-  userName?: string
-  phone: string
-  description?: string | null
-  country?: string | null
-  state?: string | null
-  city?: string | null
-  address?: string | null
-  zip_code?: string | null
-  instagram?: string | null
-  facebook?: string | null
-  twitter?: string | null
-  tiktok?: string | null
-  website?: string | null
-  notification?: boolean
-  fcmToken?: string | null
-  mission?: string | null
-  business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
-  isOnline?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  isDeleted?: boolean
-  avgRating?: number
-  auth?: Prisma.AuthCreateNestedOneWithoutUserInput
-  picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
-  account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
-  notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
-  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
-  receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
-  chatGroups?: Prisma.ChatParticipantCreateNestedManyWithoutUserInput
-  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
-  products?: Prisma.ProductCreateNestedManyWithoutUserInput
-  productCharities?: Prisma.ProductCharityCreateNestedManyWithoutCharityInput
-  favouriteProducts?: Prisma.FavouriteCreateNestedManyWithoutUserInput
-  ratingsGiven?: Prisma.RatingCreateNestedManyWithoutFromUserInput
-  ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
-  returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
-  returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
-  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
-  productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
-  billingAddress?: Prisma.BillingDetailsCreateNestedOneWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutSellDonationsInput = {
-  id?: string
-  fname: string
-  lname?: string | null
-  email: string
-  userName?: string
-  phone: string
-  description?: string | null
-  country?: string | null
-  state?: string | null
-  city?: string | null
-  address?: string | null
-  zip_code?: string | null
-  instagram?: string | null
-  facebook?: string | null
-  twitter?: string | null
-  tiktok?: string | null
-  website?: string | null
-  notification?: boolean
-  fcmToken?: string | null
-  mission?: string | null
-  business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
-  isOnline?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  isDeleted?: boolean
-  avgRating?: number
-  auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput
-  picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
-  account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
-  notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
-  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
-  receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
-  chatGroups?: Prisma.ChatParticipantUncheckedCreateNestedManyWithoutUserInput
-  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
-  products?: Prisma.ProductUncheckedCreateNestedManyWithoutUserInput
-  productCharities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutCharityInput
-  favouriteProducts?: Prisma.FavouriteUncheckedCreateNestedManyWithoutUserInput
-  ratingsGiven?: Prisma.RatingUncheckedCreateNestedManyWithoutFromUserInput
-  ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
-  returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
-  returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
-  productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
-  billingAddress?: Prisma.BillingDetailsUncheckedCreateNestedOneWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutSellDonationsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutSellDonationsInput, Prisma.UserUncheckedCreateWithoutSellDonationsInput>
-}
-
-export type UserUpsertWithoutSellDonationsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutSellDonationsInput, Prisma.UserUncheckedUpdateWithoutSellDonationsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutSellDonationsInput, Prisma.UserUncheckedCreateWithoutSellDonationsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutSellDonationsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutSellDonationsInput, Prisma.UserUncheckedUpdateWithoutSellDonationsInput>
-}
-
-export type UserUpdateWithoutSellDonationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  fname?: Prisma.StringFieldUpdateOperationsInput | string
-  lname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  zip_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
-  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  avgRating?: Prisma.FloatFieldUpdateOperationsInput | number
-  auth?: Prisma.AuthUpdateOneWithoutUserNestedInput
-  picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
-  account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
-  notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
-  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
-  receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
-  chatGroups?: Prisma.ChatParticipantUpdateManyWithoutUserNestedInput
-  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
-  products?: Prisma.ProductUpdateManyWithoutUserNestedInput
-  productCharities?: Prisma.ProductCharityUpdateManyWithoutCharityNestedInput
-  favouriteProducts?: Prisma.FavouriteUpdateManyWithoutUserNestedInput
-  ratingsGiven?: Prisma.RatingUpdateManyWithoutFromUserNestedInput
-  ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
-  returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
-  returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
-  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
-  productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
-  billingAddress?: Prisma.BillingDetailsUpdateOneWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutSellDonationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  fname?: Prisma.StringFieldUpdateOperationsInput | string
-  lname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  zip_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
-  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  avgRating?: Prisma.FloatFieldUpdateOperationsInput | number
-  auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput
-  picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
-  account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
-  notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
-  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
-  receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
-  chatGroups?: Prisma.ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
-  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
-  products?: Prisma.ProductUncheckedUpdateManyWithoutUserNestedInput
-  productCharities?: Prisma.ProductCharityUncheckedUpdateManyWithoutCharityNestedInput
   favouriteProducts?: Prisma.FavouriteUncheckedUpdateManyWithoutUserNestedInput
   ratingsGiven?: Prisma.RatingUncheckedUpdateManyWithoutFromUserNestedInput
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
