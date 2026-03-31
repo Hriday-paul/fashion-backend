@@ -208,6 +208,7 @@ export const SellDonationScalarFieldEnum = {
   percent: 'percent',
   extra_money: 'extra_money',
   isAnonymous: 'isAnonymous',
+  total_amount: 'total_amount',
   status: 'status',
   createdAt: 'createdAt',
   orderItemId: 'orderItemId',

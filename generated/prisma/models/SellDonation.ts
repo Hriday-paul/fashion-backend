@@ -29,12 +29,14 @@ export type SellDonationAvgAggregateOutputType = {
   amount: number | null
   percent: number | null
   extra_money: number | null
+  total_amount: number | null
 }
 
 export type SellDonationSumAggregateOutputType = {
   amount: number | null
   percent: number | null
   extra_money: number | null
+  total_amount: number | null
 }
 
 export type SellDonationMinAggregateOutputType = {
@@ -43,6 +45,7 @@ export type SellDonationMinAggregateOutputType = {
   percent: number | null
   extra_money: number | null
   isAnonymous: boolean | null
+  total_amount: number | null
   status: $Enums.DonationStatus | null
   createdAt: Date | null
   orderItemId: string | null
@@ -55,6 +58,7 @@ export type SellDonationMaxAggregateOutputType = {
   percent: number | null
   extra_money: number | null
   isAnonymous: boolean | null
+  total_amount: number | null
   status: $Enums.DonationStatus | null
   createdAt: Date | null
   orderItemId: string | null
@@ -67,6 +71,7 @@ export type SellDonationCountAggregateOutputType = {
   percent: number
   extra_money: number
   isAnonymous: number
+  total_amount: number
   status: number
   createdAt: number
   orderItemId: number
@@ -79,12 +84,14 @@ export type SellDonationAvgAggregateInputType = {
   amount?: true
   percent?: true
   extra_money?: true
+  total_amount?: true
 }
 
 export type SellDonationSumAggregateInputType = {
   amount?: true
   percent?: true
   extra_money?: true
+  total_amount?: true
 }
 
 export type SellDonationMinAggregateInputType = {
@@ -93,6 +100,7 @@ export type SellDonationMinAggregateInputType = {
   percent?: true
   extra_money?: true
   isAnonymous?: true
+  total_amount?: true
   status?: true
   createdAt?: true
   orderItemId?: true
@@ -105,6 +113,7 @@ export type SellDonationMaxAggregateInputType = {
   percent?: true
   extra_money?: true
   isAnonymous?: true
+  total_amount?: true
   status?: true
   createdAt?: true
   orderItemId?: true
@@ -117,6 +126,7 @@ export type SellDonationCountAggregateInputType = {
   percent?: true
   extra_money?: true
   isAnonymous?: true
+  total_amount?: true
   status?: true
   createdAt?: true
   orderItemId?: true
@@ -216,6 +226,7 @@ export type SellDonationGroupByOutputType = {
   percent: number
   extra_money: number
   isAnonymous: boolean
+  total_amount: number
   status: $Enums.DonationStatus
   createdAt: Date
   orderItemId: string
@@ -251,6 +262,7 @@ export type SellDonationWhereInput = {
   percent?: Prisma.FloatFilter<"SellDonation"> | number
   extra_money?: Prisma.FloatFilter<"SellDonation"> | number
   isAnonymous?: Prisma.BoolFilter<"SellDonation"> | boolean
+  total_amount?: Prisma.FloatFilter<"SellDonation"> | number
   status?: Prisma.EnumDonationStatusFilter<"SellDonation"> | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFilter<"SellDonation"> | Date | string
   orderItemId?: Prisma.StringFilter<"SellDonation"> | string
@@ -265,6 +277,7 @@ export type SellDonationOrderByWithRelationInput = {
   percent?: Prisma.SortOrder
   extra_money?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
+  total_amount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   orderItemId?: Prisma.SortOrder
@@ -282,6 +295,7 @@ export type SellDonationWhereUniqueInput = Prisma.AtLeast<{
   percent?: Prisma.FloatFilter<"SellDonation"> | number
   extra_money?: Prisma.FloatFilter<"SellDonation"> | number
   isAnonymous?: Prisma.BoolFilter<"SellDonation"> | boolean
+  total_amount?: Prisma.FloatFilter<"SellDonation"> | number
   status?: Prisma.EnumDonationStatusFilter<"SellDonation"> | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFilter<"SellDonation"> | Date | string
   orderItemId?: Prisma.StringFilter<"SellDonation"> | string
@@ -296,6 +310,7 @@ export type SellDonationOrderByWithAggregationInput = {
   percent?: Prisma.SortOrder
   extra_money?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
+  total_amount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   orderItemId?: Prisma.SortOrder
@@ -316,6 +331,7 @@ export type SellDonationScalarWhereWithAggregatesInput = {
   percent?: Prisma.FloatWithAggregatesFilter<"SellDonation"> | number
   extra_money?: Prisma.FloatWithAggregatesFilter<"SellDonation"> | number
   isAnonymous?: Prisma.BoolWithAggregatesFilter<"SellDonation"> | boolean
+  total_amount?: Prisma.FloatWithAggregatesFilter<"SellDonation"> | number
   status?: Prisma.EnumDonationStatusWithAggregatesFilter<"SellDonation"> | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SellDonation"> | Date | string
   orderItemId?: Prisma.StringWithAggregatesFilter<"SellDonation"> | string
@@ -328,6 +344,7 @@ export type SellDonationCreateInput = {
   percent?: number
   extra_money?: number
   isAnonymous?: boolean
+  total_amount?: number
   status?: $Enums.DonationStatus
   createdAt?: Date | string
   orderItem: Prisma.OrderItemCreateNestedOneWithoutDonationsInput
@@ -340,6 +357,7 @@ export type SellDonationUncheckedCreateInput = {
   percent?: number
   extra_money?: number
   isAnonymous?: boolean
+  total_amount?: number
   status?: $Enums.DonationStatus
   createdAt?: Date | string
   orderItemId: string
@@ -352,6 +370,7 @@ export type SellDonationUpdateInput = {
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderItem?: Prisma.OrderItemUpdateOneRequiredWithoutDonationsNestedInput
@@ -364,6 +383,7 @@ export type SellDonationUncheckedUpdateInput = {
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -376,6 +396,7 @@ export type SellDonationCreateManyInput = {
   percent?: number
   extra_money?: number
   isAnonymous?: boolean
+  total_amount?: number
   status?: $Enums.DonationStatus
   createdAt?: Date | string
   orderItemId: string
@@ -388,6 +409,7 @@ export type SellDonationUpdateManyMutationInput = {
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -398,6 +420,7 @@ export type SellDonationUncheckedUpdateManyInput = {
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -420,6 +443,7 @@ export type SellDonationCountOrderByAggregateInput = {
   percent?: Prisma.SortOrder
   extra_money?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
+  total_amount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   orderItemId?: Prisma.SortOrder
@@ -430,6 +454,7 @@ export type SellDonationAvgOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   percent?: Prisma.SortOrder
   extra_money?: Prisma.SortOrder
+  total_amount?: Prisma.SortOrder
 }
 
 export type SellDonationMaxOrderByAggregateInput = {
@@ -438,6 +463,7 @@ export type SellDonationMaxOrderByAggregateInput = {
   percent?: Prisma.SortOrder
   extra_money?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
+  total_amount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   orderItemId?: Prisma.SortOrder
@@ -450,6 +476,7 @@ export type SellDonationMinOrderByAggregateInput = {
   percent?: Prisma.SortOrder
   extra_money?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
+  total_amount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   orderItemId?: Prisma.SortOrder
@@ -460,6 +487,7 @@ export type SellDonationSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   percent?: Prisma.SortOrder
   extra_money?: Prisma.SortOrder
+  total_amount?: Prisma.SortOrder
 }
 
 export type SellDonationCreateNestedManyWithoutOrderItemInput = {
@@ -556,6 +584,7 @@ export type SellDonationCreateWithoutOrderItemInput = {
   percent?: number
   extra_money?: number
   isAnonymous?: boolean
+  total_amount?: number
   status?: $Enums.DonationStatus
   createdAt?: Date | string
   charity: Prisma.UserCreateNestedOneWithoutSellDonationsInput
@@ -567,6 +596,7 @@ export type SellDonationUncheckedCreateWithoutOrderItemInput = {
   percent?: number
   extra_money?: number
   isAnonymous?: boolean
+  total_amount?: number
   status?: $Enums.DonationStatus
   createdAt?: Date | string
   charityId: string
@@ -607,6 +637,7 @@ export type SellDonationScalarWhereInput = {
   percent?: Prisma.FloatFilter<"SellDonation"> | number
   extra_money?: Prisma.FloatFilter<"SellDonation"> | number
   isAnonymous?: Prisma.BoolFilter<"SellDonation"> | boolean
+  total_amount?: Prisma.FloatFilter<"SellDonation"> | number
   status?: Prisma.EnumDonationStatusFilter<"SellDonation"> | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFilter<"SellDonation"> | Date | string
   orderItemId?: Prisma.StringFilter<"SellDonation"> | string
@@ -619,6 +650,7 @@ export type SellDonationCreateWithoutCharityInput = {
   percent?: number
   extra_money?: number
   isAnonymous?: boolean
+  total_amount?: number
   status?: $Enums.DonationStatus
   createdAt?: Date | string
   orderItem: Prisma.OrderItemCreateNestedOneWithoutDonationsInput
@@ -630,6 +662,7 @@ export type SellDonationUncheckedCreateWithoutCharityInput = {
   percent?: number
   extra_money?: number
   isAnonymous?: boolean
+  total_amount?: number
   status?: $Enums.DonationStatus
   createdAt?: Date | string
   orderItemId: string
@@ -667,6 +700,7 @@ export type SellDonationCreateManyOrderItemInput = {
   percent?: number
   extra_money?: number
   isAnonymous?: boolean
+  total_amount?: number
   status?: $Enums.DonationStatus
   createdAt?: Date | string
   charityId: string
@@ -678,6 +712,7 @@ export type SellDonationUpdateWithoutOrderItemInput = {
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charity?: Prisma.UserUpdateOneRequiredWithoutSellDonationsNestedInput
@@ -689,6 +724,7 @@ export type SellDonationUncheckedUpdateWithoutOrderItemInput = {
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -700,6 +736,7 @@ export type SellDonationUncheckedUpdateManyWithoutOrderItemInput = {
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -711,6 +748,7 @@ export type SellDonationCreateManyCharityInput = {
   percent?: number
   extra_money?: number
   isAnonymous?: boolean
+  total_amount?: number
   status?: $Enums.DonationStatus
   createdAt?: Date | string
   orderItemId: string
@@ -722,6 +760,7 @@ export type SellDonationUpdateWithoutCharityInput = {
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderItem?: Prisma.OrderItemUpdateOneRequiredWithoutDonationsNestedInput
@@ -733,6 +772,7 @@ export type SellDonationUncheckedUpdateWithoutCharityInput = {
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -744,6 +784,7 @@ export type SellDonationUncheckedUpdateManyWithoutCharityInput = {
   percent?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -757,6 +798,7 @@ export type SellDonationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   percent?: boolean
   extra_money?: boolean
   isAnonymous?: boolean
+  total_amount?: boolean
   status?: boolean
   createdAt?: boolean
   orderItemId?: boolean
@@ -771,6 +813,7 @@ export type SellDonationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   percent?: boolean
   extra_money?: boolean
   isAnonymous?: boolean
+  total_amount?: boolean
   status?: boolean
   createdAt?: boolean
   orderItemId?: boolean
@@ -785,6 +828,7 @@ export type SellDonationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   percent?: boolean
   extra_money?: boolean
   isAnonymous?: boolean
+  total_amount?: boolean
   status?: boolean
   createdAt?: boolean
   orderItemId?: boolean
@@ -799,13 +843,14 @@ export type SellDonationSelectScalar = {
   percent?: boolean
   extra_money?: boolean
   isAnonymous?: boolean
+  total_amount?: boolean
   status?: boolean
   createdAt?: boolean
   orderItemId?: boolean
   charityId?: boolean
 }
 
-export type SellDonationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "percent" | "extra_money" | "isAnonymous" | "status" | "createdAt" | "orderItemId" | "charityId", ExtArgs["result"]["sellDonation"]>
+export type SellDonationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "percent" | "extra_money" | "isAnonymous" | "total_amount" | "status" | "createdAt" | "orderItemId" | "charityId", ExtArgs["result"]["sellDonation"]>
 export type SellDonationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -831,6 +876,7 @@ export type $SellDonationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     percent: number
     extra_money: number
     isAnonymous: boolean
+    total_amount: number
     status: $Enums.DonationStatus
     createdAt: Date
     orderItemId: string
@@ -1265,6 +1311,7 @@ export interface SellDonationFieldRefs {
   readonly percent: Prisma.FieldRef<"SellDonation", 'Float'>
   readonly extra_money: Prisma.FieldRef<"SellDonation", 'Float'>
   readonly isAnonymous: Prisma.FieldRef<"SellDonation", 'Boolean'>
+  readonly total_amount: Prisma.FieldRef<"SellDonation", 'Float'>
   readonly status: Prisma.FieldRef<"SellDonation", 'DonationStatus'>
   readonly createdAt: Prisma.FieldRef<"SellDonation", 'DateTime'>
   readonly orderItemId: Prisma.FieldRef<"SellDonation", 'String'>

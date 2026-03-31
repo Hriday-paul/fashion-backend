@@ -67,6 +67,8 @@ model SellDonation {
 
     isAnonymous Boolean @default(false)
 
+    total_amount Float @default(0)
+
     status DonationStatus @default(PENDING)
 
     createdAt DateTime @default(now())
