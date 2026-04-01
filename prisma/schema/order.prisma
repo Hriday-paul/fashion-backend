@@ -23,6 +23,15 @@ model Order {
     @@map("orders")
 }
 
+enum OrderStatus {
+    PENDING
+    CONFIRMED
+    SHIPPED
+    DELIVERED
+    COMPLETED
+    CANCELLED
+}
+
 model OrderItem {
     id String @id @default(uuid())
 
@@ -47,14 +56,6 @@ model OrderItem {
     donations SellDonation[]
 
     @@index([orderId])
-}
-
-enum OrderStatus {
-    PENDING
-    CONFIRMED
-    SHIPPED
-    DELIVERED
-    CANCELLED
 }
 
 model SellDonation {

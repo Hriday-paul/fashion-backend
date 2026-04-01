@@ -1,0 +1,63 @@
+// =============================================================
+// WALLET  ← seller wallet
+// =============================================================
+model Wallet {
+  id                     String   @id @default(uuid())
+  sellerId               String   @unique
+  seller                 User     @relation(fields: [sellerId], references: [id])
+
+  // balance = withdrawable amount
+  // pendingBalance = held during return window
+  balance                Float @default(0)
+  pendingBalance         Float @default(0)
+
+  currency               String   @default("USD")
+  stripeConnectAccountId String?
+
+  lastPayoutAt           DateTime?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  transactions WalletTransaction[]
+
+  @@map("wallets")
+}
+
+// =============================================================
+// WALLET TRANSACTION  ← audit log of every balance change
+// =============================================================
+model WalletTransaction {
+  id            String          @id @default(uuid())
+  walletId      String
+  wallet        Wallet          @relation(fields: [walletId], references: [id])
+
+  creditType          CreaditType @default(PENDING)
+  txType TxType
+
+  amount        Float         @default(0)
+  balanceBefore Float         @default(0)
+  balanceAfter  Float         @default(0)
+  pendingBefore Float         @default(0)
+  pendingAfter  Float         @default(0)
+
+  description    String?
+  orderId        String?
+  stripePayoutId String?
+  idempotencyKey String?        @unique  // prevent double processing
+
+  createdAt DateTime @default(now())
+
+  @@map("wallet_transactions")
+}
+
+enum CreaditType {
+  PENDING   // delivery confirmed → pendingBalance increases
+  RELEASED  // return window passed → pendingBalance → balance
+  REFUNDED  // buyer returns → pendingBalance decreases
+  CANCELLED //cancelled
+}
+
+enum TxType {
+    DEBIT
+    CREDIT
+}

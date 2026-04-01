@@ -46,11 +46,20 @@ export type PaymentMinAggregateOutputType = {
   paid_amount: number | null
   seller_required_amount: number | null
   seller_received_amount: number | null
-  isPaid: boolean | null
   status: $Enums.PaymentStatus | null
+  stripe_status: $Enums.StripePaymentStatus | null
   orderId: string | null
   transactionId: string | null
   paymentIntentId: string | null
+  checkoutSessionId: string | null
+  stripeTransferId: string | null
+  stripeRefundId: string | null
+  transferGroup: string | null
+  sellerConnectAccountId: string | null
+  escrowedAt: Date | null
+  releasedAt: Date | null
+  refundedAt: Date | null
+  reconciledAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,11 +71,20 @@ export type PaymentMaxAggregateOutputType = {
   paid_amount: number | null
   seller_required_amount: number | null
   seller_received_amount: number | null
-  isPaid: boolean | null
   status: $Enums.PaymentStatus | null
+  stripe_status: $Enums.StripePaymentStatus | null
   orderId: string | null
   transactionId: string | null
   paymentIntentId: string | null
+  checkoutSessionId: string | null
+  stripeTransferId: string | null
+  stripeRefundId: string | null
+  transferGroup: string | null
+  sellerConnectAccountId: string | null
+  escrowedAt: Date | null
+  releasedAt: Date | null
+  refundedAt: Date | null
+  reconciledAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -78,11 +96,20 @@ export type PaymentCountAggregateOutputType = {
   paid_amount: number
   seller_required_amount: number
   seller_received_amount: number
-  isPaid: number
   status: number
+  stripe_status: number
   orderId: number
   transactionId: number
   paymentIntentId: number
+  checkoutSessionId: number
+  stripeTransferId: number
+  stripeRefundId: number
+  transferGroup: number
+  sellerConnectAccountId: number
+  escrowedAt: number
+  releasedAt: number
+  refundedAt: number
+  reconciledAt: number
   paymentData: number
   createdAt: number
   updatedAt: number
@@ -111,11 +138,20 @@ export type PaymentMinAggregateInputType = {
   paid_amount?: true
   seller_required_amount?: true
   seller_received_amount?: true
-  isPaid?: true
   status?: true
+  stripe_status?: true
   orderId?: true
   transactionId?: true
   paymentIntentId?: true
+  checkoutSessionId?: true
+  stripeTransferId?: true
+  stripeRefundId?: true
+  transferGroup?: true
+  sellerConnectAccountId?: true
+  escrowedAt?: true
+  releasedAt?: true
+  refundedAt?: true
+  reconciledAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -127,11 +163,20 @@ export type PaymentMaxAggregateInputType = {
   paid_amount?: true
   seller_required_amount?: true
   seller_received_amount?: true
-  isPaid?: true
   status?: true
+  stripe_status?: true
   orderId?: true
   transactionId?: true
   paymentIntentId?: true
+  checkoutSessionId?: true
+  stripeTransferId?: true
+  stripeRefundId?: true
+  transferGroup?: true
+  sellerConnectAccountId?: true
+  escrowedAt?: true
+  releasedAt?: true
+  refundedAt?: true
+  reconciledAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -143,11 +188,20 @@ export type PaymentCountAggregateInputType = {
   paid_amount?: true
   seller_required_amount?: true
   seller_received_amount?: true
-  isPaid?: true
   status?: true
+  stripe_status?: true
   orderId?: true
   transactionId?: true
   paymentIntentId?: true
+  checkoutSessionId?: true
+  stripeTransferId?: true
+  stripeRefundId?: true
+  transferGroup?: true
+  sellerConnectAccountId?: true
+  escrowedAt?: true
+  releasedAt?: true
+  refundedAt?: true
+  reconciledAt?: true
   paymentData?: true
   createdAt?: true
   updatedAt?: true
@@ -247,11 +301,20 @@ export type PaymentGroupByOutputType = {
   paid_amount: number
   seller_required_amount: number
   seller_received_amount: number
-  isPaid: boolean
   status: $Enums.PaymentStatus
+  stripe_status: $Enums.StripePaymentStatus
   orderId: string
   transactionId: string
   paymentIntentId: string | null
+  checkoutSessionId: string | null
+  stripeTransferId: string | null
+  stripeRefundId: string | null
+  transferGroup: string | null
+  sellerConnectAccountId: string | null
+  escrowedAt: Date | null
+  releasedAt: Date | null
+  refundedAt: Date | null
+  reconciledAt: Date | null
   paymentData: runtime.JsonValue | null
   createdAt: Date
   updatedAt: Date
@@ -287,11 +350,20 @@ export type PaymentWhereInput = {
   paid_amount?: Prisma.FloatFilter<"Payment"> | number
   seller_required_amount?: Prisma.FloatFilter<"Payment"> | number
   seller_received_amount?: Prisma.FloatFilter<"Payment"> | number
-  isPaid?: Prisma.BoolFilter<"Payment"> | boolean
   status?: Prisma.EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFilter<"Payment"> | $Enums.StripePaymentStatus
   orderId?: Prisma.StringFilter<"Payment"> | string
   transactionId?: Prisma.StringFilter<"Payment"> | string
   paymentIntentId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  checkoutSessionId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  stripeTransferId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  stripeRefundId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  transferGroup?: Prisma.StringNullableFilter<"Payment"> | string | null
+  sellerConnectAccountId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  escrowedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  releasedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  refundedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  reconciledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   paymentData?: Prisma.JsonNullableFilter<"Payment">
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
@@ -306,11 +378,20 @@ export type PaymentOrderByWithRelationInput = {
   paid_amount?: Prisma.SortOrder
   seller_required_amount?: Prisma.SortOrder
   seller_received_amount?: Prisma.SortOrder
-  isPaid?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  stripe_status?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   paymentIntentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  checkoutSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripeTransferId?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripeRefundId?: Prisma.SortOrderInput | Prisma.SortOrder
+  transferGroup?: Prisma.SortOrderInput | Prisma.SortOrder
+  sellerConnectAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
+  escrowedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  releasedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reconciledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentData?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -321,7 +402,6 @@ export type PaymentOrderByWithRelationInput = {
 export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   orderId?: string
-  transactionId?: string
   AND?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
   OR?: Prisma.PaymentWhereInput[]
   NOT?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
@@ -330,15 +410,25 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   paid_amount?: Prisma.FloatFilter<"Payment"> | number
   seller_required_amount?: Prisma.FloatFilter<"Payment"> | number
   seller_received_amount?: Prisma.FloatFilter<"Payment"> | number
-  isPaid?: Prisma.BoolFilter<"Payment"> | boolean
   status?: Prisma.EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFilter<"Payment"> | $Enums.StripePaymentStatus
+  transactionId?: Prisma.StringFilter<"Payment"> | string
   paymentIntentId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  checkoutSessionId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  stripeTransferId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  stripeRefundId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  transferGroup?: Prisma.StringNullableFilter<"Payment"> | string | null
+  sellerConnectAccountId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  escrowedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  releasedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  refundedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  reconciledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   paymentData?: Prisma.JsonNullableFilter<"Payment">
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
-}, "id" | "orderId" | "transactionId">
+}, "id" | "orderId">
 
 export type PaymentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -347,11 +437,20 @@ export type PaymentOrderByWithAggregationInput = {
   paid_amount?: Prisma.SortOrder
   seller_required_amount?: Prisma.SortOrder
   seller_received_amount?: Prisma.SortOrder
-  isPaid?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  stripe_status?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   paymentIntentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  checkoutSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripeTransferId?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripeRefundId?: Prisma.SortOrderInput | Prisma.SortOrder
+  transferGroup?: Prisma.SortOrderInput | Prisma.SortOrder
+  sellerConnectAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
+  escrowedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  releasedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reconciledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentData?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -372,11 +471,20 @@ export type PaymentScalarWhereWithAggregatesInput = {
   paid_amount?: Prisma.FloatWithAggregatesFilter<"Payment"> | number
   seller_required_amount?: Prisma.FloatWithAggregatesFilter<"Payment"> | number
   seller_received_amount?: Prisma.FloatWithAggregatesFilter<"Payment"> | number
-  isPaid?: Prisma.BoolWithAggregatesFilter<"Payment"> | boolean
   status?: Prisma.EnumPaymentStatusWithAggregatesFilter<"Payment"> | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusWithAggregatesFilter<"Payment"> | $Enums.StripePaymentStatus
   orderId?: Prisma.StringWithAggregatesFilter<"Payment"> | string
   transactionId?: Prisma.StringWithAggregatesFilter<"Payment"> | string
   paymentIntentId?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  checkoutSessionId?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  stripeTransferId?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  stripeRefundId?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  transferGroup?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  sellerConnectAccountId?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  escrowedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
+  releasedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
+  refundedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
+  reconciledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
   paymentData?: Prisma.JsonNullableWithAggregatesFilter<"Payment">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
@@ -388,10 +496,19 @@ export type PaymentCreateInput = {
   paid_amount?: number
   seller_required_amount?: number
   seller_received_amount?: number
-  isPaid?: boolean
   status?: $Enums.PaymentStatus
+  stripe_status?: $Enums.StripePaymentStatus
   transactionId: string
   paymentIntentId?: string | null
+  checkoutSessionId?: string | null
+  stripeTransferId?: string | null
+  stripeRefundId?: string | null
+  transferGroup?: string | null
+  sellerConnectAccountId?: string | null
+  escrowedAt?: Date | string | null
+  releasedAt?: Date | string | null
+  refundedAt?: Date | string | null
+  reconciledAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -406,11 +523,20 @@ export type PaymentUncheckedCreateInput = {
   paid_amount?: number
   seller_required_amount?: number
   seller_received_amount?: number
-  isPaid?: boolean
   status?: $Enums.PaymentStatus
+  stripe_status?: $Enums.StripePaymentStatus
   orderId: string
   transactionId: string
   paymentIntentId?: string | null
+  checkoutSessionId?: string | null
+  stripeTransferId?: string | null
+  stripeRefundId?: string | null
+  transferGroup?: string | null
+  sellerConnectAccountId?: string | null
+  escrowedAt?: Date | string | null
+  releasedAt?: Date | string | null
+  refundedAt?: Date | string | null
+  reconciledAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -422,10 +548,19 @@ export type PaymentUpdateInput = {
   paid_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_required_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_received_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
   paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeTransferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transferGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escrowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -440,11 +575,20 @@ export type PaymentUncheckedUpdateInput = {
   paid_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_required_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_received_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
   paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeTransferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transferGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escrowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -457,11 +601,20 @@ export type PaymentCreateManyInput = {
   paid_amount?: number
   seller_required_amount?: number
   seller_received_amount?: number
-  isPaid?: boolean
   status?: $Enums.PaymentStatus
+  stripe_status?: $Enums.StripePaymentStatus
   orderId: string
   transactionId: string
   paymentIntentId?: string | null
+  checkoutSessionId?: string | null
+  stripeTransferId?: string | null
+  stripeRefundId?: string | null
+  transferGroup?: string | null
+  sellerConnectAccountId?: string | null
+  escrowedAt?: Date | string | null
+  releasedAt?: Date | string | null
+  refundedAt?: Date | string | null
+  reconciledAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -473,10 +626,19 @@ export type PaymentUpdateManyMutationInput = {
   paid_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_required_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_received_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
   paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeTransferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transferGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escrowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -489,11 +651,20 @@ export type PaymentUncheckedUpdateManyInput = {
   paid_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_required_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_received_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
   paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeTransferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transferGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escrowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -511,11 +682,20 @@ export type PaymentCountOrderByAggregateInput = {
   paid_amount?: Prisma.SortOrder
   seller_required_amount?: Prisma.SortOrder
   seller_received_amount?: Prisma.SortOrder
-  isPaid?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  stripe_status?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   paymentIntentId?: Prisma.SortOrder
+  checkoutSessionId?: Prisma.SortOrder
+  stripeTransferId?: Prisma.SortOrder
+  stripeRefundId?: Prisma.SortOrder
+  transferGroup?: Prisma.SortOrder
+  sellerConnectAccountId?: Prisma.SortOrder
+  escrowedAt?: Prisma.SortOrder
+  releasedAt?: Prisma.SortOrder
+  refundedAt?: Prisma.SortOrder
+  reconciledAt?: Prisma.SortOrder
   paymentData?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -535,11 +715,20 @@ export type PaymentMaxOrderByAggregateInput = {
   paid_amount?: Prisma.SortOrder
   seller_required_amount?: Prisma.SortOrder
   seller_received_amount?: Prisma.SortOrder
-  isPaid?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  stripe_status?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   paymentIntentId?: Prisma.SortOrder
+  checkoutSessionId?: Prisma.SortOrder
+  stripeTransferId?: Prisma.SortOrder
+  stripeRefundId?: Prisma.SortOrder
+  transferGroup?: Prisma.SortOrder
+  sellerConnectAccountId?: Prisma.SortOrder
+  escrowedAt?: Prisma.SortOrder
+  releasedAt?: Prisma.SortOrder
+  refundedAt?: Prisma.SortOrder
+  reconciledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -551,11 +740,20 @@ export type PaymentMinOrderByAggregateInput = {
   paid_amount?: Prisma.SortOrder
   seller_required_amount?: Prisma.SortOrder
   seller_received_amount?: Prisma.SortOrder
-  isPaid?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  stripe_status?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   paymentIntentId?: Prisma.SortOrder
+  checkoutSessionId?: Prisma.SortOrder
+  stripeTransferId?: Prisma.SortOrder
+  stripeRefundId?: Prisma.SortOrder
+  transferGroup?: Prisma.SortOrder
+  sellerConnectAccountId?: Prisma.SortOrder
+  escrowedAt?: Prisma.SortOrder
+  releasedAt?: Prisma.SortOrder
+  refundedAt?: Prisma.SortOrder
+  reconciledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -613,6 +811,14 @@ export type EnumPaymentStatusFieldUpdateOperationsInput = {
   set?: $Enums.PaymentStatus
 }
 
+export type EnumStripePaymentStatusFieldUpdateOperationsInput = {
+  set?: $Enums.StripePaymentStatus
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type PaymentCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.PaymentCreateWithoutUserInput, Prisma.PaymentUncheckedCreateWithoutUserInput> | Prisma.PaymentCreateWithoutUserInput[] | Prisma.PaymentUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.PaymentCreateOrConnectWithoutUserInput | Prisma.PaymentCreateOrConnectWithoutUserInput[]
@@ -661,10 +867,19 @@ export type PaymentCreateWithoutOrderInput = {
   paid_amount?: number
   seller_required_amount?: number
   seller_received_amount?: number
-  isPaid?: boolean
   status?: $Enums.PaymentStatus
+  stripe_status?: $Enums.StripePaymentStatus
   transactionId: string
   paymentIntentId?: string | null
+  checkoutSessionId?: string | null
+  stripeTransferId?: string | null
+  stripeRefundId?: string | null
+  transferGroup?: string | null
+  sellerConnectAccountId?: string | null
+  escrowedAt?: Date | string | null
+  releasedAt?: Date | string | null
+  refundedAt?: Date | string | null
+  reconciledAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -678,10 +893,19 @@ export type PaymentUncheckedCreateWithoutOrderInput = {
   paid_amount?: number
   seller_required_amount?: number
   seller_received_amount?: number
-  isPaid?: boolean
   status?: $Enums.PaymentStatus
+  stripe_status?: $Enums.StripePaymentStatus
   transactionId: string
   paymentIntentId?: string | null
+  checkoutSessionId?: string | null
+  stripeTransferId?: string | null
+  stripeRefundId?: string | null
+  transferGroup?: string | null
+  sellerConnectAccountId?: string | null
+  escrowedAt?: Date | string | null
+  releasedAt?: Date | string | null
+  refundedAt?: Date | string | null
+  reconciledAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -709,10 +933,19 @@ export type PaymentUpdateWithoutOrderInput = {
   paid_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_required_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_received_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
   paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeTransferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transferGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escrowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -726,10 +959,19 @@ export type PaymentUncheckedUpdateWithoutOrderInput = {
   paid_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_required_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_received_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
   paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeTransferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transferGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escrowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -741,10 +983,19 @@ export type PaymentCreateWithoutUserInput = {
   paid_amount?: number
   seller_required_amount?: number
   seller_received_amount?: number
-  isPaid?: boolean
   status?: $Enums.PaymentStatus
+  stripe_status?: $Enums.StripePaymentStatus
   transactionId: string
   paymentIntentId?: string | null
+  checkoutSessionId?: string | null
+  stripeTransferId?: string | null
+  stripeRefundId?: string | null
+  transferGroup?: string | null
+  sellerConnectAccountId?: string | null
+  escrowedAt?: Date | string | null
+  releasedAt?: Date | string | null
+  refundedAt?: Date | string | null
+  reconciledAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -757,11 +1008,20 @@ export type PaymentUncheckedCreateWithoutUserInput = {
   paid_amount?: number
   seller_required_amount?: number
   seller_received_amount?: number
-  isPaid?: boolean
   status?: $Enums.PaymentStatus
+  stripe_status?: $Enums.StripePaymentStatus
   orderId: string
   transactionId: string
   paymentIntentId?: string | null
+  checkoutSessionId?: string | null
+  stripeTransferId?: string | null
+  stripeRefundId?: string | null
+  transferGroup?: string | null
+  sellerConnectAccountId?: string | null
+  escrowedAt?: Date | string | null
+  releasedAt?: Date | string | null
+  refundedAt?: Date | string | null
+  reconciledAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -803,11 +1063,20 @@ export type PaymentScalarWhereInput = {
   paid_amount?: Prisma.FloatFilter<"Payment"> | number
   seller_required_amount?: Prisma.FloatFilter<"Payment"> | number
   seller_received_amount?: Prisma.FloatFilter<"Payment"> | number
-  isPaid?: Prisma.BoolFilter<"Payment"> | boolean
   status?: Prisma.EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFilter<"Payment"> | $Enums.StripePaymentStatus
   orderId?: Prisma.StringFilter<"Payment"> | string
   transactionId?: Prisma.StringFilter<"Payment"> | string
   paymentIntentId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  checkoutSessionId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  stripeTransferId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  stripeRefundId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  transferGroup?: Prisma.StringNullableFilter<"Payment"> | string | null
+  sellerConnectAccountId?: Prisma.StringNullableFilter<"Payment"> | string | null
+  escrowedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  releasedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  refundedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  reconciledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   paymentData?: Prisma.JsonNullableFilter<"Payment">
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
@@ -819,11 +1088,20 @@ export type PaymentCreateManyUserInput = {
   paid_amount?: number
   seller_required_amount?: number
   seller_received_amount?: number
-  isPaid?: boolean
   status?: $Enums.PaymentStatus
+  stripe_status?: $Enums.StripePaymentStatus
   orderId: string
   transactionId: string
   paymentIntentId?: string | null
+  checkoutSessionId?: string | null
+  stripeTransferId?: string | null
+  stripeRefundId?: string | null
+  transferGroup?: string | null
+  sellerConnectAccountId?: string | null
+  escrowedAt?: Date | string | null
+  releasedAt?: Date | string | null
+  refundedAt?: Date | string | null
+  reconciledAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -835,10 +1113,19 @@ export type PaymentUpdateWithoutUserInput = {
   paid_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_required_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_received_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
   paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeTransferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transferGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escrowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -851,11 +1138,20 @@ export type PaymentUncheckedUpdateWithoutUserInput = {
   paid_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_required_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_received_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
   paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeTransferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transferGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escrowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -867,11 +1163,20 @@ export type PaymentUncheckedUpdateManyWithoutUserInput = {
   paid_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_required_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   seller_received_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
   paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeTransferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transferGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escrowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -886,11 +1191,20 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   paid_amount?: boolean
   seller_required_amount?: boolean
   seller_received_amount?: boolean
-  isPaid?: boolean
   status?: boolean
+  stripe_status?: boolean
   orderId?: boolean
   transactionId?: boolean
   paymentIntentId?: boolean
+  checkoutSessionId?: boolean
+  stripeTransferId?: boolean
+  stripeRefundId?: boolean
+  transferGroup?: boolean
+  sellerConnectAccountId?: boolean
+  escrowedAt?: boolean
+  releasedAt?: boolean
+  refundedAt?: boolean
+  reconciledAt?: boolean
   paymentData?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -905,11 +1219,20 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   paid_amount?: boolean
   seller_required_amount?: boolean
   seller_received_amount?: boolean
-  isPaid?: boolean
   status?: boolean
+  stripe_status?: boolean
   orderId?: boolean
   transactionId?: boolean
   paymentIntentId?: boolean
+  checkoutSessionId?: boolean
+  stripeTransferId?: boolean
+  stripeRefundId?: boolean
+  transferGroup?: boolean
+  sellerConnectAccountId?: boolean
+  escrowedAt?: boolean
+  releasedAt?: boolean
+  refundedAt?: boolean
+  reconciledAt?: boolean
   paymentData?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -924,11 +1247,20 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   paid_amount?: boolean
   seller_required_amount?: boolean
   seller_received_amount?: boolean
-  isPaid?: boolean
   status?: boolean
+  stripe_status?: boolean
   orderId?: boolean
   transactionId?: boolean
   paymentIntentId?: boolean
+  checkoutSessionId?: boolean
+  stripeTransferId?: boolean
+  stripeRefundId?: boolean
+  transferGroup?: boolean
+  sellerConnectAccountId?: boolean
+  escrowedAt?: boolean
+  releasedAt?: boolean
+  refundedAt?: boolean
+  reconciledAt?: boolean
   paymentData?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -943,17 +1275,26 @@ export type PaymentSelectScalar = {
   paid_amount?: boolean
   seller_required_amount?: boolean
   seller_received_amount?: boolean
-  isPaid?: boolean
   status?: boolean
+  stripe_status?: boolean
   orderId?: boolean
   transactionId?: boolean
   paymentIntentId?: boolean
+  checkoutSessionId?: boolean
+  stripeTransferId?: boolean
+  stripeRefundId?: boolean
+  transferGroup?: boolean
+  sellerConnectAccountId?: boolean
+  escrowedAt?: boolean
+  releasedAt?: boolean
+  refundedAt?: boolean
+  reconciledAt?: boolean
   paymentData?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "total_amount" | "paid_amount" | "seller_required_amount" | "seller_received_amount" | "isPaid" | "status" | "orderId" | "transactionId" | "paymentIntentId" | "paymentData" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "total_amount" | "paid_amount" | "seller_required_amount" | "seller_received_amount" | "status" | "stripe_status" | "orderId" | "transactionId" | "paymentIntentId" | "checkoutSessionId" | "stripeTransferId" | "stripeRefundId" | "transferGroup" | "sellerConnectAccountId" | "escrowedAt" | "releasedAt" | "refundedAt" | "reconciledAt" | "paymentData" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Payment$userArgs<ExtArgs>
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
@@ -980,11 +1321,20 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     paid_amount: number
     seller_required_amount: number
     seller_received_amount: number
-    isPaid: boolean
     status: $Enums.PaymentStatus
+    stripe_status: $Enums.StripePaymentStatus
     orderId: string
     transactionId: string
     paymentIntentId: string | null
+    checkoutSessionId: string | null
+    stripeTransferId: string | null
+    stripeRefundId: string | null
+    transferGroup: string | null
+    sellerConnectAccountId: string | null
+    escrowedAt: Date | null
+    releasedAt: Date | null
+    refundedAt: Date | null
+    reconciledAt: Date | null
     paymentData: runtime.JsonValue | null
     createdAt: Date
     updatedAt: Date
@@ -1419,11 +1769,20 @@ export interface PaymentFieldRefs {
   readonly paid_amount: Prisma.FieldRef<"Payment", 'Float'>
   readonly seller_required_amount: Prisma.FieldRef<"Payment", 'Float'>
   readonly seller_received_amount: Prisma.FieldRef<"Payment", 'Float'>
-  readonly isPaid: Prisma.FieldRef<"Payment", 'Boolean'>
   readonly status: Prisma.FieldRef<"Payment", 'PaymentStatus'>
+  readonly stripe_status: Prisma.FieldRef<"Payment", 'StripePaymentStatus'>
   readonly orderId: Prisma.FieldRef<"Payment", 'String'>
   readonly transactionId: Prisma.FieldRef<"Payment", 'String'>
   readonly paymentIntentId: Prisma.FieldRef<"Payment", 'String'>
+  readonly checkoutSessionId: Prisma.FieldRef<"Payment", 'String'>
+  readonly stripeTransferId: Prisma.FieldRef<"Payment", 'String'>
+  readonly stripeRefundId: Prisma.FieldRef<"Payment", 'String'>
+  readonly transferGroup: Prisma.FieldRef<"Payment", 'String'>
+  readonly sellerConnectAccountId: Prisma.FieldRef<"Payment", 'String'>
+  readonly escrowedAt: Prisma.FieldRef<"Payment", 'DateTime'>
+  readonly releasedAt: Prisma.FieldRef<"Payment", 'DateTime'>
+  readonly refundedAt: Prisma.FieldRef<"Payment", 'DateTime'>
+  readonly reconciledAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly paymentData: Prisma.FieldRef<"Payment", 'Json'>
   readonly createdAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Payment", 'DateTime'>

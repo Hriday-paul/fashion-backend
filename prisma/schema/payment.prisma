@@ -9,15 +9,26 @@ model Payment {
   seller_required_amount Float @default(0) // how much seller should receive
   seller_received_amount Float @default(0) // how much seller actually received
 
-  isPaid Boolean @default(false)
-
   status PaymentStatus @default(PENDING)
+
+  stripe_status StripePaymentStatus @default(PENDING) // for track transfer
 
   orderId String         @unique
   order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
-  transactionId   String  @unique
+  transactionId   String
   paymentIntentId String?
+  checkoutSessionId  String?        // Stripe Checkout Session ID
+  stripeTransferId   String?                // Stripe Transfer ID (platform → seller)
+  stripeRefundId     String?                // Stripe Refund ID
+  transferGroup      String?                // ties charge → transfer (e.g. "order_xxx")
+  sellerConnectAccountId String?            // seller এর Stripe Connect account ID
+
+  // ── Escrow timestamps ─────────────────────────────────────
+  escrowedAt   DateTime? // buyer paid — money held
+  releasedAt   DateTime?  // return window passed — seller can withdraw
+  refundedAt   DateTime?  // buyer refunded
+  reconciledAt DateTime?  // last reconciliation check
 
   paymentData Json?
 
@@ -32,4 +43,17 @@ enum PaymentStatus {
   PROCESSING
   SUCCESSED
   FAILED
+  CANCELLED //order cancelled
+  REFUNDED      // buyer refunded
+}
+
+enum StripePaymentStatus {
+  PENDING       // checkout created, not paid yet
+  ESCROWED      // buyer paid, captured, held by platform
+  DELIVERED     // delivery confirmed, pendingBalance started
+  RELEASED      // return window passed, seller can withdraw
+  REFUNDED   // buyer refunded
+  FAILED     // payment failed
+  CANCELLED  // order cancelled before delivery
+  DISPUTED      // dispute opened
 }

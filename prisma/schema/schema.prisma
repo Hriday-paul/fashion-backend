@@ -101,6 +101,8 @@ model User {
 
   billingAddress BillingDetails?
 
+  wallet Wallet?
+
   avgRating Float @default(0)
 
   @@map("users")

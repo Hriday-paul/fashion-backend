@@ -46,6 +46,9 @@ const checkout = async (orderId: string, userId: string) => {
       where: {
         orderId: order?.id,
         userId: userId,
+        status: {
+          notIn: ["FAILED", "CANCELLED", "REFUNDED"]
+        }
       }
     })
 
@@ -53,7 +56,7 @@ const checkout = async (orderId: string, userId: string) => {
 
     if (isExistPayment) {
 
-      if (isExistPayment?.isPaid) {
+      if (isExistPayment?.status == "SUCCESSED") {
         throw new AppError(httpStatus.BAD_REQUEST, "Payment already made success")
       }
 
@@ -65,7 +68,8 @@ const checkout = async (orderId: string, userId: string) => {
           paid_amount: 0,
           seller_required_amount: 0,
           seller_received_amount: 0,
-          isPaid: false
+          status: "PENDING",
+          stripe_status: "PENDING"
         },
         include: {
           user: true
@@ -84,9 +88,10 @@ const checkout = async (orderId: string, userId: string) => {
           paid_amount: 0,
           seller_required_amount: 0,
           seller_received_amount: 0,
-          isPaid: false,
+          status: "PENDING",
+          stripe_status: "PENDING",
           orderId: order?.id,
-          transactionId: tranId
+          transactionId: tranId,
         },
         include: {
           user: true
@@ -161,8 +166,14 @@ const confirmPayment = async (query: Record<string, any>) => {
       await transactionClient.payment.update({
         where: { id: paymentId },
         data: {
-          isPaid: true,
           status: "SUCCESSED",
+          stripe_status: "ESCROWED",
+          paymentIntentId,
+          checkoutSessionId: sessionId,
+          escrowedAt: new Date(),
+          paid_amount: PaymentSession?.amount_total || 0,
+          seller_received_amount: 0,
+          transferGroup : `order_${paymentId}`,
           paymentData: PaymentSession as any,
         }
       });
@@ -197,7 +208,7 @@ const getAllPayments = async (query: Record<string, unknown>, options: TPaginati
 
   const AndConditions: GeneratedPrisma.PaymentWhereInput[] = [
     {
-      isPaid: true
+      status : "SUCCESSED"
     }
   ];
 
@@ -258,7 +269,7 @@ const getAllPayments = async (query: Record<string, unknown>, options: TPaginati
   });
 
   const total_earning = await prisma.payment.aggregate({
-    where: { isPaid: true, status: "SUCCESSED" },
+    where: { status: "SUCCESSED" },
     _sum: { total_amount: true },
   })
 
@@ -267,7 +278,6 @@ const getAllPayments = async (query: Record<string, unknown>, options: TPaginati
 
   const today_earning = await prisma.payment.aggregate({
     where: {
-      isPaid: true,
       createdAt: {
         gte: startOfTodayUTC,
         lte: endOfTodayUTC,
@@ -301,7 +311,7 @@ const getPaymentsByUserId = async (
   const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
   const payments = await prisma.payment.findMany({
-    where: { userId, isPaid: true },
+    where: { userId, status : "SUCCESSED" },
     skip,
     take: limit,
     orderBy: {
@@ -312,7 +322,6 @@ const getPaymentsByUserId = async (
       id: true,
       total_amount: true,
       transactionId: true,
-      isPaid: true,
       createdAt: true,
     }
   })

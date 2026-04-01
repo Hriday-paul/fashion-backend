@@ -13,6 +13,7 @@ export const OrderStatus = {
   CONFIRMED: 'CONFIRMED',
   SHIPPED: 'SHIPPED',
   DELIVERED: 'DELIVERED',
+  COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED'
 } as const
 
@@ -32,10 +33,26 @@ export const PaymentStatus = {
   PENDING: 'PENDING',
   PROCESSING: 'PROCESSING',
   SUCCESSED: 'SUCCESSED',
-  FAILED: 'FAILED'
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
+  REFUNDED: 'REFUNDED'
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const StripePaymentStatus = {
+  PENDING: 'PENDING',
+  ESCROWED: 'ESCROWED',
+  DELIVERED: 'DELIVERED',
+  RELEASED: 'RELEASED',
+  REFUNDED: 'REFUNDED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
+  DISPUTED: 'DISPUTED'
+} as const
+
+export type StripePaymentStatus = (typeof StripePaymentStatus)[keyof typeof StripePaymentStatus]
 
 
 export const ReturnStatus = {
@@ -118,3 +135,21 @@ export const SettingKey = {
 } as const
 
 export type SettingKey = (typeof SettingKey)[keyof typeof SettingKey]
+
+
+export const CreaditType = {
+  PENDING: 'PENDING',
+  RELEASED: 'RELEASED',
+  REFUNDED: 'REFUNDED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type CreaditType = (typeof CreaditType)[keyof typeof CreaditType]
+
+
+export const TxType = {
+  DEBIT: 'DEBIT',
+  CREDIT: 'CREDIT'
+} as const
+
+export type TxType = (typeof TxType)[keyof typeof TxType]

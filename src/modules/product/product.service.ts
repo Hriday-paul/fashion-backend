@@ -10,7 +10,7 @@ import { BuildFingerPrint } from "../../utils/BuildfingerPrint";
 
 type ProductOtherPayload = {
     images: { key: string, url: string }[],
-    charities: { isAnonymous: boolean, charityId: string, percent: number }[]
+    charities: { isAnonymous: boolean, charityId: string}[]
 }
 
 const addNewProduct = async (payload: Product & ProductOtherPayload, role: string, userId: string) => {
@@ -211,7 +211,7 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
                     favourites: true
                 }
             },
-            // Add this 👇
+            // Add this
             favourites: userId
                 ? {
                     where: {

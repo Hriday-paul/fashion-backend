@@ -639,10 +639,6 @@ export type NullableFloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type ReturnCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.ReturnCreateWithoutItemsInput, Prisma.ReturnUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.ReturnCreateOrConnectWithoutItemsInput
