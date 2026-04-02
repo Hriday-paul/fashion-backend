@@ -173,16 +173,16 @@ const confirmPayment = async (query: Record<string, any>) => {
           escrowedAt: new Date(),
           paid_amount: PaymentSession?.amount_total || 0,
           seller_received_amount: 0,
-          transferGroup : `order_${paymentId}`,
+          transferGroup: `order_${paymentId}`,
           paymentData: PaymentSession as any,
         }
       });
 
-
-      sendAdminNotifications({
-        title: "New Order Payment Received",
-        message: `A new Order payment has been successfully received from a customer. Transaction id is : ${payment?.transactionId}`
-      });
+      //send notification
+      // sendAdminNotifications({
+      //   title: "New Order Payment Received",
+      //   message: `A new Order payment has been successfully received from a customer. Transaction id is : ${payment?.transactionId}`
+      // });
 
     })
 
@@ -194,8 +194,23 @@ const confirmPayment = async (query: Record<string, any>) => {
         await stripe.refunds.create({
           payment_intent: paymentIntentId,
         });
+        await prisma.payment.update({
+          where: { id: paymentId },
+          data: {
+            status: "CANCELLED",
+            stripe_status: "CANCELLED",
+            paymentIntentId,
+            checkoutSessionId: sessionId,
+            escrowedAt: null,
+            paid_amount: 0,
+            seller_received_amount: 0,
+            transferGroup: `order_${paymentId}`,
+            paymentData: {},
+          }
+        });
       } catch (refundError: any) {
         console.error('Error processing refund:', refundError.message);
+        throw new AppError(httpStatus.BAD_GATEWAY, refundError.message);
       }
     }
 
@@ -208,7 +223,7 @@ const getAllPayments = async (query: Record<string, unknown>, options: TPaginati
 
   const AndConditions: GeneratedPrisma.PaymentWhereInput[] = [
     {
-      status : "SUCCESSED"
+      status: "SUCCESSED"
     }
   ];
 
@@ -311,7 +326,7 @@ const getPaymentsByUserId = async (
   const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
   const payments = await prisma.payment.findMany({
-    where: { userId, status : "SUCCESSED" },
+    where: { userId, status: "SUCCESSED" },
     skip,
     take: limit,
     orderBy: {

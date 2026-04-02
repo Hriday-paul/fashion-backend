@@ -42,6 +42,9 @@ export const createCheckoutSession = async (payload: IPayload) => {
 
     // `${config.server_url}/payments/cancel?paymentId=${payload?.paymentId}`,
     mode: 'payment',
+    payment_intent_data: {
+      transfer_group: `order_${payload.paymentId}`,
+    },
     // metadata: {
     //   user: JSON.stringify({
     //     paymentId: payment.id,

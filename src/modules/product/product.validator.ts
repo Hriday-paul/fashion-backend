@@ -79,6 +79,9 @@ export const addProductValidator: ValidationChain[] = [
   body("return_window")
     .optional()
     .isInt({ min: 0, max: 365 }).withMessage("Return window must be between 0 and 365 days"),
+  body("donation_percent")
+    .optional()
+    .isInt({ min: 0, max: 100 }).withMessage("Donation Percent must be between 0 and 100").toInt(),
 
   // Charities
   body("charities")
@@ -97,9 +100,7 @@ export const addProductValidator: ValidationChain[] = [
     .trim()
     .notEmpty().withMessage("Charity ID is required")
     .isUUID().withMessage("Invalid charity ID"),
-  body("charities.*.percent")
-    .notEmpty().withMessage("Charity percent is required")
-    .isFloat({ min: 0.1, max: 100 }).withMessage("Charity percent must be between 0.1 and 100"),
+  
   body("charities.*.isAnonymous")
     .optional()
     .isBoolean().withMessage("isAnonymous must be a boolean"),

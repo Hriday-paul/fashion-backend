@@ -1,5 +1,8 @@
 import { Order, OrderItem } from "../../../generated/prisma/client";
+import AppError from "../../error/AppError";
+import { DistributePaymentQueue } from "../../queues/payment.queue";
 import prisma from "../../shared/prisma";
+import httpStatus from "http-status"
 
 const findUnpaidOrder = async (
     userId: string,
@@ -207,6 +210,47 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
 
 
     return result
+
+}
+
+const confirmOrderReceived = async (orderId: string, userId: string) => {
+    //check exist order received
+    const order = await prisma.order.findFirst({
+        where: {
+            id: orderId,
+        }
+    })
+
+    if (!order) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order not found")
+    }
+
+    //check order is delivered or not
+    if (order?.status !== "DELIVERED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Request Invalid")
+    }
+
+    //mark order received
+    await prisma.order.update({
+        where: {
+            id: orderId
+        },
+        data: {
+            status: "COMPLETED"
+        }
+    })
+
+    // distribute the payment
+    await DistributePaymentQueue.add(
+        "distribute-payment",
+        { orderId },
+        {
+            jobId: order?.id,
+            removeOnComplete: true,
+        }
+    );
+
+
 
 }
 
