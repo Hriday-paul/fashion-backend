@@ -1,3 +1,58 @@
+// ─── NEW: groups all items from one seller within an order ───────────────────
+model OrderSellerGroup {
+    id String @id @default(uuid())
+
+    orderId String
+    order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+    sellerId String
+    seller   User   @relation(fields: [sellerId], references: [id], onDelete: Restrict)
+
+    items OrderItem[]
+
+    delivery OrderSellerDelivery?
+
+    subtotal Float @default(0) // sum of all item totalPrices in this group
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([orderId, sellerId]) // one group per seller per order
+    @@index([orderId])
+    @@index([sellerId])
+    @@map("order_seller_groups")
+}
+
+// ─── NEW: delivery charge per seller group ───────────────────────────────────
+model OrderSellerDelivery {
+    id String @id @default(uuid())
+
+    sellerGroupId String            @unique
+    sellerGroup   OrderSellerGroup  @relation(fields: [sellerGroupId], references: [id], onDelete: Cascade)
+
+    totalItems     Int    @default(0)// snapshot: total item count at time of order
+    totalWeight    Float  @default(0)// snapshot: total weight (kg) at time of order
+
+    baseCharge     Float  @default(0)// charge calculated from count/weight
+    discount       Float  @default(0)
+    finalCharge    Float  @default(0)// baseCharge - discount
+
+    status         DeliveryChargeStatus @default(UNPAID)
+
+    paidAt    DateTime?
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+
+    @@map("order_seller_deliveries")
+}
+
+enum DeliveryChargeStatus {
+    UNPAID
+    PAID
+    WAIVED
+    REFUNDED
+}
+
 model Order {
     id String @id @default(uuid())
 
@@ -11,13 +66,17 @@ model Order {
     userId String
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    items     OrderItem[]
+    // items     OrderItem[]
 
     return Return[]
 
+    sellerGroups OrderSellerGroup[] // NEW
+
     payment Payment?
 
-    totalPrice Float @default(0)
+    itemsTotal        Float @default(0) // sum of all item prices
+    totalDelivery     Float @default(0) // NEW: sum of all seller delivery charges
+    totalPrice Float @default(0) // itemsTotal + total Delivery charge
 
     @@index([userId])
     @@map("orders")
@@ -35,13 +94,18 @@ enum OrderStatus {
 model OrderItem {
     id String @id @default(uuid())
 
-    orderId String
-    order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+    // orderId String
+    // order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+    // NEW: link to seller group
+    sellerGroupId String
+    sellerGroup   OrderSellerGroup @relation(fields: [sellerGroupId], references: [id], onDelete: Cascade)
 
     productId String
     product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
 
     quantity   Int
+    weight     Float  @default(0) // NEW: snapshot of product weight at order time
     unitPrice  Float  // snapshot of price at time of order
     totalPrice Float  // unitPrice * quantity
 
@@ -55,7 +119,8 @@ model OrderItem {
     extra_donation Float @default(0)
     donations SellDonation[]
 
-    @@index([orderId])
+    // @@index([orderId])
+    @@index([sellerGroupId]) // NEW
 }
 
 model SellDonation {
@@ -75,10 +140,10 @@ model SellDonation {
     createdAt DateTime @default(now())
 
     orderItemId String
-    orderItem   OrderItem @relation(fields: [orderItemId], references: [id])
+    orderItem   OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
 
     charityId String
-    charity   User   @relation(fields: [charityId], references: [id])
+    charity   User   @relation(fields: [charityId], references: [id], onDelete: Restrict)
 
     @@map("sellItemMoneyDonations")
 }

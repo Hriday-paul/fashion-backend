@@ -10,7 +10,7 @@ import { BuildFingerPrint } from "../../utils/BuildfingerPrint";
 
 type ProductOtherPayload = {
     images: { key: string, url: string }[],
-    charities: { isAnonymous: boolean, charityId: string}[]
+    charities: { isAnonymous: boolean, charityId: string }[]
 }
 
 const addNewProduct = async (payload: Product & ProductOtherPayload, role: string, userId: string) => {
@@ -445,11 +445,14 @@ const topSellingProducts = async (userId?: string) => {
         where: {
             orderItems: {
                 some: {
-                    order: {
-                        status: "DELIVERED"
+                    sellerGroup: {
+                        order: {
+                            status: "DELIVERED"
+                        }
                     }
                 }
             },
+            isDeleted : false
         },
         orderBy: {
             orderItems: { _count: 'desc' }  // sort by number of order items

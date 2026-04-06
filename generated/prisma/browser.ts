@@ -52,6 +52,16 @@ export type Message = Prisma.MessageModel
  */
 export type FileMessage = Prisma.FileMessageModel
 /**
+ * Model OrderSellerGroup
+ * 
+ */
+export type OrderSellerGroup = Prisma.OrderSellerGroupModel
+/**
+ * Model OrderSellerDelivery
+ * 
+ */
+export type OrderSellerDelivery = Prisma.OrderSellerDeliveryModel
+/**
  * Model Order
  * 
  */

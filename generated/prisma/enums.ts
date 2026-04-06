@@ -8,6 +8,16 @@
 * 🟢 You can import this file directly.
 */
 
+export const DeliveryChargeStatus = {
+  UNPAID: 'UNPAID',
+  PAID: 'PAID',
+  WAIVED: 'WAIVED',
+  REFUNDED: 'REFUNDED'
+} as const
+
+export type DeliveryChargeStatus = (typeof DeliveryChargeStatus)[keyof typeof DeliveryChargeStatus]
+
+
 export const OrderStatus = {
   PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',

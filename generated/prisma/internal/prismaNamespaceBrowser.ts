@@ -55,6 +55,8 @@ export const ModelName = {
   ChatParticipant: 'ChatParticipant',
   Message: 'Message',
   FileMessage: 'FileMessage',
+  OrderSellerGroup: 'OrderSellerGroup',
+  OrderSellerDelivery: 'OrderSellerDelivery',
   Order: 'Order',
   OrderItem: 'OrderItem',
   SellDonation: 'SellDonation',
@@ -175,12 +177,43 @@ export const FileMessageScalarFieldEnum = {
 export type FileMessageScalarFieldEnum = (typeof FileMessageScalarFieldEnum)[keyof typeof FileMessageScalarFieldEnum]
 
 
+export const OrderSellerGroupScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  sellerId: 'sellerId',
+  subtotal: 'subtotal',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrderSellerGroupScalarFieldEnum = (typeof OrderSellerGroupScalarFieldEnum)[keyof typeof OrderSellerGroupScalarFieldEnum]
+
+
+export const OrderSellerDeliveryScalarFieldEnum = {
+  id: 'id',
+  sellerGroupId: 'sellerGroupId',
+  totalItems: 'totalItems',
+  totalWeight: 'totalWeight',
+  baseCharge: 'baseCharge',
+  discount: 'discount',
+  finalCharge: 'finalCharge',
+  status: 'status',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrderSellerDeliveryScalarFieldEnum = (typeof OrderSellerDeliveryScalarFieldEnum)[keyof typeof OrderSellerDeliveryScalarFieldEnum]
+
+
 export const OrderScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   status: 'status',
   userId: 'userId',
+  itemsTotal: 'itemsTotal',
+  totalDelivery: 'totalDelivery',
   totalPrice: 'totalPrice'
 } as const
 
@@ -189,9 +222,10 @@ export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof Or
 
 export const OrderItemScalarFieldEnum = {
   id: 'id',
-  orderId: 'orderId',
+  sellerGroupId: 'sellerGroupId',
   productId: 'productId',
   quantity: 'quantity',
+  weight: 'weight',
   unitPrice: 'unitPrice',
   totalPrice: 'totalPrice',
   createdAt: 'createdAt',

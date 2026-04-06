@@ -97,6 +97,7 @@ model User {
   returnsAsSeller Return[] @relation("ReturnSeller")
 
   orders       Order[]
+  ordersByGroup       OrderSellerGroup[]
   productViews ProductView[]
 
   billingAddress BillingDetails?

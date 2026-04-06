@@ -11,30 +11,32 @@ interface IPayload {
   products: {
     amount: number;
     name: string;
-    images : string[]
+    description ?: string
+    images: string[]
     quantity: number;
   }[];
   // customerId: string;
   paymentId: string;
-  user : User
+  user: User
 }
 
 export const createCheckoutSession = async (payload: IPayload) => {
 
   const paymentGatewayData = await stripe.checkout.sessions.create({
-    line_items: payload?.products?.map(prod=>({
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: prod?.name,
-            images : prod?.images
-          },
-          unit_amount: Math.round(prod?.amount * 100),
+    line_items: payload?.products?.map(prod => ({
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          name: prod?.name,
+          description : prod?.description,
+          images: prod?.images
         },
-        quantity: prod?.quantity,
-      })),
+        unit_amount: Math.round(prod?.amount * 100),
+      },
+      quantity: prod?.quantity,
+    })),
 
-    customer_email : payload?.user?.email ?? undefined,
+    customer_email: payload?.user?.email ?? undefined,
 
     success_url: `${config.SERVER_URL}/payments/confirm-payment?sessionId={CHECKOUT_SESSION_ID}&paymentId=${payload?.paymentId}`,
 
@@ -64,6 +66,6 @@ export const createCheckoutSession = async (payload: IPayload) => {
     payment_method_types: ['card', "us_bank_account"],
     // payment_method_types: ['card'], //, 'paypal'
   });
-  
+
   return paymentGatewayData;
 };
