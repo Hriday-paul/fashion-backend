@@ -1241,10 +1241,12 @@ export type UserCreateNestedOneWithoutBillingAddressInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutBillingAddressNestedInput = {
+export type UserUpdateOneWithoutBillingAddressNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutBillingAddressInput, Prisma.UserUncheckedCreateWithoutBillingAddressInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutBillingAddressInput
   upsert?: Prisma.UserUpsertWithoutBillingAddressInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBillingAddressInput, Prisma.UserUpdateWithoutBillingAddressInput>, Prisma.UserUncheckedUpdateWithoutBillingAddressInput>
 }

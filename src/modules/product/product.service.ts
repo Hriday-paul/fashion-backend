@@ -206,12 +206,13 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
                     picture: true
                 },
             },
+            //favourite count
             _count: {
                 select: {
                     favourites: true
                 }
             },
-            // Add this
+            // is Favourites by user
             favourites: userId
                 ? {
                     where: {
@@ -252,7 +253,7 @@ async function getViewKey(req: Request, productId?: string) {
     };
 }
 
-const productDetails = async (productId: string, req: Request, userId?: string,) => {
+const productDetails = async (productId: string, req: Request, userId?: string) => {
 
     const details = await prisma.product.findFirst({
         where: {
@@ -263,7 +264,17 @@ const productDetails = async (productId: string, req: Request, userId?: string,)
             brand: true,
             size: true,
             images: true,
-            charities: true,
+            charities: {
+                include: {
+                    charity: {
+                        select: {
+                            fname: true,
+                            lname: true,
+                            userName: true
+                        }
+                    }
+                }
+            },
             user: {
                 include: {
                     auth: {
@@ -317,10 +328,10 @@ const productDetails = async (productId: string, req: Request, userId?: string,)
         })
     }
 
-    // const categoryChain = await categoryService.getParentChain(details?.categoryId);
+    const categoryChain = await categoryService.getParentChain(details?.categoryId);
 
-    // return { ...details, cat_parent_chain: categoryChain };
-    return details;
+    return { ...details, catagory_hierarchy: categoryChain };
+    // return details;
 }
 
 const recentViewProducts = async (viewKey: string) => {
@@ -452,7 +463,7 @@ const topSellingProducts = async (userId?: string) => {
                     }
                 }
             },
-            isDeleted : false
+            isDeleted: false
         },
         orderBy: {
             orderItems: { _count: 'desc' }  // sort by number of order items

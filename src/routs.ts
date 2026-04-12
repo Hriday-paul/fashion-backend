@@ -11,6 +11,7 @@ import { categoryRouter } from './modules/category/category.rout';
 import { productRouts } from './modules/product/product.rout';
 import { favouriteRouts } from './modules/favourite/favourite.rout';
 import { orderRouts } from './modules/order/order.rout';
+import { paymentsRoutes } from './modules/payments/payments.route';
 
 const router = express.Router();
 
@@ -27,10 +28,10 @@ const moduleRoutes = [
         path: '/messages',
         route: messagesRoutes,
     },
-    // {
-    //     path: '/payments',
-    //     route: paymentsRoutes,
-    // },
+    {
+        path: '/payments',
+        route: paymentsRoutes,
+    },
     {
         path: '/notifications',
         route: notificationRoutes,

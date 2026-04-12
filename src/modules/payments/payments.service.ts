@@ -142,6 +142,13 @@ const checkout = async (orderId: string, userId: string) => {
       quantity: 1,
     }
 
+    const treeCost = {
+      amount: order?.treeCredit,
+      images: [],
+      name: "Tree plantation cost",
+      quantity: 1,
+    }
+
     // build delivery charge line item
     const deliveryLines = (order?.sellerGroups);
     const totalDeliveryCharge = deliveryLines.reduce((sum, d) => sum + (d.delivery?.finalCharge || 0), 0);
@@ -159,7 +166,7 @@ const checkout = async (orderId: string, userId: string) => {
 
     const checkoutSession = await createCheckoutSession({
       // customerId: customer.id,
-      products: [...products, donation_charge, delivary_charge],
+      products: [...products, donation_charge, delivary_charge, treeCost],
       user: paymentData?.user,
       paymentId: paymentData?.id,
     });
@@ -199,6 +206,10 @@ const confirmPayment = async (query: Record<string, any>) => {
         throw new AppError(httpStatus.NOT_FOUND, "Payment not found");
       }
 
+      if (payment?.status == "SUCCESSED") {
+        return;
+      }
+
       await transactionClient.payment.update({
         where: { id: paymentId },
         data: {
@@ -207,7 +218,7 @@ const confirmPayment = async (query: Record<string, any>) => {
           paymentIntentId,
           checkoutSessionId: sessionId,
           escrowedAt: new Date(),
-          paid_amount: PaymentSession?.amount_total || 0,
+          paid_amount: (PaymentSession?.amount_total || 0) / 100,
           seller_received_amount: 0,
           transferGroup: `order_${paymentId}`,
           paymentData: PaymentSession as any,

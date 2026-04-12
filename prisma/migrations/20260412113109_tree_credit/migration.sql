@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "orders" ADD COLUMN     "treeCredit" DOUBLE PRECISION NOT NULL DEFAULT 0;

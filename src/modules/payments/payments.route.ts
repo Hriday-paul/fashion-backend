@@ -5,14 +5,15 @@ import auth from '../../middleware/auth';
 import { checkoutValidator } from './payments.validation';
 import req_validator from '../../middleware/req_validation';
 import { Role } from '../../../generated/prisma/enums';
+import { allRoles } from '../user/user.rout';
 
 const router = Router();
 
-router.post('/checkout', checkoutValidator, req_validator(), auth(Role.User), paymentsController.checkout);
+router.post('/checkout', checkoutValidator, req_validator(), auth(Role.INDIVIDUAL_USER), paymentsController.checkout);
 
 router.get(
   '/my-payment',
-  auth(Role.User),
+  auth(...allRoles),
   paymentsController.getPaymentsByUserId,
 );
 

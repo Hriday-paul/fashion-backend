@@ -74,9 +74,13 @@ model Order {
 
     payment Payment?
 
+    billingId String?
+    billingDetails BillingDetails? @relation(fields: [billingId], references: [id], onDelete: Restrict)
+
     itemsTotal        Float @default(0) // sum of all item prices
     totalDelivery     Float @default(0) // NEW: sum of all seller delivery charges
     totalPrice Float @default(0) // itemsTotal + total Delivery charge
+    treeCredit Float @default(0) // gifted for tree planner
 
     @@index([userId])
     @@map("orders")

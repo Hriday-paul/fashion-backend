@@ -198,15 +198,16 @@ const allCharies = async () => {
 }
 
 const addOrUpdateBillingDetails = async (payload: BillingDetails, userId: string) => {
-    const res = await prisma.billingDetails.upsert({
-        where: { userId },
-        create: {
+    const existDefaultBillingDetails = await prisma.billingDetails.findFirst({ where: { userId } });
+    if (existDefaultBillingDetails) {
+        await prisma.billingDetails.update({ where: { userId }, data: { userId: null } });
+    }
+    const res = await prisma.billingDetails.create({
+        data: {
             ...payload,
             userId
-        },
-        update: payload,
+        }
     })
-
     return res;
 }
 

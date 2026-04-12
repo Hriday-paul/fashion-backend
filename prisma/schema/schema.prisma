@@ -131,14 +131,18 @@ model AccountDocument {
 
 model BillingDetails {
   id        String  @id @default(uuid())
-  userId    String  @unique
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String? @unique
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade) // for set on default to user
   country   String
   full_name String?
   address1  String
   address2  String?
   zip_code  String
+  state String
+  email String?
   city      String
+
+  orders  Order[]
 
   contact String?
 

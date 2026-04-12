@@ -6,7 +6,8 @@ import httpStatus from "http-status"
 
 const findUnpaidOrder = async (
     userId: string,
-    orderItems: { productId: string; quantity: number, extra_donation: number, charities: string[] }[]
+    orderItems: { productId: string; quantity: number, extra_donation: number, charities: string[] }[],
+    treeCredit: number
 ) => {
     const pendingOrders = await prisma.order.findMany({
         where: {
@@ -62,6 +63,10 @@ const findUnpaidOrder = async (
     };
 
     const matchedOrder = pendingOrders.find((order) => {
+
+        // ✅ Check treeCredit matches
+        if (order.treeCredit !== treeCredit) return false;
+
         // Flatten all items across all seller groups
         const allExistingItems = order.sellerGroups.flatMap((g) => g.items);
 
@@ -87,7 +92,13 @@ interface PayloadItem extends OrderItem {
 }
 
 const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId: string): Promise<Order> => {
-    const { products } = payload;
+    const { products, treeCredit } = payload;
+
+    const billing_details = await prisma.billingDetails.findFirst({ where: { userId } });
+
+    if (!billing_details) {
+        throw new AppError(httpStatus.NOT_FOUND, "Billing details is required")
+    }
 
     // Fetch prices
     const prod_prices = await prisma.product.findMany({
@@ -152,14 +163,15 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
         const product = products.find((i) => i.productId === p.id)!;
         const total_price = p.finalPrice * (product.quantity || 0);
         const donation_percent = p.donation_percent || 0;
+        const extra_donation = product.extra_donation ?? 0
 
         return {
             productId: p.id,
             sellerId: p.userId, // for grouping
             unitPrice: p.finalPrice,
-            totalPrice: total_price,
+            totalPrice: total_price + extra_donation,
             quantity: product.quantity || 0,
-            extra_donation: product.extra_donation ?? 0,
+            extra_donation,
             donation_percent,
             donation_amount: total_price * (donation_percent / 100),
             charities: product.charities ?? [],
@@ -177,10 +189,11 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
     );
 
     // Calculate items total
-    const itemsTotal = orderItems.reduce((sum, item) => sum + item.totalPrice, 0);
+    const itemsTotal = orderItems.reduce((sum, item) => sum + item.totalPrice, 0) + Number(treeCredit || 0);
+    
 
     //checking have already unpaid order 
-    const existingOrder = await findUnpaidOrder(userId, orderItems);
+    const existingOrder = await findUnpaidOrder(userId, orderItems, (payload?.treeCredit || 0));
     if (existingOrder) {
         return existingOrder
     }
@@ -188,8 +201,10 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
     const result = await prisma.order.create({
         data: {
             totalPrice: itemsTotal,
+            treeCredit: treeCredit ?? 0,
             userId,
             status: 'PENDING',
+            billingId: billing_details?.id,
             sellerGroups: {
                 create: Object.entries(groupedBySeller).map(([sellerId, items]) => {
                     const subtotal = items.reduce((sum, i) => sum + i.totalPrice, 0);

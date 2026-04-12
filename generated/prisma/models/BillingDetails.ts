@@ -31,6 +31,8 @@ export type BillingDetailsMinAggregateOutputType = {
   address1: string | null
   address2: string | null
   zip_code: string | null
+  state: string | null
+  email: string | null
   city: string | null
   contact: string | null
 }
@@ -43,6 +45,8 @@ export type BillingDetailsMaxAggregateOutputType = {
   address1: string | null
   address2: string | null
   zip_code: string | null
+  state: string | null
+  email: string | null
   city: string | null
   contact: string | null
 }
@@ -55,6 +59,8 @@ export type BillingDetailsCountAggregateOutputType = {
   address1: number
   address2: number
   zip_code: number
+  state: number
+  email: number
   city: number
   contact: number
   _all: number
@@ -69,6 +75,8 @@ export type BillingDetailsMinAggregateInputType = {
   address1?: true
   address2?: true
   zip_code?: true
+  state?: true
+  email?: true
   city?: true
   contact?: true
 }
@@ -81,6 +89,8 @@ export type BillingDetailsMaxAggregateInputType = {
   address1?: true
   address2?: true
   zip_code?: true
+  state?: true
+  email?: true
   city?: true
   contact?: true
 }
@@ -93,6 +103,8 @@ export type BillingDetailsCountAggregateInputType = {
   address1?: true
   address2?: true
   zip_code?: true
+  state?: true
+  email?: true
   city?: true
   contact?: true
   _all?: true
@@ -172,12 +184,14 @@ export type BillingDetailsGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 
 export type BillingDetailsGroupByOutputType = {
   id: string
-  userId: string
+  userId: string | null
   country: string
   full_name: string | null
   address1: string
   address2: string | null
   zip_code: string
+  state: string
+  email: string | null
   city: string
   contact: string | null
   _count: BillingDetailsCountAggregateOutputType | null
@@ -205,28 +219,34 @@ export type BillingDetailsWhereInput = {
   OR?: Prisma.BillingDetailsWhereInput[]
   NOT?: Prisma.BillingDetailsWhereInput | Prisma.BillingDetailsWhereInput[]
   id?: Prisma.StringFilter<"BillingDetails"> | string
-  userId?: Prisma.StringFilter<"BillingDetails"> | string
+  userId?: Prisma.StringNullableFilter<"BillingDetails"> | string | null
   country?: Prisma.StringFilter<"BillingDetails"> | string
   full_name?: Prisma.StringNullableFilter<"BillingDetails"> | string | null
   address1?: Prisma.StringFilter<"BillingDetails"> | string
   address2?: Prisma.StringNullableFilter<"BillingDetails"> | string | null
   zip_code?: Prisma.StringFilter<"BillingDetails"> | string
+  state?: Prisma.StringFilter<"BillingDetails"> | string
+  email?: Prisma.StringNullableFilter<"BillingDetails"> | string | null
   city?: Prisma.StringFilter<"BillingDetails"> | string
   contact?: Prisma.StringNullableFilter<"BillingDetails"> | string | null
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  orders?: Prisma.OrderListRelationFilter
 }
 
 export type BillingDetailsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   country?: Prisma.SortOrder
   full_name?: Prisma.SortOrderInput | Prisma.SortOrder
   address1?: Prisma.SortOrder
   address2?: Prisma.SortOrderInput | Prisma.SortOrder
   zip_code?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrder
   contact?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  orders?: Prisma.OrderOrderByRelationAggregateInput
 }
 
 export type BillingDetailsWhereUniqueInput = Prisma.AtLeast<{
@@ -240,19 +260,24 @@ export type BillingDetailsWhereUniqueInput = Prisma.AtLeast<{
   address1?: Prisma.StringFilter<"BillingDetails"> | string
   address2?: Prisma.StringNullableFilter<"BillingDetails"> | string | null
   zip_code?: Prisma.StringFilter<"BillingDetails"> | string
+  state?: Prisma.StringFilter<"BillingDetails"> | string
+  email?: Prisma.StringNullableFilter<"BillingDetails"> | string | null
   city?: Prisma.StringFilter<"BillingDetails"> | string
   contact?: Prisma.StringNullableFilter<"BillingDetails"> | string | null
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  orders?: Prisma.OrderListRelationFilter
 }, "id" | "userId">
 
 export type BillingDetailsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   country?: Prisma.SortOrder
   full_name?: Prisma.SortOrderInput | Prisma.SortOrder
   address1?: Prisma.SortOrder
   address2?: Prisma.SortOrderInput | Prisma.SortOrder
   zip_code?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrder
   contact?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.BillingDetailsCountOrderByAggregateInput
@@ -265,12 +290,14 @@ export type BillingDetailsScalarWhereWithAggregatesInput = {
   OR?: Prisma.BillingDetailsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.BillingDetailsScalarWhereWithAggregatesInput | Prisma.BillingDetailsScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"BillingDetails"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"BillingDetails"> | string
+  userId?: Prisma.StringNullableWithAggregatesFilter<"BillingDetails"> | string | null
   country?: Prisma.StringWithAggregatesFilter<"BillingDetails"> | string
   full_name?: Prisma.StringNullableWithAggregatesFilter<"BillingDetails"> | string | null
   address1?: Prisma.StringWithAggregatesFilter<"BillingDetails"> | string
   address2?: Prisma.StringNullableWithAggregatesFilter<"BillingDetails"> | string | null
   zip_code?: Prisma.StringWithAggregatesFilter<"BillingDetails"> | string
+  state?: Prisma.StringWithAggregatesFilter<"BillingDetails"> | string
+  email?: Prisma.StringNullableWithAggregatesFilter<"BillingDetails"> | string | null
   city?: Prisma.StringWithAggregatesFilter<"BillingDetails"> | string
   contact?: Prisma.StringNullableWithAggregatesFilter<"BillingDetails"> | string | null
 }
@@ -282,21 +309,27 @@ export type BillingDetailsCreateInput = {
   address1: string
   address2?: string | null
   zip_code: string
+  state: string
+  email?: string | null
   city: string
   contact?: string | null
-  user: Prisma.UserCreateNestedOneWithoutBillingAddressInput
+  user?: Prisma.UserCreateNestedOneWithoutBillingAddressInput
+  orders?: Prisma.OrderCreateNestedManyWithoutBillingDetailsInput
 }
 
 export type BillingDetailsUncheckedCreateInput = {
   id?: string
-  userId: string
+  userId?: string | null
   country: string
   full_name?: string | null
   address1: string
   address2?: string | null
   zip_code: string
+  state: string
+  email?: string | null
   city: string
   contact?: string | null
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBillingDetailsInput
 }
 
 export type BillingDetailsUpdateInput = {
@@ -306,31 +339,39 @@ export type BillingDetailsUpdateInput = {
   address1?: Prisma.StringFieldUpdateOperationsInput | string
   address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  user?: Prisma.UserUpdateOneRequiredWithoutBillingAddressNestedInput
+  user?: Prisma.UserUpdateOneWithoutBillingAddressNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutBillingDetailsNestedInput
 }
 
 export type BillingDetailsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.StringFieldUpdateOperationsInput | string
   full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address1?: Prisma.StringFieldUpdateOperationsInput | string
   address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutBillingDetailsNestedInput
 }
 
 export type BillingDetailsCreateManyInput = {
   id?: string
-  userId: string
+  userId?: string | null
   country: string
   full_name?: string | null
   address1: string
   address2?: string | null
   zip_code: string
+  state: string
+  email?: string | null
   city: string
   contact?: string | null
 }
@@ -342,18 +383,22 @@ export type BillingDetailsUpdateManyMutationInput = {
   address1?: Prisma.StringFieldUpdateOperationsInput | string
   address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type BillingDetailsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.StringFieldUpdateOperationsInput | string
   full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address1?: Prisma.StringFieldUpdateOperationsInput | string
   address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -371,6 +416,8 @@ export type BillingDetailsCountOrderByAggregateInput = {
   address1?: Prisma.SortOrder
   address2?: Prisma.SortOrder
   zip_code?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   city?: Prisma.SortOrder
   contact?: Prisma.SortOrder
 }
@@ -383,6 +430,8 @@ export type BillingDetailsMaxOrderByAggregateInput = {
   address1?: Prisma.SortOrder
   address2?: Prisma.SortOrder
   zip_code?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   city?: Prisma.SortOrder
   contact?: Prisma.SortOrder
 }
@@ -395,8 +444,26 @@ export type BillingDetailsMinOrderByAggregateInput = {
   address1?: Prisma.SortOrder
   address2?: Prisma.SortOrder
   zip_code?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   city?: Prisma.SortOrder
   contact?: Prisma.SortOrder
+}
+
+export type BillingDetailsCreateNestedOneWithoutOrdersInput = {
+  create?: Prisma.XOR<Prisma.BillingDetailsCreateWithoutOrdersInput, Prisma.BillingDetailsUncheckedCreateWithoutOrdersInput>
+  connectOrCreate?: Prisma.BillingDetailsCreateOrConnectWithoutOrdersInput
+  connect?: Prisma.BillingDetailsWhereUniqueInput
+}
+
+export type BillingDetailsUpdateOneWithoutOrdersNestedInput = {
+  create?: Prisma.XOR<Prisma.BillingDetailsCreateWithoutOrdersInput, Prisma.BillingDetailsUncheckedCreateWithoutOrdersInput>
+  connectOrCreate?: Prisma.BillingDetailsCreateOrConnectWithoutOrdersInput
+  upsert?: Prisma.BillingDetailsUpsertWithoutOrdersInput
+  disconnect?: Prisma.BillingDetailsWhereInput | boolean
+  delete?: Prisma.BillingDetailsWhereInput | boolean
+  connect?: Prisma.BillingDetailsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BillingDetailsUpdateToOneWithWhereWithoutOrdersInput, Prisma.BillingDetailsUpdateWithoutOrdersInput>, Prisma.BillingDetailsUncheckedUpdateWithoutOrdersInput>
 }
 
 export type BillingDetailsCreateNestedOneWithoutUserInput = {
@@ -431,6 +498,78 @@ export type BillingDetailsUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BillingDetailsUpdateToOneWithWhereWithoutUserInput, Prisma.BillingDetailsUpdateWithoutUserInput>, Prisma.BillingDetailsUncheckedUpdateWithoutUserInput>
 }
 
+export type BillingDetailsCreateWithoutOrdersInput = {
+  id?: string
+  country: string
+  full_name?: string | null
+  address1: string
+  address2?: string | null
+  zip_code: string
+  state: string
+  email?: string | null
+  city: string
+  contact?: string | null
+  user?: Prisma.UserCreateNestedOneWithoutBillingAddressInput
+}
+
+export type BillingDetailsUncheckedCreateWithoutOrdersInput = {
+  id?: string
+  userId?: string | null
+  country: string
+  full_name?: string | null
+  address1: string
+  address2?: string | null
+  zip_code: string
+  state: string
+  email?: string | null
+  city: string
+  contact?: string | null
+}
+
+export type BillingDetailsCreateOrConnectWithoutOrdersInput = {
+  where: Prisma.BillingDetailsWhereUniqueInput
+  create: Prisma.XOR<Prisma.BillingDetailsCreateWithoutOrdersInput, Prisma.BillingDetailsUncheckedCreateWithoutOrdersInput>
+}
+
+export type BillingDetailsUpsertWithoutOrdersInput = {
+  update: Prisma.XOR<Prisma.BillingDetailsUpdateWithoutOrdersInput, Prisma.BillingDetailsUncheckedUpdateWithoutOrdersInput>
+  create: Prisma.XOR<Prisma.BillingDetailsCreateWithoutOrdersInput, Prisma.BillingDetailsUncheckedCreateWithoutOrdersInput>
+  where?: Prisma.BillingDetailsWhereInput
+}
+
+export type BillingDetailsUpdateToOneWithWhereWithoutOrdersInput = {
+  where?: Prisma.BillingDetailsWhereInput
+  data: Prisma.XOR<Prisma.BillingDetailsUpdateWithoutOrdersInput, Prisma.BillingDetailsUncheckedUpdateWithoutOrdersInput>
+}
+
+export type BillingDetailsUpdateWithoutOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address1?: Prisma.StringFieldUpdateOperationsInput | string
+  address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUpdateOneWithoutBillingAddressNestedInput
+}
+
+export type BillingDetailsUncheckedUpdateWithoutOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address1?: Prisma.StringFieldUpdateOperationsInput | string
+  address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
 export type BillingDetailsCreateWithoutUserInput = {
   id?: string
   country: string
@@ -438,8 +577,11 @@ export type BillingDetailsCreateWithoutUserInput = {
   address1: string
   address2?: string | null
   zip_code: string
+  state: string
+  email?: string | null
   city: string
   contact?: string | null
+  orders?: Prisma.OrderCreateNestedManyWithoutBillingDetailsInput
 }
 
 export type BillingDetailsUncheckedCreateWithoutUserInput = {
@@ -449,8 +591,11 @@ export type BillingDetailsUncheckedCreateWithoutUserInput = {
   address1: string
   address2?: string | null
   zip_code: string
+  state: string
+  email?: string | null
   city: string
   contact?: string | null
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBillingDetailsInput
 }
 
 export type BillingDetailsCreateOrConnectWithoutUserInput = {
@@ -476,8 +621,11 @@ export type BillingDetailsUpdateWithoutUserInput = {
   address1?: Prisma.StringFieldUpdateOperationsInput | string
   address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orders?: Prisma.OrderUpdateManyWithoutBillingDetailsNestedInput
 }
 
 export type BillingDetailsUncheckedUpdateWithoutUserInput = {
@@ -487,10 +635,42 @@ export type BillingDetailsUncheckedUpdateWithoutUserInput = {
   address1?: Prisma.StringFieldUpdateOperationsInput | string
   address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutBillingDetailsNestedInput
 }
 
+
+/**
+ * Count Type BillingDetailsCountOutputType
+ */
+
+export type BillingDetailsCountOutputType = {
+  orders: number
+}
+
+export type BillingDetailsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  orders?: boolean | BillingDetailsCountOutputTypeCountOrdersArgs
+}
+
+/**
+ * BillingDetailsCountOutputType without action
+ */
+export type BillingDetailsCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BillingDetailsCountOutputType
+   */
+  select?: Prisma.BillingDetailsCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * BillingDetailsCountOutputType without action
+ */
+export type BillingDetailsCountOutputTypeCountOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrderWhereInput
+}
 
 
 export type BillingDetailsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -501,9 +681,13 @@ export type BillingDetailsSelect<ExtArgs extends runtime.Types.Extensions.Intern
   address1?: boolean
   address2?: boolean
   zip_code?: boolean
+  state?: boolean
+  email?: boolean
   city?: boolean
   contact?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.BillingDetails$userArgs<ExtArgs>
+  orders?: boolean | Prisma.BillingDetails$ordersArgs<ExtArgs>
+  _count?: boolean | Prisma.BillingDetailsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["billingDetails"]>
 
 export type BillingDetailsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -514,9 +698,11 @@ export type BillingDetailsSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   address1?: boolean
   address2?: boolean
   zip_code?: boolean
+  state?: boolean
+  email?: boolean
   city?: boolean
   contact?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.BillingDetails$userArgs<ExtArgs>
 }, ExtArgs["result"]["billingDetails"]>
 
 export type BillingDetailsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -527,9 +713,11 @@ export type BillingDetailsSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   address1?: boolean
   address2?: boolean
   zip_code?: boolean
+  state?: boolean
+  email?: boolean
   city?: boolean
   contact?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.BillingDetails$userArgs<ExtArgs>
 }, ExtArgs["result"]["billingDetails"]>
 
 export type BillingDetailsSelectScalar = {
@@ -540,34 +728,41 @@ export type BillingDetailsSelectScalar = {
   address1?: boolean
   address2?: boolean
   zip_code?: boolean
+  state?: boolean
+  email?: boolean
   city?: boolean
   contact?: boolean
 }
 
-export type BillingDetailsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "country" | "full_name" | "address1" | "address2" | "zip_code" | "city" | "contact", ExtArgs["result"]["billingDetails"]>
+export type BillingDetailsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "country" | "full_name" | "address1" | "address2" | "zip_code" | "state" | "email" | "city" | "contact", ExtArgs["result"]["billingDetails"]>
 export type BillingDetailsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.BillingDetails$userArgs<ExtArgs>
+  orders?: boolean | Prisma.BillingDetails$ordersArgs<ExtArgs>
+  _count?: boolean | Prisma.BillingDetailsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BillingDetailsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.BillingDetails$userArgs<ExtArgs>
 }
 export type BillingDetailsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.BillingDetails$userArgs<ExtArgs>
 }
 
 export type $BillingDetailsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "BillingDetails"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs> | null
+    orders: Prisma.$OrderPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    userId: string
+    userId: string | null
     country: string
     full_name: string | null
     address1: string
     address2: string | null
     zip_code: string
+    state: string
+    email: string | null
     city: string
     contact: string | null
   }, ExtArgs["result"]["billingDetails"]>
@@ -964,7 +1159,8 @@ readonly fields: BillingDetailsFieldRefs;
  */
 export interface Prisma__BillingDetailsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.BillingDetails$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillingDetails$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  orders<T extends Prisma.BillingDetails$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillingDetails$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1001,6 +1197,8 @@ export interface BillingDetailsFieldRefs {
   readonly address1: Prisma.FieldRef<"BillingDetails", 'String'>
   readonly address2: Prisma.FieldRef<"BillingDetails", 'String'>
   readonly zip_code: Prisma.FieldRef<"BillingDetails", 'String'>
+  readonly state: Prisma.FieldRef<"BillingDetails", 'String'>
+  readonly email: Prisma.FieldRef<"BillingDetails", 'String'>
   readonly city: Prisma.FieldRef<"BillingDetails", 'String'>
   readonly contact: Prisma.FieldRef<"BillingDetails", 'String'>
 }
@@ -1396,6 +1594,49 @@ export type BillingDetailsDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many BillingDetails to delete.
    */
   limit?: number
+}
+
+/**
+ * BillingDetails.user
+ */
+export type BillingDetails$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * BillingDetails.orders
+ */
+export type BillingDetails$ordersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Order
+   */
+  select?: Prisma.OrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Order
+   */
+  omit?: Prisma.OrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderInclude<ExtArgs> | null
+  where?: Prisma.OrderWhereInput
+  orderBy?: Prisma.OrderOrderByWithRelationInput | Prisma.OrderOrderByWithRelationInput[]
+  cursor?: Prisma.OrderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrderScalarFieldEnum | Prisma.OrderScalarFieldEnum[]
 }
 
 /**

@@ -5,6 +5,11 @@ export const validateOrderProducts = [
         .isArray({ min: 1 })
         .withMessage('Products must be a non-empty array'),
 
+    body('treeCredit')
+        .optional()
+        .isInt({ min: 0 })
+        .withMessage('treeCredit must be a positive integer').toInt(),
+
     body('products.*.productId')
         .notEmpty()
         .withMessage('productId is required')
@@ -15,12 +20,12 @@ export const validateOrderProducts = [
         .notEmpty()
         .withMessage('quantity is required')
         .isInt({ min: 1 })
-        .withMessage('quantity must be a positive non-zero integer'),
+        .withMessage('quantity must be a positive non-zero integer').toInt(),
 
     body('products.*.extra_donation')
         .optional()
-        .isInt({ min: 1 })
-        .withMessage('extra donation must be a positive non-zero integer'),
+        .isInt({ min: 0 })
+        .withMessage('extra donation must be a positive integer').toInt(),
 
     body('products.*.charities')
         .optional()
