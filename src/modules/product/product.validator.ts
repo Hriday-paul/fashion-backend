@@ -1,4 +1,4 @@
-import { body, ValidationChain } from "express-validator";
+import { body, query, ValidationChain } from "express-validator";
 
 export const addProductValidator: ValidationChain[] = [
   // Basic Info
@@ -100,8 +100,15 @@ export const addProductValidator: ValidationChain[] = [
     .trim()
     .notEmpty().withMessage("Charity ID is required")
     .isUUID().withMessage("Invalid charity ID"),
-  
+
   body("charities.*.isAnonymous")
     .optional()
     .isBoolean().withMessage("isAnonymous must be a boolean"),
 ];
+
+export const productByTypeValidator = [
+  query('type')
+    .optional()
+    .isIn(['trending', 'topSelling', 'recomended'])
+    .withMessage('type must be trending, topSelling or recomended')
+]

@@ -132,6 +132,11 @@ export type Favourite = Prisma.FavouriteModel
  */
 export type ProductView = Prisma.ProductViewModel
 /**
+ * Model Question
+ * 
+ */
+export type Question = Prisma.QuestionModel
+/**
  * Model Return
  * 
  */

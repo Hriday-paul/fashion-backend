@@ -66,6 +66,7 @@ export const ModelName = {
   ProductCharity: 'ProductCharity',
   Favourite: 'Favourite',
   ProductView: 'ProductView',
+  Question: 'Question',
   Return: 'Return',
   ReturnItem: 'ReturnItem',
   ReturnEvidence: 'ReturnEvidence',
@@ -355,6 +356,19 @@ export const ProductViewScalarFieldEnum = {
 } as const
 
 export type ProductViewScalarFieldEnum = (typeof ProductViewScalarFieldEnum)[keyof typeof ProductViewScalarFieldEnum]
+
+
+export const QuestionScalarFieldEnum = {
+  id: 'id',
+  questionerId: 'questionerId',
+  productId: 'productId',
+  question: 'question',
+  answer: 'answer',
+  createdAt: 'createdAt',
+  answeredAt: 'answeredAt'
+} as const
+
+export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
 
 
 export const ReturnScalarFieldEnum = {

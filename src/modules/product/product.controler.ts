@@ -57,6 +57,46 @@ const allProducts = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const productsByType = catchAsync(async (req: Request, res: Response) => {
+
+    const type = req.query.type;
+    req.query.limit = "8";
+    const options = pick(req.query, PaginateOptions);
+
+    let result: any[] = []
+
+    if (type == "trending") {
+        result = await productService.trendingProducts(req.user?.id);
+    }
+    else if (type == "topSelling") {
+        result = await productService.topSellingProducts(req.user?.id);
+    }
+    else if (type == "recomended") {
+        const { userkey } = await productService.getViewKey(req)
+        result = await productService.recomendedProducts(userkey, req.user?.id);
+    } else {
+        const { data } = await productService.allProducts({}, options, req.user?.id);
+        result = data;
+    }
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Products retrived successfully',
+        data: result,
+    });
+});
+
+const newArrivalProducts = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.newArrivalProducts();
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Products retrived successfully',
+        data: result,
+    });
+});
+
 const productDetails = catchAsync(async (req: Request, res: Response) => {
     const result = await productService.productDetails(req.params.id, req, req.user?.id);
     sendResponse(res, {
@@ -113,6 +153,8 @@ const recomendedProducts = catchAsync(async (req: Request, res: Response) => {
 export const productControler = {
     addNewProduct,
     allProducts,
+    newArrivalProducts,
+    productsByType,
     productDetails,
 
     recentViewProducts,

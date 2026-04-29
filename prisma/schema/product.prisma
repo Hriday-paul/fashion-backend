@@ -45,6 +45,8 @@ model Product {
 
     viewers ProductView[]
 
+    questions Question[]
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
@@ -106,4 +108,22 @@ model ProductView {
 
   product   Product  @relation(fields: [productId], references: [id])
   @@map("product_views")
+}
+
+model Question {
+    id String @id @default(uuid())
+
+    questionerId String
+    questioner   User   @relation(fields: [questionerId], references: [id], onDelete: Cascade)
+
+    productId String
+    product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+    question String
+    answer String?
+
+    createdAt DateTime @default(now())
+    answeredAt DateTime?
+
+    @@map("questions")
 }

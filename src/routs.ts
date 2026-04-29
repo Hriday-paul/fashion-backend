@@ -12,6 +12,7 @@ import { productRouts } from './modules/product/product.rout';
 import { favouriteRouts } from './modules/favourite/favourite.rout';
 import { orderRouts } from './modules/order/order.rout';
 import { paymentsRoutes } from './modules/payments/payments.route';
+import { questionRouts } from './modules/question/question.rout';
 
 const router = express.Router();
 
@@ -51,6 +52,10 @@ const moduleRoutes = [
     {
         path: '/favourites',
         route: favouriteRouts,
+    },
+    {
+        path: '/questions',
+        route: questionRouts,
     },
     {
         path: '/orders',

@@ -396,7 +396,8 @@ const refreshToken = async (token: string) => {
     // Checking if the given token is valid
     const decoded = verifyToken(token, config.jwt_refresh_secret as string);
     const { userId } = decoded;
-    const user = await prisma.user.findFirst({ where: userId, include: { auth: true } });
+
+    const user = await prisma.user.findFirst({ where: { id: userId }, include: { auth: true } });
 
     if (!user || !user?.auth) {
         throw new AppError(httpStatus.NOT_FOUND, 'User not found');

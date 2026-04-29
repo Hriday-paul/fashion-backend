@@ -242,6 +242,26 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
 
 }
 
+const newArrivalProducts = async () => {
+    const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }];
+
+    const whereConditions: Prisma.ProductWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
+
+    const result = await prisma.product.findMany({
+        where: whereConditions,
+        take: 10,
+        orderBy: {
+            createdAt: "desc",
+        },
+        include: {
+            images: true,
+        },
+    })
+
+    return result;
+
+}
+
 async function getViewKey(req: Request, productId?: string) {
 
     // Guest — build fingerprint
@@ -399,10 +419,10 @@ const trendingProducts = async (userId?: string) => {
         scoreMap[w.productId] = (scoreMap[w.productId] ?? 0) + w._count.productId * WEIGHTS.wishlist
     })
 
-    // sort by score and get top 10
+    // sort by score and get top 8
     const trendingIds = Object.entries(scoreMap)
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 10)
+        .slice(0, 8)
         .map(([productId]) => productId)
 
     // fetch full product data
@@ -423,22 +443,22 @@ const trendingProducts = async (userId?: string) => {
                     picture: true
                 },
             },
-            // _count: {
-            //     select: {
-            //         favourites: true
-            //     }
-            // },
+            _count: {
+                select: {
+                    favourites: true
+                }
+            },
             // Add this 👇
-            // favourites: userId
-            //     ? {
-            //         where: {
-            //             userId: userId,
-            //         },
-            //         select: {
-            //             id: true,
-            //         },
-            //     }
-            //     : false,
+            favourites: userId
+                ? {
+                    where: {
+                        userId: userId,
+                    },
+                    select: {
+                        id: true,
+                    },
+                }
+                : false,
         }
     })
 
@@ -468,7 +488,7 @@ const topSellingProducts = async (userId?: string) => {
         orderBy: {
             orderItems: { _count: 'desc' }  // sort by number of order items
         },
-        take: 10,
+        take: 8,
         include: {
             images: true,
             brand: true,
@@ -484,22 +504,22 @@ const topSellingProducts = async (userId?: string) => {
                     picture: true
                 },
             },
-            // _count: {
-            //     select: {
-            //         favourites: true
-            //     }
-            // },
+            _count: {
+                select: {
+                    favourites: true
+                }
+            },
             // Add this 👇
-            // favourites: userId
-            //     ? {
-            //         where: {
-            //             userId: userId,
-            //         },
-            //         select: {
-            //             id: true,
-            //         },
-            //     }
-            //     : false,
+            favourites: userId
+                ? {
+                    where: {
+                        userId: userId,
+                    },
+                    select: {
+                        id: true,
+                    },
+                }
+                : false,
         }
     })
 
@@ -519,7 +539,7 @@ const recomendedProducts = async (viewKey: string, userId?: string) => {
             createdAt: 'desc',
         },
         select: { productId: true },
-    })
+    });
 
     // 2. Get wishlist product IDs (authenticated only)
     const wishlistItems = userId
@@ -564,7 +584,7 @@ const recomendedProducts = async (viewKey: string, userId?: string) => {
             { favourites: { _count: 'desc' } },       // most wishlisted first
             { viewers: { _count: 'desc' } },       // most viewed second
         ],
-        take: 10,
+        take: 8,
         include: {
             images: true,
             brand: true,
@@ -580,22 +600,21 @@ const recomendedProducts = async (viewKey: string, userId?: string) => {
                     picture: true
                 },
             },
-            // _count: {
-            //     select: {
-            //         favourites: true
-            //     }
-            // },
+            _count: {
+                select: {
+                    favourites: true
+                }
+            },
             // Add this 👇
-            // favourites: userId
-            //     ? {
-            //         where: {
-            //             userId: userId,
-            //         },
-            //         select: {
-            //             id: true,
-            //         },
-            //     }
-            //    
+            favourites: userId
+                ? {
+                    where: {
+                        userId: userId,
+                    },
+                    select: {
+                        id: true,
+                    },
+                } : false
         }
     });
 
@@ -607,6 +626,7 @@ export const productService = {
     addNewProduct,
 
     allProducts,
+    newArrivalProducts,
     productDetails,
 
     getViewKey,
