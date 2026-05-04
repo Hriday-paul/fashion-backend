@@ -96,6 +96,11 @@ model User {
   returnsAsBuyer  Return[] @relation("ReturnBuyer")
   returnsAsSeller Return[] @relation("ReturnSeller")
 
+  // Users who follow me
+  followers Follow[] @relation("UserFollowers")
+  // Users I follow
+  following Follow[] @relation("UserFollowing")
+
   orders       Order[]
   ordersByGroup       OrderSellerGroup[]
   productViews ProductView[]

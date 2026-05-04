@@ -28,6 +28,7 @@ model Brand {
 
     categoryId String
     category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    catagory_child_hierarchy String[]
 
     products Product[]
 
@@ -47,6 +48,7 @@ model Size {
 
     categoryId String
     category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    catagory_child_hierarchy String[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

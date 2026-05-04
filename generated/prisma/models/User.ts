@@ -396,6 +396,8 @@ export type UserWhereInput = {
   ratingsReceived?: Prisma.RatingListRelationFilter
   returnsAsBuyer?: Prisma.ReturnListRelationFilter
   returnsAsSeller?: Prisma.ReturnListRelationFilter
+  followers?: Prisma.FollowListRelationFilter
+  following?: Prisma.FollowListRelationFilter
   orders?: Prisma.OrderListRelationFilter
   ordersByGroup?: Prisma.OrderSellerGroupListRelationFilter
   productViews?: Prisma.ProductViewListRelationFilter
@@ -448,6 +450,8 @@ export type UserOrderByWithRelationInput = {
   ratingsReceived?: Prisma.RatingOrderByRelationAggregateInput
   returnsAsBuyer?: Prisma.ReturnOrderByRelationAggregateInput
   returnsAsSeller?: Prisma.ReturnOrderByRelationAggregateInput
+  followers?: Prisma.FollowOrderByRelationAggregateInput
+  following?: Prisma.FollowOrderByRelationAggregateInput
   orders?: Prisma.OrderOrderByRelationAggregateInput
   ordersByGroup?: Prisma.OrderSellerGroupOrderByRelationAggregateInput
   productViews?: Prisma.ProductViewOrderByRelationAggregateInput
@@ -503,6 +507,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   ratingsReceived?: Prisma.RatingListRelationFilter
   returnsAsBuyer?: Prisma.ReturnListRelationFilter
   returnsAsSeller?: Prisma.ReturnListRelationFilter
+  followers?: Prisma.FollowListRelationFilter
+  following?: Prisma.FollowListRelationFilter
   orders?: Prisma.OrderListRelationFilter
   ordersByGroup?: Prisma.OrderSellerGroupListRelationFilter
   productViews?: Prisma.ProductViewListRelationFilter
@@ -621,6 +627,8 @@ export type UserCreateInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -673,6 +681,8 @@ export type UserUncheckedCreateInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -725,6 +735,8 @@ export type UserUpdateInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -777,6 +789,8 @@ export type UserUncheckedUpdateInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -973,6 +987,34 @@ export type UserMinOrderByAggregateInput = {
 
 export type UserSumOrderByAggregateInput = {
   avgRating?: Prisma.SortOrder
+}
+
+export type UserCreateNestedOneWithoutFollowingInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowingInput, Prisma.UserUncheckedCreateWithoutFollowingInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowingInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutFollowersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowersInput, Prisma.UserUncheckedCreateWithoutFollowersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFollowingNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowingInput, Prisma.UserUncheckedCreateWithoutFollowingInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowingInput
+  upsert?: Prisma.UserUpsertWithoutFollowingInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFollowingInput, Prisma.UserUpdateWithoutFollowingInput>, Prisma.UserUncheckedUpdateWithoutFollowingInput>
+}
+
+export type UserUpdateOneRequiredWithoutFollowersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowersInput, Prisma.UserUncheckedCreateWithoutFollowersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowersInput
+  upsert?: Prisma.UserUpsertWithoutFollowersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFollowersInput, Prisma.UserUpdateWithoutFollowersInput>, Prisma.UserUncheckedUpdateWithoutFollowersInput>
 }
 
 export type UserCreateNestedOneWithoutChatGroupsInput = {
@@ -1318,6 +1360,462 @@ export type UserUpdateOneRequiredWithoutWalletNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWalletInput, Prisma.UserUpdateWithoutWalletInput>, Prisma.UserUncheckedUpdateWithoutWalletInput>
 }
 
+export type UserCreateWithoutFollowingInput = {
+  id?: string
+  fname: string
+  lname?: string | null
+  email: string
+  userName?: string
+  phone: string
+  description?: string | null
+  country?: string | null
+  state?: string | null
+  city?: string | null
+  address?: string | null
+  zip_code?: string | null
+  instagram?: string | null
+  facebook?: string | null
+  twitter?: string | null
+  tiktok?: string | null
+  website?: string | null
+  notification?: boolean
+  fcmToken?: string | null
+  mission?: string | null
+  business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
+  isOnline?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  avgRating?: number
+  auth?: Prisma.AuthCreateNestedOneWithoutUserInput
+  picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
+  account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
+  notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
+  chatGroups?: Prisma.ChatParticipantCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  products?: Prisma.ProductCreateNestedManyWithoutUserInput
+  sellDonations?: Prisma.SellDonationCreateNestedManyWithoutCharityInput
+  productCharities?: Prisma.ProductCharityCreateNestedManyWithoutCharityInput
+  favouriteProducts?: Prisma.FavouriteCreateNestedManyWithoutUserInput
+  ratingsGiven?: Prisma.RatingCreateNestedManyWithoutFromUserInput
+  ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
+  returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
+  returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
+  productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
+  prodQuestions?: Prisma.QuestionCreateNestedManyWithoutQuestionerInput
+  billingAddress?: Prisma.BillingDetailsCreateNestedOneWithoutUserInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutSellerInput
+}
+
+export type UserUncheckedCreateWithoutFollowingInput = {
+  id?: string
+  fname: string
+  lname?: string | null
+  email: string
+  userName?: string
+  phone: string
+  description?: string | null
+  country?: string | null
+  state?: string | null
+  city?: string | null
+  address?: string | null
+  zip_code?: string | null
+  instagram?: string | null
+  facebook?: string | null
+  twitter?: string | null
+  tiktok?: string | null
+  website?: string | null
+  notification?: boolean
+  fcmToken?: string | null
+  mission?: string | null
+  business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
+  isOnline?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  avgRating?: number
+  auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput
+  picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
+  account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
+  notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
+  chatGroups?: Prisma.ChatParticipantUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutUserInput
+  sellDonations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutCharityInput
+  productCharities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutCharityInput
+  favouriteProducts?: Prisma.FavouriteUncheckedCreateNestedManyWithoutUserInput
+  ratingsGiven?: Prisma.RatingUncheckedCreateNestedManyWithoutFromUserInput
+  ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
+  returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
+  returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
+  productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
+  prodQuestions?: Prisma.QuestionUncheckedCreateNestedManyWithoutQuestionerInput
+  billingAddress?: Prisma.BillingDetailsUncheckedCreateNestedOneWithoutUserInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutSellerInput
+}
+
+export type UserCreateOrConnectWithoutFollowingInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFollowingInput, Prisma.UserUncheckedCreateWithoutFollowingInput>
+}
+
+export type UserCreateWithoutFollowersInput = {
+  id?: string
+  fname: string
+  lname?: string | null
+  email: string
+  userName?: string
+  phone: string
+  description?: string | null
+  country?: string | null
+  state?: string | null
+  city?: string | null
+  address?: string | null
+  zip_code?: string | null
+  instagram?: string | null
+  facebook?: string | null
+  twitter?: string | null
+  tiktok?: string | null
+  website?: string | null
+  notification?: boolean
+  fcmToken?: string | null
+  mission?: string | null
+  business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
+  isOnline?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  avgRating?: number
+  auth?: Prisma.AuthCreateNestedOneWithoutUserInput
+  picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
+  account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
+  notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
+  chatGroups?: Prisma.ChatParticipantCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  products?: Prisma.ProductCreateNestedManyWithoutUserInput
+  sellDonations?: Prisma.SellDonationCreateNestedManyWithoutCharityInput
+  productCharities?: Prisma.ProductCharityCreateNestedManyWithoutCharityInput
+  favouriteProducts?: Prisma.FavouriteCreateNestedManyWithoutUserInput
+  ratingsGiven?: Prisma.RatingCreateNestedManyWithoutFromUserInput
+  ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
+  returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
+  returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
+  productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
+  prodQuestions?: Prisma.QuestionCreateNestedManyWithoutQuestionerInput
+  billingAddress?: Prisma.BillingDetailsCreateNestedOneWithoutUserInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutSellerInput
+}
+
+export type UserUncheckedCreateWithoutFollowersInput = {
+  id?: string
+  fname: string
+  lname?: string | null
+  email: string
+  userName?: string
+  phone: string
+  description?: string | null
+  country?: string | null
+  state?: string | null
+  city?: string | null
+  address?: string | null
+  zip_code?: string | null
+  instagram?: string | null
+  facebook?: string | null
+  twitter?: string | null
+  tiktok?: string | null
+  website?: string | null
+  notification?: boolean
+  fcmToken?: string | null
+  mission?: string | null
+  business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
+  isOnline?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  avgRating?: number
+  auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput
+  picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
+  account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
+  notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
+  chatGroups?: Prisma.ChatParticipantUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutUserInput
+  sellDonations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutCharityInput
+  productCharities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutCharityInput
+  favouriteProducts?: Prisma.FavouriteUncheckedCreateNestedManyWithoutUserInput
+  ratingsGiven?: Prisma.RatingUncheckedCreateNestedManyWithoutFromUserInput
+  ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
+  returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
+  returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
+  productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
+  prodQuestions?: Prisma.QuestionUncheckedCreateNestedManyWithoutQuestionerInput
+  billingAddress?: Prisma.BillingDetailsUncheckedCreateNestedOneWithoutUserInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutSellerInput
+}
+
+export type UserCreateOrConnectWithoutFollowersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFollowersInput, Prisma.UserUncheckedCreateWithoutFollowersInput>
+}
+
+export type UserUpsertWithoutFollowingInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFollowingInput, Prisma.UserUncheckedUpdateWithoutFollowingInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFollowingInput, Prisma.UserUncheckedCreateWithoutFollowingInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFollowingInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFollowingInput, Prisma.UserUncheckedUpdateWithoutFollowingInput>
+}
+
+export type UserUpdateWithoutFollowingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fname?: Prisma.StringFieldUpdateOperationsInput | string
+  lname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  auth?: Prisma.AuthUpdateOneWithoutUserNestedInput
+  picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
+  account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
+  notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
+  chatGroups?: Prisma.ChatParticipantUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  products?: Prisma.ProductUpdateManyWithoutUserNestedInput
+  sellDonations?: Prisma.SellDonationUpdateManyWithoutCharityNestedInput
+  productCharities?: Prisma.ProductCharityUpdateManyWithoutCharityNestedInput
+  favouriteProducts?: Prisma.FavouriteUpdateManyWithoutUserNestedInput
+  ratingsGiven?: Prisma.RatingUpdateManyWithoutFromUserNestedInput
+  ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
+  returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
+  returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
+  productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
+  prodQuestions?: Prisma.QuestionUpdateManyWithoutQuestionerNestedInput
+  billingAddress?: Prisma.BillingDetailsUpdateOneWithoutUserNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutSellerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFollowingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fname?: Prisma.StringFieldUpdateOperationsInput | string
+  lname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput
+  picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
+  account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
+  notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
+  chatGroups?: Prisma.ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutUserNestedInput
+  sellDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutCharityNestedInput
+  productCharities?: Prisma.ProductCharityUncheckedUpdateManyWithoutCharityNestedInput
+  favouriteProducts?: Prisma.FavouriteUncheckedUpdateManyWithoutUserNestedInput
+  ratingsGiven?: Prisma.RatingUncheckedUpdateManyWithoutFromUserNestedInput
+  ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
+  returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
+  returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
+  productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
+  prodQuestions?: Prisma.QuestionUncheckedUpdateManyWithoutQuestionerNestedInput
+  billingAddress?: Prisma.BillingDetailsUncheckedUpdateOneWithoutUserNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutSellerNestedInput
+}
+
+export type UserUpsertWithoutFollowersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFollowersInput, Prisma.UserUncheckedUpdateWithoutFollowersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFollowersInput, Prisma.UserUncheckedCreateWithoutFollowersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFollowersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFollowersInput, Prisma.UserUncheckedUpdateWithoutFollowersInput>
+}
+
+export type UserUpdateWithoutFollowersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fname?: Prisma.StringFieldUpdateOperationsInput | string
+  lname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  auth?: Prisma.AuthUpdateOneWithoutUserNestedInput
+  picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
+  account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
+  notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
+  chatGroups?: Prisma.ChatParticipantUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  products?: Prisma.ProductUpdateManyWithoutUserNestedInput
+  sellDonations?: Prisma.SellDonationUpdateManyWithoutCharityNestedInput
+  productCharities?: Prisma.ProductCharityUpdateManyWithoutCharityNestedInput
+  favouriteProducts?: Prisma.FavouriteUpdateManyWithoutUserNestedInput
+  ratingsGiven?: Prisma.RatingUpdateManyWithoutFromUserNestedInput
+  ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
+  returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
+  returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
+  productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
+  prodQuestions?: Prisma.QuestionUpdateManyWithoutQuestionerNestedInput
+  billingAddress?: Prisma.BillingDetailsUpdateOneWithoutUserNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutSellerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFollowersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fname?: Prisma.StringFieldUpdateOperationsInput | string
+  lname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput
+  picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
+  account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
+  notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
+  chatGroups?: Prisma.ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutUserNestedInput
+  sellDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutCharityNestedInput
+  productCharities?: Prisma.ProductCharityUncheckedUpdateManyWithoutCharityNestedInput
+  favouriteProducts?: Prisma.FavouriteUncheckedUpdateManyWithoutUserNestedInput
+  ratingsGiven?: Prisma.RatingUncheckedUpdateManyWithoutFromUserNestedInput
+  ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
+  returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
+  returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
+  productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
+  prodQuestions?: Prisma.QuestionUncheckedUpdateManyWithoutQuestionerNestedInput
+  billingAddress?: Prisma.BillingDetailsUncheckedUpdateOneWithoutUserNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutSellerNestedInput
+}
+
 export type UserCreateWithoutChatGroupsInput = {
   id?: string
   fname: string
@@ -1361,6 +1859,8 @@ export type UserCreateWithoutChatGroupsInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -1412,6 +1912,8 @@ export type UserUncheckedCreateWithoutChatGroupsInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -1479,6 +1981,8 @@ export type UserUpdateWithoutChatGroupsInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -1530,6 +2034,8 @@ export type UserUncheckedUpdateWithoutChatGroupsInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -1581,6 +2087,8 @@ export type UserCreateWithoutSentMessagesInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -1632,6 +2140,8 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -1688,6 +2198,8 @@ export type UserCreateWithoutReceiveMessagesInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -1739,6 +2251,8 @@ export type UserUncheckedCreateWithoutReceiveMessagesInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -1806,6 +2320,8 @@ export type UserUpdateWithoutSentMessagesInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -1857,6 +2373,8 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -1919,6 +2437,8 @@ export type UserUpdateWithoutReceiveMessagesInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -1970,6 +2490,8 @@ export type UserUncheckedUpdateWithoutReceiveMessagesInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -2022,6 +2544,8 @@ export type UserCreateWithoutOrdersByGroupInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
   prodQuestions?: Prisma.QuestionCreateNestedManyWithoutQuestionerInput
@@ -2073,6 +2597,8 @@ export type UserUncheckedCreateWithoutOrdersByGroupInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
   prodQuestions?: Prisma.QuestionUncheckedCreateNestedManyWithoutQuestionerInput
@@ -2140,6 +2666,8 @@ export type UserUpdateWithoutOrdersByGroupInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
   prodQuestions?: Prisma.QuestionUpdateManyWithoutQuestionerNestedInput
@@ -2191,6 +2719,8 @@ export type UserUncheckedUpdateWithoutOrdersByGroupInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
   prodQuestions?: Prisma.QuestionUncheckedUpdateManyWithoutQuestionerNestedInput
@@ -2242,6 +2772,8 @@ export type UserCreateWithoutOrdersInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
   prodQuestions?: Prisma.QuestionCreateNestedManyWithoutQuestionerInput
@@ -2293,6 +2825,8 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
   prodQuestions?: Prisma.QuestionUncheckedCreateNestedManyWithoutQuestionerInput
@@ -2360,6 +2894,8 @@ export type UserUpdateWithoutOrdersInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
   prodQuestions?: Prisma.QuestionUpdateManyWithoutQuestionerNestedInput
@@ -2411,6 +2947,8 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
   prodQuestions?: Prisma.QuestionUncheckedUpdateManyWithoutQuestionerNestedInput
@@ -2461,6 +2999,8 @@ export type UserCreateWithoutSellDonationsInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -2512,6 +3052,8 @@ export type UserUncheckedCreateWithoutSellDonationsInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -2579,6 +3121,8 @@ export type UserUpdateWithoutSellDonationsInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -2630,6 +3174,8 @@ export type UserUncheckedUpdateWithoutSellDonationsInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -2681,6 +3227,8 @@ export type UserCreateWithoutPaymentsInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -2732,6 +3280,8 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -2799,6 +3349,8 @@ export type UserUpdateWithoutPaymentsInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -2850,6 +3402,8 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -2901,6 +3455,8 @@ export type UserCreateWithoutProductsInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -2952,6 +3508,8 @@ export type UserUncheckedCreateWithoutProductsInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -3019,6 +3577,8 @@ export type UserUpdateWithoutProductsInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -3070,6 +3630,8 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -3121,6 +3683,8 @@ export type UserCreateWithoutProductCharitiesInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -3172,6 +3736,8 @@ export type UserUncheckedCreateWithoutProductCharitiesInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -3239,6 +3805,8 @@ export type UserUpdateWithoutProductCharitiesInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -3290,6 +3858,8 @@ export type UserUncheckedUpdateWithoutProductCharitiesInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -3341,6 +3911,8 @@ export type UserCreateWithoutFavouriteProductsInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -3392,6 +3964,8 @@ export type UserUncheckedCreateWithoutFavouriteProductsInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -3459,6 +4033,8 @@ export type UserUpdateWithoutFavouriteProductsInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -3510,6 +4086,8 @@ export type UserUncheckedUpdateWithoutFavouriteProductsInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -3562,6 +4140,8 @@ export type UserCreateWithoutProductViewsInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   prodQuestions?: Prisma.QuestionCreateNestedManyWithoutQuestionerInput
@@ -3613,6 +4193,8 @@ export type UserUncheckedCreateWithoutProductViewsInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   prodQuestions?: Prisma.QuestionUncheckedCreateNestedManyWithoutQuestionerInput
@@ -3680,6 +4262,8 @@ export type UserUpdateWithoutProductViewsInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   prodQuestions?: Prisma.QuestionUpdateManyWithoutQuestionerNestedInput
@@ -3731,6 +4315,8 @@ export type UserUncheckedUpdateWithoutProductViewsInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   prodQuestions?: Prisma.QuestionUncheckedUpdateManyWithoutQuestionerNestedInput
@@ -3782,6 +4368,8 @@ export type UserCreateWithoutProdQuestionsInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -3833,6 +4421,8 @@ export type UserUncheckedCreateWithoutProdQuestionsInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -3900,6 +4490,8 @@ export type UserUpdateWithoutProdQuestionsInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -3951,6 +4543,8 @@ export type UserUncheckedUpdateWithoutProdQuestionsInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -4001,6 +4595,8 @@ export type UserCreateWithoutReturnsAsBuyerInput = {
   ratingsGiven?: Prisma.RatingCreateNestedManyWithoutFromUserInput
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -4052,6 +4648,8 @@ export type UserUncheckedCreateWithoutReturnsAsBuyerInput = {
   ratingsGiven?: Prisma.RatingUncheckedCreateNestedManyWithoutFromUserInput
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -4108,6 +4706,8 @@ export type UserCreateWithoutReturnsAsSellerInput = {
   ratingsGiven?: Prisma.RatingCreateNestedManyWithoutFromUserInput
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -4159,6 +4759,8 @@ export type UserUncheckedCreateWithoutReturnsAsSellerInput = {
   ratingsGiven?: Prisma.RatingUncheckedCreateNestedManyWithoutFromUserInput
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -4226,6 +4828,8 @@ export type UserUpdateWithoutReturnsAsBuyerInput = {
   ratingsGiven?: Prisma.RatingUpdateManyWithoutFromUserNestedInput
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -4277,6 +4881,8 @@ export type UserUncheckedUpdateWithoutReturnsAsBuyerInput = {
   ratingsGiven?: Prisma.RatingUncheckedUpdateManyWithoutFromUserNestedInput
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -4339,6 +4945,8 @@ export type UserUpdateWithoutReturnsAsSellerInput = {
   ratingsGiven?: Prisma.RatingUpdateManyWithoutFromUserNestedInput
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -4390,6 +4998,8 @@ export type UserUncheckedUpdateWithoutReturnsAsSellerInput = {
   ratingsGiven?: Prisma.RatingUncheckedUpdateManyWithoutFromUserNestedInput
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -4441,6 +5051,8 @@ export type UserCreateWithoutRatingsGivenInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -4492,6 +5104,8 @@ export type UserUncheckedCreateWithoutRatingsGivenInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -4548,6 +5162,8 @@ export type UserCreateWithoutRatingsReceivedInput = {
   ratingsGiven?: Prisma.RatingCreateNestedManyWithoutFromUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -4599,6 +5215,8 @@ export type UserUncheckedCreateWithoutRatingsReceivedInput = {
   ratingsGiven?: Prisma.RatingUncheckedCreateNestedManyWithoutFromUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -4666,6 +5284,8 @@ export type UserUpdateWithoutRatingsGivenInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -4717,6 +5337,8 @@ export type UserUncheckedUpdateWithoutRatingsGivenInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -4779,6 +5401,8 @@ export type UserUpdateWithoutRatingsReceivedInput = {
   ratingsGiven?: Prisma.RatingUpdateManyWithoutFromUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -4830,6 +5454,8 @@ export type UserUncheckedUpdateWithoutRatingsReceivedInput = {
   ratingsGiven?: Prisma.RatingUncheckedUpdateManyWithoutFromUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -4881,6 +5507,8 @@ export type UserCreateWithoutAuthInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -4932,6 +5560,8 @@ export type UserUncheckedCreateWithoutAuthInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -4999,6 +5629,8 @@ export type UserUpdateWithoutAuthInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -5050,6 +5682,8 @@ export type UserUncheckedUpdateWithoutAuthInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -5101,6 +5735,8 @@ export type UserCreateWithoutPictureInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -5152,6 +5788,8 @@ export type UserUncheckedCreateWithoutPictureInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -5219,6 +5857,8 @@ export type UserUpdateWithoutPictureInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -5270,6 +5910,8 @@ export type UserUncheckedUpdateWithoutPictureInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -5321,6 +5963,8 @@ export type UserCreateWithoutAccount_documentsInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -5372,6 +6016,8 @@ export type UserUncheckedCreateWithoutAccount_documentsInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -5439,6 +6085,8 @@ export type UserUpdateWithoutAccount_documentsInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -5490,6 +6138,8 @@ export type UserUncheckedUpdateWithoutAccount_documentsInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -5542,6 +6192,8 @@ export type UserCreateWithoutBillingAddressInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -5593,6 +6245,8 @@ export type UserUncheckedCreateWithoutBillingAddressInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -5660,6 +6314,8 @@ export type UserUpdateWithoutBillingAddressInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -5711,6 +6367,8 @@ export type UserUncheckedUpdateWithoutBillingAddressInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -5761,6 +6419,8 @@ export type UserCreateWithoutNotificationSendersInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -5812,6 +6472,8 @@ export type UserUncheckedCreateWithoutNotificationSendersInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -5868,6 +6530,8 @@ export type UserCreateWithoutNotificationReceiversInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -5919,6 +6583,8 @@ export type UserUncheckedCreateWithoutNotificationReceiversInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -5986,6 +6652,8 @@ export type UserUpdateWithoutNotificationSendersInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -6037,6 +6705,8 @@ export type UserUncheckedUpdateWithoutNotificationSendersInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -6099,6 +6769,8 @@ export type UserUpdateWithoutNotificationReceiversInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -6150,6 +6822,8 @@ export type UserUncheckedUpdateWithoutNotificationReceiversInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -6202,6 +6876,8 @@ export type UserCreateWithoutWalletInput = {
   ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
@@ -6253,6 +6929,8 @@ export type UserUncheckedCreateWithoutWalletInput = {
   ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
   returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
   returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedCreateNestedManyWithoutSellerInput
   productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
@@ -6320,6 +6998,8 @@ export type UserUpdateWithoutWalletInput = {
   ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
@@ -6371,6 +7051,8 @@ export type UserUncheckedUpdateWithoutWalletInput = {
   ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
   returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
   returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   ordersByGroup?: Prisma.OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput
   productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
@@ -6399,6 +7081,8 @@ export type UserCountOutputType = {
   ratingsReceived: number
   returnsAsBuyer: number
   returnsAsSeller: number
+  followers: number
+  following: number
   orders: number
   ordersByGroup: number
   productViews: number
@@ -6421,6 +7105,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   ratingsReceived?: boolean | UserCountOutputTypeCountRatingsReceivedArgs
   returnsAsBuyer?: boolean | UserCountOutputTypeCountReturnsAsBuyerArgs
   returnsAsSeller?: boolean | UserCountOutputTypeCountReturnsAsSellerArgs
+  followers?: boolean | UserCountOutputTypeCountFollowersArgs
+  following?: boolean | UserCountOutputTypeCountFollowingArgs
   orders?: boolean | UserCountOutputTypeCountOrdersArgs
   ordersByGroup?: boolean | UserCountOutputTypeCountOrdersByGroupArgs
   productViews?: boolean | UserCountOutputTypeCountProductViewsArgs
@@ -6545,6 +7231,20 @@ export type UserCountOutputTypeCountReturnsAsSellerArgs<ExtArgs extends runtime.
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountFollowersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FollowWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFollowingArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FollowWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.OrderWhereInput
 }
@@ -6615,6 +7315,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   ratingsReceived?: boolean | Prisma.User$ratingsReceivedArgs<ExtArgs>
   returnsAsBuyer?: boolean | Prisma.User$returnsAsBuyerArgs<ExtArgs>
   returnsAsSeller?: boolean | Prisma.User$returnsAsSellerArgs<ExtArgs>
+  followers?: boolean | Prisma.User$followersArgs<ExtArgs>
+  following?: boolean | Prisma.User$followingArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   ordersByGroup?: boolean | Prisma.User$ordersByGroupArgs<ExtArgs>
   productViews?: boolean | Prisma.User$productViewsArgs<ExtArgs>
@@ -6730,6 +7432,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   ratingsReceived?: boolean | Prisma.User$ratingsReceivedArgs<ExtArgs>
   returnsAsBuyer?: boolean | Prisma.User$returnsAsBuyerArgs<ExtArgs>
   returnsAsSeller?: boolean | Prisma.User$returnsAsSellerArgs<ExtArgs>
+  followers?: boolean | Prisma.User$followersArgs<ExtArgs>
+  following?: boolean | Prisma.User$followingArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   ordersByGroup?: boolean | Prisma.User$ordersByGroupArgs<ExtArgs>
   productViews?: boolean | Prisma.User$productViewsArgs<ExtArgs>
@@ -6761,6 +7465,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     ratingsReceived: Prisma.$RatingPayload<ExtArgs>[]
     returnsAsBuyer: Prisma.$ReturnPayload<ExtArgs>[]
     returnsAsSeller: Prisma.$ReturnPayload<ExtArgs>[]
+    followers: Prisma.$FollowPayload<ExtArgs>[]
+    following: Prisma.$FollowPayload<ExtArgs>[]
     orders: Prisma.$OrderPayload<ExtArgs>[]
     ordersByGroup: Prisma.$OrderSellerGroupPayload<ExtArgs>[]
     productViews: Prisma.$ProductViewPayload<ExtArgs>[]
@@ -7206,6 +7912,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   ratingsReceived<T extends Prisma.User$ratingsReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ratingsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   returnsAsBuyer<T extends Prisma.User$returnsAsBuyerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$returnsAsBuyerArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReturnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   returnsAsSeller<T extends Prisma.User$returnsAsSellerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$returnsAsSellerArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReturnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  followers<T extends Prisma.User$followersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  following<T extends Prisma.User$followingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followingArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   orders<T extends Prisma.User$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ordersByGroup<T extends Prisma.User$ordersByGroupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ordersByGroupArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderSellerGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   productViews<T extends Prisma.User$productViewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$productViewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -8050,6 +8758,54 @@ export type User$returnsAsSellerArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.ReturnScalarFieldEnum | Prisma.ReturnScalarFieldEnum[]
+}
+
+/**
+ * User.followers
+ */
+export type User$followersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Follow
+   */
+  select?: Prisma.FollowSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Follow
+   */
+  omit?: Prisma.FollowOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FollowInclude<ExtArgs> | null
+  where?: Prisma.FollowWhereInput
+  orderBy?: Prisma.FollowOrderByWithRelationInput | Prisma.FollowOrderByWithRelationInput[]
+  cursor?: Prisma.FollowWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FollowScalarFieldEnum | Prisma.FollowScalarFieldEnum[]
+}
+
+/**
+ * User.following
+ */
+export type User$followingArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Follow
+   */
+  select?: Prisma.FollowSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Follow
+   */
+  omit?: Prisma.FollowOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FollowInclude<ExtArgs> | null
+  where?: Prisma.FollowWhereInput
+  orderBy?: Prisma.FollowOrderByWithRelationInput | Prisma.FollowOrderByWithRelationInput[]
+  cursor?: Prisma.FollowWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FollowScalarFieldEnum | Prisma.FollowScalarFieldEnum[]
 }
 
 /**

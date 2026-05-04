@@ -57,6 +57,11 @@ export type Brand = Prisma.BrandModel
  */
 export type Size = Prisma.SizeModel
 /**
+ * Model Follow
+ * 
+ */
+export type Follow = Prisma.FollowModel
+/**
  * Model Chat
  * 
  */

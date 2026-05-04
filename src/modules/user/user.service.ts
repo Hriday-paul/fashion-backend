@@ -155,9 +155,27 @@ const deletemyAccount = async (userId: string) => {
     return res;
 }
 
-const userDetails = async (userId: string) => {
-    const res = await prisma.user.findFirst({ where: { id: userId }, include: { picture: true } });
-    return res;
+const userDetails = async (userName: string, currentUserId?: string) => {
+
+    const res = await prisma.user.findFirst({
+        where: { userName: userName },
+        include: {
+            picture: true,
+            followers: { include: { follower: { include: { picture: true, auth: { select: { role: true } } } } } }, following: { include: { following: { include: { picture: true, auth: { select: { role: true } } } } } }
+        },
+    });
+
+    const ratingAvg = await prisma.rating.aggregate({
+        where: { toUserId: res?.id },
+        _avg: { rating: true },
+        _count: {
+            id: true
+        }
+    });
+
+    const isfolowing = await prisma.follow.findFirst({ where: { followerId: currentUserId, followingId: res?.id } })
+
+    return { user: res, review: ratingAvg, isfolowing: isfolowing ? true : false };
 }
 
 const UpdateNotification = async (payload: { status: boolean, fcmToken?: string }, userId: string) => {

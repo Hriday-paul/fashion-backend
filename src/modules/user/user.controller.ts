@@ -92,7 +92,7 @@ const deleteUser = catchAsync(async (req, res) => {
 
 const userDetails = catchAsync(async (req, res) => {
 
-    const result = await userService.userDetails(req.params.id);
+    const result = await userService.userDetails(req.params.username, req.user?.id);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,

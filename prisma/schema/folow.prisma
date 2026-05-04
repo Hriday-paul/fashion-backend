@@ -1,0 +1,16 @@
+model Follow {
+    id String @id @default(uuid())
+
+    followerId  String
+    followingId String
+
+    createdAt DateTime @default(now())
+
+    // who is following
+    follower User @relation("UserFollowing", fields: [followerId], references: [id], onDelete: Cascade)
+
+    // who is being followed
+    following User @relation("UserFollowers", fields: [followingId], references: [id], onDelete: Cascade)
+
+    @@unique([followerId, followingId]) // prevent duplicate follow
+}

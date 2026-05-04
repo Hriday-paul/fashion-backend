@@ -62,6 +62,9 @@ const getCategories = async () => {
 }
 
 const getParentChain = async (categoryId: string): Promise<Category[]> => {
+    if (!categoryId) {
+        return []
+    }
     const result = await prisma.$queryRaw<Category[]>`
         WITH RECURSIVE parent_chain AS (
             SELECT *, 1 AS level

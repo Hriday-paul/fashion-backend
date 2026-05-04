@@ -56,6 +56,7 @@ export type BrandCountAggregateOutputType = {
   name: number
   order: number
   categoryId: number
+  catagory_child_hierarchy: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -93,6 +94,7 @@ export type BrandCountAggregateInputType = {
   name?: true
   order?: true
   categoryId?: true
+  catagory_child_hierarchy?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -189,6 +191,7 @@ export type BrandGroupByOutputType = {
   name: string
   order: number
   categoryId: string
+  catagory_child_hierarchy: string[]
   createdAt: Date
   updatedAt: Date
   _count: BrandCountAggregateOutputType | null
@@ -221,6 +224,7 @@ export type BrandWhereInput = {
   name?: Prisma.StringFilter<"Brand"> | string
   order?: Prisma.IntFilter<"Brand"> | number
   categoryId?: Prisma.StringFilter<"Brand"> | string
+  catagory_child_hierarchy?: Prisma.StringNullableListFilter<"Brand">
   createdAt?: Prisma.DateTimeFilter<"Brand"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Brand"> | Date | string
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
@@ -232,6 +236,7 @@ export type BrandOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   order?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  catagory_child_hierarchy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   category?: Prisma.CategoryOrderByWithRelationInput
@@ -246,6 +251,7 @@ export type BrandWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Brand"> | string
   order?: Prisma.IntFilter<"Brand"> | number
   categoryId?: Prisma.StringFilter<"Brand"> | string
+  catagory_child_hierarchy?: Prisma.StringNullableListFilter<"Brand">
   createdAt?: Prisma.DateTimeFilter<"Brand"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Brand"> | Date | string
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
@@ -257,6 +263,7 @@ export type BrandOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   order?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  catagory_child_hierarchy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.BrandCountOrderByAggregateInput
@@ -274,6 +281,7 @@ export type BrandScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Brand"> | string
   order?: Prisma.IntWithAggregatesFilter<"Brand"> | number
   categoryId?: Prisma.StringWithAggregatesFilter<"Brand"> | string
+  catagory_child_hierarchy?: Prisma.StringNullableListFilter<"Brand">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Brand"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Brand"> | Date | string
 }
@@ -282,6 +290,7 @@ export type BrandCreateInput = {
   id?: string
   name: string
   order?: number
+  catagory_child_hierarchy?: Prisma.BrandCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutBrandsInput
@@ -293,6 +302,7 @@ export type BrandUncheckedCreateInput = {
   name: string
   order?: number
   categoryId: string
+  catagory_child_hierarchy?: Prisma.BrandCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBrandInput
@@ -302,6 +312,7 @@ export type BrandUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  catagory_child_hierarchy?: Prisma.BrandUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutBrandsNestedInput
@@ -313,6 +324,7 @@ export type BrandUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  catagory_child_hierarchy?: Prisma.BrandUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutBrandNestedInput
@@ -323,6 +335,7 @@ export type BrandCreateManyInput = {
   name: string
   order?: number
   categoryId: string
+  catagory_child_hierarchy?: Prisma.BrandCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -331,6 +344,7 @@ export type BrandUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  catagory_child_hierarchy?: Prisma.BrandUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -340,6 +354,7 @@ export type BrandUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  catagory_child_hierarchy?: Prisma.BrandUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -354,11 +369,20 @@ export type BrandOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type BrandCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   order?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  catagory_child_hierarchy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -436,12 +460,21 @@ export type BrandUncheckedUpdateManyWithoutCategoryNestedInput = {
   deleteMany?: Prisma.BrandScalarWhereInput | Prisma.BrandScalarWhereInput[]
 }
 
+export type BrandCreatecatagory_child_hierarchyInput = {
+  set: string[]
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type BrandUpdatecatagory_child_hierarchyInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type BrandCreateNestedOneWithoutProductsInput = {
@@ -462,6 +495,7 @@ export type BrandCreateWithoutCategoryInput = {
   id?: string
   name: string
   order?: number
+  catagory_child_hierarchy?: Prisma.BrandCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductCreateNestedManyWithoutBrandInput
@@ -471,6 +505,7 @@ export type BrandUncheckedCreateWithoutCategoryInput = {
   id?: string
   name: string
   order?: number
+  catagory_child_hierarchy?: Prisma.BrandCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBrandInput
@@ -510,6 +545,7 @@ export type BrandScalarWhereInput = {
   name?: Prisma.StringFilter<"Brand"> | string
   order?: Prisma.IntFilter<"Brand"> | number
   categoryId?: Prisma.StringFilter<"Brand"> | string
+  catagory_child_hierarchy?: Prisma.StringNullableListFilter<"Brand">
   createdAt?: Prisma.DateTimeFilter<"Brand"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Brand"> | Date | string
 }
@@ -518,6 +554,7 @@ export type BrandCreateWithoutProductsInput = {
   id?: string
   name: string
   order?: number
+  catagory_child_hierarchy?: Prisma.BrandCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutBrandsInput
@@ -528,6 +565,7 @@ export type BrandUncheckedCreateWithoutProductsInput = {
   name: string
   order?: number
   categoryId: string
+  catagory_child_hierarchy?: Prisma.BrandCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -552,6 +590,7 @@ export type BrandUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  catagory_child_hierarchy?: Prisma.BrandUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutBrandsNestedInput
@@ -562,6 +601,7 @@ export type BrandUncheckedUpdateWithoutProductsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  catagory_child_hierarchy?: Prisma.BrandUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -570,6 +610,7 @@ export type BrandCreateManyCategoryInput = {
   id?: string
   name: string
   order?: number
+  catagory_child_hierarchy?: Prisma.BrandCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -578,6 +619,7 @@ export type BrandUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  catagory_child_hierarchy?: Prisma.BrandUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUpdateManyWithoutBrandNestedInput
@@ -587,6 +629,7 @@ export type BrandUncheckedUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  catagory_child_hierarchy?: Prisma.BrandUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutBrandNestedInput
@@ -596,6 +639,7 @@ export type BrandUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  catagory_child_hierarchy?: Prisma.BrandUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -636,6 +680,7 @@ export type BrandSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   name?: boolean
   order?: boolean
   categoryId?: boolean
+  catagory_child_hierarchy?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -648,6 +693,7 @@ export type BrandSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   order?: boolean
   categoryId?: boolean
+  catagory_child_hierarchy?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -658,6 +704,7 @@ export type BrandSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   order?: boolean
   categoryId?: boolean
+  catagory_child_hierarchy?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -668,11 +715,12 @@ export type BrandSelectScalar = {
   name?: boolean
   order?: boolean
   categoryId?: boolean
+  catagory_child_hierarchy?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type BrandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "order" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["brand"]>
+export type BrandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "order" | "categoryId" | "catagory_child_hierarchy" | "createdAt" | "updatedAt", ExtArgs["result"]["brand"]>
 export type BrandInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   products?: boolean | Prisma.Brand$productsArgs<ExtArgs>
@@ -696,6 +744,7 @@ export type $BrandPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     name: string
     order: number
     categoryId: string
+    catagory_child_hierarchy: string[]
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["brand"]>
@@ -1127,6 +1176,7 @@ export interface BrandFieldRefs {
   readonly name: Prisma.FieldRef<"Brand", 'String'>
   readonly order: Prisma.FieldRef<"Brand", 'Int'>
   readonly categoryId: Prisma.FieldRef<"Brand", 'String'>
+  readonly catagory_child_hierarchy: Prisma.FieldRef<"Brand", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Brand", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Brand", 'DateTime'>
 }

@@ -56,6 +56,7 @@ export type SizeCountAggregateOutputType = {
   title: number
   order: number
   categoryId: number
+  catagory_child_hierarchy: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -93,6 +94,7 @@ export type SizeCountAggregateInputType = {
   title?: true
   order?: true
   categoryId?: true
+  catagory_child_hierarchy?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -189,6 +191,7 @@ export type SizeGroupByOutputType = {
   title: string
   order: number
   categoryId: string
+  catagory_child_hierarchy: string[]
   createdAt: Date
   updatedAt: Date
   _count: SizeCountAggregateOutputType | null
@@ -221,6 +224,7 @@ export type SizeWhereInput = {
   title?: Prisma.StringFilter<"Size"> | string
   order?: Prisma.IntFilter<"Size"> | number
   categoryId?: Prisma.StringFilter<"Size"> | string
+  catagory_child_hierarchy?: Prisma.StringNullableListFilter<"Size">
   createdAt?: Prisma.DateTimeFilter<"Size"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Size"> | Date | string
   products?: Prisma.ProductListRelationFilter
@@ -232,6 +236,7 @@ export type SizeOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   order?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  catagory_child_hierarchy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   products?: Prisma.ProductOrderByRelationAggregateInput
@@ -246,6 +251,7 @@ export type SizeWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Size"> | string
   order?: Prisma.IntFilter<"Size"> | number
   categoryId?: Prisma.StringFilter<"Size"> | string
+  catagory_child_hierarchy?: Prisma.StringNullableListFilter<"Size">
   createdAt?: Prisma.DateTimeFilter<"Size"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Size"> | Date | string
   products?: Prisma.ProductListRelationFilter
@@ -257,6 +263,7 @@ export type SizeOrderByWithAggregationInput = {
   title?: Prisma.SortOrder
   order?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  catagory_child_hierarchy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SizeCountOrderByAggregateInput
@@ -274,6 +281,7 @@ export type SizeScalarWhereWithAggregatesInput = {
   title?: Prisma.StringWithAggregatesFilter<"Size"> | string
   order?: Prisma.IntWithAggregatesFilter<"Size"> | number
   categoryId?: Prisma.StringWithAggregatesFilter<"Size"> | string
+  catagory_child_hierarchy?: Prisma.StringNullableListFilter<"Size">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Size"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Size"> | Date | string
 }
@@ -282,6 +290,7 @@ export type SizeCreateInput = {
   id?: string
   title: string
   order?: number
+  catagory_child_hierarchy?: Prisma.SizeCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductCreateNestedManyWithoutSizeInput
@@ -293,6 +302,7 @@ export type SizeUncheckedCreateInput = {
   title: string
   order?: number
   categoryId: string
+  catagory_child_hierarchy?: Prisma.SizeCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutSizeInput
@@ -302,6 +312,7 @@ export type SizeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  catagory_child_hierarchy?: Prisma.SizeUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUpdateManyWithoutSizeNestedInput
@@ -313,6 +324,7 @@ export type SizeUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  catagory_child_hierarchy?: Prisma.SizeUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutSizeNestedInput
@@ -323,6 +335,7 @@ export type SizeCreateManyInput = {
   title: string
   order?: number
   categoryId: string
+  catagory_child_hierarchy?: Prisma.SizeCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -331,6 +344,7 @@ export type SizeUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  catagory_child_hierarchy?: Prisma.SizeUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -340,6 +354,7 @@ export type SizeUncheckedUpdateManyInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  catagory_child_hierarchy?: Prisma.SizeUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -359,6 +374,7 @@ export type SizeCountOrderByAggregateInput = {
   title?: Prisma.SortOrder
   order?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  catagory_child_hierarchy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -436,6 +452,15 @@ export type SizeUncheckedUpdateManyWithoutCategoryNestedInput = {
   deleteMany?: Prisma.SizeScalarWhereInput | Prisma.SizeScalarWhereInput[]
 }
 
+export type SizeCreatecatagory_child_hierarchyInput = {
+  set: string[]
+}
+
+export type SizeUpdatecatagory_child_hierarchyInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
 export type SizeCreateNestedOneWithoutProductsInput = {
   create?: Prisma.XOR<Prisma.SizeCreateWithoutProductsInput, Prisma.SizeUncheckedCreateWithoutProductsInput>
   connectOrCreate?: Prisma.SizeCreateOrConnectWithoutProductsInput
@@ -454,6 +479,7 @@ export type SizeCreateWithoutCategoryInput = {
   id?: string
   title: string
   order?: number
+  catagory_child_hierarchy?: Prisma.SizeCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductCreateNestedManyWithoutSizeInput
@@ -463,6 +489,7 @@ export type SizeUncheckedCreateWithoutCategoryInput = {
   id?: string
   title: string
   order?: number
+  catagory_child_hierarchy?: Prisma.SizeCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutSizeInput
@@ -502,6 +529,7 @@ export type SizeScalarWhereInput = {
   title?: Prisma.StringFilter<"Size"> | string
   order?: Prisma.IntFilter<"Size"> | number
   categoryId?: Prisma.StringFilter<"Size"> | string
+  catagory_child_hierarchy?: Prisma.StringNullableListFilter<"Size">
   createdAt?: Prisma.DateTimeFilter<"Size"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Size"> | Date | string
 }
@@ -510,6 +538,7 @@ export type SizeCreateWithoutProductsInput = {
   id?: string
   title: string
   order?: number
+  catagory_child_hierarchy?: Prisma.SizeCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutSizesInput
@@ -520,6 +549,7 @@ export type SizeUncheckedCreateWithoutProductsInput = {
   title: string
   order?: number
   categoryId: string
+  catagory_child_hierarchy?: Prisma.SizeCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -544,6 +574,7 @@ export type SizeUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  catagory_child_hierarchy?: Prisma.SizeUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutSizesNestedInput
@@ -554,6 +585,7 @@ export type SizeUncheckedUpdateWithoutProductsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  catagory_child_hierarchy?: Prisma.SizeUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -562,6 +594,7 @@ export type SizeCreateManyCategoryInput = {
   id?: string
   title: string
   order?: number
+  catagory_child_hierarchy?: Prisma.SizeCreatecatagory_child_hierarchyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -570,6 +603,7 @@ export type SizeUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  catagory_child_hierarchy?: Prisma.SizeUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUpdateManyWithoutSizeNestedInput
@@ -579,6 +613,7 @@ export type SizeUncheckedUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  catagory_child_hierarchy?: Prisma.SizeUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutSizeNestedInput
@@ -588,6 +623,7 @@ export type SizeUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  catagory_child_hierarchy?: Prisma.SizeUpdatecatagory_child_hierarchyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -628,6 +664,7 @@ export type SizeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   title?: boolean
   order?: boolean
   categoryId?: boolean
+  catagory_child_hierarchy?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   products?: boolean | Prisma.Size$productsArgs<ExtArgs>
@@ -640,6 +677,7 @@ export type SizeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   title?: boolean
   order?: boolean
   categoryId?: boolean
+  catagory_child_hierarchy?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -650,6 +688,7 @@ export type SizeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   title?: boolean
   order?: boolean
   categoryId?: boolean
+  catagory_child_hierarchy?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -660,11 +699,12 @@ export type SizeSelectScalar = {
   title?: boolean
   order?: boolean
   categoryId?: boolean
+  catagory_child_hierarchy?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SizeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "order" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["size"]>
+export type SizeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "order" | "categoryId" | "catagory_child_hierarchy" | "createdAt" | "updatedAt", ExtArgs["result"]["size"]>
 export type SizeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | Prisma.Size$productsArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -688,6 +728,7 @@ export type $SizePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     title: string
     order: number
     categoryId: string
+    catagory_child_hierarchy: string[]
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["size"]>
@@ -1119,6 +1160,7 @@ export interface SizeFieldRefs {
   readonly title: Prisma.FieldRef<"Size", 'String'>
   readonly order: Prisma.FieldRef<"Size", 'Int'>
   readonly categoryId: Prisma.FieldRef<"Size", 'String'>
+  readonly catagory_child_hierarchy: Prisma.FieldRef<"Size", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Size", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Size", 'DateTime'>
 }

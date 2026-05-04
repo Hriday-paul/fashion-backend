@@ -10,6 +10,7 @@
 export type * from './models/Category'
 export type * from './models/Brand'
 export type * from './models/Size'
+export type * from './models/Follow'
 export type * from './models/Chat'
 export type * from './models/ChatParticipant'
 export type * from './models/Message'

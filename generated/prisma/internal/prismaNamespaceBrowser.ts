@@ -51,6 +51,7 @@ export const ModelName = {
   Category: 'Category',
   Brand: 'Brand',
   Size: 'Size',
+  Follow: 'Follow',
   Chat: 'Chat',
   ChatParticipant: 'ChatParticipant',
   Message: 'Message',
@@ -115,6 +116,7 @@ export const BrandScalarFieldEnum = {
   name: 'name',
   order: 'order',
   categoryId: 'categoryId',
+  catagory_child_hierarchy: 'catagory_child_hierarchy',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -127,11 +129,22 @@ export const SizeScalarFieldEnum = {
   title: 'title',
   order: 'order',
   categoryId: 'categoryId',
+  catagory_child_hierarchy: 'catagory_child_hierarchy',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type SizeScalarFieldEnum = (typeof SizeScalarFieldEnum)[keyof typeof SizeScalarFieldEnum]
+
+
+export const FollowScalarFieldEnum = {
+  id: 'id',
+  followerId: 'followerId',
+  followingId: 'followingId',
+  createdAt: 'createdAt'
+} as const
+
+export type FollowScalarFieldEnum = (typeof FollowScalarFieldEnum)[keyof typeof FollowScalarFieldEnum]
 
 
 export const ChatScalarFieldEnum = {

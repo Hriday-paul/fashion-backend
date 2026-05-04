@@ -392,6 +392,7 @@ export const ModelName = {
   Category: 'Category',
   Brand: 'Brand',
   Size: 'Size',
+  Follow: 'Follow',
   Chat: 'Chat',
   ChatParticipant: 'ChatParticipant',
   Message: 'Message',
@@ -436,7 +437,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "brand" | "size" | "chat" | "chatParticipant" | "message" | "fileMessage" | "orderSellerGroup" | "orderSellerDelivery" | "order" | "orderItem" | "sellDonation" | "payment" | "product" | "productPicture" | "productCharity" | "favourite" | "productView" | "question" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
+    modelProps: "category" | "brand" | "size" | "follow" | "chat" | "chatParticipant" | "message" | "fileMessage" | "orderSellerGroup" | "orderSellerDelivery" | "order" | "orderItem" | "sellDonation" | "payment" | "product" | "productPicture" | "productCharity" | "favourite" | "productView" | "question" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -659,6 +660,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SizeCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SizeCountAggregateOutputType> | number
+        }
+      }
+    }
+    Follow: {
+      payload: Prisma.$FollowPayload<ExtArgs>
+      fields: Prisma.FollowFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FollowFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FollowFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>
+        }
+        findFirst: {
+          args: Prisma.FollowFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FollowFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>
+        }
+        findMany: {
+          args: Prisma.FollowFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>[]
+        }
+        create: {
+          args: Prisma.FollowCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>
+        }
+        createMany: {
+          args: Prisma.FollowCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FollowCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>[]
+        }
+        delete: {
+          args: Prisma.FollowDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>
+        }
+        update: {
+          args: Prisma.FollowUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>
+        }
+        deleteMany: {
+          args: Prisma.FollowDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FollowUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FollowUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>[]
+        }
+        upsert: {
+          args: Prisma.FollowUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>
+        }
+        aggregate: {
+          args: Prisma.FollowAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFollow>
+        }
+        groupBy: {
+          args: Prisma.FollowGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FollowGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FollowCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FollowCountAggregateOutputType> | number
         }
       }
     }
@@ -2864,6 +2939,7 @@ export const BrandScalarFieldEnum = {
   name: 'name',
   order: 'order',
   categoryId: 'categoryId',
+  catagory_child_hierarchy: 'catagory_child_hierarchy',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2876,11 +2952,22 @@ export const SizeScalarFieldEnum = {
   title: 'title',
   order: 'order',
   categoryId: 'categoryId',
+  catagory_child_hierarchy: 'catagory_child_hierarchy',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type SizeScalarFieldEnum = (typeof SizeScalarFieldEnum)[keyof typeof SizeScalarFieldEnum]
+
+
+export const FollowScalarFieldEnum = {
+  id: 'id',
+  followerId: 'followerId',
+  followingId: 'followingId',
+  createdAt: 'createdAt'
+} as const
+
+export type FollowScalarFieldEnum = (typeof FollowScalarFieldEnum)[keyof typeof FollowScalarFieldEnum]
 
 
 export const ChatScalarFieldEnum = {
@@ -3755,6 +3842,7 @@ export type GlobalOmitConfig = {
   category?: Prisma.CategoryOmit
   brand?: Prisma.BrandOmit
   size?: Prisma.SizeOmit
+  follow?: Prisma.FollowOmit
   chat?: Prisma.ChatOmit
   chatParticipant?: Prisma.ChatParticipantOmit
   message?: Prisma.MessageOmit
