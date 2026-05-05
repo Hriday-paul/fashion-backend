@@ -242,6 +242,88 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
 
 }
 
+const productsByUserName = async (query: Record<string, unknown>, options: TPaginationOptions, userName: string, currentUser?: string) => {
+
+    const user = await prisma.user.findFirst({ where: { userName } });
+
+    if (!user) {
+        return { data: [] }
+    }
+
+    const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }, { userId: user?.id }];
+
+    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+    const { category } = query;
+
+    if (category) {
+        AndConditions.push({
+            catagory_hierarchy: {
+                has: category as string
+            }
+        });
+    }
+
+    const whereConditions: Prisma.ProductWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
+
+    const result = await prisma.product.findMany({
+        where: whereConditions,
+        skip,
+        take: limit,
+        orderBy: {
+            [sortBy]: sortOrder,
+        },
+        include: {
+            images: true,
+            brand: true,
+            size: true,
+            category: true,
+            user: {
+                include: {
+                    auth: {
+                        select: {
+                            role: true
+                        }
+                    },
+                    picture: true
+                },
+            },
+            //favourite count
+            _count: {
+                select: {
+                    favourites: true
+                }
+            },
+            // is Favourites by user
+            favourites: currentUser
+                ? {
+                    where: {
+                        userId: currentUser,
+                    },
+                    select: {
+                        id: true,
+                    },
+                }
+                : false,
+        },
+    })
+
+    const total = await prisma.product.count({
+        where: whereConditions,
+    });
+
+    return {
+        meta: {
+            total,
+            totalPage: Math.ceil(total / limit),
+            page,
+            limit,
+        },
+        data: result,
+    };
+
+}
+
 const newArrivalProducts = async () => {
     const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }];
 
@@ -628,6 +710,8 @@ export const productService = {
     allProducts,
     newArrivalProducts,
     productDetails,
+
+    productsByUserName,
 
     getViewKey,
 

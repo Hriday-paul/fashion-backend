@@ -48,6 +48,11 @@ router.get(
 );
 
 router.get(
+    '/stats/:userName',
+    userController.memberStats
+);
+
+router.get(
     '/charities',
     auth(...allRoles),
     userController.allCharies,

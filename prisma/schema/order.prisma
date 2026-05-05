@@ -118,8 +118,8 @@ model OrderItem {
     createdAt DateTime    @default(now())
     updatedAt DateTime    @updatedAt
 
-    donation_percent Float @default(0)
-    donation_amount Float @default(0)
+    donation_percent Float @default(0) //single item donation percent
+    donation_amount Float @default(0) // total donation amount multiply by quantity
     extra_donation Float @default(0)
     donations SellDonation[]
 
@@ -130,14 +130,14 @@ model OrderItem {
 model SellDonation {
     id String @id @default(uuid())
 
-    amount  Float @default(0)
-    percent Float @default(0)
+    amount  Float @default(0) //only item donation amount
+    percent Float @default(0) //what actual percent received, split by other charaties
 
     extra_money Float @default(0)
 
     isAnonymous Boolean @default(false)
 
-    total_amount Float @default(0)
+    total_amount Float @default(0) //adjusted extra + item donation
 
     status DonationStatus @default(PENDING)
 

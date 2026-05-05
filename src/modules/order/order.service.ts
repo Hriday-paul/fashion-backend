@@ -163,17 +163,19 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
         const product = products.find((i) => i.productId === p.id)!;
         const total_price = p.finalPrice * (product.quantity || 0);
         const donation_percent = p.donation_percent || 0;
-        const extra_donation = product.extra_donation ?? 0
+        const extra_donation = product.extra_donation ?? 0;
+
+        const quantity = product.quantity || 0;
 
         return {
             productId: p.id,
             sellerId: p.userId, // for grouping
             unitPrice: p.finalPrice,
             totalPrice: total_price + extra_donation,
-            quantity: product.quantity || 0,
+            quantity,
             extra_donation,
             donation_percent,
-            donation_amount: total_price * (donation_percent / 100),
+            donation_amount: (total_price * (donation_percent / 100)) * quantity, // toatl donation, multiply by quantity
             charities: product.charities ?? [],
         };
     });
@@ -232,6 +234,8 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
 
                                 const dbProduct = prod_prices.find((p) => p.id === item.productId)!;
 
+                                const splitPercent = charityCount > 0 ? 100 / charityCount : 0;
+
                                 return {
                                     ...item,
                                     ...(charityCount > 0 && {
@@ -244,7 +248,7 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
                                                 return {
                                                     charityId,
                                                     amount: splitAmount,
-                                                    percent: item.donation_percent,
+                                                    percent: splitPercent,
                                                     extra_money: splitExtra,
                                                     total_amount: splitAmount + splitExtra,
                                                     status: 'PENDING',

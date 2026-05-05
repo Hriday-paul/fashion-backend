@@ -215,6 +215,51 @@ const allCharies = async () => {
     return res;
 }
 
+const memberStats = async (userName: string) => {
+    const user = await prisma.user.findFirst({ where: { userName } });
+
+    if (!user) {
+        return {
+            totalProducts: 0,
+            totalSold: 0,
+            totalFollowers: 0,
+            totalDonation: 0,
+        }
+    }
+
+    const totalProducts = await prisma.product.count({ where: { userId: user?.id, isDeleted: false } });
+
+    const totalSold = await prisma.orderItem.aggregate({
+        _sum: {
+            quantity: true,
+        },
+        where: {
+            sellerGroup: {
+                sellerId: user.id,
+                order: {
+                    status: "COMPLETED", // ✅ important (avoid counting pending/cancelled)
+                },
+            },
+        },
+    });
+
+    const totalFollowers = await prisma.follow.count({ where: { followingId: user?.id } });
+
+    const totalSellDonation = await prisma.sellDonation.aggregate({ where: { status: "PAID" }, _sum: { amount: true } });
+    const totalTreeDonation = await prisma.order.aggregate({ where: { status: "COMPLETED" }, _sum: { treeCredit: true } });
+
+    const totalSellDonationAmount = totalSellDonation?._sum?.amount || 0;
+    const totalTreeDonationAmount = totalTreeDonation?._sum?.treeCredit || 0;
+
+    return {
+        totalProducts,
+        totalSold: totalSold?._sum?.quantity || 0,
+        totalFollowers,
+        totalDonation: totalSellDonationAmount + totalTreeDonationAmount,
+    };
+
+}
+
 const addOrUpdateBillingDetails = async (payload: BillingDetails, userId: string) => {
     const existDefaultBillingDetails = await prisma.billingDetails.findFirst({ where: { userId } });
     if (existDefaultBillingDetails) {
@@ -246,5 +291,6 @@ export const userService = {
 
     allCharies,
     addOrUpdateBillingDetails,
-    billingDetailsByUser
+    billingDetailsByUser,
+    memberStats
 }

@@ -57,6 +57,21 @@ const allProducts = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+
+const productsByUserName = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["searchTerm", "category"])
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await productService.productsByUserName(query, options, req.params.username, req.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Products retrived successfully',
+        data: result,
+    });
+});
+
 const productsByType = catchAsync(async (req: Request, res: Response) => {
 
     const type = req.query.type;
@@ -156,6 +171,8 @@ export const productControler = {
     newArrivalProducts,
     productsByType,
     productDetails,
+
+    productsByUserName,
 
     recentViewProducts,
     trendingProducts,

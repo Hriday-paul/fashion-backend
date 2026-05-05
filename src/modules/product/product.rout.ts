@@ -12,6 +12,7 @@ const router = Router();
 router.post("/", auth(...allRoles), image_Upload.array('images'), parseData(), addProductValidator, req_validator(), productControler.addNewProduct);
 
 router.get("/", PublicAuth(), productControler.allProducts);
+router.get("/member/:username", PublicAuth(), productControler.productsByUserName);
 router.get("/by-type", productByTypeValidator, req_validator(), PublicAuth(), productControler.productsByType);
 router.get("/new-arrival", PublicAuth(), productControler.newArrivalProducts);
 

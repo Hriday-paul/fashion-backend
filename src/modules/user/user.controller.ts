@@ -65,6 +65,17 @@ const update_user_status: RequestHandler<{ id: string }, {}, { status: boolean }
     });
 })
 
+
+const memberStats: RequestHandler<{ id: string }, {}, { status: boolean }> = catchAsync(async (req, res) => {
+    const result = await userService.memberStats(req.params.userName)
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Stats retrived successfully',
+        data: result,
+    });
+})
+
 // delete my accont
 const deletemyAccount = catchAsync(async (req, res) => {
 
@@ -166,6 +177,7 @@ export const userController = {
     UpdateNotification,
     
     allCharies,
+    memberStats,
 
     addOrUpdateBillingDetails,
     billingDetailsByUser

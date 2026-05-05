@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { paymentsController } from './payments.controller';
-import { USER_ROLE } from '../user/user.constants';
 import auth from '../../middleware/auth';
 import { checkoutValidator } from './payments.validation';
 import req_validator from '../../middleware/req_validation';
