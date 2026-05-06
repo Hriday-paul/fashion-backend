@@ -245,8 +245,17 @@ const memberStats = async (userName: string) => {
 
     const totalFollowers = await prisma.follow.count({ where: { followingId: user?.id } });
 
-    const totalSellDonation = await prisma.sellDonation.aggregate({ where: { status: "PAID" }, _sum: { amount: true } });
-    const totalTreeDonation = await prisma.order.aggregate({ where: { status: "COMPLETED" }, _sum: { treeCredit: true } });
+    const totalSellDonation = await prisma.sellDonation.aggregate({
+        where: {
+            status: "PAID", orderItem: {
+                sellerGroup: {
+                    sellerId: user?.id
+                }
+            }
+        }, _sum: { amount: true }
+    });
+
+    const totalTreeDonation = await prisma.order.aggregate({ where: { status: "COMPLETED", userId : user?.id }, _sum: { treeCredit: true } });
 
     const totalSellDonationAmount = totalSellDonation?._sum?.amount || 0;
     const totalTreeDonationAmount = totalTreeDonation?._sum?.treeCredit || 0;

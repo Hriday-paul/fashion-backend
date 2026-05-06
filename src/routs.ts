@@ -14,6 +14,7 @@ import { orderRouts } from './modules/order/order.rout';
 import { paymentsRoutes } from './modules/payments/payments.route';
 import { questionRouts } from './modules/question/question.rout';
 import { folowRouts } from './modules/folow/folow.rout';
+import { donationRouts } from './modules/donation/donation.rout';
 
 const router = express.Router();
 
@@ -65,6 +66,10 @@ const moduleRoutes = [
     {
         path: '/folow',
         route: folowRouts,
+    },
+    {
+        path: '/donations',
+        route: donationRouts,
     },
 ];
 
