@@ -54,7 +54,7 @@ const memberDonationStats = async (userName: string) => {
         totalPurchaseDonationContribute,
         clothDonation,
         directDonation,
-        total: totalSellDonationAmount + totalTreeDonationAmount + totalExtraDonated + totalPurchaseDonationContribute + clothDonation + directDonation
+        total: totalSellDonationAmount + totalTreeDonationAmount + totalExtraDonated + clothDonation + directDonation
     }
 
 
