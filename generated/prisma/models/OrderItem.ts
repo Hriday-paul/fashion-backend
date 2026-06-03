@@ -297,7 +297,7 @@ export type OrderItemWhereInput = {
   extra_donation?: Prisma.FloatFilter<"OrderItem"> | number
   sellerGroup?: Prisma.XOR<Prisma.OrderSellerGroupScalarRelationFilter, Prisma.OrderSellerGroupWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
-  returnItems?: Prisma.ReturnItemListRelationFilter
+  returnItem?: Prisma.XOR<Prisma.ReturnItemNullableScalarRelationFilter, Prisma.ReturnItemWhereInput> | null
   donations?: Prisma.SellDonationListRelationFilter
 }
 
@@ -316,7 +316,7 @@ export type OrderItemOrderByWithRelationInput = {
   extra_donation?: Prisma.SortOrder
   sellerGroup?: Prisma.OrderSellerGroupOrderByWithRelationInput
   product?: Prisma.ProductOrderByWithRelationInput
-  returnItems?: Prisma.ReturnItemOrderByRelationAggregateInput
+  returnItem?: Prisma.ReturnItemOrderByWithRelationInput
   donations?: Prisma.SellDonationOrderByRelationAggregateInput
 }
 
@@ -338,7 +338,7 @@ export type OrderItemWhereUniqueInput = Prisma.AtLeast<{
   extra_donation?: Prisma.FloatFilter<"OrderItem"> | number
   sellerGroup?: Prisma.XOR<Prisma.OrderSellerGroupScalarRelationFilter, Prisma.OrderSellerGroupWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
-  returnItems?: Prisma.ReturnItemListRelationFilter
+  returnItem?: Prisma.XOR<Prisma.ReturnItemNullableScalarRelationFilter, Prisma.ReturnItemWhereInput> | null
   donations?: Prisma.SellDonationListRelationFilter
 }, "id">
 
@@ -393,7 +393,7 @@ export type OrderItemCreateInput = {
   extra_donation?: number
   sellerGroup: Prisma.OrderSellerGroupCreateNestedOneWithoutItemsInput
   product: Prisma.ProductCreateNestedOneWithoutOrderItemsInput
-  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutOrderItemInput
+  returnItem?: Prisma.ReturnItemCreateNestedOneWithoutOrderItemInput
   donations?: Prisma.SellDonationCreateNestedManyWithoutOrderItemInput
 }
 
@@ -410,7 +410,7 @@ export type OrderItemUncheckedCreateInput = {
   donation_percent?: number
   donation_amount?: number
   extra_donation?: number
-  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutOrderItemInput
+  returnItem?: Prisma.ReturnItemUncheckedCreateNestedOneWithoutOrderItemInput
   donations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutOrderItemInput
 }
 
@@ -427,7 +427,7 @@ export type OrderItemUpdateInput = {
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   sellerGroup?: Prisma.OrderSellerGroupUpdateOneRequiredWithoutItemsNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutOrderItemsNestedInput
-  returnItems?: Prisma.ReturnItemUpdateManyWithoutOrderItemNestedInput
+  returnItem?: Prisma.ReturnItemUpdateOneWithoutOrderItemNestedInput
   donations?: Prisma.SellDonationUpdateManyWithoutOrderItemNestedInput
 }
 
@@ -444,7 +444,7 @@ export type OrderItemUncheckedUpdateInput = {
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
-  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutOrderItemNestedInput
+  returnItem?: Prisma.ReturnItemUncheckedUpdateOneWithoutOrderItemNestedInput
   donations?: Prisma.SellDonationUncheckedUpdateManyWithoutOrderItemNestedInput
 }
 
@@ -669,18 +669,18 @@ export type OrderItemUncheckedUpdateManyWithoutProductNestedInput = {
   deleteMany?: Prisma.OrderItemScalarWhereInput | Prisma.OrderItemScalarWhereInput[]
 }
 
-export type OrderItemCreateNestedOneWithoutReturnItemsInput = {
-  create?: Prisma.XOR<Prisma.OrderItemCreateWithoutReturnItemsInput, Prisma.OrderItemUncheckedCreateWithoutReturnItemsInput>
-  connectOrCreate?: Prisma.OrderItemCreateOrConnectWithoutReturnItemsInput
+export type OrderItemCreateNestedOneWithoutReturnItemInput = {
+  create?: Prisma.XOR<Prisma.OrderItemCreateWithoutReturnItemInput, Prisma.OrderItemUncheckedCreateWithoutReturnItemInput>
+  connectOrCreate?: Prisma.OrderItemCreateOrConnectWithoutReturnItemInput
   connect?: Prisma.OrderItemWhereUniqueInput
 }
 
-export type OrderItemUpdateOneRequiredWithoutReturnItemsNestedInput = {
-  create?: Prisma.XOR<Prisma.OrderItemCreateWithoutReturnItemsInput, Prisma.OrderItemUncheckedCreateWithoutReturnItemsInput>
-  connectOrCreate?: Prisma.OrderItemCreateOrConnectWithoutReturnItemsInput
-  upsert?: Prisma.OrderItemUpsertWithoutReturnItemsInput
+export type OrderItemUpdateOneRequiredWithoutReturnItemNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderItemCreateWithoutReturnItemInput, Prisma.OrderItemUncheckedCreateWithoutReturnItemInput>
+  connectOrCreate?: Prisma.OrderItemCreateOrConnectWithoutReturnItemInput
+  upsert?: Prisma.OrderItemUpsertWithoutReturnItemInput
   connect?: Prisma.OrderItemWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrderItemUpdateToOneWithWhereWithoutReturnItemsInput, Prisma.OrderItemUpdateWithoutReturnItemsInput>, Prisma.OrderItemUncheckedUpdateWithoutReturnItemsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrderItemUpdateToOneWithWhereWithoutReturnItemInput, Prisma.OrderItemUpdateWithoutReturnItemInput>, Prisma.OrderItemUncheckedUpdateWithoutReturnItemInput>
 }
 
 export type OrderItemCreateWithoutSellerGroupInput = {
@@ -695,7 +695,7 @@ export type OrderItemCreateWithoutSellerGroupInput = {
   donation_amount?: number
   extra_donation?: number
   product: Prisma.ProductCreateNestedOneWithoutOrderItemsInput
-  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutOrderItemInput
+  returnItem?: Prisma.ReturnItemCreateNestedOneWithoutOrderItemInput
   donations?: Prisma.SellDonationCreateNestedManyWithoutOrderItemInput
 }
 
@@ -711,7 +711,7 @@ export type OrderItemUncheckedCreateWithoutSellerGroupInput = {
   donation_percent?: number
   donation_amount?: number
   extra_donation?: number
-  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutOrderItemInput
+  returnItem?: Prisma.ReturnItemUncheckedCreateNestedOneWithoutOrderItemInput
   donations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutOrderItemInput
 }
 
@@ -772,7 +772,7 @@ export type OrderItemCreateWithoutDonationsInput = {
   extra_donation?: number
   sellerGroup: Prisma.OrderSellerGroupCreateNestedOneWithoutItemsInput
   product: Prisma.ProductCreateNestedOneWithoutOrderItemsInput
-  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutOrderItemInput
+  returnItem?: Prisma.ReturnItemCreateNestedOneWithoutOrderItemInput
 }
 
 export type OrderItemUncheckedCreateWithoutDonationsInput = {
@@ -788,7 +788,7 @@ export type OrderItemUncheckedCreateWithoutDonationsInput = {
   donation_percent?: number
   donation_amount?: number
   extra_donation?: number
-  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutOrderItemInput
+  returnItem?: Prisma.ReturnItemUncheckedCreateNestedOneWithoutOrderItemInput
 }
 
 export type OrderItemCreateOrConnectWithoutDonationsInput = {
@@ -820,7 +820,7 @@ export type OrderItemUpdateWithoutDonationsInput = {
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   sellerGroup?: Prisma.OrderSellerGroupUpdateOneRequiredWithoutItemsNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutOrderItemsNestedInput
-  returnItems?: Prisma.ReturnItemUpdateManyWithoutOrderItemNestedInput
+  returnItem?: Prisma.ReturnItemUpdateOneWithoutOrderItemNestedInput
 }
 
 export type OrderItemUncheckedUpdateWithoutDonationsInput = {
@@ -836,7 +836,7 @@ export type OrderItemUncheckedUpdateWithoutDonationsInput = {
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
-  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutOrderItemNestedInput
+  returnItem?: Prisma.ReturnItemUncheckedUpdateOneWithoutOrderItemNestedInput
 }
 
 export type OrderItemCreateWithoutProductInput = {
@@ -851,7 +851,7 @@ export type OrderItemCreateWithoutProductInput = {
   donation_amount?: number
   extra_donation?: number
   sellerGroup: Prisma.OrderSellerGroupCreateNestedOneWithoutItemsInput
-  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutOrderItemInput
+  returnItem?: Prisma.ReturnItemCreateNestedOneWithoutOrderItemInput
   donations?: Prisma.SellDonationCreateNestedManyWithoutOrderItemInput
 }
 
@@ -867,7 +867,7 @@ export type OrderItemUncheckedCreateWithoutProductInput = {
   donation_percent?: number
   donation_amount?: number
   extra_donation?: number
-  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutOrderItemInput
+  returnItem?: Prisma.ReturnItemUncheckedCreateNestedOneWithoutOrderItemInput
   donations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutOrderItemInput
 }
 
@@ -897,7 +897,7 @@ export type OrderItemUpdateManyWithWhereWithoutProductInput = {
   data: Prisma.XOR<Prisma.OrderItemUpdateManyMutationInput, Prisma.OrderItemUncheckedUpdateManyWithoutProductInput>
 }
 
-export type OrderItemCreateWithoutReturnItemsInput = {
+export type OrderItemCreateWithoutReturnItemInput = {
   id?: string
   quantity: number
   weight?: number
@@ -913,7 +913,7 @@ export type OrderItemCreateWithoutReturnItemsInput = {
   donations?: Prisma.SellDonationCreateNestedManyWithoutOrderItemInput
 }
 
-export type OrderItemUncheckedCreateWithoutReturnItemsInput = {
+export type OrderItemUncheckedCreateWithoutReturnItemInput = {
   id?: string
   sellerGroupId: string
   productId: string
@@ -929,23 +929,23 @@ export type OrderItemUncheckedCreateWithoutReturnItemsInput = {
   donations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutOrderItemInput
 }
 
-export type OrderItemCreateOrConnectWithoutReturnItemsInput = {
+export type OrderItemCreateOrConnectWithoutReturnItemInput = {
   where: Prisma.OrderItemWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrderItemCreateWithoutReturnItemsInput, Prisma.OrderItemUncheckedCreateWithoutReturnItemsInput>
+  create: Prisma.XOR<Prisma.OrderItemCreateWithoutReturnItemInput, Prisma.OrderItemUncheckedCreateWithoutReturnItemInput>
 }
 
-export type OrderItemUpsertWithoutReturnItemsInput = {
-  update: Prisma.XOR<Prisma.OrderItemUpdateWithoutReturnItemsInput, Prisma.OrderItemUncheckedUpdateWithoutReturnItemsInput>
-  create: Prisma.XOR<Prisma.OrderItemCreateWithoutReturnItemsInput, Prisma.OrderItemUncheckedCreateWithoutReturnItemsInput>
+export type OrderItemUpsertWithoutReturnItemInput = {
+  update: Prisma.XOR<Prisma.OrderItemUpdateWithoutReturnItemInput, Prisma.OrderItemUncheckedUpdateWithoutReturnItemInput>
+  create: Prisma.XOR<Prisma.OrderItemCreateWithoutReturnItemInput, Prisma.OrderItemUncheckedCreateWithoutReturnItemInput>
   where?: Prisma.OrderItemWhereInput
 }
 
-export type OrderItemUpdateToOneWithWhereWithoutReturnItemsInput = {
+export type OrderItemUpdateToOneWithWhereWithoutReturnItemInput = {
   where?: Prisma.OrderItemWhereInput
-  data: Prisma.XOR<Prisma.OrderItemUpdateWithoutReturnItemsInput, Prisma.OrderItemUncheckedUpdateWithoutReturnItemsInput>
+  data: Prisma.XOR<Prisma.OrderItemUpdateWithoutReturnItemInput, Prisma.OrderItemUncheckedUpdateWithoutReturnItemInput>
 }
 
-export type OrderItemUpdateWithoutReturnItemsInput = {
+export type OrderItemUpdateWithoutReturnItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   weight?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -961,7 +961,7 @@ export type OrderItemUpdateWithoutReturnItemsInput = {
   donations?: Prisma.SellDonationUpdateManyWithoutOrderItemNestedInput
 }
 
-export type OrderItemUncheckedUpdateWithoutReturnItemsInput = {
+export type OrderItemUncheckedUpdateWithoutReturnItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1003,7 +1003,7 @@ export type OrderItemUpdateWithoutSellerGroupInput = {
   donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   product?: Prisma.ProductUpdateOneRequiredWithoutOrderItemsNestedInput
-  returnItems?: Prisma.ReturnItemUpdateManyWithoutOrderItemNestedInput
+  returnItem?: Prisma.ReturnItemUpdateOneWithoutOrderItemNestedInput
   donations?: Prisma.SellDonationUpdateManyWithoutOrderItemNestedInput
 }
 
@@ -1019,7 +1019,7 @@ export type OrderItemUncheckedUpdateWithoutSellerGroupInput = {
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
-  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutOrderItemNestedInput
+  returnItem?: Prisma.ReturnItemUncheckedUpdateOneWithoutOrderItemNestedInput
   donations?: Prisma.SellDonationUncheckedUpdateManyWithoutOrderItemNestedInput
 }
 
@@ -1063,7 +1063,7 @@ export type OrderItemUpdateWithoutProductInput = {
   donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   sellerGroup?: Prisma.OrderSellerGroupUpdateOneRequiredWithoutItemsNestedInput
-  returnItems?: Prisma.ReturnItemUpdateManyWithoutOrderItemNestedInput
+  returnItem?: Prisma.ReturnItemUpdateOneWithoutOrderItemNestedInput
   donations?: Prisma.SellDonationUpdateManyWithoutOrderItemNestedInput
 }
 
@@ -1079,7 +1079,7 @@ export type OrderItemUncheckedUpdateWithoutProductInput = {
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
   donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
-  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutOrderItemNestedInput
+  returnItem?: Prisma.ReturnItemUncheckedUpdateOneWithoutOrderItemNestedInput
   donations?: Prisma.SellDonationUncheckedUpdateManyWithoutOrderItemNestedInput
 }
 
@@ -1103,12 +1103,10 @@ export type OrderItemUncheckedUpdateManyWithoutProductInput = {
  */
 
 export type OrderItemCountOutputType = {
-  returnItems: number
   donations: number
 }
 
 export type OrderItemCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  returnItems?: boolean | OrderItemCountOutputTypeCountReturnItemsArgs
   donations?: boolean | OrderItemCountOutputTypeCountDonationsArgs
 }
 
@@ -1120,13 +1118,6 @@ export type OrderItemCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ex
    * Select specific fields to fetch from the OrderItemCountOutputType
    */
   select?: Prisma.OrderItemCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * OrderItemCountOutputType without action
- */
-export type OrderItemCountOutputTypeCountReturnItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ReturnItemWhereInput
 }
 
 /**
@@ -1152,7 +1143,7 @@ export type OrderItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   extra_donation?: boolean
   sellerGroup?: boolean | Prisma.OrderSellerGroupDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
-  returnItems?: boolean | Prisma.OrderItem$returnItemsArgs<ExtArgs>
+  returnItem?: boolean | Prisma.OrderItem$returnItemArgs<ExtArgs>
   donations?: boolean | Prisma.OrderItem$donationsArgs<ExtArgs>
   _count?: boolean | Prisma.OrderItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["orderItem"]>
@@ -1210,7 +1201,7 @@ export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type OrderItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sellerGroup?: boolean | Prisma.OrderSellerGroupDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
-  returnItems?: boolean | Prisma.OrderItem$returnItemsArgs<ExtArgs>
+  returnItem?: boolean | Prisma.OrderItem$returnItemArgs<ExtArgs>
   donations?: boolean | Prisma.OrderItem$donationsArgs<ExtArgs>
   _count?: boolean | Prisma.OrderItemCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1228,7 +1219,7 @@ export type $OrderItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   objects: {
     sellerGroup: Prisma.$OrderSellerGroupPayload<ExtArgs>
     product: Prisma.$ProductPayload<ExtArgs>
-    returnItems: Prisma.$ReturnItemPayload<ExtArgs>[]
+    returnItem: Prisma.$ReturnItemPayload<ExtArgs> | null
     donations: Prisma.$SellDonationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1640,7 +1631,7 @@ export interface Prisma__OrderItemClient<T, Null = never, ExtArgs extends runtim
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sellerGroup<T extends Prisma.OrderSellerGroupDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderSellerGroupDefaultArgs<ExtArgs>>): Prisma.Prisma__OrderSellerGroupClient<runtime.Types.Result.GetResult<Prisma.$OrderSellerGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   product<T extends Prisma.ProductDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  returnItems<T extends Prisma.OrderItem$returnItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderItem$returnItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReturnItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  returnItem<T extends Prisma.OrderItem$returnItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderItem$returnItemArgs<ExtArgs>>): Prisma.Prisma__ReturnItemClient<runtime.Types.Result.GetResult<Prisma.$ReturnItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   donations<T extends Prisma.OrderItem$donationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderItem$donationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SellDonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2079,9 +2070,9 @@ export type OrderItemDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
- * OrderItem.returnItems
+ * OrderItem.returnItem
  */
-export type OrderItem$returnItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type OrderItem$returnItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ReturnItem
    */
@@ -2095,11 +2086,6 @@ export type OrderItem$returnItemsArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   include?: Prisma.ReturnItemInclude<ExtArgs> | null
   where?: Prisma.ReturnItemWhereInput
-  orderBy?: Prisma.ReturnItemOrderByWithRelationInput | Prisma.ReturnItemOrderByWithRelationInput[]
-  cursor?: Prisma.ReturnItemWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ReturnItemScalarFieldEnum | Prisma.ReturnItemScalarFieldEnum[]
 }
 
 /**

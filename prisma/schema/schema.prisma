@@ -38,7 +38,8 @@ model User {
   userName String  @unique @default(uuid())
   phone    String
 
-  description String?
+  bio         String?
+  description String? //about for carity
 
   // ---locations---
   country  String?
@@ -101,9 +102,14 @@ model User {
   // Users I follow
   following Follow[] @relation("UserFollowing")
 
-  orders       Order[]
-  ordersByGroup       OrderSellerGroup[]
-  productViews ProductView[]
+  // my donations to charaties
+  donations         DirectDonation[] @relation("donor")
+  // donation received as a charity
+  donationsReceived DirectDonation[] @relation("charity")
+
+  orders        Order[]
+  ordersByGroup OrderSellerGroup[]
+  productViews  ProductView[]
 
   prodQuestions Question[]
 
@@ -113,7 +119,30 @@ model User {
 
   avgRating Float @default(0)
 
+  vacationMode Boolean @default(false)
+
+  stripeAccountId  String?
+  stripeCustomerId String?
+  charityGalleries CharityGallery[]
+
+  bundleDiscount    BundleDiscount?
+
   @@map("users")
+}
+
+model CharityGallery {
+  id      String  @id @default(uuid())
+  url     String
+  key     String
+  caption String?
+  order   Int     @default(0)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("charity_gallery")
 }
 
 model ProfilePicture {
@@ -139,17 +168,17 @@ model AccountDocument {
 model BillingDetails {
   id        String  @id @default(uuid())
   userId    String? @unique
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade) // for set on default to user
+  user      User?   @relation(fields: [userId], references: [id], onDelete: Cascade) // for set on default to user
   country   String
   full_name String?
   address1  String
   address2  String?
   zip_code  String
-  state String
-  email String?
+  state     String
+  email     String?
   city      String
 
-  orders  Order[]
+  orders Order[]
 
   contact String?
 

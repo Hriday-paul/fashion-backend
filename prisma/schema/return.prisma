@@ -40,7 +40,7 @@ model ReturnItem {
     id          String  @id @default(uuid())
     returnId    String
     return      Return  @relation(fields: [returnId], references: [id], onDelete: Cascade)
-    orderItemId String
+    orderItemId String @unique
     orderItem   OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Restrict)
     quantity    Int
     createdAt   DateTime @default(now())

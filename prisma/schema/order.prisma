@@ -113,7 +113,7 @@ model OrderItem {
     unitPrice  Float  // snapshot of price at time of order
     totalPrice Float  // unitPrice * quantity
 
-    returnItems ReturnItem[]
+    returnItem ReturnItem?
 
     createdAt DateTime    @default(now())
     updatedAt DateTime    @updatedAt
@@ -148,6 +148,8 @@ model SellDonation {
 
     charityId String
     charity   User   @relation(fields: [charityId], references: [id], onDelete: Restrict)
+
+    donatedAt DateTime?
 
     @@map("sellItemMoneyDonations")
 }

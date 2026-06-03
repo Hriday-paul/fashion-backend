@@ -8,9 +8,9 @@ import httpStatus from 'http-status'
 // update user profile
 const updateProfile = async (payload: User, userId: string, image?: { url: string, key: string }) => {
 
-    const { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken } = payload
+    const { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode } = payload
 
-    const updateFields: Partial<User> = { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken };
+    const updateFields: Partial<User> = { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode };
 
     // Remove undefined or null fields to prevent overwriting existing values with null
     Object.keys(updateFields).forEach((key) => {
@@ -20,7 +20,7 @@ const updateProfile = async (payload: User, userId: string, image?: { url: strin
     });
 
     // check updated field found or not
-    if (Object.keys(updateFields).length === 0) {
+    if (Object.keys(updateFields).length === 0 && !image) {
         throw new AppError(
             httpStatus.NOT_FOUND,
             'No valid field found',
@@ -161,6 +161,7 @@ const userDetails = async (userName: string, currentUserId?: string) => {
         where: { userName: userName },
         include: {
             picture: true,
+            auth: { select: { role: true } },
             followers: { include: { follower: { include: { picture: true, auth: { select: { role: true } } } } } }, following: { include: { following: { include: { picture: true, auth: { select: { role: true } } } } } }
         },
     });
@@ -176,6 +177,19 @@ const userDetails = async (userName: string, currentUserId?: string) => {
     const isfolowing = await prisma.follow.findFirst({ where: { followerId: currentUserId, followingId: res?.id } })
 
     return { user: res, review: ratingAvg, isfolowing: isfolowing ? true : false };
+}
+
+const charityAbout = async (userName: string) => {
+    const res = await prisma.user.findFirst({
+        where: { userName: userName },
+        select: {
+            bio: true,
+            description: true,
+            charityGalleries: true
+        },
+    })
+
+    return res;
 }
 
 const UpdateNotification = async (payload: { status: boolean, fcmToken?: string }, userId: string) => {
@@ -198,6 +212,7 @@ const allCharies = async () => {
                 role: {
                     in: [Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP]
                 },
+                isverified: true,
                 approval_status: Approval_Status.Approved
             }
         },
@@ -255,16 +270,67 @@ const memberStats = async (userName: string) => {
         }, _sum: { amount: true }
     });
 
-    const totalTreeDonation = await prisma.order.aggregate({ where: { status: "COMPLETED", userId : user?.id }, _sum: { treeCredit: true } });
+    const totalTreeDonation = await prisma.order.aggregate({ where: { status: "COMPLETED", userId: user?.id }, _sum: { treeCredit: true } });
+
+    const directMoneyDonation = await prisma.directDonation.aggregate({
+        where: {
+            status: "SUCCESS",
+            donorId: user?.id
+        }, _sum: { amount: true }
+    });
+
 
     const totalSellDonationAmount = totalSellDonation?._sum?.amount || 0;
     const totalTreeDonationAmount = totalTreeDonation?._sum?.treeCredit || 0;
+    const totalDirectDonationAmount = directMoneyDonation?._sum?.amount || 0;
+
 
     return {
         totalProducts,
         totalSold: totalSold?._sum?.quantity || 0,
         totalFollowers,
-        totalDonation: totalSellDonationAmount + totalTreeDonationAmount,
+        totalDonation: totalSellDonationAmount + totalTreeDonationAmount + totalDirectDonationAmount,
+    };
+
+}
+
+const charityStats = async (userName: string) => {
+    const user = await prisma.user.findFirst({ where: { userName, auth: { role: { in: [Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP] } } } });
+
+    if (!user) {
+        return {
+            totalFollowers: 0,
+            totalFollowings: 0,
+            totalDonation: 0
+        }
+    }
+
+    const totalFollowers = await prisma.follow.count({ where: { followingId: user?.id } });
+    const totalFollowings = await prisma.follow.count({ where: { followerId: user?.id } });
+
+    const totalSellDonationReceived = await prisma.sellDonation.aggregate({
+        where: {
+            status: "PAID",
+            charityId: user?.id,
+        }, _sum: { amount: true }
+    });
+
+    const directMoneyDonationReceived = await prisma.directDonation.aggregate({
+        where: {
+            status: "SUCCESS",
+            charityId: user?.id
+        }, _sum: { amount: true }
+    });
+
+
+    const totalSellDonationAmount = totalSellDonationReceived?._sum?.amount || 0;
+    const totalDirectDonationAmount = directMoneyDonationReceived?._sum?.amount || 0;
+
+
+    return {
+        totalFollowers,
+        totalFollowings,
+        totalDonation: totalSellDonationAmount + totalDirectDonationAmount,
     };
 
 }
@@ -289,6 +355,48 @@ const billingDetailsByUser = async (userId: string) => {
     return res;
 }
 
+const bundleDiscount = async (userId: string) => {
+    const res = await prisma.bundleDiscount.findFirst({ where: { sellerId: userId }, include: { tiers: true } });
+
+    if (!res) {
+        return {
+            enabled: false,
+            tiers: []
+        }
+    }
+    return res;
+}
+
+const updateBundleDiscount = async (
+    userId: string,
+    payload: { enabled: boolean; tiers: { quantity: number; percent: number }[] }
+) => {
+
+    const res = await prisma.$transaction(async (tx) => {
+        const bundleDiscount = await tx.bundleDiscount.upsert({
+            where: { sellerId: userId },
+            create: { sellerId: userId, enabled: payload.enabled },
+            update: { enabled: payload.enabled },
+        });
+
+        await tx.bundleDiscountTier.deleteMany({
+            where: { bundleDiscountId: bundleDiscount.id },
+        });
+
+        await tx.bundleDiscountTier.createMany({
+            data: payload.tiers.map((tier) => ({
+                bundleDiscountId: bundleDiscount.id,
+                itemCount: tier.quantity,
+                discountPercent: tier.percent,
+            })),
+        });
+
+        return bundleDiscount;
+    });
+
+    return res;
+};
+
 export const userService = {
     updateProfile,
     getUserById,
@@ -301,5 +409,9 @@ export const userService = {
     allCharies,
     addOrUpdateBillingDetails,
     billingDetailsByUser,
-    memberStats
+    memberStats,
+    charityStats,
+    charityAbout,
+    bundleDiscount,
+    updateBundleDiscount
 }

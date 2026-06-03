@@ -62,18 +62,22 @@ export const ModelName = {
   OrderItem: 'OrderItem',
   SellDonation: 'SellDonation',
   Payment: 'Payment',
+  DirectDonation: 'DirectDonation',
   Product: 'Product',
   ProductPicture: 'ProductPicture',
   ProductCharity: 'ProductCharity',
   Favourite: 'Favourite',
   ProductView: 'ProductView',
   Question: 'Question',
+  BundleDiscount: 'BundleDiscount',
+  BundleDiscountTier: 'BundleDiscountTier',
   Return: 'Return',
   ReturnItem: 'ReturnItem',
   ReturnEvidence: 'ReturnEvidence',
   Rating: 'Rating',
   Auth: 'Auth',
   User: 'User',
+  CharityGallery: 'CharityGallery',
   ProfilePicture: 'ProfilePicture',
   AccountDocument: 'AccountDocument',
   BillingDetails: 'BillingDetails',
@@ -264,7 +268,8 @@ export const SellDonationScalarFieldEnum = {
   status: 'status',
   createdAt: 'createdAt',
   orderItemId: 'orderItemId',
-  charityId: 'charityId'
+  charityId: 'charityId',
+  donatedAt: 'donatedAt'
 } as const
 
 export type SellDonationScalarFieldEnum = (typeof SellDonationScalarFieldEnum)[keyof typeof SellDonationScalarFieldEnum]
@@ -297,6 +302,25 @@ export const PaymentScalarFieldEnum = {
 } as const
 
 export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const DirectDonationScalarFieldEnum = {
+  id: 'id',
+  donorId: 'donorId',
+  charityId: 'charityId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  transactionId: 'transactionId',
+  paymentIntentId: 'paymentIntentId',
+  isAnonymous: 'isAnonymous',
+  message: 'message',
+  donatedAt: 'donatedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DirectDonationScalarFieldEnum = (typeof DirectDonationScalarFieldEnum)[keyof typeof DirectDonationScalarFieldEnum]
 
 
 export const ProductScalarFieldEnum = {
@@ -382,6 +406,29 @@ export const QuestionScalarFieldEnum = {
 } as const
 
 export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
+
+
+export const BundleDiscountScalarFieldEnum = {
+  id: 'id',
+  sellerId: 'sellerId',
+  enabled: 'enabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BundleDiscountScalarFieldEnum = (typeof BundleDiscountScalarFieldEnum)[keyof typeof BundleDiscountScalarFieldEnum]
+
+
+export const BundleDiscountTierScalarFieldEnum = {
+  id: 'id',
+  bundleDiscountId: 'bundleDiscountId',
+  itemCount: 'itemCount',
+  discountPercent: 'discountPercent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BundleDiscountTierScalarFieldEnum = (typeof BundleDiscountTierScalarFieldEnum)[keyof typeof BundleDiscountTierScalarFieldEnum]
 
 
 export const ReturnScalarFieldEnum = {
@@ -471,6 +518,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   userName: 'userName',
   phone: 'phone',
+  bio: 'bio',
   description: 'description',
   country: 'country',
   state: 'state',
@@ -490,10 +538,26 @@ export const UserScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDeleted: 'isDeleted',
-  avgRating: 'avgRating'
+  avgRating: 'avgRating',
+  vacationMode: 'vacationMode',
+  stripeAccountId: 'stripeAccountId',
+  stripeCustomerId: 'stripeCustomerId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const CharityGalleryScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  key: 'key',
+  caption: 'caption',
+  order: 'order',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type CharityGalleryScalarFieldEnum = (typeof CharityGalleryScalarFieldEnum)[keyof typeof CharityGalleryScalarFieldEnum]
 
 
 export const ProfilePictureScalarFieldEnum = {

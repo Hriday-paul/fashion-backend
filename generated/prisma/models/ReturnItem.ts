@@ -231,16 +231,16 @@ export type ReturnItemOrderByWithRelationInput = {
 
 export type ReturnItemWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  orderItemId?: string
   AND?: Prisma.ReturnItemWhereInput | Prisma.ReturnItemWhereInput[]
   OR?: Prisma.ReturnItemWhereInput[]
   NOT?: Prisma.ReturnItemWhereInput | Prisma.ReturnItemWhereInput[]
   returnId?: Prisma.StringFilter<"ReturnItem"> | string
-  orderItemId?: Prisma.StringFilter<"ReturnItem"> | string
   quantity?: Prisma.IntFilter<"ReturnItem"> | number
   createdAt?: Prisma.DateTimeFilter<"ReturnItem"> | Date | string
   return?: Prisma.XOR<Prisma.ReturnScalarRelationFilter, Prisma.ReturnWhereInput>
   orderItem?: Prisma.XOR<Prisma.OrderItemScalarRelationFilter, Prisma.OrderItemWhereInput>
-}, "id">
+}, "id" | "orderItemId">
 
 export type ReturnItemOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -271,7 +271,7 @@ export type ReturnItemCreateInput = {
   quantity: number
   createdAt?: Date | string
   return: Prisma.ReturnCreateNestedOneWithoutItemsInput
-  orderItem: Prisma.OrderItemCreateNestedOneWithoutReturnItemsInput
+  orderItem: Prisma.OrderItemCreateNestedOneWithoutReturnItemInput
 }
 
 export type ReturnItemUncheckedCreateInput = {
@@ -287,7 +287,7 @@ export type ReturnItemUpdateInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   return?: Prisma.ReturnUpdateOneRequiredWithoutItemsNestedInput
-  orderItem?: Prisma.OrderItemUpdateOneRequiredWithoutReturnItemsNestedInput
+  orderItem?: Prisma.OrderItemUpdateOneRequiredWithoutReturnItemNestedInput
 }
 
 export type ReturnItemUncheckedUpdateInput = {
@@ -318,6 +318,11 @@ export type ReturnItemUncheckedUpdateManyInput = {
   orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ReturnItemNullableScalarRelationFilter = {
+  is?: Prisma.ReturnItemWhereInput | null
+  isNot?: Prisma.ReturnItemWhereInput | null
 }
 
 export type ReturnItemListRelationFilter = {
@@ -362,46 +367,36 @@ export type ReturnItemSumOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
 }
 
-export type ReturnItemCreateNestedManyWithoutOrderItemInput = {
-  create?: Prisma.XOR<Prisma.ReturnItemCreateWithoutOrderItemInput, Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput> | Prisma.ReturnItemCreateWithoutOrderItemInput[] | Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput[]
-  connectOrCreate?: Prisma.ReturnItemCreateOrConnectWithoutOrderItemInput | Prisma.ReturnItemCreateOrConnectWithoutOrderItemInput[]
-  createMany?: Prisma.ReturnItemCreateManyOrderItemInputEnvelope
-  connect?: Prisma.ReturnItemWhereUniqueInput | Prisma.ReturnItemWhereUniqueInput[]
+export type ReturnItemCreateNestedOneWithoutOrderItemInput = {
+  create?: Prisma.XOR<Prisma.ReturnItemCreateWithoutOrderItemInput, Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput>
+  connectOrCreate?: Prisma.ReturnItemCreateOrConnectWithoutOrderItemInput
+  connect?: Prisma.ReturnItemWhereUniqueInput
 }
 
-export type ReturnItemUncheckedCreateNestedManyWithoutOrderItemInput = {
-  create?: Prisma.XOR<Prisma.ReturnItemCreateWithoutOrderItemInput, Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput> | Prisma.ReturnItemCreateWithoutOrderItemInput[] | Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput[]
-  connectOrCreate?: Prisma.ReturnItemCreateOrConnectWithoutOrderItemInput | Prisma.ReturnItemCreateOrConnectWithoutOrderItemInput[]
-  createMany?: Prisma.ReturnItemCreateManyOrderItemInputEnvelope
-  connect?: Prisma.ReturnItemWhereUniqueInput | Prisma.ReturnItemWhereUniqueInput[]
+export type ReturnItemUncheckedCreateNestedOneWithoutOrderItemInput = {
+  create?: Prisma.XOR<Prisma.ReturnItemCreateWithoutOrderItemInput, Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput>
+  connectOrCreate?: Prisma.ReturnItemCreateOrConnectWithoutOrderItemInput
+  connect?: Prisma.ReturnItemWhereUniqueInput
 }
 
-export type ReturnItemUpdateManyWithoutOrderItemNestedInput = {
-  create?: Prisma.XOR<Prisma.ReturnItemCreateWithoutOrderItemInput, Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput> | Prisma.ReturnItemCreateWithoutOrderItemInput[] | Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput[]
-  connectOrCreate?: Prisma.ReturnItemCreateOrConnectWithoutOrderItemInput | Prisma.ReturnItemCreateOrConnectWithoutOrderItemInput[]
-  upsert?: Prisma.ReturnItemUpsertWithWhereUniqueWithoutOrderItemInput | Prisma.ReturnItemUpsertWithWhereUniqueWithoutOrderItemInput[]
-  createMany?: Prisma.ReturnItemCreateManyOrderItemInputEnvelope
-  set?: Prisma.ReturnItemWhereUniqueInput | Prisma.ReturnItemWhereUniqueInput[]
-  disconnect?: Prisma.ReturnItemWhereUniqueInput | Prisma.ReturnItemWhereUniqueInput[]
-  delete?: Prisma.ReturnItemWhereUniqueInput | Prisma.ReturnItemWhereUniqueInput[]
-  connect?: Prisma.ReturnItemWhereUniqueInput | Prisma.ReturnItemWhereUniqueInput[]
-  update?: Prisma.ReturnItemUpdateWithWhereUniqueWithoutOrderItemInput | Prisma.ReturnItemUpdateWithWhereUniqueWithoutOrderItemInput[]
-  updateMany?: Prisma.ReturnItemUpdateManyWithWhereWithoutOrderItemInput | Prisma.ReturnItemUpdateManyWithWhereWithoutOrderItemInput[]
-  deleteMany?: Prisma.ReturnItemScalarWhereInput | Prisma.ReturnItemScalarWhereInput[]
+export type ReturnItemUpdateOneWithoutOrderItemNestedInput = {
+  create?: Prisma.XOR<Prisma.ReturnItemCreateWithoutOrderItemInput, Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput>
+  connectOrCreate?: Prisma.ReturnItemCreateOrConnectWithoutOrderItemInput
+  upsert?: Prisma.ReturnItemUpsertWithoutOrderItemInput
+  disconnect?: Prisma.ReturnItemWhereInput | boolean
+  delete?: Prisma.ReturnItemWhereInput | boolean
+  connect?: Prisma.ReturnItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ReturnItemUpdateToOneWithWhereWithoutOrderItemInput, Prisma.ReturnItemUpdateWithoutOrderItemInput>, Prisma.ReturnItemUncheckedUpdateWithoutOrderItemInput>
 }
 
-export type ReturnItemUncheckedUpdateManyWithoutOrderItemNestedInput = {
-  create?: Prisma.XOR<Prisma.ReturnItemCreateWithoutOrderItemInput, Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput> | Prisma.ReturnItemCreateWithoutOrderItemInput[] | Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput[]
-  connectOrCreate?: Prisma.ReturnItemCreateOrConnectWithoutOrderItemInput | Prisma.ReturnItemCreateOrConnectWithoutOrderItemInput[]
-  upsert?: Prisma.ReturnItemUpsertWithWhereUniqueWithoutOrderItemInput | Prisma.ReturnItemUpsertWithWhereUniqueWithoutOrderItemInput[]
-  createMany?: Prisma.ReturnItemCreateManyOrderItemInputEnvelope
-  set?: Prisma.ReturnItemWhereUniqueInput | Prisma.ReturnItemWhereUniqueInput[]
-  disconnect?: Prisma.ReturnItemWhereUniqueInput | Prisma.ReturnItemWhereUniqueInput[]
-  delete?: Prisma.ReturnItemWhereUniqueInput | Prisma.ReturnItemWhereUniqueInput[]
-  connect?: Prisma.ReturnItemWhereUniqueInput | Prisma.ReturnItemWhereUniqueInput[]
-  update?: Prisma.ReturnItemUpdateWithWhereUniqueWithoutOrderItemInput | Prisma.ReturnItemUpdateWithWhereUniqueWithoutOrderItemInput[]
-  updateMany?: Prisma.ReturnItemUpdateManyWithWhereWithoutOrderItemInput | Prisma.ReturnItemUpdateManyWithWhereWithoutOrderItemInput[]
-  deleteMany?: Prisma.ReturnItemScalarWhereInput | Prisma.ReturnItemScalarWhereInput[]
+export type ReturnItemUncheckedUpdateOneWithoutOrderItemNestedInput = {
+  create?: Prisma.XOR<Prisma.ReturnItemCreateWithoutOrderItemInput, Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput>
+  connectOrCreate?: Prisma.ReturnItemCreateOrConnectWithoutOrderItemInput
+  upsert?: Prisma.ReturnItemUpsertWithoutOrderItemInput
+  disconnect?: Prisma.ReturnItemWhereInput | boolean
+  delete?: Prisma.ReturnItemWhereInput | boolean
+  connect?: Prisma.ReturnItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ReturnItemUpdateToOneWithWhereWithoutOrderItemInput, Prisma.ReturnItemUpdateWithoutOrderItemInput>, Prisma.ReturnItemUncheckedUpdateWithoutOrderItemInput>
 }
 
 export type ReturnItemCreateNestedManyWithoutReturnInput = {
@@ -465,43 +460,36 @@ export type ReturnItemCreateOrConnectWithoutOrderItemInput = {
   create: Prisma.XOR<Prisma.ReturnItemCreateWithoutOrderItemInput, Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput>
 }
 
-export type ReturnItemCreateManyOrderItemInputEnvelope = {
-  data: Prisma.ReturnItemCreateManyOrderItemInput | Prisma.ReturnItemCreateManyOrderItemInput[]
-  skipDuplicates?: boolean
-}
-
-export type ReturnItemUpsertWithWhereUniqueWithoutOrderItemInput = {
-  where: Prisma.ReturnItemWhereUniqueInput
+export type ReturnItemUpsertWithoutOrderItemInput = {
   update: Prisma.XOR<Prisma.ReturnItemUpdateWithoutOrderItemInput, Prisma.ReturnItemUncheckedUpdateWithoutOrderItemInput>
   create: Prisma.XOR<Prisma.ReturnItemCreateWithoutOrderItemInput, Prisma.ReturnItemUncheckedCreateWithoutOrderItemInput>
+  where?: Prisma.ReturnItemWhereInput
 }
 
-export type ReturnItemUpdateWithWhereUniqueWithoutOrderItemInput = {
-  where: Prisma.ReturnItemWhereUniqueInput
+export type ReturnItemUpdateToOneWithWhereWithoutOrderItemInput = {
+  where?: Prisma.ReturnItemWhereInput
   data: Prisma.XOR<Prisma.ReturnItemUpdateWithoutOrderItemInput, Prisma.ReturnItemUncheckedUpdateWithoutOrderItemInput>
 }
 
-export type ReturnItemUpdateManyWithWhereWithoutOrderItemInput = {
-  where: Prisma.ReturnItemScalarWhereInput
-  data: Prisma.XOR<Prisma.ReturnItemUpdateManyMutationInput, Prisma.ReturnItemUncheckedUpdateManyWithoutOrderItemInput>
+export type ReturnItemUpdateWithoutOrderItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  return?: Prisma.ReturnUpdateOneRequiredWithoutItemsNestedInput
 }
 
-export type ReturnItemScalarWhereInput = {
-  AND?: Prisma.ReturnItemScalarWhereInput | Prisma.ReturnItemScalarWhereInput[]
-  OR?: Prisma.ReturnItemScalarWhereInput[]
-  NOT?: Prisma.ReturnItemScalarWhereInput | Prisma.ReturnItemScalarWhereInput[]
-  id?: Prisma.StringFilter<"ReturnItem"> | string
-  returnId?: Prisma.StringFilter<"ReturnItem"> | string
-  orderItemId?: Prisma.StringFilter<"ReturnItem"> | string
-  quantity?: Prisma.IntFilter<"ReturnItem"> | number
-  createdAt?: Prisma.DateTimeFilter<"ReturnItem"> | Date | string
+export type ReturnItemUncheckedUpdateWithoutOrderItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  returnId?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ReturnItemCreateWithoutReturnInput = {
   id?: string
   quantity: number
   createdAt?: Date | string
-  orderItem: Prisma.OrderItemCreateNestedOneWithoutReturnItemsInput
+  orderItem: Prisma.OrderItemCreateNestedOneWithoutReturnItemInput
 }
 
 export type ReturnItemUncheckedCreateWithoutReturnInput = {
@@ -537,32 +525,15 @@ export type ReturnItemUpdateManyWithWhereWithoutReturnInput = {
   data: Prisma.XOR<Prisma.ReturnItemUpdateManyMutationInput, Prisma.ReturnItemUncheckedUpdateManyWithoutReturnInput>
 }
 
-export type ReturnItemCreateManyOrderItemInput = {
-  id?: string
-  returnId: string
-  quantity: number
-  createdAt?: Date | string
-}
-
-export type ReturnItemUpdateWithoutOrderItemInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  return?: Prisma.ReturnUpdateOneRequiredWithoutItemsNestedInput
-}
-
-export type ReturnItemUncheckedUpdateWithoutOrderItemInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  returnId?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type ReturnItemUncheckedUpdateManyWithoutOrderItemInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  returnId?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type ReturnItemScalarWhereInput = {
+  AND?: Prisma.ReturnItemScalarWhereInput | Prisma.ReturnItemScalarWhereInput[]
+  OR?: Prisma.ReturnItemScalarWhereInput[]
+  NOT?: Prisma.ReturnItemScalarWhereInput | Prisma.ReturnItemScalarWhereInput[]
+  id?: Prisma.StringFilter<"ReturnItem"> | string
+  returnId?: Prisma.StringFilter<"ReturnItem"> | string
+  orderItemId?: Prisma.StringFilter<"ReturnItem"> | string
+  quantity?: Prisma.IntFilter<"ReturnItem"> | number
+  createdAt?: Prisma.DateTimeFilter<"ReturnItem"> | Date | string
 }
 
 export type ReturnItemCreateManyReturnInput = {
@@ -576,7 +547,7 @@ export type ReturnItemUpdateWithoutReturnInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  orderItem?: Prisma.OrderItemUpdateOneRequiredWithoutReturnItemsNestedInput
+  orderItem?: Prisma.OrderItemUpdateOneRequiredWithoutReturnItemNestedInput
 }
 
 export type ReturnItemUncheckedUpdateWithoutReturnInput = {

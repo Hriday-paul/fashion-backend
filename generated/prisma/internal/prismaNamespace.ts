@@ -403,18 +403,22 @@ export const ModelName = {
   OrderItem: 'OrderItem',
   SellDonation: 'SellDonation',
   Payment: 'Payment',
+  DirectDonation: 'DirectDonation',
   Product: 'Product',
   ProductPicture: 'ProductPicture',
   ProductCharity: 'ProductCharity',
   Favourite: 'Favourite',
   ProductView: 'ProductView',
   Question: 'Question',
+  BundleDiscount: 'BundleDiscount',
+  BundleDiscountTier: 'BundleDiscountTier',
   Return: 'Return',
   ReturnItem: 'ReturnItem',
   ReturnEvidence: 'ReturnEvidence',
   Rating: 'Rating',
   Auth: 'Auth',
   User: 'User',
+  CharityGallery: 'CharityGallery',
   ProfilePicture: 'ProfilePicture',
   AccountDocument: 'AccountDocument',
   BillingDetails: 'BillingDetails',
@@ -437,7 +441,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "brand" | "size" | "follow" | "chat" | "chatParticipant" | "message" | "fileMessage" | "orderSellerGroup" | "orderSellerDelivery" | "order" | "orderItem" | "sellDonation" | "payment" | "product" | "productPicture" | "productCharity" | "favourite" | "productView" | "question" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
+    modelProps: "category" | "brand" | "size" | "follow" | "chat" | "chatParticipant" | "message" | "fileMessage" | "orderSellerGroup" | "orderSellerDelivery" | "order" | "orderItem" | "sellDonation" | "payment" | "directDonation" | "product" | "productPicture" | "productCharity" | "favourite" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1477,6 +1481,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DirectDonation: {
+      payload: Prisma.$DirectDonationPayload<ExtArgs>
+      fields: Prisma.DirectDonationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DirectDonationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DirectDonationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
+        }
+        findFirst: {
+          args: Prisma.DirectDonationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DirectDonationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
+        }
+        findMany: {
+          args: Prisma.DirectDonationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>[]
+        }
+        create: {
+          args: Prisma.DirectDonationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
+        }
+        createMany: {
+          args: Prisma.DirectDonationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DirectDonationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>[]
+        }
+        delete: {
+          args: Prisma.DirectDonationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
+        }
+        update: {
+          args: Prisma.DirectDonationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
+        }
+        deleteMany: {
+          args: Prisma.DirectDonationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DirectDonationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DirectDonationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>[]
+        }
+        upsert: {
+          args: Prisma.DirectDonationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
+        }
+        aggregate: {
+          args: Prisma.DirectDonationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDirectDonation>
+        }
+        groupBy: {
+          args: Prisma.DirectDonationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DirectDonationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DirectDonationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DirectDonationCountAggregateOutputType> | number
+        }
+      }
+    }
     Product: {
       payload: Prisma.$ProductPayload<ExtArgs>
       fields: Prisma.ProductFieldRefs
@@ -1921,6 +1999,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    BundleDiscount: {
+      payload: Prisma.$BundleDiscountPayload<ExtArgs>
+      fields: Prisma.BundleDiscountFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BundleDiscountFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BundleDiscountFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountPayload>
+        }
+        findFirst: {
+          args: Prisma.BundleDiscountFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BundleDiscountFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountPayload>
+        }
+        findMany: {
+          args: Prisma.BundleDiscountFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountPayload>[]
+        }
+        create: {
+          args: Prisma.BundleDiscountCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountPayload>
+        }
+        createMany: {
+          args: Prisma.BundleDiscountCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BundleDiscountCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountPayload>[]
+        }
+        delete: {
+          args: Prisma.BundleDiscountDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountPayload>
+        }
+        update: {
+          args: Prisma.BundleDiscountUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountPayload>
+        }
+        deleteMany: {
+          args: Prisma.BundleDiscountDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BundleDiscountUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BundleDiscountUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountPayload>[]
+        }
+        upsert: {
+          args: Prisma.BundleDiscountUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountPayload>
+        }
+        aggregate: {
+          args: Prisma.BundleDiscountAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBundleDiscount>
+        }
+        groupBy: {
+          args: Prisma.BundleDiscountGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BundleDiscountGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BundleDiscountCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BundleDiscountCountAggregateOutputType> | number
+        }
+      }
+    }
+    BundleDiscountTier: {
+      payload: Prisma.$BundleDiscountTierPayload<ExtArgs>
+      fields: Prisma.BundleDiscountTierFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BundleDiscountTierFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountTierPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BundleDiscountTierFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountTierPayload>
+        }
+        findFirst: {
+          args: Prisma.BundleDiscountTierFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountTierPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BundleDiscountTierFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountTierPayload>
+        }
+        findMany: {
+          args: Prisma.BundleDiscountTierFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountTierPayload>[]
+        }
+        create: {
+          args: Prisma.BundleDiscountTierCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountTierPayload>
+        }
+        createMany: {
+          args: Prisma.BundleDiscountTierCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BundleDiscountTierCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountTierPayload>[]
+        }
+        delete: {
+          args: Prisma.BundleDiscountTierDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountTierPayload>
+        }
+        update: {
+          args: Prisma.BundleDiscountTierUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountTierPayload>
+        }
+        deleteMany: {
+          args: Prisma.BundleDiscountTierDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BundleDiscountTierUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BundleDiscountTierUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountTierPayload>[]
+        }
+        upsert: {
+          args: Prisma.BundleDiscountTierUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundleDiscountTierPayload>
+        }
+        aggregate: {
+          args: Prisma.BundleDiscountTierAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBundleDiscountTier>
+        }
+        groupBy: {
+          args: Prisma.BundleDiscountTierGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BundleDiscountTierGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BundleDiscountTierCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BundleDiscountTierCountAggregateOutputType> | number
+        }
+      }
+    }
     Return: {
       payload: Prisma.$ReturnPayload<ExtArgs>
       fields: Prisma.ReturnFieldRefs
@@ -2362,6 +2588,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    CharityGallery: {
+      payload: Prisma.$CharityGalleryPayload<ExtArgs>
+      fields: Prisma.CharityGalleryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CharityGalleryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityGalleryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CharityGalleryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityGalleryPayload>
+        }
+        findFirst: {
+          args: Prisma.CharityGalleryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityGalleryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CharityGalleryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityGalleryPayload>
+        }
+        findMany: {
+          args: Prisma.CharityGalleryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityGalleryPayload>[]
+        }
+        create: {
+          args: Prisma.CharityGalleryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityGalleryPayload>
+        }
+        createMany: {
+          args: Prisma.CharityGalleryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CharityGalleryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityGalleryPayload>[]
+        }
+        delete: {
+          args: Prisma.CharityGalleryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityGalleryPayload>
+        }
+        update: {
+          args: Prisma.CharityGalleryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityGalleryPayload>
+        }
+        deleteMany: {
+          args: Prisma.CharityGalleryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CharityGalleryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CharityGalleryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityGalleryPayload>[]
+        }
+        upsert: {
+          args: Prisma.CharityGalleryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityGalleryPayload>
+        }
+        aggregate: {
+          args: Prisma.CharityGalleryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCharityGallery>
+        }
+        groupBy: {
+          args: Prisma.CharityGalleryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharityGalleryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CharityGalleryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharityGalleryCountAggregateOutputType> | number
         }
       }
     }
@@ -3087,7 +3387,8 @@ export const SellDonationScalarFieldEnum = {
   status: 'status',
   createdAt: 'createdAt',
   orderItemId: 'orderItemId',
-  charityId: 'charityId'
+  charityId: 'charityId',
+  donatedAt: 'donatedAt'
 } as const
 
 export type SellDonationScalarFieldEnum = (typeof SellDonationScalarFieldEnum)[keyof typeof SellDonationScalarFieldEnum]
@@ -3120,6 +3421,25 @@ export const PaymentScalarFieldEnum = {
 } as const
 
 export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const DirectDonationScalarFieldEnum = {
+  id: 'id',
+  donorId: 'donorId',
+  charityId: 'charityId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  transactionId: 'transactionId',
+  paymentIntentId: 'paymentIntentId',
+  isAnonymous: 'isAnonymous',
+  message: 'message',
+  donatedAt: 'donatedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DirectDonationScalarFieldEnum = (typeof DirectDonationScalarFieldEnum)[keyof typeof DirectDonationScalarFieldEnum]
 
 
 export const ProductScalarFieldEnum = {
@@ -3205,6 +3525,29 @@ export const QuestionScalarFieldEnum = {
 } as const
 
 export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
+
+
+export const BundleDiscountScalarFieldEnum = {
+  id: 'id',
+  sellerId: 'sellerId',
+  enabled: 'enabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BundleDiscountScalarFieldEnum = (typeof BundleDiscountScalarFieldEnum)[keyof typeof BundleDiscountScalarFieldEnum]
+
+
+export const BundleDiscountTierScalarFieldEnum = {
+  id: 'id',
+  bundleDiscountId: 'bundleDiscountId',
+  itemCount: 'itemCount',
+  discountPercent: 'discountPercent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BundleDiscountTierScalarFieldEnum = (typeof BundleDiscountTierScalarFieldEnum)[keyof typeof BundleDiscountTierScalarFieldEnum]
 
 
 export const ReturnScalarFieldEnum = {
@@ -3294,6 +3637,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   userName: 'userName',
   phone: 'phone',
+  bio: 'bio',
   description: 'description',
   country: 'country',
   state: 'state',
@@ -3313,10 +3657,26 @@ export const UserScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDeleted: 'isDeleted',
-  avgRating: 'avgRating'
+  avgRating: 'avgRating',
+  vacationMode: 'vacationMode',
+  stripeAccountId: 'stripeAccountId',
+  stripeCustomerId: 'stripeCustomerId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const CharityGalleryScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  key: 'key',
+  caption: 'caption',
+  order: 'order',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type CharityGalleryScalarFieldEnum = (typeof CharityGalleryScalarFieldEnum)[keyof typeof CharityGalleryScalarFieldEnum]
 
 
 export const ProfilePictureScalarFieldEnum = {
@@ -3614,6 +3974,20 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'DirectDonationStatus'
+ */
+export type EnumDirectDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DirectDonationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DirectDonationStatus[]'
+ */
+export type ListEnumDirectDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DirectDonationStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'ReturnStatus'
  */
 export type EnumReturnStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReturnStatus'>
@@ -3853,18 +4227,22 @@ export type GlobalOmitConfig = {
   orderItem?: Prisma.OrderItemOmit
   sellDonation?: Prisma.SellDonationOmit
   payment?: Prisma.PaymentOmit
+  directDonation?: Prisma.DirectDonationOmit
   product?: Prisma.ProductOmit
   productPicture?: Prisma.ProductPictureOmit
   productCharity?: Prisma.ProductCharityOmit
   favourite?: Prisma.FavouriteOmit
   productView?: Prisma.ProductViewOmit
   question?: Prisma.QuestionOmit
+  bundleDiscount?: Prisma.BundleDiscountOmit
+  bundleDiscountTier?: Prisma.BundleDiscountTierOmit
   return?: Prisma.ReturnOmit
   returnItem?: Prisma.ReturnItemOmit
   returnEvidence?: Prisma.ReturnEvidenceOmit
   rating?: Prisma.RatingOmit
   auth?: Prisma.AuthOmit
   user?: Prisma.UserOmit
+  charityGallery?: Prisma.CharityGalleryOmit
   profilePicture?: Prisma.ProfilePictureOmit
   accountDocument?: Prisma.AccountDocumentOmit
   billingDetails?: Prisma.BillingDetailsOmit

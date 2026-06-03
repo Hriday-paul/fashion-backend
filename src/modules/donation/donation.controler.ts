@@ -27,6 +27,18 @@ const selldonations = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const directMoneyDonations = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await donationService.directMoneyDonations(req.params.username);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Direct Money Donations retrived successfully',
+        data: result,
+    });
+});
+
 const purchaseDonationsContribute = catchAsync(async (req: Request, res: Response) => {
 
     const result = await donationService.purchaseDonationsContribute(req.params.username);
@@ -39,8 +51,22 @@ const purchaseDonationsContribute = catchAsync(async (req: Request, res: Respons
     });
 });
 
+const treeDonations = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await donationService.treeDonations(req.params.username);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Tree Donations retrived successfully',
+        data: result,
+    });
+});
+
 export const donationControler = {
     memberDonationStats,
     selldonations,
-    purchaseDonationsContribute
+    directMoneyDonations,
+    purchaseDonationsContribute,
+    treeDonations
 }

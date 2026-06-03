@@ -65,6 +65,16 @@ export const StripePaymentStatus = {
 export type StripePaymentStatus = (typeof StripePaymentStatus)[keyof typeof StripePaymentStatus]
 
 
+export const DirectDonationStatus = {
+  PENDING: 'PENDING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED'
+} as const
+
+export type DirectDonationStatus = (typeof DirectDonationStatus)[keyof typeof DirectDonationStatus]
+
+
 export const ReturnStatus = {
   REQUESTED: 'REQUESTED',
   PENDING_REVIEW: 'PENDING_REVIEW',

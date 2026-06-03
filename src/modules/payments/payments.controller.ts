@@ -3,13 +3,22 @@ import catchAsync from '../../utils/catchAsync';
 import { paymentsService } from './payments.service';
 import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
-import AppError from '../../error/AppError';
 import pick from '../../shared/pick';
 import { PaginateOptions } from '../../helper/pagination.helper';
 import config from '../../config';
 
 const checkout = catchAsync(async (req: Request, res: Response) => {
   const result = await paymentsService.checkout(req.body?.orderId, req?.user?.id);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    data: result,
+    message: 'Payment link get successful',
+  });
+});
+
+const donationCheckout = catchAsync(async (req: Request, res: Response) => {
+  const result = await paymentsService.donationCheckout(req.body, req?.user?.id);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -31,6 +40,21 @@ const confirmPayment = catchAsync(async (req: Request, res: Response) => {
   //   message: 'payment successful',
   // });
 });
+
+const confirmDonationPayment = catchAsync(async (req: Request, res: Response) => {
+
+  const result = await paymentsService.confirmDonationPayment(req?.query);
+
+  res.redirect(`${config.BASE_URL}${config.success_url}`);
+
+  // sendResponse(res, {
+  //   success: true,
+  //   statusCode: httpStatus.OK,
+  //   data: result,
+  //   message: 'payment successful',
+  // });
+});
+
 
 const getPaymentsByUserId = catchAsync(async (req: Request, res: Response) => {
   const options = pick(req.query, PaginateOptions);
@@ -148,4 +172,6 @@ export const paymentsController = {
   checkout,
   getPaymentsByUserId,
   getPaymentsByUserIdWithParams,
+  donationCheckout,
+  confirmDonationPayment
 };

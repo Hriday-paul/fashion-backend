@@ -1,11 +1,10 @@
 import AppError from '../../error/AppError';
 import httpStatus from 'http-status';
-import { createCheckoutSession } from './payments.utils';
-import { Payment, Prisma as GeneratedPrisma, User } from '../../../generated/prisma/client';
+import { createCheckoutSession, createDonationCheckoutSession } from './payments.utils';
+import { Payment, Prisma as GeneratedPrisma, DirectDonation } from '../../../generated/prisma/client';
 import prisma from '../../shared/prisma';
 import { paginationHelper, TPaginationOptions } from '../../helper/pagination.helper';
 import generateRandomString from '../../utils/generateRandomString';
-import { sendAdminNotifications } from '../notification/notification.send.admin';
 
 import Stripe from 'stripe';
 import config from '../../config';
@@ -183,6 +182,80 @@ const checkout = async (orderId: string, userId: string) => {
 
 };
 
+//-----------------create donation checkout---------------------
+const donationCheckout = async (payload: DirectDonation, userId: string) => {
+
+  const { paymentIntentId, donatedAt, currency, status, transactionId, updatedAt, ...body } = payload;
+
+  const result = await prisma.$transaction(async (transactionClient) => {
+
+    let donation = await transactionClient.directDonation.findFirst({
+      where: { donorId: userId, charityId: payload.charityId, status: "PENDING", amount: payload.amount },
+      include: {
+        charity: true,
+        donor: true,
+      }
+    });
+
+    const tranId = generateRandomString(10);
+
+    if (!donation) {
+      donation = await transactionClient.directDonation.create({
+        data: {
+          ...body,
+          transactionId: tranId,
+          donorId: userId,
+          status: "PENDING"
+        },
+        include: {
+          charity: true,
+          donor: true,
+        }
+      });
+    } else {
+      await transactionClient.directDonation.update({
+        where: { id: donation.id },
+        data: { status: "PENDING", transactionId: tranId, amount: payload.amount },
+        include: {
+          charity: true,
+          donor: true,
+        }
+      });
+    }
+
+    if (!donation?.charity?.stripeAccountId) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'This charity is not set up to receive payments yet.');
+    }
+
+    if (!donation) throw new AppError(httpStatus.BAD_REQUEST, 'Donation not found');
+
+    const donation_charge = {
+      amount: donation?.amount,
+      images: [],
+      name: `Money Donation to ${donation.charity?.fname}`,
+      quantity: 1,
+    }
+
+    const checkoutSession = await createDonationCheckoutSession({
+      // customerId: customer.id,
+      products: [donation_charge],
+      user: donation?.donor!,
+      donationId: donation?.id,
+      stripeAccountId: donation?.charity?.stripeAccountId,
+    });
+
+    if (!checkoutSession) {
+      throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, 'Checkout session creation failed');
+    }
+
+    return checkoutSession?.url
+
+  })
+
+  return result;
+
+};
+
 const confirmPayment = async (query: Record<string, any>) => {
 
   const { sessionId, paymentId } = query;
@@ -263,6 +336,77 @@ const confirmPayment = async (query: Record<string, any>) => {
             seller_received_amount: 0,
             transferGroup: `order_${paymentId}`,
             paymentData: {},
+          }
+        });
+      } catch (refundError: any) {
+        console.error('Error processing refund:', refundError.message);
+        throw new AppError(httpStatus.BAD_GATEWAY, refundError.message);
+      }
+    }
+
+    throw new AppError(httpStatus.BAD_GATEWAY, error.message);
+  }
+
+};
+
+const confirmDonationPayment = async (query: Record<string, any>) => {
+
+  const { sessionId, donationId } = query;
+
+  const PaymentSession = await stripe.checkout.sessions.retrieve(sessionId);
+  const paymentIntentId = PaymentSession.payment_intent as string;
+
+  if (PaymentSession.status !== 'complete') {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'Payment session is not completed',
+    );
+  }
+
+  try {
+    const result = await prisma.$transaction(async (transactionClient) => {
+
+      const donation = await transactionClient.directDonation.findFirst({ where: { id: donationId } });
+
+      if (!donation) {
+        throw new AppError(httpStatus.NOT_FOUND, "Donation not found");
+      }
+
+      if (donation?.status == "SUCCESS") {
+        return;
+      }
+
+      await transactionClient.directDonation.update({
+        where: { id: donationId },
+        data: {
+          status: "SUCCESS",
+          paymentIntentId,
+          donatedAt: new Date(),
+        }
+      });
+
+      //send notification
+      // sendAdminNotifications({
+      //   title: "New Order Payment Received",
+      //   message: `A new Order payment has been successfully received from a customer. Transaction id is : ${payment?.transactionId}`
+      // });
+
+    })
+
+    return result;
+  } catch (error: any) {
+
+    if (paymentIntentId) {
+      try {
+        await stripe.refunds.create({
+          payment_intent: paymentIntentId,
+        });
+        await prisma.directDonation.update({
+          where: { id: donationId },
+          data: {
+            status: "REFUNDED",
+            paymentIntentId,
+            donatedAt: null,
           }
         });
       } catch (refundError: any) {
@@ -455,4 +599,6 @@ export const paymentsService = {
   confirmPayment,
   getPaymentsByUserId,
   generateInvoice,
+  donationCheckout,
+  confirmDonationPayment,
 };

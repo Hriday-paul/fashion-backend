@@ -2,6 +2,26 @@ import AppError from "../../error/AppError";
 import prisma from "../../shared/prisma"
 import httpstatus from "http-status"
 
+const directMoneyDonations = async (userName: string) => {
+
+    const donations = await prisma.directDonation.findMany({
+        where: {
+            status: "SUCCESS",
+            donor: {
+                userName
+            }
+        },
+        orderBy: {
+            donatedAt: "desc"
+        },
+        include: {
+            charity: { include: { picture: true } }
+        }
+    });
+
+    return donations;
+}
+
 const memberDonationStats = async (userName: string) => {
 
     const user = await prisma.user.findFirst({ where: { userName } });
@@ -21,8 +41,16 @@ const memberDonationStats = async (userName: string) => {
     });
     const totalTreeDonation = await prisma.order.aggregate({ where: { status: "COMPLETED", userId: user?.id }, _sum: { treeCredit: true } });
 
+    const directMoneyDonation = await prisma.directDonation.aggregate({
+        where: {
+            status: "SUCCESS",
+            donorId: user?.id
+        }, _sum: { amount: true }
+    });
+
     const totalSellDonationAmount = totalSellDonation?._sum?.amount || 0;
     const totalTreeDonationAmount = totalTreeDonation?._sum?.treeCredit || 0;
+    const totalDirectDonationAmount = directMoneyDonation?._sum?.amount || 0;
 
     const totalExtraDonation = await prisma.sellDonation.aggregate({
         _sum: {
@@ -44,7 +72,7 @@ const memberDonationStats = async (userName: string) => {
     const totalExtraDonated = totalExtraDonation._sum.extra_money || 0;
     const totalPurchaseDonationContribute = totalExtraDonation._sum.amount || 0;
 
-    const directDonation = 0;
+    const directDonation = totalDirectDonationAmount;
     const clothDonation = 0;
 
     return {
@@ -84,6 +112,9 @@ const selldonations = async (userName: string) => {
                     sellerId: user?.id
                 }
             }
+        },
+        orderBy: {
+            donatedAt: "desc"
         },
         include: {
             charity: { include: { picture: true } },
@@ -153,14 +184,48 @@ const purchaseDonationsContribute = async (userName: string) => {
 
                 }
             }
+        },
+        orderBy: {
+            donatedAt: "desc"
         }
     });
 
     return purchaseDonations;
 }
 
+const treeDonations = async (userName: string) => {
+
+    const user = await prisma.user.findFirst({ where: { userName } });
+
+    if (!user) {
+        throw new AppError(httpstatus.NOT_FOUND, "User Does not exist")
+    }
+
+    const treeDonationOrders = await prisma.order.findMany({
+        where: {
+            treeCredit: {
+                gt: 0
+            },
+            status: "COMPLETED",
+            userId: user?.id,
+        },
+        orderBy: {
+            createdAt: "desc"
+        },
+        select: {
+            id: true,
+            treeCredit: true,
+            createdAt: true,
+        }
+    });
+
+    return treeDonationOrders;
+}
+
 export const donationService = {
     memberDonationStats,
     selldonations,
-    purchaseDonationsContribute
+    purchaseDonationsContribute,
+    treeDonations,
+    directMoneyDonations
 }

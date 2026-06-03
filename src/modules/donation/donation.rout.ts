@@ -17,4 +17,10 @@ router.get("/sell/:username",
 router.get("/purchase/:username",
     donationControler.purchaseDonationsContribute);
 
+router.get("/direct/:username",
+    donationControler.directMoneyDonations);
+
+router.get("/tree/:username",
+    donationControler.treeDonations);
+
 export const donationRouts = router;

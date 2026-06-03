@@ -112,6 +112,11 @@ export type SellDonation = Prisma.SellDonationModel
  */
 export type Payment = Prisma.PaymentModel
 /**
+ * Model DirectDonation
+ * 
+ */
+export type DirectDonation = Prisma.DirectDonationModel
+/**
  * Model Product
  * 
  */
@@ -142,6 +147,16 @@ export type ProductView = Prisma.ProductViewModel
  */
 export type Question = Prisma.QuestionModel
 /**
+ * Model BundleDiscount
+ * 
+ */
+export type BundleDiscount = Prisma.BundleDiscountModel
+/**
+ * Model BundleDiscountTier
+ * 
+ */
+export type BundleDiscountTier = Prisma.BundleDiscountTierModel
+/**
  * Model Return
  * 
  */
@@ -171,6 +186,11 @@ export type Auth = Prisma.AuthModel
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model CharityGallery
+ * 
+ */
+export type CharityGallery = Prisma.CharityGalleryModel
 /**
  * Model ProfilePicture
  * 

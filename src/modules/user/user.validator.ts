@@ -1,7 +1,7 @@
 import { check, body } from "express-validator";
 
 export const statusUpdateValidator = [
-    check('status').not().isEmpty().withMessage('status is required').isBoolean().withMessage("status must be boolean").toBoolean(),
+  check('status').not().isEmpty().withMessage('status is required').isBoolean().withMessage("status must be boolean").toBoolean(),
 ]
 
 export const validateBillingDetails = [
@@ -48,4 +48,26 @@ export const validateBillingDetails = [
     .withMessage('contact is required')
     .isMobilePhone('any')
     .withMessage('contact must be a valid phone number')
+];
+
+export const bundleDiscountValidator = [
+  body("enabled")
+    .isBoolean()
+    .withMessage("Enabled must be a boolean"),
+
+  body("tiers")
+    .isArray({ min: 1 })
+    .withMessage("At least one tier is required"),
+
+  body("tiers.*.quantity")
+    .notEmpty()
+    .withMessage("Quantity is required")
+    .isInt({ min: 1 })
+    .withMessage("Quantity must be minimum 1").toInt(),
+
+  body("tiers.*.percent")
+    .notEmpty()
+    .withMessage("Percent is required")
+    .isInt({ min: 1, max: 100 })
+    .withMessage("Percent must be between 1 and 100").toInt(),
 ];

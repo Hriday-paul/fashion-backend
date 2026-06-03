@@ -1,7 +1,7 @@
 import { Router } from "express";
 import auth, { PublicAuth } from "../../middleware/auth";
 import { userController } from "./user.controller";
-import { statusUpdateValidator, validateBillingDetails } from "./user.validator";
+import { bundleDiscountValidator, statusUpdateValidator, validateBillingDetails } from "./user.validator";
 import req_validator from "../../middleware/req_validation";
 import { image_Upload } from "../../utils/s3";
 import parseData from "../../middleware/parseData";
@@ -37,14 +37,28 @@ router.patch(
     '/notofication',
     statusUpdateValidator,
     req_validator(),
-    auth(Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
+    auth(...allRoles),
     userController.UpdateNotification,
 );
 
 router.get(
     '/my-profile',
-    auth(Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
+    auth(...allRoles),
     userController.getMyProfile,
+);
+
+router.get(
+    '/bundle-discount',
+    auth(...allRoles),
+    userController.bundleDiscount,
+);
+
+router.put(
+    '/bundle-discount',
+    bundleDiscountValidator,
+    req_validator(),
+    auth(...allRoles),
+    userController.updateBundleDiscount,
 );
 
 router.get(
@@ -53,8 +67,18 @@ router.get(
 );
 
 router.get(
+    '/charity-stats/:userName',
+    userController.charityStats
+);
+
+router.get(
+    '/charity-about/:userName',
+    userController.charityAbout
+);
+
+router.get(
     '/charities',
-    auth(...allRoles),
+    // auth(...allRoles),
     userController.allCharies,
 );
 
@@ -78,9 +102,10 @@ router.get(
     userController.userDetails,
 );
 
+
 router.delete(
     '/delete-account',
-    auth(Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
+    auth(...allRoles),
     userController.deletemyAccount,
 );
 

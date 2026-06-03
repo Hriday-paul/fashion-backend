@@ -75,6 +75,15 @@ const memberStats: RequestHandler<{ id: string }, {}, { status: boolean }> = cat
         data: result,
     });
 })
+const charityStats: RequestHandler<{ id: string }, {}, { status: boolean }> = catchAsync(async (req, res) => {
+    const result = await userService.charityStats(req.params.userName)
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Stats retrived successfully',
+        data: result,
+    });
+})
 
 // delete my accont
 const deletemyAccount = catchAsync(async (req, res) => {
@@ -109,6 +118,18 @@ const userDetails = catchAsync(async (req, res) => {
         statusCode: httpStatus.OK,
         success: true,
         message: 'User details retrived successfully',
+        data: result,
+    });
+})
+
+const charityAbout = catchAsync(async (req, res) => {
+
+    const result = await userService.charityAbout(req.params.userName);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Charity about retrived successfully',
         data: result,
     });
 })
@@ -165,6 +186,31 @@ const billingDetailsByUser = catchAsync(async (req, res) => {
     });
 })
 
+const bundleDiscount = catchAsync(async (req, res) => {
+
+    const result = await userService.bundleDiscount(req?.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Bundle discount retrived successfully',
+        data: result,
+    });
+})
+
+const updateBundleDiscount = catchAsync(async (req, res) => {
+
+    const result = await userService.updateBundleDiscount(req?.user?.id, req.body);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Bundle discount updated successfully',
+        data: result,
+    });
+
+})
+
 
 export const userController = {
     updateProfile,
@@ -174,10 +220,14 @@ export const userController = {
     deletemyAccount,
     deleteUser,
     userDetails,
+    charityAbout,
     UpdateNotification,
+    bundleDiscount,
+    updateBundleDiscount,
     
     allCharies,
     memberStats,
+    charityStats,
 
     addOrUpdateBillingDetails,
     billingDetailsByUser

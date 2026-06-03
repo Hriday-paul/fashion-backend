@@ -127,3 +127,28 @@ model Question {
 
     @@map("questions")
 }
+
+// Controls whether bundle discounts are enabled for a seller
+model BundleDiscount {
+  id        String                @id @default(uuid())
+  sellerId  String                @unique
+  seller    User                @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  enabled   Boolean               @default(false)
+  tiers     BundleDiscountTier[]
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
+}
+
+// Each discount tier (e.g. "2 items → 10%", "3 items → 15%")
+model BundleDiscountTier {
+  id               String         @id @default(uuid())
+  bundleDiscountId String
+  bundleDiscount   BundleDiscount @relation(fields: [bundleDiscountId], references: [id], onDelete: Cascade)
+  itemCount        Int            // minimum number of items to qualify (e.g. 2, 3, 5)
+  discountPercent  Int
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@unique([bundleDiscountId, itemCount]) // one tier per item count per seller
+  @@index([bundleDiscountId])
+}
