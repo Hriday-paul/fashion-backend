@@ -1,5 +1,6 @@
-import { Order, OrderItem } from "../../../generated/prisma/client";
+import { Order, OrderItem, OrderStatus, Prisma } from "../../../generated/prisma/client";
 import AppError from "../../error/AppError";
+import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import { DistributePaymentQueue } from "../../queues/payment.queue";
 import prisma from "../../shared/prisma";
 import httpStatus from "http-status"
@@ -12,7 +13,6 @@ const findUnpaidOrder = async (
     const pendingOrders = await prisma.order.findMany({
         where: {
             userId,
-            status: 'PENDING',
             payment: {
                 status: {
                     notIn: ['PROCESSING', 'SUCCESSED'],
@@ -21,6 +21,7 @@ const findUnpaidOrder = async (
             // ✅ at least one item matches — just to narrow results
             sellerGroups: {
                 some: {
+                    status: 'PENDING',
                     items: {
                         some: {
                             productId: { in: orderItems.map((i) => i.productId) },
@@ -192,7 +193,7 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
 
     // Calculate items total
     const itemsTotal = orderItems.reduce((sum, item) => sum + item.totalPrice, 0) + Number(treeCredit || 0);
-    
+
 
     //checking have already unpaid order 
     const existingOrder = await findUnpaidOrder(userId, orderItems, (payload?.treeCredit || 0));
@@ -205,13 +206,13 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
             totalPrice: itemsTotal,
             treeCredit: treeCredit ?? 0,
             userId,
-            status: 'PENDING',
             billingId: billing_details?.id,
             sellerGroups: {
                 create: Object.entries(groupedBySeller).map(([sellerId, items]) => {
                     const subtotal = items.reduce((sum, i) => sum + i.totalPrice, 0);
 
                     return {
+                        status: 'PENDING',
                         sellerId,
                         subtotal,
                         delivery: {
@@ -271,11 +272,11 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
 
 }
 
-const confirmOrderReceived = async (orderId: string, userId: string) => {
+const confirmOrderReceived = async (orderSellerGroupId: string, userId: string) => {
     //check exist order received
-    const order = await prisma.order.findFirst({
+    const order = await prisma.orderSellerGroup.findFirst({
         where: {
-            id: orderId,
+            id: orderSellerGroupId,
         }
     })
 
@@ -289,9 +290,9 @@ const confirmOrderReceived = async (orderId: string, userId: string) => {
     }
 
     //mark order received
-    await prisma.order.update({
+    await prisma.orderSellerGroup.update({
         where: {
-            id: orderId
+            id: orderSellerGroupId
         },
         data: {
             status: "COMPLETED"
@@ -301,7 +302,7 @@ const confirmOrderReceived = async (orderId: string, userId: string) => {
     // distribute the payment
     await DistributePaymentQueue.add(
         "distribute-payment",
-        { orderId },
+        { orderSellerGroupId },
         {
             jobId: order?.id,
             removeOnComplete: true,
@@ -312,6 +313,283 @@ const confirmOrderReceived = async (orderId: string, userId: string) => {
 
 }
 
+const ordersBySeller = async (sellerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
+    const AndConditions: Prisma.OrderWhereInput[] = [{ sellerGroups: { every: { sellerId } } }];
+    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+    const { searchTerm, status } = query;
+
+    if (searchTerm) {
+        AndConditions.push({
+            OR: [
+
+                {
+                    user: {
+                        OR: [
+                            {
+                                fname: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                lname: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                phone: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ],
+                    }
+                },
+                {
+                    billingDetails: {
+                        OR: [
+                            {
+                                full_name: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                contact: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address1: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address2: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: {
+                        contains: searchTerm as string,
+                        mode: "insensitive",
+                    },
+                },
+
+                {
+                    sellerGroups: {
+                        some: {
+                            items: {
+                                some: {
+                                    product: {
+                                        OR: [
+                                            {
+                                                title: {
+                                                    contains: searchTerm as string,
+                                                    mode: "insensitive",
+                                                },
+                                            },
+                                            {
+                                                description: {
+                                                    contains: searchTerm as string,
+                                                    mode: "insensitive",
+                                                }
+                                            },
+                                            {
+                                                id: {
+                                                    contains: searchTerm as string,
+                                                    mode: "insensitive",
+                                                },
+                                            },
+
+                                        ]
+                                    },
+                                },
+                            }
+                        }
+                    }
+                },
+
+            ],
+        });
+    }
+
+    if (status) {
+        AndConditions.push({
+            sellerGroups: {
+                some: {
+                    status: status as OrderStatus
+                }
+            }
+        })
+    }
+
+    const whereConditions: Prisma.OrderWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
+
+    const result = await prisma.order.findMany({
+        where: whereConditions,
+        skip,
+        take: limit,
+        orderBy: {
+            [sortBy]: sortOrder,
+        },
+        include: {
+            sellerGroups: {
+                where: {
+                    sellerId
+                },
+                include: {
+                    items: {
+                        include: {
+                            product: {
+                                select: {
+                                    title: true,
+                                    description: true,
+                                    id: true,
+                                    condition: true,
+                                    finalPrice: true,
+                                    images: {
+                                        select: {
+                                            url: true
+                                        }
+                                    },
+                                    category: {
+                                        select: {
+                                            name: true
+                                        }
+                                    },
+                                    size: {
+                                        select: {
+                                            title: true
+                                        }
+                                    },
+                                    _count: true
+                                },
+                            }
+                        }
+                    }
+                }
+            },
+            user: {
+                select: {
+                    fname: true,
+                    lname: true,
+                    email: true,
+                    phone: true,
+                    picture: {
+                        select: {
+                            url: true
+                        }
+                    }
+                }
+            },
+            billingDetails : true
+        },
+    })
+
+    const total = await prisma.order.count({
+        where: whereConditions,
+    });
+
+    return {
+        meta: {
+            total,
+            page,
+            limit,
+        },
+        data: result,
+    };
+}
+
+const confirmOrder = async (sellerGroupId: string, userId: string) => {
+    const order = await prisma.orderSellerGroup.findFirst({
+        where: {
+            id: sellerGroupId,
+            sellerId: userId
+        }
+    })
+
+    if (!order) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
+    }
+
+    if (order?.sellerId !== userId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order")
+    }
+
+    if (order?.status !== "PENDING") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process confirm the order")
+    }
+
+    const updatedOrder = await prisma.orderSellerGroup.update({
+        where: {
+            id: sellerGroupId,
+        },
+        data: {
+            status: "CONFIRMED"
+        }
+    })
+
+    return;
+
+}
+
+const cancelOrder = async (sellerGroupId: string, userId: string) => {
+
+    const order = await prisma.orderSellerGroup.findFirst({
+        where: {
+            id: sellerGroupId,
+        }
+    })
+
+    if (!order) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
+    }
+
+    if (order?.sellerId !== userId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order")
+    }
+
+    if (!["PENDING", "CONFIRMED"].includes(order?.status)) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process cancel the order")
+    }
+
+    const updatedOrder = await prisma.orderSellerGroup.update({
+        where: {
+            id: sellerGroupId,
+        },
+        data: {
+            status: "CANCELLED"
+        }
+    })
+
+    return;
+
+}
+
 export const orderService = {
-    addNewOrder
+    addNewOrder,
+    ordersBySeller,
+    confirmOrder,
+    cancelOrder,
 }

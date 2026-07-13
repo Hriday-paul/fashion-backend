@@ -559,9 +559,7 @@ const topSellingProducts = async (userId?: string) => {
             orderItems: {
                 some: {
                     sellerGroup: {
-                        order: {
-                            status: "DELIVERED"
-                        }
+                        status: "DELIVERED"
                     }
                 }
             },

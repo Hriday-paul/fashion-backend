@@ -199,6 +199,7 @@ export const OrderSellerGroupScalarFieldEnum = {
   id: 'id',
   orderId: 'orderId',
   sellerId: 'sellerId',
+  status: 'status',
   subtotal: 'subtotal',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -228,7 +229,6 @@ export const OrderScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  status: 'status',
   userId: 'userId',
   billingId: 'billingId',
   itemsTotal: 'itemsTotal',

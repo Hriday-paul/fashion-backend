@@ -4,6 +4,8 @@ import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import { orderService } from "./order.service";
 import { paymentsService } from "../payments/payments.service";
+import pick from "../../shared/pick";
+import { PaginateOptions } from "../../helper/pagination.helper";
 
 const addNewOrder = catchAsync(async (req: Request, res: Response) => {
     // add order
@@ -18,6 +20,50 @@ const addNewOrder = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const ordersBySeller = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["searchTerm", "status"])
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await orderService.ordersBySeller(req.user?.id, query, options);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Orders retrieved successfully',
+        data: result,
+    });
+});
+
+const confirmOrder = catchAsync(async (req: Request, res: Response) => {
+    const { sellerGroupId } = req.params;
+    const { id: userId } = req.user;
+
+    await orderService.confirmOrder(sellerGroupId, userId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Order confirmed successfully',
+    });
+});
+
+const cancelOrder = catchAsync(async (req: Request, res: Response) => {
+    const { sellerGroupId } = req.params;
+    const { id: userId } = req.user;
+
+    await orderService.cancelOrder(sellerGroupId, userId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Order cancelled successfully',
+    });
+});
+
 export const orderControler = {
-    addNewOrder
+    addNewOrder,
+    ordersBySeller,
+    confirmOrder,
+    cancelOrder
 }

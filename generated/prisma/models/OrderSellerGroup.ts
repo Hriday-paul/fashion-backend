@@ -37,6 +37,7 @@ export type OrderSellerGroupMinAggregateOutputType = {
   id: string | null
   orderId: string | null
   sellerId: string | null
+  status: $Enums.OrderStatus | null
   subtotal: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -46,6 +47,7 @@ export type OrderSellerGroupMaxAggregateOutputType = {
   id: string | null
   orderId: string | null
   sellerId: string | null
+  status: $Enums.OrderStatus | null
   subtotal: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -55,6 +57,7 @@ export type OrderSellerGroupCountAggregateOutputType = {
   id: number
   orderId: number
   sellerId: number
+  status: number
   subtotal: number
   createdAt: number
   updatedAt: number
@@ -74,6 +77,7 @@ export type OrderSellerGroupMinAggregateInputType = {
   id?: true
   orderId?: true
   sellerId?: true
+  status?: true
   subtotal?: true
   createdAt?: true
   updatedAt?: true
@@ -83,6 +87,7 @@ export type OrderSellerGroupMaxAggregateInputType = {
   id?: true
   orderId?: true
   sellerId?: true
+  status?: true
   subtotal?: true
   createdAt?: true
   updatedAt?: true
@@ -92,6 +97,7 @@ export type OrderSellerGroupCountAggregateInputType = {
   id?: true
   orderId?: true
   sellerId?: true
+  status?: true
   subtotal?: true
   createdAt?: true
   updatedAt?: true
@@ -188,6 +194,7 @@ export type OrderSellerGroupGroupByOutputType = {
   id: string
   orderId: string
   sellerId: string
+  status: $Enums.OrderStatus
   subtotal: number
   createdAt: Date
   updatedAt: Date
@@ -220,6 +227,7 @@ export type OrderSellerGroupWhereInput = {
   id?: Prisma.StringFilter<"OrderSellerGroup"> | string
   orderId?: Prisma.StringFilter<"OrderSellerGroup"> | string
   sellerId?: Prisma.StringFilter<"OrderSellerGroup"> | string
+  status?: Prisma.EnumOrderStatusFilter<"OrderSellerGroup"> | $Enums.OrderStatus
   subtotal?: Prisma.FloatFilter<"OrderSellerGroup"> | number
   createdAt?: Prisma.DateTimeFilter<"OrderSellerGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderSellerGroup"> | Date | string
@@ -233,6 +241,7 @@ export type OrderSellerGroupOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -250,6 +259,7 @@ export type OrderSellerGroupWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.OrderSellerGroupWhereInput | Prisma.OrderSellerGroupWhereInput[]
   orderId?: Prisma.StringFilter<"OrderSellerGroup"> | string
   sellerId?: Prisma.StringFilter<"OrderSellerGroup"> | string
+  status?: Prisma.EnumOrderStatusFilter<"OrderSellerGroup"> | $Enums.OrderStatus
   subtotal?: Prisma.FloatFilter<"OrderSellerGroup"> | number
   createdAt?: Prisma.DateTimeFilter<"OrderSellerGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderSellerGroup"> | Date | string
@@ -263,6 +273,7 @@ export type OrderSellerGroupOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -280,6 +291,7 @@ export type OrderSellerGroupScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"OrderSellerGroup"> | string
   orderId?: Prisma.StringWithAggregatesFilter<"OrderSellerGroup"> | string
   sellerId?: Prisma.StringWithAggregatesFilter<"OrderSellerGroup"> | string
+  status?: Prisma.EnumOrderStatusWithAggregatesFilter<"OrderSellerGroup"> | $Enums.OrderStatus
   subtotal?: Prisma.FloatWithAggregatesFilter<"OrderSellerGroup"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"OrderSellerGroup"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"OrderSellerGroup"> | Date | string
@@ -287,6 +299,7 @@ export type OrderSellerGroupScalarWhereWithAggregatesInput = {
 
 export type OrderSellerGroupCreateInput = {
   id?: string
+  status?: $Enums.OrderStatus
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -300,6 +313,7 @@ export type OrderSellerGroupUncheckedCreateInput = {
   id?: string
   orderId: string
   sellerId: string
+  status?: $Enums.OrderStatus
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -309,6 +323,7 @@ export type OrderSellerGroupUncheckedCreateInput = {
 
 export type OrderSellerGroupUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -322,6 +337,7 @@ export type OrderSellerGroupUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -333,6 +349,7 @@ export type OrderSellerGroupCreateManyInput = {
   id?: string
   orderId: string
   sellerId: string
+  status?: $Enums.OrderStatus
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -340,6 +357,7 @@ export type OrderSellerGroupCreateManyInput = {
 
 export type OrderSellerGroupUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -349,6 +367,7 @@ export type OrderSellerGroupUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -363,6 +382,7 @@ export type OrderSellerGroupCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -376,6 +396,7 @@ export type OrderSellerGroupMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -385,6 +406,7 @@ export type OrderSellerGroupMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -407,6 +429,10 @@ export type OrderSellerGroupListRelationFilter = {
 
 export type OrderSellerGroupOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type EnumOrderStatusFieldUpdateOperationsInput = {
+  set?: $Enums.OrderStatus
 }
 
 export type FloatFieldUpdateOperationsInput = {
@@ -531,6 +557,7 @@ export type OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput = {
 
 export type OrderSellerGroupCreateWithoutDeliveryInput = {
   id?: string
+  status?: $Enums.OrderStatus
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -543,6 +570,7 @@ export type OrderSellerGroupUncheckedCreateWithoutDeliveryInput = {
   id?: string
   orderId: string
   sellerId: string
+  status?: $Enums.OrderStatus
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -567,6 +595,7 @@ export type OrderSellerGroupUpdateToOneWithWhereWithoutDeliveryInput = {
 
 export type OrderSellerGroupUpdateWithoutDeliveryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -579,6 +608,7 @@ export type OrderSellerGroupUncheckedUpdateWithoutDeliveryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -587,6 +617,7 @@ export type OrderSellerGroupUncheckedUpdateWithoutDeliveryInput = {
 
 export type OrderSellerGroupCreateWithoutOrderInput = {
   id?: string
+  status?: $Enums.OrderStatus
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -598,6 +629,7 @@ export type OrderSellerGroupCreateWithoutOrderInput = {
 export type OrderSellerGroupUncheckedCreateWithoutOrderInput = {
   id?: string
   sellerId: string
+  status?: $Enums.OrderStatus
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -638,6 +670,7 @@ export type OrderSellerGroupScalarWhereInput = {
   id?: Prisma.StringFilter<"OrderSellerGroup"> | string
   orderId?: Prisma.StringFilter<"OrderSellerGroup"> | string
   sellerId?: Prisma.StringFilter<"OrderSellerGroup"> | string
+  status?: Prisma.EnumOrderStatusFilter<"OrderSellerGroup"> | $Enums.OrderStatus
   subtotal?: Prisma.FloatFilter<"OrderSellerGroup"> | number
   createdAt?: Prisma.DateTimeFilter<"OrderSellerGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderSellerGroup"> | Date | string
@@ -645,6 +678,7 @@ export type OrderSellerGroupScalarWhereInput = {
 
 export type OrderSellerGroupCreateWithoutItemsInput = {
   id?: string
+  status?: $Enums.OrderStatus
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -657,6 +691,7 @@ export type OrderSellerGroupUncheckedCreateWithoutItemsInput = {
   id?: string
   orderId: string
   sellerId: string
+  status?: $Enums.OrderStatus
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -681,6 +716,7 @@ export type OrderSellerGroupUpdateToOneWithWhereWithoutItemsInput = {
 
 export type OrderSellerGroupUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -693,6 +729,7 @@ export type OrderSellerGroupUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -701,6 +738,7 @@ export type OrderSellerGroupUncheckedUpdateWithoutItemsInput = {
 
 export type OrderSellerGroupCreateWithoutSellerInput = {
   id?: string
+  status?: $Enums.OrderStatus
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -712,6 +750,7 @@ export type OrderSellerGroupCreateWithoutSellerInput = {
 export type OrderSellerGroupUncheckedCreateWithoutSellerInput = {
   id?: string
   orderId: string
+  status?: $Enums.OrderStatus
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -748,6 +787,7 @@ export type OrderSellerGroupUpdateManyWithWhereWithoutSellerInput = {
 export type OrderSellerGroupCreateManyOrderInput = {
   id?: string
   sellerId: string
+  status?: $Enums.OrderStatus
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -755,6 +795,7 @@ export type OrderSellerGroupCreateManyOrderInput = {
 
 export type OrderSellerGroupUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -766,6 +807,7 @@ export type OrderSellerGroupUpdateWithoutOrderInput = {
 export type OrderSellerGroupUncheckedUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -776,6 +818,7 @@ export type OrderSellerGroupUncheckedUpdateWithoutOrderInput = {
 export type OrderSellerGroupUncheckedUpdateManyWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -784,6 +827,7 @@ export type OrderSellerGroupUncheckedUpdateManyWithoutOrderInput = {
 export type OrderSellerGroupCreateManySellerInput = {
   id?: string
   orderId: string
+  status?: $Enums.OrderStatus
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -791,6 +835,7 @@ export type OrderSellerGroupCreateManySellerInput = {
 
 export type OrderSellerGroupUpdateWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -802,6 +847,7 @@ export type OrderSellerGroupUpdateWithoutSellerInput = {
 export type OrderSellerGroupUncheckedUpdateWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -812,6 +858,7 @@ export type OrderSellerGroupUncheckedUpdateWithoutSellerInput = {
 export type OrderSellerGroupUncheckedUpdateManyWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -852,6 +899,7 @@ export type OrderSellerGroupSelect<ExtArgs extends runtime.Types.Extensions.Inte
   id?: boolean
   orderId?: boolean
   sellerId?: boolean
+  status?: boolean
   subtotal?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -866,6 +914,7 @@ export type OrderSellerGroupSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   id?: boolean
   orderId?: boolean
   sellerId?: boolean
+  status?: boolean
   subtotal?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -877,6 +926,7 @@ export type OrderSellerGroupSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   id?: boolean
   orderId?: boolean
   sellerId?: boolean
+  status?: boolean
   subtotal?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -888,12 +938,13 @@ export type OrderSellerGroupSelectScalar = {
   id?: boolean
   orderId?: boolean
   sellerId?: boolean
+  status?: boolean
   subtotal?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type OrderSellerGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "sellerId" | "subtotal" | "createdAt" | "updatedAt", ExtArgs["result"]["orderSellerGroup"]>
+export type OrderSellerGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "sellerId" | "status" | "subtotal" | "createdAt" | "updatedAt", ExtArgs["result"]["orderSellerGroup"]>
 export type OrderSellerGroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -922,6 +973,7 @@ export type $OrderSellerGroupPayload<ExtArgs extends runtime.Types.Extensions.In
     id: string
     orderId: string
     sellerId: string
+    status: $Enums.OrderStatus
     subtotal: number
     createdAt: Date
     updatedAt: Date
@@ -1355,6 +1407,7 @@ export interface OrderSellerGroupFieldRefs {
   readonly id: Prisma.FieldRef<"OrderSellerGroup", 'String'>
   readonly orderId: Prisma.FieldRef<"OrderSellerGroup", 'String'>
   readonly sellerId: Prisma.FieldRef<"OrderSellerGroup", 'String'>
+  readonly status: Prisma.FieldRef<"OrderSellerGroup", 'OrderStatus'>
   readonly subtotal: Prisma.FieldRef<"OrderSellerGroup", 'Float'>
   readonly createdAt: Prisma.FieldRef<"OrderSellerGroup", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"OrderSellerGroup", 'DateTime'>

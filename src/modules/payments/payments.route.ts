@@ -8,7 +8,7 @@ import { allRoles } from '../user/user.rout';
 
 const router = Router();
 
-const excludedCharityRoles: Role[] = [
+export const excludedCharityRoles: Role[] = [
   Role.CHARITABLE_ORGANIZATION,
   Role.CHARITY_SHOP,
 ];

@@ -10,6 +10,8 @@ model OrderSellerGroup {
 
     items OrderItem[]
 
+    status    OrderStatus @default(PENDING)
+
     delivery OrderSellerDelivery?
 
     subtotal Float @default(0) // sum of all item totalPrices in this group
@@ -61,10 +63,8 @@ model Order {
     createdAt DateTime    @default(now())
     updatedAt DateTime    @updatedAt
 
-    status    OrderStatus @default(PENDING)
-
-    userId String
-    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String // buyer
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade) //buyer
 
     // items     OrderItem[]
 
