@@ -1,4 +1,4 @@
-import { Order, OrderItem, OrderStatus, Prisma } from "../../../generated/prisma/client";
+import { CancelledBy, CancelReason, Order, OrderItem, OrderStatus, Prisma } from "../../../generated/prisma/client";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import { DistributePaymentQueue } from "../../queues/payment.queue";
@@ -503,7 +503,7 @@ const ordersBySeller = async (sellerId: string, query: Record<string, unknown>, 
                     }
                 }
             },
-            billingDetails : true
+            billingDetails: true
         },
     })
 
@@ -554,7 +554,53 @@ const confirmOrder = async (sellerGroupId: string, userId: string) => {
 
 }
 
-const cancelOrder = async (sellerGroupId: string, userId: string) => {
+const cancelOrder = async (sellerGroupId: string, userId: string, payload: { reason: string, reason_details?: string }) => {
+
+    const { reason, reason_details } = payload;
+    const order = await prisma.orderSellerGroup.findFirst({
+        where: {
+            id: sellerGroupId,
+        },
+        include: {
+            order: {
+                select: {
+                    userId: true
+                }
+            }
+        }
+    })
+
+    const requestedUserIsSeller = order?.sellerId === userId;
+
+    if (!order) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
+    }
+
+    if (!requestedUserIsSeller || order?.order?.userId !== userId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not allowed to cancel this order")
+    }
+
+    if (!["PENDING", "CONFIRMED"].includes(order?.status)) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process cancel the order")
+    }
+
+    await prisma.orderSellerGroup.update({
+        where: {
+            id: sellerGroupId,
+        },
+        data: {
+            status: "CANCELLED",
+            cancelReason: reason as CancelReason,
+            cancelledBy: requestedUserIsSeller ? CancelledBy.SELLER : CancelledBy.BUYER,
+            cancelReasonDetails: reason_details || null
+        }
+    })
+
+    return;
+
+}
+
+const markShippedOrder = async (sellerGroupId: string, userId: string) => {
 
     const order = await prisma.orderSellerGroup.findFirst({
         where: {
@@ -570,8 +616,8 @@ const cancelOrder = async (sellerGroupId: string, userId: string) => {
         throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order")
     }
 
-    if (!["PENDING", "CONFIRMED"].includes(order?.status)) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process cancel the order")
+    if (order?.status !== "CONFIRMED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process mark as shipped the order")
     }
 
     const updatedOrder = await prisma.orderSellerGroup.update({
@@ -579,7 +625,7 @@ const cancelOrder = async (sellerGroupId: string, userId: string) => {
             id: sellerGroupId,
         },
         data: {
-            status: "CANCELLED"
+            status: "SHIPPED"
         }
     })
 
@@ -592,4 +638,5 @@ export const orderService = {
     ordersBySeller,
     confirmOrder,
     cancelOrder,
+    markShippedOrder
 }

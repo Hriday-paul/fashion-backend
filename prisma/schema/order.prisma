@@ -12,6 +12,10 @@ model OrderSellerGroup {
 
     status    OrderStatus @default(PENDING)
 
+    cancelledBy          CancelledBy?
+    cancelReason   CancelReason?
+    cancelReasonDetails   String?
+
     delivery OrderSellerDelivery?
 
     subtotal Float @default(0) // sum of all item totalPrices in this group
@@ -158,4 +162,37 @@ enum DonationStatus {
     PENDING
     PAID
     FAILED
+}
+
+enum CancelReason {
+  CHANGED_MIND
+  FOUND_BETTER_PRICE
+  ORDERED_BY_MISTAKE
+  ITEM_NO_LONGER_NEEDED
+  DELIVERY_TOO_LONG
+  FOUND_BETTER_PRODUCT
+  WRONG_ITEM_SELECTED
+  DUPLICATE_ORDER
+  SHIPPING_COST_TOO_HIGH
+  PAYMENT_ISSUE
+  SELLER_UNRESPONSIVE
+
+  OUT_OF_STOCK
+  UNABLE_TO_FULFILL_IN_TIME
+  PRICING_ERROR
+  BUYER_UNREACHABLE
+  SUSPECTED_FRAUD
+  SHIPPING_ADDRESS_ISSUE
+  LISTING_ERROR
+  BUYER_REQUESTED
+  DAMAGED_INVENTORY
+  PAYMENT_NOT_VERIFIED
+
+  OTHER
+}
+
+enum CancelledBy {
+  SELLER
+  BUYER
+  SYSTEM
 }

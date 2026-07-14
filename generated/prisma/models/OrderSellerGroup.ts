@@ -38,6 +38,9 @@ export type OrderSellerGroupMinAggregateOutputType = {
   orderId: string | null
   sellerId: string | null
   status: $Enums.OrderStatus | null
+  cancelledBy: $Enums.CancelledBy | null
+  cancelReason: $Enums.CancelReason | null
+  cancelReasonDetails: string | null
   subtotal: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -48,6 +51,9 @@ export type OrderSellerGroupMaxAggregateOutputType = {
   orderId: string | null
   sellerId: string | null
   status: $Enums.OrderStatus | null
+  cancelledBy: $Enums.CancelledBy | null
+  cancelReason: $Enums.CancelReason | null
+  cancelReasonDetails: string | null
   subtotal: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -58,6 +64,9 @@ export type OrderSellerGroupCountAggregateOutputType = {
   orderId: number
   sellerId: number
   status: number
+  cancelledBy: number
+  cancelReason: number
+  cancelReasonDetails: number
   subtotal: number
   createdAt: number
   updatedAt: number
@@ -78,6 +87,9 @@ export type OrderSellerGroupMinAggregateInputType = {
   orderId?: true
   sellerId?: true
   status?: true
+  cancelledBy?: true
+  cancelReason?: true
+  cancelReasonDetails?: true
   subtotal?: true
   createdAt?: true
   updatedAt?: true
@@ -88,6 +100,9 @@ export type OrderSellerGroupMaxAggregateInputType = {
   orderId?: true
   sellerId?: true
   status?: true
+  cancelledBy?: true
+  cancelReason?: true
+  cancelReasonDetails?: true
   subtotal?: true
   createdAt?: true
   updatedAt?: true
@@ -98,6 +113,9 @@ export type OrderSellerGroupCountAggregateInputType = {
   orderId?: true
   sellerId?: true
   status?: true
+  cancelledBy?: true
+  cancelReason?: true
+  cancelReasonDetails?: true
   subtotal?: true
   createdAt?: true
   updatedAt?: true
@@ -195,6 +213,9 @@ export type OrderSellerGroupGroupByOutputType = {
   orderId: string
   sellerId: string
   status: $Enums.OrderStatus
+  cancelledBy: $Enums.CancelledBy | null
+  cancelReason: $Enums.CancelReason | null
+  cancelReasonDetails: string | null
   subtotal: number
   createdAt: Date
   updatedAt: Date
@@ -228,6 +249,9 @@ export type OrderSellerGroupWhereInput = {
   orderId?: Prisma.StringFilter<"OrderSellerGroup"> | string
   sellerId?: Prisma.StringFilter<"OrderSellerGroup"> | string
   status?: Prisma.EnumOrderStatusFilter<"OrderSellerGroup"> | $Enums.OrderStatus
+  cancelledBy?: Prisma.EnumCancelledByNullableFilter<"OrderSellerGroup"> | $Enums.CancelledBy | null
+  cancelReason?: Prisma.EnumCancelReasonNullableFilter<"OrderSellerGroup"> | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.StringNullableFilter<"OrderSellerGroup"> | string | null
   subtotal?: Prisma.FloatFilter<"OrderSellerGroup"> | number
   createdAt?: Prisma.DateTimeFilter<"OrderSellerGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderSellerGroup"> | Date | string
@@ -242,6 +266,9 @@ export type OrderSellerGroupOrderByWithRelationInput = {
   orderId?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  cancelledBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelReasonDetails?: Prisma.SortOrderInput | Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -260,6 +287,9 @@ export type OrderSellerGroupWhereUniqueInput = Prisma.AtLeast<{
   orderId?: Prisma.StringFilter<"OrderSellerGroup"> | string
   sellerId?: Prisma.StringFilter<"OrderSellerGroup"> | string
   status?: Prisma.EnumOrderStatusFilter<"OrderSellerGroup"> | $Enums.OrderStatus
+  cancelledBy?: Prisma.EnumCancelledByNullableFilter<"OrderSellerGroup"> | $Enums.CancelledBy | null
+  cancelReason?: Prisma.EnumCancelReasonNullableFilter<"OrderSellerGroup"> | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.StringNullableFilter<"OrderSellerGroup"> | string | null
   subtotal?: Prisma.FloatFilter<"OrderSellerGroup"> | number
   createdAt?: Prisma.DateTimeFilter<"OrderSellerGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderSellerGroup"> | Date | string
@@ -274,6 +304,9 @@ export type OrderSellerGroupOrderByWithAggregationInput = {
   orderId?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  cancelledBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelReasonDetails?: Prisma.SortOrderInput | Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -292,6 +325,9 @@ export type OrderSellerGroupScalarWhereWithAggregatesInput = {
   orderId?: Prisma.StringWithAggregatesFilter<"OrderSellerGroup"> | string
   sellerId?: Prisma.StringWithAggregatesFilter<"OrderSellerGroup"> | string
   status?: Prisma.EnumOrderStatusWithAggregatesFilter<"OrderSellerGroup"> | $Enums.OrderStatus
+  cancelledBy?: Prisma.EnumCancelledByNullableWithAggregatesFilter<"OrderSellerGroup"> | $Enums.CancelledBy | null
+  cancelReason?: Prisma.EnumCancelReasonNullableWithAggregatesFilter<"OrderSellerGroup"> | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.StringNullableWithAggregatesFilter<"OrderSellerGroup"> | string | null
   subtotal?: Prisma.FloatWithAggregatesFilter<"OrderSellerGroup"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"OrderSellerGroup"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"OrderSellerGroup"> | Date | string
@@ -300,6 +336,9 @@ export type OrderSellerGroupScalarWhereWithAggregatesInput = {
 export type OrderSellerGroupCreateInput = {
   id?: string
   status?: $Enums.OrderStatus
+  cancelledBy?: $Enums.CancelledBy | null
+  cancelReason?: $Enums.CancelReason | null
+  cancelReasonDetails?: string | null
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -314,6 +353,9 @@ export type OrderSellerGroupUncheckedCreateInput = {
   orderId: string
   sellerId: string
   status?: $Enums.OrderStatus
+  cancelledBy?: $Enums.CancelledBy | null
+  cancelReason?: $Enums.CancelReason | null
+  cancelReasonDetails?: string | null
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -324,6 +366,9 @@ export type OrderSellerGroupUncheckedCreateInput = {
 export type OrderSellerGroupUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -338,6 +383,9 @@ export type OrderSellerGroupUncheckedUpdateInput = {
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -350,6 +398,9 @@ export type OrderSellerGroupCreateManyInput = {
   orderId: string
   sellerId: string
   status?: $Enums.OrderStatus
+  cancelledBy?: $Enums.CancelledBy | null
+  cancelReason?: $Enums.CancelReason | null
+  cancelReasonDetails?: string | null
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -358,6 +409,9 @@ export type OrderSellerGroupCreateManyInput = {
 export type OrderSellerGroupUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -368,6 +422,9 @@ export type OrderSellerGroupUncheckedUpdateManyInput = {
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -383,6 +440,9 @@ export type OrderSellerGroupCountOrderByAggregateInput = {
   orderId?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  cancelledBy?: Prisma.SortOrder
+  cancelReason?: Prisma.SortOrder
+  cancelReasonDetails?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -397,6 +457,9 @@ export type OrderSellerGroupMaxOrderByAggregateInput = {
   orderId?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  cancelledBy?: Prisma.SortOrder
+  cancelReason?: Prisma.SortOrder
+  cancelReasonDetails?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -407,6 +470,9 @@ export type OrderSellerGroupMinOrderByAggregateInput = {
   orderId?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  cancelledBy?: Prisma.SortOrder
+  cancelReason?: Prisma.SortOrder
+  cancelReasonDetails?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -433,6 +499,14 @@ export type OrderSellerGroupOrderByRelationAggregateInput = {
 
 export type EnumOrderStatusFieldUpdateOperationsInput = {
   set?: $Enums.OrderStatus
+}
+
+export type NullableEnumCancelledByFieldUpdateOperationsInput = {
+  set?: $Enums.CancelledBy | null
+}
+
+export type NullableEnumCancelReasonFieldUpdateOperationsInput = {
+  set?: $Enums.CancelReason | null
 }
 
 export type FloatFieldUpdateOperationsInput = {
@@ -558,6 +632,9 @@ export type OrderSellerGroupUncheckedUpdateManyWithoutSellerNestedInput = {
 export type OrderSellerGroupCreateWithoutDeliveryInput = {
   id?: string
   status?: $Enums.OrderStatus
+  cancelledBy?: $Enums.CancelledBy | null
+  cancelReason?: $Enums.CancelReason | null
+  cancelReasonDetails?: string | null
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -571,6 +648,9 @@ export type OrderSellerGroupUncheckedCreateWithoutDeliveryInput = {
   orderId: string
   sellerId: string
   status?: $Enums.OrderStatus
+  cancelledBy?: $Enums.CancelledBy | null
+  cancelReason?: $Enums.CancelReason | null
+  cancelReasonDetails?: string | null
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -596,6 +676,9 @@ export type OrderSellerGroupUpdateToOneWithWhereWithoutDeliveryInput = {
 export type OrderSellerGroupUpdateWithoutDeliveryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -609,6 +692,9 @@ export type OrderSellerGroupUncheckedUpdateWithoutDeliveryInput = {
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -618,6 +704,9 @@ export type OrderSellerGroupUncheckedUpdateWithoutDeliveryInput = {
 export type OrderSellerGroupCreateWithoutOrderInput = {
   id?: string
   status?: $Enums.OrderStatus
+  cancelledBy?: $Enums.CancelledBy | null
+  cancelReason?: $Enums.CancelReason | null
+  cancelReasonDetails?: string | null
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -630,6 +719,9 @@ export type OrderSellerGroupUncheckedCreateWithoutOrderInput = {
   id?: string
   sellerId: string
   status?: $Enums.OrderStatus
+  cancelledBy?: $Enums.CancelledBy | null
+  cancelReason?: $Enums.CancelReason | null
+  cancelReasonDetails?: string | null
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -671,6 +763,9 @@ export type OrderSellerGroupScalarWhereInput = {
   orderId?: Prisma.StringFilter<"OrderSellerGroup"> | string
   sellerId?: Prisma.StringFilter<"OrderSellerGroup"> | string
   status?: Prisma.EnumOrderStatusFilter<"OrderSellerGroup"> | $Enums.OrderStatus
+  cancelledBy?: Prisma.EnumCancelledByNullableFilter<"OrderSellerGroup"> | $Enums.CancelledBy | null
+  cancelReason?: Prisma.EnumCancelReasonNullableFilter<"OrderSellerGroup"> | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.StringNullableFilter<"OrderSellerGroup"> | string | null
   subtotal?: Prisma.FloatFilter<"OrderSellerGroup"> | number
   createdAt?: Prisma.DateTimeFilter<"OrderSellerGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderSellerGroup"> | Date | string
@@ -679,6 +774,9 @@ export type OrderSellerGroupScalarWhereInput = {
 export type OrderSellerGroupCreateWithoutItemsInput = {
   id?: string
   status?: $Enums.OrderStatus
+  cancelledBy?: $Enums.CancelledBy | null
+  cancelReason?: $Enums.CancelReason | null
+  cancelReasonDetails?: string | null
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -692,6 +790,9 @@ export type OrderSellerGroupUncheckedCreateWithoutItemsInput = {
   orderId: string
   sellerId: string
   status?: $Enums.OrderStatus
+  cancelledBy?: $Enums.CancelledBy | null
+  cancelReason?: $Enums.CancelReason | null
+  cancelReasonDetails?: string | null
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -717,6 +818,9 @@ export type OrderSellerGroupUpdateToOneWithWhereWithoutItemsInput = {
 export type OrderSellerGroupUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -730,6 +834,9 @@ export type OrderSellerGroupUncheckedUpdateWithoutItemsInput = {
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -739,6 +846,9 @@ export type OrderSellerGroupUncheckedUpdateWithoutItemsInput = {
 export type OrderSellerGroupCreateWithoutSellerInput = {
   id?: string
   status?: $Enums.OrderStatus
+  cancelledBy?: $Enums.CancelledBy | null
+  cancelReason?: $Enums.CancelReason | null
+  cancelReasonDetails?: string | null
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -751,6 +861,9 @@ export type OrderSellerGroupUncheckedCreateWithoutSellerInput = {
   id?: string
   orderId: string
   status?: $Enums.OrderStatus
+  cancelledBy?: $Enums.CancelledBy | null
+  cancelReason?: $Enums.CancelReason | null
+  cancelReasonDetails?: string | null
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -788,6 +901,9 @@ export type OrderSellerGroupCreateManyOrderInput = {
   id?: string
   sellerId: string
   status?: $Enums.OrderStatus
+  cancelledBy?: $Enums.CancelledBy | null
+  cancelReason?: $Enums.CancelReason | null
+  cancelReasonDetails?: string | null
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -796,6 +912,9 @@ export type OrderSellerGroupCreateManyOrderInput = {
 export type OrderSellerGroupUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -808,6 +927,9 @@ export type OrderSellerGroupUncheckedUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -819,6 +941,9 @@ export type OrderSellerGroupUncheckedUpdateManyWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -828,6 +953,9 @@ export type OrderSellerGroupCreateManySellerInput = {
   id?: string
   orderId: string
   status?: $Enums.OrderStatus
+  cancelledBy?: $Enums.CancelledBy | null
+  cancelReason?: $Enums.CancelReason | null
+  cancelReasonDetails?: string | null
   subtotal?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -836,6 +964,9 @@ export type OrderSellerGroupCreateManySellerInput = {
 export type OrderSellerGroupUpdateWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -848,6 +979,9 @@ export type OrderSellerGroupUncheckedUpdateWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -859,6 +993,9 @@ export type OrderSellerGroupUncheckedUpdateManyWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
+  cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
+  cancelReasonDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -900,6 +1037,9 @@ export type OrderSellerGroupSelect<ExtArgs extends runtime.Types.Extensions.Inte
   orderId?: boolean
   sellerId?: boolean
   status?: boolean
+  cancelledBy?: boolean
+  cancelReason?: boolean
+  cancelReasonDetails?: boolean
   subtotal?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -915,6 +1055,9 @@ export type OrderSellerGroupSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   orderId?: boolean
   sellerId?: boolean
   status?: boolean
+  cancelledBy?: boolean
+  cancelReason?: boolean
+  cancelReasonDetails?: boolean
   subtotal?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -927,6 +1070,9 @@ export type OrderSellerGroupSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   orderId?: boolean
   sellerId?: boolean
   status?: boolean
+  cancelledBy?: boolean
+  cancelReason?: boolean
+  cancelReasonDetails?: boolean
   subtotal?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -939,12 +1085,15 @@ export type OrderSellerGroupSelectScalar = {
   orderId?: boolean
   sellerId?: boolean
   status?: boolean
+  cancelledBy?: boolean
+  cancelReason?: boolean
+  cancelReasonDetails?: boolean
   subtotal?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type OrderSellerGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "sellerId" | "status" | "subtotal" | "createdAt" | "updatedAt", ExtArgs["result"]["orderSellerGroup"]>
+export type OrderSellerGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "sellerId" | "status" | "cancelledBy" | "cancelReason" | "cancelReasonDetails" | "subtotal" | "createdAt" | "updatedAt", ExtArgs["result"]["orderSellerGroup"]>
 export type OrderSellerGroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -974,6 +1123,9 @@ export type $OrderSellerGroupPayload<ExtArgs extends runtime.Types.Extensions.In
     orderId: string
     sellerId: string
     status: $Enums.OrderStatus
+    cancelledBy: $Enums.CancelledBy | null
+    cancelReason: $Enums.CancelReason | null
+    cancelReasonDetails: string | null
     subtotal: number
     createdAt: Date
     updatedAt: Date
@@ -1408,6 +1560,9 @@ export interface OrderSellerGroupFieldRefs {
   readonly orderId: Prisma.FieldRef<"OrderSellerGroup", 'String'>
   readonly sellerId: Prisma.FieldRef<"OrderSellerGroup", 'String'>
   readonly status: Prisma.FieldRef<"OrderSellerGroup", 'OrderStatus'>
+  readonly cancelledBy: Prisma.FieldRef<"OrderSellerGroup", 'CancelledBy'>
+  readonly cancelReason: Prisma.FieldRef<"OrderSellerGroup", 'CancelReason'>
+  readonly cancelReasonDetails: Prisma.FieldRef<"OrderSellerGroup", 'String'>
   readonly subtotal: Prisma.FieldRef<"OrderSellerGroup", 'Float'>
   readonly createdAt: Prisma.FieldRef<"OrderSellerGroup", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"OrderSellerGroup", 'DateTime'>

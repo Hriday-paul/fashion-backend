@@ -3,7 +3,7 @@ import auth from "../../middleware/auth";
 import { allRoles } from "../user/user.rout";
 import req_validator from "../../middleware/req_validation";
 import { orderControler } from "./order.controller";
-import { validateOrderProducts } from "./order.validator";
+import { cancelOrderValidator, validateOrderProducts } from "./order.validator";
 import { Role } from "../../../generated/prisma/enums";
 
 const router = Router();
@@ -30,7 +30,13 @@ router.patch("/confirm/:sellerGroupId",
     orderControler.confirmOrder);
 
 router.patch("/cancel/:sellerGroupId",
+    cancelOrderValidator,
+    req_validator(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.cancelOrder);
+
+router.patch("/mark-shipped/:sellerGroupId",
+    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    orderControler.markShippedOrder);
 
 export const orderRouts = router;

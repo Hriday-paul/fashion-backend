@@ -200,6 +200,9 @@ export const OrderSellerGroupScalarFieldEnum = {
   orderId: 'orderId',
   sellerId: 'sellerId',
   status: 'status',
+  cancelledBy: 'cancelledBy',
+  cancelReason: 'cancelReason',
+  cancelReasonDetails: 'cancelReasonDetails',
   subtotal: 'subtotal',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

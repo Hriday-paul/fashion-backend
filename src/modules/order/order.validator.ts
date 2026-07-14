@@ -1,4 +1,5 @@
 import { body } from 'express-validator';
+import { CancelReason } from '../../../generated/prisma/enums';
 
 export const validateOrderProducts = [
     body('products')
@@ -38,3 +39,17 @@ export const validateOrderProducts = [
         .isUUID()
         .withMessage('charityId must be a valid UUID'),
 ];
+
+export const cancelOrderValidator = [
+    body('reason')
+        .notEmpty()
+        .withMessage('Cancellation reason is required')
+        .isIn(Object.values(CancelReason))
+        .withMessage('Invalid cancellation reason'),
+
+    body("reason_details")
+        .optional()
+        .isString()
+        .withMessage('Reason details must be a string')
+
+]

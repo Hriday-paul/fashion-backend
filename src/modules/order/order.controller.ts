@@ -52,7 +52,7 @@ const cancelOrder = catchAsync(async (req: Request, res: Response) => {
     const { sellerGroupId } = req.params;
     const { id: userId } = req.user;
 
-    await orderService.cancelOrder(sellerGroupId, userId);
+    await orderService.cancelOrder(sellerGroupId, userId, req.body);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -61,9 +61,23 @@ const cancelOrder = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const markShippedOrder = catchAsync(async (req: Request, res: Response) => {
+    const { sellerGroupId } = req.params;
+    const { id: userId } = req.user;
+
+    await orderService.markShippedOrder(sellerGroupId, userId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Order marked as shipped successfully',
+    });
+});
+
 export const orderControler = {
     addNewOrder,
     ordersBySeller,
     confirmOrder,
-    cancelOrder
+    cancelOrder,
+    markShippedOrder
 }

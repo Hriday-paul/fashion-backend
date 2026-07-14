@@ -3319,6 +3319,9 @@ export const OrderSellerGroupScalarFieldEnum = {
   orderId: 'orderId',
   sellerId: 'sellerId',
   status: 'status',
+  cancelledBy: 'cancelledBy',
+  cancelReason: 'cancelReason',
+  cancelReasonDetails: 'cancelReasonDetails',
   subtotal: 'subtotal',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -3886,6 +3889,34 @@ export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'OrderStatus[]'
  */
 export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CancelledBy'
+ */
+export type EnumCancelledByFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CancelledBy'>
+    
+
+
+/**
+ * Reference to a field of type 'CancelledBy[]'
+ */
+export type ListEnumCancelledByFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CancelledBy[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CancelReason'
+ */
+export type EnumCancelReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CancelReason'>
+    
+
+
+/**
+ * Reference to a field of type 'CancelReason[]'
+ */
+export type ListEnumCancelReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CancelReason[]'>
     
 
 
