@@ -1,91 +1,10 @@
-import { CancelledBy, CancelReason, Order, OrderItem, OrderStatus, Prisma } from "../../../generated/prisma/client";
+import { CancelOrderEvidence } from "../../../generated/prisma/browser";
+import { CancelReason, Order, OrderItem, OrderStatus, Prisma } from "../../../generated/prisma/client";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import { DistributePaymentQueue } from "../../queues/payment.queue";
 import prisma from "../../shared/prisma";
 import httpStatus from "http-status"
-
-const findUnpaidOrder = async (
-    userId: string,
-    orderItems: { productId: string; quantity: number, extra_donation: number, charities: string[] }[],
-    treeCredit: number
-) => {
-    const pendingOrders = await prisma.order.findMany({
-        where: {
-            userId,
-            payment: {
-                status: {
-                    notIn: ['PROCESSING', 'SUCCESSED'],
-                },
-            },
-            // ✅ at least one item matches — just to narrow results
-            sellerGroups: {
-                some: {
-                    status: 'PENDING',
-                    items: {
-                        some: {
-                            productId: { in: orderItems.map((i) => i.productId) },
-                        },
-                    },
-                },
-            },
-        },
-        include: {
-            sellerGroups: {
-                include: {
-                    items: {
-                        select: {
-                            productId: true,
-                            quantity: true,
-                            extra_donation: true,
-                            donations: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    const isSameItem = (
-        a: { productId: string; quantity: number; extra_donation: number; donations: { charityId: string }[] },
-        b: { productId: string; quantity: number; extra_donation: number; charities: string[] }
-    ): boolean => {
-        if (a.productId !== b.productId) return false;
-        if (a.quantity !== b.quantity) return false;
-        if (a.extra_donation !== b.extra_donation) return false;
-
-        const existingCharityIds = a.donations.map((d) => d.charityId);
-        if (existingCharityIds.length !== b.charities.length) return false;
-
-        const sortedExisting = [...existingCharityIds].sort();
-        const sortedNew = [...b.charities].sort();
-
-        return sortedExisting.every((id, index) => id === sortedNew[index]);
-    };
-
-    const matchedOrder = pendingOrders.find((order) => {
-
-        // ✅ Check treeCredit matches
-        if (order.treeCredit !== treeCredit) return false;
-
-        // Flatten all items across all seller groups
-        const allExistingItems = order.sellerGroups.flatMap((g) => g.items);
-
-        if (allExistingItems.length !== orderItems.length) return false;
-
-        const allNewItemsMatch = orderItems.every((newItem) =>
-            allExistingItems.some((existingItem) => isSameItem(existingItem, newItem))
-        );
-
-        const allExistingItemsMatch = allExistingItems.every((existingItem) =>
-            orderItems.some((newItem) => isSameItem(existingItem, newItem))
-        );
-
-        return allNewItemsMatch && allExistingItemsMatch;
-    });
-
-    return matchedOrder ?? null;
-};
 
 interface PayloadItem extends OrderItem {
     extra_donation: number,
@@ -117,7 +36,7 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
                     isAnonymous: true,
                 },
             },
-            userId: true,
+            userId: true, // sellerId
             donation_percent: true
         }
     })
@@ -129,7 +48,7 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
             .filter((p) => !foundIds.includes(p.productId))
             .map((p) => p.productId);
 
-        throw new Error(`Products not found: ${missingIds.join(', ')}`);
+        throw new AppError(httpStatus.NOT_FOUND, `Products not found: ${missingIds.join(', ')}`);
     }
 
     //Validate charities belong to the product
@@ -142,7 +61,7 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
 
         // ✅ At least 1 charity required if have At least 1 charity to the product
         if (!payloadItem.charities?.length) {
-            throw new Error(
+            throw new AppError(httpStatus.BAD_REQUEST,
                 `At least one charity is required for product ${payloadItem.productId}`
             );
         }
@@ -153,10 +72,19 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
         );
 
         if (invalidCharities.length > 0) {
-            throw new Error(
+            throw new AppError(httpStatus.BAD_REQUEST,
                 `Invalid charities [${invalidCharities.join(', ')}] for product ${payloadItem.productId}`
             );
         }
+    }
+
+    // ✅ Validate all products belong to the same seller
+    const sellerIds = [...new Set(prod_prices.map((p) => p.userId))];
+
+    if (sellerIds.length > 1) {
+        throw new AppError(httpStatus.BAD_REQUEST,
+            `All products in an order must belong to the same seller`
+        );
     }
 
     // Build order items with seller info
@@ -170,7 +98,7 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
 
         return {
             productId: p.id,
-            sellerId: p.userId, // for grouping
+            sellerId: p.userId,
             unitPrice: p.finalPrice,
             totalPrice: total_price + extra_donation,
             quantity,
@@ -181,86 +109,47 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
         };
     });
 
-    // Group items by seller
-    const groupedBySeller = orderItems.reduce<Record<string, typeof orderItems>>(
-        (acc, item) => {
-            if (!acc[item.sellerId]) acc[item.sellerId] = [];
-            acc[item.sellerId].push(item);
-            return acc;
-        },
-        {}
-    );
-
     // Calculate items total
     const itemsTotal = orderItems.reduce((sum, item) => sum + item.totalPrice, 0) + Number(treeCredit || 0);
-
-
-    //checking have already unpaid order 
-    const existingOrder = await findUnpaidOrder(userId, orderItems, (payload?.treeCredit || 0));
-    if (existingOrder) {
-        return existingOrder
-    }
 
     const result = await prisma.order.create({
         data: {
             totalPrice: itemsTotal,
             treeCredit: treeCredit ?? 0,
-            userId,
+            buyerId: userId,
             billingId: billing_details?.id,
-            sellerGroups: {
-                create: Object.entries(groupedBySeller).map(([sellerId, items]) => {
-                    const subtotal = items.reduce((sum, i) => sum + i.totalPrice, 0);
+            sellerId: orderItems[0]?.sellerId,
+            items: {
+                create: orderItems.map(({ charities, sellerId, ...item }) => {
+                    const charityCount = charities.length;
+                    const splitAmount = charityCount > 0 ? item.donation_amount / charityCount : 0;
+                    const splitExtra = charityCount > 0 ? item.extra_donation / charityCount : 0;
+
+                    const dbProduct = prod_prices.find((p) => p.id === item.productId)!;
+
+                    const splitPercent = charityCount > 0 ? 100 / charityCount : 0;
 
                     return {
-                        status: 'PENDING',
-                        sellerId,
-                        subtotal,
-                        delivery: {
-                            create: {
-                                totalItems: items?.length,
-                                totalWeight: 0,
+                        ...item,
+                        ...(charityCount > 0 && {
+                            donations: {
+                                create: charities.map((charityId) => {
+                                    const productCharity = dbProduct.charities.find(
+                                        (c) => c.charityId === charityId
+                                    )!;
 
-                                //for now, will dynmic
-                                baseCharge: 0,
-                                finalCharge: 0,
-                                discount: 0,
-                                status: "UNPAID"
-                            }
-                        },
-                        items: {
-                            create: items.map(({ charities, sellerId: _sellerId, ...item }) => {
-                                const charityCount = charities.length;
-                                const splitAmount = charityCount > 0 ? item.donation_amount / charityCount : 0;
-                                const splitExtra = charityCount > 0 ? item.extra_donation / charityCount : 0;
-
-                                const dbProduct = prod_prices.find((p) => p.id === item.productId)!;
-
-                                const splitPercent = charityCount > 0 ? 100 / charityCount : 0;
-
-                                return {
-                                    ...item,
-                                    ...(charityCount > 0 && {
-                                        donations: {
-                                            create: charities.map((charityId) => {
-                                                const productCharity = dbProduct.charities.find(
-                                                    (c) => c.charityId === charityId
-                                                )!;
-
-                                                return {
-                                                    charityId,
-                                                    amount: splitAmount,
-                                                    percent: splitPercent,
-                                                    extra_money: splitExtra,
-                                                    total_amount: splitAmount + splitExtra,
-                                                    status: 'PENDING',
-                                                    isAnonymous: productCharity.isAnonymous,
-                                                };
-                                            }),
-                                        },
-                                    }),
-                                };
-                            }),
-                        },
+                                    return {
+                                        charityId,
+                                        amount: splitAmount,
+                                        percent: splitPercent,
+                                        extra_money: splitExtra,
+                                        total_amount: splitAmount + splitExtra,
+                                        status: 'PENDING',
+                                        isAnonymous: productCharity.isAnonymous,
+                                    };
+                                }),
+                            },
+                        }),
                     };
                 }),
             },
@@ -272,11 +161,208 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
 
 }
 
-const confirmOrderReceived = async (orderSellerGroupId: string, userId: string) => {
-    //check exist order received
-    const order = await prisma.orderSellerGroup.findFirst({
+const cancelOrderItemBySeller = async (payload: { orderItemId: string, reason: string, details: string, evidence: CancelOrderEvidence[] }, current_sellerId: string) => {
+
+    const { reason, details, evidence, orderItemId } = payload;
+
+    const orderItem = await prisma.orderItem.findFirst({
         where: {
-            id: orderSellerGroupId,
+            id: orderItemId,
+        },
+        include: {
+            order: {
+                select: {
+                    sellerId: true,
+                    status: true
+                }
+            }
+        }
+    })
+    if (!orderItem) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order item does not exist")
+    }
+
+    // you are not the seller of this order item
+    if (orderItem?.order?.sellerId !== current_sellerId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order item")
+    }
+
+    if (orderItem?.order?.status === "CANCELLED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Order is already cancelled")
+    }
+
+    //check if the order item is already cancelled
+    if (orderItem?.isCancelled) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Order item is already cancelled")
+    }
+
+    //check item status, only allow cancel if the item is in PENDING or SHIPPED status
+    if (orderItem?.order?.status !== "PENDING" && orderItem?.order?.status !== "SHIPPED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process cancel the order item")
+    }
+
+    //mark payment is refunded, if the payment is already paid
+
+    //update the order item status to cancelled
+    await prisma.orderItem.update({
+        where: {
+            id: orderItemId,
+        },
+        data: {
+            isCancelled: true,
+            cancelReason: reason as CancelReason,
+            cancelReasonDetails: details,
+            cancelledBy: "SELLER",
+            cancelEvidence: {
+                createMany: {
+                    data: evidence.map(e => ({
+                        type: e?.type,
+                        url: e?.url,
+                        key: e?.key
+                    }))
+                }
+            }
+        }
+    })
+}
+
+const requestCancelOrderItem = async (payload: { orderItemId: string, reason: string, details: string, evidence: CancelOrderEvidence[] }, userId: string) => {
+    const { orderItemId, reason, details, evidence } = payload;
+
+    const orderItem = await prisma.orderItem.findFirst({
+        where: {
+            id: orderItemId,
+        },
+        include: {
+            order: {
+                select: {
+                    status: true,
+                    buyerId: true
+                }
+            }
+        }
+    })
+
+    if (!orderItem) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order item does not exist")
+    }
+
+    if (orderItem?.isBuyerRequestCancel) {
+        throw new AppError(httpStatus.BAD_REQUEST, "You have already requested to cancel this order item")
+    }
+
+    if (orderItem?.order?.status === "CANCELLED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Order is already cancelled")
+    }
+
+    //check current user is the buyer of the order item
+    if (orderItem?.order?.buyerId !== userId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the buyer of this order item")
+    }
+
+    //check if the order item is already cancelled
+    if (orderItem?.isCancelled) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Order item is already cancelled")
+    }
+
+    //check item status, only allow cancel if the item is in PENDING or SHIPPED status
+    if (orderItem?.order?.status !== "PENDING" && orderItem?.order?.status !== "SHIPPED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to request cancel the order item")
+    }
+
+    await prisma.orderItem.update({
+        where: {
+            id: orderItemId,
+        },
+        data: {
+            isBuyerRequestCancel: true,
+            cancelReason: reason as CancelReason,
+            cancelReasonDetails: details,
+            cancelEvidence: {
+                createMany: {
+                    data: evidence.map(e => ({
+                        type: e?.type,
+                        url: e?.url,
+                        key: e?.key
+                    }))
+                }
+            }
+        }
+    })
+
+}
+
+const approveCancelOrderItemBySeller = async (orderItemId: string, current_sellerId: string) => {
+
+    const orderItem = await prisma.orderItem.findFirst({
+        where: {
+            id: orderItemId,
+        },
+        include: {
+            order: {
+                select: {
+                    sellerId: true,
+                    status: true
+                }
+            }
+        }
+    })
+
+    if (!orderItem) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order item does not exist")
+    }
+
+    // you are not the seller of this order item
+    if (orderItem?.order?.sellerId !== current_sellerId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order item")
+    }
+
+    //check if the order item is already cancelled
+    if (orderItem?.isCancelled) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Order item is already cancelled")
+    }
+
+    if (orderItem?.order?.status === "CANCELLED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Order is already cancelled")
+    }
+
+    //check is requested by buyer to cancel the order item
+    if (!orderItem?.isBuyerRequestCancel) {
+        throw new AppError(httpStatus.BAD_REQUEST, "No request to cancel the order item from buyer")
+    }
+
+    //check item status, only allow cancel if the item is in PENDING or SHIPPED status
+    if (orderItem?.order?.status !== "PENDING" && orderItem?.order?.status !== "SHIPPED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process cancel the order item")
+    }
+
+    // refund the payment to buyer, if the payment is already paid
+
+    //update the order item status to cancelled
+    await prisma.orderItem.update({
+        where: {
+            id: orderItemId,
+        },
+        data: {
+            isCancelled: true,
+            cancelledBy: "SELLER",
+        }
+    })
+}
+
+const confirmOrderReceived = async (orderId: string, userId: string) => {
+    //check exist order received
+    const order = await prisma.order.findFirst({
+        where: {
+            id: orderId,
+        },
+        include: {
+            items: {
+                select: {
+                    isCancelled: true,
+                    id: true
+                }
+            },
         }
     })
 
@@ -284,15 +370,19 @@ const confirmOrderReceived = async (orderSellerGroupId: string, userId: string) 
         throw new AppError(httpStatus.NOT_FOUND, "Order not found")
     }
 
-    //check order is delivered or not
-    if (order?.status !== "DELIVERED") {
-        throw new AppError(httpStatus.BAD_REQUEST, "Request Invalid")
+    if (order?.status !== "DELIVERED" || order?.currentShipTo !== "BUYER") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process confirm order received")
     }
 
-    //mark order received
-    await prisma.orderSellerGroup.update({
+    //check current user is the buyer of the order
+    if (order?.buyerId !== userId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the buyer of this order")
+    }
+
+    // //mark order received
+    await prisma.order.update({
         where: {
-            id: orderSellerGroupId
+            id: orderId
         },
         data: {
             status: "COMPLETED"
@@ -300,21 +390,19 @@ const confirmOrderReceived = async (orderSellerGroupId: string, userId: string) 
     })
 
     // distribute the payment
-    await DistributePaymentQueue.add(
-        "distribute-payment",
-        { orderSellerGroupId },
-        {
-            jobId: order?.id,
-            removeOnComplete: true,
-        }
-    );
-
-
+    // await DistributePaymentQueue.add(
+    //     "distribute-payment",
+    //     { orderSellerGroupId },
+    //     {
+    //         jobId: order?.id,
+    //         removeOnComplete: true,
+    //     }
+    // );
 
 }
 
 const ordersBySeller = async (sellerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
-    const AndConditions: Prisma.OrderWhereInput[] = [{ sellerGroups: { every: { sellerId } } }];
+    const AndConditions: Prisma.OrderWhereInput[] = [{ sellerId }];
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
     const { searchTerm, status } = query;
@@ -322,9 +410,14 @@ const ordersBySeller = async (sellerId: string, query: Record<string, unknown>, 
     if (searchTerm) {
         AndConditions.push({
             OR: [
-
                 {
-                    user: {
+                    id: {
+                        contains: searchTerm as string,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    buyer: {
                         OR: [
                             {
                                 fname: {
@@ -390,57 +483,41 @@ const ordersBySeller = async (sellerId: string, query: Record<string, unknown>, 
                     }
                 },
                 {
-                    id: {
-                        contains: searchTerm as string,
-                        mode: "insensitive",
-                    },
-                },
-
-                {
-                    sellerGroups: {
+                    items: {
                         some: {
-                            items: {
-                                some: {
-                                    product: {
-                                        OR: [
-                                            {
-                                                title: {
-                                                    contains: searchTerm as string,
-                                                    mode: "insensitive",
-                                                },
-                                            },
-                                            {
-                                                description: {
-                                                    contains: searchTerm as string,
-                                                    mode: "insensitive",
-                                                }
-                                            },
-                                            {
-                                                id: {
-                                                    contains: searchTerm as string,
-                                                    mode: "insensitive",
-                                                },
-                                            },
-
-                                        ]
+                            product: {
+                                OR: [
+                                    {
+                                        title: {
+                                            contains: searchTerm as string,
+                                            mode: "insensitive",
+                                        },
                                     },
-                                },
-                            }
+                                    {
+                                        description: {
+                                            contains: searchTerm as string,
+                                            mode: "insensitive",
+                                        }
+                                    },
+                                    {
+                                        id: {
+                                            contains: searchTerm as string,
+                                            mode: "insensitive",
+                                        },
+                                    },
+
+                                ]
+                            },
                         }
                     }
                 },
-
             ],
         });
     }
 
     if (status) {
         AndConditions.push({
-            sellerGroups: {
-                some: {
-                    status: status as OrderStatus
-                }
-            }
+            status: status as OrderStatus
         })
     }
 
@@ -454,43 +531,42 @@ const ordersBySeller = async (sellerId: string, query: Record<string, unknown>, 
             [sortBy]: sortOrder,
         },
         include: {
-            sellerGroups: {
-                where: {
-                    sellerId
-                },
+            items: {
                 include: {
-                    items: {
-                        include: {
-                            product: {
+                    product: {
+                        select: {
+                            title: true,
+                            description: true,
+                            id: true,
+                            condition: true,
+                            finalPrice: true,
+                            images: {
                                 select: {
-                                    title: true,
-                                    description: true,
-                                    id: true,
-                                    condition: true,
-                                    finalPrice: true,
-                                    images: {
-                                        select: {
-                                            url: true
-                                        }
-                                    },
-                                    category: {
-                                        select: {
-                                            name: true
-                                        }
-                                    },
-                                    size: {
-                                        select: {
-                                            title: true
-                                        }
-                                    },
-                                    _count: true
-                                },
-                            }
+                                    url: true
+                                }
+                            },
+                            category: {
+                                select: {
+                                    name: true
+                                }
+                            },
+                            size: {
+                                select: {
+                                    title: true
+                                }
+                            },
+                            _count: true
+                        },
+                    },
+                    returnItem: {
+                        include: {
+
                         }
                     }
                 }
             },
-            user: {
+
+            buyer: {
                 select: {
                     fname: true,
                     lname: true,
@@ -521,108 +597,32 @@ const ordersBySeller = async (sellerId: string, query: Record<string, unknown>, 
     };
 }
 
-const confirmOrder = async (sellerGroupId: string, userId: string) => {
-    const order = await prisma.orderSellerGroup.findFirst({
+const markShippedOrder = async (orderId: string, current_sellerId: string) => {
+
+    const order = await prisma.order.findFirst({
         where: {
-            id: sellerGroupId,
-            sellerId: userId
+            id: orderId,
+        },
+        include: {
+            items: true,
         }
     })
 
     if (!order) {
         throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
-    }
-
-    if (order?.sellerId !== userId) {
-        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order")
     }
 
     if (order?.status !== "PENDING") {
-        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process confirm the order")
-    }
-
-    const updatedOrder = await prisma.orderSellerGroup.update({
-        where: {
-            id: sellerGroupId,
-        },
-        data: {
-            status: "CONFIRMED"
-        }
-    })
-
-    return;
-
-}
-
-const cancelOrder = async (sellerGroupId: string, userId: string, payload: { reason: string, reason_details?: string }) => {
-
-    const { reason, reason_details } = payload;
-    const order = await prisma.orderSellerGroup.findFirst({
-        where: {
-            id: sellerGroupId,
-        },
-        include: {
-            order: {
-                select: {
-                    userId: true
-                }
-            }
-        }
-    })
-
-    const requestedUserIsSeller = order?.sellerId === userId;
-
-    if (!order) {
-        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
-    }
-
-    if (!requestedUserIsSeller || order?.order?.userId !== userId) {
-        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not allowed to cancel this order")
-    }
-
-    if (!["PENDING", "CONFIRMED"].includes(order?.status)) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process cancel the order")
-    }
-
-    await prisma.orderSellerGroup.update({
-        where: {
-            id: sellerGroupId,
-        },
-        data: {
-            status: "CANCELLED",
-            cancelReason: reason as CancelReason,
-            cancelledBy: requestedUserIsSeller ? CancelledBy.SELLER : CancelledBy.BUYER,
-            cancelReasonDetails: reason_details || null
-        }
-    })
-
-    return;
-
-}
-
-const markShippedOrder = async (sellerGroupId: string, userId: string) => {
-
-    const order = await prisma.orderSellerGroup.findFirst({
-        where: {
-            id: sellerGroupId,
-        }
-    })
-
-    if (!order) {
-        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
-    }
-
-    if (order?.sellerId !== userId) {
-        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order")
-    }
-
-    if (order?.status !== "CONFIRMED") {
         throw new AppError(httpStatus.BAD_REQUEST, "Unable to process mark as shipped the order")
     }
 
-    const updatedOrder = await prisma.orderSellerGroup.update({
+    if (order?.sellerId !== current_sellerId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order")
+    }
+
+    await prisma.order.update({
         where: {
-            id: sellerGroupId,
+            id: orderId
         },
         data: {
             status: "SHIPPED"
@@ -633,10 +633,13 @@ const markShippedOrder = async (sellerGroupId: string, userId: string) => {
 
 }
 
+
 export const orderService = {
     addNewOrder,
     ordersBySeller,
-    confirmOrder,
-    cancelOrder,
+    cancelOrderItemBySeller,
+    requestCancelOrderItem,
+    approveCancelOrderItemBySeller,
+    confirmOrderReceived,
     markShippedOrder
 }

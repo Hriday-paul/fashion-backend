@@ -22,22 +22,18 @@ const checkout = async (orderId: string, userId: string) => {
 
     const order = await transactionClient.order.findFirst({
       where: { id: orderId }, include: {
-        sellerGroups: {
+        items: {
           include: {
-            items: {
+            product: {
               include: {
-                product: {
-                  include: {
-                    images: true
-                  }
-                },
-                donations: true,
+                images: true
               }
             },
-            delivery: true,
-            seller: true
+            donations: true,
           }
         },
+        deliveryCharge: true,
+        seller: true
       }
     });
 
@@ -120,19 +116,16 @@ const checkout = async (orderId: string, userId: string) => {
     if (!paymentData?.user) throw new AppError(httpStatus.BAD_REQUEST, 'User not found');
 
     // order products
-    const products = order?.sellerGroups?.flatMap(items => {
-      return items?.items?.map(item => ({
+    const products = order?.items?.map(item => {
+      return {
         amount: item?.unitPrice,
         images: item?.product?.images.map(img => img?.url),
         name: item?.product?.title,
         quantity: item?.quantity,
-      }))
+      }
     });
 
-    const extra_donation = order?.sellerGroups?.reduce((sum, group) => {
-      const itemsDon = group?.items.reduce((itemSum, item) => itemSum + (item?.extra_donation ?? 0), 0);
-      return sum + itemsDon;
-    }, 0);
+    const extra_donation = order?.items.reduce((itemSum, item) => itemSum + (item?.extra_donation ?? 0), 0);
 
     const donation_charge = {
       amount: extra_donation,
@@ -149,17 +142,13 @@ const checkout = async (orderId: string, userId: string) => {
     }
 
     // build delivery charge line item
-    const deliveryLines = (order?.sellerGroups);
-    const totalDeliveryCharge = deliveryLines.reduce((sum, d) => sum + (d.delivery?.finalCharge || 0), 0);
-    const deliveryDescription = deliveryLines
-      .map(d => `${d.seller?.fname}: $${(d.delivery?.finalCharge || 0).toFixed(2)}`)
-      .join(' • ');
+    const totalDeliveryCharge = order?.deliveryCharge?.finalCharge || 0;
 
     const delivary_charge = {
       amount: totalDeliveryCharge,
       images: [],
       name: "Delivery Charge",
-      description: deliveryDescription,
+      description: "",
       quantity: 1,
     }
 
@@ -298,13 +287,18 @@ const confirmPayment = async (query: Record<string, any>) => {
         }
       });
 
-      const orderSellerGroups = await prisma.orderSellerGroup.findMany({ where: { orderId: payment?.orderId } })
-
       //update delivery charge paid
-      await transactionClient.orderSellerDelivery.updateMany({
-        where: { sellerGroupId: { in: orderSellerGroups?.map(i => i?.id) } },
-        data: {
+      await transactionClient.orderDeliveryCharge.upsert({
+        where: { orderId: payment?.orderId! },
+        update: {
           status: "PAID"
+        },
+        create: {
+          status: "PAID",
+          orderId: payment?.orderId!,
+          baseCharge: PaymentSession?.amount_subtotal ? PaymentSession?.amount_subtotal / 100 : 0,
+          finalCharge: PaymentSession?.amount_total ? PaymentSession?.amount_total / 100 : 0,
+          paidAt: new Date(),
         }
       })
 

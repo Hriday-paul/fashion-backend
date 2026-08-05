@@ -47,6 +47,8 @@ model Product {
 
     questions Question[]
 
+    cartItems CartItem[]
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
@@ -93,6 +95,44 @@ model Favourite {
 
     @@unique([userId, productId])
     @@map("favourites")
+}
+
+model CartGroup {
+    id String @id @default(uuid())
+
+    sellerId String
+    seller   User   @relation("sellerGroupCarts", fields: [sellerId], references: [id], onDelete: Cascade)
+
+    userId String
+    user   User   @relation("myCarts", fields: [userId], references: [id], onDelete: Cascade)
+
+    items CartItem[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([sellerId])
+    @@map("carts")
+}
+
+model CartItem {
+    id String @id @default(uuid())
+
+    groupId String
+    group   CartGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+    productId String
+    product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+    extraDonation Float @default(0)
+
+    quantity Int @default(1)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([groupId, productId])
+    @@map("cart_items")
 }
 
 model ProductView {

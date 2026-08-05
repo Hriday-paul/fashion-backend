@@ -16,6 +16,7 @@ import { questionRouts } from './modules/question/question.rout';
 import { folowRouts } from './modules/folow/folow.rout';
 import { donationRouts } from './modules/donation/donation.rout';
 import { stripeRouts } from './modules/stripe/stripe.rout';
+import { cartRouts } from './modules/cart/cart.rout';
 
 const router = express.Router();
 
@@ -55,6 +56,10 @@ const moduleRoutes = [
     {
         path: '/favourites',
         route: favouriteRouts,
+    },
+    {
+        path: '/carts',
+        route: cartRouts,
     },
     {
         path: '/questions',

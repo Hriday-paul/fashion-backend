@@ -380,10 +380,6 @@ export type ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput = {
   deleteMany?: Prisma.ReturnEvidenceScalarWhereInput | Prisma.ReturnEvidenceScalarWhereInput[]
 }
 
-export type EnumEvidenceTypeFieldUpdateOperationsInput = {
-  set?: $Enums.EvidenceType
-}
-
 export type ReturnEvidenceCreateWithoutReturnInput = {
   id?: string
   url: string

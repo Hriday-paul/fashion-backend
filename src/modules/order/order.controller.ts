@@ -35,29 +35,55 @@ const ordersBySeller = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
-const confirmOrder = catchAsync(async (req: Request, res: Response) => {
-    const { sellerGroupId } = req.params;
+//buyer mark order received
+const confirmOrderReceived = catchAsync(async (req: Request, res: Response) => {
     const { id: userId } = req.user;
 
-    await orderService.confirmOrder(sellerGroupId, userId);
+    await orderService.confirmOrderReceived(req.body.orderId, userId);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: 'Order confirmed successfully',
+        message: 'Order completed successfully',
     });
 });
 
-const cancelOrder = catchAsync(async (req: Request, res: Response) => {
-    const { sellerGroupId } = req.params;
+
+const cancelOrderItemBySeller = catchAsync(async (req: Request, res: Response) => {
     const { id: userId } = req.user;
 
-    await orderService.cancelOrder(sellerGroupId, userId, req.body);
+    await orderService.cancelOrderItemBySeller(req.body, userId);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
         message: 'Order cancelled successfully',
+    });
+});
+
+
+const requestCancelOrderItem = catchAsync(async (req: Request, res: Response) => {
+    const { id: userId } = req.user;
+
+    await orderService.requestCancelOrderItem(req.body, userId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Cancel request submitted successfully',
+    });
+});
+
+
+const approveCancelOrderItemBySeller = catchAsync(async (req: Request, res: Response) => {
+    const { id: userId } = req.user;
+
+    await orderService.approveCancelOrderItemBySeller(req.body?.orderItemId, userId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Order cancel approved successfully',
     });
 });
 
@@ -77,7 +103,9 @@ const markShippedOrder = catchAsync(async (req: Request, res: Response) => {
 export const orderControler = {
     addNewOrder,
     ordersBySeller,
-    confirmOrder,
-    cancelOrder,
+    confirmOrderReceived,
+    cancelOrderItemBySeller,
+    requestCancelOrderItem,
+    approveCancelOrderItemBySeller,
     markShippedOrder
 }

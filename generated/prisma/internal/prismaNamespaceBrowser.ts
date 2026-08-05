@@ -56,10 +56,10 @@ export const ModelName = {
   ChatParticipant: 'ChatParticipant',
   Message: 'Message',
   FileMessage: 'FileMessage',
-  OrderSellerGroup: 'OrderSellerGroup',
-  OrderSellerDelivery: 'OrderSellerDelivery',
+  OrderDeliveryCharge: 'OrderDeliveryCharge',
   Order: 'Order',
   OrderItem: 'OrderItem',
+  CancelOrderEvidence: 'CancelOrderEvidence',
   SellDonation: 'SellDonation',
   Payment: 'Payment',
   DirectDonation: 'DirectDonation',
@@ -67,6 +67,8 @@ export const ModelName = {
   ProductPicture: 'ProductPicture',
   ProductCharity: 'ProductCharity',
   Favourite: 'Favourite',
+  CartGroup: 'CartGroup',
+  CartItem: 'CartItem',
   ProductView: 'ProductView',
   Question: 'Question',
   BundleDiscount: 'BundleDiscount',
@@ -195,25 +197,9 @@ export const FileMessageScalarFieldEnum = {
 export type FileMessageScalarFieldEnum = (typeof FileMessageScalarFieldEnum)[keyof typeof FileMessageScalarFieldEnum]
 
 
-export const OrderSellerGroupScalarFieldEnum = {
+export const OrderDeliveryChargeScalarFieldEnum = {
   id: 'id',
   orderId: 'orderId',
-  sellerId: 'sellerId',
-  status: 'status',
-  cancelledBy: 'cancelledBy',
-  cancelReason: 'cancelReason',
-  cancelReasonDetails: 'cancelReasonDetails',
-  subtotal: 'subtotal',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type OrderSellerGroupScalarFieldEnum = (typeof OrderSellerGroupScalarFieldEnum)[keyof typeof OrderSellerGroupScalarFieldEnum]
-
-
-export const OrderSellerDeliveryScalarFieldEnum = {
-  id: 'id',
-  sellerGroupId: 'sellerGroupId',
   totalItems: 'totalItems',
   totalWeight: 'totalWeight',
   baseCharge: 'baseCharge',
@@ -225,19 +211,25 @@ export const OrderSellerDeliveryScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type OrderSellerDeliveryScalarFieldEnum = (typeof OrderSellerDeliveryScalarFieldEnum)[keyof typeof OrderSellerDeliveryScalarFieldEnum]
+export type OrderDeliveryChargeScalarFieldEnum = (typeof OrderDeliveryChargeScalarFieldEnum)[keyof typeof OrderDeliveryChargeScalarFieldEnum]
 
 
 export const OrderScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  userId: 'userId',
+  buyerId: 'buyerId',
+  sellerId: 'sellerId',
+  status: 'status',
+  currentShipTo: 'currentShipTo',
+  authStatus: 'authStatus',
   billingId: 'billingId',
   itemsTotal: 'itemsTotal',
   totalDelivery: 'totalDelivery',
   totalPrice: 'totalPrice',
-  treeCredit: 'treeCredit'
+  treeCredit: 'treeCredit',
+  serviceFee: 'serviceFee',
+  authenticationFee: 'authenticationFee'
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
@@ -245,20 +237,38 @@ export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof Or
 
 export const OrderItemScalarFieldEnum = {
   id: 'id',
-  sellerGroupId: 'sellerGroupId',
+  orderId: 'orderId',
   productId: 'productId',
   quantity: 'quantity',
   weight: 'weight',
   unitPrice: 'unitPrice',
   totalPrice: 'totalPrice',
+  isCancelled: 'isCancelled',
+  authResult: 'authResult',
+  isBuyerRequestCancel: 'isBuyerRequestCancel',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   donation_percent: 'donation_percent',
   donation_amount: 'donation_amount',
-  extra_donation: 'extra_donation'
+  extra_donation: 'extra_donation',
+  cancelledBy: 'cancelledBy',
+  cancelReason: 'cancelReason',
+  cancelReasonDetails: 'cancelReasonDetails'
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
+
+
+export const CancelOrderEvidenceScalarFieldEnum = {
+  id: 'id',
+  itemId: 'itemId',
+  url: 'url',
+  key: 'key',
+  type: 'type',
+  createdAt: 'createdAt'
+} as const
+
+export type CancelOrderEvidenceScalarFieldEnum = (typeof CancelOrderEvidenceScalarFieldEnum)[keyof typeof CancelOrderEvidenceScalarFieldEnum]
 
 
 export const SellDonationScalarFieldEnum = {
@@ -384,6 +394,30 @@ export const FavouriteScalarFieldEnum = {
 } as const
 
 export type FavouriteScalarFieldEnum = (typeof FavouriteScalarFieldEnum)[keyof typeof FavouriteScalarFieldEnum]
+
+
+export const CartGroupScalarFieldEnum = {
+  id: 'id',
+  sellerId: 'sellerId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CartGroupScalarFieldEnum = (typeof CartGroupScalarFieldEnum)[keyof typeof CartGroupScalarFieldEnum]
+
+
+export const CartItemScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  productId: 'productId',
+  extraDonation: 'extraDonation',
+  quantity: 'quantity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typeof CartItemScalarFieldEnum]
 
 
 export const ProductViewScalarFieldEnum = {

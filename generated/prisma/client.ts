@@ -82,15 +82,10 @@ export type Message = Prisma.MessageModel
  */
 export type FileMessage = Prisma.FileMessageModel
 /**
- * Model OrderSellerGroup
+ * Model OrderDeliveryCharge
  * 
  */
-export type OrderSellerGroup = Prisma.OrderSellerGroupModel
-/**
- * Model OrderSellerDelivery
- * 
- */
-export type OrderSellerDelivery = Prisma.OrderSellerDeliveryModel
+export type OrderDeliveryCharge = Prisma.OrderDeliveryChargeModel
 /**
  * Model Order
  * 
@@ -101,6 +96,11 @@ export type Order = Prisma.OrderModel
  * 
  */
 export type OrderItem = Prisma.OrderItemModel
+/**
+ * Model CancelOrderEvidence
+ * 
+ */
+export type CancelOrderEvidence = Prisma.CancelOrderEvidenceModel
 /**
  * Model SellDonation
  * 
@@ -136,6 +136,16 @@ export type ProductCharity = Prisma.ProductCharityModel
  * 
  */
 export type Favourite = Prisma.FavouriteModel
+/**
+ * Model CartGroup
+ * 
+ */
+export type CartGroup = Prisma.CartGroupModel
+/**
+ * Model CartItem
+ * 
+ */
+export type CartItem = Prisma.CartItemModel
 /**
  * Model ProductView
  * 

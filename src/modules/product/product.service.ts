@@ -378,14 +378,29 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
                 }
             },
             user: {
-                include: {
+                select: {
                     auth: {
                         select: {
                             role: true
                         }
                     },
-                    picture: true
-                }
+                    picture: {
+                        select : {
+                            url : true
+                        }
+                    },
+                    _count : {
+                        select : {
+                            products : true
+                        }
+                    },
+                    userName: true,
+                    avgRating: true,
+                    ratingsReceived : {
+                        
+                    }
+                },
+
             },
             _count: {
                 select: {
@@ -558,8 +573,8 @@ const topSellingProducts = async (userId?: string) => {
         where: {
             orderItems: {
                 some: {
-                    sellerGroup: {
-                        status: "DELIVERED"
+                    order : {
+                        status : "DELIVERED"
                     }
                 }
             },

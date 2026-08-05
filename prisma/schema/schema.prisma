@@ -107,8 +107,9 @@ model User {
   // donation received as a charity
   donationsReceived DirectDonation[] @relation("charity")
 
-  orders        Order[]
-  ordersByGroup OrderSellerGroup[]
+  buyOrders        Order[] @relation("buyer")
+  sellOrders    Order[] @relation("seller")
+
   productViews  ProductView[]
 
   prodQuestions Question[]
@@ -124,6 +125,9 @@ model User {
   stripeAccountId  String?
   stripeCustomerId String?
   charityGalleries CharityGallery[]
+
+  carts CartGroup[] @relation("myCarts")
+  sellerGroupCarts CartGroup[] @relation("sellerGroupCarts")
 
   bundleDiscount    BundleDiscount?
 
@@ -170,7 +174,7 @@ model BillingDetails {
   userId    String? @unique
   user      User?   @relation(fields: [userId], references: [id], onDelete: Cascade) // for set on default to user
   country   String
-  full_name String?
+  full_name String? //user name
   address1  String
   address2  String?
   zip_code  String

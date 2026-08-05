@@ -1,55 +1,24 @@
-// ─── NEW: groups all items from one seller within an order ───────────────────
-model OrderSellerGroup {
+// ─── NEW: delivery charge per seller group ───────────────────────────────────
+model OrderDeliveryCharge {
     id String @id @default(uuid())
 
-    orderId String
+    orderId String @unique
     order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
-    sellerId String
-    seller   User   @relation(fields: [sellerId], references: [id], onDelete: Restrict)
+    totalItems  Int   @default(0) // snapshot: total item count at time of order
+    totalWeight Float @default(0) // snapshot: total weight (kg) at time of order
 
-    items OrderItem[]
+    baseCharge  Float @default(0) // charge calculated from count/weight
+    discount    Float @default(0)
+    finalCharge Float @default(0) // baseCharge - discount
 
-    status    OrderStatus @default(PENDING)
-
-    cancelledBy          CancelledBy?
-    cancelReason   CancelReason?
-    cancelReasonDetails   String?
-
-    delivery OrderSellerDelivery?
-
-    subtotal Float @default(0) // sum of all item totalPrices in this group
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    @@unique([orderId, sellerId]) // one group per seller per order
-    @@index([orderId])
-    @@index([sellerId])
-    @@map("order_seller_groups")
-}
-
-// ─── NEW: delivery charge per seller group ───────────────────────────────────
-model OrderSellerDelivery {
-    id String @id @default(uuid())
-
-    sellerGroupId String            @unique
-    sellerGroup   OrderSellerGroup  @relation(fields: [sellerGroupId], references: [id], onDelete: Cascade)
-
-    totalItems     Int    @default(0)// snapshot: total item count at time of order
-    totalWeight    Float  @default(0)// snapshot: total weight (kg) at time of order
-
-    baseCharge     Float  @default(0)// charge calculated from count/weight
-    discount       Float  @default(0)
-    finalCharge    Float  @default(0)// baseCharge - discount
-
-    status         DeliveryChargeStatus @default(UNPAID)
+    status DeliveryChargeStatus @default(UNPAID)
 
     paidAt    DateTime?
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
 
-    @@map("order_seller_deliveries")
+    @@map("order_delivery_charges")
 }
 
 enum DeliveryChargeStatus {
@@ -64,71 +33,117 @@ model Order {
 
     rating Rating?
 
-    createdAt DateTime    @default(now())
-    updatedAt DateTime    @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-    userId String // buyer
-    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade) //buyer
-
-    // items     OrderItem[]
+    buyerId String // buyer
+    buyer   User   @relation("buyer", fields: [buyerId], references: [id], onDelete: Cascade) //buyer
 
     return Return[]
 
-    sellerGroups OrderSellerGroup[] // NEW
+    sellerId String
+    seller   User   @relation("seller", fields: [sellerId], references: [id], onDelete: Restrict)
+
+    items OrderItem[]
+
+    deliveryCharge OrderDeliveryCharge?
 
     payment Payment?
 
-    billingId String?
+    status OrderStatus @default(PENDING)
+    currentShipTo CurrentShipTo @default(BUYER)
+    authStatus OrderAuthStatus @default(NOT_STARTED)
+
+    billingId      String?
     billingDetails BillingDetails? @relation(fields: [billingId], references: [id], onDelete: Restrict)
 
-    itemsTotal        Float @default(0) // sum of all item prices
-    totalDelivery     Float @default(0) // NEW: sum of all seller delivery charges
-    totalPrice Float @default(0) // itemsTotal + total Delivery charge
-    treeCredit Float @default(0) // gifted for tree planner
+    itemsTotal    Float @default(0) // sum of all item prices
+    totalDelivery Float @default(0) // NEW: sum of all seller delivery charges
+    totalPrice    Float @default(0) // itemsTotal + total Delivery charge + treeCredit + serviceFee + authenticationFee
+    treeCredit    Float @default(0) // gifted for tree planner
+    serviceFee    Float @default(0) // platform service fee
+    authenticationFee Float @default(0) // authentication fee
 
-    @@index([userId])
+    @@index([buyerId, sellerId])
     @@map("orders")
+}
+
+enum CurrentShipTo {
+    AUTHENTICATION_CENTER
+    BUYER
 }
 
 enum OrderStatus {
     PENDING
-    CONFIRMED
     SHIPPED
+    OUT_FOR_DELIVERY
     DELIVERED
     COMPLETED
     CANCELLED
 }
 
+enum OrderAuthStatus {
+    NOT_STARTED
+    ITEM_RECEIVED
+    IN_PROGRESS
+    RESPONDED
+}
+
+enum OrderAuthResult {
+    NOT_PROCESSED
+    PASSED
+    FAILED
+}
+
 model OrderItem {
     id String @id @default(uuid())
 
-    // orderId String
-    // order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
-
-    // NEW: link to seller group
-    sellerGroupId String
-    sellerGroup   OrderSellerGroup @relation(fields: [sellerGroupId], references: [id], onDelete: Cascade)
+    orderId String
+    order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
     productId String
     product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
 
     quantity   Int
-    weight     Float  @default(0) // NEW: snapshot of product weight at order time
-    unitPrice  Float  // snapshot of price at time of order
-    totalPrice Float  // unitPrice * quantity
+    weight     Float @default(0) // NEW: snapshot of product weight at order time
+    unitPrice  Float // snapshot of price at time of order
+    totalPrice Float // unitPrice * quantity
+
+    isCancelled Boolean @default(false)
+    authResult OrderAuthResult @default(NOT_PROCESSED)
+
+    isBuyerRequestCancel Boolean @default(false)
 
     returnItem ReturnItem?
 
-    createdAt DateTime    @default(now())
-    updatedAt DateTime    @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-    donation_percent Float @default(0) //single item donation percent
-    donation_amount Float @default(0) // total donation amount multiply by quantity
-    extra_donation Float @default(0)
-    donations SellDonation[]
+    donation_percent Float          @default(0) //single item donation percent
+    donation_amount  Float          @default(0) // total donation amount multiply by quantity
+    extra_donation   Float          @default(0)
+    donations        SellDonation[]
 
-    // @@index([orderId])
-    @@index([sellerGroupId]) // NEW
+    cancelledBy         CancelledBy?
+    cancelReason        CancelReason?
+    cancelReasonDetails String?
+    // for attach photo or videos as reason
+    cancelEvidence  CancelOrderEvidence[]
+
+    @@index([orderId]) // NEW
+}
+
+model CancelOrderEvidence {
+    id       String @id @default(uuid())
+    itemId String
+    item   OrderItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+    url      String
+    key      String
+    type     EvidenceType @default(IMAGE)
+    createdAt DateTime @default(now())
+
+    @@map("cancel_order_evidence")
+    @@index([itemId])
 }
 
 model SellDonation {
@@ -165,34 +180,34 @@ enum DonationStatus {
 }
 
 enum CancelReason {
-  CHANGED_MIND
-  FOUND_BETTER_PRICE
-  ORDERED_BY_MISTAKE
-  ITEM_NO_LONGER_NEEDED
-  DELIVERY_TOO_LONG
-  FOUND_BETTER_PRODUCT
-  WRONG_ITEM_SELECTED
-  DUPLICATE_ORDER
-  SHIPPING_COST_TOO_HIGH
-  PAYMENT_ISSUE
-  SELLER_UNRESPONSIVE
+    CHANGED_MIND
+    FOUND_BETTER_PRICE
+    ORDERED_BY_MISTAKE
+    ITEM_NO_LONGER_NEEDED
+    DELIVERY_TOO_LONG
+    FOUND_BETTER_PRODUCT
+    WRONG_ITEM_SELECTED
+    DUPLICATE_ORDER
+    SHIPPING_COST_TOO_HIGH
+    PAYMENT_ISSUE
+    SELLER_UNRESPONSIVE
 
-  OUT_OF_STOCK
-  UNABLE_TO_FULFILL_IN_TIME
-  PRICING_ERROR
-  BUYER_UNREACHABLE
-  SUSPECTED_FRAUD
-  SHIPPING_ADDRESS_ISSUE
-  LISTING_ERROR
-  BUYER_REQUESTED
-  DAMAGED_INVENTORY
-  PAYMENT_NOT_VERIFIED
+    OUT_OF_STOCK
+    UNABLE_TO_FULFILL_IN_TIME
+    PRICING_ERROR
+    BUYER_UNREACHABLE
+    SUSPECTED_FRAUD
+    SHIPPING_ADDRESS_ISSUE
+    LISTING_ERROR
+    BUYER_REQUESTED
+    DAMAGED_INVENTORY
+    PAYMENT_NOT_VERIFIED
 
-  OTHER
+    OTHER
 }
 
 enum CancelledBy {
-  SELLER
-  BUYER
-  SYSTEM
+    SELLER
+    BUYER
+    SYSTEM
 }

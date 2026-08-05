@@ -33,13 +33,17 @@ const memberDonationStats = async (userName: string) => {
     const totalSellDonation = await prisma.sellDonation.aggregate({
         where: {
             status: "PAID", orderItem: {
-                sellerGroup: {
+                order: {
                     sellerId: user?.id
                 }
             }
         }, _sum: { amount: true }
     });
-    const totalTreeDonation = await prisma.order.aggregate({ where: { userId: user?.id, sellerGroups: { some: { status: "COMPLETED" } } }, _sum: { treeCredit: true } });
+    const totalTreeDonation = await prisma.order.aggregate({
+        where: {
+            buyerId: user?.id, status: "COMPLETED"
+        }, _sum: { treeCredit: true }
+    });
 
     const directMoneyDonation = await prisma.directDonation.aggregate({
         where: {
@@ -59,10 +63,8 @@ const memberDonationStats = async (userName: string) => {
         },
         where: {
             orderItem: {
-                sellerGroup: {
-                    order: {
-                        userId: user?.id,
-                    },
+                order: {
+                    buyerId: user?.id,
                 },
             },
             status: "PAID", // optional but recommended
@@ -108,7 +110,7 @@ const selldonations = async (userName: string) => {
             },
 
             orderItem: {
-                sellerGroup: {
+                order: {
                     sellerId: user?.id
                 }
             }
@@ -160,10 +162,8 @@ const purchaseDonationsContribute = async (userName: string) => {
             },
 
             orderItem: {
-                sellerGroup: {
-                    order: {
-                        userId: user?.id
-                    }
+                order: {
+                    buyerId: user?.id
                 }
             }
         },
@@ -206,12 +206,8 @@ const treeDonations = async (userName: string) => {
             treeCredit: {
                 gt: 0
             },
-            userId: user?.id,
-            sellerGroups : {
-                some: {
-                    status: "COMPLETED",
-                }
-            }
+            buyerId: user?.id,
+            status: "COMPLETED"
         },
         orderBy: {
             createdAt: "desc"

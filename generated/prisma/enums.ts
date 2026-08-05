@@ -18,16 +18,43 @@ export const DeliveryChargeStatus = {
 export type DeliveryChargeStatus = (typeof DeliveryChargeStatus)[keyof typeof DeliveryChargeStatus]
 
 
+export const CurrentShipTo = {
+  AUTHENTICATION_CENTER: 'AUTHENTICATION_CENTER',
+  BUYER: 'BUYER'
+} as const
+
+export type CurrentShipTo = (typeof CurrentShipTo)[keyof typeof CurrentShipTo]
+
+
 export const OrderStatus = {
   PENDING: 'PENDING',
-  CONFIRMED: 'CONFIRMED',
   SHIPPED: 'SHIPPED',
+  OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
   DELIVERED: 'DELIVERED',
   COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED'
 } as const
 
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
+
+
+export const OrderAuthStatus = {
+  NOT_STARTED: 'NOT_STARTED',
+  ITEM_RECEIVED: 'ITEM_RECEIVED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  RESPONDED: 'RESPONDED'
+} as const
+
+export type OrderAuthStatus = (typeof OrderAuthStatus)[keyof typeof OrderAuthStatus]
+
+
+export const OrderAuthResult = {
+  NOT_PROCESSED: 'NOT_PROCESSED',
+  PASSED: 'PASSED',
+  FAILED: 'FAILED'
+} as const
+
+export type OrderAuthResult = (typeof OrderAuthResult)[keyof typeof OrderAuthResult]
 
 
 export const DonationStatus = {

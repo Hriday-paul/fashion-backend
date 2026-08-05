@@ -249,10 +249,10 @@ const memberStats = async (userName: string) => {
             quantity: true,
         },
         where: {
-            sellerGroup: {
-                sellerId: user.id,
-                status: "COMPLETED"
-            },
+            order: {
+                status: "COMPLETED",
+                sellerId: user.id
+            }
         },
     });
 
@@ -261,14 +261,18 @@ const memberStats = async (userName: string) => {
     const totalSellDonation = await prisma.sellDonation.aggregate({
         where: {
             status: "PAID", orderItem: {
-                sellerGroup: {
+                order: {
                     sellerId: user?.id
                 }
             }
         }, _sum: { amount: true }
     });
 
-    const totalTreeDonation = await prisma.order.aggregate({ where: { sellerGroups : { some: { status: "COMPLETED" } }, userId: user?.id }, _sum: { treeCredit: true } });
+    const totalTreeDonation = await prisma.order.aggregate({
+        where: {
+            buyerId: user?.id, status: "COMPLETED"
+        }, _sum: { treeCredit: true }
+    });
 
     const directMoneyDonation = await prisma.directDonation.aggregate({
         where: {
