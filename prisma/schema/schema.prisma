@@ -129,6 +129,8 @@ model User {
   carts CartGroup[] @relation("myCarts")
   sellerGroupCarts CartGroup[] @relation("sellerGroupCarts")
 
+  cartDonationCharities CartDonationCharaties[]
+
   bundleDiscount    BundleDiscount?
 
   @@map("users")

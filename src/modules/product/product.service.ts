@@ -385,26 +385,33 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
                         }
                     },
                     picture: {
-                        select : {
-                            url : true
+                        select: {
+                            url: true
                         }
                     },
-                    _count : {
-                        select : {
-                            products : true
+                    _count: {
+                        select: {
+                            products: true
                         }
                     },
                     userName: true,
                     avgRating: true,
-                    ratingsReceived : {
-                        
+                    ratingsReceived: {
+
                     }
                 },
 
             },
             _count: {
                 select: {
-                    favourites: true
+                    favourites: true,
+                    cartItems: {
+                        where: {
+                            group: {
+                                userId: userId
+                            }
+                        }
+                    }
                 }
             },
             // Add this 👇
@@ -573,8 +580,8 @@ const topSellingProducts = async (userId?: string) => {
         where: {
             orderItems: {
                 some: {
-                    order : {
-                        status : "DELIVERED"
+                    order: {
+                        status: "DELIVERED"
                     }
                 }
             },

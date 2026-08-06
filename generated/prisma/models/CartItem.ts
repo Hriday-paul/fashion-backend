@@ -40,6 +40,7 @@ export type CartItemMinAggregateOutputType = {
   groupId: string | null
   productId: string | null
   extraDonation: number | null
+  extraDonationAnonymous: boolean | null
   quantity: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -50,6 +51,7 @@ export type CartItemMaxAggregateOutputType = {
   groupId: string | null
   productId: string | null
   extraDonation: number | null
+  extraDonationAnonymous: boolean | null
   quantity: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -60,6 +62,7 @@ export type CartItemCountAggregateOutputType = {
   groupId: number
   productId: number
   extraDonation: number
+  extraDonationAnonymous: number
   quantity: number
   createdAt: number
   updatedAt: number
@@ -82,6 +85,7 @@ export type CartItemMinAggregateInputType = {
   groupId?: true
   productId?: true
   extraDonation?: true
+  extraDonationAnonymous?: true
   quantity?: true
   createdAt?: true
   updatedAt?: true
@@ -92,6 +96,7 @@ export type CartItemMaxAggregateInputType = {
   groupId?: true
   productId?: true
   extraDonation?: true
+  extraDonationAnonymous?: true
   quantity?: true
   createdAt?: true
   updatedAt?: true
@@ -102,6 +107,7 @@ export type CartItemCountAggregateInputType = {
   groupId?: true
   productId?: true
   extraDonation?: true
+  extraDonationAnonymous?: true
   quantity?: true
   createdAt?: true
   updatedAt?: true
@@ -199,6 +205,7 @@ export type CartItemGroupByOutputType = {
   groupId: string
   productId: string
   extraDonation: number
+  extraDonationAnonymous: boolean
   quantity: number
   createdAt: Date
   updatedAt: Date
@@ -232,11 +239,13 @@ export type CartItemWhereInput = {
   groupId?: Prisma.StringFilter<"CartItem"> | string
   productId?: Prisma.StringFilter<"CartItem"> | string
   extraDonation?: Prisma.FloatFilter<"CartItem"> | number
+  extraDonationAnonymous?: Prisma.BoolFilter<"CartItem"> | boolean
   quantity?: Prisma.IntFilter<"CartItem"> | number
   createdAt?: Prisma.DateTimeFilter<"CartItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CartItem"> | Date | string
   group?: Prisma.XOR<Prisma.CartGroupScalarRelationFilter, Prisma.CartGroupWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
+  charities?: Prisma.CartDonationCharatiesListRelationFilter
 }
 
 export type CartItemOrderByWithRelationInput = {
@@ -244,11 +253,13 @@ export type CartItemOrderByWithRelationInput = {
   groupId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   extraDonation?: Prisma.SortOrder
+  extraDonationAnonymous?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   group?: Prisma.CartGroupOrderByWithRelationInput
   product?: Prisma.ProductOrderByWithRelationInput
+  charities?: Prisma.CartDonationCharatiesOrderByRelationAggregateInput
 }
 
 export type CartItemWhereUniqueInput = Prisma.AtLeast<{
@@ -260,11 +271,13 @@ export type CartItemWhereUniqueInput = Prisma.AtLeast<{
   groupId?: Prisma.StringFilter<"CartItem"> | string
   productId?: Prisma.StringFilter<"CartItem"> | string
   extraDonation?: Prisma.FloatFilter<"CartItem"> | number
+  extraDonationAnonymous?: Prisma.BoolFilter<"CartItem"> | boolean
   quantity?: Prisma.IntFilter<"CartItem"> | number
   createdAt?: Prisma.DateTimeFilter<"CartItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CartItem"> | Date | string
   group?: Prisma.XOR<Prisma.CartGroupScalarRelationFilter, Prisma.CartGroupWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
+  charities?: Prisma.CartDonationCharatiesListRelationFilter
 }, "id" | "groupId_productId">
 
 export type CartItemOrderByWithAggregationInput = {
@@ -272,6 +285,7 @@ export type CartItemOrderByWithAggregationInput = {
   groupId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   extraDonation?: Prisma.SortOrder
+  extraDonationAnonymous?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -290,6 +304,7 @@ export type CartItemScalarWhereWithAggregatesInput = {
   groupId?: Prisma.StringWithAggregatesFilter<"CartItem"> | string
   productId?: Prisma.StringWithAggregatesFilter<"CartItem"> | string
   extraDonation?: Prisma.FloatWithAggregatesFilter<"CartItem"> | number
+  extraDonationAnonymous?: Prisma.BoolWithAggregatesFilter<"CartItem"> | boolean
   quantity?: Prisma.IntWithAggregatesFilter<"CartItem"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CartItem"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CartItem"> | Date | string
@@ -298,11 +313,13 @@ export type CartItemScalarWhereWithAggregatesInput = {
 export type CartItemCreateInput = {
   id?: string
   extraDonation?: number
+  extraDonationAnonymous?: boolean
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   group: Prisma.CartGroupCreateNestedOneWithoutItemsInput
   product: Prisma.ProductCreateNestedOneWithoutCartItemsInput
+  charities?: Prisma.CartDonationCharatiesCreateNestedManyWithoutCartItemInput
 }
 
 export type CartItemUncheckedCreateInput = {
@@ -310,19 +327,23 @@ export type CartItemUncheckedCreateInput = {
   groupId: string
   productId: string
   extraDonation?: number
+  extraDonationAnonymous?: boolean
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  charities?: Prisma.CartDonationCharatiesUncheckedCreateNestedManyWithoutCartItemInput
 }
 
 export type CartItemUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   group?: Prisma.CartGroupUpdateOneRequiredWithoutItemsNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutCartItemsNestedInput
+  charities?: Prisma.CartDonationCharatiesUpdateManyWithoutCartItemNestedInput
 }
 
 export type CartItemUncheckedUpdateInput = {
@@ -330,9 +351,11 @@ export type CartItemUncheckedUpdateInput = {
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  charities?: Prisma.CartDonationCharatiesUncheckedUpdateManyWithoutCartItemNestedInput
 }
 
 export type CartItemCreateManyInput = {
@@ -340,6 +363,7 @@ export type CartItemCreateManyInput = {
   groupId: string
   productId: string
   extraDonation?: number
+  extraDonationAnonymous?: boolean
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -348,6 +372,7 @@ export type CartItemCreateManyInput = {
 export type CartItemUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -358,6 +383,7 @@ export type CartItemUncheckedUpdateManyInput = {
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -383,6 +409,7 @@ export type CartItemCountOrderByAggregateInput = {
   groupId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   extraDonation?: Prisma.SortOrder
+  extraDonationAnonymous?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -398,6 +425,7 @@ export type CartItemMaxOrderByAggregateInput = {
   groupId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   extraDonation?: Prisma.SortOrder
+  extraDonationAnonymous?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -408,6 +436,7 @@ export type CartItemMinOrderByAggregateInput = {
   groupId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   extraDonation?: Prisma.SortOrder
+  extraDonationAnonymous?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -416,6 +445,11 @@ export type CartItemMinOrderByAggregateInput = {
 export type CartItemSumOrderByAggregateInput = {
   extraDonation?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+}
+
+export type CartItemScalarRelationFilter = {
+  is?: Prisma.CartItemWhereInput
+  isNot?: Prisma.CartItemWhereInput
 }
 
 export type CartItemCreateNestedManyWithoutProductInput = {
@@ -502,22 +536,40 @@ export type CartItemUncheckedUpdateManyWithoutGroupNestedInput = {
   deleteMany?: Prisma.CartItemScalarWhereInput | Prisma.CartItemScalarWhereInput[]
 }
 
+export type CartItemCreateNestedOneWithoutCharitiesInput = {
+  create?: Prisma.XOR<Prisma.CartItemCreateWithoutCharitiesInput, Prisma.CartItemUncheckedCreateWithoutCharitiesInput>
+  connectOrCreate?: Prisma.CartItemCreateOrConnectWithoutCharitiesInput
+  connect?: Prisma.CartItemWhereUniqueInput
+}
+
+export type CartItemUpdateOneRequiredWithoutCharitiesNestedInput = {
+  create?: Prisma.XOR<Prisma.CartItemCreateWithoutCharitiesInput, Prisma.CartItemUncheckedCreateWithoutCharitiesInput>
+  connectOrCreate?: Prisma.CartItemCreateOrConnectWithoutCharitiesInput
+  upsert?: Prisma.CartItemUpsertWithoutCharitiesInput
+  connect?: Prisma.CartItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CartItemUpdateToOneWithWhereWithoutCharitiesInput, Prisma.CartItemUpdateWithoutCharitiesInput>, Prisma.CartItemUncheckedUpdateWithoutCharitiesInput>
+}
+
 export type CartItemCreateWithoutProductInput = {
   id?: string
   extraDonation?: number
+  extraDonationAnonymous?: boolean
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   group: Prisma.CartGroupCreateNestedOneWithoutItemsInput
+  charities?: Prisma.CartDonationCharatiesCreateNestedManyWithoutCartItemInput
 }
 
 export type CartItemUncheckedCreateWithoutProductInput = {
   id?: string
   groupId: string
   extraDonation?: number
+  extraDonationAnonymous?: boolean
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  charities?: Prisma.CartDonationCharatiesUncheckedCreateNestedManyWithoutCartItemInput
 }
 
 export type CartItemCreateOrConnectWithoutProductInput = {
@@ -554,6 +606,7 @@ export type CartItemScalarWhereInput = {
   groupId?: Prisma.StringFilter<"CartItem"> | string
   productId?: Prisma.StringFilter<"CartItem"> | string
   extraDonation?: Prisma.FloatFilter<"CartItem"> | number
+  extraDonationAnonymous?: Prisma.BoolFilter<"CartItem"> | boolean
   quantity?: Prisma.IntFilter<"CartItem"> | number
   createdAt?: Prisma.DateTimeFilter<"CartItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CartItem"> | Date | string
@@ -562,19 +615,23 @@ export type CartItemScalarWhereInput = {
 export type CartItemCreateWithoutGroupInput = {
   id?: string
   extraDonation?: number
+  extraDonationAnonymous?: boolean
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   product: Prisma.ProductCreateNestedOneWithoutCartItemsInput
+  charities?: Prisma.CartDonationCharatiesCreateNestedManyWithoutCartItemInput
 }
 
 export type CartItemUncheckedCreateWithoutGroupInput = {
   id?: string
   productId: string
   extraDonation?: number
+  extraDonationAnonymous?: boolean
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  charities?: Prisma.CartDonationCharatiesUncheckedCreateNestedManyWithoutCartItemInput
 }
 
 export type CartItemCreateOrConnectWithoutGroupInput = {
@@ -603,10 +660,71 @@ export type CartItemUpdateManyWithWhereWithoutGroupInput = {
   data: Prisma.XOR<Prisma.CartItemUpdateManyMutationInput, Prisma.CartItemUncheckedUpdateManyWithoutGroupInput>
 }
 
+export type CartItemCreateWithoutCharitiesInput = {
+  id?: string
+  extraDonation?: number
+  extraDonationAnonymous?: boolean
+  quantity?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  group: Prisma.CartGroupCreateNestedOneWithoutItemsInput
+  product: Prisma.ProductCreateNestedOneWithoutCartItemsInput
+}
+
+export type CartItemUncheckedCreateWithoutCharitiesInput = {
+  id?: string
+  groupId: string
+  productId: string
+  extraDonation?: number
+  extraDonationAnonymous?: boolean
+  quantity?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CartItemCreateOrConnectWithoutCharitiesInput = {
+  where: Prisma.CartItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.CartItemCreateWithoutCharitiesInput, Prisma.CartItemUncheckedCreateWithoutCharitiesInput>
+}
+
+export type CartItemUpsertWithoutCharitiesInput = {
+  update: Prisma.XOR<Prisma.CartItemUpdateWithoutCharitiesInput, Prisma.CartItemUncheckedUpdateWithoutCharitiesInput>
+  create: Prisma.XOR<Prisma.CartItemCreateWithoutCharitiesInput, Prisma.CartItemUncheckedCreateWithoutCharitiesInput>
+  where?: Prisma.CartItemWhereInput
+}
+
+export type CartItemUpdateToOneWithWhereWithoutCharitiesInput = {
+  where?: Prisma.CartItemWhereInput
+  data: Prisma.XOR<Prisma.CartItemUpdateWithoutCharitiesInput, Prisma.CartItemUncheckedUpdateWithoutCharitiesInput>
+}
+
+export type CartItemUpdateWithoutCharitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  group?: Prisma.CartGroupUpdateOneRequiredWithoutItemsNestedInput
+  product?: Prisma.ProductUpdateOneRequiredWithoutCartItemsNestedInput
+}
+
+export type CartItemUncheckedUpdateWithoutCharitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  groupId?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type CartItemCreateManyProductInput = {
   id?: string
   groupId: string
   extraDonation?: number
+  extraDonationAnonymous?: boolean
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -615,25 +733,30 @@ export type CartItemCreateManyProductInput = {
 export type CartItemUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   group?: Prisma.CartGroupUpdateOneRequiredWithoutItemsNestedInput
+  charities?: Prisma.CartDonationCharatiesUpdateManyWithoutCartItemNestedInput
 }
 
 export type CartItemUncheckedUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
   extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  charities?: Prisma.CartDonationCharatiesUncheckedUpdateManyWithoutCartItemNestedInput
 }
 
 export type CartItemUncheckedUpdateManyWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
   extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -643,6 +766,7 @@ export type CartItemCreateManyGroupInput = {
   id?: string
   productId: string
   extraDonation?: number
+  extraDonationAnonymous?: boolean
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -651,30 +775,64 @@ export type CartItemCreateManyGroupInput = {
 export type CartItemUpdateWithoutGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   product?: Prisma.ProductUpdateOneRequiredWithoutCartItemsNestedInput
+  charities?: Prisma.CartDonationCharatiesUpdateManyWithoutCartItemNestedInput
 }
 
 export type CartItemUncheckedUpdateWithoutGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  charities?: Prisma.CartDonationCharatiesUncheckedUpdateManyWithoutCartItemNestedInput
 }
 
 export type CartItemUncheckedUpdateManyWithoutGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type CartItemCountOutputType
+ */
+
+export type CartItemCountOutputType = {
+  charities: number
+}
+
+export type CartItemCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  charities?: boolean | CartItemCountOutputTypeCountCharitiesArgs
+}
+
+/**
+ * CartItemCountOutputType without action
+ */
+export type CartItemCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CartItemCountOutputType
+   */
+  select?: Prisma.CartItemCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * CartItemCountOutputType without action
+ */
+export type CartItemCountOutputTypeCountCharitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CartDonationCharatiesWhereInput
+}
 
 
 export type CartItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -682,11 +840,14 @@ export type CartItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   groupId?: boolean
   productId?: boolean
   extraDonation?: boolean
+  extraDonationAnonymous?: boolean
   quantity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   group?: boolean | Prisma.CartGroupDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  charities?: boolean | Prisma.CartItem$charitiesArgs<ExtArgs>
+  _count?: boolean | Prisma.CartItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cartItem"]>
 
 export type CartItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -694,6 +855,7 @@ export type CartItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   groupId?: boolean
   productId?: boolean
   extraDonation?: boolean
+  extraDonationAnonymous?: boolean
   quantity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -706,6 +868,7 @@ export type CartItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   groupId?: boolean
   productId?: boolean
   extraDonation?: boolean
+  extraDonationAnonymous?: boolean
   quantity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -718,15 +881,18 @@ export type CartItemSelectScalar = {
   groupId?: boolean
   productId?: boolean
   extraDonation?: boolean
+  extraDonationAnonymous?: boolean
   quantity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CartItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "groupId" | "productId" | "extraDonation" | "quantity" | "createdAt" | "updatedAt", ExtArgs["result"]["cartItem"]>
+export type CartItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "groupId" | "productId" | "extraDonation" | "extraDonationAnonymous" | "quantity" | "createdAt" | "updatedAt", ExtArgs["result"]["cartItem"]>
 export type CartItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   group?: boolean | Prisma.CartGroupDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  charities?: boolean | Prisma.CartItem$charitiesArgs<ExtArgs>
+  _count?: boolean | Prisma.CartItemCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CartItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   group?: boolean | Prisma.CartGroupDefaultArgs<ExtArgs>
@@ -742,12 +908,14 @@ export type $CartItemPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     group: Prisma.$CartGroupPayload<ExtArgs>
     product: Prisma.$ProductPayload<ExtArgs>
+    charities: Prisma.$CartDonationCharatiesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     groupId: string
     productId: string
     extraDonation: number
+    extraDonationAnonymous: boolean
     quantity: number
     createdAt: Date
     updatedAt: Date
@@ -1147,6 +1315,7 @@ export interface Prisma__CartItemClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   group<T extends Prisma.CartGroupDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CartGroupDefaultArgs<ExtArgs>>): Prisma.Prisma__CartGroupClient<runtime.Types.Result.GetResult<Prisma.$CartGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   product<T extends Prisma.ProductDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  charities<T extends Prisma.CartItem$charitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CartItem$charitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CartDonationCharatiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1180,6 +1349,7 @@ export interface CartItemFieldRefs {
   readonly groupId: Prisma.FieldRef<"CartItem", 'String'>
   readonly productId: Prisma.FieldRef<"CartItem", 'String'>
   readonly extraDonation: Prisma.FieldRef<"CartItem", 'Float'>
+  readonly extraDonationAnonymous: Prisma.FieldRef<"CartItem", 'Boolean'>
   readonly quantity: Prisma.FieldRef<"CartItem", 'Int'>
   readonly createdAt: Prisma.FieldRef<"CartItem", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CartItem", 'DateTime'>
@@ -1576,6 +1746,30 @@ export type CartItemDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many CartItems to delete.
    */
   limit?: number
+}
+
+/**
+ * CartItem.charities
+ */
+export type CartItem$charitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CartDonationCharaties
+   */
+  select?: Prisma.CartDonationCharatiesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CartDonationCharaties
+   */
+  omit?: Prisma.CartDonationCharatiesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CartDonationCharatiesInclude<ExtArgs> | null
+  where?: Prisma.CartDonationCharatiesWhereInput
+  orderBy?: Prisma.CartDonationCharatiesOrderByWithRelationInput | Prisma.CartDonationCharatiesOrderByWithRelationInput[]
+  cursor?: Prisma.CartDonationCharatiesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CartDonationCharatiesScalarFieldEnum | Prisma.CartDonationCharatiesScalarFieldEnum[]
 }
 
 /**

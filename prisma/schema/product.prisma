@@ -125,14 +125,32 @@ model CartItem {
     product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
     extraDonation Float @default(0)
+    extraDonationAnonymous Boolean @default(false)
 
     quantity Int @default(1)
+
+    charities CartDonationCharaties[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     @@unique([groupId, productId])
     @@map("cart_items")
+}
+
+model CartDonationCharaties {
+    id String @id @default(uuid())
+
+    cartItemId String
+    cartItem   CartItem @relation(fields: [cartItemId], references: [id], onDelete: Cascade)
+
+    charityId String
+    charity   User   @relation(fields: [charityId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+
+    @@unique([cartItemId, charityId])
+    @@map("cart_donation_charities")
 }
 
 model ProductView {

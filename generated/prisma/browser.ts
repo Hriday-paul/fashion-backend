@@ -122,6 +122,11 @@ export type CartGroup = Prisma.CartGroupModel
  */
 export type CartItem = Prisma.CartItemModel
 /**
+ * Model CartDonationCharaties
+ * 
+ */
+export type CartDonationCharaties = Prisma.CartDonationCharatiesModel
+/**
  * Model ProductView
  * 
  */

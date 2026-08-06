@@ -410,6 +410,7 @@ export const ModelName = {
   Favourite: 'Favourite',
   CartGroup: 'CartGroup',
   CartItem: 'CartItem',
+  CartDonationCharaties: 'CartDonationCharaties',
   ProductView: 'ProductView',
   Question: 'Question',
   BundleDiscount: 'BundleDiscount',
@@ -443,7 +444,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "brand" | "size" | "follow" | "chat" | "chatParticipant" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
+    modelProps: "category" | "brand" | "size" | "follow" | "chat" | "chatParticipant" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1998,6 +1999,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CartItemCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CartItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    CartDonationCharaties: {
+      payload: Prisma.$CartDonationCharatiesPayload<ExtArgs>
+      fields: Prisma.CartDonationCharatiesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CartDonationCharatiesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CartDonationCharatiesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CartDonationCharatiesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CartDonationCharatiesPayload>
+        }
+        findFirst: {
+          args: Prisma.CartDonationCharatiesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CartDonationCharatiesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CartDonationCharatiesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CartDonationCharatiesPayload>
+        }
+        findMany: {
+          args: Prisma.CartDonationCharatiesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CartDonationCharatiesPayload>[]
+        }
+        create: {
+          args: Prisma.CartDonationCharatiesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CartDonationCharatiesPayload>
+        }
+        createMany: {
+          args: Prisma.CartDonationCharatiesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CartDonationCharatiesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CartDonationCharatiesPayload>[]
+        }
+        delete: {
+          args: Prisma.CartDonationCharatiesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CartDonationCharatiesPayload>
+        }
+        update: {
+          args: Prisma.CartDonationCharatiesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CartDonationCharatiesPayload>
+        }
+        deleteMany: {
+          args: Prisma.CartDonationCharatiesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CartDonationCharatiesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CartDonationCharatiesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CartDonationCharatiesPayload>[]
+        }
+        upsert: {
+          args: Prisma.CartDonationCharatiesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CartDonationCharatiesPayload>
+        }
+        aggregate: {
+          args: Prisma.CartDonationCharatiesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCartDonationCharaties>
+        }
+        groupBy: {
+          args: Prisma.CartDonationCharatiesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CartDonationCharatiesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CartDonationCharatiesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CartDonationCharatiesCountAggregateOutputType> | number
         }
       }
     }
@@ -3679,12 +3754,23 @@ export const CartItemScalarFieldEnum = {
   groupId: 'groupId',
   productId: 'productId',
   extraDonation: 'extraDonation',
+  extraDonationAnonymous: 'extraDonationAnonymous',
   quantity: 'quantity',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typeof CartItemScalarFieldEnum]
+
+
+export const CartDonationCharatiesScalarFieldEnum = {
+  id: 'id',
+  cartItemId: 'cartItemId',
+  charityId: 'charityId',
+  createdAt: 'createdAt'
+} as const
+
+export type CartDonationCharatiesScalarFieldEnum = (typeof CartDonationCharatiesScalarFieldEnum)[keyof typeof CartDonationCharatiesScalarFieldEnum]
 
 
 export const ProductViewScalarFieldEnum = {
@@ -4489,6 +4575,7 @@ export type GlobalOmitConfig = {
   favourite?: Prisma.FavouriteOmit
   cartGroup?: Prisma.CartGroupOmit
   cartItem?: Prisma.CartItemOmit
+  cartDonationCharaties?: Prisma.CartDonationCharatiesOmit
   productView?: Prisma.ProductViewOmit
   question?: Prisma.QuestionOmit
   bundleDiscount?: Prisma.BundleDiscountOmit

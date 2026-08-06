@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
-import { cartServie } from "./cart.service";
+import { cartService } from "./cart.service";
 
 const cartsByUser = catchAsync(async (req: Request, res: Response) => {
-    const result = await cartServie.cartsByUser(req.user?.id);
+    const result = await cartService.cartsByUser(req.user?.id);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -16,7 +16,7 @@ const cartsByUser = catchAsync(async (req: Request, res: Response) => {
 
 const addToCart = catchAsync(async (req: Request, res: Response) => {
 
-    await cartServie.addToCart(req.body);
+    await cartService.addToCart(req.body, req.user?.id);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -25,9 +25,20 @@ const addToCart = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const checkoutItem = catchAsync(async (req: Request, res: Response) => {
+    const cartGroupId = req.params.cartGroupId;
+    const result = await cartService.checkoutItem(cartGroupId, req.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Checkout item retrieved successfully',
+        data: result
+    });
+});
+
 const deleteCartItem = catchAsync(async (req: Request, res: Response) => {
-    const productId = req.params.productId;
-    await cartServie.deleteCartItem(productId, req.user?.id);
+    const itemId = req.params.itemId;
+    await cartService.deleteCartItem(itemId, req.user?.id);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -38,5 +49,6 @@ const deleteCartItem = catchAsync(async (req: Request, res: Response) => {
 export const cartControler = {
     cartsByUser,
     addToCart,
+    checkoutItem,
     deleteCartItem
 }

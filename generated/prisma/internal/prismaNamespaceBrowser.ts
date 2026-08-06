@@ -69,6 +69,7 @@ export const ModelName = {
   Favourite: 'Favourite',
   CartGroup: 'CartGroup',
   CartItem: 'CartItem',
+  CartDonationCharaties: 'CartDonationCharaties',
   ProductView: 'ProductView',
   Question: 'Question',
   BundleDiscount: 'BundleDiscount',
@@ -412,12 +413,23 @@ export const CartItemScalarFieldEnum = {
   groupId: 'groupId',
   productId: 'productId',
   extraDonation: 'extraDonation',
+  extraDonationAnonymous: 'extraDonationAnonymous',
   quantity: 'quantity',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typeof CartItemScalarFieldEnum]
+
+
+export const CartDonationCharatiesScalarFieldEnum = {
+  id: 'id',
+  cartItemId: 'cartItemId',
+  charityId: 'charityId',
+  createdAt: 'createdAt'
+} as const
+
+export type CartDonationCharatiesScalarFieldEnum = (typeof CartDonationCharatiesScalarFieldEnum)[keyof typeof CartDonationCharatiesScalarFieldEnum]
 
 
 export const ProductViewScalarFieldEnum = {
