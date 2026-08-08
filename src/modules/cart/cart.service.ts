@@ -35,6 +35,16 @@ const cartsByUser = async (userId: string) => {
                         select: {
                             url: true
                         }
+                    },
+                    bundleDiscount: {
+                        include: {
+                            tiers: {
+                                select: {
+                                    itemCount: true,
+                                    discountPercent: true
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -71,17 +81,130 @@ const checkoutItem = async (cartGroupId: string, userId: string) => {
                         select: {
                             url: true
                         }
-                    }
+                    },
                 }
             },
         }
     });
 
-    if(!carts) {
-        throw new AppError(httpStatus.NOT_FOUND, "Cart not found");
+    if (!carts) {
+        throw new AppError(httpStatus.NOT_FOUND, "Cart does not exist");
     }
 
     return carts;
+}
+
+const checkoutSummary = async (cartGroupId: string, userId: string) => {
+
+    const cart = await prisma.cartGroup.findFirst({
+        where: { id: cartGroupId, userId },
+        include: {
+            items: {
+                include: {
+                    product: {
+                        select: {
+                            finalPrice: true,
+                        }
+                    }
+                }
+            },
+            seller: {
+                include: {
+                    bundleDiscount: {
+                        include: {
+                            tiers: true
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    if (!cart) {
+        throw new AppError(httpStatus.NOT_FOUND, "Cart does not exist");
+    }
+
+    const itemCount = cart.items.length;
+
+    const bundleDiscountTiers = cart?.seller?.bundleDiscount?.tiers || [];
+
+    const nearestTier = bundleDiscountTiers
+        .filter(tier => itemCount >= (tier.itemCount ?? 0))
+        .sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0))[0] ?? null;
+
+    const bundleDiscountPercent = nearestTier ? nearestTier.discountPercent : 0;
+
+    const itemTotal = cart.items.reduce((acc, item) => acc + item.product.finalPrice, 0);
+    const totalExtraDonation = cart.items.reduce((acc, item) => acc + (item.extraDonation || 0), 0);
+    const otherTotal = (cart.serviceFeeCost || 0) + (cart.treeGiftCost || 0) + (cart.authenticationCost || 0);
+
+    const bundleDiscountAmount = Math.round(itemTotal * (bundleDiscountPercent / 100));
+    const discountedItemTotal = itemTotal - bundleDiscountAmount;
+
+    const total = Math.round(discountedItemTotal + otherTotal + totalExtraDonation);
+
+    return {
+        itemTotal: itemTotal,
+        otherTotal,
+        total,
+        serviceFeeCost: cart.serviceFeeCost,
+        treeGiftCost: cart.treeGiftCost,
+        authenticationCost: cart.authenticationCost,
+        bundleDiscountPercent,
+        bundleDiscountAmount,
+        totalExtraDonation
+    };
+}
+
+const addTreeGiftCost = async (payload: { cartGroupId: string, treeGiftCount: number }, userId: string) => {
+    const { cartGroupId, treeGiftCount } = payload;
+    const cart = await prisma.cartGroup.findFirst({
+        where: { id: cartGroupId, userId },
+    });
+
+    if (!cart) {
+        throw new AppError(httpStatus.NOT_FOUND, "Cart does not exist");
+    }
+
+    const updatedCart = await prisma.cartGroup.update({
+        where: { id: cartGroupId },
+        data: { treeGiftCost: treeGiftCount * 4 } // Assuming each tree gift costs $4
+    });
+
+    return updatedCart;
+}
+
+const addAuthenticationCost = async (payload: { cartGroupId: string, allowAuthentication: boolean }, userId: string) => {
+
+    const { cartGroupId, allowAuthentication } = payload;
+
+    const cart = await prisma.cartGroup.findFirst({
+        where: { id: cartGroupId, userId },
+        include: {
+            _count: {
+                select: {
+                    items: true
+                }
+            }
+        }
+    });
+
+    if (!cart) {
+        throw new AppError(httpStatus.NOT_FOUND, "Cart does not exist");
+    }
+
+    const itemsLength = cart?._count?.items || 0;
+
+    const authenticationFee = itemsLength < 3 ? (itemsLength * 15) : 35;
+
+    const updatedCart = await prisma.cartGroup.update({
+        where: { id: cartGroupId },
+        data: {
+            authenticationCost: allowAuthentication ? authenticationFee : 0
+        }
+    });
+
+    return updatedCart;
 }
 
 const addToCart = async (payload: { productId: string, quantity: number, extraDonation: number, extraDonationAnonymous: boolean, charities: { charityId: string }[] }, userId: string) => {
@@ -161,6 +284,9 @@ const deleteCartItem = async (itemId: string, userId: string) => {
 export const cartService = {
     cartsByUser,
     checkoutItem,
+    checkoutSummary,
     addToCart,
+    addTreeGiftCost,
+    addAuthenticationCost,
     deleteCartItem
 }

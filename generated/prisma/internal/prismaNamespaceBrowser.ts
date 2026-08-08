@@ -401,6 +401,10 @@ export const CartGroupScalarFieldEnum = {
   id: 'id',
   sellerId: 'sellerId',
   userId: 'userId',
+  treeGiftCost: 'treeGiftCost',
+  authenticationCost: 'authenticationCost',
+  serviceFeeCost: 'serviceFeeCost',
+  shippingServiceId: 'shippingServiceId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -19,14 +19,32 @@ export type CartGroupModel = runtime.Types.Result.DefaultSelection<Prisma.$CartG
 
 export type AggregateCartGroup = {
   _count: CartGroupCountAggregateOutputType | null
+  _avg: CartGroupAvgAggregateOutputType | null
+  _sum: CartGroupSumAggregateOutputType | null
   _min: CartGroupMinAggregateOutputType | null
   _max: CartGroupMaxAggregateOutputType | null
+}
+
+export type CartGroupAvgAggregateOutputType = {
+  treeGiftCost: number | null
+  authenticationCost: number | null
+  serviceFeeCost: number | null
+}
+
+export type CartGroupSumAggregateOutputType = {
+  treeGiftCost: number | null
+  authenticationCost: number | null
+  serviceFeeCost: number | null
 }
 
 export type CartGroupMinAggregateOutputType = {
   id: string | null
   sellerId: string | null
   userId: string | null
+  treeGiftCost: number | null
+  authenticationCost: number | null
+  serviceFeeCost: number | null
+  shippingServiceId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -35,6 +53,10 @@ export type CartGroupMaxAggregateOutputType = {
   id: string | null
   sellerId: string | null
   userId: string | null
+  treeGiftCost: number | null
+  authenticationCost: number | null
+  serviceFeeCost: number | null
+  shippingServiceId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -43,16 +65,36 @@ export type CartGroupCountAggregateOutputType = {
   id: number
   sellerId: number
   userId: number
+  treeGiftCost: number
+  authenticationCost: number
+  serviceFeeCost: number
+  shippingServiceId: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
 
+export type CartGroupAvgAggregateInputType = {
+  treeGiftCost?: true
+  authenticationCost?: true
+  serviceFeeCost?: true
+}
+
+export type CartGroupSumAggregateInputType = {
+  treeGiftCost?: true
+  authenticationCost?: true
+  serviceFeeCost?: true
+}
+
 export type CartGroupMinAggregateInputType = {
   id?: true
   sellerId?: true
   userId?: true
+  treeGiftCost?: true
+  authenticationCost?: true
+  serviceFeeCost?: true
+  shippingServiceId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -61,6 +103,10 @@ export type CartGroupMaxAggregateInputType = {
   id?: true
   sellerId?: true
   userId?: true
+  treeGiftCost?: true
+  authenticationCost?: true
+  serviceFeeCost?: true
+  shippingServiceId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -69,6 +115,10 @@ export type CartGroupCountAggregateInputType = {
   id?: true
   sellerId?: true
   userId?: true
+  treeGiftCost?: true
+  authenticationCost?: true
+  serviceFeeCost?: true
+  shippingServiceId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -112,6 +162,18 @@ export type CartGroupAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inte
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: CartGroupAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: CartGroupSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: CartGroupMinAggregateInputType
@@ -142,6 +204,8 @@ export type CartGroupGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   _count?: CartGroupCountAggregateInputType | true
+  _avg?: CartGroupAvgAggregateInputType
+  _sum?: CartGroupSumAggregateInputType
   _min?: CartGroupMinAggregateInputType
   _max?: CartGroupMaxAggregateInputType
 }
@@ -150,9 +214,15 @@ export type CartGroupGroupByOutputType = {
   id: string
   sellerId: string
   userId: string
+  treeGiftCost: number
+  authenticationCost: number
+  serviceFeeCost: number
+  shippingServiceId: string | null
   createdAt: Date
   updatedAt: Date
   _count: CartGroupCountAggregateOutputType | null
+  _avg: CartGroupAvgAggregateOutputType | null
+  _sum: CartGroupSumAggregateOutputType | null
   _min: CartGroupMinAggregateOutputType | null
   _max: CartGroupMaxAggregateOutputType | null
 }
@@ -179,6 +249,10 @@ export type CartGroupWhereInput = {
   id?: Prisma.StringFilter<"CartGroup"> | string
   sellerId?: Prisma.StringFilter<"CartGroup"> | string
   userId?: Prisma.StringFilter<"CartGroup"> | string
+  treeGiftCost?: Prisma.FloatFilter<"CartGroup"> | number
+  authenticationCost?: Prisma.FloatFilter<"CartGroup"> | number
+  serviceFeeCost?: Prisma.FloatFilter<"CartGroup"> | number
+  shippingServiceId?: Prisma.StringNullableFilter<"CartGroup"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CartGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CartGroup"> | Date | string
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -190,6 +264,10 @@ export type CartGroupOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  treeGiftCost?: Prisma.SortOrder
+  authenticationCost?: Prisma.SortOrder
+  serviceFeeCost?: Prisma.SortOrder
+  shippingServiceId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   seller?: Prisma.UserOrderByWithRelationInput
@@ -204,6 +282,10 @@ export type CartGroupWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CartGroupWhereInput[]
   NOT?: Prisma.CartGroupWhereInput | Prisma.CartGroupWhereInput[]
   userId?: Prisma.StringFilter<"CartGroup"> | string
+  treeGiftCost?: Prisma.FloatFilter<"CartGroup"> | number
+  authenticationCost?: Prisma.FloatFilter<"CartGroup"> | number
+  serviceFeeCost?: Prisma.FloatFilter<"CartGroup"> | number
+  shippingServiceId?: Prisma.StringNullableFilter<"CartGroup"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CartGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CartGroup"> | Date | string
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -215,11 +297,17 @@ export type CartGroupOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  treeGiftCost?: Prisma.SortOrder
+  authenticationCost?: Prisma.SortOrder
+  serviceFeeCost?: Prisma.SortOrder
+  shippingServiceId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CartGroupCountOrderByAggregateInput
+  _avg?: Prisma.CartGroupAvgOrderByAggregateInput
   _max?: Prisma.CartGroupMaxOrderByAggregateInput
   _min?: Prisma.CartGroupMinOrderByAggregateInput
+  _sum?: Prisma.CartGroupSumOrderByAggregateInput
 }
 
 export type CartGroupScalarWhereWithAggregatesInput = {
@@ -229,12 +317,20 @@ export type CartGroupScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"CartGroup"> | string
   sellerId?: Prisma.StringWithAggregatesFilter<"CartGroup"> | string
   userId?: Prisma.StringWithAggregatesFilter<"CartGroup"> | string
+  treeGiftCost?: Prisma.FloatWithAggregatesFilter<"CartGroup"> | number
+  authenticationCost?: Prisma.FloatWithAggregatesFilter<"CartGroup"> | number
+  serviceFeeCost?: Prisma.FloatWithAggregatesFilter<"CartGroup"> | number
+  shippingServiceId?: Prisma.StringNullableWithAggregatesFilter<"CartGroup"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CartGroup"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CartGroup"> | Date | string
 }
 
 export type CartGroupCreateInput = {
   id?: string
+  treeGiftCost?: number
+  authenticationCost?: number
+  serviceFeeCost?: number
+  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   seller: Prisma.UserCreateNestedOneWithoutSellerGroupCartsInput
@@ -246,6 +342,10 @@ export type CartGroupUncheckedCreateInput = {
   id?: string
   sellerId: string
   userId: string
+  treeGiftCost?: number
+  authenticationCost?: number
+  serviceFeeCost?: number
+  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CartItemUncheckedCreateNestedManyWithoutGroupInput
@@ -253,6 +353,10 @@ export type CartGroupUncheckedCreateInput = {
 
 export type CartGroupUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seller?: Prisma.UserUpdateOneRequiredWithoutSellerGroupCartsNestedInput
@@ -264,6 +368,10 @@ export type CartGroupUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUncheckedUpdateManyWithoutGroupNestedInput
@@ -273,12 +381,20 @@ export type CartGroupCreateManyInput = {
   id?: string
   sellerId: string
   userId: string
+  treeGiftCost?: number
+  authenticationCost?: number
+  serviceFeeCost?: number
+  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CartGroupUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -287,6 +403,10 @@ export type CartGroupUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -295,14 +415,28 @@ export type CartGroupCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  treeGiftCost?: Prisma.SortOrder
+  authenticationCost?: Prisma.SortOrder
+  serviceFeeCost?: Prisma.SortOrder
+  shippingServiceId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type CartGroupAvgOrderByAggregateInput = {
+  treeGiftCost?: Prisma.SortOrder
+  authenticationCost?: Prisma.SortOrder
+  serviceFeeCost?: Prisma.SortOrder
 }
 
 export type CartGroupMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  treeGiftCost?: Prisma.SortOrder
+  authenticationCost?: Prisma.SortOrder
+  serviceFeeCost?: Prisma.SortOrder
+  shippingServiceId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -311,8 +445,18 @@ export type CartGroupMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  treeGiftCost?: Prisma.SortOrder
+  authenticationCost?: Prisma.SortOrder
+  serviceFeeCost?: Prisma.SortOrder
+  shippingServiceId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type CartGroupSumOrderByAggregateInput = {
+  treeGiftCost?: Prisma.SortOrder
+  authenticationCost?: Prisma.SortOrder
+  serviceFeeCost?: Prisma.SortOrder
 }
 
 export type CartGroupScalarRelationFilter = {
@@ -430,6 +574,10 @@ export type CartGroupUncheckedUpdateManyWithoutSellerNestedInput = {
 
 export type CartGroupCreateWithoutItemsInput = {
   id?: string
+  treeGiftCost?: number
+  authenticationCost?: number
+  serviceFeeCost?: number
+  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   seller: Prisma.UserCreateNestedOneWithoutSellerGroupCartsInput
@@ -440,6 +588,10 @@ export type CartGroupUncheckedCreateWithoutItemsInput = {
   id?: string
   sellerId: string
   userId: string
+  treeGiftCost?: number
+  authenticationCost?: number
+  serviceFeeCost?: number
+  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -462,6 +614,10 @@ export type CartGroupUpdateToOneWithWhereWithoutItemsInput = {
 
 export type CartGroupUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seller?: Prisma.UserUpdateOneRequiredWithoutSellerGroupCartsNestedInput
@@ -472,12 +628,20 @@ export type CartGroupUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CartGroupCreateWithoutUserInput = {
   id?: string
+  treeGiftCost?: number
+  authenticationCost?: number
+  serviceFeeCost?: number
+  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   seller: Prisma.UserCreateNestedOneWithoutSellerGroupCartsInput
@@ -487,6 +651,10 @@ export type CartGroupCreateWithoutUserInput = {
 export type CartGroupUncheckedCreateWithoutUserInput = {
   id?: string
   sellerId: string
+  treeGiftCost?: number
+  authenticationCost?: number
+  serviceFeeCost?: number
+  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CartItemUncheckedCreateNestedManyWithoutGroupInput
@@ -504,6 +672,10 @@ export type CartGroupCreateManyUserInputEnvelope = {
 
 export type CartGroupCreateWithoutSellerInput = {
   id?: string
+  treeGiftCost?: number
+  authenticationCost?: number
+  serviceFeeCost?: number
+  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCartsInput
@@ -513,6 +685,10 @@ export type CartGroupCreateWithoutSellerInput = {
 export type CartGroupUncheckedCreateWithoutSellerInput = {
   id?: string
   userId: string
+  treeGiftCost?: number
+  authenticationCost?: number
+  serviceFeeCost?: number
+  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CartItemUncheckedCreateNestedManyWithoutGroupInput
@@ -551,6 +727,10 @@ export type CartGroupScalarWhereInput = {
   id?: Prisma.StringFilter<"CartGroup"> | string
   sellerId?: Prisma.StringFilter<"CartGroup"> | string
   userId?: Prisma.StringFilter<"CartGroup"> | string
+  treeGiftCost?: Prisma.FloatFilter<"CartGroup"> | number
+  authenticationCost?: Prisma.FloatFilter<"CartGroup"> | number
+  serviceFeeCost?: Prisma.FloatFilter<"CartGroup"> | number
+  shippingServiceId?: Prisma.StringNullableFilter<"CartGroup"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CartGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CartGroup"> | Date | string
 }
@@ -574,6 +754,10 @@ export type CartGroupUpdateManyWithWhereWithoutSellerInput = {
 export type CartGroupCreateManyUserInput = {
   id?: string
   sellerId: string
+  treeGiftCost?: number
+  authenticationCost?: number
+  serviceFeeCost?: number
+  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -581,12 +765,20 @@ export type CartGroupCreateManyUserInput = {
 export type CartGroupCreateManySellerInput = {
   id?: string
   userId: string
+  treeGiftCost?: number
+  authenticationCost?: number
+  serviceFeeCost?: number
+  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CartGroupUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seller?: Prisma.UserUpdateOneRequiredWithoutSellerGroupCartsNestedInput
@@ -596,6 +788,10 @@ export type CartGroupUpdateWithoutUserInput = {
 export type CartGroupUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUncheckedUpdateManyWithoutGroupNestedInput
@@ -604,12 +800,20 @@ export type CartGroupUncheckedUpdateWithoutUserInput = {
 export type CartGroupUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CartGroupUpdateWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
@@ -619,6 +823,10 @@ export type CartGroupUpdateWithoutSellerInput = {
 export type CartGroupUncheckedUpdateWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUncheckedUpdateManyWithoutGroupNestedInput
@@ -627,6 +835,10 @@ export type CartGroupUncheckedUpdateWithoutSellerInput = {
 export type CartGroupUncheckedUpdateManyWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -666,6 +878,10 @@ export type CartGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   id?: boolean
   sellerId?: boolean
   userId?: boolean
+  treeGiftCost?: boolean
+  authenticationCost?: boolean
+  serviceFeeCost?: boolean
+  shippingServiceId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -678,6 +894,10 @@ export type CartGroupSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   sellerId?: boolean
   userId?: boolean
+  treeGiftCost?: boolean
+  authenticationCost?: boolean
+  serviceFeeCost?: boolean
+  shippingServiceId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -688,6 +908,10 @@ export type CartGroupSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   sellerId?: boolean
   userId?: boolean
+  treeGiftCost?: boolean
+  authenticationCost?: boolean
+  serviceFeeCost?: boolean
+  shippingServiceId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -698,11 +922,15 @@ export type CartGroupSelectScalar = {
   id?: boolean
   sellerId?: boolean
   userId?: boolean
+  treeGiftCost?: boolean
+  authenticationCost?: boolean
+  serviceFeeCost?: boolean
+  shippingServiceId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CartGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sellerId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["cartGroup"]>
+export type CartGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sellerId" | "userId" | "treeGiftCost" | "authenticationCost" | "serviceFeeCost" | "shippingServiceId" | "createdAt" | "updatedAt", ExtArgs["result"]["cartGroup"]>
 export type CartGroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -729,6 +957,10 @@ export type $CartGroupPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     id: string
     sellerId: string
     userId: string
+    treeGiftCost: number
+    authenticationCost: number
+    serviceFeeCost: number
+    shippingServiceId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["cartGroup"]>
@@ -1160,6 +1392,10 @@ export interface CartGroupFieldRefs {
   readonly id: Prisma.FieldRef<"CartGroup", 'String'>
   readonly sellerId: Prisma.FieldRef<"CartGroup", 'String'>
   readonly userId: Prisma.FieldRef<"CartGroup", 'String'>
+  readonly treeGiftCost: Prisma.FieldRef<"CartGroup", 'Float'>
+  readonly authenticationCost: Prisma.FieldRef<"CartGroup", 'Float'>
+  readonly serviceFeeCost: Prisma.FieldRef<"CartGroup", 'Float'>
+  readonly shippingServiceId: Prisma.FieldRef<"CartGroup", 'String'>
   readonly createdAt: Prisma.FieldRef<"CartGroup", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CartGroup", 'DateTime'>
 }

@@ -27,3 +27,26 @@ export const validateCartAdd = [
     .exists({ checkFalsy: true }).withMessage('charityId is required')
     .isUUID().withMessage('charityId must be a UUID'),
 ];
+
+export const validateCartCheckoutTreeGift = [
+  body('cartGroupId')
+    .exists({ checkFalsy: true }).withMessage('cartGroupId is required')
+    .isUUID().withMessage('cartGroupId must be a UUID'),
+
+  body('treeGiftCount')
+    .trim()
+    .notEmpty().withMessage("treeGiftCount is required")
+    .isInt({ min: 0 }).withMessage('treeGiftCount must be a non-negative integer')
+    .toInt(),
+];
+
+export const validateCartCheckoutAuthentication = [
+  body('cartGroupId')
+    .exists({ checkFalsy: true }).withMessage('cartGroupId is required')
+    .isUUID().withMessage('cartGroupId must be a UUID'),
+
+  body('allowAuthentication')
+    .exists().withMessage('allowAuthentication is required')
+    .isBoolean().withMessage('allowAuthentication must be a boolean')
+    .toBoolean(),
+];

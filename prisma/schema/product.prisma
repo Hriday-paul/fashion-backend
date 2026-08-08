@@ -108,6 +108,11 @@ model CartGroup {
 
     items CartItem[]
 
+    treeGiftCost Float @default(0)
+    authenticationCost Float @default(0)
+    serviceFeeCost Float @default(2.30)
+    shippingServiceId String?
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 

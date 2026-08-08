@@ -36,6 +36,42 @@ const checkoutItem = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const checkoutSummary = catchAsync(async (req: Request, res: Response) => {
+    const cartGroupId = req.params.cartGroupId;
+    const result = await cartService.checkoutSummary(cartGroupId, req.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Checkout summary retrieved successfully',
+        data: result
+    });
+});
+
+const addTreeGiftCost = catchAsync(async (req: Request, res: Response) => {
+
+    await cartService.addTreeGiftCost(req.body, req.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Tree gift cost updated successfully',
+    });
+});
+
+const addAuthenticationCost = catchAsync(async (req: Request, res: Response) => {
+    const cartGroupId = req.body.cartGroupId;
+    const allowAuthentication = req.body.allowAuthentication;
+
+    await cartService.addAuthenticationCost({ cartGroupId, allowAuthentication }, req.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Authentication cost updated successfully',
+    });
+});
+
 const deleteCartItem = catchAsync(async (req: Request, res: Response) => {
     const itemId = req.params.itemId;
     await cartService.deleteCartItem(itemId, req.user?.id);
@@ -50,5 +86,8 @@ export const cartControler = {
     cartsByUser,
     addToCart,
     checkoutItem,
+    checkoutSummary,
+    addTreeGiftCost,
+    addAuthenticationCost,
     deleteCartItem
 }

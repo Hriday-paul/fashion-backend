@@ -5,7 +5,7 @@ import { allRoles } from "../user/user.rout";
 
 import req_validator from "../../middleware/req_validation";
 import { cartControler } from "./cart.controler";
-import { validateCartAdd } from "./cart.validator";
+import { validateCartAdd, validateCartCheckoutAuthentication, validateCartCheckoutTreeGift } from "./cart.validator";
 import { Role } from "../../../generated/prisma/enums";
 
 const router = Router();
@@ -27,5 +27,14 @@ router.post("/",
 router.delete("/:itemId",
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     cartControler.deleteCartItem);
+
+router.get("/checkout/:cartGroupId/summary", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.checkoutSummary);
+
+router.put("/checkout/tree-gift-cost", validateCartCheckoutTreeGift, req_validator(), auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.addTreeGiftCost);
+
+router.put("/checkout/authentication-cost",
+    validateCartCheckoutAuthentication,
+    req_validator(),
+    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.addAuthenticationCost);
 
 export const cartRouts = router;
