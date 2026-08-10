@@ -30,6 +30,8 @@ router.delete("/:itemId",
 
 router.get("/checkout/:cartGroupId/summary", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.checkoutSummary);
 
+router.get("/checkout/:cartGroupId/shipping-rates", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.availableRates);
+
 router.put("/checkout/tree-gift-cost", validateCartCheckoutTreeGift, req_validator(), auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.addTreeGiftCost);
 
 router.put("/checkout/authentication-cost",

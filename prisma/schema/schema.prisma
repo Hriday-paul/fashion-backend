@@ -176,6 +176,7 @@ model BillingDetails {
   userId    String? @unique
   user      User?   @relation(fields: [userId], references: [id], onDelete: Cascade) // for set on default to user
   country   String
+  countryCode String @default("US")
   full_name String? //user name
   address1  String
   address2  String?

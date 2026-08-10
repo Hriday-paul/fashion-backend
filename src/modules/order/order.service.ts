@@ -1,18 +1,73 @@
 import { CancelOrderEvidence } from "../../../generated/prisma/browser";
-import { CancelReason, Order, OrderItem, OrderStatus, Prisma } from "../../../generated/prisma/client";
+import { CancelReason, Order, OrderStatus, Prisma } from "../../../generated/prisma/client";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import { DistributePaymentQueue } from "../../queues/payment.queue";
 import prisma from "../../shared/prisma";
 import httpStatus from "http-status"
 
-interface PayloadItem extends OrderItem {
-    extra_donation: number,
-    charities: string[]
-}
 
-const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId: string): Promise<Order> => {
-    const { products, treeCredit } = payload;
+const addNewOrder = async (
+    // payload: Order & { products: PayloadItem[] },
+    payload: { cartGroupId: string },
+    userId: string
+): Promise<Order> => {
+
+    const cartgroup = await prisma.cartGroup.findFirst({
+        where: {
+            id: payload.cartGroupId,
+            userId
+        },
+        include: {
+            items: {
+                include: {
+                    charities: true,
+                    product: {
+                        select: {
+                            title: true,
+                            finalPrice: true,
+                            id: true,
+                            charities: {
+                                select: {
+                                    charityId: true,
+                                    isAnonymous: true,
+                                },
+                            },
+                            userId: true, // sellerId
+                            donation_percent: true,
+                            stock: true
+                        }
+                    }
+                },
+
+            },
+            seller: {
+                include: {
+                    bundleDiscount: {
+                        include: {
+                            tiers: {
+                                select: {
+                                    discountPercent: true,
+                                    itemCount: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    })
+
+    if (!cartgroup) {
+        throw new AppError(httpStatus.NOT_FOUND, "Checkout cart does not exist")
+    }
+
+    //check cart owner is the current user
+    if (cartgroup.userId !== userId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the owner of this cart")
+    }
+
+    const treeCredit = cartgroup?.treeGiftCost;
 
     const billing_details = await prisma.billingDetails.findFirst({ where: { userId } });
 
@@ -20,112 +75,107 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
         throw new AppError(httpStatus.NOT_FOUND, "Billing details is required")
     }
 
-    // Fetch prices
-    const prod_prices = await prisma.product.findMany({
-        where: {
-            id: {
-                in: products?.map(p => p?.productId)
-            }
-        },
-        select: {
-            finalPrice: true,
-            id: true,
-            charities: {
-                select: {
-                    charityId: true,
-                    isAnonymous: true,
-                },
-            },
-            userId: true, // sellerId
-            donation_percent: true
+
+    //Validate cart products' charities belong to the product
+    for (const payloadItem of cartgroup.items) {
+        const dbProduct = payloadItem?.product;
+
+        // Validate all products have enough stock
+        if (dbProduct.stock < payloadItem.quantity) {
+            throw new AppError(httpStatus.BAD_REQUEST,
+                dbProduct.stock === 0
+                    ? `${payloadItem.product?.title} is out of stock`
+                    : `Only ${dbProduct.stock} unit(s) of "${payloadItem.product?.title}" left in stock`
+            );
         }
-    })
-
-    // Validate all products exist
-    if (prod_prices.length !== products.length) {
-        const foundIds = prod_prices.map((p) => p.id);
-        const missingIds = products
-            .filter((p) => !foundIds.includes(p.productId))
-            .map((p) => p.productId);
-
-        throw new AppError(httpStatus.NOT_FOUND, `Products not found: ${missingIds.join(', ')}`);
-    }
-
-    //Validate charities belong to the product
-    for (const payloadItem of products) {
-        const dbProduct = prod_prices.find((p) => p.id === payloadItem.productId)!;
 
         const allowedCharityIds = dbProduct.charities.map((c) => c.charityId);
 
         if (!allowedCharityIds.length) continue;
 
         // ✅ At least 1 charity required if have At least 1 charity to the product
-        if (!payloadItem.charities?.length) {
+        if (payloadItem.charities?.length === 0 && dbProduct.donation_percent > 0) {
             throw new AppError(httpStatus.BAD_REQUEST,
-                `At least one charity is required for product ${payloadItem.productId}`
+                `At least one charity is required for ${payloadItem?.product?.title}`
             );
         }
 
         // ✅ All provided charities must exist in the product
         const invalidCharities = payloadItem.charities.filter(
-            (id) => !allowedCharityIds.includes(id)
+            (charity) => !allowedCharityIds.includes(charity?.charityId)
         );
 
         if (invalidCharities.length > 0) {
             throw new AppError(httpStatus.BAD_REQUEST,
-                `Invalid charities [${invalidCharities.join(', ')}] for product ${payloadItem.productId}`
+                `Invalid charities [${invalidCharities.join(', ')}] for product ${payloadItem?.product?.title}`
             );
         }
     }
 
-    // ✅ Validate all products belong to the same seller
-    const sellerIds = [...new Set(prod_prices.map((p) => p.userId))];
-
-    if (sellerIds.length > 1) {
-        throw new AppError(httpStatus.BAD_REQUEST,
-            `All products in an order must belong to the same seller`
-        );
-    }
-
     // Build order items with seller info
-    const orderItems = prod_prices.map((p) => {
-        const product = products.find((i) => i.productId === p.id)!;
-        const total_price = p.finalPrice * (product.quantity || 0);
+    const orderItems = cartgroup.items.map((item) => {
+        const p = item?.product;
+        const total_price = p.finalPrice * (item.quantity || 0);
         const donation_percent = p.donation_percent || 0;
-        const extra_donation = product.extra_donation ?? 0;
+        const extra_donation = item.extraDonation || 0;
 
-        const quantity = product.quantity || 0;
+        const quantity = item.quantity || 1;
 
         return {
+            product: p,
             productId: p.id,
             sellerId: p.userId,
             unitPrice: p.finalPrice,
             totalPrice: total_price + extra_donation,
             quantity,
             extra_donation,
-            donation_percent,
-            donation_amount: (total_price * (donation_percent / 100)) * quantity, // toatl donation, multiply by quantity
-            charities: product.charities ?? [],
+            donation_percent, // how much percent of the product price will be donated to charity from seller
+            donation_amount: (total_price * (donation_percent / 100)), // how much amount of the product price will be donated to charity from seller
+            charities: item?.charities ?? [],
         };
     });
 
-    // Calculate items total
-    const itemsTotal = orderItems.reduce((sum, item) => sum + item.totalPrice, 0) + Number(treeCredit || 0);
+    const itemCount = cartgroup.items.length;
+
+    const bundleDiscountTiers = cartgroup?.seller?.bundleDiscount?.tiers || [];
+
+    const nearestTier = bundleDiscountTiers
+        .filter(tier => itemCount >= (tier.itemCount ?? 0))
+        .sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0))[0] ?? null;
+
+    const bundleDiscountPercent = nearestTier ? nearestTier.discountPercent : 0;
+
+
+    const itemsTotal = orderItems.reduce((acc, item) => acc + item.unitPrice, 0);
+    const totalExtraDonation = orderItems.reduce((acc, item) => acc + (item.extra_donation || 0), 0);
+    const otherTotal = (cartgroup.serviceFeeCost || 0) + (cartgroup.treeGiftCost || 0) + (cartgroup.authenticationCost || 0);
+
+    const bundleDiscountAmount = itemsTotal * (bundleDiscountPercent / 100);
+    const discountedItemTotal = itemsTotal - bundleDiscountAmount;
+
+    const total = discountedItemTotal + otherTotal + totalExtraDonation;
+
+    const sellerItemsTotal = orderItems.reduce((acc, item) => (acc + item.unitPrice) - item?.donation_amount, 0);
+
+    const sellerTotal = sellerItemsTotal - bundleDiscountAmount;
 
     const result = await prisma.order.create({
         data: {
-            totalPrice: itemsTotal,
+            totalPrice: total,
+            itemsTotal: discountedItemTotal,
             treeCredit: treeCredit ?? 0,
             buyerId: userId,
             billingId: billing_details?.id,
             sellerId: orderItems[0]?.sellerId,
+            sellerItemsTotal,
+            sellerTotal,
             items: {
-                create: orderItems.map(({ charities, sellerId, ...item }) => {
+                create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, ...item }) => {
                     const charityCount = charities.length;
-                    const splitAmount = charityCount > 0 ? item.donation_amount / charityCount : 0;
-                    const splitExtra = charityCount > 0 ? item.extra_donation / charityCount : 0;
+                    const splitAmount = charityCount > 0 ? (donation_amount / charityCount) : 0;
+                    const splitExtra = charityCount > 0 ? (item.extra_donation / charityCount) : 0;
 
-                    const dbProduct = prod_prices.find((p) => p.id === item.productId)!;
+                    const dbProduct = product;
 
                     const splitPercent = charityCount > 0 ? 100 / charityCount : 0;
 
@@ -133,19 +183,20 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
                         ...item,
                         ...(charityCount > 0 && {
                             donations: {
-                                create: charities.map((charityId) => {
+                                create: charities.map((charity) => {
+
                                     const productCharity = dbProduct.charities.find(
-                                        (c) => c.charityId === charityId
+                                        (c) => c.charityId === charity?.charityId
                                     )!;
 
                                     return {
-                                        charityId,
+                                        charityId: charity?.charityId,
                                         amount: splitAmount,
                                         percent: splitPercent,
                                         extra_money: splitExtra,
                                         total_amount: splitAmount + splitExtra,
                                         status: 'PENDING',
-                                        isAnonymous: productCharity.isAnonymous,
+                                        isAnonymous: productCharity?.isAnonymous,
                                     };
                                 }),
                             },
@@ -155,7 +206,6 @@ const addNewOrder = async (payload: Order & { products: PayloadItem[] }, userId:
             },
         },
     });
-
 
     return result;
 

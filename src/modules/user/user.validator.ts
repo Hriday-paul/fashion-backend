@@ -13,6 +13,12 @@ export const validateBillingDetails = [
     .isLength({ min: 2, max: 100 })
     .withMessage('country must be between 2 and 100 characters'),
 
+  body('countryCode')
+    .notEmpty()
+    .withMessage('country code is required')
+    .isISO31661Alpha2()
+    .withMessage('Must be a valid 2-letter ISO country code'),
+
   body('full_name')
     .optional()
     .isString()

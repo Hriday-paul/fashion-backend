@@ -82,7 +82,7 @@ router.get(
     userController.allCharies,
 );
 
-//------Billing details--------
+//------shipping details--------
 router.put(
     '/billing-details',
     validateBillingDetails,

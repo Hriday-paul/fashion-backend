@@ -29,6 +29,7 @@ export type ProductAvgAggregateOutputType = {
   price: number | null
   discountPct: number | null
   finalPrice: number | null
+  stock: number | null
   return_window: number | null
   donation_percent: number | null
 }
@@ -37,6 +38,7 @@ export type ProductSumAggregateOutputType = {
   price: number | null
   discountPct: number | null
   finalPrice: number | null
+  stock: number | null
   return_window: number | null
   donation_percent: number | null
 }
@@ -54,6 +56,7 @@ export type ProductMinAggregateOutputType = {
   categoryId: string | null
   condition: string | null
   color: string | null
+  stock: number | null
   allow_offer: boolean | null
   return_window: number | null
   donation_percent: number | null
@@ -76,6 +79,7 @@ export type ProductMaxAggregateOutputType = {
   categoryId: string | null
   condition: string | null
   color: string | null
+  stock: number | null
   allow_offer: boolean | null
   return_window: number | null
   donation_percent: number | null
@@ -102,6 +106,7 @@ export type ProductCountAggregateOutputType = {
   meterials: number
   color: number
   care_instructions: number
+  stock: number
   allow_offer: number
   return_window: number
   donation_percent: number
@@ -117,6 +122,7 @@ export type ProductAvgAggregateInputType = {
   price?: true
   discountPct?: true
   finalPrice?: true
+  stock?: true
   return_window?: true
   donation_percent?: true
 }
@@ -125,6 +131,7 @@ export type ProductSumAggregateInputType = {
   price?: true
   discountPct?: true
   finalPrice?: true
+  stock?: true
   return_window?: true
   donation_percent?: true
 }
@@ -142,6 +149,7 @@ export type ProductMinAggregateInputType = {
   categoryId?: true
   condition?: true
   color?: true
+  stock?: true
   allow_offer?: true
   return_window?: true
   donation_percent?: true
@@ -164,6 +172,7 @@ export type ProductMaxAggregateInputType = {
   categoryId?: true
   condition?: true
   color?: true
+  stock?: true
   allow_offer?: true
   return_window?: true
   donation_percent?: true
@@ -190,6 +199,7 @@ export type ProductCountAggregateInputType = {
   meterials?: true
   color?: true
   care_instructions?: true
+  stock?: true
   allow_offer?: true
   return_window?: true
   donation_percent?: true
@@ -303,6 +313,7 @@ export type ProductGroupByOutputType = {
   meterials: string[]
   color: string
   care_instructions: string[]
+  stock: number
   allow_offer: boolean
   return_window: number
   donation_percent: number
@@ -352,6 +363,7 @@ export type ProductWhereInput = {
   meterials?: Prisma.StringNullableListFilter<"Product">
   color?: Prisma.StringFilter<"Product"> | string
   care_instructions?: Prisma.StringNullableListFilter<"Product">
+  stock?: Prisma.IntFilter<"Product"> | number
   allow_offer?: Prisma.BoolFilter<"Product"> | boolean
   return_window?: Prisma.IntFilter<"Product"> | number
   donation_percent?: Prisma.FloatFilter<"Product"> | number
@@ -389,6 +401,7 @@ export type ProductOrderByWithRelationInput = {
   meterials?: Prisma.SortOrder
   color?: Prisma.SortOrder
   care_instructions?: Prisma.SortOrder
+  stock?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
@@ -429,6 +442,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   meterials?: Prisma.StringNullableListFilter<"Product">
   color?: Prisma.StringFilter<"Product"> | string
   care_instructions?: Prisma.StringNullableListFilter<"Product">
+  stock?: Prisma.IntFilter<"Product"> | number
   allow_offer?: Prisma.BoolFilter<"Product"> | boolean
   return_window?: Prisma.IntFilter<"Product"> | number
   donation_percent?: Prisma.FloatFilter<"Product"> | number
@@ -466,6 +480,7 @@ export type ProductOrderByWithAggregationInput = {
   meterials?: Prisma.SortOrder
   color?: Prisma.SortOrder
   care_instructions?: Prisma.SortOrder
+  stock?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
@@ -500,6 +515,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   meterials?: Prisma.StringNullableListFilter<"Product">
   color?: Prisma.StringWithAggregatesFilter<"Product"> | string
   care_instructions?: Prisma.StringNullableListFilter<"Product">
+  stock?: Prisma.IntWithAggregatesFilter<"Product"> | number
   allow_offer?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   return_window?: Prisma.IntWithAggregatesFilter<"Product"> | number
   donation_percent?: Prisma.FloatWithAggregatesFilter<"Product"> | number
@@ -523,6 +539,7 @@ export type ProductCreateInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -559,6 +576,7 @@ export type ProductUncheckedCreateInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -589,6 +607,7 @@ export type ProductUpdateInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -625,6 +644,7 @@ export type ProductUncheckedUpdateInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -658,6 +678,7 @@ export type ProductCreateManyInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -681,6 +702,7 @@ export type ProductUpdateManyMutationInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -706,6 +728,7 @@ export type ProductUncheckedUpdateManyInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -747,6 +770,7 @@ export type ProductCountOrderByAggregateInput = {
   meterials?: Prisma.SortOrder
   color?: Prisma.SortOrder
   care_instructions?: Prisma.SortOrder
+  stock?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
@@ -760,6 +784,7 @@ export type ProductAvgOrderByAggregateInput = {
   price?: Prisma.SortOrder
   discountPct?: Prisma.SortOrder
   finalPrice?: Prisma.SortOrder
+  stock?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
 }
@@ -777,6 +802,7 @@ export type ProductMaxOrderByAggregateInput = {
   categoryId?: Prisma.SortOrder
   condition?: Prisma.SortOrder
   color?: Prisma.SortOrder
+  stock?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
@@ -799,6 +825,7 @@ export type ProductMinOrderByAggregateInput = {
   categoryId?: Prisma.SortOrder
   condition?: Prisma.SortOrder
   color?: Prisma.SortOrder
+  stock?: Prisma.SortOrder
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
@@ -812,6 +839,7 @@ export type ProductSumOrderByAggregateInput = {
   price?: Prisma.SortOrder
   discountPct?: Prisma.SortOrder
   finalPrice?: Prisma.SortOrder
+  stock?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
 }
@@ -1132,6 +1160,7 @@ export type ProductCreateWithoutCategoryInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1166,6 +1195,7 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1228,6 +1258,7 @@ export type ProductScalarWhereInput = {
   meterials?: Prisma.StringNullableListFilter<"Product">
   color?: Prisma.StringFilter<"Product"> | string
   care_instructions?: Prisma.StringNullableListFilter<"Product">
+  stock?: Prisma.IntFilter<"Product"> | number
   allow_offer?: Prisma.BoolFilter<"Product"> | boolean
   return_window?: Prisma.IntFilter<"Product"> | number
   donation_percent?: Prisma.FloatFilter<"Product"> | number
@@ -1251,6 +1282,7 @@ export type ProductCreateWithoutBrandInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1285,6 +1317,7 @@ export type ProductUncheckedCreateWithoutBrandInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1341,6 +1374,7 @@ export type ProductCreateWithoutSizeInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1375,6 +1409,7 @@ export type ProductUncheckedCreateWithoutSizeInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1431,6 +1466,7 @@ export type ProductCreateWithoutOrderItemsInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1466,6 +1502,7 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1511,6 +1548,7 @@ export type ProductUpdateWithoutOrderItemsInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1546,6 +1584,7 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1575,6 +1614,7 @@ export type ProductCreateWithoutImagesInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1610,6 +1650,7 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1655,6 +1696,7 @@ export type ProductUpdateWithoutImagesInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1690,6 +1732,7 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1719,6 +1762,7 @@ export type ProductCreateWithoutCharitiesInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1754,6 +1798,7 @@ export type ProductUncheckedCreateWithoutCharitiesInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1799,6 +1844,7 @@ export type ProductUpdateWithoutCharitiesInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1834,6 +1880,7 @@ export type ProductUncheckedUpdateWithoutCharitiesInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1863,6 +1910,7 @@ export type ProductCreateWithoutFavouritesInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1898,6 +1946,7 @@ export type ProductUncheckedCreateWithoutFavouritesInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -1943,6 +1992,7 @@ export type ProductUpdateWithoutFavouritesInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1978,6 +2028,7 @@ export type ProductUncheckedUpdateWithoutFavouritesInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2007,6 +2058,7 @@ export type ProductCreateWithoutCartItemsInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -2042,6 +2094,7 @@ export type ProductUncheckedCreateWithoutCartItemsInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -2087,6 +2140,7 @@ export type ProductUpdateWithoutCartItemsInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2122,6 +2176,7 @@ export type ProductUncheckedUpdateWithoutCartItemsInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2151,6 +2206,7 @@ export type ProductCreateWithoutViewersInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -2186,6 +2242,7 @@ export type ProductUncheckedCreateWithoutViewersInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -2231,6 +2288,7 @@ export type ProductUpdateWithoutViewersInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2266,6 +2324,7 @@ export type ProductUncheckedUpdateWithoutViewersInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2295,6 +2354,7 @@ export type ProductCreateWithoutQuestionsInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -2330,6 +2390,7 @@ export type ProductUncheckedCreateWithoutQuestionsInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -2375,6 +2436,7 @@ export type ProductUpdateWithoutQuestionsInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2410,6 +2472,7 @@ export type ProductUncheckedUpdateWithoutQuestionsInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2439,6 +2502,7 @@ export type ProductCreateWithoutUserInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -2474,6 +2538,7 @@ export type ProductUncheckedCreateWithoutUserInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -2531,6 +2596,7 @@ export type ProductCreateManyCategoryInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -2554,6 +2620,7 @@ export type ProductUpdateWithoutCategoryInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2588,6 +2655,7 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2620,6 +2688,7 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2645,6 +2714,7 @@ export type ProductCreateManyBrandInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -2668,6 +2738,7 @@ export type ProductUpdateWithoutBrandInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2702,6 +2773,7 @@ export type ProductUncheckedUpdateWithoutBrandInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2734,6 +2806,7 @@ export type ProductUncheckedUpdateManyWithoutBrandInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2759,6 +2832,7 @@ export type ProductCreateManySizeInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -2782,6 +2856,7 @@ export type ProductUpdateWithoutSizeInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2816,6 +2891,7 @@ export type ProductUncheckedUpdateWithoutSizeInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2848,6 +2924,7 @@ export type ProductUncheckedUpdateManyWithoutSizeInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2874,6 +2951,7 @@ export type ProductCreateManyUserInput = {
   meterials?: Prisma.ProductCreatemeterialsInput | string[]
   color: string
   care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
@@ -2896,6 +2974,7 @@ export type ProductUpdateWithoutUserInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2931,6 +3010,7 @@ export type ProductUncheckedUpdateWithoutUserInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2963,6 +3043,7 @@ export type ProductUncheckedUpdateManyWithoutUserInput = {
   meterials?: Prisma.ProductUpdatemeterialsInput | string[]
   color?: Prisma.StringFieldUpdateOperationsInput | string
   care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -3073,6 +3154,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   meterials?: boolean
   color?: boolean
   care_instructions?: boolean
+  stock?: boolean
   allow_offer?: boolean
   return_window?: boolean
   donation_percent?: boolean
@@ -3111,6 +3193,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   meterials?: boolean
   color?: boolean
   care_instructions?: boolean
+  stock?: boolean
   allow_offer?: boolean
   return_window?: boolean
   donation_percent?: boolean
@@ -3141,6 +3224,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   meterials?: boolean
   color?: boolean
   care_instructions?: boolean
+  stock?: boolean
   allow_offer?: boolean
   return_window?: boolean
   donation_percent?: boolean
@@ -3171,6 +3255,7 @@ export type ProductSelectScalar = {
   meterials?: boolean
   color?: boolean
   care_instructions?: boolean
+  stock?: boolean
   allow_offer?: boolean
   return_window?: boolean
   donation_percent?: boolean
@@ -3180,7 +3265,7 @@ export type ProductSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "discountPct" | "finalPrice" | "currency" | "brandId" | "sizeId" | "categoryId" | "catagory_hierarchy" | "condition" | "tags" | "meterials" | "color" | "care_instructions" | "allow_offer" | "return_window" | "donation_percent" | "isDeleted" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "discountPct" | "finalPrice" | "currency" | "brandId" | "sizeId" | "categoryId" | "catagory_hierarchy" | "condition" | "tags" | "meterials" | "color" | "care_instructions" | "stock" | "allow_offer" | "return_window" | "donation_percent" | "isDeleted" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
@@ -3240,6 +3325,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     meterials: string[]
     color: string
     care_instructions: string[]
+    stock: number
     allow_offer: boolean
     return_window: number
     donation_percent: number
@@ -3697,6 +3783,7 @@ export interface ProductFieldRefs {
   readonly meterials: Prisma.FieldRef<"Product", 'String[]'>
   readonly color: Prisma.FieldRef<"Product", 'String'>
   readonly care_instructions: Prisma.FieldRef<"Product", 'String[]'>
+  readonly stock: Prisma.FieldRef<"Product", 'Int'>
   readonly allow_offer: Prisma.FieldRef<"Product", 'Boolean'>
   readonly return_window: Prisma.FieldRef<"Product", 'Int'>
   readonly donation_percent: Prisma.FieldRef<"Product", 'Float'>

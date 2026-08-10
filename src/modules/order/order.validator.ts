@@ -2,42 +2,11 @@ import { body } from 'express-validator';
 import { CancelReason } from '../../../generated/prisma/enums';
 
 export const validateOrderProducts = [
-    body('products')
-        .isArray({ min: 1 })
-        .withMessage('Products must be a non-empty array'),
-
-    body('treeCredit')
-        .optional()
-        .isInt({ min: 0 })
-        .withMessage('treeCredit must be a positive integer').toInt(),
-
-    body('products.*.productId')
+    body('cartGroupId')
         .notEmpty()
-        .withMessage('productId is required')
+        .withMessage('cartGroupId is required')
         .isUUID()
-        .withMessage('productId must be a valid UUID'),
-
-    body('products.*.quantity')
-        .notEmpty()
-        .withMessage('quantity is required')
-        .isInt({ min: 1 })
-        .withMessage('quantity must be a positive non-zero integer').toInt(),
-
-    body('products.*.extra_donation')
-        .optional()
-        .isInt({ min: 0 })
-        .withMessage('extra donation must be a positive integer').toInt(),
-
-    body('products.*.charities')
-        .optional()
-        .isArray()
-        .withMessage('charities must be an array'),
-
-    // ✅ Validate each charityId inside the array
-    body('products.*.charities.*')
-        .optional()
-        .isUUID()
-        .withMessage('charityId must be a valid UUID'),
+        .withMessage('cartGroupId must be a valid UUID'),
 ];
 
 export const cancelOrderItemValidator = [

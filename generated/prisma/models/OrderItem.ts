@@ -30,8 +30,6 @@ export type OrderItemAvgAggregateOutputType = {
   weight: number | null
   unitPrice: number | null
   totalPrice: number | null
-  donation_percent: number | null
-  donation_amount: number | null
   extra_donation: number | null
 }
 
@@ -40,8 +38,6 @@ export type OrderItemSumAggregateOutputType = {
   weight: number | null
   unitPrice: number | null
   totalPrice: number | null
-  donation_percent: number | null
-  donation_amount: number | null
   extra_donation: number | null
 }
 
@@ -58,8 +54,6 @@ export type OrderItemMinAggregateOutputType = {
   isBuyerRequestCancel: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
-  donation_percent: number | null
-  donation_amount: number | null
   extra_donation: number | null
   cancelledBy: $Enums.CancelledBy | null
   cancelReason: $Enums.CancelReason | null
@@ -79,8 +73,6 @@ export type OrderItemMaxAggregateOutputType = {
   isBuyerRequestCancel: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
-  donation_percent: number | null
-  donation_amount: number | null
   extra_donation: number | null
   cancelledBy: $Enums.CancelledBy | null
   cancelReason: $Enums.CancelReason | null
@@ -100,8 +92,6 @@ export type OrderItemCountAggregateOutputType = {
   isBuyerRequestCancel: number
   createdAt: number
   updatedAt: number
-  donation_percent: number
-  donation_amount: number
   extra_donation: number
   cancelledBy: number
   cancelReason: number
@@ -115,8 +105,6 @@ export type OrderItemAvgAggregateInputType = {
   weight?: true
   unitPrice?: true
   totalPrice?: true
-  donation_percent?: true
-  donation_amount?: true
   extra_donation?: true
 }
 
@@ -125,8 +113,6 @@ export type OrderItemSumAggregateInputType = {
   weight?: true
   unitPrice?: true
   totalPrice?: true
-  donation_percent?: true
-  donation_amount?: true
   extra_donation?: true
 }
 
@@ -143,8 +129,6 @@ export type OrderItemMinAggregateInputType = {
   isBuyerRequestCancel?: true
   createdAt?: true
   updatedAt?: true
-  donation_percent?: true
-  donation_amount?: true
   extra_donation?: true
   cancelledBy?: true
   cancelReason?: true
@@ -164,8 +148,6 @@ export type OrderItemMaxAggregateInputType = {
   isBuyerRequestCancel?: true
   createdAt?: true
   updatedAt?: true
-  donation_percent?: true
-  donation_amount?: true
   extra_donation?: true
   cancelledBy?: true
   cancelReason?: true
@@ -185,8 +167,6 @@ export type OrderItemCountAggregateInputType = {
   isBuyerRequestCancel?: true
   createdAt?: true
   updatedAt?: true
-  donation_percent?: true
-  donation_amount?: true
   extra_donation?: true
   cancelledBy?: true
   cancelReason?: true
@@ -293,8 +273,6 @@ export type OrderItemGroupByOutputType = {
   isBuyerRequestCancel: boolean
   createdAt: Date
   updatedAt: Date
-  donation_percent: number
-  donation_amount: number
   extra_donation: number
   cancelledBy: $Enums.CancelledBy | null
   cancelReason: $Enums.CancelReason | null
@@ -337,8 +315,6 @@ export type OrderItemWhereInput = {
   isBuyerRequestCancel?: Prisma.BoolFilter<"OrderItem"> | boolean
   createdAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
-  donation_percent?: Prisma.FloatFilter<"OrderItem"> | number
-  donation_amount?: Prisma.FloatFilter<"OrderItem"> | number
   extra_donation?: Prisma.FloatFilter<"OrderItem"> | number
   cancelledBy?: Prisma.EnumCancelledByNullableFilter<"OrderItem"> | $Enums.CancelledBy | null
   cancelReason?: Prisma.EnumCancelReasonNullableFilter<"OrderItem"> | $Enums.CancelReason | null
@@ -363,8 +339,6 @@ export type OrderItemOrderByWithRelationInput = {
   isBuyerRequestCancel?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  donation_percent?: Prisma.SortOrder
-  donation_amount?: Prisma.SortOrder
   extra_donation?: Prisma.SortOrder
   cancelledBy?: Prisma.SortOrderInput | Prisma.SortOrder
   cancelReason?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -392,8 +366,6 @@ export type OrderItemWhereUniqueInput = Prisma.AtLeast<{
   isBuyerRequestCancel?: Prisma.BoolFilter<"OrderItem"> | boolean
   createdAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
-  donation_percent?: Prisma.FloatFilter<"OrderItem"> | number
-  donation_amount?: Prisma.FloatFilter<"OrderItem"> | number
   extra_donation?: Prisma.FloatFilter<"OrderItem"> | number
   cancelledBy?: Prisma.EnumCancelledByNullableFilter<"OrderItem"> | $Enums.CancelledBy | null
   cancelReason?: Prisma.EnumCancelReasonNullableFilter<"OrderItem"> | $Enums.CancelReason | null
@@ -418,8 +390,6 @@ export type OrderItemOrderByWithAggregationInput = {
   isBuyerRequestCancel?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  donation_percent?: Prisma.SortOrder
-  donation_amount?: Prisma.SortOrder
   extra_donation?: Prisma.SortOrder
   cancelledBy?: Prisma.SortOrderInput | Prisma.SortOrder
   cancelReason?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -447,8 +417,6 @@ export type OrderItemScalarWhereWithAggregatesInput = {
   isBuyerRequestCancel?: Prisma.BoolWithAggregatesFilter<"OrderItem"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
-  donation_percent?: Prisma.FloatWithAggregatesFilter<"OrderItem"> | number
-  donation_amount?: Prisma.FloatWithAggregatesFilter<"OrderItem"> | number
   extra_donation?: Prisma.FloatWithAggregatesFilter<"OrderItem"> | number
   cancelledBy?: Prisma.EnumCancelledByNullableWithAggregatesFilter<"OrderItem"> | $Enums.CancelledBy | null
   cancelReason?: Prisma.EnumCancelReasonNullableWithAggregatesFilter<"OrderItem"> | $Enums.CancelReason | null
@@ -466,8 +434,6 @@ export type OrderItemCreateInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -492,8 +458,6 @@ export type OrderItemUncheckedCreateInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -514,8 +478,6 @@ export type OrderItemUpdateInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -540,8 +502,6 @@ export type OrderItemUncheckedUpdateInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -564,8 +524,6 @@ export type OrderItemCreateManyInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -583,8 +541,6 @@ export type OrderItemUpdateManyMutationInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -604,8 +560,6 @@ export type OrderItemUncheckedUpdateManyInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -635,8 +589,6 @@ export type OrderItemCountOrderByAggregateInput = {
   isBuyerRequestCancel?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  donation_percent?: Prisma.SortOrder
-  donation_amount?: Prisma.SortOrder
   extra_donation?: Prisma.SortOrder
   cancelledBy?: Prisma.SortOrder
   cancelReason?: Prisma.SortOrder
@@ -648,8 +600,6 @@ export type OrderItemAvgOrderByAggregateInput = {
   weight?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
-  donation_percent?: Prisma.SortOrder
-  donation_amount?: Prisma.SortOrder
   extra_donation?: Prisma.SortOrder
 }
 
@@ -666,8 +616,6 @@ export type OrderItemMaxOrderByAggregateInput = {
   isBuyerRequestCancel?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  donation_percent?: Prisma.SortOrder
-  donation_amount?: Prisma.SortOrder
   extra_donation?: Prisma.SortOrder
   cancelledBy?: Prisma.SortOrder
   cancelReason?: Prisma.SortOrder
@@ -687,8 +635,6 @@ export type OrderItemMinOrderByAggregateInput = {
   isBuyerRequestCancel?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  donation_percent?: Prisma.SortOrder
-  donation_amount?: Prisma.SortOrder
   extra_donation?: Prisma.SortOrder
   cancelledBy?: Prisma.SortOrder
   cancelReason?: Prisma.SortOrder
@@ -700,8 +646,6 @@ export type OrderItemSumOrderByAggregateInput = {
   weight?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
-  donation_percent?: Prisma.SortOrder
-  donation_amount?: Prisma.SortOrder
   extra_donation?: Prisma.SortOrder
 }
 
@@ -859,8 +803,6 @@ export type OrderItemCreateWithoutOrderInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -883,8 +825,6 @@ export type OrderItemUncheckedCreateWithoutOrderInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -936,8 +876,6 @@ export type OrderItemScalarWhereInput = {
   isBuyerRequestCancel?: Prisma.BoolFilter<"OrderItem"> | boolean
   createdAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
-  donation_percent?: Prisma.FloatFilter<"OrderItem"> | number
-  donation_amount?: Prisma.FloatFilter<"OrderItem"> | number
   extra_donation?: Prisma.FloatFilter<"OrderItem"> | number
   cancelledBy?: Prisma.EnumCancelledByNullableFilter<"OrderItem"> | $Enums.CancelledBy | null
   cancelReason?: Prisma.EnumCancelReasonNullableFilter<"OrderItem"> | $Enums.CancelReason | null
@@ -955,8 +893,6 @@ export type OrderItemCreateWithoutCancelEvidenceInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -980,8 +916,6 @@ export type OrderItemUncheckedCreateWithoutCancelEvidenceInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -1017,8 +951,6 @@ export type OrderItemUpdateWithoutCancelEvidenceInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -1042,8 +974,6 @@ export type OrderItemUncheckedUpdateWithoutCancelEvidenceInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -1063,8 +993,6 @@ export type OrderItemCreateWithoutDonationsInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -1088,8 +1016,6 @@ export type OrderItemUncheckedCreateWithoutDonationsInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -1125,8 +1051,6 @@ export type OrderItemUpdateWithoutDonationsInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -1150,8 +1074,6 @@ export type OrderItemUncheckedUpdateWithoutDonationsInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -1171,8 +1093,6 @@ export type OrderItemCreateWithoutProductInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -1195,8 +1115,6 @@ export type OrderItemUncheckedCreateWithoutProductInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -1243,8 +1161,6 @@ export type OrderItemCreateWithoutReturnItemInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -1268,8 +1184,6 @@ export type OrderItemUncheckedCreateWithoutReturnItemInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -1305,8 +1219,6 @@ export type OrderItemUpdateWithoutReturnItemInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -1330,8 +1242,6 @@ export type OrderItemUncheckedUpdateWithoutReturnItemInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -1352,8 +1262,6 @@ export type OrderItemCreateManyOrderInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -1371,8 +1279,6 @@ export type OrderItemUpdateWithoutOrderInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -1395,8 +1301,6 @@ export type OrderItemUncheckedUpdateWithoutOrderInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -1418,8 +1322,6 @@ export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -1438,8 +1340,6 @@ export type OrderItemCreateManyProductInput = {
   isBuyerRequestCancel?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  donation_percent?: number
-  donation_amount?: number
   extra_donation?: number
   cancelledBy?: $Enums.CancelledBy | null
   cancelReason?: $Enums.CancelReason | null
@@ -1457,8 +1357,6 @@ export type OrderItemUpdateWithoutProductInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -1481,8 +1379,6 @@ export type OrderItemUncheckedUpdateWithoutProductInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -1504,8 +1400,6 @@ export type OrderItemUncheckedUpdateManyWithoutProductInput = {
   isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
-  donation_amount?: Prisma.FloatFieldUpdateOperationsInput | number
   extra_donation?: Prisma.FloatFieldUpdateOperationsInput | number
   cancelledBy?: Prisma.NullableEnumCancelledByFieldUpdateOperationsInput | $Enums.CancelledBy | null
   cancelReason?: Prisma.NullableEnumCancelReasonFieldUpdateOperationsInput | $Enums.CancelReason | null
@@ -1565,8 +1459,6 @@ export type OrderItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   isBuyerRequestCancel?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  donation_percent?: boolean
-  donation_amount?: boolean
   extra_donation?: boolean
   cancelledBy?: boolean
   cancelReason?: boolean
@@ -1592,8 +1484,6 @@ export type OrderItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   isBuyerRequestCancel?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  donation_percent?: boolean
-  donation_amount?: boolean
   extra_donation?: boolean
   cancelledBy?: boolean
   cancelReason?: boolean
@@ -1615,8 +1505,6 @@ export type OrderItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   isBuyerRequestCancel?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  donation_percent?: boolean
-  donation_amount?: boolean
   extra_donation?: boolean
   cancelledBy?: boolean
   cancelReason?: boolean
@@ -1638,15 +1526,13 @@ export type OrderItemSelectScalar = {
   isBuyerRequestCancel?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  donation_percent?: boolean
-  donation_amount?: boolean
   extra_donation?: boolean
   cancelledBy?: boolean
   cancelReason?: boolean
   cancelReasonDetails?: boolean
 }
 
-export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "productId" | "quantity" | "weight" | "unitPrice" | "totalPrice" | "isCancelled" | "authResult" | "isBuyerRequestCancel" | "createdAt" | "updatedAt" | "donation_percent" | "donation_amount" | "extra_donation" | "cancelledBy" | "cancelReason" | "cancelReasonDetails", ExtArgs["result"]["orderItem"]>
+export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "productId" | "quantity" | "weight" | "unitPrice" | "totalPrice" | "isCancelled" | "authResult" | "isBuyerRequestCancel" | "createdAt" | "updatedAt" | "extra_donation" | "cancelledBy" | "cancelReason" | "cancelReasonDetails", ExtArgs["result"]["orderItem"]>
 export type OrderItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -1686,8 +1572,6 @@ export type $OrderItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     isBuyerRequestCancel: boolean
     createdAt: Date
     updatedAt: Date
-    donation_percent: number
-    donation_amount: number
     extra_donation: number
     cancelledBy: $Enums.CancelledBy | null
     cancelReason: $Enums.CancelReason | null
@@ -2132,8 +2016,6 @@ export interface OrderItemFieldRefs {
   readonly isBuyerRequestCancel: Prisma.FieldRef<"OrderItem", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"OrderItem", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"OrderItem", 'DateTime'>
-  readonly donation_percent: Prisma.FieldRef<"OrderItem", 'Float'>
-  readonly donation_amount: Prisma.FieldRef<"OrderItem", 'Float'>
   readonly extra_donation: Prisma.FieldRef<"OrderItem", 'Float'>
   readonly cancelledBy: Prisma.FieldRef<"OrderItem", 'CancelledBy'>
   readonly cancelReason: Prisma.FieldRef<"OrderItem", 'CancelReason'>

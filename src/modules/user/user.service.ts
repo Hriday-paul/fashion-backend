@@ -1,5 +1,6 @@
 import { BillingDetails, Prisma, User } from "../../../generated/prisma/client";
 import { Approval_Status, Role } from "../../../generated/prisma/enums";
+import config from "../../config";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import prisma from "../../shared/prisma";
@@ -338,10 +339,38 @@ const charityStats = async (userName: string) => {
 }
 
 const addOrUpdateBillingDetails = async (payload: BillingDetails, userId: string) => {
+
+    const shipPayload = {
+        "line_1": payload?.address1,
+        "city": payload?.city,
+        "state": payload?.state,
+        "postal_code": payload?.zip_code,
+        "country_alpha2": payload?.countryCode
+    }
+
+    const rateRes = await fetch(`${config.easyship.easyship_base_url}/addresses/validations`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shipPayload)
+    });
+
+    if (!rateRes.ok) {
+        const errorData = await rateRes.json().catch(() => null);
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            errorData?.error?.message || 'Invalid Shipping Address',
+        );
+    }
+
     const existDefaultBillingDetails = await prisma.billingDetails.findFirst({ where: { userId } });
+
     if (existDefaultBillingDetails) {
         await prisma.billingDetails.update({ where: { userId }, data: { userId: null } });
     }
+
     const res = await prisma.billingDetails.create({
         data: {
             ...payload,

@@ -29,6 +29,8 @@ export type OrderAvgAggregateOutputType = {
   itemsTotal: number | null
   totalDelivery: number | null
   totalPrice: number | null
+  sellerItemsTotal: number | null
+  sellerTotal: number | null
   treeCredit: number | null
   serviceFee: number | null
   authenticationFee: number | null
@@ -38,6 +40,8 @@ export type OrderSumAggregateOutputType = {
   itemsTotal: number | null
   totalDelivery: number | null
   totalPrice: number | null
+  sellerItemsTotal: number | null
+  sellerTotal: number | null
   treeCredit: number | null
   serviceFee: number | null
   authenticationFee: number | null
@@ -56,6 +60,8 @@ export type OrderMinAggregateOutputType = {
   itemsTotal: number | null
   totalDelivery: number | null
   totalPrice: number | null
+  sellerItemsTotal: number | null
+  sellerTotal: number | null
   treeCredit: number | null
   serviceFee: number | null
   authenticationFee: number | null
@@ -74,6 +80,8 @@ export type OrderMaxAggregateOutputType = {
   itemsTotal: number | null
   totalDelivery: number | null
   totalPrice: number | null
+  sellerItemsTotal: number | null
+  sellerTotal: number | null
   treeCredit: number | null
   serviceFee: number | null
   authenticationFee: number | null
@@ -92,6 +100,8 @@ export type OrderCountAggregateOutputType = {
   itemsTotal: number
   totalDelivery: number
   totalPrice: number
+  sellerItemsTotal: number
+  sellerTotal: number
   treeCredit: number
   serviceFee: number
   authenticationFee: number
@@ -103,6 +113,8 @@ export type OrderAvgAggregateInputType = {
   itemsTotal?: true
   totalDelivery?: true
   totalPrice?: true
+  sellerItemsTotal?: true
+  sellerTotal?: true
   treeCredit?: true
   serviceFee?: true
   authenticationFee?: true
@@ -112,6 +124,8 @@ export type OrderSumAggregateInputType = {
   itemsTotal?: true
   totalDelivery?: true
   totalPrice?: true
+  sellerItemsTotal?: true
+  sellerTotal?: true
   treeCredit?: true
   serviceFee?: true
   authenticationFee?: true
@@ -130,6 +144,8 @@ export type OrderMinAggregateInputType = {
   itemsTotal?: true
   totalDelivery?: true
   totalPrice?: true
+  sellerItemsTotal?: true
+  sellerTotal?: true
   treeCredit?: true
   serviceFee?: true
   authenticationFee?: true
@@ -148,6 +164,8 @@ export type OrderMaxAggregateInputType = {
   itemsTotal?: true
   totalDelivery?: true
   totalPrice?: true
+  sellerItemsTotal?: true
+  sellerTotal?: true
   treeCredit?: true
   serviceFee?: true
   authenticationFee?: true
@@ -166,6 +184,8 @@ export type OrderCountAggregateInputType = {
   itemsTotal?: true
   totalDelivery?: true
   totalPrice?: true
+  sellerItemsTotal?: true
+  sellerTotal?: true
   treeCredit?: true
   serviceFee?: true
   authenticationFee?: true
@@ -271,6 +291,8 @@ export type OrderGroupByOutputType = {
   itemsTotal: number
   totalDelivery: number
   totalPrice: number
+  sellerItemsTotal: number
+  sellerTotal: number
   treeCredit: number
   serviceFee: number
   authenticationFee: number
@@ -312,6 +334,8 @@ export type OrderWhereInput = {
   itemsTotal?: Prisma.FloatFilter<"Order"> | number
   totalDelivery?: Prisma.FloatFilter<"Order"> | number
   totalPrice?: Prisma.FloatFilter<"Order"> | number
+  sellerItemsTotal?: Prisma.FloatFilter<"Order"> | number
+  sellerTotal?: Prisma.FloatFilter<"Order"> | number
   treeCredit?: Prisma.FloatFilter<"Order"> | number
   serviceFee?: Prisma.FloatFilter<"Order"> | number
   authenticationFee?: Prisma.FloatFilter<"Order"> | number
@@ -338,6 +362,8 @@ export type OrderOrderByWithRelationInput = {
   itemsTotal?: Prisma.SortOrder
   totalDelivery?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  sellerItemsTotal?: Prisma.SortOrder
+  sellerTotal?: Prisma.SortOrder
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
@@ -367,6 +393,8 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   itemsTotal?: Prisma.FloatFilter<"Order"> | number
   totalDelivery?: Prisma.FloatFilter<"Order"> | number
   totalPrice?: Prisma.FloatFilter<"Order"> | number
+  sellerItemsTotal?: Prisma.FloatFilter<"Order"> | number
+  sellerTotal?: Prisma.FloatFilter<"Order"> | number
   treeCredit?: Prisma.FloatFilter<"Order"> | number
   serviceFee?: Prisma.FloatFilter<"Order"> | number
   authenticationFee?: Prisma.FloatFilter<"Order"> | number
@@ -393,6 +421,8 @@ export type OrderOrderByWithAggregationInput = {
   itemsTotal?: Prisma.SortOrder
   totalDelivery?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  sellerItemsTotal?: Prisma.SortOrder
+  sellerTotal?: Prisma.SortOrder
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
@@ -419,6 +449,8 @@ export type OrderScalarWhereWithAggregatesInput = {
   itemsTotal?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   totalDelivery?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   totalPrice?: Prisma.FloatWithAggregatesFilter<"Order"> | number
+  sellerItemsTotal?: Prisma.FloatWithAggregatesFilter<"Order"> | number
+  sellerTotal?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   treeCredit?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   serviceFee?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   authenticationFee?: Prisma.FloatWithAggregatesFilter<"Order"> | number
@@ -434,6 +466,8 @@ export type OrderCreateInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -460,6 +494,8 @@ export type OrderUncheckedCreateInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -480,6 +516,8 @@ export type OrderUpdateInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -506,6 +544,8 @@ export type OrderUncheckedUpdateInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -529,6 +569,8 @@ export type OrderCreateManyInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -544,6 +586,8 @@ export type OrderUpdateManyMutationInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -562,6 +606,8 @@ export type OrderUncheckedUpdateManyInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -585,6 +631,8 @@ export type OrderCountOrderByAggregateInput = {
   itemsTotal?: Prisma.SortOrder
   totalDelivery?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  sellerItemsTotal?: Prisma.SortOrder
+  sellerTotal?: Prisma.SortOrder
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
@@ -594,6 +642,8 @@ export type OrderAvgOrderByAggregateInput = {
   itemsTotal?: Prisma.SortOrder
   totalDelivery?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  sellerItemsTotal?: Prisma.SortOrder
+  sellerTotal?: Prisma.SortOrder
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
@@ -612,6 +662,8 @@ export type OrderMaxOrderByAggregateInput = {
   itemsTotal?: Prisma.SortOrder
   totalDelivery?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  sellerItemsTotal?: Prisma.SortOrder
+  sellerTotal?: Prisma.SortOrder
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
@@ -630,6 +682,8 @@ export type OrderMinOrderByAggregateInput = {
   itemsTotal?: Prisma.SortOrder
   totalDelivery?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  sellerItemsTotal?: Prisma.SortOrder
+  sellerTotal?: Prisma.SortOrder
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
@@ -639,6 +693,8 @@ export type OrderSumOrderByAggregateInput = {
   itemsTotal?: Prisma.SortOrder
   totalDelivery?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  sellerItemsTotal?: Prisma.SortOrder
+  sellerTotal?: Prisma.SortOrder
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
@@ -879,6 +935,8 @@ export type OrderCreateWithoutDeliveryChargeInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -904,6 +962,8 @@ export type OrderUncheckedCreateWithoutDeliveryChargeInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -939,6 +999,8 @@ export type OrderUpdateWithoutDeliveryChargeInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -964,6 +1026,8 @@ export type OrderUncheckedUpdateWithoutDeliveryChargeInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -983,6 +1047,8 @@ export type OrderCreateWithoutItemsInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1008,6 +1074,8 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1043,6 +1111,8 @@ export type OrderUpdateWithoutItemsInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1068,6 +1138,8 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1087,6 +1159,8 @@ export type OrderCreateWithoutPaymentInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1112,6 +1186,8 @@ export type OrderUncheckedCreateWithoutPaymentInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1147,6 +1223,8 @@ export type OrderUpdateWithoutPaymentInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1172,6 +1250,8 @@ export type OrderUncheckedUpdateWithoutPaymentInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1191,6 +1271,8 @@ export type OrderCreateWithoutReturnInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1216,6 +1298,8 @@ export type OrderUncheckedCreateWithoutReturnInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1251,6 +1335,8 @@ export type OrderUpdateWithoutReturnInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1276,6 +1362,8 @@ export type OrderUncheckedUpdateWithoutReturnInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1295,6 +1383,8 @@ export type OrderCreateWithoutRatingInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1320,6 +1410,8 @@ export type OrderUncheckedCreateWithoutRatingInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1355,6 +1447,8 @@ export type OrderUpdateWithoutRatingInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1380,6 +1474,8 @@ export type OrderUncheckedUpdateWithoutRatingInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1399,6 +1495,8 @@ export type OrderCreateWithoutBuyerInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1423,6 +1521,8 @@ export type OrderUncheckedCreateWithoutBuyerInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1453,6 +1553,8 @@ export type OrderCreateWithoutSellerInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1477,6 +1579,8 @@ export type OrderUncheckedCreateWithoutSellerInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1529,6 +1633,8 @@ export type OrderScalarWhereInput = {
   itemsTotal?: Prisma.FloatFilter<"Order"> | number
   totalDelivery?: Prisma.FloatFilter<"Order"> | number
   totalPrice?: Prisma.FloatFilter<"Order"> | number
+  sellerItemsTotal?: Prisma.FloatFilter<"Order"> | number
+  sellerTotal?: Prisma.FloatFilter<"Order"> | number
   treeCredit?: Prisma.FloatFilter<"Order"> | number
   serviceFee?: Prisma.FloatFilter<"Order"> | number
   authenticationFee?: Prisma.FloatFilter<"Order"> | number
@@ -1560,6 +1666,8 @@ export type OrderCreateWithoutBillingDetailsInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1584,6 +1692,8 @@ export type OrderUncheckedCreateWithoutBillingDetailsInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1632,6 +1742,8 @@ export type OrderCreateManyBuyerInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1649,6 +1761,8 @@ export type OrderCreateManySellerInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1664,6 +1778,8 @@ export type OrderUpdateWithoutBuyerInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1688,6 +1804,8 @@ export type OrderUncheckedUpdateWithoutBuyerInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1710,6 +1828,8 @@ export type OrderUncheckedUpdateManyWithoutBuyerInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1725,6 +1845,8 @@ export type OrderUpdateWithoutSellerInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1749,6 +1871,8 @@ export type OrderUncheckedUpdateWithoutSellerInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1771,6 +1895,8 @@ export type OrderUncheckedUpdateManyWithoutSellerInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1788,6 +1914,8 @@ export type OrderCreateManyBillingDetailsInput = {
   itemsTotal?: number
   totalDelivery?: number
   totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
@@ -1803,6 +1931,8 @@ export type OrderUpdateWithoutBillingDetailsInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1827,6 +1957,8 @@ export type OrderUncheckedUpdateWithoutBillingDetailsInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1849,6 +1981,8 @@ export type OrderUncheckedUpdateManyWithoutBillingDetailsInput = {
   itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1907,6 +2041,8 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   itemsTotal?: boolean
   totalDelivery?: boolean
   totalPrice?: boolean
+  sellerItemsTotal?: boolean
+  sellerTotal?: boolean
   treeCredit?: boolean
   serviceFee?: boolean
   authenticationFee?: boolean
@@ -1934,6 +2070,8 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   itemsTotal?: boolean
   totalDelivery?: boolean
   totalPrice?: boolean
+  sellerItemsTotal?: boolean
+  sellerTotal?: boolean
   treeCredit?: boolean
   serviceFee?: boolean
   authenticationFee?: boolean
@@ -1955,6 +2093,8 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   itemsTotal?: boolean
   totalDelivery?: boolean
   totalPrice?: boolean
+  sellerItemsTotal?: boolean
+  sellerTotal?: boolean
   treeCredit?: boolean
   serviceFee?: boolean
   authenticationFee?: boolean
@@ -1976,12 +2116,14 @@ export type OrderSelectScalar = {
   itemsTotal?: boolean
   totalDelivery?: boolean
   totalPrice?: boolean
+  sellerItemsTotal?: boolean
+  sellerTotal?: boolean
   treeCredit?: boolean
   serviceFee?: boolean
   authenticationFee?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "buyerId" | "sellerId" | "status" | "currentShipTo" | "authStatus" | "billingId" | "itemsTotal" | "totalDelivery" | "totalPrice" | "treeCredit" | "serviceFee" | "authenticationFee", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "buyerId" | "sellerId" | "status" | "currentShipTo" | "authStatus" | "billingId" | "itemsTotal" | "totalDelivery" | "totalPrice" | "sellerItemsTotal" | "sellerTotal" | "treeCredit" | "serviceFee" | "authenticationFee", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rating?: boolean | Prisma.Order$ratingArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2029,6 +2171,8 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     itemsTotal: number
     totalDelivery: number
     totalPrice: number
+    sellerItemsTotal: number
+    sellerTotal: number
     treeCredit: number
     serviceFee: number
     authenticationFee: number
@@ -2475,6 +2619,8 @@ export interface OrderFieldRefs {
   readonly itemsTotal: Prisma.FieldRef<"Order", 'Float'>
   readonly totalDelivery: Prisma.FieldRef<"Order", 'Float'>
   readonly totalPrice: Prisma.FieldRef<"Order", 'Float'>
+  readonly sellerItemsTotal: Prisma.FieldRef<"Order", 'Float'>
+  readonly sellerTotal: Prisma.FieldRef<"Order", 'Float'>
   readonly treeCredit: Prisma.FieldRef<"Order", 'Float'>
   readonly serviceFee: Prisma.FieldRef<"Order", 'Float'>
   readonly authenticationFee: Prisma.FieldRef<"Order", 'Float'>

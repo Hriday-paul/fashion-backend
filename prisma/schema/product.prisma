@@ -27,6 +27,8 @@ model Product {
 
     care_instructions String[]
 
+    stock Int @default(0)
+
     allow_offer Boolean @default(false)
 
     return_window Int @default(0)

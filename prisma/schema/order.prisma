@@ -60,6 +60,10 @@ model Order {
     itemsTotal    Float @default(0) // sum of all item prices
     totalDelivery Float @default(0) // NEW: sum of all seller delivery charges
     totalPrice    Float @default(0) // itemsTotal + total Delivery charge + treeCredit + serviceFee + authenticationFee
+    
+    sellerItemsTotal Float @default(0) // sum of all items total prices - seller donation amount
+    sellerTotal  Float @default(0) // sum of all items total prices - seller donation amount - bundle discount
+
     treeCredit    Float @default(0) // gifted for tree planner
     serviceFee    Float @default(0) // platform service fee
     authenticationFee Float @default(0) // authentication fee
@@ -119,8 +123,6 @@ model OrderItem {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    donation_percent Float          @default(0) //single item donation percent
-    donation_amount  Float          @default(0) // total donation amount multiply by quantity
     extra_donation   Float          @default(0)
     donations        SellDonation[]
 

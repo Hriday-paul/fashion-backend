@@ -7,6 +7,11 @@ const stripe = {
   stripe_api_secret: process.env.STRIPE_API_SECRET,
 };
 
+const easyship = {
+  easyship_api_key: process.env.EASYSHIP_API_KEY,
+  easyship_base_url: process.env.EASYSHIP_BASE_URL,
+}
+
 const message = {
   twilioAccountSID: process.env.TWILIO_ACCOUNT_SID,
   twilioAuthToken: process.env.TWILIO_AUTH_TOKEN,
@@ -56,6 +61,8 @@ export default {
   aws,
   message,
   redis,
+
+  easyship,
 
   flight_api_key : process.env.AEROAPI_KEY
 };

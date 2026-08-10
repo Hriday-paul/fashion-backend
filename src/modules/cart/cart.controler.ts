@@ -48,6 +48,18 @@ const checkoutSummary = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const availableRates = catchAsync(async (req: Request, res: Response) => {
+    const cartGroupId = req.params.cartGroupId;
+    const result = await cartService.availableRates(cartGroupId, req.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Available rates retrieved successfully',
+        data: result
+    });
+});
+
 const addTreeGiftCost = catchAsync(async (req: Request, res: Response) => {
 
     await cartService.addTreeGiftCost(req.body, req.user?.id);
@@ -89,5 +101,6 @@ export const cartControler = {
     checkoutSummary,
     addTreeGiftCost,
     addAuthenticationCost,
+    availableRates,
     deleteCartItem
 }

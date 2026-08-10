@@ -1,3 +1,4 @@
+import config from "../../config";
 import AppError from "../../error/AppError";
 import prisma from "../../shared/prisma"
 import httpStatus from "http-status";
@@ -138,20 +139,20 @@ const checkoutSummary = async (cartGroupId: string, userId: string) => {
     const totalExtraDonation = cart.items.reduce((acc, item) => acc + (item.extraDonation || 0), 0);
     const otherTotal = (cart.serviceFeeCost || 0) + (cart.treeGiftCost || 0) + (cart.authenticationCost || 0);
 
-    const bundleDiscountAmount = Math.round(itemTotal * (bundleDiscountPercent / 100));
+    const bundleDiscountAmount = itemTotal * (bundleDiscountPercent / 100);
     const discountedItemTotal = itemTotal - bundleDiscountAmount;
 
-    const total = Math.round(discountedItemTotal + otherTotal + totalExtraDonation);
+    const total = discountedItemTotal + otherTotal + totalExtraDonation;
 
     return {
         itemTotal: itemTotal,
-        otherTotal,
-        total,
-        serviceFeeCost: cart.serviceFeeCost,
-        treeGiftCost: cart.treeGiftCost,
-        authenticationCost: cart.authenticationCost,
+        otherTotal: otherTotal,
+        total: total,
+        serviceFeeCost: (cart.serviceFeeCost || 0),
+        treeGiftCost: (cart.treeGiftCost || 0),
+        authenticationCost: (cart.authenticationCost || 0),
         bundleDiscountPercent,
-        bundleDiscountAmount,
+        bundleDiscountAmount: bundleDiscountAmount,
         totalExtraDonation
     };
 }
@@ -281,11 +282,117 @@ const deleteCartItem = async (itemId: string, userId: string) => {
     return;
 }
 
+const availableRates = async (cartGroupId: string, userId: string) => {
+    const cartgroup = await prisma.cartGroup.findFirst({
+        where: { id: cartGroupId, userId },
+        include: {
+            items: {
+                include: {
+                    product: {
+                        select: {
+                            finalPrice: true,
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+
+    if (!cartgroup) {
+        throw new AppError(httpStatus.NOT_FOUND, "Cart does not exist");
+    }
+
+    //check cart owner is the current user
+    if (cartgroup.userId !== userId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the owner of this cart");
+    }
+
+    const billing_details = await prisma.billingDetails.findFirst({ where: { userId } });
+
+    if (!billing_details) {
+        return;
+    }
+
+    const shipPayload = {
+        "origin_address": {
+            "line_1": "Pariser Platz 1",
+            "city": "Berlin",
+            "state": "Berlin",
+            "postal_code": "10117",
+            "country_alpha2": "DE"
+        },
+        "destination_address": {
+            "line_1": billing_details?.address1,
+            "city": billing_details?.city,
+            "state": billing_details?.state,
+            "postal_code": billing_details?.zip_code,
+            "country_alpha2": billing_details?.countryCode,
+            "contact_name": billing_details?.full_name,
+            "contact_email": billing_details?.email,
+            "contact_phone": billing_details?.contact
+        },
+        "incoterms": "DDP",
+        "courier_settings": {
+            "show_courier_logo_url": true
+        },
+        "shipping_settings": {
+            "units": {
+                "weight": "kg",
+                "dimensions": "cm"
+            },
+            "output_currency": "USD"
+        },
+        "parcels": [
+            {
+                "total_actual_weight": 0.5,
+                "items": cartgroup?.items?.map(item => {
+                    return {
+                        "category": "fashion",
+                        "quantity": 1,
+                        "dimensions": {
+                            "height": 0.1,
+                            "width": 20,
+                            "length": 30
+                        },
+                        "declared_currency": "USD",
+                        "declared_customs_value": item?.product?.finalPrice || 0
+                    }
+                }),
+            }
+        ],
+        "calculate_tax_and_duties": true
+    }
+
+    const rateRes = await fetch(`${config.easyship.easyship_base_url}/rates`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shipPayload)
+    });
+
+    if (!rateRes.ok) {
+        const errorData = await rateRes.json().catch(() => null);
+        console.log(errorData);
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            errorData?.error?.message || 'Failed to fetch shipping rates',
+        );
+    }
+
+    const rateData = await rateRes.json();
+
+    return rateData;
+}
+
 export const cartService = {
     cartsByUser,
     checkoutItem,
     checkoutSummary,
     addToCart,
+    availableRates,
     addTreeGiftCost,
     addAuthenticationCost,
     deleteCartItem

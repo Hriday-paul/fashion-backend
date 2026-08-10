@@ -43,7 +43,7 @@ const checkout = async (orderId: string, userId: string) => {
 
     let paymentData;
 
-    // Check for existing unpaid payment for the reservation
+    // Check for existing unpaid payment for the order
     const isExistPayment = await transactionClient.payment.findFirst({
       where: {
         orderId: order?.id,
@@ -148,7 +148,6 @@ const checkout = async (orderId: string, userId: string) => {
       amount: totalDeliveryCharge,
       images: [],
       name: "Delivery Charge",
-      description: "",
       quantity: 1,
     }
 
