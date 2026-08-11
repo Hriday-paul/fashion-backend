@@ -258,6 +258,7 @@ export type CartGroupWhereInput = {
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.CartItemListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }
 
 export type CartGroupOrderByWithRelationInput = {
@@ -273,6 +274,7 @@ export type CartGroupOrderByWithRelationInput = {
   seller?: Prisma.UserOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   items?: Prisma.CartItemOrderByRelationAggregateInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
 export type CartGroupWhereUniqueInput = Prisma.AtLeast<{
@@ -291,6 +293,7 @@ export type CartGroupWhereUniqueInput = Prisma.AtLeast<{
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.CartItemListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }, "id" | "sellerId">
 
 export type CartGroupOrderByWithAggregationInput = {
@@ -336,6 +339,7 @@ export type CartGroupCreateInput = {
   seller: Prisma.UserCreateNestedOneWithoutSellerGroupCartsInput
   user: Prisma.UserCreateNestedOneWithoutCartsInput
   items?: Prisma.CartItemCreateNestedManyWithoutGroupInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupUncheckedCreateInput = {
@@ -349,6 +353,7 @@ export type CartGroupUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CartItemUncheckedCreateNestedManyWithoutGroupInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupUpdateInput = {
@@ -362,6 +367,7 @@ export type CartGroupUpdateInput = {
   seller?: Prisma.UserUpdateOneRequiredWithoutSellerGroupCartsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
   items?: Prisma.CartItemUpdateManyWithoutGroupNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupUncheckedUpdateInput = {
@@ -375,6 +381,7 @@ export type CartGroupUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUncheckedUpdateManyWithoutGroupNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupCreateManyInput = {
@@ -409,6 +416,11 @@ export type CartGroupUncheckedUpdateManyInput = {
   shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CartGroupNullableScalarRelationFilter = {
+  is?: Prisma.CartGroupWhereInput | null
+  isNot?: Prisma.CartGroupWhereInput | null
 }
 
 export type CartGroupCountOrderByAggregateInput = {
@@ -472,6 +484,22 @@ export type CartGroupListRelationFilter = {
 
 export type CartGroupOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type CartGroupCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.CartGroupCreateWithoutPaymentsInput, Prisma.CartGroupUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.CartGroupCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.CartGroupWhereUniqueInput
+}
+
+export type CartGroupUpdateOneWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.CartGroupCreateWithoutPaymentsInput, Prisma.CartGroupUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.CartGroupCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.CartGroupUpsertWithoutPaymentsInput
+  disconnect?: Prisma.CartGroupWhereInput | boolean
+  delete?: Prisma.CartGroupWhereInput | boolean
+  connect?: Prisma.CartGroupWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CartGroupUpdateToOneWithWhereWithoutPaymentsInput, Prisma.CartGroupUpdateWithoutPaymentsInput>, Prisma.CartGroupUncheckedUpdateWithoutPaymentsInput>
 }
 
 export type CartGroupCreateNestedOneWithoutItemsInput = {
@@ -572,6 +600,74 @@ export type CartGroupUncheckedUpdateManyWithoutSellerNestedInput = {
   deleteMany?: Prisma.CartGroupScalarWhereInput | Prisma.CartGroupScalarWhereInput[]
 }
 
+export type CartGroupCreateWithoutPaymentsInput = {
+  id?: string
+  treeGiftCost?: number
+  authenticationCost?: number
+  serviceFeeCost?: number
+  shippingServiceId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  seller: Prisma.UserCreateNestedOneWithoutSellerGroupCartsInput
+  user: Prisma.UserCreateNestedOneWithoutCartsInput
+  items?: Prisma.CartItemCreateNestedManyWithoutGroupInput
+}
+
+export type CartGroupUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  sellerId: string
+  userId: string
+  treeGiftCost?: number
+  authenticationCost?: number
+  serviceFeeCost?: number
+  shippingServiceId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.CartItemUncheckedCreateNestedManyWithoutGroupInput
+}
+
+export type CartGroupCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.CartGroupWhereUniqueInput
+  create: Prisma.XOR<Prisma.CartGroupCreateWithoutPaymentsInput, Prisma.CartGroupUncheckedCreateWithoutPaymentsInput>
+}
+
+export type CartGroupUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.CartGroupUpdateWithoutPaymentsInput, Prisma.CartGroupUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.CartGroupCreateWithoutPaymentsInput, Prisma.CartGroupUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.CartGroupWhereInput
+}
+
+export type CartGroupUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.CartGroupWhereInput
+  data: Prisma.XOR<Prisma.CartGroupUpdateWithoutPaymentsInput, Prisma.CartGroupUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type CartGroupUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seller?: Prisma.UserUpdateOneRequiredWithoutSellerGroupCartsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
+  items?: Prisma.CartItemUpdateManyWithoutGroupNestedInput
+}
+
+export type CartGroupUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
+  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.CartItemUncheckedUpdateManyWithoutGroupNestedInput
+}
+
 export type CartGroupCreateWithoutItemsInput = {
   id?: string
   treeGiftCost?: number
@@ -582,6 +678,7 @@ export type CartGroupCreateWithoutItemsInput = {
   updatedAt?: Date | string
   seller: Prisma.UserCreateNestedOneWithoutSellerGroupCartsInput
   user: Prisma.UserCreateNestedOneWithoutCartsInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupUncheckedCreateWithoutItemsInput = {
@@ -594,6 +691,7 @@ export type CartGroupUncheckedCreateWithoutItemsInput = {
   shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupCreateOrConnectWithoutItemsInput = {
@@ -622,6 +720,7 @@ export type CartGroupUpdateWithoutItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seller?: Prisma.UserUpdateOneRequiredWithoutSellerGroupCartsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupUncheckedUpdateWithoutItemsInput = {
@@ -634,6 +733,7 @@ export type CartGroupUncheckedUpdateWithoutItemsInput = {
   shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupCreateWithoutUserInput = {
@@ -646,6 +746,7 @@ export type CartGroupCreateWithoutUserInput = {
   updatedAt?: Date | string
   seller: Prisma.UserCreateNestedOneWithoutSellerGroupCartsInput
   items?: Prisma.CartItemCreateNestedManyWithoutGroupInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupUncheckedCreateWithoutUserInput = {
@@ -658,6 +759,7 @@ export type CartGroupUncheckedCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CartItemUncheckedCreateNestedManyWithoutGroupInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupCreateOrConnectWithoutUserInput = {
@@ -680,6 +782,7 @@ export type CartGroupCreateWithoutSellerInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCartsInput
   items?: Prisma.CartItemCreateNestedManyWithoutGroupInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupUncheckedCreateWithoutSellerInput = {
@@ -692,6 +795,7 @@ export type CartGroupUncheckedCreateWithoutSellerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CartItemUncheckedCreateNestedManyWithoutGroupInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupCreateOrConnectWithoutSellerInput = {
@@ -783,6 +887,7 @@ export type CartGroupUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seller?: Prisma.UserUpdateOneRequiredWithoutSellerGroupCartsNestedInput
   items?: Prisma.CartItemUpdateManyWithoutGroupNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupUncheckedUpdateWithoutUserInput = {
@@ -795,6 +900,7 @@ export type CartGroupUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUncheckedUpdateManyWithoutGroupNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupUncheckedUpdateManyWithoutUserInput = {
@@ -818,6 +924,7 @@ export type CartGroupUpdateWithoutSellerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
   items?: Prisma.CartItemUpdateManyWithoutGroupNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupUncheckedUpdateWithoutSellerInput = {
@@ -830,6 +937,7 @@ export type CartGroupUncheckedUpdateWithoutSellerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUncheckedUpdateManyWithoutGroupNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupUncheckedUpdateManyWithoutSellerInput = {
@@ -850,10 +958,12 @@ export type CartGroupUncheckedUpdateManyWithoutSellerInput = {
 
 export type CartGroupCountOutputType = {
   items: number
+  payments: number
 }
 
 export type CartGroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | CartGroupCountOutputTypeCountItemsArgs
+  payments?: boolean | CartGroupCountOutputTypeCountPaymentsArgs
 }
 
 /**
@@ -873,6 +983,13 @@ export type CartGroupCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types
   where?: Prisma.CartItemWhereInput
 }
 
+/**
+ * CartGroupCountOutputType without action
+ */
+export type CartGroupCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
+}
+
 
 export type CartGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -887,6 +1004,7 @@ export type CartGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.CartGroup$itemsArgs<ExtArgs>
+  payments?: boolean | Prisma.CartGroup$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.CartGroupCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cartGroup"]>
 
@@ -935,6 +1053,7 @@ export type CartGroupInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.CartGroup$itemsArgs<ExtArgs>
+  payments?: boolean | Prisma.CartGroup$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.CartGroupCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CartGroupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -952,6 +1071,7 @@ export type $CartGroupPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     seller: Prisma.$UserPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
     items: Prisma.$CartItemPayload<ExtArgs>[]
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1360,6 +1480,7 @@ export interface Prisma__CartGroupClient<T, Null = never, ExtArgs extends runtim
   seller<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.CartGroup$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CartGroup$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CartItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payments<T extends Prisma.CartGroup$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CartGroup$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1815,6 +1936,30 @@ export type CartGroup$itemsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.CartItemScalarFieldEnum | Prisma.CartItemScalarFieldEnum[]
+}
+
+/**
+ * CartGroup.payments
+ */
+export type CartGroup$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
 }
 
 /**

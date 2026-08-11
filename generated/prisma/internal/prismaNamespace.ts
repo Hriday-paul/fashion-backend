@@ -3573,7 +3573,8 @@ export const OrderScalarFieldEnum = {
   sellerTotal: 'sellerTotal',
   treeCredit: 'treeCredit',
   serviceFee: 'serviceFee',
-  authenticationFee: 'authenticationFee'
+  authenticationFee: 'authenticationFee',
+  bundleDiscountPercent: 'bundleDiscountPercent'
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
@@ -3640,6 +3641,7 @@ export const PaymentScalarFieldEnum = {
   status: 'status',
   stripe_status: 'stripe_status',
   orderId: 'orderId',
+  cartGroupId: 'cartGroupId',
   transactionId: 'transactionId',
   paymentIntentId: 'paymentIntentId',
   checkoutSessionId: 'checkoutSessionId',

@@ -11,6 +11,8 @@ import globalErrorHandler from "./middleware/globalErrorhandler";
 import { DefaultTask } from "./utils/DefaultTask";
 dotenv.config();
 
+import "./workers/index"
+
 const app: Express = express();
 
 multer();

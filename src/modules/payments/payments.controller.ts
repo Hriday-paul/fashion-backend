@@ -7,16 +7,6 @@ import pick from '../../shared/pick';
 import { PaginateOptions } from '../../helper/pagination.helper';
 import config from '../../config';
 
-const checkout = catchAsync(async (req: Request, res: Response) => {
-  const result = await paymentsService.checkout(req.body?.orderId, req?.user?.id);
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    data: result,
-    message: 'Payment link get successful',
-  });
-});
-
 const donationCheckout = catchAsync(async (req: Request, res: Response) => {
   const result = await paymentsService.donationCheckout(req.body, req?.user?.id);
   sendResponse(res, {
@@ -169,7 +159,6 @@ export const paymentsController = {
   updatePayments,
   deletePayments,
   confirmPayment,
-  checkout,
   getPaymentsByUserId,
   getPaymentsByUserIdWithParams,
   donationCheckout,

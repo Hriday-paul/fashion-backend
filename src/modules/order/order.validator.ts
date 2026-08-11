@@ -7,6 +7,12 @@ export const validateOrderProducts = [
         .withMessage('cartGroupId is required')
         .isUUID()
         .withMessage('cartGroupId must be a valid UUID'),
+
+    body('shipmentServiceId')
+        .notEmpty()
+        .withMessage('Shipment service ID is required')
+        .isString()
+        .withMessage('Shipment service ID must be a valid string'),
 ];
 
 export const cancelOrderItemValidator = [

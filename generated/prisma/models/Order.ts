@@ -34,6 +34,7 @@ export type OrderAvgAggregateOutputType = {
   treeCredit: number | null
   serviceFee: number | null
   authenticationFee: number | null
+  bundleDiscountPercent: number | null
 }
 
 export type OrderSumAggregateOutputType = {
@@ -45,6 +46,7 @@ export type OrderSumAggregateOutputType = {
   treeCredit: number | null
   serviceFee: number | null
   authenticationFee: number | null
+  bundleDiscountPercent: number | null
 }
 
 export type OrderMinAggregateOutputType = {
@@ -65,6 +67,7 @@ export type OrderMinAggregateOutputType = {
   treeCredit: number | null
   serviceFee: number | null
   authenticationFee: number | null
+  bundleDiscountPercent: number | null
 }
 
 export type OrderMaxAggregateOutputType = {
@@ -85,6 +88,7 @@ export type OrderMaxAggregateOutputType = {
   treeCredit: number | null
   serviceFee: number | null
   authenticationFee: number | null
+  bundleDiscountPercent: number | null
 }
 
 export type OrderCountAggregateOutputType = {
@@ -105,6 +109,7 @@ export type OrderCountAggregateOutputType = {
   treeCredit: number
   serviceFee: number
   authenticationFee: number
+  bundleDiscountPercent: number
   _all: number
 }
 
@@ -118,6 +123,7 @@ export type OrderAvgAggregateInputType = {
   treeCredit?: true
   serviceFee?: true
   authenticationFee?: true
+  bundleDiscountPercent?: true
 }
 
 export type OrderSumAggregateInputType = {
@@ -129,6 +135,7 @@ export type OrderSumAggregateInputType = {
   treeCredit?: true
   serviceFee?: true
   authenticationFee?: true
+  bundleDiscountPercent?: true
 }
 
 export type OrderMinAggregateInputType = {
@@ -149,6 +156,7 @@ export type OrderMinAggregateInputType = {
   treeCredit?: true
   serviceFee?: true
   authenticationFee?: true
+  bundleDiscountPercent?: true
 }
 
 export type OrderMaxAggregateInputType = {
@@ -169,6 +177,7 @@ export type OrderMaxAggregateInputType = {
   treeCredit?: true
   serviceFee?: true
   authenticationFee?: true
+  bundleDiscountPercent?: true
 }
 
 export type OrderCountAggregateInputType = {
@@ -189,6 +198,7 @@ export type OrderCountAggregateInputType = {
   treeCredit?: true
   serviceFee?: true
   authenticationFee?: true
+  bundleDiscountPercent?: true
   _all?: true
 }
 
@@ -296,6 +306,7 @@ export type OrderGroupByOutputType = {
   treeCredit: number
   serviceFee: number
   authenticationFee: number
+  bundleDiscountPercent: number
   _count: OrderCountAggregateOutputType | null
   _avg: OrderAvgAggregateOutputType | null
   _sum: OrderSumAggregateOutputType | null
@@ -339,6 +350,7 @@ export type OrderWhereInput = {
   treeCredit?: Prisma.FloatFilter<"Order"> | number
   serviceFee?: Prisma.FloatFilter<"Order"> | number
   authenticationFee?: Prisma.FloatFilter<"Order"> | number
+  bundleDiscountPercent?: Prisma.FloatFilter<"Order"> | number
   rating?: Prisma.XOR<Prisma.RatingNullableScalarRelationFilter, Prisma.RatingWhereInput> | null
   buyer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   return?: Prisma.ReturnListRelationFilter
@@ -367,6 +379,7 @@ export type OrderOrderByWithRelationInput = {
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
+  bundleDiscountPercent?: Prisma.SortOrder
   rating?: Prisma.RatingOrderByWithRelationInput
   buyer?: Prisma.UserOrderByWithRelationInput
   return?: Prisma.ReturnOrderByRelationAggregateInput
@@ -398,6 +411,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   treeCredit?: Prisma.FloatFilter<"Order"> | number
   serviceFee?: Prisma.FloatFilter<"Order"> | number
   authenticationFee?: Prisma.FloatFilter<"Order"> | number
+  bundleDiscountPercent?: Prisma.FloatFilter<"Order"> | number
   rating?: Prisma.XOR<Prisma.RatingNullableScalarRelationFilter, Prisma.RatingWhereInput> | null
   buyer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   return?: Prisma.ReturnListRelationFilter
@@ -426,6 +440,7 @@ export type OrderOrderByWithAggregationInput = {
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
+  bundleDiscountPercent?: Prisma.SortOrder
   _count?: Prisma.OrderCountOrderByAggregateInput
   _avg?: Prisma.OrderAvgOrderByAggregateInput
   _max?: Prisma.OrderMaxOrderByAggregateInput
@@ -454,6 +469,7 @@ export type OrderScalarWhereWithAggregatesInput = {
   treeCredit?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   serviceFee?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   authenticationFee?: Prisma.FloatWithAggregatesFilter<"Order"> | number
+  bundleDiscountPercent?: Prisma.FloatWithAggregatesFilter<"Order"> | number
 }
 
 export type OrderCreateInput = {
@@ -471,6 +487,7 @@ export type OrderCreateInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -499,6 +516,7 @@ export type OrderUncheckedCreateInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -521,6 +539,7 @@ export type OrderUpdateInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -549,6 +568,7 @@ export type OrderUncheckedUpdateInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -574,6 +594,7 @@ export type OrderCreateManyInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
 }
 
 export type OrderUpdateManyMutationInput = {
@@ -591,6 +612,7 @@ export type OrderUpdateManyMutationInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type OrderUncheckedUpdateManyInput = {
@@ -611,6 +633,7 @@ export type OrderUncheckedUpdateManyInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type OrderScalarRelationFilter = {
@@ -636,6 +659,7 @@ export type OrderCountOrderByAggregateInput = {
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
+  bundleDiscountPercent?: Prisma.SortOrder
 }
 
 export type OrderAvgOrderByAggregateInput = {
@@ -647,6 +671,7 @@ export type OrderAvgOrderByAggregateInput = {
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
+  bundleDiscountPercent?: Prisma.SortOrder
 }
 
 export type OrderMaxOrderByAggregateInput = {
@@ -667,6 +692,7 @@ export type OrderMaxOrderByAggregateInput = {
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
+  bundleDiscountPercent?: Prisma.SortOrder
 }
 
 export type OrderMinOrderByAggregateInput = {
@@ -687,6 +713,7 @@ export type OrderMinOrderByAggregateInput = {
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
+  bundleDiscountPercent?: Prisma.SortOrder
 }
 
 export type OrderSumOrderByAggregateInput = {
@@ -698,6 +725,7 @@ export type OrderSumOrderByAggregateInput = {
   treeCredit?: Prisma.SortOrder
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
+  bundleDiscountPercent?: Prisma.SortOrder
 }
 
 export type OrderNullableScalarRelationFilter = {
@@ -761,10 +789,12 @@ export type OrderCreateNestedOneWithoutPaymentInput = {
   connect?: Prisma.OrderWhereUniqueInput
 }
 
-export type OrderUpdateOneRequiredWithoutPaymentNestedInput = {
+export type OrderUpdateOneWithoutPaymentNestedInput = {
   create?: Prisma.XOR<Prisma.OrderCreateWithoutPaymentInput, Prisma.OrderUncheckedCreateWithoutPaymentInput>
   connectOrCreate?: Prisma.OrderCreateOrConnectWithoutPaymentInput
   upsert?: Prisma.OrderUpsertWithoutPaymentInput
+  disconnect?: Prisma.OrderWhereInput | boolean
+  delete?: Prisma.OrderWhereInput | boolean
   connect?: Prisma.OrderWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrderUpdateToOneWithWhereWithoutPaymentInput, Prisma.OrderUpdateWithoutPaymentInput>, Prisma.OrderUncheckedUpdateWithoutPaymentInput>
 }
@@ -940,6 +970,7 @@ export type OrderCreateWithoutDeliveryChargeInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -967,6 +998,7 @@ export type OrderUncheckedCreateWithoutDeliveryChargeInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1004,6 +1036,7 @@ export type OrderUpdateWithoutDeliveryChargeInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -1031,6 +1064,7 @@ export type OrderUncheckedUpdateWithoutDeliveryChargeInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -1052,6 +1086,7 @@ export type OrderCreateWithoutItemsInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -1079,6 +1114,7 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
@@ -1116,6 +1152,7 @@ export type OrderUpdateWithoutItemsInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -1143,6 +1180,7 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
@@ -1164,6 +1202,7 @@ export type OrderCreateWithoutPaymentInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -1191,6 +1230,7 @@ export type OrderUncheckedCreateWithoutPaymentInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1228,6 +1268,7 @@ export type OrderUpdateWithoutPaymentInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -1255,6 +1296,7 @@ export type OrderUncheckedUpdateWithoutPaymentInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -1276,6 +1318,7 @@ export type OrderCreateWithoutReturnInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
@@ -1303,6 +1346,7 @@ export type OrderUncheckedCreateWithoutReturnInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
@@ -1340,6 +1384,7 @@ export type OrderUpdateWithoutReturnInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
@@ -1367,6 +1412,7 @@ export type OrderUncheckedUpdateWithoutReturnInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
@@ -1388,6 +1434,7 @@ export type OrderCreateWithoutRatingInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
@@ -1415,6 +1462,7 @@ export type OrderUncheckedCreateWithoutRatingInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
@@ -1452,6 +1500,7 @@ export type OrderUpdateWithoutRatingInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
@@ -1479,6 +1528,7 @@ export type OrderUncheckedUpdateWithoutRatingInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
@@ -1500,6 +1550,7 @@ export type OrderCreateWithoutBuyerInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
@@ -1526,6 +1577,7 @@ export type OrderUncheckedCreateWithoutBuyerInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1558,6 +1610,7 @@ export type OrderCreateWithoutSellerInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -1584,6 +1637,7 @@ export type OrderUncheckedCreateWithoutSellerInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1638,6 +1692,7 @@ export type OrderScalarWhereInput = {
   treeCredit?: Prisma.FloatFilter<"Order"> | number
   serviceFee?: Prisma.FloatFilter<"Order"> | number
   authenticationFee?: Prisma.FloatFilter<"Order"> | number
+  bundleDiscountPercent?: Prisma.FloatFilter<"Order"> | number
 }
 
 export type OrderUpsertWithWhereUniqueWithoutSellerInput = {
@@ -1671,6 +1726,7 @@ export type OrderCreateWithoutBillingDetailsInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -1697,6 +1753,7 @@ export type OrderUncheckedCreateWithoutBillingDetailsInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1747,6 +1804,7 @@ export type OrderCreateManyBuyerInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
 }
 
 export type OrderCreateManySellerInput = {
@@ -1766,6 +1824,7 @@ export type OrderCreateManySellerInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
 }
 
 export type OrderUpdateWithoutBuyerInput = {
@@ -1783,6 +1842,7 @@ export type OrderUpdateWithoutBuyerInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
@@ -1809,6 +1869,7 @@ export type OrderUncheckedUpdateWithoutBuyerInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -1833,6 +1894,7 @@ export type OrderUncheckedUpdateManyWithoutBuyerInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type OrderUpdateWithoutSellerInput = {
@@ -1850,6 +1912,7 @@ export type OrderUpdateWithoutSellerInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -1876,6 +1939,7 @@ export type OrderUncheckedUpdateWithoutSellerInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -1900,6 +1964,7 @@ export type OrderUncheckedUpdateManyWithoutSellerInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type OrderCreateManyBillingDetailsInput = {
@@ -1919,6 +1984,7 @@ export type OrderCreateManyBillingDetailsInput = {
   treeCredit?: number
   serviceFee?: number
   authenticationFee?: number
+  bundleDiscountPercent?: number
 }
 
 export type OrderUpdateWithoutBillingDetailsInput = {
@@ -1936,6 +2002,7 @@ export type OrderUpdateWithoutBillingDetailsInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -1962,6 +2029,7 @@ export type OrderUncheckedUpdateWithoutBillingDetailsInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -1986,6 +2054,7 @@ export type OrderUncheckedUpdateManyWithoutBillingDetailsInput = {
   treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 
@@ -2046,6 +2115,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   treeCredit?: boolean
   serviceFee?: boolean
   authenticationFee?: boolean
+  bundleDiscountPercent?: boolean
   rating?: boolean | Prisma.Order$ratingArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   return?: boolean | Prisma.Order$returnArgs<ExtArgs>
@@ -2075,6 +2145,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   treeCredit?: boolean
   serviceFee?: boolean
   authenticationFee?: boolean
+  bundleDiscountPercent?: boolean
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   billingDetails?: boolean | Prisma.Order$billingDetailsArgs<ExtArgs>
@@ -2098,6 +2169,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   treeCredit?: boolean
   serviceFee?: boolean
   authenticationFee?: boolean
+  bundleDiscountPercent?: boolean
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   billingDetails?: boolean | Prisma.Order$billingDetailsArgs<ExtArgs>
@@ -2121,9 +2193,10 @@ export type OrderSelectScalar = {
   treeCredit?: boolean
   serviceFee?: boolean
   authenticationFee?: boolean
+  bundleDiscountPercent?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "buyerId" | "sellerId" | "status" | "currentShipTo" | "authStatus" | "billingId" | "itemsTotal" | "totalDelivery" | "totalPrice" | "sellerItemsTotal" | "sellerTotal" | "treeCredit" | "serviceFee" | "authenticationFee", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "buyerId" | "sellerId" | "status" | "currentShipTo" | "authStatus" | "billingId" | "itemsTotal" | "totalDelivery" | "totalPrice" | "sellerItemsTotal" | "sellerTotal" | "treeCredit" | "serviceFee" | "authenticationFee" | "bundleDiscountPercent", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rating?: boolean | Prisma.Order$ratingArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2176,6 +2249,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     treeCredit: number
     serviceFee: number
     authenticationFee: number
+    bundleDiscountPercent: number
   }, ExtArgs["result"]["order"]>
   composites: {}
 }
@@ -2624,6 +2698,7 @@ export interface OrderFieldRefs {
   readonly treeCredit: Prisma.FieldRef<"Order", 'Float'>
   readonly serviceFee: Prisma.FieldRef<"Order", 'Float'>
   readonly authenticationFee: Prisma.FieldRef<"Order", 'Float'>
+  readonly bundleDiscountPercent: Prisma.FieldRef<"Order", 'Float'>
 }
     
 

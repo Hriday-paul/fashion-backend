@@ -68,6 +68,8 @@ model Order {
     serviceFee    Float @default(0) // platform service fee
     authenticationFee Float @default(0) // authentication fee
 
+    bundleDiscountPercent Float @default(0)
+
     @@index([buyerId, sellerId])
     @@map("orders")
 }
@@ -110,7 +112,7 @@ model OrderItem {
 
     quantity   Int
     weight     Float @default(0) // NEW: snapshot of product weight at order time
-    unitPrice  Float // snapshot of price at time of order
+    unitPrice  Float // snapshot of price at time of order, after bundle discount
     totalPrice Float // unitPrice * quantity
 
     isCancelled Boolean @default(false)

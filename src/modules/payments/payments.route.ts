@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { paymentsController } from './payments.controller';
 import auth from '../../middleware/auth';
-import { checkoutValidator, donationCheckoutValidator } from './payments.validation';
+import { donationCheckoutValidator } from './payments.validation';
 import req_validator from '../../middleware/req_validation';
 import { Role } from '../../../generated/prisma/enums';
 import { allRoles } from '../user/user.rout';
@@ -12,8 +12,6 @@ export const excludedCharityRoles: Role[] = [
   Role.CHARITABLE_ORGANIZATION,
   Role.CHARITY_SHOP,
 ];
-
-router.post('/checkout', checkoutValidator, req_validator(), auth(...allRoles), paymentsController.checkout);
 
 router.post('/donation/checkout', donationCheckoutValidator, req_validator(), auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), paymentsController.donationCheckout);
 

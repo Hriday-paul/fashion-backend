@@ -13,8 +13,11 @@ model Payment {
 
   stripe_status StripePaymentStatus @default(PENDING) // for track transfer
 
-  orderId String @unique
-  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId String? @unique
+  order   Order?  @relation(fields: [orderId], references: [id], onDelete: SetNull)
+
+  cartGroupId String?
+  cartGroup   CartGroup? @relation(fields: [cartGroupId], references: [id], onDelete: SetNull)
 
   transactionId          String
   paymentIntentId        String?
