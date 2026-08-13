@@ -54,8 +54,11 @@ model Order {
     currentShipTo CurrentShipTo @default(BUYER)
     authStatus OrderAuthStatus @default(NOT_STARTED)
 
+    originDetailsId String?
+    originDetails BillingDetails? @relation("origin", fields: [originDetailsId], references: [id], onDelete: Restrict)
+
     billingId      String?
-    billingDetails BillingDetails? @relation(fields: [billingId], references: [id], onDelete: Restrict)
+    billingDetails BillingDetails? @relation("destination",fields: [billingId], references: [id], onDelete: Restrict)
 
     itemsTotal    Float @default(0) // sum of all item prices
     totalDelivery Float @default(0) // NEW: sum of all seller delivery charges
@@ -69,6 +72,9 @@ model Order {
     authenticationFee Float @default(0) // authentication fee
 
     bundleDiscountPercent Float @default(0)
+
+    courier_service_id String
+    shippingId String?
 
     @@index([buyerId, sellerId])
     @@map("orders")

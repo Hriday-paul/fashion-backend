@@ -174,14 +174,14 @@ const addOrUpdateBillingDetails = catchAsync(async (req, res) => {
     });
 })
 
-const billingDetailsByUser = catchAsync(async (req, res) => {
+const addressesByUser = catchAsync(async (req, res) => {
 
-    const result = await userService.billingDetailsByUser(req?.user?.id);
+    const result = await userService.addressesByUser(req?.user?.id);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: 'Billing details retrived successfully',
+        message: 'Addresses retrived successfully',
         data: result,
     });
 })
@@ -230,5 +230,5 @@ export const userController = {
     charityStats,
 
     addOrUpdateBillingDetails,
-    billingDetailsByUser
+    addressesByUser
 }

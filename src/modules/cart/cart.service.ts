@@ -291,6 +291,10 @@ const availableRates = async (cartGroupId: string, userId: string) => {
                     product: {
                         select: {
                             finalPrice: true,
+                            weight_kg: true,
+                            hight_cm: true,
+                            width_cm: true,
+                            length_cm: true,
                         }
                     }
                 }
@@ -345,15 +349,15 @@ const availableRates = async (cartGroupId: string, userId: string) => {
         },
         "parcels": [
             {
-                "total_actual_weight": 0.5,
                 "items": cartgroup?.items?.map(item => {
                     return {
                         "category": "fashion",
                         "quantity": 1,
+                        "actual_weight" : item?.product?.weight_kg,
                         "dimensions": {
-                            "height": 0.1,
-                            "width": 20,
-                            "length": 30
+                            "height": item?.product?.hight_cm,
+                            "width": item?.product?.width_cm,
+                            "length": item?.product?.length_cm
                         },
                         "declared_currency": "USD",
                         "declared_customs_value": item?.product?.finalPrice || 0

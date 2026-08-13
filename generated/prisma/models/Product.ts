@@ -32,6 +32,10 @@ export type ProductAvgAggregateOutputType = {
   stock: number | null
   return_window: number | null
   donation_percent: number | null
+  weight_kg: number | null
+  hight_cm: number | null
+  width_cm: number | null
+  length_cm: number | null
 }
 
 export type ProductSumAggregateOutputType = {
@@ -41,6 +45,10 @@ export type ProductSumAggregateOutputType = {
   stock: number | null
   return_window: number | null
   donation_percent: number | null
+  weight_kg: number | null
+  hight_cm: number | null
+  width_cm: number | null
+  length_cm: number | null
 }
 
 export type ProductMinAggregateOutputType = {
@@ -64,6 +72,10 @@ export type ProductMinAggregateOutputType = {
   userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  weight_kg: number | null
+  hight_cm: number | null
+  width_cm: number | null
+  length_cm: number | null
 }
 
 export type ProductMaxAggregateOutputType = {
@@ -87,6 +99,10 @@ export type ProductMaxAggregateOutputType = {
   userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  weight_kg: number | null
+  hight_cm: number | null
+  width_cm: number | null
+  length_cm: number | null
 }
 
 export type ProductCountAggregateOutputType = {
@@ -114,6 +130,10 @@ export type ProductCountAggregateOutputType = {
   userId: number
   createdAt: number
   updatedAt: number
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   _all: number
 }
 
@@ -125,6 +145,10 @@ export type ProductAvgAggregateInputType = {
   stock?: true
   return_window?: true
   donation_percent?: true
+  weight_kg?: true
+  hight_cm?: true
+  width_cm?: true
+  length_cm?: true
 }
 
 export type ProductSumAggregateInputType = {
@@ -134,6 +158,10 @@ export type ProductSumAggregateInputType = {
   stock?: true
   return_window?: true
   donation_percent?: true
+  weight_kg?: true
+  hight_cm?: true
+  width_cm?: true
+  length_cm?: true
 }
 
 export type ProductMinAggregateInputType = {
@@ -157,6 +185,10 @@ export type ProductMinAggregateInputType = {
   userId?: true
   createdAt?: true
   updatedAt?: true
+  weight_kg?: true
+  hight_cm?: true
+  width_cm?: true
+  length_cm?: true
 }
 
 export type ProductMaxAggregateInputType = {
@@ -180,6 +212,10 @@ export type ProductMaxAggregateInputType = {
   userId?: true
   createdAt?: true
   updatedAt?: true
+  weight_kg?: true
+  hight_cm?: true
+  width_cm?: true
+  length_cm?: true
 }
 
 export type ProductCountAggregateInputType = {
@@ -207,6 +243,10 @@ export type ProductCountAggregateInputType = {
   userId?: true
   createdAt?: true
   updatedAt?: true
+  weight_kg?: true
+  hight_cm?: true
+  width_cm?: true
+  length_cm?: true
   _all?: true
 }
 
@@ -321,6 +361,10 @@ export type ProductGroupByOutputType = {
   userId: string
   createdAt: Date
   updatedAt: Date
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   _count: ProductCountAggregateOutputType | null
   _avg: ProductAvgAggregateOutputType | null
   _sum: ProductSumAggregateOutputType | null
@@ -371,6 +415,10 @@ export type ProductWhereInput = {
   userId?: Prisma.StringFilter<"Product"> | string
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
+  weight_kg?: Prisma.FloatFilter<"Product"> | number
+  hight_cm?: Prisma.FloatFilter<"Product"> | number
+  width_cm?: Prisma.FloatFilter<"Product"> | number
+  length_cm?: Prisma.FloatFilter<"Product"> | number
   images?: Prisma.ProductPictureListRelationFilter
   brand?: Prisma.XOR<Prisma.BrandScalarRelationFilter, Prisma.BrandWhereInput>
   size?: Prisma.XOR<Prisma.SizeScalarRelationFilter, Prisma.SizeWhereInput>
@@ -409,6 +457,10 @@ export type ProductOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  weight_kg?: Prisma.SortOrder
+  hight_cm?: Prisma.SortOrder
+  width_cm?: Prisma.SortOrder
+  length_cm?: Prisma.SortOrder
   images?: Prisma.ProductPictureOrderByRelationAggregateInput
   brand?: Prisma.BrandOrderByWithRelationInput
   size?: Prisma.SizeOrderByWithRelationInput
@@ -450,6 +502,10 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"Product"> | string
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
+  weight_kg?: Prisma.FloatFilter<"Product"> | number
+  hight_cm?: Prisma.FloatFilter<"Product"> | number
+  width_cm?: Prisma.FloatFilter<"Product"> | number
+  length_cm?: Prisma.FloatFilter<"Product"> | number
   images?: Prisma.ProductPictureListRelationFilter
   brand?: Prisma.XOR<Prisma.BrandScalarRelationFilter, Prisma.BrandWhereInput>
   size?: Prisma.XOR<Prisma.SizeScalarRelationFilter, Prisma.SizeWhereInput>
@@ -488,6 +544,10 @@ export type ProductOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  weight_kg?: Prisma.SortOrder
+  hight_cm?: Prisma.SortOrder
+  width_cm?: Prisma.SortOrder
+  length_cm?: Prisma.SortOrder
   _count?: Prisma.ProductCountOrderByAggregateInput
   _avg?: Prisma.ProductAvgOrderByAggregateInput
   _max?: Prisma.ProductMaxOrderByAggregateInput
@@ -523,6 +583,10 @@ export type ProductScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"Product"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
+  weight_kg?: Prisma.FloatWithAggregatesFilter<"Product"> | number
+  hight_cm?: Prisma.FloatWithAggregatesFilter<"Product"> | number
+  width_cm?: Prisma.FloatWithAggregatesFilter<"Product"> | number
+  length_cm?: Prisma.FloatWithAggregatesFilter<"Product"> | number
 }
 
 export type ProductCreateInput = {
@@ -546,6 +610,10 @@ export type ProductCreateInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
@@ -584,6 +652,10 @@ export type ProductUncheckedCreateInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
@@ -614,6 +686,10 @@ export type ProductUpdateInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
@@ -652,6 +728,10 @@ export type ProductUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
@@ -686,6 +766,10 @@ export type ProductCreateManyInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
 }
 
 export type ProductUpdateManyMutationInput = {
@@ -709,6 +793,10 @@ export type ProductUpdateManyMutationInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type ProductUncheckedUpdateManyInput = {
@@ -736,6 +824,10 @@ export type ProductUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type ProductListRelationFilter = {
@@ -778,6 +870,10 @@ export type ProductCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  weight_kg?: Prisma.SortOrder
+  hight_cm?: Prisma.SortOrder
+  width_cm?: Prisma.SortOrder
+  length_cm?: Prisma.SortOrder
 }
 
 export type ProductAvgOrderByAggregateInput = {
@@ -787,6 +883,10 @@ export type ProductAvgOrderByAggregateInput = {
   stock?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
+  weight_kg?: Prisma.SortOrder
+  hight_cm?: Prisma.SortOrder
+  width_cm?: Prisma.SortOrder
+  length_cm?: Prisma.SortOrder
 }
 
 export type ProductMaxOrderByAggregateInput = {
@@ -810,6 +910,10 @@ export type ProductMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  weight_kg?: Prisma.SortOrder
+  hight_cm?: Prisma.SortOrder
+  width_cm?: Prisma.SortOrder
+  length_cm?: Prisma.SortOrder
 }
 
 export type ProductMinOrderByAggregateInput = {
@@ -833,6 +937,10 @@ export type ProductMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  weight_kg?: Prisma.SortOrder
+  hight_cm?: Prisma.SortOrder
+  width_cm?: Prisma.SortOrder
+  length_cm?: Prisma.SortOrder
 }
 
 export type ProductSumOrderByAggregateInput = {
@@ -842,6 +950,10 @@ export type ProductSumOrderByAggregateInput = {
   stock?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
+  weight_kg?: Prisma.SortOrder
+  hight_cm?: Prisma.SortOrder
+  width_cm?: Prisma.SortOrder
+  length_cm?: Prisma.SortOrder
 }
 
 export type ProductCreateNestedManyWithoutCategoryInput = {
@@ -1167,6 +1279,10 @@ export type ProductCreateWithoutCategoryInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
@@ -1203,6 +1319,10 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
@@ -1266,6 +1386,10 @@ export type ProductScalarWhereInput = {
   userId?: Prisma.StringFilter<"Product"> | string
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
+  weight_kg?: Prisma.FloatFilter<"Product"> | number
+  hight_cm?: Prisma.FloatFilter<"Product"> | number
+  width_cm?: Prisma.FloatFilter<"Product"> | number
+  length_cm?: Prisma.FloatFilter<"Product"> | number
 }
 
 export type ProductCreateWithoutBrandInput = {
@@ -1289,6 +1413,10 @@ export type ProductCreateWithoutBrandInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
@@ -1325,6 +1453,10 @@ export type ProductUncheckedCreateWithoutBrandInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
@@ -1381,6 +1513,10 @@ export type ProductCreateWithoutSizeInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
@@ -1417,6 +1553,10 @@ export type ProductUncheckedCreateWithoutSizeInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
@@ -1473,6 +1613,10 @@ export type ProductCreateWithoutOrderItemsInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
@@ -1510,6 +1654,10 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
@@ -1555,6 +1703,10 @@ export type ProductUpdateWithoutOrderItemsInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
@@ -1592,6 +1744,10 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
@@ -1621,6 +1777,10 @@ export type ProductCreateWithoutImagesInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
@@ -1658,6 +1818,10 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
@@ -1703,6 +1867,10 @@ export type ProductUpdateWithoutImagesInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
@@ -1740,6 +1908,10 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
@@ -1769,6 +1941,10 @@ export type ProductCreateWithoutCharitiesInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
@@ -1806,6 +1982,10 @@ export type ProductUncheckedCreateWithoutCharitiesInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
@@ -1851,6 +2031,10 @@ export type ProductUpdateWithoutCharitiesInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
@@ -1888,6 +2072,10 @@ export type ProductUncheckedUpdateWithoutCharitiesInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
@@ -1917,6 +2105,10 @@ export type ProductCreateWithoutFavouritesInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
@@ -1954,6 +2146,10 @@ export type ProductUncheckedCreateWithoutFavouritesInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
@@ -1999,6 +2195,10 @@ export type ProductUpdateWithoutFavouritesInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
@@ -2036,6 +2236,10 @@ export type ProductUncheckedUpdateWithoutFavouritesInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2065,6 +2269,10 @@ export type ProductCreateWithoutCartItemsInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
@@ -2102,6 +2310,10 @@ export type ProductUncheckedCreateWithoutCartItemsInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
@@ -2147,6 +2359,10 @@ export type ProductUpdateWithoutCartItemsInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
@@ -2184,6 +2400,10 @@ export type ProductUncheckedUpdateWithoutCartItemsInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
@@ -2213,6 +2433,10 @@ export type ProductCreateWithoutViewersInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
@@ -2250,6 +2474,10 @@ export type ProductUncheckedCreateWithoutViewersInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
@@ -2295,6 +2523,10 @@ export type ProductUpdateWithoutViewersInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
@@ -2332,6 +2564,10 @@ export type ProductUncheckedUpdateWithoutViewersInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
@@ -2361,6 +2597,10 @@ export type ProductCreateWithoutQuestionsInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
@@ -2398,6 +2638,10 @@ export type ProductUncheckedCreateWithoutQuestionsInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
@@ -2443,6 +2687,10 @@ export type ProductUpdateWithoutQuestionsInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
@@ -2480,6 +2728,10 @@ export type ProductUncheckedUpdateWithoutQuestionsInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
@@ -2509,6 +2761,10 @@ export type ProductCreateWithoutUserInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
   brand: Prisma.BrandCreateNestedOneWithoutProductsInput
   size: Prisma.SizeCreateNestedOneWithoutProductsInput
@@ -2545,6 +2801,10 @@ export type ProductUncheckedCreateWithoutUserInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
   images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
   charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
   favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
@@ -2604,6 +2864,10 @@ export type ProductCreateManyCategoryInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
 }
 
 export type ProductUpdateWithoutCategoryInput = {
@@ -2627,6 +2891,10 @@ export type ProductUpdateWithoutCategoryInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
@@ -2663,6 +2931,10 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
@@ -2696,6 +2968,10 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type ProductCreateManyBrandInput = {
@@ -2722,6 +2998,10 @@ export type ProductCreateManyBrandInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
 }
 
 export type ProductUpdateWithoutBrandInput = {
@@ -2745,6 +3025,10 @@ export type ProductUpdateWithoutBrandInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
@@ -2781,6 +3065,10 @@ export type ProductUncheckedUpdateWithoutBrandInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
@@ -2814,6 +3102,10 @@ export type ProductUncheckedUpdateManyWithoutBrandInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type ProductCreateManySizeInput = {
@@ -2840,6 +3132,10 @@ export type ProductCreateManySizeInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
 }
 
 export type ProductUpdateWithoutSizeInput = {
@@ -2863,6 +3159,10 @@ export type ProductUpdateWithoutSizeInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
@@ -2899,6 +3199,10 @@ export type ProductUncheckedUpdateWithoutSizeInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
@@ -2932,6 +3236,10 @@ export type ProductUncheckedUpdateManyWithoutSizeInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type ProductCreateManyUserInput = {
@@ -2958,6 +3266,10 @@ export type ProductCreateManyUserInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
 }
 
 export type ProductUpdateWithoutUserInput = {
@@ -2981,6 +3293,10 @@ export type ProductUpdateWithoutUserInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
   brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
   size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
@@ -3017,6 +3333,10 @@ export type ProductUncheckedUpdateWithoutUserInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
   charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
   favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
@@ -3050,6 +3370,10 @@ export type ProductUncheckedUpdateManyWithoutUserInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 
@@ -3162,6 +3486,10 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  weight_kg?: boolean
+  hight_cm?: boolean
+  width_cm?: boolean
+  length_cm?: boolean
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
   size?: boolean | Prisma.SizeDefaultArgs<ExtArgs>
@@ -3201,6 +3529,10 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  weight_kg?: boolean
+  hight_cm?: boolean
+  width_cm?: boolean
+  length_cm?: boolean
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
   size?: boolean | Prisma.SizeDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -3232,6 +3564,10 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  weight_kg?: boolean
+  hight_cm?: boolean
+  width_cm?: boolean
+  length_cm?: boolean
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
   size?: boolean | Prisma.SizeDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -3263,9 +3599,13 @@ export type ProductSelectScalar = {
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  weight_kg?: boolean
+  hight_cm?: boolean
+  width_cm?: boolean
+  length_cm?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "discountPct" | "finalPrice" | "currency" | "brandId" | "sizeId" | "categoryId" | "catagory_hierarchy" | "condition" | "tags" | "meterials" | "color" | "care_instructions" | "stock" | "allow_offer" | "return_window" | "donation_percent" | "isDeleted" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "discountPct" | "finalPrice" | "currency" | "brandId" | "sizeId" | "categoryId" | "catagory_hierarchy" | "condition" | "tags" | "meterials" | "color" | "care_instructions" | "stock" | "allow_offer" | "return_window" | "donation_percent" | "isDeleted" | "userId" | "createdAt" | "updatedAt" | "weight_kg" | "hight_cm" | "width_cm" | "length_cm", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
@@ -3333,6 +3673,10 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     userId: string
     createdAt: Date
     updatedAt: Date
+    weight_kg: number
+    hight_cm: number
+    width_cm: number
+    length_cm: number
   }, ExtArgs["result"]["product"]>
   composites: {}
 }
@@ -3791,6 +4135,10 @@ export interface ProductFieldRefs {
   readonly userId: Prisma.FieldRef<"Product", 'String'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Product", 'DateTime'>
+  readonly weight_kg: Prisma.FieldRef<"Product", 'Float'>
+  readonly hight_cm: Prisma.FieldRef<"Product", 'Float'>
+  readonly width_cm: Prisma.FieldRef<"Product", 'Float'>
+  readonly length_cm: Prisma.FieldRef<"Product", 'Float'>
 }
     
 

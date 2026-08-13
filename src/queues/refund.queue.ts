@@ -1,7 +1,14 @@
 import { Queue } from "bullmq";
 import { connectionInfo } from "../redis";
 
-export const RefundQueue = new Queue("payment-refund", {
+export const RefundQueue = new Queue<{
+        paymentId: string;
+        paymentIntentId: string;
+        reason: string;
+        triggeredBy: string;
+        markPaymentRefunded?: boolean;
+        amount?: number;
+    }>("payment-refund", {
     connection: connectionInfo,
     defaultJobOptions: {
         attempts: 5,

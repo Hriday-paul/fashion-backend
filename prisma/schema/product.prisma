@@ -54,6 +54,11 @@ model Product {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
+    weight_kg Float // in kg, for shipping cost calculation
+    hight_cm Float // in cm, for shipping cost calculation
+    width_cm Float // in cm, for shipping cost calculation
+    length_cm Float // in cm, for shipping cost calculation
+
     @@map("products")
 }
 

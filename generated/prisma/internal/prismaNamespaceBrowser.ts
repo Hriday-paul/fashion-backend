@@ -224,6 +224,7 @@ export const OrderScalarFieldEnum = {
   status: 'status',
   currentShipTo: 'currentShipTo',
   authStatus: 'authStatus',
+  originDetailsId: 'originDetailsId',
   billingId: 'billingId',
   itemsTotal: 'itemsTotal',
   totalDelivery: 'totalDelivery',
@@ -233,7 +234,9 @@ export const OrderScalarFieldEnum = {
   treeCredit: 'treeCredit',
   serviceFee: 'serviceFee',
   authenticationFee: 'authenticationFee',
-  bundleDiscountPercent: 'bundleDiscountPercent'
+  bundleDiscountPercent: 'bundleDiscountPercent',
+  courier_service_id: 'courier_service_id',
+  shippingId: 'shippingId'
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
@@ -363,7 +366,11 @@ export const ProductScalarFieldEnum = {
   isDeleted: 'isDeleted',
   userId: 'userId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  weight_kg: 'weight_kg',
+  hight_cm: 'hight_cm',
+  width_cm: 'width_cm',
+  length_cm: 'length_cm'
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
@@ -639,6 +646,7 @@ export type AccountDocumentScalarFieldEnum = (typeof AccountDocumentScalarFieldE
 export const BillingDetailsScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  sellerId: 'sellerId',
   country: 'country',
   countryCode: 'countryCode',
   full_name: 'full_name',

@@ -91,9 +91,9 @@ router.put(
     userController.addOrUpdateBillingDetails,
 );
 router.get(
-    '/billing-details',
+    '/addrsesses',
     auth(...allRoles),
-    userController.billingDetailsByUser
+    userController.addressesByUser
 );
 
 router.get(

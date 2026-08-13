@@ -365,25 +365,151 @@ const addOrUpdateBillingDetails = async (payload: BillingDetails, userId: string
         );
     }
 
-    const existDefaultBillingDetails = await prisma.billingDetails.findFirst({ where: { userId } });
-
-    if (existDefaultBillingDetails) {
-        await prisma.billingDetails.update({ where: { userId }, data: { userId: null } });
-    }
-
-    const res = await prisma.billingDetails.create({
-        data: {
-            ...payload,
-            userId
+    const existBuyingAddress = await prisma.billingDetails.findFirst({
+        where: { userId },
+        include: {
+            orders: {
+                select: {
+                    id: true
+                }
+            },
+            ordersAsDestination: {
+                select: {
+                    id: true
+                }
+            }
         }
+    });
+
+    await prisma.$transaction(async (tx) => {
+
+        if (existBuyingAddress && existBuyingAddress?.orders?.length === 0 && existBuyingAddress?.ordersAsDestination?.length === 0 && !existBuyingAddress?.sellerId) {
+
+            await tx.billingDetails.update({
+                where: { userId }, data: {
+                    ...payload,
+                    userId
+                }
+            });
+
+            return;
+        }
+        //if just a address is exist, just soft delete the address
+        else if (existBuyingAddress) {
+
+            await tx.billingDetails.update({
+                where: { userId }, data: {
+                    userId: null
+                }
+            });
+        }
+
+        const existSellingAddress = await tx.billingDetails.findFirst({ where: { sellerId: userId } });
+
+        const res = await tx.billingDetails.create({
+            data: {
+                ...payload,
+                userId,
+                ...(!existSellingAddress ? { sellerId: userId } : { userId: null })
+            }
+        })
     })
-    return res;
+
+    return;
 }
 
-const billingDetailsByUser = async (userId: string) => {
-    const res = await prisma.billingDetails.findFirst({ where: { userId } });
+const addressesByUser = async (userId: string) => {
+    const buyingAddress = await prisma.billingDetails.findFirst({ where: { userId } });
 
-    return res;
+    const sellingAddress = await prisma.billingDetails.findFirst({ where: { sellerId: userId } });
+
+    return {
+        buyingAddress,
+        sellingAddress
+    }
+}
+
+const addOrUpdateSellerAddress = async (payload: BillingDetails, sellerId: string) => {
+
+    const shipPayload = {
+        "line_1": payload?.address1,
+        "city": payload?.city,
+        "state": payload?.state,
+        "postal_code": payload?.zip_code,
+        "country_alpha2": payload?.countryCode
+    }
+
+    const rateRes = await fetch(`${config.easyship.easyship_base_url}/addresses/validations`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shipPayload)
+    });
+
+    if (!rateRes.ok) {
+        const errorData = await rateRes.json().catch(() => null);
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            errorData?.error?.message || 'Invalid Shipping Address',
+        );
+    }
+
+    const existSellingAddress = await prisma.billingDetails.findFirst({
+        where: { sellerId },
+        include: {
+            orders: {
+                select: {
+                    id: true
+                }
+            },
+            ordersAsDestination: {
+                select: {
+                    id: true
+                }
+            }
+        }
+    });
+
+    // Check if the existing address is exist & did not used in any order & did not used in any buyer address, if yes then can update the existing address, otherwise create new address
+
+    await prisma.$transaction(async (tx) => {
+
+        if (existSellingAddress && existSellingAddress?.orders?.length === 0 && existSellingAddress?.ordersAsDestination?.length === 0 && !existSellingAddress?.userId) {
+
+            await tx.billingDetails.update({
+                where: { sellerId }, data: {
+                    ...payload,
+                    sellerId
+                }
+            });
+
+            return;
+        }
+        //if just a address is exist, just soft delete the address
+        else if (existSellingAddress) {
+
+            await tx.billingDetails.update({
+                where: { sellerId }, data: {
+                    sellerId: null
+                }
+            });
+        }
+
+        const existBuyingAddress = await tx.billingDetails.findFirst({ where: { userId: sellerId } });
+
+        const res = await tx.billingDetails.create({
+            data: {
+                ...payload,
+                sellerId,
+                ...(!existBuyingAddress ? { userId: sellerId } : { userId: null })
+            }
+        })
+    })
+
+
+    return;
 }
 
 const bundleDiscount = async (userId: string) => {
@@ -439,7 +565,8 @@ export const userService = {
 
     allCharies,
     addOrUpdateBillingDetails,
-    billingDetailsByUser,
+    addressesByUser,
+    addOrUpdateSellerAddress,
     memberStats,
     charityStats,
     charityAbout,

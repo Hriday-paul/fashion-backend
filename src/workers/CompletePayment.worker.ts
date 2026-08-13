@@ -141,6 +141,12 @@ markCompletePaymentWorker.on("completed", async (job, result) => {
             return;
         }
 
+        if (!payment?.cartGroupId) {
+            //send notification to admin
+            console.error(`Cart group not found for paymentId & order creation failed: ${paymentId}`);
+            return;
+        }
+
         //make order after payment is completed
         await MakeOrderQueue.add(jobs.makeOrder, {
             cartGroupId: payment.cartGroupId,

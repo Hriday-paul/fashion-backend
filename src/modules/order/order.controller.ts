@@ -23,7 +23,7 @@ const ordersBySeller = catchAsync(async (req: Request, res: Response) => {
     const query = pick(req.query, ["searchTerm", "status"])
     const options = pick(req.query, PaginateOptions);
 
-    const result = await orderService.ordersBySeller(req.user?.id, query, options);
+    const result = await orderService.ordersAsASeller(req.user?.id, query, options);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,

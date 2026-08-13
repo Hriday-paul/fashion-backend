@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "products" ALTER COLUMN "hight_cm" DROP DEFAULT,
+ALTER COLUMN "length_cm" DROP DEFAULT,
+ALTER COLUMN "weight_kg" DROP DEFAULT,
+ALTER COLUMN "width_cm" DROP DEFAULT;

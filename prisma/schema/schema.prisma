@@ -114,7 +114,8 @@ model User {
 
   prodQuestions Question[]
 
-  billingAddress BillingDetails?
+  billingAddress BillingDetails? @relation("asBuyer")
+  sellerAddress BillingDetails? @relation("asSeller")
 
   wallet Wallet?
 
@@ -174,7 +175,11 @@ model AccountDocument {
 model BillingDetails {
   id        String  @id @default(uuid())
   userId    String? @unique
-  user      User?   @relation(fields: [userId], references: [id], onDelete: Cascade) // for set on default to user
+  user      User?   @relation("asBuyer",fields: [userId], references: [id], onDelete: Cascade) // for set on default to user
+
+  sellerId  String? @unique
+  seller    User?   @relation("asSeller", fields: [sellerId], references: [id], onDelete: Cascade) // for set on default to seller
+
   country   String
   countryCode String @default("US")
   full_name String? //user name
@@ -185,7 +190,8 @@ model BillingDetails {
   email     String?
   city      String
 
-  orders Order[]
+  orders Order[] @relation("origin")
+  ordersAsDestination Order[] @relation("destination")
 
   contact String?
 

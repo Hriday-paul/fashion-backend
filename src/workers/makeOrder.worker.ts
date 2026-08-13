@@ -3,14 +3,16 @@ import { connectionInfo } from "../redis";
 import prisma from "../shared/prisma";
 import { RefundQueue } from "../queues/refund.queue";
 import { jobs } from "../queues/jobs.name";
+import config from "../config";
+import { IShipment } from "../modules/order/order.interface";
 // import { notificationQueue } from "../queues/notification.queues";
 
 // ── Worker ──────────────────────────────────────────────────────────────────
 export const makeOrderWorker = new Worker(
     "make-order",
-    async (job: Job<{ cartGroupId: string, paymentId: string, paymentIntentId: string }>) => {
+    async (job) => {
 
-        const { cartGroupId, paymentId } = job.data;
+        const { cartGroupId, paymentId, paymentIntentId } = job.data;
 
         const cartGroup = await prisma.cartGroup.findFirst({
             where: { id: cartGroupId },
@@ -32,6 +34,11 @@ export const makeOrderWorker = new Worker(
                                 donation_percent: true,
                                 stock: true,
                                 userId: true,
+                                weight_kg: true,
+                                hight_cm: true,
+                                width_cm: true,
+                                length_cm: true,
+                                description: true
                             }
                         }
                     },
@@ -59,6 +66,10 @@ export const makeOrderWorker = new Worker(
             throw new UnrecoverableError("Cart group does not exist");
         }
 
+        if (!cartGroup?.shippingServiceId) {
+            throw new UnrecoverableError("Courier service does not exist");
+        }
+
         const cartgroup = cartGroup;
 
         const billing_details = await prisma.billingDetails.findFirst({ where: { userId: cartgroup?.userId } });
@@ -77,8 +88,8 @@ export const makeOrderWorker = new Worker(
 
         const bundleDiscountPercent = nearestTier ? nearestTier.discountPercent : 0;
 
-        // Build order items with seller info
-        const orderItems = cartgroup.items.map((item) => {
+        // Build order in stock items with seller info
+        const orderItems = cartgroup.items.filter((item) => item?.product?.stock > 0).map((item) => {
             const p = item?.product;
             const donation_percent = p.donation_percent || 0;
             const extra_donation = item.extraDonation || 0;
@@ -100,24 +111,148 @@ export const makeOrderWorker = new Worker(
             };
         });
 
+        const stockoutItems = cartgroup.items.filter((item) => item?.product?.stock <= 0).map((item) => {
+            const p = item?.product;
+            const donation_percent = p.donation_percent || 0;
+            const extra_donation = item.extraDonation || 0;
+            const unit_price = p?.finalPrice - (p?.finalPrice * (bundleDiscountPercent / 100))
+
+            const quantity = item.quantity || 1;
+
+            return {
+                product: p,
+                productId: p.id,
+                sellerId: p.userId,
+                unitPrice: unit_price,
+                totalPrice: unit_price + extra_donation,
+                quantity,
+                extra_donation,
+                donation_percent, // how much percent of the product price will be donated to charity from seller
+                donation_amount: (unit_price * (donation_percent / 100)), // how much amount of the product price will be donated to charity from seller
+                charities: item?.charities ?? [],
+                isCancelled: true,
+                cancelledBy: "SYSTEM",
+                cancelReason: "OUT_OF_STOCK",
+                cancelReasonDetails: "Product is out of stock, please contact support for further assistance."
+            };
+        });
+
         // ====================For Save Ordrer in DB========================
         const itemsTotal = orderItems.reduce((acc, item) => acc + item.unitPrice, 0);
-        const totalExtraDonation = orderItems.reduce((acc, item) => acc + (item.extra_donation || 0), 0);
+
+        const totalExtraDonation = orderItems.reduce((acc, item) => acc + (item.extra_donation || 0), 0) + stockoutItems.reduce((acc, item) => acc + (item.extra_donation || 0), 0);
+
         const otherTotal = (cartgroup.serviceFeeCost || 0) + (cartgroup.treeGiftCost || 0) + (cartgroup.authenticationCost || 0);
 
+        const discountedItemTotal = itemsTotal;
 
-        const discountedItemTotal = itemsTotal
-
-        const total = discountedItemTotal + otherTotal + totalExtraDonation;
 
         const sellerDonationTotal = orderItems.reduce((acc, item) => acc + item?.donation_amount, 0);
 
-        
         const treeCredit = cartgroup?.treeGiftCost;
         const userId = cartgroup?.userId;
 
+        //if no available items in order, then refund the full payment amount to the buyer
+        if (orderItems.length === 0) {
+            // refund issue, don't have cart group
+
+            await RefundQueue.add(jobs.refund, {
+                paymentId: paymentId,
+                paymentIntentId,
+                reason: "Due to all items in the cart being out of stock, the order could not be processed. A full refund will be issued.",
+                triggeredBy: "System",
+                markPaymentRefunded: true
+            });
+
+            //send notification & email to buyer about order creation failure due to stockout
+
+            // no need to create order in DB, just return from here
+            return;
+        }
+
+        const shipPayload = {
+            "origin_address": {
+                "line_1": "Pariser Platz 1",
+                "city": "Berlin",
+                "state": "Berlin",
+                "postal_code": "10117",
+                "country_alpha2": "DE",
+                "company_name": "FASHION",
+                "contact_name": cartgroup?.seller?.fname,
+                "contact_phone": cartgroup?.seller?.phone,
+                "contact_email": cartgroup?.seller?.email
+            },
+            "destination_address": {
+                "line_1": billing_details?.address1,
+                "line_2": billing_details?.address2,
+                "city": billing_details?.city,
+                "state": billing_details?.state,
+                "postal_code": billing_details?.zip_code,
+                "country_alpha2": billing_details?.countryCode,
+                "contact_name": billing_details?.full_name,
+                "contact_phone": billing_details?.contact,
+                "contact_email": billing_details?.email
+            },
+            "return": false,
+            "incoterms": "DDP",
+            "order_data": {
+                "platform_name": "FASHION",
+            },
+            "courier_settings": {
+                "courier_service_id": cartgroup?.shippingServiceId
+            },
+            "shipping_settings": {
+                "units": {
+                    "weight": "kg",
+                    "dimensions": "cm"
+                }
+            },
+            "parcels": [
+                {
+                    "items": orderItems?.map((item) => {
+                        return {
+                            "description": item?.product?.description || item?.product?.title || "Fashion Product",
+                            "category": "fashion",
+                            "origin_country_alpha2": billing_details?.countryCode,
+                            "quantity": 1,
+                            "dimensions": {
+                                "height": item?.product?.hight_cm,
+                                "width": item?.product?.width_cm,
+                                "length": item?.product?.length_cm
+                            },
+                            "declared_currency": "USD",
+                            "declared_customs_value": item?.product?.finalPrice || 0,
+                        }
+
+                    }),
+                    "total_actual_weight": 0.5
+                }
+            ]
+        }
+
+        const rateRes = await fetch(`${config.easyship.easyship_base_url}/shipments`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(shipPayload)
+        });
+
+        if (!rateRes.ok) {
+            const errorData = await rateRes.json().catch(() => null);
+            console.log(errorData?.error?.message || "Shipment creation failed")
+            throw new UnrecoverableError(errorData?.error?.message || "Shipment creation failed");
+        }
+
+        const shipmentData = await rateRes.json() as IShipment;
+
+        const shippingRate = shipmentData?.shipment?.rates.find(rate => rate?.courier_service?.id === cartGroup?.shippingServiceId)?.total_charge || 0;
+
+        const total = discountedItemTotal + otherTotal + totalExtraDonation + shippingRate;
+
         // Create order in DB
-        const result = await prisma.order.create({
+        const order = await prisma.order.create({
             data: {
                 totalPrice: total,
                 itemsTotal: discountedItemTotal,
@@ -125,16 +260,31 @@ export const makeOrderWorker = new Worker(
                 buyerId: userId,
                 billingId: billing_details?.id,
                 sellerId: orderItems[0]?.sellerId,
-                sellerItemsTotal : discountedItemTotal,
-                sellerTotal : discountedItemTotal - sellerDonationTotal,
+                sellerItemsTotal: discountedItemTotal,
+                sellerTotal: discountedItemTotal - sellerDonationTotal,
                 bundleDiscountPercent,
+                courier_service_id: cartGroup?.shippingServiceId,
+
+                shippingId: shipmentData?.shipment?.easyship_shipment_id,
+                deliveryCharge: {
+                    create: {
+                        baseCharge: shippingRate,
+                        discount: 0,
+                        finalCharge: shippingRate,
+                        status: "UNPAID",
+                        totalItems: orderItems?.length || 0,
+                        totalWeight: orderItems?.reduce((acc, item) => acc + (item?.product?.weight_kg || 0), 0),
+                    }
+                },
+                totalDelivery: shippingRate,
+
                 payment: {
                     connect: {
                         id: paymentId
                     }
                 },
                 items: {
-                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, ...item }) => {
+                    create: [...orderItems, ...stockoutItems].map(({ charities, sellerId, donation_amount, donation_percent, product, ...item }) => {
                         const charityCount = charities.length;
                         const splitAmount = charityCount > 0 ? (donation_amount / charityCount) : 0;
                         const splitExtra = charityCount > 0 ? (item.extra_donation / charityCount) : 0;
@@ -166,10 +316,27 @@ export const makeOrderWorker = new Worker(
                                 },
                             }),
                         };
-                    }),
+                    })
                 },
             },
         });
+
+        //refund the payment for stockout items
+        if (stockoutItems.length > 0) {
+            const stockoutRefundAmount = stockoutItems.reduce((acc, item) => acc + item.unitPrice, 0);
+
+            // refund issue
+            await RefundQueue.add(jobs.refund, {
+                paymentId: paymentId,
+                paymentIntentId,
+                reason: "Due to some items in the cart being out of stock, a partial refund will be issued for those items.",
+                triggeredBy: "System",
+                markPaymentRefunded: false,
+                amount: stockoutRefundAmount
+            });
+
+            //send notification & email to buyer about order item stockout & partial refund
+        }
 
     },
     {
@@ -212,20 +379,49 @@ makeOrderWorker.on("failed", async (job, err) => {
 
 makeOrderWorker.on("completed", async (job, result) => {
 
-    const { paymentId, paymentIntentId, cartGroupId } = job.data;
+    try {
 
-    console.log(`makeOrderWorker completed for paymentId: ${paymentId}, paymentIntentId: ${paymentIntentId}`);
+        const { cartGroupId } = job.data;
 
-    //delete cart group after order creation success
-    await prisma.cartGroup.delete({ where: { id: cartGroupId } });
+        //decrement the items stock after order creation success
+        const cartGroup = await prisma.cartGroup.findFirst({
+            where: { id: cartGroupId },
+            include: {
+                items: {
+                    include: {
+                        product: true
+                    }
+                }
+            }
+        });
 
-    //send email & notification to buyer & seller about order creation success
-    // await notificationQueue.add(jobs.admin_notification, {
-    //     title: "Order Created Successfully",
-    //     message: `Order has been created successfully for paymentId: ${paymentId}, paymentIntentId: ${paymentIntentId}`
-    // });
+        await prisma.$transaction(async (tx) => {
+            await tx.product.updateMany({
+                where: {
+                    id: {
+                        in: cartGroup?.items?.map(item => {
+                            return item?.productId
+                        })
+                    },
+                    stock: {
+                        gt: 0
+                    }
+                },
+                data: {
+                    stock: {
+                        decrement: 1
+                    }
+                }
+            })
 
-    //send email & notification to buyer & seller about order creation success
+            //delete the cart group after order creation success
+            await tx.cartGroup.delete({ where: { id: cartGroupId } });
+        })
+
+
+    } catch (err) {
+        console.log("order cration complete, but items stock decrement get error:", err);
+    }
 
 });
 

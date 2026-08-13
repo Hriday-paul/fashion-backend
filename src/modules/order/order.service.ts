@@ -90,7 +90,7 @@ const addNewOrder = async (
         if (dbProduct.stock < payloadItem.quantity) {
             throw new AppError(httpStatus.BAD_REQUEST,
                 dbProduct.stock === 0
-                    ? `${payloadItem.product?.title} is out of stock`
+                    ? `"${payloadItem.product?.title}" is out of stock`
                     : `Only ${dbProduct.stock} unit(s) of "${payloadItem.product?.title}" left in stock`
             );
         }
@@ -496,7 +496,7 @@ const confirmOrderReceived = async (orderId: string, userId: string) => {
 
 }
 
-const ordersBySeller = async (sellerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
+const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
     const AndConditions: Prisma.OrderWhereInput[] = [{ sellerId }];
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
@@ -728,10 +728,14 @@ const markShippedOrder = async (orderId: string, current_sellerId: string) => {
 
 }
 
+const makeShipingLebel = async (orderId: string, current_sellerId: string) => {
+
+}
+
 
 export const orderService = {
     addNewOrder,
-    ordersBySeller,
+    ordersAsASeller,
     cancelOrderItemBySeller,
     requestCancelOrderItem,
     approveCancelOrderItemBySeller,
