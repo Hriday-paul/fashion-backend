@@ -74,8 +74,10 @@ export const makeOrderWorker = new Worker(
 
         const billing_details = await prisma.billingDetails.findFirst({ where: { userId: cartgroup?.userId } });
 
-        if (!billing_details) {
-            throw new UnrecoverableError("Billing details is required")
+        const sellerDetails = await prisma.billingDetails.findFirst({ where: { sellerId: cartgroup?.sellerId } });
+
+        if (!billing_details || !sellerDetails) {
+            throw new UnrecoverableError(!billing_details ? "Shipping details is required" : "Seller location does not exist for place shipment");
         }
 
         const itemCount = cartgroup.items.length;
@@ -172,11 +174,12 @@ export const makeOrderWorker = new Worker(
 
         const shipPayload = {
             "origin_address": {
-                "line_1": "Pariser Platz 1",
-                "city": "Berlin",
-                "state": "Berlin",
-                "postal_code": "10117",
-                "country_alpha2": "DE",
+                "line_1": sellerDetails?.address1,
+                "line_2": sellerDetails?.address2,
+                "city": sellerDetails?.city,
+                "state": sellerDetails?.state,
+                "postal_code": sellerDetails?.zip_code,
+                "country_alpha2": sellerDetails?.countryCode,
                 "company_name": "FASHION",
                 "contact_name": cartgroup?.seller?.fname,
                 "contact_phone": cartgroup?.seller?.phone,
@@ -264,6 +267,8 @@ export const makeOrderWorker = new Worker(
                 sellerTotal: discountedItemTotal - sellerDonationTotal,
                 bundleDiscountPercent,
                 courier_service_id: cartGroup?.shippingServiceId,
+
+                currentShipTo: cartgroup.authenticationCost > 0 ? "AUTHENTICATION_CENTER" : "BUYER",
 
                 shippingId: shipmentData?.shipment?.easyship_shipment_id,
                 deliveryCharge: {

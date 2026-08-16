@@ -245,3 +245,195 @@ export interface IShipment {
         "unavailable_couriers": []
     }
 }
+
+export interface ILabel {
+    "shipment": {
+        "easyship_shipment_id": "ESSG10006001",
+        "buyer_regulatory_identifiers": {
+            "ein": null,
+            "ssn": null,
+            "vat_number": null
+        },
+        "consignee_tax_id": null,
+        "courier_service": {
+            "id": "01563646-58c1-4607-8fe0-cae3e33c0001",
+            "courier_id": "01563646-58c1-4607-8fe0-cae3e33c0001",
+            "easyship_courier_service": true,
+            "name": "FedEx Economy HK",
+            "umbrella_name": "FedEx"
+        },
+        "created_at": "2022-02-22T12:21:00Z",
+        "currency": "HKD",
+        "delivery_state": "not_created",
+        "destination_address": {
+            "city": "SINGAPORE",
+            "company_name": null,
+            "contact_email": "test@test.com",
+            "contact_name": "Test McTest",
+            "contact_phone": "+6512345678",
+            "country_alpha2": "SG",
+            "delivery_instructions": "Beware of the dog",
+            "line_1": "Orchard Road 5th",
+            "line_2": null,
+            "postal_code": "546080",
+            "state": "SINGAPORE"
+        },
+        "eei_reference": null,
+        "incoterms": "DDU",
+        "insurance": {
+            "is_insured": true,
+            "insured_amount": 10,
+            "insured_currency": "HKD"
+        },
+        "label_generated_at": null,
+        "label_paid_at": "2022-02-22T12:21:00Z",
+        "label_state": "failed",
+        "last_failure_http_response_messages": [],
+        "metadata": {},
+        "order_data": {
+            "buyer_notes": null,
+            "buyer_selected_courier_name": null,
+            "order_created_at": null,
+            "order_tag_list": [],
+            "platform_name": null,
+            "platform_order_number": null,
+            "seller_notes": null
+        },
+        "origin_address": {
+            "city": "City",
+            "company_name": "Test Plc.",
+            "contact_email": "asd@asd.com",
+            "contact_name": "Foo Bar",
+            "contact_phone": "+852-1234-5678",
+            "country_alpha2": "HK",
+            "line_1": "123 Test Street",
+            "line_2": "Block 3",
+            "postal_code": "ABC123",
+            "state": "State"
+        },
+        "parcels": [
+            {
+                "box": {
+                    "id": "01563646-58c1-4607-8fe0-cae3e33c0001",
+                    "name": "small_box",
+                    "outer_dimensions": {
+                        "length": 15,
+                        "width": 7,
+                        "height": 25
+                    },
+                    "slug": "small_box",
+                    "type": "box",
+                    "weight": 3
+                },
+                "id": "01563646-58c1-4607-8fe0-cae3e33c0001",
+                "items": [
+                    {
+                        "actual_weight": 2,
+                        "category": "Mobile Phones",
+                        "contains_battery_pi966": false,
+                        "contains_battery_pi967": true,
+                        "contains_liquids": false,
+                        "declared_currency": "HKD",
+                        "declared_customs_value": 100,
+                        "description": "Testing Testing",
+                        "dimensions": {
+                            "length": 10,
+                            "width": 10,
+                            "height": 10
+                        },
+                        "hs_code": null,
+                        "id": "01563646-58c1-4607-8fe0-cae3e33c0000",
+                        "origin_country_alpha2": null,
+                        "origin_currency": "HKD",
+                        "origin_customs_value": 100,
+                        "quantity": 1,
+                        "sku": "12341234"
+                    }, 
+                ],
+                "total_actual_weight": 30
+            }
+        ],
+        "pickup_state": "not_requested",
+        "rates": [],
+        "regulatory_identifiers": {
+            "eori": null,
+            "ioss": null,
+            "vat_number": null
+        },
+        "return": false,
+        "return_address": {
+            "city": "City",
+            "company_name": "Test Plc.",
+            "contact_email": "asd@asd.com",
+            "contact_name": "Foo Bar",
+            "contact_phone": "+852-1234-5678",
+            "country_alpha2": "HK",
+            "line_1": "123 Test Street",
+            "line_2": "Block 3",
+            "postal_code": "ABC123",
+            "state": "State"
+        },
+        "sender_address": {
+            "city": "City",
+            "company_name": "Test Plc.",
+            "contact_email": "asd@asd.com",
+            "contact_name": "Foo Bar",
+            "contact_phone": "+852-1234-5678",
+            "country_alpha2": "HK",
+            "line_1": "123 Test Street",
+            "line_2": "Block 3",
+            "postal_code": "ABC123",
+            "state": "State"
+        },
+        "set_as_residential": false,
+        "shipment_state": "created",
+        "shipping_documents": [
+            {
+                "base64_encoded_strings": [
+                    "JVBERi0xLjUKJf//////AAAAAAoxI"
+                ],
+                "category": "label",
+                "format": "pdf",
+                "page_size": "a4",
+                "required": true,
+                "url": null
+            },
+            {
+                "base64_encoded_strings": [""],
+                "category": "battery_form",
+                "format": "pdf",
+                "page_size": "a4",
+                "required": true,
+                "url": null
+            }
+        ],
+        "shipping_settings": {
+            "b13a_filing": null,
+            "label_customization_fields": []
+        },
+        "tracking_page_url": "http://api.easyship.com:9003/shipment-tracking/ESSG10006001",
+        "trackings": [
+            {
+                "tracking_number" : string,
+                "alternate_tracking_number": string | null,
+            }
+        ],
+        "updated_at": "2022-02-22T12:21:00Z",
+        "warehouse_state": "none"
+    },
+    "examples": {
+        "label_successfully_created": {
+            "summary": "label successfully created",
+            "value": {
+                "printing_options": {
+                    "format": "pdf",
+                    "label": "A4"
+                }
+            }
+        }
+    },
+    "meta": {
+        "request_id": "01563646-58c1-4607-8fe0-cae3e92c4477",
+        "unavailable_couriers": []
+    }
+}

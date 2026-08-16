@@ -84,14 +84,21 @@ router.get(
 
 //------shipping details--------
 router.put(
-    '/billing-details',
+    '/buying-details',
     validateBillingDetails,
     req_validator(),
     auth(...allRoles),
     userController.addOrUpdateBillingDetails,
 );
+router.put(
+    '/selling-address',
+    validateBillingDetails,
+    req_validator(),
+    auth(...allRoles),
+    userController.addOrUpdateSellingDetails,
+);
 router.get(
-    '/addrsesses',
+    '/addresses',
     auth(...allRoles),
     userController.addressesByUser
 );

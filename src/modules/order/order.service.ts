@@ -728,8 +728,18 @@ const markShippedOrder = async (orderId: string, current_sellerId: string) => {
 
 }
 
-const makeShipingLebel = async (orderId: string, current_sellerId: string) => {
+const getShipingLebel = async (orderId: string, current_sellerId: string) => {
+    const order = await prisma.order.findFirst({where : {id : orderId}});
 
+    if(!order){
+        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
+    }
+
+    if(order?.sellerId !== current_sellerId){
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order")
+    }
+
+    
 }
 
 

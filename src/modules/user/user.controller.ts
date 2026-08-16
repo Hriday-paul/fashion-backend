@@ -186,6 +186,18 @@ const addressesByUser = catchAsync(async (req, res) => {
     });
 })
 
+const addOrUpdateSellingDetails = catchAsync(async (req, res) => {
+
+    const result = await userService.addOrUpdateSellerAddress(req.body, req?.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Selling address updated successfully',
+        data: result,
+    });
+})
+
 const bundleDiscount = catchAsync(async (req, res) => {
 
     const result = await userService.bundleDiscount(req?.user?.id);
@@ -224,11 +236,12 @@ export const userController = {
     UpdateNotification,
     bundleDiscount,
     updateBundleDiscount,
-    
+
     allCharies,
     memberStats,
     charityStats,
 
     addOrUpdateBillingDetails,
+    addOrUpdateSellingDetails,
     addressesByUser
 }
