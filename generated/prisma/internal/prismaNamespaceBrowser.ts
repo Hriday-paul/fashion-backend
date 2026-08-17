@@ -236,7 +236,9 @@ export const OrderScalarFieldEnum = {
   authenticationFee: 'authenticationFee',
   bundleDiscountPercent: 'bundleDiscountPercent',
   courier_service_id: 'courier_service_id',
-  shippingId: 'shippingId'
+  shippingId: 'shippingId',
+  isLebelGenerated: 'isLebelGenerated',
+  lebelUrl: 'lebelUrl'
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]

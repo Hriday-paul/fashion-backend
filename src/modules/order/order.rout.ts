@@ -21,6 +21,10 @@ router.post("/",
     auth(...allRoles),
     orderControler.addNewOrder);
 
+router.post("/shipping-label/:orderId",
+    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    orderControler.getShippingLebel);
+
 router.get("/by-seller",
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.ordersBySeller);

@@ -396,7 +396,7 @@ export interface ILabel {
                 "format": "pdf",
                 "page_size": "a4",
                 "required": true,
-                "url": null
+                "url": string | null
             },
             {
                 "base64_encoded_strings": [""],
@@ -404,7 +404,7 @@ export interface ILabel {
                 "format": "pdf",
                 "page_size": "a4",
                 "required": true,
-                "url": null
+                "url": string | null
             }
         ],
         "shipping_settings": {

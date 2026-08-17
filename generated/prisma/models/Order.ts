@@ -71,6 +71,8 @@ export type OrderMinAggregateOutputType = {
   bundleDiscountPercent: number | null
   courier_service_id: string | null
   shippingId: string | null
+  isLebelGenerated: boolean | null
+  lebelUrl: string | null
 }
 
 export type OrderMaxAggregateOutputType = {
@@ -95,6 +97,8 @@ export type OrderMaxAggregateOutputType = {
   bundleDiscountPercent: number | null
   courier_service_id: string | null
   shippingId: string | null
+  isLebelGenerated: boolean | null
+  lebelUrl: string | null
 }
 
 export type OrderCountAggregateOutputType = {
@@ -119,6 +123,8 @@ export type OrderCountAggregateOutputType = {
   bundleDiscountPercent: number
   courier_service_id: number
   shippingId: number
+  isLebelGenerated: number
+  lebelUrl: number
   _all: number
 }
 
@@ -169,6 +175,8 @@ export type OrderMinAggregateInputType = {
   bundleDiscountPercent?: true
   courier_service_id?: true
   shippingId?: true
+  isLebelGenerated?: true
+  lebelUrl?: true
 }
 
 export type OrderMaxAggregateInputType = {
@@ -193,6 +201,8 @@ export type OrderMaxAggregateInputType = {
   bundleDiscountPercent?: true
   courier_service_id?: true
   shippingId?: true
+  isLebelGenerated?: true
+  lebelUrl?: true
 }
 
 export type OrderCountAggregateInputType = {
@@ -217,6 +227,8 @@ export type OrderCountAggregateInputType = {
   bundleDiscountPercent?: true
   courier_service_id?: true
   shippingId?: true
+  isLebelGenerated?: true
+  lebelUrl?: true
   _all?: true
 }
 
@@ -327,7 +339,9 @@ export type OrderGroupByOutputType = {
   authenticationFee: number
   bundleDiscountPercent: number
   courier_service_id: string
-  shippingId: string | null
+  shippingId: string
+  isLebelGenerated: boolean
+  lebelUrl: string | null
   _count: OrderCountAggregateOutputType | null
   _avg: OrderAvgAggregateOutputType | null
   _sum: OrderSumAggregateOutputType | null
@@ -374,7 +388,9 @@ export type OrderWhereInput = {
   authenticationFee?: Prisma.FloatFilter<"Order"> | number
   bundleDiscountPercent?: Prisma.FloatFilter<"Order"> | number
   courier_service_id?: Prisma.StringFilter<"Order"> | string
-  shippingId?: Prisma.StringNullableFilter<"Order"> | string | null
+  shippingId?: Prisma.StringFilter<"Order"> | string
+  isLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
+  lebelUrl?: Prisma.StringNullableFilter<"Order"> | string | null
   rating?: Prisma.XOR<Prisma.RatingNullableScalarRelationFilter, Prisma.RatingWhereInput> | null
   buyer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   return?: Prisma.ReturnListRelationFilter
@@ -407,7 +423,9 @@ export type OrderOrderByWithRelationInput = {
   authenticationFee?: Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
-  shippingId?: Prisma.SortOrderInput | Prisma.SortOrder
+  shippingId?: Prisma.SortOrder
+  isLebelGenerated?: Prisma.SortOrder
+  lebelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   rating?: Prisma.RatingOrderByWithRelationInput
   buyer?: Prisma.UserOrderByWithRelationInput
   return?: Prisma.ReturnOrderByRelationAggregateInput
@@ -443,7 +461,9 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   authenticationFee?: Prisma.FloatFilter<"Order"> | number
   bundleDiscountPercent?: Prisma.FloatFilter<"Order"> | number
   courier_service_id?: Prisma.StringFilter<"Order"> | string
-  shippingId?: Prisma.StringNullableFilter<"Order"> | string | null
+  shippingId?: Prisma.StringFilter<"Order"> | string
+  isLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
+  lebelUrl?: Prisma.StringNullableFilter<"Order"> | string | null
   rating?: Prisma.XOR<Prisma.RatingNullableScalarRelationFilter, Prisma.RatingWhereInput> | null
   buyer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   return?: Prisma.ReturnListRelationFilter
@@ -476,7 +496,9 @@ export type OrderOrderByWithAggregationInput = {
   authenticationFee?: Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
-  shippingId?: Prisma.SortOrderInput | Prisma.SortOrder
+  shippingId?: Prisma.SortOrder
+  isLebelGenerated?: Prisma.SortOrder
+  lebelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.OrderCountOrderByAggregateInput
   _avg?: Prisma.OrderAvgOrderByAggregateInput
   _max?: Prisma.OrderMaxOrderByAggregateInput
@@ -508,7 +530,9 @@ export type OrderScalarWhereWithAggregatesInput = {
   authenticationFee?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   bundleDiscountPercent?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   courier_service_id?: Prisma.StringWithAggregatesFilter<"Order"> | string
-  shippingId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  shippingId?: Prisma.StringWithAggregatesFilter<"Order"> | string
+  isLebelGenerated?: Prisma.BoolWithAggregatesFilter<"Order"> | boolean
+  lebelUrl?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
 }
 
 export type OrderCreateInput = {
@@ -528,7 +552,9 @@ export type OrderCreateInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -561,7 +587,9 @@ export type OrderUncheckedCreateInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -586,7 +614,9 @@ export type OrderUpdateInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -619,7 +649,9 @@ export type OrderUncheckedUpdateInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -648,7 +680,9 @@ export type OrderCreateManyInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
 }
 
 export type OrderUpdateManyMutationInput = {
@@ -668,7 +702,9 @@ export type OrderUpdateManyMutationInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type OrderUncheckedUpdateManyInput = {
@@ -692,7 +728,9 @@ export type OrderUncheckedUpdateManyInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type OrderScalarRelationFilter = {
@@ -722,6 +760,8 @@ export type OrderCountOrderByAggregateInput = {
   bundleDiscountPercent?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
+  isLebelGenerated?: Prisma.SortOrder
+  lebelUrl?: Prisma.SortOrder
 }
 
 export type OrderAvgOrderByAggregateInput = {
@@ -758,6 +798,8 @@ export type OrderMaxOrderByAggregateInput = {
   bundleDiscountPercent?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
+  isLebelGenerated?: Prisma.SortOrder
+  lebelUrl?: Prisma.SortOrder
 }
 
 export type OrderMinOrderByAggregateInput = {
@@ -782,6 +824,8 @@ export type OrderMinOrderByAggregateInput = {
   bundleDiscountPercent?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
+  isLebelGenerated?: Prisma.SortOrder
+  lebelUrl?: Prisma.SortOrder
 }
 
 export type OrderSumOrderByAggregateInput = {
@@ -1082,7 +1126,9 @@ export type OrderCreateWithoutDeliveryChargeInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -1114,7 +1160,9 @@ export type OrderUncheckedCreateWithoutDeliveryChargeInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1154,7 +1202,9 @@ export type OrderUpdateWithoutDeliveryChargeInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -1186,7 +1236,9 @@ export type OrderUncheckedUpdateWithoutDeliveryChargeInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -1210,7 +1262,9 @@ export type OrderCreateWithoutItemsInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -1242,7 +1296,9 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
@@ -1282,7 +1338,9 @@ export type OrderUpdateWithoutItemsInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -1314,7 +1372,9 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
@@ -1338,7 +1398,9 @@ export type OrderCreateWithoutPaymentInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -1370,7 +1432,9 @@ export type OrderUncheckedCreateWithoutPaymentInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1410,7 +1474,9 @@ export type OrderUpdateWithoutPaymentInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -1442,7 +1508,9 @@ export type OrderUncheckedUpdateWithoutPaymentInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -1466,7 +1534,9 @@ export type OrderCreateWithoutReturnInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
@@ -1498,7 +1568,9 @@ export type OrderUncheckedCreateWithoutReturnInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
@@ -1538,7 +1610,9 @@ export type OrderUpdateWithoutReturnInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
@@ -1570,7 +1644,9 @@ export type OrderUncheckedUpdateWithoutReturnInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
@@ -1594,7 +1670,9 @@ export type OrderCreateWithoutRatingInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
@@ -1626,7 +1704,9 @@ export type OrderUncheckedCreateWithoutRatingInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
@@ -1666,7 +1746,9 @@ export type OrderUpdateWithoutRatingInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
@@ -1698,7 +1780,9 @@ export type OrderUncheckedUpdateWithoutRatingInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
@@ -1722,7 +1806,9 @@ export type OrderCreateWithoutBuyerInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
@@ -1753,7 +1839,9 @@ export type OrderUncheckedCreateWithoutBuyerInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1788,7 +1876,9 @@ export type OrderCreateWithoutSellerInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -1819,7 +1909,9 @@ export type OrderUncheckedCreateWithoutSellerInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1877,7 +1969,9 @@ export type OrderScalarWhereInput = {
   authenticationFee?: Prisma.FloatFilter<"Order"> | number
   bundleDiscountPercent?: Prisma.FloatFilter<"Order"> | number
   courier_service_id?: Prisma.StringFilter<"Order"> | string
-  shippingId?: Prisma.StringNullableFilter<"Order"> | string | null
+  shippingId?: Prisma.StringFilter<"Order"> | string
+  isLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
+  lebelUrl?: Prisma.StringNullableFilter<"Order"> | string | null
 }
 
 export type OrderUpsertWithWhereUniqueWithoutSellerInput = {
@@ -1913,7 +2007,9 @@ export type OrderCreateWithoutOriginDetailsInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -1944,7 +2040,9 @@ export type OrderUncheckedCreateWithoutOriginDetailsInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1979,7 +2077,9 @@ export type OrderCreateWithoutBillingDetailsInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -2010,7 +2110,9 @@ export type OrderUncheckedCreateWithoutBillingDetailsInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -2080,7 +2182,9 @@ export type OrderCreateManyBuyerInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
 }
 
 export type OrderCreateManySellerInput = {
@@ -2103,7 +2207,9 @@ export type OrderCreateManySellerInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
 }
 
 export type OrderUpdateWithoutBuyerInput = {
@@ -2123,7 +2229,9 @@ export type OrderUpdateWithoutBuyerInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
@@ -2154,7 +2262,9 @@ export type OrderUncheckedUpdateWithoutBuyerInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -2182,7 +2292,9 @@ export type OrderUncheckedUpdateManyWithoutBuyerInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type OrderUpdateWithoutSellerInput = {
@@ -2202,7 +2314,9 @@ export type OrderUpdateWithoutSellerInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -2233,7 +2347,9 @@ export type OrderUncheckedUpdateWithoutSellerInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -2261,7 +2377,9 @@ export type OrderUncheckedUpdateManyWithoutSellerInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type OrderCreateManyOriginDetailsInput = {
@@ -2284,7 +2402,9 @@ export type OrderCreateManyOriginDetailsInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
 }
 
 export type OrderCreateManyBillingDetailsInput = {
@@ -2307,7 +2427,9 @@ export type OrderCreateManyBillingDetailsInput = {
   authenticationFee?: number
   bundleDiscountPercent?: number
   courier_service_id: string
-  shippingId?: string | null
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
 }
 
 export type OrderUpdateWithoutOriginDetailsInput = {
@@ -2327,7 +2449,9 @@ export type OrderUpdateWithoutOriginDetailsInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -2358,7 +2482,9 @@ export type OrderUncheckedUpdateWithoutOriginDetailsInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -2386,7 +2512,9 @@ export type OrderUncheckedUpdateManyWithoutOriginDetailsInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type OrderUpdateWithoutBillingDetailsInput = {
@@ -2406,7 +2534,9 @@ export type OrderUpdateWithoutBillingDetailsInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -2437,7 +2567,9 @@ export type OrderUncheckedUpdateWithoutBillingDetailsInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -2465,7 +2597,9 @@ export type OrderUncheckedUpdateManyWithoutBillingDetailsInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -2530,6 +2664,8 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   bundleDiscountPercent?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
+  isLebelGenerated?: boolean
+  lebelUrl?: boolean
   rating?: boolean | Prisma.Order$ratingArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   return?: boolean | Prisma.Order$returnArgs<ExtArgs>
@@ -2564,6 +2700,8 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   bundleDiscountPercent?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
+  isLebelGenerated?: boolean
+  lebelUrl?: boolean
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   originDetails?: boolean | Prisma.Order$originDetailsArgs<ExtArgs>
@@ -2592,6 +2730,8 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   bundleDiscountPercent?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
+  isLebelGenerated?: boolean
+  lebelUrl?: boolean
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   originDetails?: boolean | Prisma.Order$originDetailsArgs<ExtArgs>
@@ -2620,9 +2760,11 @@ export type OrderSelectScalar = {
   bundleDiscountPercent?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
+  isLebelGenerated?: boolean
+  lebelUrl?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "buyerId" | "sellerId" | "status" | "currentShipTo" | "authStatus" | "originDetailsId" | "billingId" | "itemsTotal" | "totalDelivery" | "totalPrice" | "sellerItemsTotal" | "sellerTotal" | "treeCredit" | "serviceFee" | "authenticationFee" | "bundleDiscountPercent" | "courier_service_id" | "shippingId", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "buyerId" | "sellerId" | "status" | "currentShipTo" | "authStatus" | "originDetailsId" | "billingId" | "itemsTotal" | "totalDelivery" | "totalPrice" | "sellerItemsTotal" | "sellerTotal" | "treeCredit" | "serviceFee" | "authenticationFee" | "bundleDiscountPercent" | "courier_service_id" | "shippingId" | "isLebelGenerated" | "lebelUrl", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rating?: boolean | Prisma.Order$ratingArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2682,7 +2824,9 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     authenticationFee: number
     bundleDiscountPercent: number
     courier_service_id: string
-    shippingId: string | null
+    shippingId: string
+    isLebelGenerated: boolean
+    lebelUrl: string | null
   }, ExtArgs["result"]["order"]>
   composites: {}
 }
@@ -3136,6 +3280,8 @@ export interface OrderFieldRefs {
   readonly bundleDiscountPercent: Prisma.FieldRef<"Order", 'Float'>
   readonly courier_service_id: Prisma.FieldRef<"Order", 'String'>
   readonly shippingId: Prisma.FieldRef<"Order", 'String'>
+  readonly isLebelGenerated: Prisma.FieldRef<"Order", 'Boolean'>
+  readonly lebelUrl: Prisma.FieldRef<"Order", 'String'>
 }
     
 

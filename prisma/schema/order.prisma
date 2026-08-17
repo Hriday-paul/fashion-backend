@@ -74,7 +74,9 @@ model Order {
     bundleDiscountPercent Float @default(0)
 
     courier_service_id String
-    shippingId String?
+    shippingId String
+    isLebelGenerated Boolean @default(false)
+    lebelUrl String?
 
     @@index([buyerId, sellerId])
     @@map("orders")

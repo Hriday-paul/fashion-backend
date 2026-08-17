@@ -1,4 +1,4 @@
-import { CancelOrderEvidence } from "../../../generated/prisma/browser";
+import { CancelOrderEvidence, CurrentShipTo, OrderAuthStatus } from "../../../generated/prisma/browser";
 import { CancelReason, Order, OrderStatus, Prisma } from "../../../generated/prisma/client";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
@@ -7,6 +7,8 @@ import prisma from "../../shared/prisma";
 import httpStatus from "http-status"
 import generateRandomString from "../../utils/generateRandomString";
 import { createCheckoutSession } from "../payments/payments.utils";
+import config from "../../config";
+import { ILabel } from "./order.interface";
 
 
 const addNewOrder = async (
@@ -728,20 +730,230 @@ const markShippedOrder = async (orderId: string, current_sellerId: string) => {
 
 }
 
-const getShipingLebel = async (orderId: string, current_sellerId: string) => {
-    const order = await prisma.order.findFirst({where : {id : orderId}});
+const createLebelForOrder = async ({ shipment_id, orderId }: { orderId: string, shipment_id: string }) => {
 
-    if(!order){
+    const payload = {
+        "printing_options": {
+            "format": "url"
+        },
+    }
+
+    const rateRes = await fetch(`${config.easyship.easyship_base_url}/shipments/${shipment_id}/label`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    });
+
+    if (!rateRes.ok) {
+        const errorData = await rateRes.json().catch(() => null);
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            errorData?.error?.message || 'Lebel generation failed',
+        );
+    }
+
+    const data = await rateRes.json() as ILabel;
+
+    const labelDoc = data?.shipment?.shipping_documents?.find(doc => doc.category === "label");
+
+    await prisma.order.update({
+        where: {
+            id: orderId
+        },
+        data: {
+            lebelUrl: labelDoc?.url,
+            isLebelGenerated: true
+        }
+    })
+
+    return labelDoc?.url || null;
+}
+
+const getShipingLebel = async (orderId: string, current_sellerId: string) => {
+    const order = await prisma.order.findFirst({ where: { id: orderId } });
+
+    if (!order) {
         throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
     }
 
-    if(order?.sellerId !== current_sellerId){
+    if (order?.sellerId !== current_sellerId) {
         throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order")
     }
 
-    
+    if (order?.lebelUrl) {
+        return order?.lebelUrl;
+    }
+
+    else if (order?.isLebelGenerated) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Label already generated but not found, please contact support")
+    }
+
+    const labelUrl = await createLebelForOrder({ shipment_id: order?.shippingId, orderId: order?.id });
+
+    if (!labelUrl) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Label generated but not found, please contact support")
+    }
+
+    return labelUrl;
 }
 
+const cancelFullOrderShipment = async ({ shipment_id, orderId }: { shipment_id: string, orderId: string }) => {
+
+    const rateRes = await fetch(`${config.easyship.easyship_base_url}/shipments/${shipment_id}/cancel`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        // body: JSON.stringify(payload)
+    });
+
+    if (!rateRes.ok) {
+        const errorData = await rateRes.json().catch(() => null);
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            errorData?.error?.message || 'Order shipment cancel failed',
+        );
+    }
+
+    // const data = await rateRes.json();
+
+    //mark order as cancelled to the database
+    await prisma.order.update({
+        where: {
+            id: orderId
+        },
+        data: {
+            status: "CANCELLED",
+        }
+    })
+
+}
+
+const dltOrderShipment = async ({ orderId, shipment_id }: { shipment_id: string, orderId: string }) => {
+
+    const rateRes = await fetch(`${config.easyship.easyship_base_url}/shipments/${shipment_id}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        // body: JSON.stringify(payload)
+    });
+
+    if (!rateRes.ok) {
+        const errorData = await rateRes.json().catch(() => null);
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            errorData?.error?.message || 'Order shipment deletion failed',
+        );
+    }
+
+    // const data = await rateRes.json();
+
+    //mark order as cancelled to the database
+    await prisma.order.update({
+        where: {
+            id: orderId
+        },
+        data: {
+            status: "CANCELLED",
+        }
+    })
+
+}
+
+const updateOrderShipment = async ({ orderId, shipment_id }: { shipment_id: string, orderId: string }) => {
+
+    const payload = {
+        "printing_options": {
+            "format": "url"
+        },
+    }
+
+    const rateRes = await fetch(`${config.easyship.easyship_base_url}/shipments/${shipment_id}/label`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    });
+
+    if (!rateRes.ok) {
+        const errorData = await rateRes.json().catch(() => null);
+        console.log(errorData)
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            errorData?.error?.message || 'Lebel generation failed',
+        );
+    }
+
+    const data = await rateRes.json() as ILabel;
+
+}
+
+const cancelItems = async (payload: { orderId: string, itemIds: string[] }, current_sellerId: string) => {
+
+    const { orderId, itemIds } = payload;
+
+    const order = await prisma.order.findFirst({
+        where: {
+            id: orderId
+        },
+        include: {
+            items: {
+                where: {
+                    id: {
+                        notIn: itemIds,
+                    },
+                    isCancelled: false
+                }
+            }
+        }
+    })
+
+    if (!order) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
+    }
+
+    if (order?.sellerId !== current_sellerId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order")
+    }
+    if (order?.status === "CANCELLED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Order is already cancelled")
+    }
+
+    //check allow to cancel
+    const isDirectToBuyer =
+        order.authStatus === OrderAuthStatus.NOT_STARTED &&
+        order.currentShipTo === CurrentShipTo.BUYER;
+
+    const isAuthRound =
+        order.currentShipTo === CurrentShipTo.AUTHENTICATION_CENTER;
+
+    if ((isDirectToBuyer && order?.status !== "PENDING") || (isAuthRound && order?.status !== "PENDING")) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process cancel the order items")
+    }
+
+    const allowCancelFullOrder = order?.items?.length === 0;
+
+    if (allowCancelFullOrder && order?.isLebelGenerated) {
+        await cancelFullOrderShipment({ shipment_id: order?.shippingId, orderId: order?.id });
+    } else if (allowCancelFullOrder) {
+        await dltOrderShipment({ shipment_id: order?.shippingId, orderId: order?.id });
+    } else {
+
+        //mark the order items as cancelled
+
+
+    }
+
+
+}
 
 export const orderService = {
     addNewOrder,
@@ -750,5 +962,6 @@ export const orderService = {
     requestCancelOrderItem,
     approveCancelOrderItemBySeller,
     confirmOrderReceived,
+    getShipingLebel,
     markShippedOrder
 }

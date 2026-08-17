@@ -98,6 +98,20 @@ const markShippedOrder = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const getShippingLebel = catchAsync(async (req: Request, res: Response) => {
+    const { orderId } = req.params;
+    const { id: userId } = req.user;
+
+    const labelUrl = await orderService.getShipingLebel(orderId, userId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Shipping label retrieved successfully',
+        data: { labelUrl },
+    });
+});
+
 export const orderControler = {
     addNewOrder,
     ordersBySeller,
@@ -105,5 +119,6 @@ export const orderControler = {
     cancelOrderItemBySeller,
     requestCancelOrderItem,
     approveCancelOrderItemBySeller,
-    markShippedOrder
+    markShippedOrder,
+    getShippingLebel
 }
