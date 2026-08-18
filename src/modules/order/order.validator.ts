@@ -15,25 +15,38 @@ export const validateOrderProducts = [
         .withMessage('Shipment service ID must be a valid string'),
 ];
 
-export const cancelOrderItemValidator = [
-    body('orderItemId')
+export const cancelItemsValidator = [
+    body("orderId")
+        .trim()
         .notEmpty()
-        .withMessage('Item ID is required')
+        .withMessage("Order ID is required")
         .isUUID()
-        .withMessage('Item ID must be a valid ID'),
+        .withMessage("Invalid order ID"),
 
-    body('reason')
+    body("itemIds")
+        .isArray({ min: 1 })
+        .withMessage("At least one item ID is required"),
+
+    body("itemIds.*")
+        .trim()
         .notEmpty()
-        .withMessage('Cancellation reason is required')
+        .withMessage("Item ID cannot be empty")
+        .isUUID()
+        .withMessage("Invalid item ID"),
+
+    body("cancelReason")
         .isIn(Object.values(CancelReason))
-        .withMessage('Invalid cancellation reason'),
+        .withMessage("Invalid cancel reason"),
 
-    body("details")
-        .optional()
-        .isString()
-        .withMessage('Reason details must be a string')
-
-]
+    body("cancelReasonDescription")
+        .trim()
+        .notEmpty()
+        .withMessage("Cancel reason description is required")
+        .isLength({ min: 5 })
+        .withMessage(
+            "Cancel reason description must be at least 5 characters"
+        ),
+];
 
 export const validateOrderReceivedmark = [
     body('orderId')

@@ -5,6 +5,7 @@ import httpStatus from "http-status";
 import { orderService } from "./order.service";
 import pick from "../../shared/pick";
 import { PaginateOptions } from "../../helper/pagination.helper";
+import { uploadManyToS3 } from "../../utils/s3";
 
 const addNewOrder = catchAsync(async (req: Request, res: Response) => {
     // add order
@@ -50,6 +51,21 @@ const confirmOrderReceived = catchAsync(async (req: Request, res: Response) => {
 const cancelOrderItemBySeller = catchAsync(async (req: Request, res: Response) => {
     const { id: userId } = req.user;
 
+    const files = req.files as Express.Multer.File[];
+
+    if (files) {
+
+        const FileAry = files?.map(file => {
+            return {
+                file,
+                path: `evidences/cancelled`,
+            };
+        });
+
+        const urls = await uploadManyToS3(FileAry);
+        req.body.cancelEvidences = urls
+    }
+
     await orderService.cancelOrderItemBySeller(req.body, userId);
 
     sendResponse(res, {
@@ -62,6 +78,21 @@ const cancelOrderItemBySeller = catchAsync(async (req: Request, res: Response) =
 
 const requestCancelOrderItem = catchAsync(async (req: Request, res: Response) => {
     const { id: userId } = req.user;
+
+    const files = req.files as Express.Multer.File[];
+
+    if (files) {
+
+        const FileAry = files?.map(file => {
+            return {
+                file,
+                path: `evidences/cancelled`,
+            };
+        });
+
+        const urls = await uploadManyToS3(FileAry);
+        req.body.cancelEvidences = urls
+    }
 
     await orderService.requestCancelOrderItem(req.body, userId);
 

@@ -214,7 +214,7 @@ export const makeOrderWorker = new Worker(
                 {
                     "items": orderItems?.map((item) => {
                         return {
-                            "description": item?.product?.description || item?.product?.title || "Fashion Product",
+                            "description": item?.product?.title || "Fashion Product",
                             "category": "fashion",
                             "origin_country_alpha2": billing_details?.countryCode,
                             "quantity": 1,
@@ -223,12 +223,12 @@ export const makeOrderWorker = new Worker(
                                 "width": item?.product?.width_cm,
                                 "length": item?.product?.length_cm
                             },
+                            "actual_weight": item?.product?.weight_kg,
                             "declared_currency": "USD",
                             "declared_customs_value": item?.product?.finalPrice || 0,
                         }
 
                     }),
-                    "total_actual_weight": 0.5
                 }
             ]
         }
@@ -244,7 +244,6 @@ export const makeOrderWorker = new Worker(
 
         if (!rateRes.ok) {
             const errorData = await rateRes.json().catch(() => null);
-            console.log(errorData?.error?.message || "Shipment creation failed")
             throw new UnrecoverableError(errorData?.error?.message || "Shipment creation failed");
         }
 
@@ -253,6 +252,10 @@ export const makeOrderWorker = new Worker(
         const shippingRate = shipmentData?.shipment?.rates.find(rate => rate?.courier_service?.id === cartGroup?.shippingServiceId)?.total_charge || 0;
 
         const total = discountedItemTotal + otherTotal + totalExtraDonation + shippingRate;
+
+        const parcelId = shipmentData?.shipment?.parcels[0]?.id;
+
+        const shipmentItems = shipmentData?.shipment?.parcels[0]?.items || [];
 
         // Create order in DB
         const order = await prisma.order.create({
@@ -267,6 +270,8 @@ export const makeOrderWorker = new Worker(
                 sellerTotal: discountedItemTotal - sellerDonationTotal,
                 bundleDiscountPercent,
                 courier_service_id: cartGroup?.shippingServiceId,
+
+                parcelId,
 
                 currentShipTo: cartgroup.authenticationCost > 0 ? "AUTHENTICATION_CENTER" : "BUYER",
 
@@ -298,8 +303,11 @@ export const makeOrderWorker = new Worker(
 
                         const splitPercent = charityCount > 0 ? 100 / charityCount : 0;
 
+                        const parcelItemId = shipmentItems.find(parcelItem => parcelItem?.description === product?.title && parcelItem?.declared_customs_value === product?.finalPrice)?.id;
+
                         return {
                             ...item,
+                            parcelItemId,
                             ...(charityCount > 0 && {
                                 donations: {
                                     create: charities.map((charity) => {
@@ -320,6 +328,7 @@ export const makeOrderWorker = new Worker(
                                     }),
                                 },
                             }),
+
                         };
                     })
                 },

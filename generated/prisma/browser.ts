@@ -92,6 +92,11 @@ export type Payment = Prisma.PaymentModel
  */
 export type DirectDonation = Prisma.DirectDonationModel
 /**
+ * Model Refund
+ * 
+ */
+export type Refund = Prisma.RefundModel
+/**
  * Model Product
  * 
  */

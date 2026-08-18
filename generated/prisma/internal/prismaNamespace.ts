@@ -404,6 +404,7 @@ export const ModelName = {
   SellDonation: 'SellDonation',
   Payment: 'Payment',
   DirectDonation: 'DirectDonation',
+  Refund: 'Refund',
   Product: 'Product',
   ProductPicture: 'ProductPicture',
   ProductCharity: 'ProductCharity',
@@ -444,7 +445,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "brand" | "size" | "follow" | "chat" | "chatParticipant" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
+    modelProps: "category" | "brand" | "size" | "follow" | "chat" | "chatParticipant" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1555,6 +1556,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.DirectDonationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.DirectDonationCountAggregateOutputType> | number
+        }
+      }
+    }
+    Refund: {
+      payload: Prisma.$RefundPayload<ExtArgs>
+      fields: Prisma.RefundFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RefundFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RefundPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RefundFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RefundPayload>
+        }
+        findFirst: {
+          args: Prisma.RefundFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RefundPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RefundFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RefundPayload>
+        }
+        findMany: {
+          args: Prisma.RefundFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RefundPayload>[]
+        }
+        create: {
+          args: Prisma.RefundCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RefundPayload>
+        }
+        createMany: {
+          args: Prisma.RefundCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RefundCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RefundPayload>[]
+        }
+        delete: {
+          args: Prisma.RefundDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RefundPayload>
+        }
+        update: {
+          args: Prisma.RefundUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RefundPayload>
+        }
+        deleteMany: {
+          args: Prisma.RefundDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RefundUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RefundUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RefundPayload>[]
+        }
+        upsert: {
+          args: Prisma.RefundUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RefundPayload>
+        }
+        aggregate: {
+          args: Prisma.RefundAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRefund>
+        }
+        groupBy: {
+          args: Prisma.RefundGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RefundGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RefundCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RefundCountAggregateOutputType> | number
         }
       }
     }
@@ -3579,7 +3654,8 @@ export const OrderScalarFieldEnum = {
   courier_service_id: 'courier_service_id',
   shippingId: 'shippingId',
   isLebelGenerated: 'isLebelGenerated',
-  lebelUrl: 'lebelUrl'
+  lebelUrl: 'lebelUrl',
+  parcelId: 'parcelId'
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
@@ -3596,12 +3672,15 @@ export const OrderItemScalarFieldEnum = {
   isCancelled: 'isCancelled',
   authResult: 'authResult',
   isBuyerRequestCancel: 'isBuyerRequestCancel',
+  cancellationRequestAt: 'cancellationRequestAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  cancelledAt: 'cancelledAt',
   extra_donation: 'extra_donation',
   cancelledBy: 'cancelledBy',
   cancelReason: 'cancelReason',
-  cancelReasonDetails: 'cancelReasonDetails'
+  cancelReasonDetails: 'cancelReasonDetails',
+  parcelItemId: 'parcelItemId'
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
@@ -3683,6 +3762,22 @@ export const DirectDonationScalarFieldEnum = {
 } as const
 
 export type DirectDonationScalarFieldEnum = (typeof DirectDonationScalarFieldEnum)[keyof typeof DirectDonationScalarFieldEnum]
+
+
+export const RefundScalarFieldEnum = {
+  id: 'id',
+  paymentId: 'paymentId',
+  amount: 'amount',
+  status: 'status',
+  reason: 'reason',
+  stripeRefundId: 'stripeRefundId',
+  refundedAt: 'refundedAt',
+  cancelledAt: 'cancelledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RefundScalarFieldEnum = (typeof RefundScalarFieldEnum)[keyof typeof RefundScalarFieldEnum]
 
 
 export const ProductScalarFieldEnum = {
@@ -4361,6 +4456,20 @@ export type ListEnumDirectDonationStatusFieldRefInput<$PrismaModel> = FieldRefIn
 
 
 /**
+ * Reference to a field of type 'RefundStatus'
+ */
+export type EnumRefundStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RefundStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'RefundStatus[]'
+ */
+export type ListEnumRefundStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RefundStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'ReturnStatus'
  */
 export type EnumReturnStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReturnStatus'>
@@ -4587,6 +4696,7 @@ export type GlobalOmitConfig = {
   sellDonation?: Prisma.SellDonationOmit
   payment?: Prisma.PaymentOmit
   directDonation?: Prisma.DirectDonationOmit
+  refund?: Prisma.RefundOmit
   product?: Prisma.ProductOmit
   productPicture?: Prisma.ProductPictureOmit
   productCharity?: Prisma.ProductCharityOmit

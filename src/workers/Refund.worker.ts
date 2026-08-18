@@ -32,11 +32,23 @@ export const refundWorker = new Worker(
             payment_intent: intentId,
             reverse_transfer: true,
             refund_application_fee: true,
-            amount: job.data.amount ? job.data.amount * 100 : undefined,
+            amount: amount ? amount * 100 : undefined,
             metadata: {
                 paymentId,
                 triggeredBy,
                 internalReason: reason,
+            }
+        });
+
+        //make a record of the refund in the database
+        await prisma.refund.create({
+            data: {
+                paymentId,
+                stripeRefundId: refund?.id,
+                amount: refund?.amount ? refund.amount / 100 : undefined,
+                reason,
+                refundedAt: new Date(),
+                status: "SUCCESSED"
             }
         });
 
@@ -55,7 +67,27 @@ refundWorker.on("failed", async (job, err) => {
 
     if (!isExhausted && !isUnrecoverable) return;
 
-    const { paymentId, paymentIntentId } = job.data;
+    const { paymentId, paymentIntentId, amount, reason } = job.data;
+
+    try {
+
+        //make a record of the refund in the database
+        await prisma.refund.create({
+            data: {
+                paymentId,
+                amount: amount ?? undefined,
+                reason,
+                cancelledAt: new Date(),
+                status: "FAILED"
+            }
+        });
+
+    } catch (err) {
+        console.error(
+            `Failed to process refundWorker failed event for job ${job.id}:`,
+            err
+        );
+    }
 
     // await notificationQueue.add(jobs.admin_notification, {
     //         title: "⚠️ Refund FAILED",
@@ -77,7 +109,7 @@ refundWorker.on("completed", async (job, err) => {
                 where: { id: paymentId },
                 data: {
                     status: "REFUNDED",
-                    refundedAt : new Date(),
+                    refundedAt: new Date(),
                 }
             });
         }

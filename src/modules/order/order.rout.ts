@@ -3,8 +3,10 @@ import auth from "../../middleware/auth";
 import { allRoles } from "../user/user.rout";
 import req_validator from "../../middleware/req_validation";
 import { orderControler } from "./order.controller";
-import { cancelOrderItemValidator, validateApproveCancelReq, validateOrderProducts, validateOrderReceivedmark } from "./order.validator";
+import { cancelItemsValidator, validateApproveCancelReq, validateOrderProducts, validateOrderReceivedmark } from "./order.validator";
 import { Role } from "../../../generated/prisma/enums";
+import parseData from "../../middleware/parseData";
+import { image_Upload } from "../../utils/s3";
 
 const router = Router();
 
@@ -30,17 +32,21 @@ router.get("/by-seller",
     orderControler.ordersBySeller);
 
 //seller cancel order item
-router.patch("/items/cancel",
-    cancelOrderItemValidator,
-    req_validator(),
+router.post("/items/cancel",
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    image_Upload.array('evidences'),
+    parseData(),
+    cancelItemsValidator,
+    req_validator(),
     orderControler.cancelOrderItemBySeller);
 
 //buyer request cancel order item
-router.patch("/items/cancel/request",
-    cancelOrderItemValidator,
-    req_validator(),
+router.post("/items/cancel/request",
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    image_Upload.array('evidences'), 
+    parseData(),
+    cancelItemsValidator,
+    req_validator(),
     orderControler.requestCancelOrderItem);
 
 

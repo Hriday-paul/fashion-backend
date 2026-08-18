@@ -78,6 +78,8 @@ model Order {
     isLebelGenerated Boolean @default(false)
     lebelUrl String?
 
+    parcelId String?
+
     @@index([buyerId, sellerId])
     @@map("orders")
 }
@@ -127,11 +129,13 @@ model OrderItem {
     authResult OrderAuthResult @default(NOT_PROCESSED)
 
     isBuyerRequestCancel Boolean @default(false)
+    cancellationRequestAt DateTime?
 
     returnItem ReturnItem?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    cancelledAt DateTime?
 
     extra_donation   Float          @default(0)
     donations        SellDonation[]
@@ -140,10 +144,26 @@ model OrderItem {
     cancelReason        CancelReason?
     cancelReasonDetails String?
     // for attach photo or videos as reason
-    cancelEvidence  CancelOrderEvidence[]
+    
+    cancelEvidences CancelOrderEvidence[]
+
+    parcelItemId String?
 
     @@index([orderId]) // NEW
 }
+
+// model CancelEvidenceGroup {
+//     id String @id @default(uuid())
+//     orderItemId String
+//     order   OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+    
+//     evidences CancelOrderEvidence[]
+
+//     createdAt DateTime @default(now())
+
+//     @@map("cancel_evidence_group")
+//     @@index([orderItemId])
+// }
 
 model CancelOrderEvidence {
     id       String @id @default(uuid())

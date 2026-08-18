@@ -73,6 +73,7 @@ export type OrderMinAggregateOutputType = {
   shippingId: string | null
   isLebelGenerated: boolean | null
   lebelUrl: string | null
+  parcelId: string | null
 }
 
 export type OrderMaxAggregateOutputType = {
@@ -99,6 +100,7 @@ export type OrderMaxAggregateOutputType = {
   shippingId: string | null
   isLebelGenerated: boolean | null
   lebelUrl: string | null
+  parcelId: string | null
 }
 
 export type OrderCountAggregateOutputType = {
@@ -125,6 +127,7 @@ export type OrderCountAggregateOutputType = {
   shippingId: number
   isLebelGenerated: number
   lebelUrl: number
+  parcelId: number
   _all: number
 }
 
@@ -177,6 +180,7 @@ export type OrderMinAggregateInputType = {
   shippingId?: true
   isLebelGenerated?: true
   lebelUrl?: true
+  parcelId?: true
 }
 
 export type OrderMaxAggregateInputType = {
@@ -203,6 +207,7 @@ export type OrderMaxAggregateInputType = {
   shippingId?: true
   isLebelGenerated?: true
   lebelUrl?: true
+  parcelId?: true
 }
 
 export type OrderCountAggregateInputType = {
@@ -229,6 +234,7 @@ export type OrderCountAggregateInputType = {
   shippingId?: true
   isLebelGenerated?: true
   lebelUrl?: true
+  parcelId?: true
   _all?: true
 }
 
@@ -342,6 +348,7 @@ export type OrderGroupByOutputType = {
   shippingId: string
   isLebelGenerated: boolean
   lebelUrl: string | null
+  parcelId: string | null
   _count: OrderCountAggregateOutputType | null
   _avg: OrderAvgAggregateOutputType | null
   _sum: OrderSumAggregateOutputType | null
@@ -391,6 +398,7 @@ export type OrderWhereInput = {
   shippingId?: Prisma.StringFilter<"Order"> | string
   isLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
   lebelUrl?: Prisma.StringNullableFilter<"Order"> | string | null
+  parcelId?: Prisma.StringNullableFilter<"Order"> | string | null
   rating?: Prisma.XOR<Prisma.RatingNullableScalarRelationFilter, Prisma.RatingWhereInput> | null
   buyer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   return?: Prisma.ReturnListRelationFilter
@@ -426,6 +434,7 @@ export type OrderOrderByWithRelationInput = {
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
   lebelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  parcelId?: Prisma.SortOrderInput | Prisma.SortOrder
   rating?: Prisma.RatingOrderByWithRelationInput
   buyer?: Prisma.UserOrderByWithRelationInput
   return?: Prisma.ReturnOrderByRelationAggregateInput
@@ -464,6 +473,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   shippingId?: Prisma.StringFilter<"Order"> | string
   isLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
   lebelUrl?: Prisma.StringNullableFilter<"Order"> | string | null
+  parcelId?: Prisma.StringNullableFilter<"Order"> | string | null
   rating?: Prisma.XOR<Prisma.RatingNullableScalarRelationFilter, Prisma.RatingWhereInput> | null
   buyer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   return?: Prisma.ReturnListRelationFilter
@@ -499,6 +509,7 @@ export type OrderOrderByWithAggregationInput = {
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
   lebelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  parcelId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.OrderCountOrderByAggregateInput
   _avg?: Prisma.OrderAvgOrderByAggregateInput
   _max?: Prisma.OrderMaxOrderByAggregateInput
@@ -533,6 +544,7 @@ export type OrderScalarWhereWithAggregatesInput = {
   shippingId?: Prisma.StringWithAggregatesFilter<"Order"> | string
   isLebelGenerated?: Prisma.BoolWithAggregatesFilter<"Order"> | boolean
   lebelUrl?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  parcelId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
 }
 
 export type OrderCreateInput = {
@@ -555,6 +567,7 @@ export type OrderCreateInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -590,6 +603,7 @@ export type OrderUncheckedCreateInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -617,6 +631,7 @@ export type OrderUpdateInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -652,6 +667,7 @@ export type OrderUncheckedUpdateInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -683,6 +699,7 @@ export type OrderCreateManyInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
 }
 
 export type OrderUpdateManyMutationInput = {
@@ -705,6 +722,7 @@ export type OrderUpdateManyMutationInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type OrderUncheckedUpdateManyInput = {
@@ -731,6 +749,7 @@ export type OrderUncheckedUpdateManyInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type OrderScalarRelationFilter = {
@@ -762,6 +781,7 @@ export type OrderCountOrderByAggregateInput = {
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
   lebelUrl?: Prisma.SortOrder
+  parcelId?: Prisma.SortOrder
 }
 
 export type OrderAvgOrderByAggregateInput = {
@@ -800,6 +820,7 @@ export type OrderMaxOrderByAggregateInput = {
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
   lebelUrl?: Prisma.SortOrder
+  parcelId?: Prisma.SortOrder
 }
 
 export type OrderMinOrderByAggregateInput = {
@@ -826,6 +847,7 @@ export type OrderMinOrderByAggregateInput = {
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
   lebelUrl?: Prisma.SortOrder
+  parcelId?: Prisma.SortOrder
 }
 
 export type OrderSumOrderByAggregateInput = {
@@ -1129,6 +1151,7 @@ export type OrderCreateWithoutDeliveryChargeInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -1163,6 +1186,7 @@ export type OrderUncheckedCreateWithoutDeliveryChargeInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1205,6 +1229,7 @@ export type OrderUpdateWithoutDeliveryChargeInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -1239,6 +1264,7 @@ export type OrderUncheckedUpdateWithoutDeliveryChargeInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -1265,6 +1291,7 @@ export type OrderCreateWithoutItemsInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -1299,6 +1326,7 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
@@ -1341,6 +1369,7 @@ export type OrderUpdateWithoutItemsInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -1375,6 +1404,7 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
@@ -1401,6 +1431,7 @@ export type OrderCreateWithoutPaymentInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -1435,6 +1466,7 @@ export type OrderUncheckedCreateWithoutPaymentInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1477,6 +1509,7 @@ export type OrderUpdateWithoutPaymentInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -1511,6 +1544,7 @@ export type OrderUncheckedUpdateWithoutPaymentInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -1537,6 +1571,7 @@ export type OrderCreateWithoutReturnInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
@@ -1571,6 +1606,7 @@ export type OrderUncheckedCreateWithoutReturnInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
@@ -1613,6 +1649,7 @@ export type OrderUpdateWithoutReturnInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
@@ -1647,6 +1684,7 @@ export type OrderUncheckedUpdateWithoutReturnInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
@@ -1673,6 +1711,7 @@ export type OrderCreateWithoutRatingInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
@@ -1707,6 +1746,7 @@ export type OrderUncheckedCreateWithoutRatingInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
@@ -1749,6 +1789,7 @@ export type OrderUpdateWithoutRatingInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
@@ -1783,6 +1824,7 @@ export type OrderUncheckedUpdateWithoutRatingInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
@@ -1809,6 +1851,7 @@ export type OrderCreateWithoutBuyerInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
@@ -1842,6 +1885,7 @@ export type OrderUncheckedCreateWithoutBuyerInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1879,6 +1923,7 @@ export type OrderCreateWithoutSellerInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -1912,6 +1957,7 @@ export type OrderUncheckedCreateWithoutSellerInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -1972,6 +2018,7 @@ export type OrderScalarWhereInput = {
   shippingId?: Prisma.StringFilter<"Order"> | string
   isLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
   lebelUrl?: Prisma.StringNullableFilter<"Order"> | string | null
+  parcelId?: Prisma.StringNullableFilter<"Order"> | string | null
 }
 
 export type OrderUpsertWithWhereUniqueWithoutSellerInput = {
@@ -2010,6 +2057,7 @@ export type OrderCreateWithoutOriginDetailsInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -2043,6 +2091,7 @@ export type OrderUncheckedCreateWithoutOriginDetailsInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -2080,6 +2129,7 @@ export type OrderCreateWithoutBillingDetailsInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
   return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
@@ -2113,6 +2163,7 @@ export type OrderUncheckedCreateWithoutBillingDetailsInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
   return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -2185,6 +2236,7 @@ export type OrderCreateManyBuyerInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
 }
 
 export type OrderCreateManySellerInput = {
@@ -2210,6 +2262,7 @@ export type OrderCreateManySellerInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
 }
 
 export type OrderUpdateWithoutBuyerInput = {
@@ -2232,6 +2285,7 @@ export type OrderUpdateWithoutBuyerInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
@@ -2265,6 +2319,7 @@ export type OrderUncheckedUpdateWithoutBuyerInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -2295,6 +2350,7 @@ export type OrderUncheckedUpdateManyWithoutBuyerInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type OrderUpdateWithoutSellerInput = {
@@ -2317,6 +2373,7 @@ export type OrderUpdateWithoutSellerInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -2350,6 +2407,7 @@ export type OrderUncheckedUpdateWithoutSellerInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -2380,6 +2438,7 @@ export type OrderUncheckedUpdateManyWithoutSellerInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type OrderCreateManyOriginDetailsInput = {
@@ -2405,6 +2464,7 @@ export type OrderCreateManyOriginDetailsInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
 }
 
 export type OrderCreateManyBillingDetailsInput = {
@@ -2430,6 +2490,7 @@ export type OrderCreateManyBillingDetailsInput = {
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
+  parcelId?: string | null
 }
 
 export type OrderUpdateWithoutOriginDetailsInput = {
@@ -2452,6 +2513,7 @@ export type OrderUpdateWithoutOriginDetailsInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -2485,6 +2547,7 @@ export type OrderUncheckedUpdateWithoutOriginDetailsInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -2515,6 +2578,7 @@ export type OrderUncheckedUpdateManyWithoutOriginDetailsInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type OrderUpdateWithoutBillingDetailsInput = {
@@ -2537,6 +2601,7 @@ export type OrderUpdateWithoutBillingDetailsInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
   return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
@@ -2570,6 +2635,7 @@ export type OrderUncheckedUpdateWithoutBillingDetailsInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
   return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -2600,6 +2666,7 @@ export type OrderUncheckedUpdateManyWithoutBillingDetailsInput = {
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -2666,6 +2733,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   shippingId?: boolean
   isLebelGenerated?: boolean
   lebelUrl?: boolean
+  parcelId?: boolean
   rating?: boolean | Prisma.Order$ratingArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   return?: boolean | Prisma.Order$returnArgs<ExtArgs>
@@ -2702,6 +2770,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   shippingId?: boolean
   isLebelGenerated?: boolean
   lebelUrl?: boolean
+  parcelId?: boolean
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   originDetails?: boolean | Prisma.Order$originDetailsArgs<ExtArgs>
@@ -2732,6 +2801,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   shippingId?: boolean
   isLebelGenerated?: boolean
   lebelUrl?: boolean
+  parcelId?: boolean
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   originDetails?: boolean | Prisma.Order$originDetailsArgs<ExtArgs>
@@ -2762,9 +2832,10 @@ export type OrderSelectScalar = {
   shippingId?: boolean
   isLebelGenerated?: boolean
   lebelUrl?: boolean
+  parcelId?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "buyerId" | "sellerId" | "status" | "currentShipTo" | "authStatus" | "originDetailsId" | "billingId" | "itemsTotal" | "totalDelivery" | "totalPrice" | "sellerItemsTotal" | "sellerTotal" | "treeCredit" | "serviceFee" | "authenticationFee" | "bundleDiscountPercent" | "courier_service_id" | "shippingId" | "isLebelGenerated" | "lebelUrl", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "buyerId" | "sellerId" | "status" | "currentShipTo" | "authStatus" | "originDetailsId" | "billingId" | "itemsTotal" | "totalDelivery" | "totalPrice" | "sellerItemsTotal" | "sellerTotal" | "treeCredit" | "serviceFee" | "authenticationFee" | "bundleDiscountPercent" | "courier_service_id" | "shippingId" | "isLebelGenerated" | "lebelUrl" | "parcelId", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rating?: boolean | Prisma.Order$ratingArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2827,6 +2898,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     shippingId: string
     isLebelGenerated: boolean
     lebelUrl: string | null
+    parcelId: string | null
   }, ExtArgs["result"]["order"]>
   composites: {}
 }
@@ -3282,6 +3354,7 @@ export interface OrderFieldRefs {
   readonly shippingId: Prisma.FieldRef<"Order", 'String'>
   readonly isLebelGenerated: Prisma.FieldRef<"Order", 'Boolean'>
   readonly lebelUrl: Prisma.FieldRef<"Order", 'String'>
+  readonly parcelId: Prisma.FieldRef<"Order", 'String'>
 }
     
 

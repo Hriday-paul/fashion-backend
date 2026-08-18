@@ -35,6 +35,8 @@ model Payment {
 
   paymentData Json?
 
+  refunds Refund[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -98,4 +100,33 @@ enum DirectDonationStatus {
   SUCCESS
   FAILED
   REFUNDED
+}
+
+model Refund {
+  id String @id @default(cuid())
+
+  paymentId String
+  payment   Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  amount Float @default(0)
+
+  status RefundStatus @default(PENDING)
+
+  reason String?
+
+  stripeRefundId String? // Stripe Refund ID
+
+  refundedAt DateTime?
+  cancelledAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([paymentId])
+}
+
+enum RefundStatus {
+  PENDING
+  SUCCESSED
+  FAILED
 }

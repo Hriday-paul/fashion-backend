@@ -1,5 +1,5 @@
-import { CancelOrderEvidence, CurrentShipTo, OrderAuthStatus } from "../../../generated/prisma/browser";
-import { CancelReason, Order, OrderStatus, Prisma } from "../../../generated/prisma/client";
+import { CancelledBy, CancelOrderEvidence, CurrentShipTo, OrderAuthStatus } from "../../../generated/prisma/browser";
+import { CancelReason, Order, OrderItem, OrderStatus, Prisma, Product, SellDonation } from "../../../generated/prisma/client";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import { DistributePaymentQueue } from "../../queues/payment.queue";
@@ -8,7 +8,9 @@ import httpStatus from "http-status"
 import generateRandomString from "../../utils/generateRandomString";
 import { createCheckoutSession } from "../payments/payments.utils";
 import config from "../../config";
-import { ILabel } from "./order.interface";
+import { ILabel, IShipment } from "./order.interface";
+import { RefundQueue } from "../../queues/refund.queue";
+import { jobs } from "../../queues/jobs.name";
 
 
 const addNewOrder = async (
@@ -258,134 +260,110 @@ const addNewOrder = async (
 
 }
 
-const cancelOrderItemBySeller = async (payload: { orderItemId: string, reason: string, details: string, evidence: CancelOrderEvidence[] }, current_sellerId: string) => {
+const requestCancelOrderItem = async (payload: { orderId: string, itemIds: string[], cancelReason: string, cancelReasonDescription: string, cancelEvidences: { key: string, url: string }[] }, userId: string) => {
 
-    const { reason, details, evidence, orderItemId } = payload;
+    const { itemIds, orderId, cancelEvidences, cancelReason, cancelReasonDescription } = payload;
 
-    const orderItem = await prisma.orderItem.findFirst({
+    const order = await prisma.order.findFirst({
         where: {
-            id: orderItemId,
+            id: orderId
         },
         include: {
-            order: {
-                select: {
-                    sellerId: true,
-                    status: true
+            items: {
+                where: {
+                    id: {
+                        notIn: itemIds,
+                    },
+                    isCancelled: false
                 }
             }
         }
     })
-    if (!orderItem) {
-        throw new AppError(httpStatus.NOT_FOUND, "Order item does not exist")
+
+    if (!order) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
     }
 
-    // you are not the seller of this order item
-    if (orderItem?.order?.sellerId !== current_sellerId) {
-        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order item")
+    if (order?.buyerId !== userId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the buyer of this order")
     }
-
-    if (orderItem?.order?.status === "CANCELLED") {
+    if (order?.status === "CANCELLED") {
         throw new AppError(httpStatus.BAD_REQUEST, "Order is already cancelled")
     }
 
-    //check if the order item is already cancelled
-    if (orderItem?.isCancelled) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Order item is already cancelled")
+    //check allow to cancel
+    const isDirectToBuyer =
+        order.authStatus === OrderAuthStatus.NOT_STARTED &&
+        order.currentShipTo === CurrentShipTo.BUYER;
+
+    const isAuthRound =
+        order.currentShipTo === CurrentShipTo.AUTHENTICATION_CENTER;
+
+    const canCancel =
+        order.status === OrderStatus.PENDING &&
+        (isDirectToBuyer || isAuthRound);
+
+    if (!canCancel) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            "Unable to process cancel the order items"
+        );
     }
 
-    //check item status, only allow cancel if the item is in PENDING or SHIPPED status
-    if (orderItem?.order?.status !== "PENDING" && orderItem?.order?.status !== "SHIPPED") {
-        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process cancel the order item")
-    }
-
-    //mark payment is refunded, if the payment is already paid
-
-    //update the order item status to cancelled
-    await prisma.orderItem.update({
+    //check all of items belongs to the order and not cancelled
+    const orderItems = await prisma.orderItem.findMany({
         where: {
-            id: orderItemId,
-        },
-        data: {
-            isCancelled: true,
-            cancelReason: reason as CancelReason,
-            cancelReasonDetails: details,
-            cancelledBy: "SELLER",
-            cancelEvidence: {
-                createMany: {
-                    data: evidence.map(e => ({
-                        type: e?.type,
-                        url: e?.url,
-                        key: e?.key
-                    }))
-                }
-            }
-        }
-    })
-}
-
-const requestCancelOrderItem = async (payload: { orderItemId: string, reason: string, details: string, evidence: CancelOrderEvidence[] }, userId: string) => {
-    const { orderItemId, reason, details, evidence } = payload;
-
-    const orderItem = await prisma.orderItem.findFirst({
-        where: {
-            id: orderItemId,
+            id: {
+                in: itemIds
+            },
+            orderId: orderId,
+            isCancelled: false,
         },
         include: {
-            order: {
-                select: {
-                    status: true,
-                    buyerId: true
-                }
-            }
+            product: true
         }
     })
 
-    if (!orderItem) {
-        throw new AppError(httpStatus.NOT_FOUND, "Order item does not exist")
+    if (orderItems.length !== itemIds.length) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Some of the order items are already cancelled or not belong to this order")
     }
 
-    if (orderItem?.isBuyerRequestCancel) {
-        throw new AppError(httpStatus.BAD_REQUEST, "You have already requested to cancel this order item")
-    }
+    await prisma.$transaction(async (transactionClient) => {
 
-    if (orderItem?.order?.status === "CANCELLED") {
-        throw new AppError(httpStatus.BAD_REQUEST, "Order is already cancelled")
-    }
+        //mark the order items as cancel requested by buyer
+        await transactionClient.orderItem.updateMany({
+            where: {
+                id: {
+                    in: itemIds
+                }
+            },
+            data: {
+                isBuyerRequestCancel: true,
+                cancellationRequestAt: new Date(),
+                cancelledBy: "BUYER",
+                cancelReason: cancelReason as CancelReason,
+                cancelReasonDetails: cancelReasonDescription,
+            }
+        })
 
-    //check current user is the buyer of the order item
-    if (orderItem?.order?.buyerId !== userId) {
-        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the buyer of this order item")
-    }
+        const ids = orderItems.map(item => item.id);
 
-    //check if the order item is already cancelled
-    if (orderItem?.isCancelled) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Order item is already cancelled")
-    }
-
-    //check item status, only allow cancel if the item is in PENDING or SHIPPED status
-    if (orderItem?.order?.status !== "PENDING" && orderItem?.order?.status !== "SHIPPED") {
-        throw new AppError(httpStatus.BAD_REQUEST, "Unable to request cancel the order item")
-    }
-
-    await prisma.orderItem.update({
-        where: {
-            id: orderItemId,
-        },
-        data: {
-            isBuyerRequestCancel: true,
-            cancelReason: reason as CancelReason,
-            cancelReasonDetails: details,
-            cancelEvidence: {
-                createMany: {
-                    data: evidence.map(e => ({
-                        type: e?.type,
+        //create cancel evidence group for the order
+        await transactionClient.cancelOrderEvidence.createMany({
+            data: ids.flatMap(itemId => {
+                return cancelEvidences.map(e => {
+                    return {
+                        itemId: itemId,
+                        key: e?.key,
                         url: e?.url,
-                        key: e?.key
-                    }))
-                }
-            }
-        }
+                    }
+                })
+            })
+        })
+
     })
+
+
 
 }
 
@@ -397,11 +375,11 @@ const approveCancelOrderItemBySeller = async (orderItemId: string, current_selle
         },
         include: {
             order: {
-                select: {
-                    sellerId: true,
-                    status: true
+                include: {
+                    payment: true
                 }
-            }
+            },
+            donations: true
         }
     })
 
@@ -425,26 +403,146 @@ const approveCancelOrderItemBySeller = async (orderItemId: string, current_selle
 
     //check is requested by buyer to cancel the order item
     if (!orderItem?.isBuyerRequestCancel) {
-        throw new AppError(httpStatus.BAD_REQUEST, "No request to cancel the order item from buyer")
+        throw new AppError(httpStatus.BAD_REQUEST, "Does not have a request to cancel the order item from buyer")
     }
 
-    //check item status, only allow cancel if the item is in PENDING or SHIPPED status
-    if (orderItem?.order?.status !== "PENDING" && orderItem?.order?.status !== "SHIPPED") {
-        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process cancel the order item")
+    const order = orderItem?.order;
+
+    //check allow to cancel
+    const isDirectToBuyer =
+        order.authStatus === OrderAuthStatus.NOT_STARTED &&
+        order.currentShipTo === CurrentShipTo.BUYER;
+
+    const isAuthRound =
+        order.currentShipTo === CurrentShipTo.AUTHENTICATION_CENTER;
+
+    const canCancel =
+        order.status === OrderStatus.PENDING &&
+        (isDirectToBuyer || isAuthRound);
+
+    if (!canCancel) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            "Unable to process cancel the order items"
+        );
     }
 
-    // refund the payment to buyer, if the payment is already paid
+    if (!order?.payment || !order?.payment?.paymentIntentId) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Payment not found for this order")
+    }
 
-    //update the order item status to cancelled
-    await prisma.orderItem.update({
+    //count how many items available to the order that not cancelled, without the current order item
+    const availableItems = await prisma.orderItem.findMany({
         where: {
-            id: orderItemId,
+            orderId: order?.id,
+            isCancelled: false,
+            id: {
+                not: orderItemId
+            }
         },
-        data: {
-            isCancelled: true,
-            cancelledBy: "SELLER",
+        include: {
+            product: true
         }
     })
+
+    const refundAmount = orderItem?.unitPrice;
+
+    //if the available items count is 0, then cancel the whole order
+    if (availableItems.length === 0 && order?.isLebelGenerated) {
+        await cancelFullOrderShipment({
+            shipment_id: order?.shippingId,
+            orderId: order?.id,
+            cancelReason: orderItem?.cancelReason || "OTHER",
+            cancelReasonDescription: orderItem?.cancelReasonDetails || "Cancelled by Buyer request",
+            cancelEvidences: [],
+            items: [orderItem],
+            price: {
+                buyerTotalNow: order?.totalPrice - order?.itemsTotal,
+                sellerTotalNow: order?.sellerTotal - order?.sellerItemsTotal
+            },
+            cancelledBy: orderItem?.cancelledBy || "BUYER"
+        });
+    } else if (availableItems.length === 0) {
+
+        await dltOrderShipment({
+            shipment_id: order?.shippingId,
+            orderId: order?.id,
+            cancelReason: orderItem?.cancelReason || "OTHER",
+            cancelReasonDescription: orderItem?.cancelReasonDetails || "Cancelled by Buyer request",
+            cancelEvidences: [],
+            items: [orderItem],
+            price: {
+                buyerTotalNow: order?.totalPrice - order?.itemsTotal,
+                sellerTotalNow: order?.sellerTotal - order?.sellerItemsTotal
+            },
+            cancelledBy: orderItem?.cancelledBy || "BUYER"
+        });
+
+    } else {
+
+
+        if (order?.parcelId) {
+            //update the shipment to remove the cancelled items
+            await updateOrderShipment({ shipment_id: order?.shippingId, orderItems: availableItems, parcelId: order?.parcelId });
+        }
+
+        await prisma.$transaction(async (transactionClient) => {
+
+            //recalculate prices
+            await transactionClient.order.update({
+                where: {
+                    id: order?.id
+                },
+                data: {
+                    totalPrice: order?.totalPrice - refundAmount,
+                    sellerTotal: order?.sellerTotal - refundAmount,
+                    itemsTotal: order?.itemsTotal - refundAmount,
+                    sellerItemsTotal: order?.sellerItemsTotal - refundAmount
+                }
+            });
+
+            //mark the order items as cancelled
+            await transactionClient.orderItem.update({
+                where: {
+                    id: orderItemId
+                },
+                data: {
+                    isCancelled: true,
+                    cancelledAt: new Date(),
+                }
+            })
+
+            //update sell donations
+            await transactionClient.sellDonation.updateMany({
+                where: {
+                    orderItemId: orderItemId
+                },
+                data: orderItem?.donations?.map(donation => {
+                    return {
+                        amount: 0,
+                        percent: 0,
+                        total_amount: donation?.extra_money,
+                    }
+                })
+            })
+
+        })
+
+    }
+
+    const paymentId = order?.payment?.id;
+    const paymentIntentId = order?.payment?.paymentIntentId;
+
+    await RefundQueue.add(jobs.refund, {
+        paymentId,
+        paymentIntentId,
+        reason: "Order item canceled for requested from buyer",
+        triggeredBy: "Seller",
+        markPaymentRefunded: false,
+        amount: refundAmount
+    });
+
+    return;
 }
 
 const confirmOrderReceived = async (orderId: string, userId: string) => {
@@ -659,7 +757,8 @@ const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>,
                         include: {
 
                         }
-                    }
+                    },
+                    cancelEvidences: true
                 }
             },
 
@@ -779,6 +878,10 @@ const getShipingLebel = async (orderId: string, current_sellerId: string) => {
         throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
     }
 
+    if (order?.status == "CANCELLED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Order is cancelled, unable to generate label")
+    }
+
     if (order?.sellerId !== current_sellerId) {
         throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order")
     }
@@ -800,9 +903,27 @@ const getShipingLebel = async (orderId: string, current_sellerId: string) => {
     return labelUrl;
 }
 
-const cancelFullOrderShipment = async ({ shipment_id, orderId }: { shipment_id: string, orderId: string }) => {
+interface ItemWithDonation extends OrderItem {
+    donations: SellDonation[]
+}
 
-    const rateRes = await fetch(`${config.easyship.easyship_base_url}/shipments/${shipment_id}/cancel`, {
+type CancelOrderShipmentPayload = {
+    shipment_id: string,
+    orderId: string,
+    items: ItemWithDonation[],
+    cancelReason: string,
+    cancelReasonDescription: string,
+    cancelEvidences: { key: string, url: string }[],
+    cancelledBy: CancelledBy
+    price: {
+        buyerTotalNow: number,
+        sellerTotalNow: number,
+    }
+}
+
+const cancelFullOrderShipment = async ({ shipment_id, orderId, items, cancelReason, cancelReasonDescription, cancelEvidences, price, cancelledBy }: CancelOrderShipmentPayload) => {
+
+    const shipRes = await fetch(`${config.easyship.easyship_base_url}/shipments/${shipment_id}/cancel`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
@@ -811,8 +932,8 @@ const cancelFullOrderShipment = async ({ shipment_id, orderId }: { shipment_id: 
         // body: JSON.stringify(payload)
     });
 
-    if (!rateRes.ok) {
-        const errorData = await rateRes.json().catch(() => null);
+    if (!shipRes.ok) {
+        const errorData = await shipRes.json().catch(() => null);
         throw new AppError(
             httpStatus.BAD_REQUEST,
             errorData?.error?.message || 'Order shipment cancel failed',
@@ -821,19 +942,76 @@ const cancelFullOrderShipment = async ({ shipment_id, orderId }: { shipment_id: 
 
     // const data = await rateRes.json();
 
-    //mark order as cancelled to the database
-    await prisma.order.update({
-        where: {
-            id: orderId
-        },
-        data: {
-            status: "CANCELLED",
-        }
+    await prisma.$transaction(async (transactionClient) => {
+
+        //mark order as cancelled to the database
+        await transactionClient.order.update({
+            where: {
+                id: orderId
+            },
+            data: {
+                status: "CANCELLED",
+                totalPrice: price?.buyerTotalNow,
+                itemsTotal: 0,
+                sellerItemsTotal: 0,
+                sellerTotal: price?.sellerTotalNow
+            }
+        })
+
+        //mark all order items as cancelled
+        await transactionClient.orderItem.updateMany({
+            where: {
+                orderId: orderId,
+                isCancelled: false
+            },
+            data: {
+                isCancelled: true,
+                cancelReason: cancelReason as CancelReason,
+                cancelReasonDetails: cancelReasonDescription,
+                cancelledBy,
+                cancelledAt: new Date(),
+            },
+        })
+
+        const itemIds = items.map(item => item?.id);
+
+        //create cancel evidence group for the order
+        await transactionClient.cancelOrderEvidence.createMany({
+            data: itemIds.flatMap(itemId => {
+                return cancelEvidences.map(e => {
+                    return {
+                        itemId: itemId,
+                        key: e?.key,
+                        url: e?.url,
+                    }
+                })
+            })
+        })
+
+        //update sell donations
+        await transactionClient.sellDonation.updateMany({
+            where: {
+                orderItemId: {
+                    in: itemIds
+                }
+            },
+            data: items?.flatMap(item => {
+                return item?.donations?.map(donation => {
+                    return {
+                        amount: 0,
+                        percent: 0,
+                        total_amount: donation?.extra_money,
+                    }
+                })
+            })
+        })
+
+
     })
 
 }
 
-const dltOrderShipment = async ({ orderId, shipment_id }: { shipment_id: string, orderId: string }) => {
+const dltOrderShipment = async ({ orderId, shipment_id, items, cancelReason, cancelReasonDescription, cancelEvidences, price, cancelledBy }: CancelOrderShipmentPayload) => {
 
     const rateRes = await fetch(`${config.easyship.easyship_base_url}/shipments/${shipment_id}`, {
         method: 'DELETE',
@@ -855,50 +1033,132 @@ const dltOrderShipment = async ({ orderId, shipment_id }: { shipment_id: string,
     // const data = await rateRes.json();
 
     //mark order as cancelled to the database
-    await prisma.order.update({
-        where: {
-            id: orderId
-        },
-        data: {
-            status: "CANCELLED",
-        }
+    await prisma.$transaction(async (transactionClient) => {
+
+        //mark order as cancelled to the database
+        await transactionClient.order.update({
+            where: {
+                id: orderId
+            },
+            data: {
+                status: "CANCELLED",
+                totalPrice: price?.buyerTotalNow,
+                itemsTotal: 0,
+                sellerItemsTotal: 0,
+                sellerTotal: price?.sellerTotalNow
+            }
+        })
+
+        //mark all order items as cancelled
+        await transactionClient.orderItem.updateMany({
+            where: {
+                orderId: orderId,
+                isCancelled: false
+            },
+            data: {
+                isCancelled: true,
+                cancelReason: cancelReason as CancelReason,
+                cancelReasonDetails: cancelReasonDescription,
+                cancelledBy,
+                cancelledAt: new Date(),
+            },
+        })
+
+        const itemIds = items.map(item => item.id);
+
+        //create cancel evidence group for the order
+        await transactionClient.cancelOrderEvidence.createMany({
+            data: itemIds.flatMap(itemId => {
+                return cancelEvidences.map(e => {
+                    return {
+                        itemId: itemId,
+                        key: e?.key,
+                        url: e?.url,
+                    }
+                })
+            })
+        })
+
+        //update sell donations
+        await transactionClient.sellDonation.updateMany({
+            where: {
+                orderItemId: {
+                    in: itemIds
+                }
+            },
+            data: items?.flatMap(item => {
+                return item?.donations?.map(donation => {
+                    return {
+                        amount: 0,
+                        percent: 0,
+                        total_amount: donation?.extra_money,
+                    }
+                })
+            })
+        })
+
     })
 
 }
 
-const updateOrderShipment = async ({ orderId, shipment_id }: { shipment_id: string, orderId: string }) => {
+interface Item extends OrderItem {
+    product: Product
+}
 
-    const payload = {
-        "printing_options": {
-            "format": "url"
-        },
+const updateOrderShipment = async ({ orderItems, shipment_id, parcelId }: { shipment_id: string, orderItems: Item[], parcelId: string }) => {
+
+    const filteredItems = orderItems.filter(item => item?.parcelItemId);
+
+    const shipPayload = {
+        "parcels": [
+            {
+                id: parcelId,
+                "items": filteredItems?.map((item) => {
+                    return {
+                        "description": item?.product?.title || "Fashion Product",
+                        "id": item?.parcelItemId,
+                        "category": "fashion",
+                        "quantity": 1,
+                        "dimensions": {
+                            "height": item?.product?.hight_cm,
+                            "width": item?.product?.width_cm,
+                            "length": item?.product?.length_cm
+                        },
+                        "declared_currency": "USD",
+                        "declared_customs_value": item?.product?.finalPrice || 0,
+                        "actual_weight": item?.product?.weight_kg,
+                    }
+                })
+            }
+        ]
     }
 
-    const rateRes = await fetch(`${config.easyship.easyship_base_url}/shipments/${shipment_id}/label`, {
-        method: 'POST',
+    const shipRes = await fetch(`${config.easyship.easyship_base_url}/shipments/${shipment_id}`, {
+        method: 'PATCH',
         headers: {
             'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(shipPayload)
     });
 
-    if (!rateRes.ok) {
-        const errorData = await rateRes.json().catch(() => null);
-        console.log(errorData)
+    if (!shipRes.ok) {
+        const errorData = await shipRes.json().catch(() => null);
         throw new AppError(
             httpStatus.BAD_REQUEST,
             errorData?.error?.message || 'Lebel generation failed',
         );
     }
 
-    const data = await rateRes.json() as ILabel;
+    const data = await shipRes.json() as IShipment;
+
+    return;
 
 }
 
-const cancelItems = async (payload: { orderId: string, itemIds: string[] }, current_sellerId: string) => {
+const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: string[], cancelReason: string, cancelReasonDescription: string, cancelEvidences: { key: string, url: string }[] }, current_sellerId: string) => {
 
-    const { orderId, itemIds } = payload;
+    const { orderId, itemIds, cancelEvidences, cancelReason, cancelReasonDescription } = payload;
 
     const order = await prisma.order.findFirst({
         where: {
@@ -911,8 +1171,12 @@ const cancelItems = async (payload: { orderId: string, itemIds: string[] }, curr
                         notIn: itemIds,
                     },
                     isCancelled: false
+                },
+                include: {
+                    product: true,
                 }
-            }
+            },
+            payment: true,
         }
     })
 
@@ -935,23 +1199,159 @@ const cancelItems = async (payload: { orderId: string, itemIds: string[] }, curr
     const isAuthRound =
         order.currentShipTo === CurrentShipTo.AUTHENTICATION_CENTER;
 
-    if ((isDirectToBuyer && order?.status !== "PENDING") || (isAuthRound && order?.status !== "PENDING")) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process cancel the order items")
+    const canCancel =
+        order.status === OrderStatus.PENDING &&
+        (isDirectToBuyer || isAuthRound);
+
+    if (!canCancel) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            "Unable to process cancel the order items"
+        );
+    }
+
+    //check all of items belongs to the order and not cancelled
+    const orderItems = await prisma.orderItem.findMany({
+        where: {
+            id: {
+                in: itemIds
+            },
+            orderId: orderId,
+            isCancelled: false,
+        },
+        include: {
+            donations: true
+        }
+    })
+
+    if (orderItems.length !== itemIds.length) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Some of the order items are already cancelled or not belong to this order")
     }
 
     const allowCancelFullOrder = order?.items?.length === 0;
 
-    if (allowCancelFullOrder && order?.isLebelGenerated) {
-        await cancelFullOrderShipment({ shipment_id: order?.shippingId, orderId: order?.id });
-    } else if (allowCancelFullOrder) {
-        await dltOrderShipment({ shipment_id: order?.shippingId, orderId: order?.id });
-    } else {
+    const ids = orderItems.map(item => item?.id);
 
-        //mark the order items as cancelled
+    const refundAmount = orderItems.reduce((acc, item) => acc + (item?.unitPrice || 0), 0);
 
-
+    if (!order?.payment || !order?.payment?.paymentIntentId) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Payment not found for this order, contact support")
     }
 
+    if (allowCancelFullOrder && order?.isLebelGenerated) {
+        await cancelFullOrderShipment({
+            shipment_id: order?.shippingId,
+            orderId: order?.id,
+            cancelReason,
+            cancelReasonDescription,
+            cancelEvidences,
+            items: orderItems,
+            price: {
+                buyerTotalNow: order?.totalPrice - order?.itemsTotal,
+                sellerTotalNow: order?.sellerTotal - order?.sellerItemsTotal
+            },
+            cancelledBy: "SELLER"
+        });
+    } else if (allowCancelFullOrder) {
+        await dltOrderShipment({
+            shipment_id: order?.shippingId,
+            orderId: order?.id,
+            cancelReason,
+            cancelReasonDescription,
+            cancelEvidences,
+            items: orderItems,
+            price: {
+                buyerTotalNow: order?.totalPrice - order?.itemsTotal,
+                sellerTotalNow: order?.sellerTotal - order?.sellerItemsTotal
+            },
+            cancelledBy: "SELLER"
+        });
+    } else {
+
+        if (order?.parcelId) {
+            //update the shipment to remove the cancelled items
+            await updateOrderShipment({ shipment_id: order?.shippingId, orderItems: order?.items, parcelId: order?.parcelId });
+        }
+
+        await prisma.$transaction(async (transactionClient) => {
+
+            //recalculate prices
+            await transactionClient.order.update({
+                where: {
+                    id: order?.id
+                },
+                data: {
+                    totalPrice: order?.totalPrice - refundAmount,
+                    sellerTotal: order?.sellerTotal - refundAmount,
+                    itemsTotal: order?.itemsTotal - refundAmount,
+                    sellerItemsTotal: order?.sellerItemsTotal - refundAmount
+                }
+            });
+
+            //mark the order items as cancelled
+            await transactionClient.orderItem.updateMany({
+                where: {
+                    id: {
+                        in: itemIds
+                    }
+                },
+                data: {
+                    isCancelled: true,
+                    cancelledAt: new Date(),
+                    cancelledBy: "SELLER",
+                    cancelReason: cancelReason as CancelReason,
+                    cancelReasonDetails: cancelReasonDescription,
+                }
+            })
+
+
+            //create cancel evidence group for the order
+            await transactionClient.cancelOrderEvidence.createMany({
+                data: ids.flatMap(itemId => {
+                    return cancelEvidences.map(e => {
+                        return {
+                            itemId: itemId,
+                            key: e?.key,
+                            url: e?.url,
+                        }
+                    })
+                })
+            })
+
+            //update sell donations
+            await transactionClient.sellDonation.updateMany({
+                where: {
+                    orderItemId: {
+                        in: itemIds
+                    }
+                },
+                data: orderItems?.flatMap(item => {
+                    return item?.donations?.map(donation => {
+                        return {
+                            amount: 0,
+                            percent: 0,
+                            total_amount: donation?.extra_money,
+                        }
+                    })
+                })
+            })
+
+        })
+    }
+
+    const paymentId = order?.payment?.id;
+    const paymentIntentId = order?.payment?.paymentIntentId;
+
+    await RefundQueue.add(jobs.refund, {
+        paymentId,
+        paymentIntentId,
+        reason: "Order item(s) cancelled by seller",
+        triggeredBy: "Seller",
+        markPaymentRefunded: false,
+        amount: refundAmount
+    });
+
+    return;
 
 }
 

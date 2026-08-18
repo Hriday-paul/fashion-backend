@@ -63,6 +63,7 @@ export const ModelName = {
   SellDonation: 'SellDonation',
   Payment: 'Payment',
   DirectDonation: 'DirectDonation',
+  Refund: 'Refund',
   Product: 'Product',
   ProductPicture: 'ProductPicture',
   ProductCharity: 'ProductCharity',
@@ -238,7 +239,8 @@ export const OrderScalarFieldEnum = {
   courier_service_id: 'courier_service_id',
   shippingId: 'shippingId',
   isLebelGenerated: 'isLebelGenerated',
-  lebelUrl: 'lebelUrl'
+  lebelUrl: 'lebelUrl',
+  parcelId: 'parcelId'
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
@@ -255,12 +257,15 @@ export const OrderItemScalarFieldEnum = {
   isCancelled: 'isCancelled',
   authResult: 'authResult',
   isBuyerRequestCancel: 'isBuyerRequestCancel',
+  cancellationRequestAt: 'cancellationRequestAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  cancelledAt: 'cancelledAt',
   extra_donation: 'extra_donation',
   cancelledBy: 'cancelledBy',
   cancelReason: 'cancelReason',
-  cancelReasonDetails: 'cancelReasonDetails'
+  cancelReasonDetails: 'cancelReasonDetails',
+  parcelItemId: 'parcelItemId'
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
@@ -342,6 +347,22 @@ export const DirectDonationScalarFieldEnum = {
 } as const
 
 export type DirectDonationScalarFieldEnum = (typeof DirectDonationScalarFieldEnum)[keyof typeof DirectDonationScalarFieldEnum]
+
+
+export const RefundScalarFieldEnum = {
+  id: 'id',
+  paymentId: 'paymentId',
+  amount: 'amount',
+  status: 'status',
+  reason: 'reason',
+  stripeRefundId: 'stripeRefundId',
+  refundedAt: 'refundedAt',
+  cancelledAt: 'cancelledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RefundScalarFieldEnum = (typeof RefundScalarFieldEnum)[keyof typeof RefundScalarFieldEnum]
 
 
 export const ProductScalarFieldEnum = {

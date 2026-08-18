@@ -245,7 +245,7 @@ export type CancelOrderEvidenceCreateInput = {
   key: string
   type?: $Enums.EvidenceType
   createdAt?: Date | string
-  item: Prisma.OrderItemCreateNestedOneWithoutCancelEvidenceInput
+  item: Prisma.OrderItemCreateNestedOneWithoutCancelEvidencesInput
 }
 
 export type CancelOrderEvidenceUncheckedCreateInput = {
@@ -263,7 +263,7 @@ export type CancelOrderEvidenceUpdateInput = {
   key?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  item?: Prisma.OrderItemUpdateOneRequiredWithoutCancelEvidenceNestedInput
+  item?: Prisma.OrderItemUpdateOneRequiredWithoutCancelEvidencesNestedInput
 }
 
 export type CancelOrderEvidenceUncheckedUpdateInput = {

@@ -139,6 +139,15 @@ export const DirectDonationStatus = {
 export type DirectDonationStatus = (typeof DirectDonationStatus)[keyof typeof DirectDonationStatus]
 
 
+export const RefundStatus = {
+  PENDING: 'PENDING',
+  SUCCESSED: 'SUCCESSED',
+  FAILED: 'FAILED'
+} as const
+
+export type RefundStatus = (typeof RefundStatus)[keyof typeof RefundStatus]
+
+
 export const ReturnStatus = {
   REQUESTED: 'REQUESTED',
   PENDING_REVIEW: 'PENDING_REVIEW',
