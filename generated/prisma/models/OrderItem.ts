@@ -51,7 +51,7 @@ export type OrderItemMinAggregateOutputType = {
   totalPrice: number | null
   isCancelled: boolean | null
   authResult: $Enums.OrderAuthResult | null
-  isBuyerRequestCancel: boolean | null
+  buyerRequestCancel: $Enums.BuyerRequestCancelStatus | null
   cancellationRequestAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -73,7 +73,7 @@ export type OrderItemMaxAggregateOutputType = {
   totalPrice: number | null
   isCancelled: boolean | null
   authResult: $Enums.OrderAuthResult | null
-  isBuyerRequestCancel: boolean | null
+  buyerRequestCancel: $Enums.BuyerRequestCancelStatus | null
   cancellationRequestAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -95,7 +95,7 @@ export type OrderItemCountAggregateOutputType = {
   totalPrice: number
   isCancelled: number
   authResult: number
-  isBuyerRequestCancel: number
+  buyerRequestCancel: number
   cancellationRequestAt: number
   createdAt: number
   updatedAt: number
@@ -135,7 +135,7 @@ export type OrderItemMinAggregateInputType = {
   totalPrice?: true
   isCancelled?: true
   authResult?: true
-  isBuyerRequestCancel?: true
+  buyerRequestCancel?: true
   cancellationRequestAt?: true
   createdAt?: true
   updatedAt?: true
@@ -157,7 +157,7 @@ export type OrderItemMaxAggregateInputType = {
   totalPrice?: true
   isCancelled?: true
   authResult?: true
-  isBuyerRequestCancel?: true
+  buyerRequestCancel?: true
   cancellationRequestAt?: true
   createdAt?: true
   updatedAt?: true
@@ -179,7 +179,7 @@ export type OrderItemCountAggregateInputType = {
   totalPrice?: true
   isCancelled?: true
   authResult?: true
-  isBuyerRequestCancel?: true
+  buyerRequestCancel?: true
   cancellationRequestAt?: true
   createdAt?: true
   updatedAt?: true
@@ -288,7 +288,7 @@ export type OrderItemGroupByOutputType = {
   totalPrice: number
   isCancelled: boolean
   authResult: $Enums.OrderAuthResult
-  isBuyerRequestCancel: boolean
+  buyerRequestCancel: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -333,7 +333,7 @@ export type OrderItemWhereInput = {
   totalPrice?: Prisma.FloatFilter<"OrderItem"> | number
   isCancelled?: Prisma.BoolFilter<"OrderItem"> | boolean
   authResult?: Prisma.EnumOrderAuthResultFilter<"OrderItem"> | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFilter<"OrderItem"> | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFilter<"OrderItem"> | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.DateTimeNullableFilter<"OrderItem"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
@@ -360,7 +360,7 @@ export type OrderItemOrderByWithRelationInput = {
   totalPrice?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
   authResult?: Prisma.SortOrder
-  isBuyerRequestCancel?: Prisma.SortOrder
+  buyerRequestCancel?: Prisma.SortOrder
   cancellationRequestAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -390,7 +390,7 @@ export type OrderItemWhereUniqueInput = Prisma.AtLeast<{
   totalPrice?: Prisma.FloatFilter<"OrderItem"> | number
   isCancelled?: Prisma.BoolFilter<"OrderItem"> | boolean
   authResult?: Prisma.EnumOrderAuthResultFilter<"OrderItem"> | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFilter<"OrderItem"> | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFilter<"OrderItem"> | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.DateTimeNullableFilter<"OrderItem"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
@@ -417,7 +417,7 @@ export type OrderItemOrderByWithAggregationInput = {
   totalPrice?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
   authResult?: Prisma.SortOrder
-  isBuyerRequestCancel?: Prisma.SortOrder
+  buyerRequestCancel?: Prisma.SortOrder
   cancellationRequestAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -447,7 +447,7 @@ export type OrderItemScalarWhereWithAggregatesInput = {
   totalPrice?: Prisma.FloatWithAggregatesFilter<"OrderItem"> | number
   isCancelled?: Prisma.BoolWithAggregatesFilter<"OrderItem"> | boolean
   authResult?: Prisma.EnumOrderAuthResultWithAggregatesFilter<"OrderItem"> | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolWithAggregatesFilter<"OrderItem"> | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusWithAggregatesFilter<"OrderItem"> | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.DateTimeNullableWithAggregatesFilter<"OrderItem"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
@@ -467,7 +467,7 @@ export type OrderItemCreateInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -494,7 +494,7 @@ export type OrderItemUncheckedCreateInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -517,7 +517,7 @@ export type OrderItemUpdateInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -544,7 +544,7 @@ export type OrderItemUncheckedUpdateInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -569,7 +569,7 @@ export type OrderItemCreateManyInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -589,7 +589,7 @@ export type OrderItemUpdateManyMutationInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -611,7 +611,7 @@ export type OrderItemUncheckedUpdateManyInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -643,7 +643,7 @@ export type OrderItemCountOrderByAggregateInput = {
   totalPrice?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
   authResult?: Prisma.SortOrder
-  isBuyerRequestCancel?: Prisma.SortOrder
+  buyerRequestCancel?: Prisma.SortOrder
   cancellationRequestAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -673,7 +673,7 @@ export type OrderItemMaxOrderByAggregateInput = {
   totalPrice?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
   authResult?: Prisma.SortOrder
-  isBuyerRequestCancel?: Prisma.SortOrder
+  buyerRequestCancel?: Prisma.SortOrder
   cancellationRequestAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -695,7 +695,7 @@ export type OrderItemMinOrderByAggregateInput = {
   totalPrice?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
   authResult?: Prisma.SortOrder
-  isBuyerRequestCancel?: Prisma.SortOrder
+  buyerRequestCancel?: Prisma.SortOrder
   cancellationRequestAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -764,6 +764,10 @@ export type OrderItemUncheckedUpdateManyWithoutOrderNestedInput = {
 
 export type EnumOrderAuthResultFieldUpdateOperationsInput = {
   set?: $Enums.OrderAuthResult
+}
+
+export type EnumBuyerRequestCancelStatusFieldUpdateOperationsInput = {
+  set?: $Enums.BuyerRequestCancelStatus
 }
 
 export type NullableEnumCancelledByFieldUpdateOperationsInput = {
@@ -866,7 +870,7 @@ export type OrderItemCreateWithoutOrderInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -891,7 +895,7 @@ export type OrderItemUncheckedCreateWithoutOrderInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -945,7 +949,7 @@ export type OrderItemScalarWhereInput = {
   totalPrice?: Prisma.FloatFilter<"OrderItem"> | number
   isCancelled?: Prisma.BoolFilter<"OrderItem"> | boolean
   authResult?: Prisma.EnumOrderAuthResultFilter<"OrderItem"> | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFilter<"OrderItem"> | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFilter<"OrderItem"> | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.DateTimeNullableFilter<"OrderItem"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
@@ -965,7 +969,7 @@ export type OrderItemCreateWithoutCancelEvidencesInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -991,7 +995,7 @@ export type OrderItemUncheckedCreateWithoutCancelEvidencesInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1029,7 +1033,7 @@ export type OrderItemUpdateWithoutCancelEvidencesInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1055,7 +1059,7 @@ export type OrderItemUncheckedUpdateWithoutCancelEvidencesInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1077,7 +1081,7 @@ export type OrderItemCreateWithoutDonationsInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1103,7 +1107,7 @@ export type OrderItemUncheckedCreateWithoutDonationsInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1141,7 +1145,7 @@ export type OrderItemUpdateWithoutDonationsInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1167,7 +1171,7 @@ export type OrderItemUncheckedUpdateWithoutDonationsInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1189,7 +1193,7 @@ export type OrderItemCreateWithoutProductInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1214,7 +1218,7 @@ export type OrderItemUncheckedCreateWithoutProductInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1263,7 +1267,7 @@ export type OrderItemCreateWithoutReturnItemInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1289,7 +1293,7 @@ export type OrderItemUncheckedCreateWithoutReturnItemInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1327,7 +1331,7 @@ export type OrderItemUpdateWithoutReturnItemInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1353,7 +1357,7 @@ export type OrderItemUncheckedUpdateWithoutReturnItemInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1376,7 +1380,7 @@ export type OrderItemCreateManyOrderInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1396,7 +1400,7 @@ export type OrderItemUpdateWithoutOrderInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1421,7 +1425,7 @@ export type OrderItemUncheckedUpdateWithoutOrderInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1445,7 +1449,7 @@ export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1466,7 +1470,7 @@ export type OrderItemCreateManyProductInput = {
   totalPrice: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1486,7 +1490,7 @@ export type OrderItemUpdateWithoutProductInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1511,7 +1515,7 @@ export type OrderItemUncheckedUpdateWithoutProductInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1535,7 +1539,7 @@ export type OrderItemUncheckedUpdateManyWithoutProductInput = {
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
-  isBuyerRequestCancel?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
   cancellationRequestAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1597,7 +1601,7 @@ export type OrderItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   totalPrice?: boolean
   isCancelled?: boolean
   authResult?: boolean
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: boolean
   cancellationRequestAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1625,7 +1629,7 @@ export type OrderItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   totalPrice?: boolean
   isCancelled?: boolean
   authResult?: boolean
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: boolean
   cancellationRequestAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1649,7 +1653,7 @@ export type OrderItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   totalPrice?: boolean
   isCancelled?: boolean
   authResult?: boolean
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: boolean
   cancellationRequestAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1673,7 +1677,7 @@ export type OrderItemSelectScalar = {
   totalPrice?: boolean
   isCancelled?: boolean
   authResult?: boolean
-  isBuyerRequestCancel?: boolean
+  buyerRequestCancel?: boolean
   cancellationRequestAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1685,7 +1689,7 @@ export type OrderItemSelectScalar = {
   parcelItemId?: boolean
 }
 
-export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "productId" | "quantity" | "weight" | "unitPrice" | "totalPrice" | "isCancelled" | "authResult" | "isBuyerRequestCancel" | "cancellationRequestAt" | "createdAt" | "updatedAt" | "cancelledAt" | "extra_donation" | "cancelledBy" | "cancelReason" | "cancelReasonDetails" | "parcelItemId", ExtArgs["result"]["orderItem"]>
+export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "productId" | "quantity" | "weight" | "unitPrice" | "totalPrice" | "isCancelled" | "authResult" | "buyerRequestCancel" | "cancellationRequestAt" | "createdAt" | "updatedAt" | "cancelledAt" | "extra_donation" | "cancelledBy" | "cancelReason" | "cancelReasonDetails" | "parcelItemId", ExtArgs["result"]["orderItem"]>
 export type OrderItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -1722,7 +1726,7 @@ export type $OrderItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     totalPrice: number
     isCancelled: boolean
     authResult: $Enums.OrderAuthResult
-    isBuyerRequestCancel: boolean
+    buyerRequestCancel: $Enums.BuyerRequestCancelStatus
     cancellationRequestAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -2169,7 +2173,7 @@ export interface OrderItemFieldRefs {
   readonly totalPrice: Prisma.FieldRef<"OrderItem", 'Float'>
   readonly isCancelled: Prisma.FieldRef<"OrderItem", 'Boolean'>
   readonly authResult: Prisma.FieldRef<"OrderItem", 'OrderAuthResult'>
-  readonly isBuyerRequestCancel: Prisma.FieldRef<"OrderItem", 'Boolean'>
+  readonly buyerRequestCancel: Prisma.FieldRef<"OrderItem", 'BuyerRequestCancelStatus'>
   readonly cancellationRequestAt: Prisma.FieldRef<"OrderItem", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"OrderItem", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"OrderItem", 'DateTime'>

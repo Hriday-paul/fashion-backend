@@ -276,6 +276,13 @@ export type EnumOrderAuthResultFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumOrderAuthResultFilter<$PrismaModel> | $Enums.OrderAuthResult
 }
 
+export type EnumBuyerRequestCancelStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.BuyerRequestCancelStatus | Prisma.EnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.BuyerRequestCancelStatus[] | Prisma.ListEnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BuyerRequestCancelStatus[] | Prisma.ListEnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBuyerRequestCancelStatusFilter<$PrismaModel> | $Enums.BuyerRequestCancelStatus
+}
+
 export type EnumCancelledByNullableFilter<$PrismaModel = never> = {
   equals?: $Enums.CancelledBy | Prisma.EnumCancelledByFieldRefInput<$PrismaModel> | null
   in?: $Enums.CancelledBy[] | Prisma.ListEnumCancelledByFieldRefInput<$PrismaModel> | null
@@ -298,6 +305,16 @@ export type EnumOrderAuthResultWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumOrderAuthResultFilter<$PrismaModel>
   _max?: Prisma.NestedEnumOrderAuthResultFilter<$PrismaModel>
+}
+
+export type EnumBuyerRequestCancelStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BuyerRequestCancelStatus | Prisma.EnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.BuyerRequestCancelStatus[] | Prisma.ListEnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BuyerRequestCancelStatus[] | Prisma.ListEnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBuyerRequestCancelStatusWithAggregatesFilter<$PrismaModel> | $Enums.BuyerRequestCancelStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBuyerRequestCancelStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBuyerRequestCancelStatusFilter<$PrismaModel>
 }
 
 export type EnumCancelledByNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -918,6 +935,13 @@ export type NestedEnumOrderAuthResultFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumOrderAuthResultFilter<$PrismaModel> | $Enums.OrderAuthResult
 }
 
+export type NestedEnumBuyerRequestCancelStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.BuyerRequestCancelStatus | Prisma.EnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.BuyerRequestCancelStatus[] | Prisma.ListEnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BuyerRequestCancelStatus[] | Prisma.ListEnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBuyerRequestCancelStatusFilter<$PrismaModel> | $Enums.BuyerRequestCancelStatus
+}
+
 export type NestedEnumCancelledByNullableFilter<$PrismaModel = never> = {
   equals?: $Enums.CancelledBy | Prisma.EnumCancelledByFieldRefInput<$PrismaModel> | null
   in?: $Enums.CancelledBy[] | Prisma.ListEnumCancelledByFieldRefInput<$PrismaModel> | null
@@ -940,6 +964,16 @@ export type NestedEnumOrderAuthResultWithAggregatesFilter<$PrismaModel = never> 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumOrderAuthResultFilter<$PrismaModel>
   _max?: Prisma.NestedEnumOrderAuthResultFilter<$PrismaModel>
+}
+
+export type NestedEnumBuyerRequestCancelStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BuyerRequestCancelStatus | Prisma.EnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.BuyerRequestCancelStatus[] | Prisma.ListEnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BuyerRequestCancelStatus[] | Prisma.ListEnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBuyerRequestCancelStatusWithAggregatesFilter<$PrismaModel> | $Enums.BuyerRequestCancelStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBuyerRequestCancelStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBuyerRequestCancelStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumCancelledByNullableWithAggregatesFilter<$PrismaModel = never> = {

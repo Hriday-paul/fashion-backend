@@ -3671,7 +3671,7 @@ export const OrderItemScalarFieldEnum = {
   totalPrice: 'totalPrice',
   isCancelled: 'isCancelled',
   authResult: 'authResult',
-  isBuyerRequestCancel: 'isBuyerRequestCancel',
+  buyerRequestCancel: 'buyerRequestCancel',
   cancellationRequestAt: 'cancellationRequestAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -3946,7 +3946,12 @@ export const ReturnScalarFieldEnum = {
   refundAmount: 'refundAmount',
   refundedAt: 'refundedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  courier_service_id: 'courier_service_id',
+  shippingId: 'shippingId',
+  isLebelGenerated: 'isLebelGenerated',
+  lebelUrl: 'lebelUrl',
+  parcelId: 'parcelId'
 } as const
 
 export type ReturnScalarFieldEnum = (typeof ReturnScalarFieldEnum)[keyof typeof ReturnScalarFieldEnum]
@@ -4340,6 +4345,20 @@ export type EnumOrderAuthResultFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'OrderAuthResult[]'
  */
 export type ListEnumOrderAuthResultFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderAuthResult[]'>
+    
+
+
+/**
+ * Reference to a field of type 'BuyerRequestCancelStatus'
+ */
+export type EnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BuyerRequestCancelStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'BuyerRequestCancelStatus[]'
+ */
+export type ListEnumBuyerRequestCancelStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BuyerRequestCancelStatus[]'>
     
 
 

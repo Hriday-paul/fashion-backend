@@ -30,6 +30,13 @@ model Return {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
+    courier_service_id String?
+    shippingId String?
+    isLebelGenerated Boolean @default(false)
+    lebelUrl String?
+
+    parcelId String?
+
     @@index([orderId])
     @@index([buyerId])
     @@index([sellerId])
@@ -62,11 +69,13 @@ model ReturnEvidence {
 
 enum ReturnStatus {
     REQUESTED        // buyer tapped "Request return"
-    PENDING_REVIEW   // waiting on seller (no auto-approve policy)
     APPROVED         // seller approved or auto-approved
     DECLINED         // seller rejected with reason
-    SHIPPED          // buyer has shipped item back (tracking added)
-    COMPLETED        // seller confirmed receipt + refund issued
+    SHIPPED
+    OUT_FOR_DELIVERY
+    DELIVERED
+    COMPLETED
+    CANCELLED
 }
 
 enum ReturnReason {

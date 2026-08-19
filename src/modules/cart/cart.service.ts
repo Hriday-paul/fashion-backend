@@ -226,8 +226,10 @@ const addToCart = async (payload: { productId: string, quantity: number, extraDo
 
     const cartGroup = await prisma.cartGroup.upsert({
         where: {
-            sellerId: sellerId,
-            userId: userId
+            sellerId_userId: {
+                sellerId: sellerId,
+                userId: userId
+            }
         },
         update: {
             items: {
@@ -353,7 +355,7 @@ const availableRates = async (cartGroupId: string, userId: string) => {
                     return {
                         "category": "fashion",
                         "quantity": 1,
-                        "actual_weight" : item?.product?.weight_kg,
+                        "actual_weight": item?.product?.weight_kg,
                         "dimensions": {
                             "height": item?.product?.hight_cm,
                             "width": item?.product?.width_cm,

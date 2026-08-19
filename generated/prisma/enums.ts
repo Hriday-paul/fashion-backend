@@ -103,6 +103,16 @@ export const CancelledBy = {
 export type CancelledBy = (typeof CancelledBy)[keyof typeof CancelledBy]
 
 
+export const BuyerRequestCancelStatus = {
+  NOT_REQUESTED: 'NOT_REQUESTED',
+  REQUESTED: 'REQUESTED',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type BuyerRequestCancelStatus = (typeof BuyerRequestCancelStatus)[keyof typeof BuyerRequestCancelStatus]
+
+
 export const PaymentStatus = {
   PENDING: 'PENDING',
   PROCESSING: 'PROCESSING',
@@ -150,11 +160,13 @@ export type RefundStatus = (typeof RefundStatus)[keyof typeof RefundStatus]
 
 export const ReturnStatus = {
   REQUESTED: 'REQUESTED',
-  PENDING_REVIEW: 'PENDING_REVIEW',
   APPROVED: 'APPROVED',
   DECLINED: 'DECLINED',
   SHIPPED: 'SHIPPED',
-  COMPLETED: 'COMPLETED'
+  OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
+  DELIVERED: 'DELIVERED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
 } as const
 
 export type ReturnStatus = (typeof ReturnStatus)[keyof typeof ReturnStatus]

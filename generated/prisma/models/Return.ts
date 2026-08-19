@@ -48,6 +48,11 @@ export type ReturnMinAggregateOutputType = {
   refundedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  courier_service_id: string | null
+  shippingId: string | null
+  isLebelGenerated: boolean | null
+  lebelUrl: string | null
+  parcelId: string | null
 }
 
 export type ReturnMaxAggregateOutputType = {
@@ -65,6 +70,11 @@ export type ReturnMaxAggregateOutputType = {
   refundedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  courier_service_id: string | null
+  shippingId: string | null
+  isLebelGenerated: boolean | null
+  lebelUrl: string | null
+  parcelId: string | null
 }
 
 export type ReturnCountAggregateOutputType = {
@@ -82,6 +92,11 @@ export type ReturnCountAggregateOutputType = {
   refundedAt: number
   createdAt: number
   updatedAt: number
+  courier_service_id: number
+  shippingId: number
+  isLebelGenerated: number
+  lebelUrl: number
+  parcelId: number
   _all: number
 }
 
@@ -109,6 +124,11 @@ export type ReturnMinAggregateInputType = {
   refundedAt?: true
   createdAt?: true
   updatedAt?: true
+  courier_service_id?: true
+  shippingId?: true
+  isLebelGenerated?: true
+  lebelUrl?: true
+  parcelId?: true
 }
 
 export type ReturnMaxAggregateInputType = {
@@ -126,6 +146,11 @@ export type ReturnMaxAggregateInputType = {
   refundedAt?: true
   createdAt?: true
   updatedAt?: true
+  courier_service_id?: true
+  shippingId?: true
+  isLebelGenerated?: true
+  lebelUrl?: true
+  parcelId?: true
 }
 
 export type ReturnCountAggregateInputType = {
@@ -143,6 +168,11 @@ export type ReturnCountAggregateInputType = {
   refundedAt?: true
   createdAt?: true
   updatedAt?: true
+  courier_service_id?: true
+  shippingId?: true
+  isLebelGenerated?: true
+  lebelUrl?: true
+  parcelId?: true
   _all?: true
 }
 
@@ -247,6 +277,11 @@ export type ReturnGroupByOutputType = {
   refundedAt: Date | null
   createdAt: Date
   updatedAt: Date
+  courier_service_id: string | null
+  shippingId: string | null
+  isLebelGenerated: boolean
+  lebelUrl: string | null
+  parcelId: string | null
   _count: ReturnCountAggregateOutputType | null
   _avg: ReturnAvgAggregateOutputType | null
   _sum: ReturnSumAggregateOutputType | null
@@ -287,6 +322,11 @@ export type ReturnWhereInput = {
   refundedAt?: Prisma.DateTimeNullableFilter<"Return"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Return"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Return"> | Date | string
+  courier_service_id?: Prisma.StringNullableFilter<"Return"> | string | null
+  shippingId?: Prisma.StringNullableFilter<"Return"> | string | null
+  isLebelGenerated?: Prisma.BoolFilter<"Return"> | boolean
+  lebelUrl?: Prisma.StringNullableFilter<"Return"> | string | null
+  parcelId?: Prisma.StringNullableFilter<"Return"> | string | null
   order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
   buyer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -309,6 +349,11 @@ export type ReturnOrderByWithRelationInput = {
   refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  courier_service_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  shippingId?: Prisma.SortOrderInput | Prisma.SortOrder
+  isLebelGenerated?: Prisma.SortOrder
+  lebelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  parcelId?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.OrderOrderByWithRelationInput
   buyer?: Prisma.UserOrderByWithRelationInput
   seller?: Prisma.UserOrderByWithRelationInput
@@ -334,6 +379,11 @@ export type ReturnWhereUniqueInput = Prisma.AtLeast<{
   refundedAt?: Prisma.DateTimeNullableFilter<"Return"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Return"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Return"> | Date | string
+  courier_service_id?: Prisma.StringNullableFilter<"Return"> | string | null
+  shippingId?: Prisma.StringNullableFilter<"Return"> | string | null
+  isLebelGenerated?: Prisma.BoolFilter<"Return"> | boolean
+  lebelUrl?: Prisma.StringNullableFilter<"Return"> | string | null
+  parcelId?: Prisma.StringNullableFilter<"Return"> | string | null
   order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
   buyer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -356,6 +406,11 @@ export type ReturnOrderByWithAggregationInput = {
   refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  courier_service_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  shippingId?: Prisma.SortOrderInput | Prisma.SortOrder
+  isLebelGenerated?: Prisma.SortOrder
+  lebelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  parcelId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ReturnCountOrderByAggregateInput
   _avg?: Prisma.ReturnAvgOrderByAggregateInput
   _max?: Prisma.ReturnMaxOrderByAggregateInput
@@ -381,6 +436,11 @@ export type ReturnScalarWhereWithAggregatesInput = {
   refundedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Return"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Return"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Return"> | Date | string
+  courier_service_id?: Prisma.StringNullableWithAggregatesFilter<"Return"> | string | null
+  shippingId?: Prisma.StringNullableWithAggregatesFilter<"Return"> | string | null
+  isLebelGenerated?: Prisma.BoolWithAggregatesFilter<"Return"> | boolean
+  lebelUrl?: Prisma.StringNullableWithAggregatesFilter<"Return"> | string | null
+  parcelId?: Prisma.StringNullableWithAggregatesFilter<"Return"> | string | null
 }
 
 export type ReturnCreateInput = {
@@ -395,6 +455,11 @@ export type ReturnCreateInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
   order?: Prisma.OrderCreateNestedOneWithoutReturnInput
   buyer: Prisma.UserCreateNestedOneWithoutReturnsAsBuyerInput
   seller: Prisma.UserCreateNestedOneWithoutReturnsAsSellerInput
@@ -417,6 +482,11 @@ export type ReturnUncheckedCreateInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
   items?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutReturnInput
   evidence?: Prisma.ReturnEvidenceUncheckedCreateNestedManyWithoutReturnInput
 }
@@ -433,6 +503,11 @@ export type ReturnUpdateInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.OrderUpdateOneWithoutReturnNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutReturnsAsBuyerNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutReturnsAsSellerNestedInput
@@ -455,6 +530,11 @@ export type ReturnUncheckedUpdateInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnNestedInput
   evidence?: Prisma.ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput
 }
@@ -474,6 +554,11 @@ export type ReturnCreateManyInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
 }
 
 export type ReturnUpdateManyMutationInput = {
@@ -488,6 +573,11 @@ export type ReturnUpdateManyMutationInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ReturnUncheckedUpdateManyInput = {
@@ -505,6 +595,11 @@ export type ReturnUncheckedUpdateManyInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ReturnListRelationFilter = {
@@ -532,6 +627,11 @@ export type ReturnCountOrderByAggregateInput = {
   refundedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  courier_service_id?: Prisma.SortOrder
+  shippingId?: Prisma.SortOrder
+  isLebelGenerated?: Prisma.SortOrder
+  lebelUrl?: Prisma.SortOrder
+  parcelId?: Prisma.SortOrder
 }
 
 export type ReturnAvgOrderByAggregateInput = {
@@ -553,6 +653,11 @@ export type ReturnMaxOrderByAggregateInput = {
   refundedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  courier_service_id?: Prisma.SortOrder
+  shippingId?: Prisma.SortOrder
+  isLebelGenerated?: Prisma.SortOrder
+  lebelUrl?: Prisma.SortOrder
+  parcelId?: Prisma.SortOrder
 }
 
 export type ReturnMinOrderByAggregateInput = {
@@ -570,6 +675,11 @@ export type ReturnMinOrderByAggregateInput = {
   refundedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  courier_service_id?: Prisma.SortOrder
+  shippingId?: Prisma.SortOrder
+  isLebelGenerated?: Prisma.SortOrder
+  lebelUrl?: Prisma.SortOrder
+  parcelId?: Prisma.SortOrder
 }
 
 export type ReturnSumOrderByAggregateInput = {
@@ -763,6 +873,11 @@ export type ReturnCreateWithoutOrderInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
   buyer: Prisma.UserCreateNestedOneWithoutReturnsAsBuyerInput
   seller: Prisma.UserCreateNestedOneWithoutReturnsAsSellerInput
   items?: Prisma.ReturnItemCreateNestedManyWithoutReturnInput
@@ -783,6 +898,11 @@ export type ReturnUncheckedCreateWithoutOrderInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
   items?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutReturnInput
   evidence?: Prisma.ReturnEvidenceUncheckedCreateNestedManyWithoutReturnInput
 }
@@ -831,6 +951,11 @@ export type ReturnScalarWhereInput = {
   refundedAt?: Prisma.DateTimeNullableFilter<"Return"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Return"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Return"> | Date | string
+  courier_service_id?: Prisma.StringNullableFilter<"Return"> | string | null
+  shippingId?: Prisma.StringNullableFilter<"Return"> | string | null
+  isLebelGenerated?: Prisma.BoolFilter<"Return"> | boolean
+  lebelUrl?: Prisma.StringNullableFilter<"Return"> | string | null
+  parcelId?: Prisma.StringNullableFilter<"Return"> | string | null
 }
 
 export type ReturnCreateWithoutItemsInput = {
@@ -845,6 +970,11 @@ export type ReturnCreateWithoutItemsInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
   order?: Prisma.OrderCreateNestedOneWithoutReturnInput
   buyer: Prisma.UserCreateNestedOneWithoutReturnsAsBuyerInput
   seller: Prisma.UserCreateNestedOneWithoutReturnsAsSellerInput
@@ -866,6 +996,11 @@ export type ReturnUncheckedCreateWithoutItemsInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
   evidence?: Prisma.ReturnEvidenceUncheckedCreateNestedManyWithoutReturnInput
 }
 
@@ -897,6 +1032,11 @@ export type ReturnUpdateWithoutItemsInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.OrderUpdateOneWithoutReturnNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutReturnsAsBuyerNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutReturnsAsSellerNestedInput
@@ -918,6 +1058,11 @@ export type ReturnUncheckedUpdateWithoutItemsInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evidence?: Prisma.ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput
 }
 
@@ -933,6 +1078,11 @@ export type ReturnCreateWithoutEvidenceInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
   order?: Prisma.OrderCreateNestedOneWithoutReturnInput
   buyer: Prisma.UserCreateNestedOneWithoutReturnsAsBuyerInput
   seller: Prisma.UserCreateNestedOneWithoutReturnsAsSellerInput
@@ -954,6 +1104,11 @@ export type ReturnUncheckedCreateWithoutEvidenceInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
   items?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutReturnInput
 }
 
@@ -985,6 +1140,11 @@ export type ReturnUpdateWithoutEvidenceInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.OrderUpdateOneWithoutReturnNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutReturnsAsBuyerNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutReturnsAsSellerNestedInput
@@ -1006,6 +1166,11 @@ export type ReturnUncheckedUpdateWithoutEvidenceInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnNestedInput
 }
 
@@ -1021,6 +1186,11 @@ export type ReturnCreateWithoutBuyerInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
   order?: Prisma.OrderCreateNestedOneWithoutReturnInput
   seller: Prisma.UserCreateNestedOneWithoutReturnsAsSellerInput
   items?: Prisma.ReturnItemCreateNestedManyWithoutReturnInput
@@ -1041,6 +1211,11 @@ export type ReturnUncheckedCreateWithoutBuyerInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
   items?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutReturnInput
   evidence?: Prisma.ReturnEvidenceUncheckedCreateNestedManyWithoutReturnInput
 }
@@ -1067,6 +1242,11 @@ export type ReturnCreateWithoutSellerInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
   order?: Prisma.OrderCreateNestedOneWithoutReturnInput
   buyer: Prisma.UserCreateNestedOneWithoutReturnsAsBuyerInput
   items?: Prisma.ReturnItemCreateNestedManyWithoutReturnInput
@@ -1087,6 +1267,11 @@ export type ReturnUncheckedCreateWithoutSellerInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
   items?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutReturnInput
   evidence?: Prisma.ReturnEvidenceUncheckedCreateNestedManyWithoutReturnInput
 }
@@ -1147,6 +1332,11 @@ export type ReturnCreateManyOrderInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
 }
 
 export type ReturnUpdateWithoutOrderInput = {
@@ -1161,6 +1351,11 @@ export type ReturnUpdateWithoutOrderInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   buyer?: Prisma.UserUpdateOneRequiredWithoutReturnsAsBuyerNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutReturnsAsSellerNestedInput
   items?: Prisma.ReturnItemUpdateManyWithoutReturnNestedInput
@@ -1181,6 +1376,11 @@ export type ReturnUncheckedUpdateWithoutOrderInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnNestedInput
   evidence?: Prisma.ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput
 }
@@ -1199,6 +1399,11 @@ export type ReturnUncheckedUpdateManyWithoutOrderInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ReturnCreateManyBuyerInput = {
@@ -1215,6 +1420,11 @@ export type ReturnCreateManyBuyerInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
 }
 
 export type ReturnCreateManySellerInput = {
@@ -1231,6 +1441,11 @@ export type ReturnCreateManySellerInput = {
   refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  courier_service_id?: string | null
+  shippingId?: string | null
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
 }
 
 export type ReturnUpdateWithoutBuyerInput = {
@@ -1245,6 +1460,11 @@ export type ReturnUpdateWithoutBuyerInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.OrderUpdateOneWithoutReturnNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutReturnsAsSellerNestedInput
   items?: Prisma.ReturnItemUpdateManyWithoutReturnNestedInput
@@ -1265,6 +1485,11 @@ export type ReturnUncheckedUpdateWithoutBuyerInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnNestedInput
   evidence?: Prisma.ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput
 }
@@ -1283,6 +1508,11 @@ export type ReturnUncheckedUpdateManyWithoutBuyerInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ReturnUpdateWithoutSellerInput = {
@@ -1297,6 +1527,11 @@ export type ReturnUpdateWithoutSellerInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.OrderUpdateOneWithoutReturnNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutReturnsAsBuyerNestedInput
   items?: Prisma.ReturnItemUpdateManyWithoutReturnNestedInput
@@ -1317,6 +1552,11 @@ export type ReturnUncheckedUpdateWithoutSellerInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnNestedInput
   evidence?: Prisma.ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput
 }
@@ -1335,6 +1575,11 @@ export type ReturnUncheckedUpdateManyWithoutSellerInput = {
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1392,6 +1637,11 @@ export type ReturnSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   refundedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  courier_service_id?: boolean
+  shippingId?: boolean
+  isLebelGenerated?: boolean
+  lebelUrl?: boolean
+  parcelId?: boolean
   order?: boolean | Prisma.Return$orderArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1415,6 +1665,11 @@ export type ReturnSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   refundedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  courier_service_id?: boolean
+  shippingId?: boolean
+  isLebelGenerated?: boolean
+  lebelUrl?: boolean
+  parcelId?: boolean
   order?: boolean | Prisma.Return$orderArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1435,6 +1690,11 @@ export type ReturnSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   refundedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  courier_service_id?: boolean
+  shippingId?: boolean
+  isLebelGenerated?: boolean
+  lebelUrl?: boolean
+  parcelId?: boolean
   order?: boolean | Prisma.Return$orderArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1455,9 +1715,14 @@ export type ReturnSelectScalar = {
   refundedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  courier_service_id?: boolean
+  shippingId?: boolean
+  isLebelGenerated?: boolean
+  lebelUrl?: boolean
+  parcelId?: boolean
 }
 
-export type ReturnOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "buyerId" | "sellerId" | "status" | "reason" | "description" | "declineReason" | "trackingNumber" | "trackingCarrier" | "refundAmount" | "refundedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["return"]>
+export type ReturnOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "buyerId" | "sellerId" | "status" | "reason" | "description" | "declineReason" | "trackingNumber" | "trackingCarrier" | "refundAmount" | "refundedAt" | "createdAt" | "updatedAt" | "courier_service_id" | "shippingId" | "isLebelGenerated" | "lebelUrl" | "parcelId", ExtArgs["result"]["return"]>
 export type ReturnInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.Return$orderArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1501,6 +1766,11 @@ export type $ReturnPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     refundedAt: Date | null
     createdAt: Date
     updatedAt: Date
+    courier_service_id: string | null
+    shippingId: string | null
+    isLebelGenerated: boolean
+    lebelUrl: string | null
+    parcelId: string | null
   }, ExtArgs["result"]["return"]>
   composites: {}
 }
@@ -1943,6 +2213,11 @@ export interface ReturnFieldRefs {
   readonly refundedAt: Prisma.FieldRef<"Return", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Return", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Return", 'DateTime'>
+  readonly courier_service_id: Prisma.FieldRef<"Return", 'String'>
+  readonly shippingId: Prisma.FieldRef<"Return", 'String'>
+  readonly isLebelGenerated: Prisma.FieldRef<"Return", 'Boolean'>
+  readonly lebelUrl: Prisma.FieldRef<"Return", 'String'>
+  readonly parcelId: Prisma.FieldRef<"Return", 'String'>
 }
     
 

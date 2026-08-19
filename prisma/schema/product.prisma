@@ -125,7 +125,7 @@ model CartGroup {
 
     payments Payment[]
 
-    @@unique([sellerId])
+    @@unique([sellerId, userId])
     @@map("carts")
 }
 

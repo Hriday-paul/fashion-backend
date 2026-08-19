@@ -1,5 +1,5 @@
-import { CancelledBy, CancelOrderEvidence, CurrentShipTo, OrderAuthStatus } from "../../../generated/prisma/browser";
-import { CancelReason, Order, OrderItem, OrderStatus, Prisma, Product, SellDonation } from "../../../generated/prisma/client";
+import { CancelledBy, CurrentShipTo, OrderAuthStatus } from "../../../generated/prisma/browser";
+import { CancelReason, OrderItem, OrderStatus, Prisma, Product, SellDonation } from "../../../generated/prisma/client";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import { DistributePaymentQueue } from "../../queues/payment.queue";
@@ -318,6 +318,7 @@ const requestCancelOrderItem = async (payload: { orderId: string, itemIds: strin
             },
             orderId: orderId,
             isCancelled: false,
+            buyerRequestCancel: "NOT_REQUESTED"
         },
         include: {
             product: true
@@ -325,7 +326,7 @@ const requestCancelOrderItem = async (payload: { orderId: string, itemIds: strin
     })
 
     if (orderItems.length !== itemIds.length) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Some of the order items are already cancelled or not belong to this order")
+        throw new AppError(httpStatus.BAD_REQUEST, "Some of the order items are already cancelled or requested to cancel or does not belong to this order")
     }
 
     await prisma.$transaction(async (transactionClient) => {
@@ -338,7 +339,7 @@ const requestCancelOrderItem = async (payload: { orderId: string, itemIds: strin
                 }
             },
             data: {
-                isBuyerRequestCancel: true,
+                buyerRequestCancel: "REQUESTED",
                 cancellationRequestAt: new Date(),
                 cancelledBy: "BUYER",
                 cancelReason: cancelReason as CancelReason,
@@ -402,7 +403,7 @@ const approveCancelOrderItemBySeller = async (orderItemId: string, current_selle
     }
 
     //check is requested by buyer to cancel the order item
-    if (!orderItem?.isBuyerRequestCancel) {
+    if (orderItem?.buyerRequestCancel !== "REQUESTED") {
         throw new AppError(httpStatus.BAD_REQUEST, "Does not have a request to cancel the order item from buyer")
     }
 
@@ -541,6 +542,52 @@ const approveCancelOrderItemBySeller = async (orderItemId: string, current_selle
         markPaymentRefunded: false,
         amount: refundAmount
     });
+
+    return;
+}
+
+const declineCancelOrderItemBySeller = async (orderItemId: string, current_sellerId: string) => {
+
+    const orderItem = await prisma.orderItem.findFirst({
+        where: {
+            id: orderItemId,
+        },
+        include: {
+            order: true
+        }
+    })
+
+    if (!orderItem) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order item does not exist")
+    }
+
+    // you are not the seller of this order item
+    if (orderItem?.order?.sellerId !== current_sellerId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order item")
+    }
+
+    //check if the order item is already cancelled
+    if (orderItem?.isCancelled) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Order item is already cancelled")
+    }
+
+    if (orderItem?.order?.status === "CANCELLED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Order is already cancelled")
+    }
+
+    //check is requested by buyer to cancel the order item
+    if (orderItem?.buyerRequestCancel !== "REQUESTED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Does not have a request to cancel the order item from buyer")
+    }
+
+    await prisma.orderItem.update({
+        where: {
+            id: orderItemId
+        },
+        data: {
+            buyerRequestCancel: "REJECTED"
+        }
+    })
 
     return;
 }
@@ -762,19 +809,211 @@ const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>,
                 }
             },
 
-            buyer: {
-                select: {
-                    fname: true,
-                    lname: true,
-                    email: true,
-                    phone: true,
-                    picture: {
-                        select: {
-                            url: true
+            // buyer: {
+            //     select: {
+            //         fname: true,
+            //         lname: true,
+            //         email: true,
+            //         phone: true,
+            //         picture: {
+            //             select: {
+            //                 url: true
+            //             }
+            //         }
+            //     }
+            // },
+            billingDetails: true
+        },
+    })
+
+    const total = await prisma.order.count({
+        where: whereConditions,
+    });
+
+    return {
+        meta: {
+            total,
+            page,
+            limit,
+        },
+        data: result,
+    };
+}
+
+const ordersAsABuyer = async (buyerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
+    const AndConditions: Prisma.OrderWhereInput[] = [{ buyerId }];
+    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+    const { searchTerm, status } = query;
+
+    if (searchTerm) {
+        AndConditions.push({
+            OR: [
+                {
+                    id: {
+                        contains: searchTerm as string,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    buyer: {
+                        OR: [
+                            {
+                                fname: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                lname: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                phone: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ],
+                    }
+                },
+                {
+                    billingDetails: {
+                        OR: [
+                            {
+                                full_name: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                contact: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address1: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address2: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    items: {
+                        some: {
+                            product: {
+                                OR: [
+                                    {
+                                        title: {
+                                            contains: searchTerm as string,
+                                            mode: "insensitive",
+                                        },
+                                    },
+                                    {
+                                        description: {
+                                            contains: searchTerm as string,
+                                            mode: "insensitive",
+                                        }
+                                    },
+                                    {
+                                        id: {
+                                            contains: searchTerm as string,
+                                            mode: "insensitive",
+                                        },
+                                    },
+
+                                ]
+                            },
                         }
                     }
+                },
+            ],
+        });
+    }
+
+    if (status) {
+        AndConditions.push({
+            status: status as OrderStatus
+        })
+    }
+
+    const whereConditions: Prisma.OrderWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
+
+    const result = await prisma.order.findMany({
+        where: whereConditions,
+        skip,
+        take: limit,
+        orderBy: {
+            [sortBy]: sortOrder,
+        },
+        include: {
+            items: {
+                include: {
+                    product: {
+                        select: {
+                            title: true,
+                            description: true,
+                            id: true,
+                            condition: true,
+                            finalPrice: true,
+                            images: {
+                                select: {
+                                    url: true
+                                }
+                            },
+                            category: {
+                                select: {
+                                    name: true
+                                }
+                            },
+                            size: {
+                                select: {
+                                    title: true
+                                }
+                            },
+                            _count: true
+                        },
+                    },
+                    returnItem: true,
+                    cancelEvidences: true
                 }
             },
+            // buyer: {
+            //     select: {
+            //         fname: true,
+            //         lname: true,
+            //         email: true,
+            //         phone: true,
+            //         picture: {
+            //             select: {
+            //                 url: true
+            //             }
+            //         }
+            //     }
+            // },
             billingDetails: true
         },
     })
@@ -1358,9 +1597,11 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
 export const orderService = {
     addNewOrder,
     ordersAsASeller,
+    ordersAsABuyer,
     cancelOrderItemBySeller,
     requestCancelOrderItem,
     approveCancelOrderItemBySeller,
+    declineCancelOrderItemBySeller,
     confirmOrderReceived,
     getShipingLebel,
     markShippedOrder

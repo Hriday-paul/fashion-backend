@@ -279,10 +279,11 @@ export type CartGroupOrderByWithRelationInput = {
 
 export type CartGroupWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  sellerId?: string
+  sellerId_userId?: Prisma.CartGroupSellerIdUserIdCompoundUniqueInput
   AND?: Prisma.CartGroupWhereInput | Prisma.CartGroupWhereInput[]
   OR?: Prisma.CartGroupWhereInput[]
   NOT?: Prisma.CartGroupWhereInput | Prisma.CartGroupWhereInput[]
+  sellerId?: Prisma.StringFilter<"CartGroup"> | string
   userId?: Prisma.StringFilter<"CartGroup"> | string
   treeGiftCost?: Prisma.FloatFilter<"CartGroup"> | number
   authenticationCost?: Prisma.FloatFilter<"CartGroup"> | number
@@ -294,7 +295,7 @@ export type CartGroupWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.CartItemListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
-}, "id" | "sellerId">
+}, "id" | "sellerId_userId">
 
 export type CartGroupOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -421,6 +422,11 @@ export type CartGroupUncheckedUpdateManyInput = {
 export type CartGroupNullableScalarRelationFilter = {
   is?: Prisma.CartGroupWhereInput | null
   isNot?: Prisma.CartGroupWhereInput | null
+}
+
+export type CartGroupSellerIdUserIdCompoundUniqueInput = {
+  sellerId: string
+  userId: string
 }
 
 export type CartGroupCountOrderByAggregateInput = {

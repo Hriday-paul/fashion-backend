@@ -31,6 +31,10 @@ router.get("/by-seller",
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.ordersBySeller);
 
+router.get("/by-buyer",
+    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    orderControler.ordersAsABuyer);
+
 //seller cancel order item
 router.post("/items/cancel",
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
@@ -56,6 +60,13 @@ router.patch("/items/cancel/approve",
     req_validator(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.approveCancelOrderItemBySeller);
+
+//seller decline buyer cancel request
+router.patch("/items/cancel/decline",
+    validateApproveCancelReq,
+    req_validator(),
+    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    orderControler.declineCancelOrderItemBySeller);
 
 router.patch("/confirm-received",
     validateOrderReceivedmark,

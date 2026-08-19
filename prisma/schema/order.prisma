@@ -128,7 +128,7 @@ model OrderItem {
     isCancelled Boolean @default(false)
     authResult OrderAuthResult @default(NOT_PROCESSED)
 
-    isBuyerRequestCancel Boolean @default(false)
+    buyerRequestCancel BuyerRequestCancelStatus @default(NOT_REQUESTED)
     cancellationRequestAt DateTime?
 
     returnItem ReturnItem?
@@ -242,4 +242,11 @@ enum CancelledBy {
     SELLER
     BUYER
     SYSTEM
+}
+
+enum BuyerRequestCancelStatus {
+    NOT_REQUESTED
+    REQUESTED
+    APPROVED
+    REJECTED
 }

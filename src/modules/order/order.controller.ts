@@ -34,6 +34,21 @@ const ordersBySeller = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const ordersAsABuyer = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["searchTerm", "status"])
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await orderService.ordersAsABuyer(req.user?.id, query, options);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Orders retrieved successfully',
+        data: result,
+    });
+});
+
 //buyer mark order received
 const confirmOrderReceived = catchAsync(async (req: Request, res: Response) => {
     const { id: userId } = req.user;
@@ -116,6 +131,18 @@ const approveCancelOrderItemBySeller = catchAsync(async (req: Request, res: Resp
     });
 });
 
+const declineCancelOrderItemBySeller = catchAsync(async (req: Request, res: Response) => {
+    const { id: userId } = req.user;
+
+    await orderService.declineCancelOrderItemBySeller(req.body?.orderItemId, userId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Order cancel declined successfully',
+    });
+});
+
 const markShippedOrder = catchAsync(async (req: Request, res: Response) => {
     const { sellerGroupId } = req.params;
     const { id: userId } = req.user;
@@ -146,10 +173,12 @@ const getShippingLebel = catchAsync(async (req: Request, res: Response) => {
 export const orderControler = {
     addNewOrder,
     ordersBySeller,
+    ordersAsABuyer,
     confirmOrderReceived,
     cancelOrderItemBySeller,
     requestCancelOrderItem,
     approveCancelOrderItemBySeller,
+    declineCancelOrderItemBySeller,
     markShippedOrder,
     getShippingLebel
 }
