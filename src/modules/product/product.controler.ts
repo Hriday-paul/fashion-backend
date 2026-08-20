@@ -60,6 +60,9 @@ const allProducts = catchAsync(async (req: Request, res: Response) => {
 
 const productsByUserName = catchAsync(async (req: Request, res: Response) => {
 
+    //add a wait of 5 seconds
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+
     const query = pick(req.query, ["searchTerm", "category"])
     const options = pick(req.query, PaginateOptions);
 

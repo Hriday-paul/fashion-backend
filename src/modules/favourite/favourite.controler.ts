@@ -3,9 +3,12 @@ import catchAsync from "../../utils/catchAsync";
 import { favouriteService } from "./favourite.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
+import pick from "../../shared/pick";
+import { PaginateOptions } from "../../helper/pagination.helper";
 
 const favouritesByUser = catchAsync(async (req: Request, res: Response) => {
-    const result = await favouriteService.favouritesByUser(req.user?.id);
+    const options = pick(req.query, PaginateOptions);
+    const result = await favouriteService.favouritesByUser(req.user?.id, options);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,

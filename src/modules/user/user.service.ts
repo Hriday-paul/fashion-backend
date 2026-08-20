@@ -177,7 +177,36 @@ const userDetails = async (userName: string, currentUserId?: string) => {
 
     const isfolowing = await prisma.follow.findFirst({ where: { followerId: currentUserId, followingId: res?.id } })
 
-    return { user: res, review: ratingAvg, isfolowing: isfolowing ? true : false };
+    const totalSellDonation = await prisma.sellDonation.aggregate({
+        where: {
+            status: "PAID", orderItem: {
+                order: {
+                    sellerId: currentUserId
+                }
+            }
+        }, _sum: { amount: true }
+    });
+
+    const totalTreeDonation = await prisma.order.aggregate({
+        where: {
+            buyerId: currentUserId, status: "COMPLETED"
+        }, _sum: { treeCredit: true }
+    });
+
+    const directMoneyDonation = await prisma.directDonation.aggregate({
+        where: {
+            status: "SUCCESS",
+            donorId: currentUserId
+        }, _sum: { amount: true }
+    });
+
+    const totalSellDonationAmount = totalSellDonation?._sum?.amount || 0;
+    const totalTreeDonationAmount = totalTreeDonation?._sum?.treeCredit || 0;
+    const totalDirectDonationAmount = directMoneyDonation?._sum?.amount || 0;
+
+    const totalDonation = totalSellDonationAmount + totalTreeDonationAmount + totalDirectDonationAmount;
+
+    return { user: res, review: ratingAvg, isfolowing: isfolowing ? true : false, totalDonation };
 }
 
 const charityAbout = async (userName: string) => {
@@ -281,7 +310,6 @@ const memberStats = async (userName: string) => {
             donorId: user?.id
         }, _sum: { amount: true }
     });
-
 
     const totalSellDonationAmount = totalSellDonation?._sum?.amount || 0;
     const totalTreeDonationAmount = totalTreeDonation?._sum?.treeCredit || 0;

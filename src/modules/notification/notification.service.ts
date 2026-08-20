@@ -19,11 +19,16 @@ const getNotificationFromDb = async (options: TPaginationOptions, userId: string
     where: { receiverId: userId },
   });
 
+  const unReadCount = await prisma.notification.count({
+    where: { receiverId: userId, isRead: false },
+  });
+
   return {
     meta: {
       total,
       page,
       limit,
+      unReadCount,
     },
     data: result,
   };

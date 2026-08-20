@@ -1,20 +1,42 @@
 import AppError from "../../error/AppError";
+import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import prisma from "../../shared/prisma"
 import httpStatus from "http-status";
 
-const favouritesByUser = async (userId: string) => {
+const favouritesByUser = async (userId: string, options: TPaginationOptions) => {
+
+    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
     const favourites = await prisma.favourite.findMany({
         where: { userId },
+        skip,
+        take: limit,
+        orderBy: {
+            [sortBy]: sortOrder,
+        },
         include: {
             product: {
                 include: {
                     images: true,
-                    size: true
+                    size: true,
+                    brand: true
                 }
             }
         }
     });
-    return favourites;
+
+    const total = await prisma.favourite.count({
+        where: { userId },
+    });
+
+    return {
+        meta: paginationHelper.generatePaginationMeta({
+            total,
+            page,
+            limit,
+        }),
+        data: favourites,
+    };
 }
 
 const addFavourite = async (productId: string, userId: string) => {
