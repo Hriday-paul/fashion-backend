@@ -582,6 +582,20 @@ const updateBundleDiscount = async (
     return res;
 };
 
+const getSellerBundileTiers = async (userName: string) => {
+
+    const user = await prisma.user.findFirst({ where: { userName } });
+
+    if (!user) {
+        throw new AppError(httpStatus.NOT_FOUND, "User Does not exist")
+    }
+
+    const res = await prisma.bundleDiscount.findFirst({ where: { sellerId: user.id }, include: { tiers: true } });
+
+    return res;
+
+}
+
 export const userService = {
     updateProfile,
     getUserById,
@@ -599,5 +613,6 @@ export const userService = {
     charityStats,
     charityAbout,
     bundleDiscount,
-    updateBundleDiscount
+    updateBundleDiscount,
+    getSellerBundileTiers
 }

@@ -63,10 +63,23 @@ const treeDonations = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const sellerCharitySupportStats = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await donationService.sellerCharitySupportStats(req.params.username);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Seller Charity Support Stats retrived successfully',
+        data: result,
+    });
+});
+
 export const donationControler = {
     memberDonationStats,
     selldonations,
     directMoneyDonations,
     purchaseDonationsContribute,
-    treeDonations
+    treeDonations,
+    sellerCharitySupportStats
 }

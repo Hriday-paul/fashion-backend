@@ -223,6 +223,19 @@ const updateBundleDiscount = catchAsync(async (req, res) => {
 
 })
 
+const getSellerBundileTiers = catchAsync(async (req, res) => {
+
+    const result = await userService.getSellerBundileTiers(req?.params?.userName);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Bundle discount tiers retrieved successfully',
+        data: result,
+    });
+
+})
+
 
 export const userController = {
     updateProfile,
@@ -243,5 +256,6 @@ export const userController = {
 
     addOrUpdateBillingDetails,
     addOrUpdateSellingDetails,
-    addressesByUser
+    addressesByUser,
+    getSellerBundileTiers
 }

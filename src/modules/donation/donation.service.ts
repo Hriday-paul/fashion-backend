@@ -222,10 +222,113 @@ const treeDonations = async (userName: string) => {
     return treeDonationOrders;
 }
 
+const sellerCharitySupportStats = async (userName: string) => {
+    const user = await prisma.user.findFirst({ where: { userName } });
+
+    if (!user) {
+        throw new AppError(httpstatus.NOT_FOUND, "User Does not exist")
+    }
+
+    const sellDonations = await prisma.sellDonation.aggregate({
+        _sum: {
+            amount: true,
+        },
+        where: {
+            status: "PAID",
+
+            // 🔥 ignore records where are 0
+            NOT: {
+                AND: [
+                    { amount: 0 }
+                ]
+            },
+
+            orderItem: {
+                order: {
+                    sellerId: user?.id
+                }
+            }
+        },
+    });
+
+    //avg sell donation percentage
+    const avgSellDonationPercentage = await prisma.product.aggregate({
+        _avg: {
+            donation_percent: true,
+        },
+        where: {
+            userId: user?.id,
+        },
+    });
+
+    const charities = await prisma.sellDonation.groupBy({
+        by: ["charityId"],
+        where: {
+            orderItem: {
+                product: {
+                    userId: user?.id
+                }
+            },
+            status: "PAID"
+        },
+    });
+
+    const totalCharitiesToSupport = charities.length;
+
+
+    const donationsByCharity = await prisma.$queryRaw<
+        {
+            charityId: string;
+            charityName: string;
+            charityImage: string | null;
+            totalDonation: number;
+        }[]
+    >`
+    SELECT
+        sd."charityId" AS "charityId",
+        u."userName" AS "charityName",
+        pp."url" AS "charityImage",
+        COALESCE(SUM(sd."total_amount"), 0) AS "totalDonation"
+    FROM "sellItemMoneyDonations" sd
+
+    INNER JOIN "users" u
+        ON u."id" = sd."charityId"
+
+    LEFT JOIN "profile_pictures" pp
+        ON pp."userId" = u."id"
+
+    INNER JOIN "OrderItem" oi
+        ON oi."id" = sd."orderItemId"
+
+    INNER JOIN "products" p
+        ON p."id" = oi."productId"
+
+    WHERE p."userId" = ${user.id}
+      AND sd."status" = 'PAID'
+
+    GROUP BY
+        sd."charityId",
+        u."userName",
+        pp."url"
+
+    ORDER BY "totalDonation" DESC
+`;
+
+
+    return {
+        sellDonatedAmount: sellDonations._sum.amount || 0,
+        avgSellDonationPercentage: avgSellDonationPercentage._avg.donation_percent || 0,
+        totalCharitiesToSupport,
+        donationsByCharity
+    }
+
+}
+
 export const donationService = {
     memberDonationStats,
     selldonations,
     purchaseDonationsContribute,
     treeDonations,
-    directMoneyDonations
+    directMoneyDonations,
+    sellerCharitySupportStats
 }

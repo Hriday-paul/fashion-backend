@@ -18,6 +18,7 @@ import { donationRouts } from './modules/donation/donation.rout';
 import { stripeRouts } from './modules/stripe/stripe.rout';
 import { cartRouts } from './modules/cart/cart.rout';
 import { returnRoutes } from './modules/return/return.rout';
+import { reviewRouts } from './modules/review/review.rout';
 
 const router = express.Router();
 
@@ -85,6 +86,10 @@ const moduleRoutes = [
     {
         path: '/stripe',
         route: stripeRouts,
+    },
+    {
+        path: '/reviews',
+        route: reviewRouts,
     },
 ];
 

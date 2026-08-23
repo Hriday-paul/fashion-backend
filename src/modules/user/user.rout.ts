@@ -104,6 +104,11 @@ router.get(
 );
 
 router.get(
+    '/bundle-discount-tiers/:userName',
+    userController.getSellerBundileTiers
+);
+
+router.get(
     '/:username',
     PublicAuth(),
     userController.userDetails,

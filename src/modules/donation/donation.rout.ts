@@ -23,4 +23,7 @@ router.get("/direct/:username",
 router.get("/tree/:username",
     donationControler.treeDonations);
 
+router.get("/seller-charity-support/:username",
+    donationControler.sellerCharitySupportStats);
+
 export const donationRouts = router;
