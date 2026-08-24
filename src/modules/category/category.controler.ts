@@ -45,7 +45,10 @@ const getParentChain = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getChildChain = catchAsync(async (req: Request, res: Response) => {
-  const result = await categoryService.getChildChain(req.params.id);
+  const categories = await categoryService.getChildChain(req.params.id);
+
+  const result = await categoryService.buildChildCategoryTree(categories);
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -55,7 +58,7 @@ const getChildChain = catchAsync(async (req: Request, res: Response) => {
 });
 
 const addNewBrand = catchAsync(async (req: Request, res: Response) => {
-  const result = await categoryService.addNewBrand(req.body);
+  const result = await categoryService.assignBrandToCategory(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -65,7 +68,7 @@ const addNewBrand = catchAsync(async (req: Request, res: Response) => {
 });
 
 const allBrands = catchAsync(async (req: Request, res: Response) => {
-  const result = await categoryService.allBrands(req.params.id);
+  const result = await categoryService.allBrandsByCategory(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -75,7 +78,7 @@ const allBrands = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deletBrand = catchAsync(async (req: Request, res: Response) => {
-  const result = await categoryService.deletBrand(req.params.id);
+  const result = await categoryService.deletBrandToCategory(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -85,7 +88,7 @@ const deletBrand = catchAsync(async (req: Request, res: Response) => {
 });
 
 const allSizes = catchAsync(async (req: Request, res: Response) => {
-  const result = await categoryService.allSizes(req.params.id);
+  const result = await categoryService.assingedSizeByCategory(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -95,7 +98,7 @@ const allSizes = catchAsync(async (req: Request, res: Response) => {
 });
 
 const addSize = catchAsync(async (req: Request, res: Response) => {
-  const result = await categoryService.addSize(req.body);
+  const result = await categoryService.addSizeToCategory(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -105,7 +108,7 @@ const addSize = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteSize = catchAsync(async (req: Request, res: Response) => {
-  const result = await categoryService.deleteSize(req.params.id);
+  const result = await categoryService.deleteSizeFromCategory(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

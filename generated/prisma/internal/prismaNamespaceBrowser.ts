@@ -49,6 +49,8 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 export const ModelName = {
   Category: 'Category',
+  BrandByCategory: 'BrandByCategory',
+  SizeByCategory: 'SizeByCategory',
   Brand: 'Brand',
   Size: 'Size',
   Follow: 'Follow',
@@ -119,12 +121,32 @@ export const CategoryScalarFieldEnum = {
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
+export const BrandByCategoryScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  brandId: 'brandId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BrandByCategoryScalarFieldEnum = (typeof BrandByCategoryScalarFieldEnum)[keyof typeof BrandByCategoryScalarFieldEnum]
+
+
+export const SizeByCategoryScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  sizeId: 'sizeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SizeByCategoryScalarFieldEnum = (typeof SizeByCategoryScalarFieldEnum)[keyof typeof SizeByCategoryScalarFieldEnum]
+
+
 export const BrandScalarFieldEnum = {
   id: 'id',
   name: 'name',
   order: 'order',
-  categoryId: 'categoryId',
-  catagory_child_hierarchy: 'catagory_child_hierarchy',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -136,8 +158,6 @@ export const SizeScalarFieldEnum = {
   id: 'id',
   title: 'title',
   order: 'order',
-  categoryId: 'categoryId',
-  catagory_child_hierarchy: 'catagory_child_hierarchy',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -621,6 +641,7 @@ export const UserScalarFieldEnum = {
   twitter: 'twitter',
   tiktok: 'tiktok',
   website: 'website',
+  support_email: 'support_email',
   notification: 'notification',
   fcmToken: 'fcmToken',
   mission: 'mission',

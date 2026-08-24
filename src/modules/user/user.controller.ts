@@ -3,7 +3,7 @@ import catchAsync from "../../utils/catchAsync";
 import { userService } from "./user.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from 'http-status'
-import { uploadToS3 } from "../../utils/s3";
+import { uploadManyToS3, uploadToS3 } from "../../utils/s3";
 import pick from "../../shared/pick";
 import { PaginateOptions } from "../../helper/pagination.helper";
 import AppError from "../../error/AppError";
@@ -24,14 +24,34 @@ const all_users = catchAsync(async (req: Request, res: Response) => {
 const updateProfile = catchAsync(async (req: Request, res: Response) => {
 
     let image: { key: string, url: string } | undefined;
-    // image = req.file?.filename && (config.BASE_URL + '/images/' + req.file.filename);
 
-    if (req.file) {
+    const files = req.files as {
+        picture?: Express.Multer.File[];
+        charityImgs?: Express.Multer.File[];
+    };
+
+    if (files?.picture && files?.picture.length > 0) {
         image = await uploadToS3({
-            file: req.file,
+            file: files.picture[0],
             fileName: `images/user/${Math.floor(100000 + Math.random() * 900000)}`,
         });
     }
+
+
+    if (files?.charityImgs && files?.charityImgs.length > 0) {
+
+        const FileAry = files?.charityImgs?.map(image => {
+            return {
+                file: image,
+                path: `images/charity/galary`,
+            };
+        });
+
+        const urls = await uploadManyToS3(FileAry);
+
+        req.body.charityImgs = urls
+    }
+
 
     const result = await userService.updateProfile(req.body, req.user.id, image ? image : undefined)
 

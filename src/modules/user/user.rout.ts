@@ -20,7 +20,7 @@ export const allRoles: Role[] = [Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSAD
 router.patch(
     '/update-my-profile',
     auth(...allRoles),
-    image_Upload.single('picture'),
+    image_Upload.fields([{ name: "picture", maxCount: 1 }, { name: "charityImgs", maxCount: 8 }]),
     parseData(),
     userController.updateProfile,
 );

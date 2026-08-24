@@ -7,11 +7,11 @@ import prisma from "../../shared/prisma";
 import httpStatus from 'http-status'
 
 // update user profile
-const updateProfile = async (payload: User, userId: string, image?: { url: string, key: string }) => {
+const updateProfile = async (payload: User & { charityImgs: { url: string, key: string }[], dltGalleries: string[] }, userId: string, image?: { url: string, key: string }) => {
 
-    const { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode } = payload
+    const { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode, support_email, dltGalleries = [], charityImgs = [] } = payload
 
-    const updateFields: Partial<User> = { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode };
+    const updateFields: Partial<User> = { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode, support_email };
 
     // Remove undefined or null fields to prevent overwriting existing values with null
     Object.keys(updateFields).forEach((key) => {
@@ -41,7 +41,26 @@ const updateProfile = async (payload: User, userId: string, image?: { url: strin
         };
     }
 
-    const result = await prisma.user.update({ where: { id: userId }, data })
+    const result = await prisma.user.update({
+        where: { id: userId }, data: {
+            charityGalleries: {
+                ...(dltGalleries.length > 0 ? {
+                    deleteMany: {
+                        id: { in: dltGalleries }
+                    },
+                } : {}),
+                ...(charityImgs.length > 0 ? {
+                    createMany: {
+                        data: charityImgs.map((img) => ({
+                            url: img.url,
+                            key: img.key
+                        }))
+                    }
+                } : {})
+            },
+            ...data
+        }
+    })
 
     return result
 }
@@ -117,7 +136,7 @@ const allUsers = async (query: Record<string, unknown>, options: TPaginationOpti
 }
 
 const getUserById = async (id: string) => {
-    const result = await prisma.user.findFirst({ where: { id }, include: { picture: true } });
+    const result = await prisma.user.findFirst({ where: { id }, include: { picture: true, charityGalleries: true } });
     return result;
 };
 
@@ -163,7 +182,29 @@ const userDetails = async (userName: string, currentUserId?: string) => {
         include: {
             picture: true,
             auth: { select: { role: true } },
-            followers: { include: { follower: { include: { picture: true, auth: { select: { role: true } } } } } }, following: { include: { following: { include: { picture: true, auth: { select: { role: true } } } } } }
+            followers: {
+                include: {
+                    follower: {
+                        include: {
+                            picture: true,
+                            auth: {
+                                select: { role: true }
+                            }
+                        }
+                    }
+                }
+            }, following: {
+                include: {
+                    following: {
+                        include: {
+                            picture: true,
+                            auth: {
+                                select: { role: true }
+                            }
+                        }
+                    }
+                }
+            },
         },
     });
 
@@ -210,12 +251,17 @@ const userDetails = async (userName: string, currentUserId?: string) => {
 }
 
 const charityAbout = async (userName: string) => {
+
     const res = await prisma.user.findFirst({
         where: { userName: userName },
         select: {
-            bio: true,
             description: true,
-            charityGalleries: true
+            charityGalleries: true,
+            website: true,
+            facebook: true,
+            instagram: true,
+            twitter: true,
+            support_email: true,
         },
     })
 

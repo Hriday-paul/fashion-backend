@@ -47,6 +47,16 @@ path.join(process.cwd(), "generated/prisma/query_engine-windows.dll.node")
  */
 export type Category = Prisma.CategoryModel
 /**
+ * Model BrandByCategory
+ * 
+ */
+export type BrandByCategory = Prisma.BrandByCategoryModel
+/**
+ * Model SizeByCategory
+ * 
+ */
+export type SizeByCategory = Prisma.SizeByCategoryModel
+/**
  * Model Brand
  * 
  */

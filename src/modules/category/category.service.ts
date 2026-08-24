@@ -108,7 +108,7 @@ const buildChildCategoryTree = (categories: CategoryC[]) => {
     return roots;
 };
 
-const getChildChain = async (categoryId: string) => {
+const getChildChain = async (categoryId: string): Promise<{ id: string; name: string; parentId: string | null }[]> => {
     const categories = await prisma.$queryRaw<{ id: string; name: string; parentId: string | null }[]>`
   WITH RECURSIVE category_tree AS (
       SELECT id, name, "parentId"
@@ -124,7 +124,7 @@ const getChildChain = async (categoryId: string) => {
   SELECT * FROM category_tree;
   `;
 
-    return buildChildCategoryTree(categories);
+    return categories
 }
 
 const haveChildCategory = async (categoryId: string) => {
@@ -135,66 +135,51 @@ const haveChildCategory = async (categoryId: string) => {
     return res;
 }
 
-const addNewBrand = async (payload: Brand & { categoryId: string }) => {
+const assignBrandToCategory = async (payload: { categoryId: string, brandId: string }) => {
 
-    const res = await prisma.brand.create({ data: { name: payload?.name, categoryId: payload?.categoryId } });
+    const res = await prisma.brandByCategory.create({ data: { categoryId: payload?.categoryId, brandId: payload?.brandId } });
     return res;
 }
 
-const deletBrand = async (brandId: string) => {
+const deletBrandToCategory = async (brandId: string) => {
 
     const res = await prisma.brand.delete({ where: { id: brandId } });
     return res;
 }
 
-const allBrands = async (categoryId: string) => {
+const allBrandsByCategory = async (categoryId: string) => {
 
-    const category = await prisma.category.findUnique({
-        where: { id: categoryId }
-    });
-
-    const filterArray = [{ categoryId }];
-
-    if (category?.parentId) {
-        filterArray.push({ categoryId: category?.parentId });
-    }
-
-    const res = await prisma.brand.findMany({
-        where: { OR: filterArray }
+    const res = await prisma.brandByCategory.findMany({
+        where: {
+            categoryId: categoryId
+        }
     });
 
     return res;
 }
 
 
-const allSizes = async (categoryId: string) => {
 
-    const category = await prisma.category.findUnique({
-        where: { id: categoryId }
-    });
+const assingedSizeByCategory = async (categoryId: string) => {
 
-    const filterArray = [{ categoryId }];
-
-    if (category?.parentId) {
-        filterArray.push({ categoryId: category?.parentId });
-    }
-
-    const res = await prisma.size.findMany({
-        where: { OR: filterArray }
+    const res = await prisma.sizeByCategory.findMany({
+        where: {
+            categoryId: categoryId
+        }
     });
 
     return res;
 }
 
-const addSize = async (payload: Size) => {
+const addSizeToCategory = async (payload: { categoryId: string, sizeId: string }) => {
 
-    const res = await prisma.size.create({ data: payload });
+    const res = await prisma.sizeByCategory.create({ data: { categoryId: payload?.categoryId, sizeId: payload?.sizeId } });
     return res;
 }
 
-const deleteSize = async (sizeId: string) => {
+const deleteSizeFromCategory = async (payload: { categoryId: string, sizeId: string }) => {
 
-    const res = await prisma.size.delete({ where: { id: sizeId } });
+    const res = await prisma.sizeByCategory.delete({ where: { categoryId_sizeId: { categoryId: payload?.categoryId, sizeId: payload?.sizeId } } });
     return res;
 }
 
@@ -206,11 +191,13 @@ export const categoryService = {
     getChildChain,
     haveChildCategory,
 
-    addNewBrand,
-    deletBrand,
-    allBrands,
+    buildChildCategoryTree,
 
-    allSizes,
-    addSize,
-    deleteSize
+    assignBrandToCategory,
+    deletBrandToCategory,
+    allBrandsByCategory,
+
+    assingedSizeByCategory,
+    addSizeToCategory,
+    deleteSizeFromCategory
 }

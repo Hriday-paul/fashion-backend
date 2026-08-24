@@ -390,6 +390,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   Category: 'Category',
+  BrandByCategory: 'BrandByCategory',
+  SizeByCategory: 'SizeByCategory',
   Brand: 'Brand',
   Size: 'Size',
   Follow: 'Follow',
@@ -445,7 +447,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "brand" | "size" | "follow" | "chat" | "chatParticipant" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
+    modelProps: "category" | "brandByCategory" | "sizeByCategory" | "brand" | "size" | "follow" | "chat" | "chatParticipant" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -520,6 +522,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CategoryCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CategoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    BrandByCategory: {
+      payload: Prisma.$BrandByCategoryPayload<ExtArgs>
+      fields: Prisma.BrandByCategoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BrandByCategoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandByCategoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BrandByCategoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandByCategoryPayload>
+        }
+        findFirst: {
+          args: Prisma.BrandByCategoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandByCategoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BrandByCategoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandByCategoryPayload>
+        }
+        findMany: {
+          args: Prisma.BrandByCategoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandByCategoryPayload>[]
+        }
+        create: {
+          args: Prisma.BrandByCategoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandByCategoryPayload>
+        }
+        createMany: {
+          args: Prisma.BrandByCategoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BrandByCategoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandByCategoryPayload>[]
+        }
+        delete: {
+          args: Prisma.BrandByCategoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandByCategoryPayload>
+        }
+        update: {
+          args: Prisma.BrandByCategoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandByCategoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.BrandByCategoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BrandByCategoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BrandByCategoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandByCategoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.BrandByCategoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandByCategoryPayload>
+        }
+        aggregate: {
+          args: Prisma.BrandByCategoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBrandByCategory>
+        }
+        groupBy: {
+          args: Prisma.BrandByCategoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BrandByCategoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BrandByCategoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BrandByCategoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    SizeByCategory: {
+      payload: Prisma.$SizeByCategoryPayload<ExtArgs>
+      fields: Prisma.SizeByCategoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SizeByCategoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SizeByCategoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>
+        }
+        findFirst: {
+          args: Prisma.SizeByCategoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SizeByCategoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>
+        }
+        findMany: {
+          args: Prisma.SizeByCategoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>[]
+        }
+        create: {
+          args: Prisma.SizeByCategoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>
+        }
+        createMany: {
+          args: Prisma.SizeByCategoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SizeByCategoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>[]
+        }
+        delete: {
+          args: Prisma.SizeByCategoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>
+        }
+        update: {
+          args: Prisma.SizeByCategoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.SizeByCategoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SizeByCategoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SizeByCategoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.SizeByCategoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>
+        }
+        aggregate: {
+          args: Prisma.SizeByCategoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSizeByCategory>
+        }
+        groupBy: {
+          args: Prisma.SizeByCategoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SizeByCategoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SizeByCategoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SizeByCategoryCountAggregateOutputType> | number
         }
       }
     }
@@ -3534,12 +3684,32 @@ export const CategoryScalarFieldEnum = {
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
+export const BrandByCategoryScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  brandId: 'brandId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BrandByCategoryScalarFieldEnum = (typeof BrandByCategoryScalarFieldEnum)[keyof typeof BrandByCategoryScalarFieldEnum]
+
+
+export const SizeByCategoryScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  sizeId: 'sizeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SizeByCategoryScalarFieldEnum = (typeof SizeByCategoryScalarFieldEnum)[keyof typeof SizeByCategoryScalarFieldEnum]
+
+
 export const BrandScalarFieldEnum = {
   id: 'id',
   name: 'name',
   order: 'order',
-  categoryId: 'categoryId',
-  catagory_child_hierarchy: 'catagory_child_hierarchy',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -3551,8 +3721,6 @@ export const SizeScalarFieldEnum = {
   id: 'id',
   title: 'title',
   order: 'order',
-  categoryId: 'categoryId',
-  catagory_child_hierarchy: 'catagory_child_hierarchy',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -4036,6 +4204,7 @@ export const UserScalarFieldEnum = {
   twitter: 'twitter',
   tiktok: 'tiktok',
   website: 'website',
+  support_email: 'support_email',
   notification: 'notification',
   fcmToken: 'fcmToken',
   mission: 'mission',
@@ -4701,6 +4870,8 @@ export interface PrismaClientOptions {
 }
 export type GlobalOmitConfig = {
   category?: Prisma.CategoryOmit
+  brandByCategory?: Prisma.BrandByCategoryOmit
+  sizeByCategory?: Prisma.SizeByCategoryOmit
   brand?: Prisma.BrandOmit
   size?: Prisma.SizeOmit
   follow?: Prisma.FollowOmit

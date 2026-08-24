@@ -52,6 +52,7 @@ export type UserMinAggregateOutputType = {
   twitter: string | null
   tiktok: string | null
   website: string | null
+  support_email: string | null
   notification: boolean | null
   fcmToken: string | null
   mission: string | null
@@ -84,6 +85,7 @@ export type UserMaxAggregateOutputType = {
   twitter: string | null
   tiktok: string | null
   website: string | null
+  support_email: string | null
   notification: boolean | null
   fcmToken: string | null
   mission: string | null
@@ -116,6 +118,7 @@ export type UserCountAggregateOutputType = {
   twitter: number
   tiktok: number
   website: number
+  support_email: number
   notification: number
   fcmToken: number
   mission: number
@@ -159,6 +162,7 @@ export type UserMinAggregateInputType = {
   twitter?: true
   tiktok?: true
   website?: true
+  support_email?: true
   notification?: true
   fcmToken?: true
   mission?: true
@@ -191,6 +195,7 @@ export type UserMaxAggregateInputType = {
   twitter?: true
   tiktok?: true
   website?: true
+  support_email?: true
   notification?: true
   fcmToken?: true
   mission?: true
@@ -223,6 +228,7 @@ export type UserCountAggregateInputType = {
   twitter?: true
   tiktok?: true
   website?: true
+  support_email?: true
   notification?: true
   fcmToken?: true
   mission?: true
@@ -343,6 +349,7 @@ export type UserGroupByOutputType = {
   twitter: string | null
   tiktok: string | null
   website: string | null
+  support_email: string | null
   notification: boolean
   fcmToken: string | null
   mission: string | null
@@ -399,6 +406,7 @@ export type UserWhereInput = {
   twitter?: Prisma.StringNullableFilter<"User"> | string | null
   tiktok?: Prisma.StringNullableFilter<"User"> | string | null
   website?: Prisma.StringNullableFilter<"User"> | string | null
+  support_email?: Prisma.StringNullableFilter<"User"> | string | null
   notification?: Prisma.BoolFilter<"User"> | boolean
   fcmToken?: Prisma.StringNullableFilter<"User"> | string | null
   mission?: Prisma.StringNullableFilter<"User"> | string | null
@@ -465,6 +473,7 @@ export type UserOrderByWithRelationInput = {
   twitter?: Prisma.SortOrderInput | Prisma.SortOrder
   tiktok?: Prisma.SortOrderInput | Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
+  support_email?: Prisma.SortOrderInput | Prisma.SortOrder
   notification?: Prisma.SortOrder
   fcmToken?: Prisma.SortOrderInput | Prisma.SortOrder
   mission?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -534,6 +543,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   twitter?: Prisma.StringNullableFilter<"User"> | string | null
   tiktok?: Prisma.StringNullableFilter<"User"> | string | null
   website?: Prisma.StringNullableFilter<"User"> | string | null
+  support_email?: Prisma.StringNullableFilter<"User"> | string | null
   notification?: Prisma.BoolFilter<"User"> | boolean
   fcmToken?: Prisma.StringNullableFilter<"User"> | string | null
   mission?: Prisma.StringNullableFilter<"User"> | string | null
@@ -600,6 +610,7 @@ export type UserOrderByWithAggregationInput = {
   twitter?: Prisma.SortOrderInput | Prisma.SortOrder
   tiktok?: Prisma.SortOrderInput | Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
+  support_email?: Prisma.SortOrderInput | Prisma.SortOrder
   notification?: Prisma.SortOrder
   fcmToken?: Prisma.SortOrderInput | Prisma.SortOrder
   mission?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -641,6 +652,7 @@ export type UserScalarWhereWithAggregatesInput = {
   twitter?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   tiktok?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   website?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  support_email?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   notification?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   fcmToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   mission?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -674,6 +686,7 @@ export type UserCreateInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -740,6 +753,7 @@ export type UserUncheckedCreateInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -806,6 +820,7 @@ export type UserUpdateInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -872,6 +887,7 @@ export type UserUncheckedUpdateInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -938,6 +954,7 @@ export type UserCreateManyInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -971,6 +988,7 @@ export type UserUpdateManyMutationInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1004,6 +1022,7 @@ export type UserUncheckedUpdateManyInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1047,6 +1066,7 @@ export type UserCountOrderByAggregateInput = {
   twitter?: Prisma.SortOrder
   tiktok?: Prisma.SortOrder
   website?: Prisma.SortOrder
+  support_email?: Prisma.SortOrder
   notification?: Prisma.SortOrder
   fcmToken?: Prisma.SortOrder
   mission?: Prisma.SortOrder
@@ -1084,6 +1104,7 @@ export type UserMaxOrderByAggregateInput = {
   twitter?: Prisma.SortOrder
   tiktok?: Prisma.SortOrder
   website?: Prisma.SortOrder
+  support_email?: Prisma.SortOrder
   notification?: Prisma.SortOrder
   fcmToken?: Prisma.SortOrder
   mission?: Prisma.SortOrder
@@ -1116,6 +1137,7 @@ export type UserMinOrderByAggregateInput = {
   twitter?: Prisma.SortOrder
   tiktok?: Prisma.SortOrder
   website?: Prisma.SortOrder
+  support_email?: Prisma.SortOrder
   notification?: Prisma.SortOrder
   fcmToken?: Prisma.SortOrder
   mission?: Prisma.SortOrder
@@ -1639,6 +1661,7 @@ export type UserCreateWithoutFollowingInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -1704,6 +1727,7 @@ export type UserUncheckedCreateWithoutFollowingInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -1774,6 +1798,7 @@ export type UserCreateWithoutFollowersInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -1839,6 +1864,7 @@ export type UserUncheckedCreateWithoutFollowersInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -1920,6 +1946,7 @@ export type UserUpdateWithoutFollowingInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1985,6 +2012,7 @@ export type UserUncheckedUpdateWithoutFollowingInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2061,6 +2089,7 @@ export type UserUpdateWithoutFollowersInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2126,6 +2155,7 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2191,6 +2221,7 @@ export type UserCreateWithoutChatGroupsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -2256,6 +2287,7 @@ export type UserUncheckedCreateWithoutChatGroupsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -2337,6 +2369,7 @@ export type UserUpdateWithoutChatGroupsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2402,6 +2435,7 @@ export type UserUncheckedUpdateWithoutChatGroupsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2467,6 +2501,7 @@ export type UserCreateWithoutSentMessagesInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -2532,6 +2567,7 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -2602,6 +2638,7 @@ export type UserCreateWithoutReceiveMessagesInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -2667,6 +2704,7 @@ export type UserUncheckedCreateWithoutReceiveMessagesInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -2748,6 +2786,7 @@ export type UserUpdateWithoutSentMessagesInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2813,6 +2852,7 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2889,6 +2929,7 @@ export type UserUpdateWithoutReceiveMessagesInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2954,6 +2995,7 @@ export type UserUncheckedUpdateWithoutReceiveMessagesInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3019,6 +3061,7 @@ export type UserCreateWithoutBuyOrdersInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -3084,6 +3127,7 @@ export type UserUncheckedCreateWithoutBuyOrdersInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -3154,6 +3198,7 @@ export type UserCreateWithoutSellOrdersInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -3219,6 +3264,7 @@ export type UserUncheckedCreateWithoutSellOrdersInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -3300,6 +3346,7 @@ export type UserUpdateWithoutBuyOrdersInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3365,6 +3412,7 @@ export type UserUncheckedUpdateWithoutBuyOrdersInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3441,6 +3489,7 @@ export type UserUpdateWithoutSellOrdersInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3506,6 +3555,7 @@ export type UserUncheckedUpdateWithoutSellOrdersInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3571,6 +3621,7 @@ export type UserCreateWithoutSellDonationsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -3636,6 +3687,7 @@ export type UserUncheckedCreateWithoutSellDonationsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -3717,6 +3769,7 @@ export type UserUpdateWithoutSellDonationsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3782,6 +3835,7 @@ export type UserUncheckedUpdateWithoutSellDonationsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3847,6 +3901,7 @@ export type UserCreateWithoutPaymentsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -3912,6 +3967,7 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -3993,6 +4049,7 @@ export type UserUpdateWithoutPaymentsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4058,6 +4115,7 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4123,6 +4181,7 @@ export type UserCreateWithoutDonationsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -4188,6 +4247,7 @@ export type UserUncheckedCreateWithoutDonationsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -4258,6 +4318,7 @@ export type UserCreateWithoutDonationsReceivedInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -4323,6 +4384,7 @@ export type UserUncheckedCreateWithoutDonationsReceivedInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -4404,6 +4466,7 @@ export type UserUpdateWithoutDonationsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4469,6 +4532,7 @@ export type UserUncheckedUpdateWithoutDonationsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4545,6 +4609,7 @@ export type UserUpdateWithoutDonationsReceivedInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4610,6 +4675,7 @@ export type UserUncheckedUpdateWithoutDonationsReceivedInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4675,6 +4741,7 @@ export type UserCreateWithoutProductsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -4740,6 +4807,7 @@ export type UserUncheckedCreateWithoutProductsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -4821,6 +4889,7 @@ export type UserUpdateWithoutProductsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4886,6 +4955,7 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4951,6 +5021,7 @@ export type UserCreateWithoutProductCharitiesInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -5016,6 +5087,7 @@ export type UserUncheckedCreateWithoutProductCharitiesInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -5097,6 +5169,7 @@ export type UserUpdateWithoutProductCharitiesInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5162,6 +5235,7 @@ export type UserUncheckedUpdateWithoutProductCharitiesInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5227,6 +5301,7 @@ export type UserCreateWithoutFavouriteProductsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -5292,6 +5367,7 @@ export type UserUncheckedCreateWithoutFavouriteProductsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -5373,6 +5449,7 @@ export type UserUpdateWithoutFavouriteProductsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5438,6 +5515,7 @@ export type UserUncheckedUpdateWithoutFavouriteProductsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5503,6 +5581,7 @@ export type UserCreateWithoutSellerGroupCartsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -5568,6 +5647,7 @@ export type UserUncheckedCreateWithoutSellerGroupCartsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -5638,6 +5718,7 @@ export type UserCreateWithoutCartsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -5703,6 +5784,7 @@ export type UserUncheckedCreateWithoutCartsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -5784,6 +5866,7 @@ export type UserUpdateWithoutSellerGroupCartsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5849,6 +5932,7 @@ export type UserUncheckedUpdateWithoutSellerGroupCartsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5925,6 +6009,7 @@ export type UserUpdateWithoutCartsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5990,6 +6075,7 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6055,6 +6141,7 @@ export type UserCreateWithoutCartDonationCharitiesInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -6120,6 +6207,7 @@ export type UserUncheckedCreateWithoutCartDonationCharitiesInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -6201,6 +6289,7 @@ export type UserUpdateWithoutCartDonationCharitiesInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6266,6 +6355,7 @@ export type UserUncheckedUpdateWithoutCartDonationCharitiesInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6331,6 +6421,7 @@ export type UserCreateWithoutProductViewsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -6396,6 +6487,7 @@ export type UserUncheckedCreateWithoutProductViewsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -6477,6 +6569,7 @@ export type UserUpdateWithoutProductViewsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6542,6 +6635,7 @@ export type UserUncheckedUpdateWithoutProductViewsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6607,6 +6701,7 @@ export type UserCreateWithoutProdQuestionsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -6672,6 +6767,7 @@ export type UserUncheckedCreateWithoutProdQuestionsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -6753,6 +6849,7 @@ export type UserUpdateWithoutProdQuestionsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6818,6 +6915,7 @@ export type UserUncheckedUpdateWithoutProdQuestionsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6883,6 +6981,7 @@ export type UserCreateWithoutBundleDiscountInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -6948,6 +7047,7 @@ export type UserUncheckedCreateWithoutBundleDiscountInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -7029,6 +7129,7 @@ export type UserUpdateWithoutBundleDiscountInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7094,6 +7195,7 @@ export type UserUncheckedUpdateWithoutBundleDiscountInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7159,6 +7261,7 @@ export type UserCreateWithoutReturnsAsBuyerInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -7224,6 +7327,7 @@ export type UserUncheckedCreateWithoutReturnsAsBuyerInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -7294,6 +7398,7 @@ export type UserCreateWithoutReturnsAsSellerInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -7359,6 +7464,7 @@ export type UserUncheckedCreateWithoutReturnsAsSellerInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -7440,6 +7546,7 @@ export type UserUpdateWithoutReturnsAsBuyerInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7505,6 +7612,7 @@ export type UserUncheckedUpdateWithoutReturnsAsBuyerInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7581,6 +7689,7 @@ export type UserUpdateWithoutReturnsAsSellerInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7646,6 +7755,7 @@ export type UserUncheckedUpdateWithoutReturnsAsSellerInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7711,6 +7821,7 @@ export type UserCreateWithoutRatingsGivenInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -7776,6 +7887,7 @@ export type UserUncheckedCreateWithoutRatingsGivenInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -7846,6 +7958,7 @@ export type UserCreateWithoutRatingsReceivedInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -7911,6 +8024,7 @@ export type UserUncheckedCreateWithoutRatingsReceivedInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -7992,6 +8106,7 @@ export type UserUpdateWithoutRatingsGivenInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8057,6 +8172,7 @@ export type UserUncheckedUpdateWithoutRatingsGivenInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8133,6 +8249,7 @@ export type UserUpdateWithoutRatingsReceivedInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8198,6 +8315,7 @@ export type UserUncheckedUpdateWithoutRatingsReceivedInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8263,6 +8381,7 @@ export type UserCreateWithoutAuthInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -8328,6 +8447,7 @@ export type UserUncheckedCreateWithoutAuthInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -8409,6 +8529,7 @@ export type UserUpdateWithoutAuthInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8474,6 +8595,7 @@ export type UserUncheckedUpdateWithoutAuthInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8539,6 +8661,7 @@ export type UserCreateWithoutCharityGalleriesInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -8604,6 +8727,7 @@ export type UserUncheckedCreateWithoutCharityGalleriesInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -8685,6 +8809,7 @@ export type UserUpdateWithoutCharityGalleriesInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8750,6 +8875,7 @@ export type UserUncheckedUpdateWithoutCharityGalleriesInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8815,6 +8941,7 @@ export type UserCreateWithoutPictureInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -8880,6 +9007,7 @@ export type UserUncheckedCreateWithoutPictureInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -8961,6 +9089,7 @@ export type UserUpdateWithoutPictureInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9026,6 +9155,7 @@ export type UserUncheckedUpdateWithoutPictureInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9091,6 +9221,7 @@ export type UserCreateWithoutAccount_documentsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -9156,6 +9287,7 @@ export type UserUncheckedCreateWithoutAccount_documentsInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -9237,6 +9369,7 @@ export type UserUpdateWithoutAccount_documentsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9302,6 +9435,7 @@ export type UserUncheckedUpdateWithoutAccount_documentsInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9367,6 +9501,7 @@ export type UserCreateWithoutBillingAddressInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -9432,6 +9567,7 @@ export type UserUncheckedCreateWithoutBillingAddressInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -9502,6 +9638,7 @@ export type UserCreateWithoutSellerAddressInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -9567,6 +9704,7 @@ export type UserUncheckedCreateWithoutSellerAddressInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -9648,6 +9786,7 @@ export type UserUpdateWithoutBillingAddressInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9713,6 +9852,7 @@ export type UserUncheckedUpdateWithoutBillingAddressInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9789,6 +9929,7 @@ export type UserUpdateWithoutSellerAddressInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9854,6 +9995,7 @@ export type UserUncheckedUpdateWithoutSellerAddressInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9919,6 +10061,7 @@ export type UserCreateWithoutNotificationSendersInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -9984,6 +10127,7 @@ export type UserUncheckedCreateWithoutNotificationSendersInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -10054,6 +10198,7 @@ export type UserCreateWithoutNotificationReceiversInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -10119,6 +10264,7 @@ export type UserUncheckedCreateWithoutNotificationReceiversInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -10200,6 +10346,7 @@ export type UserUpdateWithoutNotificationSendersInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10265,6 +10412,7 @@ export type UserUncheckedUpdateWithoutNotificationSendersInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10341,6 +10489,7 @@ export type UserUpdateWithoutNotificationReceiversInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10406,6 +10555,7 @@ export type UserUncheckedUpdateWithoutNotificationReceiversInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10471,6 +10621,7 @@ export type UserCreateWithoutWalletInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -10536,6 +10687,7 @@ export type UserUncheckedCreateWithoutWalletInput = {
   twitter?: string | null
   tiktok?: string | null
   website?: string | null
+  support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
   mission?: string | null
@@ -10617,6 +10769,7 @@ export type UserUpdateWithoutWalletInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10682,6 +10835,7 @@ export type UserUncheckedUpdateWithoutWalletInput = {
   twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -11012,6 +11166,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   twitter?: boolean
   tiktok?: boolean
   website?: boolean
+  support_email?: boolean
   notification?: boolean
   fcmToken?: boolean
   mission?: boolean
@@ -11079,6 +11234,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   twitter?: boolean
   tiktok?: boolean
   website?: boolean
+  support_email?: boolean
   notification?: boolean
   fcmToken?: boolean
   mission?: boolean
@@ -11112,6 +11268,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   twitter?: boolean
   tiktok?: boolean
   website?: boolean
+  support_email?: boolean
   notification?: boolean
   fcmToken?: boolean
   mission?: boolean
@@ -11145,6 +11302,7 @@ export type UserSelectScalar = {
   twitter?: boolean
   tiktok?: boolean
   website?: boolean
+  support_email?: boolean
   notification?: boolean
   fcmToken?: boolean
   mission?: boolean
@@ -11159,7 +11317,7 @@ export type UserSelectScalar = {
   stripeCustomerId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fname" | "lname" | "email" | "userName" | "phone" | "bio" | "description" | "country" | "state" | "city" | "address" | "zip_code" | "instagram" | "facebook" | "twitter" | "tiktok" | "website" | "notification" | "fcmToken" | "mission" | "business_tags" | "isOnline" | "createdAt" | "updatedAt" | "isDeleted" | "avgRating" | "vacationMode" | "stripeAccountId" | "stripeCustomerId", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fname" | "lname" | "email" | "userName" | "phone" | "bio" | "description" | "country" | "state" | "city" | "address" | "zip_code" | "instagram" | "facebook" | "twitter" | "tiktok" | "website" | "support_email" | "notification" | "fcmToken" | "mission" | "business_tags" | "isOnline" | "createdAt" | "updatedAt" | "isDeleted" | "avgRating" | "vacationMode" | "stripeAccountId" | "stripeCustomerId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   auth?: boolean | Prisma.User$authArgs<ExtArgs>
   picture?: boolean | Prisma.User$pictureArgs<ExtArgs>
@@ -11255,6 +11413,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     twitter: string | null
     tiktok: string | null
     website: string | null
+    support_email: string | null
     notification: boolean
     fcmToken: string | null
     mission: string | null
@@ -11741,6 +11900,7 @@ export interface UserFieldRefs {
   readonly twitter: Prisma.FieldRef<"User", 'String'>
   readonly tiktok: Prisma.FieldRef<"User", 'String'>
   readonly website: Prisma.FieldRef<"User", 'String'>
+  readonly support_email: Prisma.FieldRef<"User", 'String'>
   readonly notification: Prisma.FieldRef<"User", 'Boolean'>
   readonly fcmToken: Prisma.FieldRef<"User", 'String'>
   readonly mission: Prisma.FieldRef<"User", 'String'>

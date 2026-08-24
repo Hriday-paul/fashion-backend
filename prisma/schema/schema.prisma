@@ -55,6 +55,8 @@ model User {
   tiktok    String?
   website   String?
 
+  support_email String? //for charity
+
   auth Auth?
 
   notification Boolean @default(true)

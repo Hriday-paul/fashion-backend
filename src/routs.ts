@@ -19,6 +19,7 @@ import { stripeRouts } from './modules/stripe/stripe.rout';
 import { cartRouts } from './modules/cart/cart.rout';
 import { returnRoutes } from './modules/return/return.rout';
 import { reviewRouts } from './modules/review/review.rout';
+import { brandRouter } from './modules/brand/brand.rout';
 
 const router = express.Router();
 
@@ -90,6 +91,10 @@ const moduleRoutes = [
     {
         path: '/reviews',
         route: reviewRouts,
+    },
+    {
+        path: '/brands',
+        route: brandRouter,
     },
 ];
 

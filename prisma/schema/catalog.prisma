@@ -9,8 +9,8 @@ model Category {
 
     products Product[]
 
-    brands Brand[]
-    sizes Size[]
+    brands BrandByCategory[]
+    sizes SizeByCategory[]
 
     sizeGuide String?
 
@@ -20,15 +20,47 @@ model Category {
     @@map("categories")
 }
 
+model BrandByCategory {
+    id         String @id @default(uuid())
+    categoryId String
+    brandId    String
+
+    category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    brand    Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("brand_by_category")
+    @@index([categoryId, brandId])
+    @@index([brandId, categoryId])
+    @@unique([categoryId, brandId])
+}
+
+model SizeByCategory {
+    id         String @id @default(uuid())
+    categoryId String
+    sizeId    String
+
+    category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    size    Size    @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("size_by_category")
+    @@index([categoryId, sizeId])
+    @@index([sizeId, categoryId])
+    @@unique([categoryId, sizeId])
+}
+
 model Brand {
     id   String @id @default(uuid())
     name String
 
     order Int @default(autoincrement())
 
-    categoryId String
-    category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-    catagory_child_hierarchy String[]
+    brandByCategories BrandByCategory[]
 
     products Product[]
 
@@ -46,9 +78,7 @@ model Size {
 
     products Product[]
 
-    categoryId String
-    category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-    catagory_child_hierarchy String[]
+    sizeByCategories SizeByCategory[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
