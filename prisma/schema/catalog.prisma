@@ -10,7 +10,7 @@ model Category {
     products Product[]
 
     brands BrandByCategory[]
-    sizes SizeByCategory[]
+    sizeCategoryHierarchyGroups SizeCategoryHierarchyGroup[]
 
     sizeGuide String?
 
@@ -37,23 +37,6 @@ model BrandByCategory {
     @@unique([categoryId, brandId])
 }
 
-model SizeByCategory {
-    id         String @id @default(uuid())
-    categoryId String
-    sizeId    String
-
-    category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-    size    Size    @relation(fields: [sizeId], references: [id], onDelete: Cascade)
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    @@map("size_by_category")
-    @@index([categoryId, sizeId])
-    @@index([sizeId, categoryId])
-    @@unique([categoryId, sizeId])
-}
-
 model Brand {
     id   String @id @default(uuid())
     name String
@@ -70,15 +53,41 @@ model Brand {
     @@map("brands")
 }
 
+model SizeCategoryHierarchyGroup {
+    id         String @id @default(uuid())
+    categoryId String
+    sizeId    String
+
+    category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    size    Size    @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("size_category_hierarchy_group")
+    @@index([categoryId, sizeId])
+    @@index([sizeId, categoryId])
+    @@unique([categoryId, sizeId])
+}
+
 model Size {
     id   String @id @default(uuid())
     title String
+
+    UK String?
+    US String?
+    EU String?
 
     order Int @default(autoincrement())
 
     products Product[]
 
-    sizeByCategories SizeByCategory[]
+    // Parent catalog (optional)
+    parentId String?
+    parent   Size?  @relation("SizeHierarchy", fields: [parentId], references: [id])
+    children Size[] @relation("SizeHierarchy")
+
+    sizeCategoryHierarchyGroups SizeCategoryHierarchyGroup[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

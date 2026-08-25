@@ -28,7 +28,7 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
     }
 
     //get category hierarchy list
-    const categories = await categoryService.getParentChain(payload?.categoryId);
+    const categories = await categoryService.getParentChain({ categoryId: payload?.categoryId });
     const hierarchy = categories.map(cat => cat?.id);
 
 
@@ -83,6 +83,7 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
 }
 
 const allProducts = async (query: Record<string, unknown>, options: TPaginationOptions, userId?: string) => {
+
     const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }];
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
@@ -165,7 +166,7 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
 
     if (minPrice || maxPrice) {
         AndConditions.push({
-            price: {
+            finalPrice: {
                 gte: minPrice ? Number(minPrice) : undefined,
                 lte: maxPrice ? Number(maxPrice) : undefined,
             },
@@ -231,12 +232,7 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
     });
 
     return {
-        meta: {
-            total,
-            totalPage: Math.ceil(total / limit),
-            page,
-            limit,
-        },
+        meta: paginationHelper.generatePaginationMeta({ total, page, limit }),
         data: result,
     };
 
@@ -254,13 +250,98 @@ const productsByUserName = async (query: Record<string, unknown>, options: TPagi
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const { category } = query;
+    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, ...moreFields } = query;
+
+    if (searchTerm) {
+        AndConditions.push({
+            OR: [
+                {
+                    title: {
+                        contains: searchTerm as string,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    description: {
+                        contains: searchTerm as string,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    tags: {
+                        has: searchTerm as string
+                    }
+                }
+            ],
+        });
+    }
 
     if (category) {
         AndConditions.push({
             catagory_hierarchy: {
                 has: category as string
             }
+        });
+    }
+
+    if (brands) {
+        const splitBrand = (brands as string).split(",")
+        AndConditions.push({
+            brandId: {
+                in: splitBrand
+            }
+        });
+    }
+    if (sizes) {
+        const splitSize = (sizes as string).split(",")
+        AndConditions.push({
+            sizeId: {
+                in: splitSize
+            }
+        });
+    }
+
+    if (conditions) {
+        const splitCondition = (conditions as string).split(",");
+        AndConditions.push({
+            condition: {
+                in: splitCondition
+            },
+        });
+    }
+    if (colors) {
+        const splitColors = (colors as string).split(",");
+        AndConditions.push({
+            color: {
+                in: splitColors
+            },
+        });
+    }
+    if (meterials) {
+        const splitMeterials = (meterials as string).split(",");
+        AndConditions.push({
+            meterials: {
+                hasSome: splitMeterials
+            },
+        });
+    }
+
+    if (minPrice || maxPrice) {
+        AndConditions.push({
+            finalPrice: {
+                gte: minPrice ? Number(minPrice) : undefined,
+                lte: maxPrice ? Number(maxPrice) : undefined,
+            },
+        });
+    }
+
+    if (Object.keys(moreFields)?.length > 0) {
+        Object.entries(moreFields).forEach(([field, value]) => {
+            AndConditions.push({
+                [field]: {
+                    equals: value,
+                },
+            });
         });
     }
 
@@ -313,12 +394,7 @@ const productsByUserName = async (query: Record<string, unknown>, options: TPagi
     });
 
     return {
-        meta: {
-            total,
-            totalPage: Math.ceil(total / limit),
-            page,
-            limit,
-        },
+        meta: paginationHelper.generatePaginationMeta({ total, page, limit }),
         data: result,
     };
 
@@ -452,7 +528,7 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
         })
     }
 
-    const categoryChain = await categoryService.getParentChain(details?.categoryId);
+    const categoryChain = await categoryService.getParentChain({ categoryId: details?.categoryId });
 
     return { ...details, catagory_hierarchy: categoryChain };
     // return details;

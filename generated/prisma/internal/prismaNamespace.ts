@@ -391,8 +391,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Category: 'Category',
   BrandByCategory: 'BrandByCategory',
-  SizeByCategory: 'SizeByCategory',
   Brand: 'Brand',
+  SizeCategoryHierarchyGroup: 'SizeCategoryHierarchyGroup',
   Size: 'Size',
   Follow: 'Follow',
   Chat: 'Chat',
@@ -447,7 +447,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "brandByCategory" | "sizeByCategory" | "brand" | "size" | "follow" | "chat" | "chatParticipant" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
+    modelProps: "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "follow" | "chat" | "chatParticipant" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -599,80 +599,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    SizeByCategory: {
-      payload: Prisma.$SizeByCategoryPayload<ExtArgs>
-      fields: Prisma.SizeByCategoryFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.SizeByCategoryFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.SizeByCategoryFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>
-        }
-        findFirst: {
-          args: Prisma.SizeByCategoryFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.SizeByCategoryFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>
-        }
-        findMany: {
-          args: Prisma.SizeByCategoryFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>[]
-        }
-        create: {
-          args: Prisma.SizeByCategoryCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>
-        }
-        createMany: {
-          args: Prisma.SizeByCategoryCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.SizeByCategoryCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>[]
-        }
-        delete: {
-          args: Prisma.SizeByCategoryDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>
-        }
-        update: {
-          args: Prisma.SizeByCategoryUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>
-        }
-        deleteMany: {
-          args: Prisma.SizeByCategoryDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.SizeByCategoryUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.SizeByCategoryUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>[]
-        }
-        upsert: {
-          args: Prisma.SizeByCategoryUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeByCategoryPayload>
-        }
-        aggregate: {
-          args: Prisma.SizeByCategoryAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateSizeByCategory>
-        }
-        groupBy: {
-          args: Prisma.SizeByCategoryGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SizeByCategoryGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.SizeByCategoryCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SizeByCategoryCountAggregateOutputType> | number
-        }
-      }
-    }
     Brand: {
       payload: Prisma.$BrandPayload<ExtArgs>
       fields: Prisma.BrandFieldRefs
@@ -744,6 +670,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.BrandCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.BrandCountAggregateOutputType> | number
+        }
+      }
+    }
+    SizeCategoryHierarchyGroup: {
+      payload: Prisma.$SizeCategoryHierarchyGroupPayload<ExtArgs>
+      fields: Prisma.SizeCategoryHierarchyGroupFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SizeCategoryHierarchyGroupFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeCategoryHierarchyGroupPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SizeCategoryHierarchyGroupFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeCategoryHierarchyGroupPayload>
+        }
+        findFirst: {
+          args: Prisma.SizeCategoryHierarchyGroupFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeCategoryHierarchyGroupPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SizeCategoryHierarchyGroupFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeCategoryHierarchyGroupPayload>
+        }
+        findMany: {
+          args: Prisma.SizeCategoryHierarchyGroupFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeCategoryHierarchyGroupPayload>[]
+        }
+        create: {
+          args: Prisma.SizeCategoryHierarchyGroupCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeCategoryHierarchyGroupPayload>
+        }
+        createMany: {
+          args: Prisma.SizeCategoryHierarchyGroupCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SizeCategoryHierarchyGroupCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeCategoryHierarchyGroupPayload>[]
+        }
+        delete: {
+          args: Prisma.SizeCategoryHierarchyGroupDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeCategoryHierarchyGroupPayload>
+        }
+        update: {
+          args: Prisma.SizeCategoryHierarchyGroupUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeCategoryHierarchyGroupPayload>
+        }
+        deleteMany: {
+          args: Prisma.SizeCategoryHierarchyGroupDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SizeCategoryHierarchyGroupUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SizeCategoryHierarchyGroupUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeCategoryHierarchyGroupPayload>[]
+        }
+        upsert: {
+          args: Prisma.SizeCategoryHierarchyGroupUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SizeCategoryHierarchyGroupPayload>
+        }
+        aggregate: {
+          args: Prisma.SizeCategoryHierarchyGroupAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSizeCategoryHierarchyGroup>
+        }
+        groupBy: {
+          args: Prisma.SizeCategoryHierarchyGroupGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SizeCategoryHierarchyGroupGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SizeCategoryHierarchyGroupCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SizeCategoryHierarchyGroupCountAggregateOutputType> | number
         }
       }
     }
@@ -3695,17 +3695,6 @@ export const BrandByCategoryScalarFieldEnum = {
 export type BrandByCategoryScalarFieldEnum = (typeof BrandByCategoryScalarFieldEnum)[keyof typeof BrandByCategoryScalarFieldEnum]
 
 
-export const SizeByCategoryScalarFieldEnum = {
-  id: 'id',
-  categoryId: 'categoryId',
-  sizeId: 'sizeId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type SizeByCategoryScalarFieldEnum = (typeof SizeByCategoryScalarFieldEnum)[keyof typeof SizeByCategoryScalarFieldEnum]
-
-
 export const BrandScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -3717,10 +3706,25 @@ export const BrandScalarFieldEnum = {
 export type BrandScalarFieldEnum = (typeof BrandScalarFieldEnum)[keyof typeof BrandScalarFieldEnum]
 
 
+export const SizeCategoryHierarchyGroupScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  sizeId: 'sizeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SizeCategoryHierarchyGroupScalarFieldEnum = (typeof SizeCategoryHierarchyGroupScalarFieldEnum)[keyof typeof SizeCategoryHierarchyGroupScalarFieldEnum]
+
+
 export const SizeScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  UK: 'UK',
+  US: 'US',
+  EU: 'EU',
   order: 'order',
+  parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -4871,8 +4875,8 @@ export interface PrismaClientOptions {
 export type GlobalOmitConfig = {
   category?: Prisma.CategoryOmit
   brandByCategory?: Prisma.BrandByCategoryOmit
-  sizeByCategory?: Prisma.SizeByCategoryOmit
   brand?: Prisma.BrandOmit
+  sizeCategoryHierarchyGroup?: Prisma.SizeCategoryHierarchyGroupOmit
   size?: Prisma.SizeOmit
   follow?: Prisma.FollowOmit
   chat?: Prisma.ChatOmit

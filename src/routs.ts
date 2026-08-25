@@ -1,9 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { authRouts } from './modules/auth/auth.rout';
 import { userRoutes } from './modules/user/user.rout';
-// import { paymentsRoutes } from './modules/payments/payments.route';
-import { packageRouters } from './modules/package/package.rout';
-// import { dashboardRouts } from './modules/dasboard/dashboard.rout';
 import { notificationRoutes } from './modules/notification/notification.routes';
 import { settingsRoutes } from './modules/settings/settings.rout';
 import { messagesRoutes } from './modules/messages/messages.route';
@@ -20,6 +17,7 @@ import { cartRouts } from './modules/cart/cart.rout';
 import { returnRoutes } from './modules/return/return.rout';
 import { reviewRouts } from './modules/review/review.rout';
 import { brandRouter } from './modules/brand/brand.rout';
+import { sizeRouter } from './modules/size/size.rout';
 
 const router = express.Router();
 
@@ -95,6 +93,10 @@ const moduleRoutes = [
     {
         path: '/brands',
         route: brandRouter,
+    },
+    {
+        path: '/sizes',
+        route: sizeRouter,
     },
 ];
 

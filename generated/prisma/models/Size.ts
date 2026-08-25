@@ -36,7 +36,11 @@ export type SizeSumAggregateOutputType = {
 export type SizeMinAggregateOutputType = {
   id: string | null
   title: string | null
+  UK: string | null
+  US: string | null
+  EU: string | null
   order: number | null
+  parentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -44,7 +48,11 @@ export type SizeMinAggregateOutputType = {
 export type SizeMaxAggregateOutputType = {
   id: string | null
   title: string | null
+  UK: string | null
+  US: string | null
+  EU: string | null
   order: number | null
+  parentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,7 +60,11 @@ export type SizeMaxAggregateOutputType = {
 export type SizeCountAggregateOutputType = {
   id: number
   title: number
+  UK: number
+  US: number
+  EU: number
   order: number
+  parentId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -70,7 +82,11 @@ export type SizeSumAggregateInputType = {
 export type SizeMinAggregateInputType = {
   id?: true
   title?: true
+  UK?: true
+  US?: true
+  EU?: true
   order?: true
+  parentId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -78,7 +94,11 @@ export type SizeMinAggregateInputType = {
 export type SizeMaxAggregateInputType = {
   id?: true
   title?: true
+  UK?: true
+  US?: true
+  EU?: true
   order?: true
+  parentId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -86,7 +106,11 @@ export type SizeMaxAggregateInputType = {
 export type SizeCountAggregateInputType = {
   id?: true
   title?: true
+  UK?: true
+  US?: true
+  EU?: true
   order?: true
+  parentId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -181,7 +205,11 @@ export type SizeGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type SizeGroupByOutputType = {
   id: string
   title: string
+  UK: string | null
+  US: string | null
+  EU: string | null
   order: number
+  parentId: string | null
   createdAt: Date
   updatedAt: Date
   _count: SizeCountAggregateOutputType | null
@@ -212,21 +240,33 @@ export type SizeWhereInput = {
   NOT?: Prisma.SizeWhereInput | Prisma.SizeWhereInput[]
   id?: Prisma.StringFilter<"Size"> | string
   title?: Prisma.StringFilter<"Size"> | string
+  UK?: Prisma.StringNullableFilter<"Size"> | string | null
+  US?: Prisma.StringNullableFilter<"Size"> | string | null
+  EU?: Prisma.StringNullableFilter<"Size"> | string | null
   order?: Prisma.IntFilter<"Size"> | number
+  parentId?: Prisma.StringNullableFilter<"Size"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Size"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Size"> | Date | string
   products?: Prisma.ProductListRelationFilter
-  sizeByCategories?: Prisma.SizeByCategoryListRelationFilter
+  parent?: Prisma.XOR<Prisma.SizeNullableScalarRelationFilter, Prisma.SizeWhereInput> | null
+  children?: Prisma.SizeListRelationFilter
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupListRelationFilter
 }
 
 export type SizeOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  UK?: Prisma.SortOrderInput | Prisma.SortOrder
+  US?: Prisma.SortOrderInput | Prisma.SortOrder
+  EU?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
+  parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   products?: Prisma.ProductOrderByRelationAggregateInput
-  sizeByCategories?: Prisma.SizeByCategoryOrderByRelationAggregateInput
+  parent?: Prisma.SizeOrderByWithRelationInput
+  children?: Prisma.SizeOrderByRelationAggregateInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupOrderByRelationAggregateInput
 }
 
 export type SizeWhereUniqueInput = Prisma.AtLeast<{
@@ -235,17 +275,27 @@ export type SizeWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SizeWhereInput[]
   NOT?: Prisma.SizeWhereInput | Prisma.SizeWhereInput[]
   title?: Prisma.StringFilter<"Size"> | string
+  UK?: Prisma.StringNullableFilter<"Size"> | string | null
+  US?: Prisma.StringNullableFilter<"Size"> | string | null
+  EU?: Prisma.StringNullableFilter<"Size"> | string | null
   order?: Prisma.IntFilter<"Size"> | number
+  parentId?: Prisma.StringNullableFilter<"Size"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Size"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Size"> | Date | string
   products?: Prisma.ProductListRelationFilter
-  sizeByCategories?: Prisma.SizeByCategoryListRelationFilter
+  parent?: Prisma.XOR<Prisma.SizeNullableScalarRelationFilter, Prisma.SizeWhereInput> | null
+  children?: Prisma.SizeListRelationFilter
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupListRelationFilter
 }, "id">
 
 export type SizeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  UK?: Prisma.SortOrderInput | Prisma.SortOrder
+  US?: Prisma.SortOrderInput | Prisma.SortOrder
+  EU?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
+  parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SizeCountOrderByAggregateInput
@@ -261,7 +311,11 @@ export type SizeScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SizeScalarWhereWithAggregatesInput | Prisma.SizeScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Size"> | string
   title?: Prisma.StringWithAggregatesFilter<"Size"> | string
+  UK?: Prisma.StringNullableWithAggregatesFilter<"Size"> | string | null
+  US?: Prisma.StringNullableWithAggregatesFilter<"Size"> | string | null
+  EU?: Prisma.StringNullableWithAggregatesFilter<"Size"> | string | null
   order?: Prisma.IntWithAggregatesFilter<"Size"> | number
+  parentId?: Prisma.StringNullableWithAggregatesFilter<"Size"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Size"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Size"> | Date | string
 }
@@ -269,47 +323,71 @@ export type SizeScalarWhereWithAggregatesInput = {
 export type SizeCreateInput = {
   id?: string
   title: string
+  UK?: string | null
+  US?: string | null
+  EU?: string | null
   order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductCreateNestedManyWithoutSizeInput
-  sizeByCategories?: Prisma.SizeByCategoryCreateNestedManyWithoutSizeInput
+  parent?: Prisma.SizeCreateNestedOneWithoutChildrenInput
+  children?: Prisma.SizeCreateNestedManyWithoutParentInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupCreateNestedManyWithoutSizeInput
 }
 
 export type SizeUncheckedCreateInput = {
   id?: string
   title: string
+  UK?: string | null
+  US?: string | null
+  EU?: string | null
   order?: number
+  parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutSizeInput
-  sizeByCategories?: Prisma.SizeByCategoryUncheckedCreateNestedManyWithoutSizeInput
+  children?: Prisma.SizeUncheckedCreateNestedManyWithoutParentInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedCreateNestedManyWithoutSizeInput
 }
 
 export type SizeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  UK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  US?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  EU?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUpdateManyWithoutSizeNestedInput
-  sizeByCategories?: Prisma.SizeByCategoryUpdateManyWithoutSizeNestedInput
+  parent?: Prisma.SizeUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.SizeUpdateManyWithoutParentNestedInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUpdateManyWithoutSizeNestedInput
 }
 
 export type SizeUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  UK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  US?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  EU?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutSizeNestedInput
-  sizeByCategories?: Prisma.SizeByCategoryUncheckedUpdateManyWithoutSizeNestedInput
+  children?: Prisma.SizeUncheckedUpdateManyWithoutParentNestedInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedUpdateManyWithoutSizeNestedInput
 }
 
 export type SizeCreateManyInput = {
   id?: string
   title: string
+  UK?: string | null
+  US?: string | null
+  EU?: string | null
   order?: number
+  parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -317,6 +395,9 @@ export type SizeCreateManyInput = {
 export type SizeUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  UK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  US?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  EU?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -325,7 +406,11 @@ export type SizeUpdateManyMutationInput = {
 export type SizeUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  UK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  US?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  EU?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -335,10 +420,29 @@ export type SizeScalarRelationFilter = {
   isNot?: Prisma.SizeWhereInput
 }
 
+export type SizeNullableScalarRelationFilter = {
+  is?: Prisma.SizeWhereInput | null
+  isNot?: Prisma.SizeWhereInput | null
+}
+
+export type SizeListRelationFilter = {
+  every?: Prisma.SizeWhereInput
+  some?: Prisma.SizeWhereInput
+  none?: Prisma.SizeWhereInput
+}
+
+export type SizeOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type SizeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  UK?: Prisma.SortOrder
+  US?: Prisma.SortOrder
+  EU?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -350,7 +454,11 @@ export type SizeAvgOrderByAggregateInput = {
 export type SizeMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  UK?: Prisma.SortOrder
+  US?: Prisma.SortOrder
+  EU?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -358,7 +466,11 @@ export type SizeMaxOrderByAggregateInput = {
 export type SizeMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  UK?: Prisma.SortOrder
+  US?: Prisma.SortOrder
+  EU?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -367,18 +479,76 @@ export type SizeSumOrderByAggregateInput = {
   order?: Prisma.SortOrder
 }
 
-export type SizeCreateNestedOneWithoutSizeByCategoriesInput = {
-  create?: Prisma.XOR<Prisma.SizeCreateWithoutSizeByCategoriesInput, Prisma.SizeUncheckedCreateWithoutSizeByCategoriesInput>
-  connectOrCreate?: Prisma.SizeCreateOrConnectWithoutSizeByCategoriesInput
+export type SizeCreateNestedOneWithoutSizeCategoryHierarchyGroupsInput = {
+  create?: Prisma.XOR<Prisma.SizeCreateWithoutSizeCategoryHierarchyGroupsInput, Prisma.SizeUncheckedCreateWithoutSizeCategoryHierarchyGroupsInput>
+  connectOrCreate?: Prisma.SizeCreateOrConnectWithoutSizeCategoryHierarchyGroupsInput
   connect?: Prisma.SizeWhereUniqueInput
 }
 
-export type SizeUpdateOneRequiredWithoutSizeByCategoriesNestedInput = {
-  create?: Prisma.XOR<Prisma.SizeCreateWithoutSizeByCategoriesInput, Prisma.SizeUncheckedCreateWithoutSizeByCategoriesInput>
-  connectOrCreate?: Prisma.SizeCreateOrConnectWithoutSizeByCategoriesInput
-  upsert?: Prisma.SizeUpsertWithoutSizeByCategoriesInput
+export type SizeUpdateOneRequiredWithoutSizeCategoryHierarchyGroupsNestedInput = {
+  create?: Prisma.XOR<Prisma.SizeCreateWithoutSizeCategoryHierarchyGroupsInput, Prisma.SizeUncheckedCreateWithoutSizeCategoryHierarchyGroupsInput>
+  connectOrCreate?: Prisma.SizeCreateOrConnectWithoutSizeCategoryHierarchyGroupsInput
+  upsert?: Prisma.SizeUpsertWithoutSizeCategoryHierarchyGroupsInput
   connect?: Prisma.SizeWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.SizeUpdateToOneWithWhereWithoutSizeByCategoriesInput, Prisma.SizeUpdateWithoutSizeByCategoriesInput>, Prisma.SizeUncheckedUpdateWithoutSizeByCategoriesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SizeUpdateToOneWithWhereWithoutSizeCategoryHierarchyGroupsInput, Prisma.SizeUpdateWithoutSizeCategoryHierarchyGroupsInput>, Prisma.SizeUncheckedUpdateWithoutSizeCategoryHierarchyGroupsInput>
+}
+
+export type SizeCreateNestedOneWithoutChildrenInput = {
+  create?: Prisma.XOR<Prisma.SizeCreateWithoutChildrenInput, Prisma.SizeUncheckedCreateWithoutChildrenInput>
+  connectOrCreate?: Prisma.SizeCreateOrConnectWithoutChildrenInput
+  connect?: Prisma.SizeWhereUniqueInput
+}
+
+export type SizeCreateNestedManyWithoutParentInput = {
+  create?: Prisma.XOR<Prisma.SizeCreateWithoutParentInput, Prisma.SizeUncheckedCreateWithoutParentInput> | Prisma.SizeCreateWithoutParentInput[] | Prisma.SizeUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.SizeCreateOrConnectWithoutParentInput | Prisma.SizeCreateOrConnectWithoutParentInput[]
+  createMany?: Prisma.SizeCreateManyParentInputEnvelope
+  connect?: Prisma.SizeWhereUniqueInput | Prisma.SizeWhereUniqueInput[]
+}
+
+export type SizeUncheckedCreateNestedManyWithoutParentInput = {
+  create?: Prisma.XOR<Prisma.SizeCreateWithoutParentInput, Prisma.SizeUncheckedCreateWithoutParentInput> | Prisma.SizeCreateWithoutParentInput[] | Prisma.SizeUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.SizeCreateOrConnectWithoutParentInput | Prisma.SizeCreateOrConnectWithoutParentInput[]
+  createMany?: Prisma.SizeCreateManyParentInputEnvelope
+  connect?: Prisma.SizeWhereUniqueInput | Prisma.SizeWhereUniqueInput[]
+}
+
+export type SizeUpdateOneWithoutChildrenNestedInput = {
+  create?: Prisma.XOR<Prisma.SizeCreateWithoutChildrenInput, Prisma.SizeUncheckedCreateWithoutChildrenInput>
+  connectOrCreate?: Prisma.SizeCreateOrConnectWithoutChildrenInput
+  upsert?: Prisma.SizeUpsertWithoutChildrenInput
+  disconnect?: Prisma.SizeWhereInput | boolean
+  delete?: Prisma.SizeWhereInput | boolean
+  connect?: Prisma.SizeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SizeUpdateToOneWithWhereWithoutChildrenInput, Prisma.SizeUpdateWithoutChildrenInput>, Prisma.SizeUncheckedUpdateWithoutChildrenInput>
+}
+
+export type SizeUpdateManyWithoutParentNestedInput = {
+  create?: Prisma.XOR<Prisma.SizeCreateWithoutParentInput, Prisma.SizeUncheckedCreateWithoutParentInput> | Prisma.SizeCreateWithoutParentInput[] | Prisma.SizeUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.SizeCreateOrConnectWithoutParentInput | Prisma.SizeCreateOrConnectWithoutParentInput[]
+  upsert?: Prisma.SizeUpsertWithWhereUniqueWithoutParentInput | Prisma.SizeUpsertWithWhereUniqueWithoutParentInput[]
+  createMany?: Prisma.SizeCreateManyParentInputEnvelope
+  set?: Prisma.SizeWhereUniqueInput | Prisma.SizeWhereUniqueInput[]
+  disconnect?: Prisma.SizeWhereUniqueInput | Prisma.SizeWhereUniqueInput[]
+  delete?: Prisma.SizeWhereUniqueInput | Prisma.SizeWhereUniqueInput[]
+  connect?: Prisma.SizeWhereUniqueInput | Prisma.SizeWhereUniqueInput[]
+  update?: Prisma.SizeUpdateWithWhereUniqueWithoutParentInput | Prisma.SizeUpdateWithWhereUniqueWithoutParentInput[]
+  updateMany?: Prisma.SizeUpdateManyWithWhereWithoutParentInput | Prisma.SizeUpdateManyWithWhereWithoutParentInput[]
+  deleteMany?: Prisma.SizeScalarWhereInput | Prisma.SizeScalarWhereInput[]
+}
+
+export type SizeUncheckedUpdateManyWithoutParentNestedInput = {
+  create?: Prisma.XOR<Prisma.SizeCreateWithoutParentInput, Prisma.SizeUncheckedCreateWithoutParentInput> | Prisma.SizeCreateWithoutParentInput[] | Prisma.SizeUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.SizeCreateOrConnectWithoutParentInput | Prisma.SizeCreateOrConnectWithoutParentInput[]
+  upsert?: Prisma.SizeUpsertWithWhereUniqueWithoutParentInput | Prisma.SizeUpsertWithWhereUniqueWithoutParentInput[]
+  createMany?: Prisma.SizeCreateManyParentInputEnvelope
+  set?: Prisma.SizeWhereUniqueInput | Prisma.SizeWhereUniqueInput[]
+  disconnect?: Prisma.SizeWhereUniqueInput | Prisma.SizeWhereUniqueInput[]
+  delete?: Prisma.SizeWhereUniqueInput | Prisma.SizeWhereUniqueInput[]
+  connect?: Prisma.SizeWhereUniqueInput | Prisma.SizeWhereUniqueInput[]
+  update?: Prisma.SizeUpdateWithWhereUniqueWithoutParentInput | Prisma.SizeUpdateWithWhereUniqueWithoutParentInput[]
+  updateMany?: Prisma.SizeUpdateManyWithWhereWithoutParentInput | Prisma.SizeUpdateManyWithWhereWithoutParentInput[]
+  deleteMany?: Prisma.SizeScalarWhereInput | Prisma.SizeScalarWhereInput[]
 }
 
 export type SizeCreateNestedOneWithoutProductsInput = {
@@ -395,74 +565,245 @@ export type SizeUpdateOneRequiredWithoutProductsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SizeUpdateToOneWithWhereWithoutProductsInput, Prisma.SizeUpdateWithoutProductsInput>, Prisma.SizeUncheckedUpdateWithoutProductsInput>
 }
 
-export type SizeCreateWithoutSizeByCategoriesInput = {
+export type SizeCreateWithoutSizeCategoryHierarchyGroupsInput = {
   id?: string
   title: string
+  UK?: string | null
+  US?: string | null
+  EU?: string | null
   order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductCreateNestedManyWithoutSizeInput
+  parent?: Prisma.SizeCreateNestedOneWithoutChildrenInput
+  children?: Prisma.SizeCreateNestedManyWithoutParentInput
 }
 
-export type SizeUncheckedCreateWithoutSizeByCategoriesInput = {
+export type SizeUncheckedCreateWithoutSizeCategoryHierarchyGroupsInput = {
   id?: string
   title: string
+  UK?: string | null
+  US?: string | null
+  EU?: string | null
   order?: number
+  parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutSizeInput
+  children?: Prisma.SizeUncheckedCreateNestedManyWithoutParentInput
 }
 
-export type SizeCreateOrConnectWithoutSizeByCategoriesInput = {
+export type SizeCreateOrConnectWithoutSizeCategoryHierarchyGroupsInput = {
   where: Prisma.SizeWhereUniqueInput
-  create: Prisma.XOR<Prisma.SizeCreateWithoutSizeByCategoriesInput, Prisma.SizeUncheckedCreateWithoutSizeByCategoriesInput>
+  create: Prisma.XOR<Prisma.SizeCreateWithoutSizeCategoryHierarchyGroupsInput, Prisma.SizeUncheckedCreateWithoutSizeCategoryHierarchyGroupsInput>
 }
 
-export type SizeUpsertWithoutSizeByCategoriesInput = {
-  update: Prisma.XOR<Prisma.SizeUpdateWithoutSizeByCategoriesInput, Prisma.SizeUncheckedUpdateWithoutSizeByCategoriesInput>
-  create: Prisma.XOR<Prisma.SizeCreateWithoutSizeByCategoriesInput, Prisma.SizeUncheckedCreateWithoutSizeByCategoriesInput>
+export type SizeUpsertWithoutSizeCategoryHierarchyGroupsInput = {
+  update: Prisma.XOR<Prisma.SizeUpdateWithoutSizeCategoryHierarchyGroupsInput, Prisma.SizeUncheckedUpdateWithoutSizeCategoryHierarchyGroupsInput>
+  create: Prisma.XOR<Prisma.SizeCreateWithoutSizeCategoryHierarchyGroupsInput, Prisma.SizeUncheckedCreateWithoutSizeCategoryHierarchyGroupsInput>
   where?: Prisma.SizeWhereInput
 }
 
-export type SizeUpdateToOneWithWhereWithoutSizeByCategoriesInput = {
+export type SizeUpdateToOneWithWhereWithoutSizeCategoryHierarchyGroupsInput = {
   where?: Prisma.SizeWhereInput
-  data: Prisma.XOR<Prisma.SizeUpdateWithoutSizeByCategoriesInput, Prisma.SizeUncheckedUpdateWithoutSizeByCategoriesInput>
+  data: Prisma.XOR<Prisma.SizeUpdateWithoutSizeCategoryHierarchyGroupsInput, Prisma.SizeUncheckedUpdateWithoutSizeCategoryHierarchyGroupsInput>
 }
 
-export type SizeUpdateWithoutSizeByCategoriesInput = {
+export type SizeUpdateWithoutSizeCategoryHierarchyGroupsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  UK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  US?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  EU?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUpdateManyWithoutSizeNestedInput
+  parent?: Prisma.SizeUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.SizeUpdateManyWithoutParentNestedInput
 }
 
-export type SizeUncheckedUpdateWithoutSizeByCategoriesInput = {
+export type SizeUncheckedUpdateWithoutSizeCategoryHierarchyGroupsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  UK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  US?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  EU?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutSizeNestedInput
+  children?: Prisma.SizeUncheckedUpdateManyWithoutParentNestedInput
+}
+
+export type SizeCreateWithoutChildrenInput = {
+  id?: string
+  title: string
+  UK?: string | null
+  US?: string | null
+  EU?: string | null
+  order?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  products?: Prisma.ProductCreateNestedManyWithoutSizeInput
+  parent?: Prisma.SizeCreateNestedOneWithoutChildrenInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupCreateNestedManyWithoutSizeInput
+}
+
+export type SizeUncheckedCreateWithoutChildrenInput = {
+  id?: string
+  title: string
+  UK?: string | null
+  US?: string | null
+  EU?: string | null
+  order?: number
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutSizeInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedCreateNestedManyWithoutSizeInput
+}
+
+export type SizeCreateOrConnectWithoutChildrenInput = {
+  where: Prisma.SizeWhereUniqueInput
+  create: Prisma.XOR<Prisma.SizeCreateWithoutChildrenInput, Prisma.SizeUncheckedCreateWithoutChildrenInput>
+}
+
+export type SizeCreateWithoutParentInput = {
+  id?: string
+  title: string
+  UK?: string | null
+  US?: string | null
+  EU?: string | null
+  order?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  products?: Prisma.ProductCreateNestedManyWithoutSizeInput
+  children?: Prisma.SizeCreateNestedManyWithoutParentInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupCreateNestedManyWithoutSizeInput
+}
+
+export type SizeUncheckedCreateWithoutParentInput = {
+  id?: string
+  title: string
+  UK?: string | null
+  US?: string | null
+  EU?: string | null
+  order?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutSizeInput
+  children?: Prisma.SizeUncheckedCreateNestedManyWithoutParentInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedCreateNestedManyWithoutSizeInput
+}
+
+export type SizeCreateOrConnectWithoutParentInput = {
+  where: Prisma.SizeWhereUniqueInput
+  create: Prisma.XOR<Prisma.SizeCreateWithoutParentInput, Prisma.SizeUncheckedCreateWithoutParentInput>
+}
+
+export type SizeCreateManyParentInputEnvelope = {
+  data: Prisma.SizeCreateManyParentInput | Prisma.SizeCreateManyParentInput[]
+  skipDuplicates?: boolean
+}
+
+export type SizeUpsertWithoutChildrenInput = {
+  update: Prisma.XOR<Prisma.SizeUpdateWithoutChildrenInput, Prisma.SizeUncheckedUpdateWithoutChildrenInput>
+  create: Prisma.XOR<Prisma.SizeCreateWithoutChildrenInput, Prisma.SizeUncheckedCreateWithoutChildrenInput>
+  where?: Prisma.SizeWhereInput
+}
+
+export type SizeUpdateToOneWithWhereWithoutChildrenInput = {
+  where?: Prisma.SizeWhereInput
+  data: Prisma.XOR<Prisma.SizeUpdateWithoutChildrenInput, Prisma.SizeUncheckedUpdateWithoutChildrenInput>
+}
+
+export type SizeUpdateWithoutChildrenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  UK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  US?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  EU?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUpdateManyWithoutSizeNestedInput
+  parent?: Prisma.SizeUpdateOneWithoutChildrenNestedInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUpdateManyWithoutSizeNestedInput
+}
+
+export type SizeUncheckedUpdateWithoutChildrenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  UK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  US?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  EU?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUncheckedUpdateManyWithoutSizeNestedInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedUpdateManyWithoutSizeNestedInput
+}
+
+export type SizeUpsertWithWhereUniqueWithoutParentInput = {
+  where: Prisma.SizeWhereUniqueInput
+  update: Prisma.XOR<Prisma.SizeUpdateWithoutParentInput, Prisma.SizeUncheckedUpdateWithoutParentInput>
+  create: Prisma.XOR<Prisma.SizeCreateWithoutParentInput, Prisma.SizeUncheckedCreateWithoutParentInput>
+}
+
+export type SizeUpdateWithWhereUniqueWithoutParentInput = {
+  where: Prisma.SizeWhereUniqueInput
+  data: Prisma.XOR<Prisma.SizeUpdateWithoutParentInput, Prisma.SizeUncheckedUpdateWithoutParentInput>
+}
+
+export type SizeUpdateManyWithWhereWithoutParentInput = {
+  where: Prisma.SizeScalarWhereInput
+  data: Prisma.XOR<Prisma.SizeUpdateManyMutationInput, Prisma.SizeUncheckedUpdateManyWithoutParentInput>
+}
+
+export type SizeScalarWhereInput = {
+  AND?: Prisma.SizeScalarWhereInput | Prisma.SizeScalarWhereInput[]
+  OR?: Prisma.SizeScalarWhereInput[]
+  NOT?: Prisma.SizeScalarWhereInput | Prisma.SizeScalarWhereInput[]
+  id?: Prisma.StringFilter<"Size"> | string
+  title?: Prisma.StringFilter<"Size"> | string
+  UK?: Prisma.StringNullableFilter<"Size"> | string | null
+  US?: Prisma.StringNullableFilter<"Size"> | string | null
+  EU?: Prisma.StringNullableFilter<"Size"> | string | null
+  order?: Prisma.IntFilter<"Size"> | number
+  parentId?: Prisma.StringNullableFilter<"Size"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Size"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Size"> | Date | string
 }
 
 export type SizeCreateWithoutProductsInput = {
   id?: string
   title: string
+  UK?: string | null
+  US?: string | null
+  EU?: string | null
   order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  sizeByCategories?: Prisma.SizeByCategoryCreateNestedManyWithoutSizeInput
+  parent?: Prisma.SizeCreateNestedOneWithoutChildrenInput
+  children?: Prisma.SizeCreateNestedManyWithoutParentInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupCreateNestedManyWithoutSizeInput
 }
 
 export type SizeUncheckedCreateWithoutProductsInput = {
   id?: string
   title: string
+  UK?: string | null
+  US?: string | null
+  EU?: string | null
   order?: number
+  parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  sizeByCategories?: Prisma.SizeByCategoryUncheckedCreateNestedManyWithoutSizeInput
+  children?: Prisma.SizeUncheckedCreateNestedManyWithoutParentInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedCreateNestedManyWithoutSizeInput
 }
 
 export type SizeCreateOrConnectWithoutProductsInput = {
@@ -484,19 +825,79 @@ export type SizeUpdateToOneWithWhereWithoutProductsInput = {
 export type SizeUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  UK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  US?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  EU?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sizeByCategories?: Prisma.SizeByCategoryUpdateManyWithoutSizeNestedInput
+  parent?: Prisma.SizeUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.SizeUpdateManyWithoutParentNestedInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUpdateManyWithoutSizeNestedInput
 }
 
 export type SizeUncheckedUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  UK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  US?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  EU?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  children?: Prisma.SizeUncheckedUpdateManyWithoutParentNestedInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedUpdateManyWithoutSizeNestedInput
+}
+
+export type SizeCreateManyParentInput = {
+  id?: string
+  title: string
+  UK?: string | null
+  US?: string | null
+  EU?: string | null
+  order?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SizeUpdateWithoutParentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  UK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  US?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  EU?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sizeByCategories?: Prisma.SizeByCategoryUncheckedUpdateManyWithoutSizeNestedInput
+  products?: Prisma.ProductUpdateManyWithoutSizeNestedInput
+  children?: Prisma.SizeUpdateManyWithoutParentNestedInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUpdateManyWithoutSizeNestedInput
+}
+
+export type SizeUncheckedUpdateWithoutParentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  UK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  US?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  EU?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUncheckedUpdateManyWithoutSizeNestedInput
+  children?: Prisma.SizeUncheckedUpdateManyWithoutParentNestedInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedUpdateManyWithoutSizeNestedInput
+}
+
+export type SizeUncheckedUpdateManyWithoutParentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  UK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  US?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  EU?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -506,12 +907,14 @@ export type SizeUncheckedUpdateWithoutProductsInput = {
 
 export type SizeCountOutputType = {
   products: number
-  sizeByCategories: number
+  children: number
+  sizeCategoryHierarchyGroups: number
 }
 
 export type SizeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | SizeCountOutputTypeCountProductsArgs
-  sizeByCategories?: boolean | SizeCountOutputTypeCountSizeByCategoriesArgs
+  children?: boolean | SizeCountOutputTypeCountChildrenArgs
+  sizeCategoryHierarchyGroups?: boolean | SizeCountOutputTypeCountSizeCategoryHierarchyGroupsArgs
 }
 
 /**
@@ -534,65 +937,104 @@ export type SizeCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Types.E
 /**
  * SizeCountOutputType without action
  */
-export type SizeCountOutputTypeCountSizeByCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SizeByCategoryWhereInput
+export type SizeCountOutputTypeCountChildrenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SizeWhereInput
+}
+
+/**
+ * SizeCountOutputType without action
+ */
+export type SizeCountOutputTypeCountSizeCategoryHierarchyGroupsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SizeCategoryHierarchyGroupWhereInput
 }
 
 
 export type SizeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  UK?: boolean
+  US?: boolean
+  EU?: boolean
   order?: boolean
+  parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   products?: boolean | Prisma.Size$productsArgs<ExtArgs>
-  sizeByCategories?: boolean | Prisma.Size$sizeByCategoriesArgs<ExtArgs>
+  parent?: boolean | Prisma.Size$parentArgs<ExtArgs>
+  children?: boolean | Prisma.Size$childrenArgs<ExtArgs>
+  sizeCategoryHierarchyGroups?: boolean | Prisma.Size$sizeCategoryHierarchyGroupsArgs<ExtArgs>
   _count?: boolean | Prisma.SizeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["size"]>
 
 export type SizeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  UK?: boolean
+  US?: boolean
+  EU?: boolean
   order?: boolean
+  parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  parent?: boolean | Prisma.Size$parentArgs<ExtArgs>
 }, ExtArgs["result"]["size"]>
 
 export type SizeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  UK?: boolean
+  US?: boolean
+  EU?: boolean
   order?: boolean
+  parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  parent?: boolean | Prisma.Size$parentArgs<ExtArgs>
 }, ExtArgs["result"]["size"]>
 
 export type SizeSelectScalar = {
   id?: boolean
   title?: boolean
+  UK?: boolean
+  US?: boolean
+  EU?: boolean
   order?: boolean
+  parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SizeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "order" | "createdAt" | "updatedAt", ExtArgs["result"]["size"]>
+export type SizeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "UK" | "US" | "EU" | "order" | "parentId" | "createdAt" | "updatedAt", ExtArgs["result"]["size"]>
 export type SizeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | Prisma.Size$productsArgs<ExtArgs>
-  sizeByCategories?: boolean | Prisma.Size$sizeByCategoriesArgs<ExtArgs>
+  parent?: boolean | Prisma.Size$parentArgs<ExtArgs>
+  children?: boolean | Prisma.Size$childrenArgs<ExtArgs>
+  sizeCategoryHierarchyGroups?: boolean | Prisma.Size$sizeCategoryHierarchyGroupsArgs<ExtArgs>
   _count?: boolean | Prisma.SizeCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type SizeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type SizeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type SizeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  parent?: boolean | Prisma.Size$parentArgs<ExtArgs>
+}
+export type SizeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  parent?: boolean | Prisma.Size$parentArgs<ExtArgs>
+}
 
 export type $SizePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Size"
   objects: {
     products: Prisma.$ProductPayload<ExtArgs>[]
-    sizeByCategories: Prisma.$SizeByCategoryPayload<ExtArgs>[]
+    parent: Prisma.$SizePayload<ExtArgs> | null
+    children: Prisma.$SizePayload<ExtArgs>[]
+    sizeCategoryHierarchyGroups: Prisma.$SizeCategoryHierarchyGroupPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     title: string
+    UK: string | null
+    US: string | null
+    EU: string | null
     order: number
+    parentId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["size"]>
@@ -990,7 +1432,9 @@ readonly fields: SizeFieldRefs;
 export interface Prisma__SizeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   products<T extends Prisma.Size$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Size$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  sizeByCategories<T extends Prisma.Size$sizeByCategoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Size$sizeByCategoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SizeByCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  parent<T extends Prisma.Size$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Size$parentArgs<ExtArgs>>): Prisma.Prisma__SizeClient<runtime.Types.Result.GetResult<Prisma.$SizePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  children<T extends Prisma.Size$childrenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Size$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SizePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sizeCategoryHierarchyGroups<T extends Prisma.Size$sizeCategoryHierarchyGroupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Size$sizeCategoryHierarchyGroupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SizeCategoryHierarchyGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1022,7 +1466,11 @@ export interface Prisma__SizeClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface SizeFieldRefs {
   readonly id: Prisma.FieldRef<"Size", 'String'>
   readonly title: Prisma.FieldRef<"Size", 'String'>
+  readonly UK: Prisma.FieldRef<"Size", 'String'>
+  readonly US: Prisma.FieldRef<"Size", 'String'>
+  readonly EU: Prisma.FieldRef<"Size", 'String'>
   readonly order: Prisma.FieldRef<"Size", 'Int'>
+  readonly parentId: Prisma.FieldRef<"Size", 'String'>
   readonly createdAt: Prisma.FieldRef<"Size", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Size", 'DateTime'>
 }
@@ -1274,6 +1722,10 @@ export type SizeCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.SizeCreateManyInput | Prisma.SizeCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SizeIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1344,6 +1796,10 @@ export type SizeUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Sizes to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SizeIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1437,27 +1893,70 @@ export type Size$productsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
- * Size.sizeByCategories
+ * Size.parent
  */
-export type Size$sizeByCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Size$parentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the SizeByCategory
+   * Select specific fields to fetch from the Size
    */
-  select?: Prisma.SizeByCategorySelect<ExtArgs> | null
+  select?: Prisma.SizeSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the SizeByCategory
+   * Omit specific fields from the Size
    */
-  omit?: Prisma.SizeByCategoryOmit<ExtArgs> | null
+  omit?: Prisma.SizeOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.SizeByCategoryInclude<ExtArgs> | null
-  where?: Prisma.SizeByCategoryWhereInput
-  orderBy?: Prisma.SizeByCategoryOrderByWithRelationInput | Prisma.SizeByCategoryOrderByWithRelationInput[]
-  cursor?: Prisma.SizeByCategoryWhereUniqueInput
+  include?: Prisma.SizeInclude<ExtArgs> | null
+  where?: Prisma.SizeWhereInput
+}
+
+/**
+ * Size.children
+ */
+export type Size$childrenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Size
+   */
+  select?: Prisma.SizeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Size
+   */
+  omit?: Prisma.SizeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SizeInclude<ExtArgs> | null
+  where?: Prisma.SizeWhereInput
+  orderBy?: Prisma.SizeOrderByWithRelationInput | Prisma.SizeOrderByWithRelationInput[]
+  cursor?: Prisma.SizeWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.SizeByCategoryScalarFieldEnum | Prisma.SizeByCategoryScalarFieldEnum[]
+  distinct?: Prisma.SizeScalarFieldEnum | Prisma.SizeScalarFieldEnum[]
+}
+
+/**
+ * Size.sizeCategoryHierarchyGroups
+ */
+export type Size$sizeCategoryHierarchyGroupsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SizeCategoryHierarchyGroup
+   */
+  select?: Prisma.SizeCategoryHierarchyGroupSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SizeCategoryHierarchyGroup
+   */
+  omit?: Prisma.SizeCategoryHierarchyGroupOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SizeCategoryHierarchyGroupInclude<ExtArgs> | null
+  where?: Prisma.SizeCategoryHierarchyGroupWhereInput
+  orderBy?: Prisma.SizeCategoryHierarchyGroupOrderByWithRelationInput | Prisma.SizeCategoryHierarchyGroupOrderByWithRelationInput[]
+  cursor?: Prisma.SizeCategoryHierarchyGroupWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SizeCategoryHierarchyGroupScalarFieldEnum | Prisma.SizeCategoryHierarchyGroupScalarFieldEnum[]
 }
 
 /**

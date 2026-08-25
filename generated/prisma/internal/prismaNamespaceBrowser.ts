@@ -50,8 +50,8 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 export const ModelName = {
   Category: 'Category',
   BrandByCategory: 'BrandByCategory',
-  SizeByCategory: 'SizeByCategory',
   Brand: 'Brand',
+  SizeCategoryHierarchyGroup: 'SizeCategoryHierarchyGroup',
   Size: 'Size',
   Follow: 'Follow',
   Chat: 'Chat',
@@ -132,17 +132,6 @@ export const BrandByCategoryScalarFieldEnum = {
 export type BrandByCategoryScalarFieldEnum = (typeof BrandByCategoryScalarFieldEnum)[keyof typeof BrandByCategoryScalarFieldEnum]
 
 
-export const SizeByCategoryScalarFieldEnum = {
-  id: 'id',
-  categoryId: 'categoryId',
-  sizeId: 'sizeId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type SizeByCategoryScalarFieldEnum = (typeof SizeByCategoryScalarFieldEnum)[keyof typeof SizeByCategoryScalarFieldEnum]
-
-
 export const BrandScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -154,10 +143,25 @@ export const BrandScalarFieldEnum = {
 export type BrandScalarFieldEnum = (typeof BrandScalarFieldEnum)[keyof typeof BrandScalarFieldEnum]
 
 
+export const SizeCategoryHierarchyGroupScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  sizeId: 'sizeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SizeCategoryHierarchyGroupScalarFieldEnum = (typeof SizeCategoryHierarchyGroupScalarFieldEnum)[keyof typeof SizeCategoryHierarchyGroupScalarFieldEnum]
+
+
 export const SizeScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  UK: 'UK',
+  US: 'US',
+  EU: 'EU',
   order: 'order',
+  parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

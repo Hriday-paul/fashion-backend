@@ -7,7 +7,7 @@ import pick from "../../shared/pick";
 
 const allBrands = catchAsync(async (req: Request, res: Response) => {
 
-    const query = pick(req.query, ["categoryId"])
+  const query = pick(req.query, ["categoryId"])
 
   const result = await brandService.brands(query);
   sendResponse(res, {
@@ -19,5 +19,5 @@ const allBrands = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const brandController = {
-    allBrands
+  allBrands
 }

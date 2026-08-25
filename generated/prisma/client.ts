@@ -52,15 +52,15 @@ export type Category = Prisma.CategoryModel
  */
 export type BrandByCategory = Prisma.BrandByCategoryModel
 /**
- * Model SizeByCategory
- * 
- */
-export type SizeByCategory = Prisma.SizeByCategoryModel
-/**
  * Model Brand
  * 
  */
 export type Brand = Prisma.BrandModel
+/**
+ * Model SizeCategoryHierarchyGroup
+ * 
+ */
+export type SizeCategoryHierarchyGroup = Prisma.SizeCategoryHierarchyGroupModel
 /**
  * Model Size
  * 
