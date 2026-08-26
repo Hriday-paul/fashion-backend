@@ -62,7 +62,7 @@ const getCategories = async () => {
 }
 
 const getParentChain = async (query: Record<string, unknown>): Promise<Category[]> => {
-    
+
     const { categoryId } = query;
 
     if (!categoryId) {
@@ -207,16 +207,19 @@ const filteredAttributes = async (query: Record<string, unknown>) => {
 }
 
 
-// const assingedSizeByCategory = async (categoryId: string) => {
+const assingedSizeByCategory = async (categoryId: string) => {
 
-//     const res = await prisma.sizeByCategory.findMany({
-//         where: {
-//             categoryId: categoryId
-//         }
-//     });
+    const res = await prisma.sizeCategoryHierarchyGroup.findMany({
+        where: {
+            categoryId
+        },
+        include : {
+            size: true
+        }
+    });
 
-//     return res;
-// }
+    return res;
+}
 
 // const addSizeToCategory = async (payload: { categoryId: string, sizeId: string }) => {
 

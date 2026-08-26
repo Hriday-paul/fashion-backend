@@ -7,6 +7,7 @@ const cartsByUser = async (userId: string) => {
 
     const carts = await prisma.cartGroup.findMany({
         where: { userId, items: { some: {} } },
+        orderBy: { createdAt: 'desc' },
         include: {
             items: {
                 include: {
@@ -53,6 +54,74 @@ const cartsByUser = async (userId: string) => {
     });
 
     return carts;
+}
+
+const cartsByUserSeller = async (userId: string, sellerUserName: string) => {
+
+    const seller = await prisma.user.findFirst({
+        where: { userName: sellerUserName },
+        select: {
+            id: true,
+            bundleDiscount: {
+                select: {
+                    tiers: {
+                        select: {
+                            itemCount: true,
+                            discountPercent: true
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    if (!seller) {
+        throw new AppError(httpStatus.NOT_FOUND, "Seller does not exist");
+    }
+
+    const cart = await prisma.cartGroup.findFirst({
+        where: { userId, sellerId: seller?.id },
+        include: {
+            items: {
+                include: {
+                    product: {
+                        include: {
+                            images: {
+                                select: {
+                                    url: true
+                                }
+                            },
+                            size: true,
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const subTotal = cart?.items.reduce((acc, item) => acc + item.product.finalPrice, 0) || 0;
+
+    const itemCount = cart?.items.length || 0;
+
+    const bundleDiscountTiers = seller?.bundleDiscount?.tiers || [];
+
+    const nearestTier = bundleDiscountTiers
+        .filter(tier => itemCount >= (tier.itemCount ?? 0))
+        .sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0))[0] ?? null;
+
+    const bundleDiscountPercent = nearestTier ? nearestTier.discountPercent : 0;
+
+    const bundleDiscountAmount = subTotal * (bundleDiscountPercent / 100);
+    const total = subTotal - bundleDiscountAmount;
+
+    return {
+        items: cart?.items || [],
+        subTotal,
+        total,
+        bundleDiscountPercent,
+        bundleDiscountAmount,
+        cartGroupId: cart?.id || null
+    };
 }
 
 const checkoutItem = async (cartGroupId: string, userId: string) => {
@@ -273,9 +342,10 @@ const addToCart = async (payload: { productId: string, quantity: number, extraDo
 
 }
 
-const deleteCartItem = async (itemId: string, userId: string) => {
+const deleteCartItem = async (productId: string, userId: string) => {
+
     //check item exist in cart
-    const cartItemExist = await prisma.cartItem.findFirst({ where: { id: itemId, group: { userId } } });
+    const cartItemExist = await prisma.cartItem.findFirst({ where: { productId, group: { userId } } });
     if (!cartItemExist) {
         throw new AppError(httpStatus.CONFLICT, "Cart item does not exist");
     }
@@ -401,5 +471,6 @@ export const cartService = {
     availableRates,
     addTreeGiftCost,
     addAuthenticationCost,
-    deleteCartItem
+    deleteCartItem,
+    cartsByUserSeller
 }

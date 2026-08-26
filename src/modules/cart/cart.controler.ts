@@ -13,6 +13,15 @@ const cartsByUser = catchAsync(async (req: Request, res: Response) => {
         data: result,
     });
 });
+const cartsByUserSeller = catchAsync(async (req: Request, res: Response) => {
+    const result = await cartService.cartsByUserSeller(req.user?.id, req.params.sellerUserName);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Items retrived successfully',
+        data: result,
+    });
+});
 
 const addToCart = catchAsync(async (req: Request, res: Response) => {
 
@@ -85,8 +94,8 @@ const addAuthenticationCost = catchAsync(async (req: Request, res: Response) => 
 });
 
 const deleteCartItem = catchAsync(async (req: Request, res: Response) => {
-    const itemId = req.params.itemId;
-    await cartService.deleteCartItem(itemId, req.user?.id);
+    const productId = req.params.productId;
+    await cartService.deleteCartItem(productId, req.user?.id);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -102,5 +111,6 @@ export const cartControler = {
     addTreeGiftCost,
     addAuthenticationCost,
     availableRates,
-    deleteCartItem
+    deleteCartItem,
+    cartsByUserSeller
 }

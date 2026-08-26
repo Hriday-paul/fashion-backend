@@ -250,7 +250,7 @@ const productsByUserName = async (query: Record<string, unknown>, options: TPagi
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, ...moreFields } = query;
+    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, showItemInCart, ...moreFields } = query;
 
     if (searchTerm) {
         AndConditions.push({
@@ -386,6 +386,17 @@ const productsByUserName = async (query: Record<string, unknown>, options: TPagi
                     },
                 }
                 : false,
+            ...(showItemInCart ? {
+
+                cartItems: currentUser ? {
+                    where: {
+                        group: {
+                            userId: currentUser
+                        }
+                    }
+                } : false
+
+            } : {})
         },
     })
 
@@ -398,6 +409,220 @@ const productsByUserName = async (query: Record<string, unknown>, options: TPagi
         data: result,
     };
 
+}
+
+const similarProductsFromSeller = async (productId: string, currentUser?: string) => {
+
+    const product = await prisma.product.findFirst({
+        where: { id: productId },
+        select: { userId: true, user: { select: { userName: true } }, categoryId: true, brandId: true }
+    });
+
+    if (!product) {
+        throw new AppError(httpStatus.NOT_FOUND, "Product not found");
+    }
+
+    const similarProducts = await prisma.product.findMany({
+        where: {
+            userId: product.userId,
+            id: { not: productId },
+            isDeleted: false,
+            stock: { gt: 0 }
+        },
+        take: 30,
+        orderBy: {
+            createdAt: "desc"
+        },
+        select: {
+            id: true,
+            title: true,
+            finalPrice: true,
+            price: true,
+            images: {
+                select: {
+                    url: true
+                }
+            },
+            brand: {
+                select: {
+                    name: true
+                }
+            },
+            size: {
+                select: {
+                    title: true
+                }
+            },
+
+            //favourite count
+            _count: {
+                select: {
+                    favourites: true
+                }
+            },
+            // is Favourites by user
+            favourites: currentUser ? {
+                where: {
+                    userId: currentUser,
+                },
+                select: {
+                    id: true,
+                },
+            } : false,
+
+        }
+    });
+
+    const isOwner = currentUser === product.userId;
+
+    return {
+        isOwner,
+        sellerUserName: product?.user?.userName,
+        products: similarProducts
+    };
+}
+
+const sameCategoryProducts = async (productId: string, currentUser?: string) => {
+
+    const product = await prisma.product.findFirst({
+        where: { id: productId },
+        select: { categoryId: true, category: { select: { name: true } }, userId: true }
+    });
+
+    if (!product) {
+        throw new AppError(httpStatus.NOT_FOUND, "Product doesn't exist");
+    }
+
+    const similarProducts = await prisma.product.findMany({
+        where: {
+            id: { not: productId },
+            categoryId: product?.categoryId,
+            isDeleted: false,
+            stock: { gt: 0 }
+        },
+        take: 30,
+        orderBy: {
+            createdAt: "desc"
+        },
+        select: {
+            id: true,
+            title: true,
+            finalPrice: true,
+            price: true,
+            images: {
+                select: {
+                    url: true
+                }
+            },
+            brand: {
+                select: {
+                    name: true
+                }
+            },
+            size: {
+                select: {
+                    title: true
+                }
+            },
+
+            //favourite count
+            _count: {
+                select: {
+                    favourites: true
+                }
+            },
+            // is Favourites by user
+            favourites: currentUser ? {
+                where: {
+                    userId: currentUser,
+                },
+                select: {
+                    id: true,
+                },
+            } : false,
+
+        }
+    });
+
+    const isOwner = currentUser === product.userId;
+
+    return {
+        isOwner,
+        categoryId: product?.categoryId,
+        categoryName: product?.category?.name,
+        products: similarProducts
+    };
+}
+
+const sameColorProducts = async (productId: string, currentUser?: string) => {
+
+    const product = await prisma.product.findFirst({
+        where: { id: productId },
+        select: { color: true, userId: true }
+    });
+
+    if (!product) {
+        throw new AppError(httpStatus.NOT_FOUND, "Product doesn't exist");
+    }
+
+    const similarProducts = await prisma.product.findMany({
+        where: {
+            id: { not: productId },
+            color: product?.color,
+            isDeleted: false,
+            stock: { gt: 0 }
+        },
+        take: 30,
+        orderBy: {
+            createdAt: "desc"
+        },
+        select: {
+            id: true,
+            title: true,
+            finalPrice: true,
+            price: true,
+            images: {
+                select: {
+                    url: true
+                }
+            },
+            brand: {
+                select: {
+                    name: true
+                }
+            },
+            size: {
+                select: {
+                    title: true
+                }
+            },
+
+            //favourite count
+            _count: {
+                select: {
+                    favourites: true
+                }
+            },
+            // is Favourites by user
+            favourites: currentUser ? {
+                where: {
+                    userId: currentUser,
+                },
+                select: {
+                    id: true,
+                },
+            } : false,
+
+        }
+    });
+
+    const isOwner = currentUser === product.userId;
+
+    return {
+        isOwner,
+        color: product?.color,
+        products: similarProducts
+    };
 }
 
 const newArrivalProducts = async () => {
@@ -432,6 +657,9 @@ async function getViewKey(req: Request, productId?: string) {
 }
 
 const productDetails = async (productId: string, req: Request, userId?: string) => {
+
+    //give a waiit
+    await new Promise(resolve => setTimeout(resolve, 3000));
 
     const details = await prisma.product.findFirst({
         where: {
@@ -800,6 +1028,44 @@ const recomendedProducts = async (viewKey: string, userId?: string) => {
 
 }
 
+const donationSupportByProduct = async (productId: string) => {
+
+    const donations = await prisma.product.findFirst({
+        where: {
+            id: productId
+        },
+        select: {
+            charities: {
+                select: {
+                    charity: {
+                        select: {
+                            fname: true,
+                            lname: true,
+                            userName: true,
+                            picture: {
+                                select: {
+                                    url: true
+                                }
+                            },
+                            bio: true,
+                            description: true,
+                        }
+                    }
+                }
+            },
+            donation_percent: true,
+            finalPrice: true,
+        }
+    })
+
+    return {
+        charities: donations?.charities || [],
+        donation_percent: donations?.donation_percent || 0,
+        donation_amount: donations?.finalPrice ? (donations.finalPrice * (donations.donation_percent / 100)) : 0
+    };
+
+}
+
 export const productService = {
     addNewProduct,
 
@@ -814,5 +1080,9 @@ export const productService = {
     recentViewProducts,
     trendingProducts,
     topSellingProducts,
-    recomendedProducts
+    recomendedProducts,
+    similarProductsFromSeller,
+    donationSupportByProduct,
+    sameCategoryProducts,
+    sameColorProducts,
 }

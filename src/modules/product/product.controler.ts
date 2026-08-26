@@ -60,7 +60,7 @@ const allProducts = catchAsync(async (req: Request, res: Response) => {
 
 const productsByUserName = catchAsync(async (req: Request, res: Response) => {
 
-    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials"])
+    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials", "showItemInCart"])
     const options = pick(req.query, PaginateOptions);
 
     const result = await productService.productsByUserName(query, options, req.params.username, req.user?.id);
@@ -68,6 +68,39 @@ const productsByUserName = catchAsync(async (req: Request, res: Response) => {
         statusCode: httpStatus.OK,
         success: true,
         message: 'Products retrived successfully',
+        data: result,
+    });
+});
+
+const similarProductsFromSeller = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await productService.similarProductsFromSeller(req.params.productId, req.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Seller more items retrived successfully',
+        data: result,
+    });
+});
+
+const sameCategoryProducts = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await productService.sameCategoryProducts(req.params.productId, req.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Same category products retrieved successfully',
+        data: result,
+    });
+});
+
+const sameColorProducts = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await productService.sameColorProducts(req.params.productId, req.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Same color products retrieved successfully',
         data: result,
     });
 });
@@ -122,6 +155,16 @@ const productDetails = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const donationSupportByProduct = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.donationSupportByProduct(req.params.productId);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Donation support information retrieved successfully',
+        data: result,
+    });
+});
+
 const recentViewProducts = catchAsync(async (req: Request, res: Response) => {
     const { userkey } = await productService.getViewKey(req)
     const result = await productService.recentViewProducts(userkey);
@@ -153,7 +196,6 @@ const topSellingProducts = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
-
 const recomendedProducts = catchAsync(async (req: Request, res: Response) => {
     const { userkey } = await productService.getViewKey(req)
     const result = await productService.recomendedProducts(userkey, req?.user?.id);
@@ -177,5 +219,9 @@ export const productControler = {
     recentViewProducts,
     trendingProducts,
     topSellingProducts,
-    recomendedProducts
+    recomendedProducts,
+    similarProductsFromSeller,
+    donationSupportByProduct,
+    sameCategoryProducts,
+    sameColorProducts
 }

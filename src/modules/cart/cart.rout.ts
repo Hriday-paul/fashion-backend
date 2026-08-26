@@ -16,7 +16,6 @@ export const excludedCharityRoles: Role[] = [
 ];
 
 router.get("/", auth(...allRoles), cartControler.cartsByUser);
-router.get("/:cartGroupId", auth(...allRoles), cartControler.checkoutItem);
 
 router.post("/",
     validateCartAdd,
@@ -24,7 +23,7 @@ router.post("/",
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     cartControler.addToCart);
 
-router.delete("/:itemId",
+router.delete("/:productId",
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     cartControler.deleteCartItem);
 
@@ -38,5 +37,9 @@ router.put("/checkout/authentication-cost",
     validateCartCheckoutAuthentication,
     req_validator(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.addAuthenticationCost);
+
+router.get("/by-seller/:sellerUserName", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.cartsByUserSeller);
+
+router.get("/:cartGroupId", auth(...allRoles), cartControler.checkoutItem);
 
 export const cartRouts = router;

@@ -21,6 +21,12 @@ router.get("/trendings", productControler.trendingProducts);
 router.get("/top-sellings", productControler.topSellingProducts);
 router.get("/recommended", PublicAuth(), productControler.recomendedProducts);
 
+router.get("/donation-support/:productId", productControler.donationSupportByProduct);
+
+router.get("/similar-from-seller/:productId", PublicAuth(), productControler.similarProductsFromSeller);
+router.get("/same-category/:productId", PublicAuth(), productControler.sameCategoryProducts);
+router.get("/same-color/:productId", PublicAuth(), productControler.sameColorProducts);
+
 router.get("/:id", PublicAuth(), productControler.productDetails);
 
 export const productRouts = router;
