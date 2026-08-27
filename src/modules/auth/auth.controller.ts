@@ -4,7 +4,6 @@ import sendResponse from "../../utils/sendResponse";
 import httpStatus from 'http-status'
 import { otpServices } from "../otp/otp.service";
 import catchAsync from "../../utils/catchAsync";
-import { uploadManyToS3 } from "../../utils/s3";
 import prisma from "../../shared/prisma";
 import AppError from "../../error/AppError";
 
@@ -16,22 +15,6 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
 
     if (exist) {
         throw new AppError(httpStatus.CONFLICT, "User name already exist");
-    }
-
-    const files = req.files as Express.Multer.File[];
-
-    if (files) {
-        const imgsArray: { file: any; path: string; key?: string }[] = [];
-
-        files?.map(image => {
-            imgsArray.push({
-                file: image,
-                path: `user/documents`,
-            });
-        });
-
-        const documents = await uploadManyToS3(imgsArray);
-        req.body.account_documents = documents
     }
 
     const result = await authService.createUser(req.body);
@@ -47,6 +30,26 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
         success: true,
         message: 'user register successfully',
         data: { otpToken: otptoken },
+    });
+})
+
+//create user
+const socialSignUp = catchAsync(async (req: Request, res: Response) => {
+
+    // check userName is exist or not
+    const exist = await prisma.user.findFirst({ where: { userName: req.body?.userName } });
+
+    if (exist) {
+        throw new AppError(httpStatus.CONFLICT, "User name already exist");
+    }
+
+    const result = await authService.socialSignUp(req.body);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Signup successfully',
+        data: result,
     });
 })
 
@@ -114,7 +117,7 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
 // refresh token
 const refreshToken = catchAsync(async (req: Request, res: Response) => {
     const { refreshToken } = req.body;
-    
+
     const result = await authService.refreshToken(refreshToken);
 
     sendResponse(res, {
@@ -128,6 +131,7 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
 export const authController = {
     createUser,
     loginUser,
+    socialSignUp,
     adminLogin,
     changePassword,
     resetPassword,

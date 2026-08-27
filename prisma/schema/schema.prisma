@@ -36,7 +36,7 @@ model User {
   lname    String?
   email    String  @unique
   userName String  @unique @default(uuid())
-  phone    String
+  phone    String?
 
   bio         String?
   description String? //about for carity

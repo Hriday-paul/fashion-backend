@@ -1,22 +1,24 @@
 import { Router } from "express";
 import { authController } from "./auth.controller";
-import { changePasswordValidator, createAccountValidator, forgotPasswordValidator, loginAccountValidator, refreshTokenValidator, resetPasswordValidator } from "./auth.validator";
+import { changePasswordValidator, createAccountValidator, forgotPasswordValidator, loginAccountValidator, refreshTokenValidator, resetPasswordValidator, socialSignupValidator } from "./auth.validator";
 import req_validator from "../../middleware/req_validation";
 import { otpResendValidator, otpVerifyValidator } from "../otp/otp.validation";
 import { otpControllers } from "../otp/otp.controller";
 import auth from "../../middleware/auth";
 import { Role } from "../../../generated/prisma/enums";
-import { document_Upload } from "../../utils/s3";
-import parseData from "../../middleware/parseData";
 
 const router = Router();
 
 router.post('/create',
-    document_Upload.array('documents'),
-    parseData(),
     createAccountValidator,
     req_validator(),
     authController.createUser
+)
+
+router.post('/social-signup',
+    socialSignupValidator,
+    req_validator(),
+    authController.socialSignUp
 )
 
 router.post('/login',

@@ -10,12 +10,13 @@ import { BuildFingerPrint } from "../../utils/BuildfingerPrint";
 
 type ProductOtherPayload = {
     images: { key: string, url: string }[],
-    charities: { isAnonymous: boolean, charityId: string }[]
+    charities: string[],
+    donationPrivacy: boolean,
 }
 
 const addNewProduct = async (payload: Product & ProductOtherPayload, role: string, userId: string) => {
 
-    const { images, charities, createdAt, updatedAt, catagory_hierarchy, finalPrice, discountPct, price, ...morePayload } = payload;
+    const { images, charities, donationPrivacy, createdAt, updatedAt, catagory_hierarchy, finalPrice, discountPct, price, ...morePayload } = payload;
 
     const category = await categoryService.haveChildCategory(payload?.categoryId);
     //checking catalog is avaialable or not
@@ -41,7 +42,7 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
             Role.CHARITY_SHOP,
             Role.CHARITABLE_ORGANIZATION,
         ];
-        const charityIds = charities?.map(c => c?.charityId);
+        const charityIds = charities;
         const validCharities = await prisma.auth.findMany({
             where: {
                 userId: { in: charityIds },
@@ -63,13 +64,29 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
         }
     }
 
+    const finalcharities = isAllowCharity ? charities?.map(i => ({ charityId: i, isAnonymous: donationPrivacy ? true : false })) : [];
+
     //calculate price
     const lastPrice = price - (price * (discountPct / 100));
+
+    // const checking shipment from is exist or not the seller
+    const seller = await prisma.user.findFirst({
+        where: {
+            id: userId,
+        },
+        select: {
+            sellerAddress: true
+        }
+    });
+
+    if (!seller?.sellerAddress) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Please, add your shipment address first")
+    }
 
     const res = await prisma.product.create({
         data: {
             images: { create: images },
-            charities: { create: isAllowCharity ? charities : [] },
+            charities: { create: isAllowCharity ? finalcharities : [] },
             ...morePayload,
             price,
             discountPct,
@@ -657,9 +674,6 @@ async function getViewKey(req: Request, productId?: string) {
 }
 
 const productDetails = async (productId: string, req: Request, userId?: string) => {
-
-    //give a waiit
-    await new Promise(resolve => setTimeout(resolve, 3000));
 
     const details = await prisma.product.findFirst({
         where: {

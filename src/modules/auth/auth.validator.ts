@@ -1,93 +1,74 @@
-import { check } from 'express-validator';
+import { body } from 'express-validator';
 import { parsePhoneNumberFromString } from 'libphonenumber-js'
 
 export const createAccountValidator = [
-    check('fname').trim().not().isEmpty().withMessage('First name is required').isString().withMessage('First name should be string').isLength({ min: 1 }).withMessage('First name min length is 1'),
-    check('userName').trim().not().isEmpty().withMessage('Username is required').isString().withMessage('Username should be string').isLength({ min: 1 }).withMessage('Username min length is 1'),
+    body('fname').trim().not().isEmpty().withMessage('First name is required').isString().withMessage('First name should be string').isLength({ min: 1 }).withMessage('First name min length is 1'),
+    body('userName').trim().not().isEmpty().withMessage('Username is required').isString().withMessage('Username should be string').isLength({ min: 1 }).withMessage('Username min length is 1'),
 
-    check('phone').trim().not().isEmpty()
+    body("phone")
+        .optional({ values: "falsy" })
+        .trim()
         .custom((value) => {
-            // enforce country code (+)
-            if (!value.startsWith('+')) {
-                throw new Error('Phone number must include country code');
+            // Enforce country code (+)
+            if (!value.startsWith("+")) {
+                throw new Error("Phone number must include country code");
             }
 
             const phoneNumber = parsePhoneNumberFromString(value);
 
             if (!phoneNumber || !phoneNumber.isValid()) {
-                throw new Error('Invalid phone number');
+                throw new Error("Invalid phone number");
             }
 
             return true;
         })
         .customSanitizer((value) => {
             const phoneNumber = parsePhoneNumberFromString(value);
+
             if (!phoneNumber || !phoneNumber.isValid()) {
                 return value;
             }
-            return phoneNumber.format('E.164');
+
+            return phoneNumber.format("E.164");
         }),
 
-    check('email').trim().not().isEmpty().withMessage("Email address required").isEmail().normalizeEmail({ all_lowercase: true }).withMessage('Invalid Email'),
+    body('email').trim().not().isEmpty().withMessage("Email address required").isEmail().normalizeEmail({ all_lowercase: true }).withMessage('Invalid Email'),
 
-    check('password').trim().not().isEmpty().withMessage('password is required').isString(),
-    
-    check('role').trim().not().isEmpty().withMessage('role is required').isIn(["INDIVIDUAL_USER" , "CHARITABLE_ORGANIZATION" , "CHARITY_SHOP" , "ECO_FRIENDLY_STORE" , "CELEBRITY" , "AMBASSADOR" , "PROFESSIONAL_SELLER" , "ASSISTED_SELLER"]),
-]
+    body('password').trim().not().isEmpty().withMessage('password is required').isString(),
 
-export const addVendorAccountValidator = [
-    check('fname').trim().not().isEmpty().withMessage('First name is required').isString().withMessage('First name should be string').isLength({ min: 1 }).withMessage('First name min length is 1'),
+    body('role').trim().not().isEmpty().withMessage('role is required').isIn(["INDIVIDUAL_USER", "CHARITABLE_ORGANIZATION", "CHARITY_SHOP", "ECO_FRIENDLY_STORE", "CELEBRITY", "AMBASSADOR", "PROFESSIONAL_SELLER", "ASSISTED_SELLER"])
+];
 
-    check('phone').trim().not().isEmpty()
-        .custom((value) => {
-            // enforce country code (+)
-            if (!value.startsWith('+')) {
-                throw new Error('Phone number must include country code');
-            }
+export const socialSignupValidator = [
+    body('fname').trim().not().isEmpty().withMessage('First name is required').isString().withMessage('First name should be string').isLength({ min: 1 }).withMessage('First name min length is 1'),
 
-            const phoneNumber = parsePhoneNumberFromString(value);
+    body('userName').trim().not().isEmpty().withMessage('Username is required').isString().withMessage('Username should be string').isLength({ min: 1 }).withMessage('Username min length is 1'),
 
-            if (!phoneNumber || !phoneNumber.isValid()) {
-                throw new Error('Invalid phone number');
-            }
+    body('role').trim().not().isEmpty().withMessage('role is required').isIn(["INDIVIDUAL_USER", "CHARITABLE_ORGANIZATION", "CHARITY_SHOP", "ECO_FRIENDLY_STORE", "CELEBRITY", "AMBASSADOR", "PROFESSIONAL_SELLER", "ASSISTED_SELLER"]),
 
-            return true;
-        })
-        .customSanitizer((value) => {
-            const phoneNumber = parsePhoneNumberFromString(value);
-            if (!phoneNumber || !phoneNumber.isValid()) {
-                return value;
-            }
-            return phoneNumber.format('E.164');
-        }),
-
-    check('email').optional({ checkFalsy: true }).trim().isEmail().normalizeEmail({ all_lowercase: true }).withMessage('Invalid Email'),
-
-    check('address').optional().trim().isString(),
-
-    check('password').trim().not().isEmpty().withMessage('password is required').isString(),
+    body('idToken').trim().not().isEmpty().withMessage('Id token is required').isString(),
 ]
 
 export const loginAccountValidator = [
-    check('email').trim().not().isEmpty().withMessage("Email address required").isEmail().normalizeEmail({ all_lowercase: true }).withMessage('Invalid Email'),
-    check('password').trim().not().isEmpty().withMessage('password is required').isString(),
+    body('email').trim().not().isEmpty().withMessage("Email address required").isEmail().normalizeEmail({ all_lowercase: true }).withMessage('Invalid Email'),
+    body('password').trim().not().isEmpty().withMessage('password is required').isString(),
 ]
 
 export const refreshTokenValidator = [
-    check('refreshToken').trim().not().isEmpty().withMessage('refreshToken is required').isString(),
+    body('refreshToken').trim().not().isEmpty().withMessage('refreshToken is required').isString(),
 ]
 
 export const forgotPasswordValidator = [
-    check('email').trim().not().isEmpty().withMessage("Email address required").isEmail().normalizeEmail({ all_lowercase: true }).withMessage('Invalid Email'),
+    body('email').trim().not().isEmpty().withMessage("Email address required").isEmail().normalizeEmail({ all_lowercase: true }).withMessage('Invalid Email'),
 ]
 
 export const resetPasswordValidator = [
-    check('newPassword').trim().not().isEmpty().withMessage('newPassword is required'),
-    check('confirmPassword').trim().not().isEmpty().withMessage('confirmPassword is required'),
+    body('newPassword').trim().not().isEmpty().withMessage('newPassword is required'),
+    body('confirmPassword').trim().not().isEmpty().withMessage('confirmPassword is required'),
 ]
 
 export const changePasswordValidator = [
-    check('oldPassword').trim().not().isEmpty().withMessage('oldPassword is required').isString(),
-    check('newPassword').trim().not().isEmpty().withMessage('newPassword is required').isString(),
-    check('confirmPassword').trim().not().isEmpty().withMessage('confirmPassword is required').isString(),
+    body('oldPassword').trim().not().isEmpty().withMessage('oldPassword is required').isString(),
+    body('newPassword').trim().not().isEmpty().withMessage('newPassword is required').isString(),
+    body('confirmPassword').trim().not().isEmpty().withMessage('confirmPassword is required').isString(),
 ]

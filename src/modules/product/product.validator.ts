@@ -86,24 +86,19 @@ export const addProductValidator: ValidationChain[] = [
   // Charities
   body("charities")
     .optional()
-    .isArray().withMessage("Charities must be an array")
-    .custom((charities: { percent: number }[]) => {
-      if (charities?.length > 0) {
-        const totalPercent = charities.reduce((sum, c) => sum + (c.percent || 0), 0);
-        if (totalPercent > 100) {
-          throw new Error("Total charity percentage cannot exceed 100%");
-        }
-      }
-      return true;
-    }),
-  body("charities.*.charityId")
-    .trim()
-    .notEmpty().withMessage("Charity ID is required")
-    .isUUID().withMessage("Invalid charity ID"),
+    .isArray()
+    .withMessage("Charities must be an array"),
 
-  body("charities.*.isAnonymous")
+  body("charities.*")
+    .trim()
+    .notEmpty()
+    .withMessage("Charity ID is required")
+    .isUUID()
+    .withMessage("Invalid charity ID"),
+
+  body("donationPrivacy")
     .optional()
-    .isBoolean().withMessage("isAnonymous must be a boolean"),
+    .isBoolean().withMessage("Donation Privacy must be a boolean").toBoolean(),
 ];
 
 export const productByTypeValidator = [

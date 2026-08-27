@@ -12,6 +12,8 @@ import { AccountDocument, Role, User } from "../../../generated/prisma/client"
 import fs from 'fs';
 import path from "path"
 import { sendEmail } from "../../utils/mailSender"
+import { firebaseAdmin } from "../notification/notification.utils"
+import generateRandomString from "../../utils/generateRandomString"
 
 type TUserMore = {
     password: string
@@ -20,7 +22,7 @@ type TUserMore = {
 }
 
 const createUser = async (payload: User & TUserMore) => {
-    const { phone, password, fname, lname, email, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, account_documents, role, userName } = payload
+    const { phone, password, fname, lname, email, userName, role } = payload
 
     let isExist = await prisma.user.findFirst({ where: { email }, include: { auth: true } });
 
@@ -28,7 +30,7 @@ const createUser = async (payload: User & TUserMore) => {
     if (isExist && isExist?.auth?.isverified) {
         throw new AppError(
             httpStatus.CONFLICT,
-            'User already exists with this email address',
+            'Account already exists with this email address',
         );
     }
 
@@ -38,17 +40,13 @@ const createUser = async (payload: User & TUserMore) => {
     const hashedPassword = await bcrypt.hash(password + PEPPER, 15);
 
     const body = {
-        phone, fname, lname, email, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code,
+        phone, fname, lname, email, userName
     }
 
     const user = await prisma.user.upsert({
         where: { email },
         update: {
             ...body,
-            account_documents: {
-                deleteMany: {},
-                create: account_documents
-            },
             auth: {
                 upsert: {
                     update: { password: hashedPassword, role },
@@ -58,9 +56,6 @@ const createUser = async (payload: User & TUserMore) => {
         },
         create: {
             ...body,
-            account_documents: {
-                create: account_documents
-            },
             auth: {
                 create: {
                     email,
@@ -73,7 +68,7 @@ const createUser = async (payload: User & TUserMore) => {
     });
 
     if (!user) {
-        throw new AppError(httpStatus.BAD_REQUEST, 'User creation failed');
+        throw new AppError(httpStatus.BAD_REQUEST, 'Account creation failed');
     }
 
     return user;
@@ -228,6 +223,149 @@ const adminLogin = async (payload: { phone: string, password: string }) => {
 
     return {
         user: userDoc,
+        accessToken,
+        refreshToken,
+    };
+};
+
+const socialSignUp = async (payload: {
+    idToken: string;
+    fname: string;
+    userName: string;
+    role: Role;
+}) => {
+    const { fname, userName, role, idToken } = payload;
+
+    const {
+        email,
+        picture,
+        phone_number,
+    } = await firebaseAdmin.auth().verifyIdToken(idToken);
+
+    if (!email) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            "Authentication failed"
+        );
+    }
+
+    const isExist = await prisma.user.findFirst({
+        where: { email },
+        include: { auth: true },
+    });
+
+    if (isExist?.auth?.isverified) {
+        throw new AppError(
+            httpStatus.CONFLICT,
+            "Account already exists with this email address"
+        );
+    }
+
+    const body = {
+        fname,
+        email,
+        userName,
+        phone: phone_number || null,
+    };
+
+    const PEPPER = config.password_pepper;
+
+    const hashedPassword = await bcrypt.hash(
+        generateRandomString(10) + PEPPER,
+        15
+    );
+
+    const user = await prisma.user.upsert({
+        where: { email },
+        update: {
+            ...body,
+
+            ...(picture
+                ? {
+                    picture: {
+                        upsert: {
+                            update: {
+                                url: picture,
+                                key: generateRandomString(8),
+                            },
+                            create: {
+                                url: picture,
+                                key: generateRandomString(8),
+                            },
+                        },
+                    },
+                }
+                : {}),
+
+            auth: {
+                upsert: {
+                    update: {
+                        password: hashedPassword,
+                        role,
+                    },
+                    create: {
+                        password: hashedPassword,
+                        email,
+                        role,
+                    },
+                },
+            },
+        },
+
+        create: {
+            ...body,
+
+            ...(picture
+                ? {
+                    picture: {
+                        create: {
+                            url: picture,
+                            key: generateRandomString(8),
+                        },
+                    },
+                }
+                : {}),
+
+            auth: {
+                create: {
+                    email,
+                    password: hashedPassword,
+                    role,
+                },
+            },
+        },
+
+        include: {
+            auth: true,
+        },
+    });
+
+    const { auth, ...userDoc } = user;
+
+    const userRole = user.auth?.role;
+
+    const jwtPayload: { userId: string; role: Role } = {
+        userId: user.id,
+        role: userRole!,
+    };
+
+    const accessToken = createToken(
+        jwtPayload,
+        config.jwt_access_secret as string,
+        60 * 30
+    );
+
+    const refreshToken = createToken(
+        jwtPayload,
+        config.jwt_refresh_secret as string,
+        60 * 60 * 24 * 7
+    );
+
+    return {
+        user: {
+            ...userDoc,
+            role: userRole,
+        },
         accessToken,
         refreshToken,
     };
@@ -435,6 +573,7 @@ const refreshToken = async (token: string) => {
 export const authService = {
     createUser,
     loginUser,
+    socialSignUp,
     forgotPassword,
     changePassword,
     resetPassword,

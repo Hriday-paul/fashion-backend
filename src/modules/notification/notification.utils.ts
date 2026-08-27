@@ -3,6 +3,7 @@ import httpStatus from "http-status";
 import AppError from "../../error/AppError";
 import prisma from "../../shared/prisma";
 import { NotificationType } from "../../../generated/prisma/client";
+import admin from "firebase-admin";
 
 export interface CreateNotificationPayload {
   receiverId: string;
@@ -14,11 +15,13 @@ export interface CreateNotificationPayload {
 }
 
 // Initialize Firebase Admin SDK only if not already initialized
-// if (!admin.apps.length) {
-//   admin.initializeApp({
-//     credential: admin.credential.cert("./firebase.json"),
-//   });
-// }
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert("./firebase.json"),
+  });
+}
+
+export const firebaseAdmin = admin;
 
 export const sendNotification = async (
   fcmToken: string[],
