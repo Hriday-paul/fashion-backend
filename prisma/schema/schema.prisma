@@ -14,6 +14,7 @@ model Auth {
   password          String
   role              Role     @default(INDIVIDUAL_USER)
   status            Boolean  @default(true)
+  isSocialLogin     Boolean  @default(false)
   isDeleted         Boolean  @default(false)
   isverified        Boolean  @default(false)
   otp               String?

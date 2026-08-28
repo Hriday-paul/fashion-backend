@@ -104,6 +104,14 @@ const loginUser = async (payload: { email: string, password: string, fcmToken?: 
             throw new AppError(httpStatus.BAD_REQUEST, 'Your account is not verified');
         }
 
+        //check account is account is connected by social login or not
+        if (user && user?.auth?.isSocialLogin) {
+            throw new AppError(
+                httpStatus.METHOD_NOT_ALLOWED,
+                'This account is connected by social login. Please use social login to access your account.',
+            );
+        }
+
 
         // Handle verify password
         // const passwordMatched = await bcrypt.compare(payload?.password, user?.auth?.password);
@@ -302,11 +310,13 @@ const socialSignUp = async (payload: {
                     update: {
                         password: hashedPassword,
                         role,
+                        isSocialLogin: true,
                     },
                     create: {
                         password: hashedPassword,
                         email,
                         role,
+                        isSocialLogin: true,
                     },
                 },
             },
@@ -331,6 +341,7 @@ const socialSignUp = async (payload: {
                     email,
                     password: hashedPassword,
                     role,
+                    isSocialLogin: true,
                 },
             },
         },
@@ -371,6 +382,106 @@ const socialSignUp = async (payload: {
     };
 };
 
+const socialLogin = async (payload: { idToken: string, fcmToken?: string }) => {
+
+    const { idToken } = payload;
+
+    const {
+        email,
+    } = await firebaseAdmin.auth().verifyIdToken(idToken);
+
+    if (!email) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            "Login failed"
+        );
+    }
+
+    const user = await prisma.user.findFirst({
+        where: {
+            email: email,
+            isDeleted: false,
+            auth: { role: { not: Role.ADMIN } }
+        },
+        include: { auth: true }
+    });
+
+    if (!user) {
+        // If user not found, throw error
+        throw new AppError(httpStatus.NOT_FOUND, 'Account not found');
+    }
+
+    else {
+        if (!user?.auth?.status) {
+            throw new AppError(httpStatus.FORBIDDEN, 'Your account is blocked');
+        }
+
+        if (user?.auth?.isDeleted) {
+            throw new AppError(httpStatus.FORBIDDEN, 'Your account is deleted');
+        }
+
+        if (!user?.auth?.isverified) {
+            throw new AppError(httpStatus.BAD_REQUEST, 'Your account is not verified');
+        }
+
+        // Update FCM token if provided
+        let updatedUser = user as User;
+        if (payload?.fcmToken) {
+            updatedUser = await prisma.user.update({
+                where: { email: email },
+                data: { fcmToken: payload.fcmToken },
+            })
+        }
+
+        // Send notification if FCM token exists and user notification is unabled
+
+        // Choose the most up-to-date FCM token to use
+        // const tokenToUse = updatedUser?.fcmToken;
+
+        // sendNotification(tokenToUse ? [tokenToUse] : [], {
+        //     title: `Login successfully`,
+        //     message: `New user login to your account`,
+        //     receiverId: updatedUser.id,
+        //     senderId: updatedUser.id,
+        // }, updatedUser?.notification);
+
+
+    }
+
+    //update last login time
+    await prisma.auth.update({
+        where: { userId: user?.id },
+        data: { last_loginAt: new Date() },
+    })
+
+    const jwtPayload: { userId: string; role: Role } = {
+        userId: user?.id,
+        role: user?.auth?.role
+    };
+
+    const role = user?.auth?.role
+
+    const userDoc = (user as any);
+    delete userDoc.auth;
+
+    const accessToken = createToken(
+        jwtPayload,
+        config.jwt_access_secret as string,
+        60 * 60 * 24 * 7, //7 days
+    );
+
+    const refreshToken = createToken(
+        jwtPayload,
+        config.jwt_refresh_secret as string,
+        60 * 60 * 24 * 30, // 30 days
+    );
+
+    return {
+        user: { ...userDoc, role },
+        accessToken,
+        refreshToken,
+    };
+};
 
 // Change password
 const changePassword = async (id: string, payload: { oldPassword: string, newPassword: string, confirmPassword: string }) => {

@@ -612,6 +612,7 @@ export const AuthScalarFieldEnum = {
   password: 'password',
   role: 'role',
   status: 'status',
+  isSocialLogin: 'isSocialLogin',
   isDeleted: 'isDeleted',
   isverified: 'isverified',
   otp: 'otp',

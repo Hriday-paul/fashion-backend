@@ -29,6 +29,7 @@ export type AuthMinAggregateOutputType = {
   password: string | null
   role: $Enums.Role | null
   status: boolean | null
+  isSocialLogin: boolean | null
   isDeleted: boolean | null
   isverified: boolean | null
   otp: string | null
@@ -46,6 +47,7 @@ export type AuthMaxAggregateOutputType = {
   password: string | null
   role: $Enums.Role | null
   status: boolean | null
+  isSocialLogin: boolean | null
   isDeleted: boolean | null
   isverified: boolean | null
   otp: string | null
@@ -63,6 +65,7 @@ export type AuthCountAggregateOutputType = {
   password: number
   role: number
   status: number
+  isSocialLogin: number
   isDeleted: number
   isverified: number
   otp: number
@@ -82,6 +85,7 @@ export type AuthMinAggregateInputType = {
   password?: true
   role?: true
   status?: true
+  isSocialLogin?: true
   isDeleted?: true
   isverified?: true
   otp?: true
@@ -99,6 +103,7 @@ export type AuthMaxAggregateInputType = {
   password?: true
   role?: true
   status?: true
+  isSocialLogin?: true
   isDeleted?: true
   isverified?: true
   otp?: true
@@ -116,6 +121,7 @@ export type AuthCountAggregateInputType = {
   password?: true
   role?: true
   status?: true
+  isSocialLogin?: true
   isDeleted?: true
   isverified?: true
   otp?: true
@@ -206,6 +212,7 @@ export type AuthGroupByOutputType = {
   password: string
   role: $Enums.Role
   status: boolean
+  isSocialLogin: boolean
   isDeleted: boolean
   isverified: boolean
   otp: string | null
@@ -244,6 +251,7 @@ export type AuthWhereInput = {
   password?: Prisma.StringFilter<"Auth"> | string
   role?: Prisma.EnumRoleFilter<"Auth"> | $Enums.Role
   status?: Prisma.BoolFilter<"Auth"> | boolean
+  isSocialLogin?: Prisma.BoolFilter<"Auth"> | boolean
   isDeleted?: Prisma.BoolFilter<"Auth"> | boolean
   isverified?: Prisma.BoolFilter<"Auth"> | boolean
   otp?: Prisma.StringNullableFilter<"Auth"> | string | null
@@ -262,6 +270,7 @@ export type AuthOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isSocialLogin?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   isverified?: Prisma.SortOrder
   otp?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -284,6 +293,7 @@ export type AuthWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"Auth"> | string
   role?: Prisma.EnumRoleFilter<"Auth"> | $Enums.Role
   status?: Prisma.BoolFilter<"Auth"> | boolean
+  isSocialLogin?: Prisma.BoolFilter<"Auth"> | boolean
   isDeleted?: Prisma.BoolFilter<"Auth"> | boolean
   isverified?: Prisma.BoolFilter<"Auth"> | boolean
   otp?: Prisma.StringNullableFilter<"Auth"> | string | null
@@ -301,6 +311,7 @@ export type AuthOrderByWithAggregationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isSocialLogin?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   isverified?: Prisma.SortOrder
   otp?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -324,6 +335,7 @@ export type AuthScalarWhereWithAggregatesInput = {
   password?: Prisma.StringWithAggregatesFilter<"Auth"> | string
   role?: Prisma.EnumRoleWithAggregatesFilter<"Auth"> | $Enums.Role
   status?: Prisma.BoolWithAggregatesFilter<"Auth"> | boolean
+  isSocialLogin?: Prisma.BoolWithAggregatesFilter<"Auth"> | boolean
   isDeleted?: Prisma.BoolWithAggregatesFilter<"Auth"> | boolean
   isverified?: Prisma.BoolWithAggregatesFilter<"Auth"> | boolean
   otp?: Prisma.StringNullableWithAggregatesFilter<"Auth"> | string | null
@@ -341,6 +353,7 @@ export type AuthCreateInput = {
   password: string
   role?: $Enums.Role
   status?: boolean
+  isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
   otp?: string | null
@@ -358,6 +371,7 @@ export type AuthUncheckedCreateInput = {
   password: string
   role?: $Enums.Role
   status?: boolean
+  isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
   otp?: string | null
@@ -375,6 +389,7 @@ export type AuthUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSocialLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isverified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -392,6 +407,7 @@ export type AuthUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSocialLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isverified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -409,6 +425,7 @@ export type AuthCreateManyInput = {
   password: string
   role?: $Enums.Role
   status?: boolean
+  isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
   otp?: string | null
@@ -426,6 +443,7 @@ export type AuthUpdateManyMutationInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSocialLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isverified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -442,6 +460,7 @@ export type AuthUncheckedUpdateManyInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSocialLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isverified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -459,6 +478,7 @@ export type AuthCountOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isSocialLogin?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   isverified?: Prisma.SortOrder
   otp?: Prisma.SortOrder
@@ -476,6 +496,7 @@ export type AuthMaxOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isSocialLogin?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   isverified?: Prisma.SortOrder
   otp?: Prisma.SortOrder
@@ -493,6 +514,7 @@ export type AuthMinOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isSocialLogin?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   isverified?: Prisma.SortOrder
   otp?: Prisma.SortOrder
@@ -555,6 +577,7 @@ export type AuthCreateWithoutUserInput = {
   password: string
   role?: $Enums.Role
   status?: boolean
+  isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
   otp?: string | null
@@ -571,6 +594,7 @@ export type AuthUncheckedCreateWithoutUserInput = {
   password: string
   role?: $Enums.Role
   status?: boolean
+  isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
   otp?: string | null
@@ -603,6 +627,7 @@ export type AuthUpdateWithoutUserInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSocialLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isverified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -619,6 +644,7 @@ export type AuthUncheckedUpdateWithoutUserInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSocialLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isverified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -637,6 +663,7 @@ export type AuthSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password?: boolean
   role?: boolean
   status?: boolean
+  isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
   otp?: boolean
@@ -655,6 +682,7 @@ export type AuthSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   role?: boolean
   status?: boolean
+  isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
   otp?: boolean
@@ -673,6 +701,7 @@ export type AuthSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   role?: boolean
   status?: boolean
+  isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
   otp?: boolean
@@ -691,6 +720,7 @@ export type AuthSelectScalar = {
   password?: boolean
   role?: boolean
   status?: boolean
+  isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
   otp?: boolean
@@ -702,7 +732,7 @@ export type AuthSelectScalar = {
   userId?: boolean
 }
 
-export type AuthOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "role" | "status" | "isDeleted" | "isverified" | "otp" | "otp_status" | "expiredAt" | "last_loginAt" | "passwordChangedAt" | "approval_status" | "userId", ExtArgs["result"]["auth"]>
+export type AuthOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "role" | "status" | "isSocialLogin" | "isDeleted" | "isverified" | "otp" | "otp_status" | "expiredAt" | "last_loginAt" | "passwordChangedAt" | "approval_status" | "userId", ExtArgs["result"]["auth"]>
 export type AuthInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -724,6 +754,7 @@ export type $AuthPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string
     role: $Enums.Role
     status: boolean
+    isSocialLogin: boolean
     isDeleted: boolean
     isverified: boolean
     otp: string | null
@@ -1162,6 +1193,7 @@ export interface AuthFieldRefs {
   readonly password: Prisma.FieldRef<"Auth", 'String'>
   readonly role: Prisma.FieldRef<"Auth", 'Role'>
   readonly status: Prisma.FieldRef<"Auth", 'Boolean'>
+  readonly isSocialLogin: Prisma.FieldRef<"Auth", 'Boolean'>
   readonly isDeleted: Prisma.FieldRef<"Auth", 'Boolean'>
   readonly isverified: Prisma.FieldRef<"Auth", 'Boolean'>
   readonly otp: Prisma.FieldRef<"Auth", 'String'>
