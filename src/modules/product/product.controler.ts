@@ -154,6 +154,15 @@ const productDetails = catchAsync(async (req: Request, res: Response) => {
         data: result,
     });
 });
+const productStats = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.productStats(req.params.productId, req.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Products details retrived successfully',
+        data: result,
+    });
+});
 
 const donationSupportByProduct = catchAsync(async (req: Request, res: Response) => {
     const result = await productService.donationSupportByProduct(req.params.productId);
@@ -223,5 +232,6 @@ export const productControler = {
     similarProductsFromSeller,
     donationSupportByProduct,
     sameCategoryProducts,
-    sameColorProducts
+    sameColorProducts,
+    productStats,
 }

@@ -81,7 +81,8 @@ model User {
   sentMessages    Message[] @relation("sentMsgs")
   receiveMessages Message[] @relation("receiveMsgs")
 
-  chatGroups ChatParticipant[]
+  user1Chats Chat[] @relation("user1Chats")
+  user2Chats Chat[] @relation("user2Chats")
 
   payments Payment[]
 
@@ -119,6 +120,9 @@ model User {
 
   billingAddress BillingDetails? @relation("asBuyer")
   sellerAddress BillingDetails? @relation("asSeller")
+
+  offersAsBuyer  Offer[] @relation("OffersForBuyer")
+  offersAsSeller Offer[] @relation("OffersForSeller")
 
   wallet Wallet?
 

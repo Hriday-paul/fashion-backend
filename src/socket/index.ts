@@ -39,7 +39,7 @@ const initializeSocketIO = (server: HttpServer) => {
 
     //--------user details and messages send for front end -->(as need to use)---------------//
     socket.on('message-page', async (payload, callback) => {
-      MessageHandler(userId, payload?.userId, io, socket, callback)
+      MessageHandler(userId, payload, io, socket, callback)
     });
 
     //----------------------chat list------------------------//
@@ -48,17 +48,17 @@ const initializeSocketIO = (server: HttpServer) => {
     });
 
     // for chat list search
-    socket.on('chat-list-search', async (data, callback) => {
-      getChatList(userId, io, socket, callback, data)
-    });
+    // socket.on('chat-list-search', async (data, callback) => {
+    //   getChatList(userId, io, socket, callback, data)
+    // });
 
     //----------------------seen message-----------------------//
     socket.on('seen', async (payload, callback) => {
-      MsgSeenHandle(io, socket, payload, userId, role, callback);
+      MsgSeenHandle(io, socket, payload, userId, callback);
     });
 
     socket.on('send-message', async (payload, callback) => {
-      SendMessageHandle(io, socket, payload, userId, role, callback)
+      SendMessageHandle(io, socket, payload, userId, callback)
     });
 
     //-----------------------Typing------------------------//
@@ -70,19 +70,6 @@ const initializeSocketIO = (server: HttpServer) => {
     socket.on('stopTyping', function (payload, callback) {
       MsgStopTyping(socket, io, payload, callback, socket.data?.name)
     });
-
-    //-----------------------------support message------------------
-    //--------admin details and messages send for front end -->(as need to use)---------------//
-    socket.on('message-page-support', async (payload, callback) => {
-      MessageHandler(userId, adminId, io, socket, callback)
-    });
-
-    //--------send mesage to admin------------
-    socket.on('send-message-support', async (payload, callback) => {
-      payload.receiverId = adminId;
-      SendMessageHandle(io, socket, payload, userId, role, callback)
-    });
-    // --------------------support message end--------------
 
 
 

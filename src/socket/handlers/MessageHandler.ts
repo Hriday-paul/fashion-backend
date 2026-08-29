@@ -1,69 +1,64 @@
 import { Server, Socket } from "socket.io";
 import { callbackFn } from "../../utils/CallbackFn";
 import prisma from "../../shared/prisma";
-import { Message, Role, User } from "../../../generated/prisma/client";
+import { Message } from "../../../generated/prisma/client";
 import httpStatus from "http-status"
 import { messagesService } from "../../modules/messages/messages.service";
 import { getChatList } from "./ChatHandler";
+import { chatService } from "../../modules/chat/chat.service";
+import { paginationHelper } from "../../helper/pagination.helper";
 
 export const MessageHandler = async (
     userId: string,
-    friendId: string,
+    payload: { chatId?: string, itemIds: string[], friendId: string },
     io: Server,
     socket: Socket,
     callback: (arg: any) => void,
 ): Promise<void> => {
     try {
 
-        if (!friendId) {
+        const { chatId: pChatId, itemIds, friendId } = payload;
+
+        let chatId = pChatId;
+
+        if (!pChatId && !itemIds?.length) {
             callbackFn(callback, {
                 success: false,
-                message: 'userId is required',
+                message: 'chatId or itemIds is missing',
             });
             socket.emit('io-error', {
                 success: false,
-                message: 'userId id is required',
+                message: 'chatId or itemIds is missing',
             });
 
             return;
         }
 
-        const receiverDetails = await prisma.user.findFirst({
-            where: { id: friendId },
-            include: { picture: true }
-        });
+        if (!pChatId) {
+            const chat = await chatService.getChatByItemIds(userId, friendId, itemIds);
 
-        if (!receiverDetails) {
-            callbackFn(callback, {
-                success: false,
-                message: 'user is not found!',
-            });
-            socket.emit('io-error', {
-                success: false,
-                message: 'user is not found!',
-            });
-            return;
-        }
-
-        socket.emit('user-details', receiverDetails);
-
-        const getPreMessage = await prisma.message.findMany({
-            where: {
-                OR: [
-                    { senderId: userId, receiverId: friendId },
-                    { senderId: friendId, receiverId: userId },
-                ]
-            },
-            include: { files: true, receiver: { select: { picture: true } }, sender: { select: { picture: true } } },
-            orderBy: {
-                createdAt: "asc"
+            if (chat) {
+                chatId = chat?.id;
             }
-        })
+        }
 
-        const chatId = getPreMessage[0]?.chatId
-        socket.join(`chat::${chatId}`);
+        const getPreMessage = !chatId ?
+            {
+                data: [],
+                meta: paginationHelper.generatePaginationMeta({ page: 1, limit: 25, total: 0 })
+            }
+            :
+            await messagesService.getAllPreMessages(chatId, { page: 1, limit: 25 });
 
-        socket.emit('message', getPreMessage || []);
+        const roomKeyByProdIds = itemIds?.length ? 'chat::' + itemIds?.sort().join('::') : null;
+
+        if (chatId) {
+            socket.join(`chat::${chatId}`);
+        } else {
+            if (roomKeyByProdIds) {
+                socket.join(roomKeyByProdIds);
+            }
+        }
 
         //end Notification//
     } catch (error: any) {
@@ -79,22 +74,21 @@ export const MessageHandler = async (
 export const SendMessageHandle = async (
     io: Server,
     socket: Socket,
-    payload: Message,
-    userId: string,
-    role: Role,
+    payload: Message & { itemIds: string[] },
+    userId: string, //curentUserId
     callback: (arg: any) => void
 ) => {
     try {
         payload.senderId = userId;
 
-        if (!payload?.receiverId) {
+        if (!payload?.receiverId || !payload?.itemIds || payload?.itemIds?.length === 0) {
             callbackFn(callback, {
                 success: false,
-                message: 'receiverId is required',
+                message: 'Missing required fields',
             });
             socket.emit('io-error', {
                 success: false,
-                message: 'receiverId id is required',
+                message: 'Missing required fields',
             });
             return;
         }
@@ -114,23 +108,22 @@ export const SendMessageHandle = async (
             return;
         }
 
-        //------------for receiver----------------
-        if (role == Role.ADMIN) {
+        const { itemIds, chatId } = payload;
 
-            // if sender role is admin receiver will get this message
-            io.to(`user::${payload?.receiverId}`).emit(`new-message::support`, result)
+        const roomKeyByProdIds = 'chat::' + itemIds?.sort().join('::');
 
-        } else {
+        // send message to the receiver all devices
+        const reciverRoom = `user::${payload?.receiverId}`
+        const senderRoom = `user::${payload?.senderId}`
 
-            // id sender role is not admin, send message to the receiver all devices
-            const reciverRoom = `user::${payload?.receiverId}`
-
-            io.to(reciverRoom).emit(`new-message::${payload?.senderId}`, result)
+        io.to(reciverRoom).emit(roomKeyByProdIds, result);
+        io.to(senderRoom).emit(roomKeyByProdIds, result);
+        
+        if (chatId) {
+            const roomKeyByChatId = 'chat::' + chatId
+            io.to(reciverRoom).emit(roomKeyByChatId, result)
+            io.to(senderRoom).emit(roomKeyByChatId, result)
         }
-
-        //-------------------for me--------------
-        // sent message to the sender all devices
-        io.to(`user::${payload?.senderId}`).emit(`new-message::${payload?.receiverId}`, result)
 
         //---------------hit on chatlist for see last sent message with the chatList------------------//
         getChatList(result?.senderId, io, socket, callback)
@@ -158,7 +151,6 @@ export const MsgSeenHandle = async (
     socket: Socket,
     payload: { chatId: string },
     userId: string,
-    role: Role,
     callback: (arg: any) => void
 ) => {
     try {
@@ -176,7 +168,7 @@ export const MsgSeenHandle = async (
             return;
         }
 
-        const chat = await prisma.chat.findFirst({ where: { id: chatId }, include: { participants: true } })
+        const chat = await prisma.chat.findFirst({ where: { id: chatId } })
 
         if (!chat) {
             callbackFn(callback, {
@@ -193,12 +185,12 @@ export const MsgSeenHandle = async (
         //--------update message seen---------
         await messagesService.seenMessage(userId, chatId)
 
-        const user1 = chat.participants[0];
-        const user2 = chat.participants[1];
+        const user1Id = chat.user1Id
+        const user2Id = chat.user2Id;
 
         //---------------hit on chatlist for see unread message count with the chatList------------------//
-        getChatList(user1?.id, io, socket, callback)
-        getChatList(user2?.id, io, socket, callback)
+        getChatList(user1Id, io, socket, callback)
+        getChatList(user2Id, io, socket, callback)
 
         // const getPreMessage = await prisma.message.findMany({
         //     where: {

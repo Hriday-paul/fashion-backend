@@ -158,6 +158,16 @@ export const RefundStatus = {
 export type RefundStatus = (typeof RefundStatus)[keyof typeof RefundStatus]
 
 
+export const OfferStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+  CANCELED: 'CANCELED'
+} as const
+
+export type OfferStatus = (typeof OfferStatus)[keyof typeof OfferStatus]
+
+
 export const ReturnStatus = {
   REQUESTED: 'REQUESTED',
   APPROVED: 'APPROVED',

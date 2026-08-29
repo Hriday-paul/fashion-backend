@@ -1,27 +1,38 @@
 model Chat {
     id String @id @default(uuid())
 
-    participants ChatParticipant[]
+    user1Id String
+    user1   User @relation("user1Chats", fields: [user1Id], references: [id], onDelete: Cascade)
+
+    user2Id String
+    user2   User @relation("user2Chats", fields: [user2Id], references: [id], onDelete: Cascade)
+
+    items ChatProdItem[]
 
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
     messages  Message[]
 
     @@map("chatGroups")
+    @@index([user1Id, user2Id])
+    @@index([user2Id, user1Id])
 }
 
-model ChatParticipant {
-    id     String  @id @default(uuid())
+model ChatProdItem {
+    id String @id @default(uuid())
+
     chatId String
     chat   Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
 
-    userId String
-    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    productId String
+    product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
 
-    @@map("chatParticipants")
+    @@map("chatProdItems")
+    @@index([chatId, productId])
+    @@index([productId, chatId])
 }
 
 model Message {
@@ -39,10 +50,18 @@ model Message {
 
     files FileMessage[]
 
+    offerId String? @unique
+    offer   Offer? @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
     createdAt    DateTime      @default(now())
     updatedAt    DateTime      @updatedAt
 
     @@map("messages")
+    @@index([chatId, isSeen])
+    @@index([chatId, receiverId, isSeen])
+    @@index([receiverId, isSeen])
+    @@index([offerId])
+    @@index([senderId])
 }
 
 model FileMessage {

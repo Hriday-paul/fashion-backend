@@ -52,10 +52,10 @@ export type Follow = Prisma.FollowModel
  */
 export type Chat = Prisma.ChatModel
 /**
- * Model ChatParticipant
+ * Model ChatProdItem
  * 
  */
-export type ChatParticipant = Prisma.ChatParticipantModel
+export type ChatProdItem = Prisma.ChatProdItemModel
 /**
  * Model Message
  * 
@@ -141,6 +141,16 @@ export type CartItem = Prisma.CartItemModel
  * 
  */
 export type CartDonationCharaties = Prisma.CartDonationCharatiesModel
+/**
+ * Model Offer
+ * 
+ */
+export type Offer = Prisma.OfferModel
+/**
+ * Model OfferItem
+ * 
+ */
+export type OfferItem = Prisma.OfferItemModel
 /**
  * Model ProductView
  * 

@@ -91,6 +91,7 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
             price,
             discountPct,
             finalPrice: lastPrice,
+            stock: 1,
             catagory_hierarchy: hierarchy,
             userId
         }
@@ -101,7 +102,7 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
 
 const allProducts = async (query: Record<string, unknown>, options: TPaginationOptions, userId?: string) => {
 
-    const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }];
+    const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false, stock: { gt: 0 } }];
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
@@ -643,7 +644,7 @@ const sameColorProducts = async (productId: string, currentUser?: string) => {
 }
 
 const newArrivalProducts = async () => {
-    const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }];
+    const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }, { stock: { gt: 0 } }];
 
     const whereConditions: Prisma.ProductWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
 
@@ -690,7 +691,12 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
                         select: {
                             fname: true,
                             lname: true,
-                            userName: true
+                            userName: true,
+                            picture: {
+                                select: {
+                                    url: true
+                                }
+                            }
                         }
                     }
                 }
@@ -722,14 +728,13 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
             },
             _count: {
                 select: {
-                    favourites: true,
                     cartItems: {
                         where: {
                             group: {
                                 userId: userId
                             }
                         }
-                    }
+                    },
                 }
             },
             // Add this 👇
@@ -770,10 +775,52 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
         })
     }
 
-    const categoryChain = await categoryService.getParentChain({ categoryId: details?.categoryId });
+    const sizechart = await prisma.size.findMany({
+        where: {
+            sizeCategoryHierarchyGroups: {
+                some: {
+                    categoryId: details?.categoryId
+                }
+            }
+        }
+    })
 
-    return { ...details, catagory_hierarchy: categoryChain };
+    return { ...details, sizechart };
     // return details;
+}
+
+const productStats = async (productId: string, currentUserId?: string) => {
+
+    const stats = await prisma.product.findFirst({
+        where: { id: productId, },
+        select: {
+            _count: {
+                select: {
+                    favourites: true,
+                    cartItems: currentUserId ? {
+                        where: {
+                            group: {
+                                NOT: {
+                                    userId: currentUserId
+                                }
+                            }
+                        }
+                    } : true,
+                    offerItems: currentUserId ? {
+                        where: {
+                            offer: {
+                                NOT: {
+                                    buyerId: currentUserId
+                                }
+                            }
+                        }
+                    } : true,
+                }
+            }
+        }
+    })
+
+    return stats;
 }
 
 const recentViewProducts = async (viewKey: string) => {
@@ -1099,4 +1146,5 @@ export const productService = {
     donationSupportByProduct,
     sameCategoryProducts,
     sameColorProducts,
+    productStats,
 }

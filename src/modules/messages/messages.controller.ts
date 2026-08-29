@@ -23,7 +23,7 @@ const createMessages = catchAsync(async (req: Request, res: Response) => {
 // Get all messages
 const getAllPreMessages = catchAsync(async (req: Request, res: Response) => {
   const options = pick(req.query, PaginateOptions);
-  const result = await messagesService.getAllPreMessages(req?.user?.id, req?.params?.id, options);
+  const result = await messagesService.getAllPreMessages(req?.params?.id, options);
   sendResponse(res, {
     statusCode: 200,
     success: true,

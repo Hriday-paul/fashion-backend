@@ -55,7 +55,7 @@ export const ModelName = {
   Size: 'Size',
   Follow: 'Follow',
   Chat: 'Chat',
-  ChatParticipant: 'ChatParticipant',
+  ChatProdItem: 'ChatProdItem',
   Message: 'Message',
   FileMessage: 'FileMessage',
   OrderDeliveryCharge: 'OrderDeliveryCharge',
@@ -73,6 +73,8 @@ export const ModelName = {
   CartGroup: 'CartGroup',
   CartItem: 'CartItem',
   CartDonationCharaties: 'CartDonationCharaties',
+  Offer: 'Offer',
+  OfferItem: 'OfferItem',
   ProductView: 'ProductView',
   Question: 'Question',
   BundleDiscount: 'BundleDiscount',
@@ -181,6 +183,8 @@ export type FollowScalarFieldEnum = (typeof FollowScalarFieldEnum)[keyof typeof 
 
 export const ChatScalarFieldEnum = {
   id: 'id',
+  user1Id: 'user1Id',
+  user2Id: 'user2Id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -188,15 +192,15 @@ export const ChatScalarFieldEnum = {
 export type ChatScalarFieldEnum = (typeof ChatScalarFieldEnum)[keyof typeof ChatScalarFieldEnum]
 
 
-export const ChatParticipantScalarFieldEnum = {
+export const ChatProdItemScalarFieldEnum = {
   id: 'id',
   chatId: 'chatId',
-  userId: 'userId',
+  productId: 'productId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type ChatParticipantScalarFieldEnum = (typeof ChatParticipantScalarFieldEnum)[keyof typeof ChatParticipantScalarFieldEnum]
+export type ChatProdItemScalarFieldEnum = (typeof ChatProdItemScalarFieldEnum)[keyof typeof ChatProdItemScalarFieldEnum]
 
 
 export const MessageScalarFieldEnum = {
@@ -206,6 +210,7 @@ export const MessageScalarFieldEnum = {
   senderId: 'senderId',
   receiverId: 'receiverId',
   chatId: 'chatId',
+  offerId: 'offerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -491,6 +496,34 @@ export const CartDonationCharatiesScalarFieldEnum = {
 } as const
 
 export type CartDonationCharatiesScalarFieldEnum = (typeof CartDonationCharatiesScalarFieldEnum)[keyof typeof CartDonationCharatiesScalarFieldEnum]
+
+
+export const OfferScalarFieldEnum = {
+  id: 'id',
+  sellerId: 'sellerId',
+  buyerId: 'buyerId',
+  actualPrice: 'actualPrice',
+  offeredPrice: 'offeredPrice',
+  status: 'status',
+  sendByBuyer: 'sendByBuyer',
+  actionAt: 'actionAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OfferScalarFieldEnum = (typeof OfferScalarFieldEnum)[keyof typeof OfferScalarFieldEnum]
+
+
+export const OfferItemScalarFieldEnum = {
+  id: 'id',
+  offerId: 'offerId',
+  productId: 'productId',
+  quantity: 'quantity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OfferItemScalarFieldEnum = (typeof OfferItemScalarFieldEnum)[keyof typeof OfferItemScalarFieldEnum]
 
 
 export const ProductViewScalarFieldEnum = {

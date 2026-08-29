@@ -21,6 +21,7 @@ router.get("/trendings", productControler.trendingProducts);
 router.get("/top-sellings", productControler.topSellingProducts);
 router.get("/recommended", PublicAuth(), productControler.recomendedProducts);
 
+router.get("/stats/:productId", PublicAuth(), productControler.productStats);
 router.get("/donation-support/:productId", productControler.donationSupportByProduct);
 
 router.get("/similar-from-seller/:productId", PublicAuth(), productControler.similarProductsFromSeller);

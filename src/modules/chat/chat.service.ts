@@ -4,131 +4,119 @@ import { Chat, Prisma, Role } from '../../../generated/prisma/client';
 import prisma from '../../shared/prisma';
 
 type TPerticipents = {
-  participants: string[]
+  user1Id: string;
+  user2Id: string;
+  itemIds: string[];
 }
 
 // Create chat
-const createChat = async (payload: Chat & TPerticipents) => {
-  const user1 = await prisma.user.findFirst({ where: { id: payload?.participants[0] } });
+const createChat = async (payload: TPerticipents) => {
+
+  const { user1Id, user2Id, itemIds } = payload;
+
+  const user1 = await prisma.user.findFirst({ where: { id: user1Id } });
 
   if (!user1) {
     throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid user');
   }
 
-  const user2 = await prisma.user.findFirst({ where: { id: payload?.participants[1] } })
+  const user2 = await prisma.user.findFirst({ where: { id: user2Id } })
 
   if (!user2) {
     throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid user');
   }
 
-  const alreadyExists = await prisma.chat.findFirst({
+  const candidateChats = await prisma.chat.findMany({
     where: {
-      AND: payload?.participants.map((id) => ({
-        participants: {
-          some: { userId: id }
-        }
-      }))
+      OR: [
+        { user1Id, user2Id },
+        { user1Id: user2Id, user2Id: user1Id },
+      ],
+
+      items: {
+        every: {
+          productId: {
+            in: itemIds,
+          },
+        },
+      },
     },
+
     include: {
-      participants: {
-        include: {
-          user: true
-        }
-      }
-    }
+      items: {
+        select: {
+          productId: true,
+        },
+      },
+    },
   });
 
-  if (alreadyExists) {
-    return alreadyExists;
+  const existingChat = candidateChats.find((chat) => {
+    const chatItemIds = chat.items.map((item) => item.productId);
+
+    return (
+      chatItemIds.length === itemIds.length &&
+      itemIds.every((id) => chatItemIds.includes(id))
+    );
+  });
+
+  if (existingChat) {
+    return existingChat;
   }
 
   // create chat if not exist
   const result = await prisma.chat.create({
     data: {
-      participants: {
-        create: [
-          {
-            userId: payload?.participants[0]
-          },
-          {
-            userId: payload?.participants[1]
-          }
-        ]
+      user1Id,
+      user2Id,
+      items: {
+        createMany: {
+          data: itemIds.map((id) => ({ productId: id }))
+        }
       }
     }
   })
+
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Chat creation failed');
   }
+
   return result;
 };
 
 // Get my chat list
-const getMyChatList = async (userId: string, role: Role, query?: Record<string, unknown>) => {
-
-  const isAdmin = role === Role.ADMIN;
+const getMyChatList = async (userId: string, query?: Record<string, unknown>) => {
 
   const { searchTerm } = query || {};
   const AndConditions: Prisma.ChatWhereInput[] = [
     {
-      participants: {
-        some: {
-          userId: userId,
+      OR: [
+        {
+          user1Id: userId
         },
-      },
+        {
+          user2Id: userId
+        }
+      ]
     }
   ];
-
-  if (!isAdmin) {
-    AndConditions.push({
-      participants: {
-        none: {
-          user: {
-            auth: {
-              role: Role.ADMIN,
-            },
-          },
-        },
-      },
-    });
-  }
 
   if (searchTerm) {
     AndConditions.push({
       OR: [
         {
-          participants: {
-            some: {
-              user: {
-                fname: {
-                  contains: searchTerm as string,
-                  mode: "insensitive",
-                },
-              }
+          user1: {
+            userName: {
+              contains: searchTerm as string,
+              mode: 'insensitive'
             }
           }
         },
         {
-          participants: {
-            some: {
-              user: {
-                email: {
-                  contains: searchTerm as string,
-                  mode: "insensitive",
-                },
-              }
-            }
-          }
-        },
-        {
-          participants: {
-            some: {
-              user: {
-                phone: {
-                  contains: searchTerm as string,
-                  mode: "insensitive",
-                },
-              }
+          user2: {
+            userName: {
+              contains: searchTerm as string,
+              mode: 'insensitive'
             }
           }
         }
@@ -141,15 +129,25 @@ const getMyChatList = async (userId: string, role: Role, query?: Record<string, 
   const chats = await prisma.chat.findMany({
     where: whereConditions,
     include: {
-      participants: {
-        where: { userId: { not: userId } }, // exclude current user
-        include: {
-          user: {
-            include: {
-              picture: true
+      user1: {
+        select: {
+          userName: true,
+          picture: {
+            select: {
+              url: true
             }
-          },
-        },
+          }
+        }
+      },
+      user2: {
+        select: {
+          userName: true,
+          picture: {
+            select: {
+              url: true
+            }
+          }
+        }
       },
       messages: {
         orderBy: { createdAt: "desc" },
@@ -183,11 +181,22 @@ const getChatById = async (chatId: string) => {
   const result = await prisma.chat.findFirst({
     where: { id: chatId },
     include: {
-      participants: {
-        include: {
-          user: {
-            include: {
-              picture: true
+      user1: {
+        select: {
+          userName: true,
+          picture: {
+            select: {
+              url: true
+            }
+          }
+        }
+      },
+      user2: {
+        select: {
+          userName: true,
+          picture: {
+            select: {
+              url: true
             }
           }
         }
@@ -200,6 +209,44 @@ const getChatById = async (chatId: string) => {
   }
   return result;
 };
+
+const getChatByItemIds = async (user1Id: string, user2Id: string, itemIds: string[]) => {
+  const candidateChats = await prisma.chat.findMany({
+    where: {
+      OR: [
+        { user1Id, user2Id },
+        { user1Id: user2Id, user2Id: user1Id },
+      ],
+
+      items: {
+        every: {
+          productId: {
+            in: itemIds,
+          },
+        },
+      },
+    },
+
+    include: {
+      items: {
+        select: {
+          productId: true,
+        },
+      },
+    },
+  });
+
+  const existingChat = candidateChats.find((chat) => {
+    const chatItemIds = chat.items.map((item) => item.productId);
+
+    return (
+      chatItemIds.length === itemIds.length &&
+      itemIds.every((id) => chatItemIds.includes(id))
+    );
+  });
+
+  return existingChat;
+}
 
 // Update chat list
 const updateChatList = async (id: string, payload: Partial<Chat>) => {
@@ -231,5 +278,6 @@ export const chatService = {
   getMyChatList,
   getChatById,
   updateChatList,
-  deleteChatList
+  deleteChatList,
+  getChatByItemIds
 };
