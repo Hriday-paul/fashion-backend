@@ -66,7 +66,6 @@ export const getOnlineDrivers = async (
 
 export const handleUserOffline = async (
     userId: string,
-    role: string,
     io: Server,
     socket: Socket,
     callback: (arg: any) => void
@@ -79,13 +78,10 @@ export const handleUserOffline = async (
             const user = await prisma.user.update({
                 where: { id: userId },
                 data: {
-                    isOnline: false
+                    isOnline: false,
+                    lastOnlineAt: new Date()
                 }
             })
-
-            // ---------------online driver -------------
-            getOnlineDrivers(userId, role, io, socket, callback);
-
         }
     } catch (error) {
         console.error("Error handling user offline:", error);

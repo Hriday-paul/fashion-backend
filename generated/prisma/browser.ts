@@ -52,11 +52,6 @@ export type Follow = Prisma.FollowModel
  */
 export type Chat = Prisma.ChatModel
 /**
- * Model ChatProdItem
- * 
- */
-export type ChatProdItem = Prisma.ChatProdItemModel
-/**
  * Model Message
  * 
  */

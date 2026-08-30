@@ -55,7 +55,6 @@ export const ModelName = {
   Size: 'Size',
   Follow: 'Follow',
   Chat: 'Chat',
-  ChatProdItem: 'ChatProdItem',
   Message: 'Message',
   FileMessage: 'FileMessage',
   OrderDeliveryCharge: 'OrderDeliveryCharge',
@@ -190,17 +189,6 @@ export const ChatScalarFieldEnum = {
 } as const
 
 export type ChatScalarFieldEnum = (typeof ChatScalarFieldEnum)[keyof typeof ChatScalarFieldEnum]
-
-
-export const ChatProdItemScalarFieldEnum = {
-  id: 'id',
-  chatId: 'chatId',
-  productId: 'productId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ChatProdItemScalarFieldEnum = (typeof ChatProdItemScalarFieldEnum)[keyof typeof ChatProdItemScalarFieldEnum]
 
 
 export const MessageScalarFieldEnum = {
@@ -685,6 +673,7 @@ export const UserScalarFieldEnum = {
   mission: 'mission',
   business_tags: 'business_tags',
   isOnline: 'isOnline',
+  lastOnlineAt: 'lastOnlineAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDeleted: 'isDeleted',

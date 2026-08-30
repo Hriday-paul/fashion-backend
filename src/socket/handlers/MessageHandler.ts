@@ -15,133 +15,92 @@ export const MessageHandler = async (
     socket: Socket,
     callback: (arg: any) => void,
 ): Promise<void> => {
-    try {
+    // try {
 
-        const { chatId: pChatId, itemIds, friendId } = payload;
+    //     const { chatId: pChatId, itemIds, friendId } = payload;
 
-        let chatId = pChatId;
+    //     let chatId = pChatId;
 
-        if (!pChatId && !itemIds?.length) {
-            callbackFn(callback, {
-                success: false,
-                message: 'chatId or itemIds is missing',
-            });
-            socket.emit('io-error', {
-                success: false,
-                message: 'chatId or itemIds is missing',
-            });
+    //     if (!pChatId && !itemIds?.length) {
+    //         callbackFn(callback, {
+    //             success: false,
+    //             message: 'chatId or itemIds is missing',
+    //         });
+    //         socket.emit('io-error', {
+    //             success: false,
+    //             message: 'chatId or itemIds is missing',
+    //         });
 
-            return;
-        }
+    //         return;
+    //     }
 
-        if (!pChatId) {
-            const chat = await chatService.getChatByItemIds(userId, friendId, itemIds);
+    //     if (!pChatId) {
+    //         const chat = await chatService.getChatByItemIds(userId, friendId, itemIds);
 
-            if (chat) {
-                chatId = chat?.id;
-            }
-        }
+    //         if (chat) {
+    //             chatId = chat?.id;
+    //         }
+    //     }
 
-        const getPreMessage = !chatId ?
-            {
-                data: [],
-                meta: paginationHelper.generatePaginationMeta({ page: 1, limit: 25, total: 0 })
-            }
-            :
-            await messagesService.getAllPreMessages(chatId, { page: 1, limit: 25 });
+    //     const getPreMessage = !chatId ?
+    //         {
+    //             data: [],
+    //             meta: paginationHelper.generatePaginationMeta({ page: 1, limit: 25, total: 0 })
+    //         }
+    //         :
+    //         await messagesService.getAllPreMessages(chatId, { page: 1, limit: 25 });
 
-        const roomKeyByProdIds = itemIds?.length ? 'chat::' + itemIds?.sort().join('::') : null;
+    //     const roomKeyByProdIds = itemIds?.length ? 'chat::' + itemIds?.sort().join('::') : null;
 
-        if (chatId) {
-            socket.join(`chat::${chatId}`);
-        } else {
-            if (roomKeyByProdIds) {
-                socket.join(roomKeyByProdIds);
-            }
-        }
+    //     if (chatId) {
+    //         socket.join(`chat::${chatId}`);
+    //     } else {
+    //         if (roomKeyByProdIds) {
+    //             socket.join(roomKeyByProdIds);
+    //         }
+    //     }
 
-        //end Notification//
-    } catch (error: any) {
-        callbackFn(callback, {
-            success: false,
-            message: error.message,
-        });
-        socket.emit('io-error', { success: false, message: error });
-        console.error('Error in message-page event:', error);
-    }
+    //     //end Notification//
+    // } catch (error: any) {
+    //     callbackFn(callback, {
+    //         success: false,
+    //         message: error.message,
+    //     });
+    //     socket.emit('io-error', { success: false, message: error });
+    //     console.error('Error in message-page event:', error);
+    // }
 }
 
 export const SendMessageHandle = async (
     io: Server,
-    socket: Socket,
-    payload: Message & { itemIds: string[] },
-    userId: string, //curentUserId
+    payload: Message & { receiverUserName: string },
     callback: (arg: any) => void
 ) => {
     try {
-        payload.senderId = userId;
 
-        if (!payload?.receiverId || !payload?.itemIds || payload?.itemIds?.length === 0) {
-            callbackFn(callback, {
-                success: false,
-                message: 'Missing required fields',
-            });
-            socket.emit('io-error', {
-                success: false,
-                message: 'Missing required fields',
-            });
-            return;
-        }
+        const reciverRoom = `user::${payload?.receiverId}`;
+        const senderRoom = `user::${payload?.senderId}`;
 
-        const result = await messagesService.createMessages(payload);
-
-        if (!result) {
-            callbackFn(callback, {
-                statusCode: httpStatus.BAD_REQUEST,
-                success: false,
-                message: 'Message sent failed',
-            });
-            socket.emit('io-error', {
-                success: false,
-                message: 'Message sent failed',
-            });
-            return;
-        }
-
-        const { itemIds, chatId } = payload;
-
-        const roomKeyByProdIds = 'chat::' + itemIds?.sort().join('::');
-
-        // send message to the receiver all devices
-        const reciverRoom = `user::${payload?.receiverId}`
-        const senderRoom = `user::${payload?.senderId}`
-
-        io.to(reciverRoom).emit(roomKeyByProdIds, result);
-        io.to(senderRoom).emit(roomKeyByProdIds, result);
-        
-        if (chatId) {
-            const roomKeyByChatId = 'chat::' + chatId
-            io.to(reciverRoom).emit(roomKeyByChatId, result)
-            io.to(senderRoom).emit(roomKeyByChatId, result)
-        }
+        io.to(reciverRoom).emit(`new-message::${payload?.senderId}`, payload);
+        io.to(senderRoom).emit(`new-message::${payload?.receiverUserName}`, payload);
 
         //---------------hit on chatlist for see last sent message with the chatList------------------//
-        getChatList(result?.senderId, io, socket, callback)
-        getChatList(result?.receiverId, io, socket, callback)
+        getChatList(payload?.senderId, io, callback)
+        getChatList(payload?.receiverId, io, callback)
 
         //end Notification//
         callbackFn(callback, {
             statusCode: httpStatus.OK,
             success: true,
             message: 'Message sent successfully!',
-            data: result,
+            data: payload,
         });
     } catch (error: any) {
         callbackFn(callback, {
             success: false,
             message: error.message,
         });
-        socket.emit('io-error', { success: false, message: error });
+        // socket.emit('io-error', { success: false, message: error });
         console.error('Error in send message event:', error);
     }
 }
@@ -189,8 +148,8 @@ export const MsgSeenHandle = async (
         const user2Id = chat.user2Id;
 
         //---------------hit on chatlist for see unread message count with the chatList------------------//
-        getChatList(user1Id, io, socket, callback)
-        getChatList(user2Id, io, socket, callback)
+        getChatList(user1Id, io, callback)
+        getChatList(user2Id, io, callback)
 
         // const getPreMessage = await prisma.message.findMany({
         //     where: {

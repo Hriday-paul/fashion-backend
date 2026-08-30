@@ -2,70 +2,52 @@ model Chat {
     id String @id @default(uuid())
 
     user1Id String
-    user1   User @relation("user1Chats", fields: [user1Id], references: [id], onDelete: Cascade)
+    user1   User   @relation("user1Chats", fields: [user1Id], references: [id], onDelete: Cascade)
 
     user2Id String
-    user2   User @relation("user2Chats", fields: [user2Id], references: [id], onDelete: Cascade)
-
-    items ChatProdItem[]
+    user2   User   @relation("user2Chats", fields: [user2Id], references: [id], onDelete: Cascade)
 
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
     messages  Message[]
 
-    @@map("chatGroups")
+    @@unique([user1Id, user2Id])
     @@index([user1Id, user2Id])
     @@index([user2Id, user1Id])
-}
-
-model ChatProdItem {
-    id String @id @default(uuid())
-
-    chatId String
-    chat   Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
-
-    productId String
-    product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
-
-    @@map("chatProdItems")
-    @@index([chatId, productId])
-    @@index([productId, chatId])
+    @@map("chatGroups")
 }
 
 model Message {
-    id       String     @id @default(uuid())
+    id       String  @id @default(uuid())
     text     String?
-    isSeen     Boolean @default(false)
+    isSeen   Boolean @default(false)
     senderId String
-    sender   User    @relation("sentMsgs",fields: [senderId], references: [id], onDelete: Cascade)
+    sender   User    @relation("sentMsgs", fields: [senderId], references: [id], onDelete: Cascade)
 
     receiverId String
-    receiver   User @relation("receiveMsgs", fields: [receiverId], references: [id], onDelete: Cascade)
+    receiver   User   @relation("receiveMsgs", fields: [receiverId], references: [id], onDelete: Cascade)
 
-    chatId      String
-    chat        Chat        @relation(fields: [chatId], references: [id], onDelete: Cascade)
+    chatId String
+    chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
 
     files FileMessage[]
 
     offerId String? @unique
-    offer   Offer? @relation(fields: [offerId], references: [id], onDelete: Cascade)
+    offer   Offer?  @relation(fields: [offerId], references: [id], onDelete: Cascade)
 
-    createdAt    DateTime      @default(now())
-    updatedAt    DateTime      @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-    @@map("messages")
     @@index([chatId, isSeen])
     @@index([chatId, receiverId, isSeen])
     @@index([receiverId, isSeen])
     @@index([offerId])
     @@index([senderId])
+    @@map("messages")
 }
 
 model FileMessage {
-    id        String     @id @default(uuid())
+    id        String  @id @default(uuid())
     key       String
     url       String
     messageId String

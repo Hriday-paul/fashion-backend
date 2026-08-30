@@ -7,6 +7,7 @@ import prisma from "../../shared/prisma";
 import { categoryService } from "../category/category.service";
 import httpStatus from "http-status";
 import { BuildFingerPrint } from "../../utils/BuildfingerPrint";
+import { chatService } from "../chat/chat.service";
 
 type ProductOtherPayload = {
     images: { key: string, url: string }[],
@@ -1146,5 +1147,5 @@ export const productService = {
     donationSupportByProduct,
     sameCategoryProducts,
     sameColorProducts,
-    productStats,
+    productStats
 }

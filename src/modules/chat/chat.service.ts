@@ -1,63 +1,35 @@
 import httpStatus from 'http-status';
 import AppError from '../../error/AppError';
-import { Chat, Prisma, Role } from '../../../generated/prisma/client';
+import { Chat, Prisma } from '../../../generated/prisma/client';
 import prisma from '../../shared/prisma';
 
 type TPerticipents = {
-  user1Id: string;
+  currentUserId: string;
   user2Id: string;
-  itemIds: string[];
 }
 
 // Create chat
 const createChat = async (payload: TPerticipents) => {
 
-  const { user1Id, user2Id, itemIds } = payload;
+  const { currentUserId, user2Id } = payload;
 
-  const user1 = await prisma.user.findFirst({ where: { id: user1Id } });
+  if (currentUserId === user2Id) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'You cannot create chat with yourself');
+  }
 
-  if (!user1) {
+  const friend = await prisma.user.findFirst({ where: { id: currentUserId, auth: { isverified: true, status: true } } });
+
+  if (!friend) {
     throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid user');
   }
 
-  const user2 = await prisma.user.findFirst({ where: { id: user2Id } })
-
-  if (!user2) {
-    throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid user');
-  }
-
-  const candidateChats = await prisma.chat.findMany({
+  const existingChat = await prisma.chat.findFirst({
     where: {
       OR: [
-        { user1Id, user2Id },
-        { user1Id: user2Id, user2Id: user1Id },
+        { user1Id: currentUserId, user2Id },
+        { user1Id: user2Id, user2Id: currentUserId },
       ],
-
-      items: {
-        every: {
-          productId: {
-            in: itemIds,
-          },
-        },
-      },
-    },
-
-    include: {
-      items: {
-        select: {
-          productId: true,
-        },
-      },
-    },
-  });
-
-  const existingChat = candidateChats.find((chat) => {
-    const chatItemIds = chat.items.map((item) => item.productId);
-
-    return (
-      chatItemIds.length === itemIds.length &&
-      itemIds.every((id) => chatItemIds.includes(id))
-    );
+    }
   });
 
   if (existingChat) {
@@ -67,13 +39,8 @@ const createChat = async (payload: TPerticipents) => {
   // create chat if not exist
   const result = await prisma.chat.create({
     data: {
-      user1Id,
+      user1Id: currentUserId,
       user2Id,
-      items: {
-        createMany: {
-          data: itemIds.map((id) => ({ productId: id }))
-        }
-      }
     }
   })
 
@@ -210,44 +177,6 @@ const getChatById = async (chatId: string) => {
   return result;
 };
 
-const getChatByItemIds = async (user1Id: string, user2Id: string, itemIds: string[]) => {
-  const candidateChats = await prisma.chat.findMany({
-    where: {
-      OR: [
-        { user1Id, user2Id },
-        { user1Id: user2Id, user2Id: user1Id },
-      ],
-
-      items: {
-        every: {
-          productId: {
-            in: itemIds,
-          },
-        },
-      },
-    },
-
-    include: {
-      items: {
-        select: {
-          productId: true,
-        },
-      },
-    },
-  });
-
-  const existingChat = candidateChats.find((chat) => {
-    const chatItemIds = chat.items.map((item) => item.productId);
-
-    return (
-      chatItemIds.length === itemIds.length &&
-      itemIds.every((id) => chatItemIds.includes(id))
-    );
-  });
-
-  return existingChat;
-}
-
 // Update chat list
 const updateChatList = async (id: string, payload: Partial<Chat>) => {
   const result = await prisma.chat.update({
@@ -278,6 +207,5 @@ export const chatService = {
   getMyChatList,
   getChatById,
   updateChatList,
-  deleteChatList,
-  getChatByItemIds
+  deleteChatList
 };

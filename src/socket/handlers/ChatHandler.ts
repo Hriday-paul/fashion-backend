@@ -6,15 +6,14 @@ import prisma from "../../shared/prisma";
 export const getChatList = async (
     userId: string,
     io: Server,
-    socket: Socket,
     callback: (arg: any) => void,
     query ?: {}
 ): Promise<void> => {
     try {
 
-        const user = await prisma.user.findFirst({ where: { id: userId }, select: { auth: { select: { role: true } } } })
+        const user = await prisma.user.findFirst({ where: { id: userId } })
 
-        if (!user || !user?.auth) {
+        if (!user) {
             return;
         }
 
@@ -29,6 +28,6 @@ export const getChatList = async (
             success: false,
             message: error.message,
         });
-        socket.emit('io-error', { success: false, message: error.message });
+        // socket.emit('io-error', { success: false, message: error.message });
     }
 }

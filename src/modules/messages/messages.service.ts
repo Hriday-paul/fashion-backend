@@ -4,26 +4,33 @@ import { Message } from '../../../generated/prisma/client';
 import prisma from '../../shared/prisma';
 import { paginationHelper, TPaginationOptions } from '../../helper/pagination.helper';
 import { chatService } from '../chat/chat.service';
+import { SendMessageHandle } from '../../socket/handlers/MessageHandler';
 
 type TFile = {
   files?: { key: string; url: string }[];
-  itemIds?: string[];
+  receiverUserName: string;
 }
 
 const createMessages = async (payload: Message & TFile) => {
 
-  if (!payload?.chatId) {
-
-    const chat = await chatService.createChat({ itemIds: payload?.itemIds || [], user1Id: payload?.senderId, user2Id: payload?.receiverId });
-
-    payload.chatId = chat?.id;
-  }
+  const { isSeen, chatId, createdAt, receiverUserName, ...morePayload } = payload;
 
   const files = payload?.files || []
 
+  const receiver = await prisma.user.findFirst({ where: { userName: payload?.receiverUserName, auth: { isverified: true, status: true } } });
+
+  if (!receiver) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Receiver not found');
+  }
+
+  morePayload.receiverId = receiver?.id;
+
+  const chat = await chatService.createChat({ currentUserId: payload.senderId, user2Id: payload.receiverId });
+
   const result = await prisma.message.create({
     data: {
-      ...payload,
+      ...morePayload,
+      chatId: chat?.id,
       files: {
         createMany: {
           data: files
@@ -47,21 +54,46 @@ const createMessages = async (payload: Message & TFile) => {
     }
   })
 
-  if (!result) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Message creation failed');
-  }
+  SendMessageHandle((global as any).socketio, { ...result, receiverUserName }, () => { })
 
   return result;
 };
 
 // Get all previous messages
-const getAllPreMessages = async (chatId: string, options: TPaginationOptions) => {
+const getAllPreMessages = async (friendUserName: string, currentUserId: string, options: TPaginationOptions) => {
 
   const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
+  const friend = await prisma.user.findFirst({ where: { userName: friendUserName, auth: { isverified: true, status: true } } });
+
+  if (!friend) {
+    return {
+      meta: paginationHelper.generatePaginationMeta({ page, limit, total: 0 }),
+      data: [],
+    };
+  }
+
+  const friendId = friend?.id;
+
+  const chat = await prisma.chat.findFirst({
+    where: {
+      OR: [
+        { user1Id: currentUserId, user2Id: friendId },
+        { user1Id: friendId, user2Id: currentUserId },
+      ],
+    },
+  });
+
+  if (!chat) {
+    return {
+      meta: paginationHelper.generatePaginationMeta({ page, limit, total: 0 }),
+      data: [],
+    };
+  }
+
   const messages = await prisma.message.findMany({
     where: {
-      chatId: chatId
+      chatId: chat?.id
     },
     include: {
       files: true,
@@ -88,7 +120,7 @@ const getAllPreMessages = async (chatId: string, options: TPaginationOptions) =>
       offer: true
     },
     orderBy: {
-      createdAt: "asc"
+      createdAt: "desc"
     },
     skip,
     take: limit,
@@ -96,7 +128,7 @@ const getAllPreMessages = async (chatId: string, options: TPaginationOptions) =>
 
   const total = await prisma.message.count({
     where: {
-      chatId: chatId
+      chatId: chat?.id
     },
   });
 

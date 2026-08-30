@@ -396,7 +396,6 @@ export const ModelName = {
   Size: 'Size',
   Follow: 'Follow',
   Chat: 'Chat',
-  ChatProdItem: 'ChatProdItem',
   Message: 'Message',
   FileMessage: 'FileMessage',
   OrderDeliveryCharge: 'OrderDeliveryCharge',
@@ -449,7 +448,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "follow" | "chat" | "chatProdItem" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
+    modelProps: "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "follow" | "chat" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -968,80 +967,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ChatCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ChatCountAggregateOutputType> | number
-        }
-      }
-    }
-    ChatProdItem: {
-      payload: Prisma.$ChatProdItemPayload<ExtArgs>
-      fields: Prisma.ChatProdItemFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ChatProdItemFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatProdItemPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ChatProdItemFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatProdItemPayload>
-        }
-        findFirst: {
-          args: Prisma.ChatProdItemFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatProdItemPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ChatProdItemFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatProdItemPayload>
-        }
-        findMany: {
-          args: Prisma.ChatProdItemFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatProdItemPayload>[]
-        }
-        create: {
-          args: Prisma.ChatProdItemCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatProdItemPayload>
-        }
-        createMany: {
-          args: Prisma.ChatProdItemCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ChatProdItemCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatProdItemPayload>[]
-        }
-        delete: {
-          args: Prisma.ChatProdItemDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatProdItemPayload>
-        }
-        update: {
-          args: Prisma.ChatProdItemUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatProdItemPayload>
-        }
-        deleteMany: {
-          args: Prisma.ChatProdItemDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ChatProdItemUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ChatProdItemUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatProdItemPayload>[]
-        }
-        upsert: {
-          args: Prisma.ChatProdItemUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatProdItemPayload>
-        }
-        aggregate: {
-          args: Prisma.ChatProdItemAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateChatProdItem>
-        }
-        groupBy: {
-          args: Prisma.ChatProdItemGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ChatProdItemGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ChatProdItemCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ChatProdItemCountAggregateOutputType> | number
         }
       }
     }
@@ -3903,17 +3828,6 @@ export const ChatScalarFieldEnum = {
 export type ChatScalarFieldEnum = (typeof ChatScalarFieldEnum)[keyof typeof ChatScalarFieldEnum]
 
 
-export const ChatProdItemScalarFieldEnum = {
-  id: 'id',
-  chatId: 'chatId',
-  productId: 'productId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ChatProdItemScalarFieldEnum = (typeof ChatProdItemScalarFieldEnum)[keyof typeof ChatProdItemScalarFieldEnum]
-
-
 export const MessageScalarFieldEnum = {
   id: 'id',
   text: 'text',
@@ -4396,6 +4310,7 @@ export const UserScalarFieldEnum = {
   mission: 'mission',
   business_tags: 'business_tags',
   isOnline: 'isOnline',
+  lastOnlineAt: 'lastOnlineAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDeleted: 'isDeleted',
@@ -5076,7 +4991,6 @@ export type GlobalOmitConfig = {
   size?: Prisma.SizeOmit
   follow?: Prisma.FollowOmit
   chat?: Prisma.ChatOmit
-  chatProdItem?: Prisma.ChatProdItemOmit
   message?: Prisma.MessageOmit
   fileMessage?: Prisma.FileMessageOmit
   orderDeliveryCharge?: Prisma.OrderDeliveryChargeOmit

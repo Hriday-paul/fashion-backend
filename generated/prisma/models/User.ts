@@ -57,6 +57,7 @@ export type UserMinAggregateOutputType = {
   fcmToken: string | null
   mission: string | null
   isOnline: boolean | null
+  lastOnlineAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   isDeleted: boolean | null
@@ -90,6 +91,7 @@ export type UserMaxAggregateOutputType = {
   fcmToken: string | null
   mission: string | null
   isOnline: boolean | null
+  lastOnlineAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   isDeleted: boolean | null
@@ -124,6 +126,7 @@ export type UserCountAggregateOutputType = {
   mission: number
   business_tags: number
   isOnline: number
+  lastOnlineAt: number
   createdAt: number
   updatedAt: number
   isDeleted: number
@@ -167,6 +170,7 @@ export type UserMinAggregateInputType = {
   fcmToken?: true
   mission?: true
   isOnline?: true
+  lastOnlineAt?: true
   createdAt?: true
   updatedAt?: true
   isDeleted?: true
@@ -200,6 +204,7 @@ export type UserMaxAggregateInputType = {
   fcmToken?: true
   mission?: true
   isOnline?: true
+  lastOnlineAt?: true
   createdAt?: true
   updatedAt?: true
   isDeleted?: true
@@ -234,6 +239,7 @@ export type UserCountAggregateInputType = {
   mission?: true
   business_tags?: true
   isOnline?: true
+  lastOnlineAt?: true
   createdAt?: true
   updatedAt?: true
   isDeleted?: true
@@ -355,6 +361,7 @@ export type UserGroupByOutputType = {
   mission: string | null
   business_tags: string[]
   isOnline: boolean
+  lastOnlineAt: Date
   createdAt: Date
   updatedAt: Date
   isDeleted: boolean
@@ -412,6 +419,7 @@ export type UserWhereInput = {
   mission?: Prisma.StringNullableFilter<"User"> | string | null
   business_tags?: Prisma.StringNullableListFilter<"User">
   isOnline?: Prisma.BoolFilter<"User"> | boolean
+  lastOnlineAt?: Prisma.DateTimeFilter<"User"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
@@ -482,6 +490,7 @@ export type UserOrderByWithRelationInput = {
   mission?: Prisma.SortOrderInput | Prisma.SortOrder
   business_tags?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
+  lastOnlineAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
@@ -555,6 +564,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   mission?: Prisma.StringNullableFilter<"User"> | string | null
   business_tags?: Prisma.StringNullableListFilter<"User">
   isOnline?: Prisma.BoolFilter<"User"> | boolean
+  lastOnlineAt?: Prisma.DateTimeFilter<"User"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
@@ -625,6 +635,7 @@ export type UserOrderByWithAggregationInput = {
   mission?: Prisma.SortOrderInput | Prisma.SortOrder
   business_tags?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
+  lastOnlineAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
@@ -667,6 +678,7 @@ export type UserScalarWhereWithAggregatesInput = {
   mission?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   business_tags?: Prisma.StringNullableListFilter<"User">
   isOnline?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  lastOnlineAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   isDeleted?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
@@ -701,6 +713,7 @@ export type UserCreateInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -771,6 +784,7 @@ export type UserUncheckedCreateInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -841,6 +855,7 @@ export type UserUpdateInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -911,6 +926,7 @@ export type UserUncheckedUpdateInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -981,6 +997,7 @@ export type UserCreateManyInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -1015,6 +1032,7 @@ export type UserUpdateManyMutationInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1049,6 +1067,7 @@ export type UserUncheckedUpdateManyInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1093,6 +1112,7 @@ export type UserCountOrderByAggregateInput = {
   mission?: Prisma.SortOrder
   business_tags?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
+  lastOnlineAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
@@ -1130,6 +1150,7 @@ export type UserMaxOrderByAggregateInput = {
   fcmToken?: Prisma.SortOrder
   mission?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
+  lastOnlineAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
@@ -1163,6 +1184,7 @@ export type UserMinOrderByAggregateInput = {
   fcmToken?: Prisma.SortOrder
   mission?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
+  lastOnlineAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
@@ -1730,6 +1752,7 @@ export type UserCreateWithoutFollowingInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -1799,6 +1822,7 @@ export type UserUncheckedCreateWithoutFollowingInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -1873,6 +1897,7 @@ export type UserCreateWithoutFollowersInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -1942,6 +1967,7 @@ export type UserUncheckedCreateWithoutFollowersInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -2027,6 +2053,7 @@ export type UserUpdateWithoutFollowingInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2096,6 +2123,7 @@ export type UserUncheckedUpdateWithoutFollowingInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2176,6 +2204,7 @@ export type UserUpdateWithoutFollowersInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2245,6 +2274,7 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2314,6 +2344,7 @@ export type UserCreateWithoutUser1ChatsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -2383,6 +2414,7 @@ export type UserUncheckedCreateWithoutUser1ChatsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -2457,6 +2489,7 @@ export type UserCreateWithoutUser2ChatsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -2526,6 +2559,7 @@ export type UserUncheckedCreateWithoutUser2ChatsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -2611,6 +2645,7 @@ export type UserUpdateWithoutUser1ChatsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2680,6 +2715,7 @@ export type UserUncheckedUpdateWithoutUser1ChatsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2760,6 +2796,7 @@ export type UserUpdateWithoutUser2ChatsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2829,6 +2866,7 @@ export type UserUncheckedUpdateWithoutUser2ChatsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2898,6 +2936,7 @@ export type UserCreateWithoutSentMessagesInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -2967,6 +3006,7 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -3041,6 +3081,7 @@ export type UserCreateWithoutReceiveMessagesInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -3110,6 +3151,7 @@ export type UserUncheckedCreateWithoutReceiveMessagesInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -3195,6 +3237,7 @@ export type UserUpdateWithoutSentMessagesInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3264,6 +3307,7 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3344,6 +3388,7 @@ export type UserUpdateWithoutReceiveMessagesInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3413,6 +3458,7 @@ export type UserUncheckedUpdateWithoutReceiveMessagesInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3482,6 +3528,7 @@ export type UserCreateWithoutBuyOrdersInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -3551,6 +3598,7 @@ export type UserUncheckedCreateWithoutBuyOrdersInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -3625,6 +3673,7 @@ export type UserCreateWithoutSellOrdersInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -3694,6 +3743,7 @@ export type UserUncheckedCreateWithoutSellOrdersInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -3779,6 +3829,7 @@ export type UserUpdateWithoutBuyOrdersInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3848,6 +3899,7 @@ export type UserUncheckedUpdateWithoutBuyOrdersInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3928,6 +3980,7 @@ export type UserUpdateWithoutSellOrdersInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3997,6 +4050,7 @@ export type UserUncheckedUpdateWithoutSellOrdersInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4066,6 +4120,7 @@ export type UserCreateWithoutSellDonationsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -4135,6 +4190,7 @@ export type UserUncheckedCreateWithoutSellDonationsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -4220,6 +4276,7 @@ export type UserUpdateWithoutSellDonationsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4289,6 +4346,7 @@ export type UserUncheckedUpdateWithoutSellDonationsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4358,6 +4416,7 @@ export type UserCreateWithoutPaymentsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -4427,6 +4486,7 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -4512,6 +4572,7 @@ export type UserUpdateWithoutPaymentsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4581,6 +4642,7 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4650,6 +4712,7 @@ export type UserCreateWithoutDonationsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -4719,6 +4782,7 @@ export type UserUncheckedCreateWithoutDonationsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -4793,6 +4857,7 @@ export type UserCreateWithoutDonationsReceivedInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -4862,6 +4927,7 @@ export type UserUncheckedCreateWithoutDonationsReceivedInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -4947,6 +5013,7 @@ export type UserUpdateWithoutDonationsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5016,6 +5083,7 @@ export type UserUncheckedUpdateWithoutDonationsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5096,6 +5164,7 @@ export type UserUpdateWithoutDonationsReceivedInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5165,6 +5234,7 @@ export type UserUncheckedUpdateWithoutDonationsReceivedInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5234,6 +5304,7 @@ export type UserCreateWithoutProductsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -5303,6 +5374,7 @@ export type UserUncheckedCreateWithoutProductsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -5388,6 +5460,7 @@ export type UserUpdateWithoutProductsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5457,6 +5530,7 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5526,6 +5600,7 @@ export type UserCreateWithoutProductCharitiesInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -5595,6 +5670,7 @@ export type UserUncheckedCreateWithoutProductCharitiesInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -5680,6 +5756,7 @@ export type UserUpdateWithoutProductCharitiesInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5749,6 +5826,7 @@ export type UserUncheckedUpdateWithoutProductCharitiesInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5818,6 +5896,7 @@ export type UserCreateWithoutFavouriteProductsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -5887,6 +5966,7 @@ export type UserUncheckedCreateWithoutFavouriteProductsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -5972,6 +6052,7 @@ export type UserUpdateWithoutFavouriteProductsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6041,6 +6122,7 @@ export type UserUncheckedUpdateWithoutFavouriteProductsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6110,6 +6192,7 @@ export type UserCreateWithoutSellerGroupCartsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -6179,6 +6262,7 @@ export type UserUncheckedCreateWithoutSellerGroupCartsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -6253,6 +6337,7 @@ export type UserCreateWithoutCartsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -6322,6 +6407,7 @@ export type UserUncheckedCreateWithoutCartsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -6407,6 +6493,7 @@ export type UserUpdateWithoutSellerGroupCartsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6476,6 +6563,7 @@ export type UserUncheckedUpdateWithoutSellerGroupCartsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6556,6 +6644,7 @@ export type UserUpdateWithoutCartsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6625,6 +6714,7 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6694,6 +6784,7 @@ export type UserCreateWithoutCartDonationCharitiesInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -6763,6 +6854,7 @@ export type UserUncheckedCreateWithoutCartDonationCharitiesInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -6848,6 +6940,7 @@ export type UserUpdateWithoutCartDonationCharitiesInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6917,6 +7010,7 @@ export type UserUncheckedUpdateWithoutCartDonationCharitiesInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6986,6 +7080,7 @@ export type UserCreateWithoutOffersAsSellerInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -7055,6 +7150,7 @@ export type UserUncheckedCreateWithoutOffersAsSellerInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -7129,6 +7225,7 @@ export type UserCreateWithoutOffersAsBuyerInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -7198,6 +7295,7 @@ export type UserUncheckedCreateWithoutOffersAsBuyerInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -7283,6 +7381,7 @@ export type UserUpdateWithoutOffersAsSellerInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7352,6 +7451,7 @@ export type UserUncheckedUpdateWithoutOffersAsSellerInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7432,6 +7532,7 @@ export type UserUpdateWithoutOffersAsBuyerInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7501,6 +7602,7 @@ export type UserUncheckedUpdateWithoutOffersAsBuyerInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7570,6 +7672,7 @@ export type UserCreateWithoutProductViewsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -7639,6 +7742,7 @@ export type UserUncheckedCreateWithoutProductViewsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -7724,6 +7828,7 @@ export type UserUpdateWithoutProductViewsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7793,6 +7898,7 @@ export type UserUncheckedUpdateWithoutProductViewsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7862,6 +7968,7 @@ export type UserCreateWithoutProdQuestionsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -7931,6 +8038,7 @@ export type UserUncheckedCreateWithoutProdQuestionsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -8016,6 +8124,7 @@ export type UserUpdateWithoutProdQuestionsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8085,6 +8194,7 @@ export type UserUncheckedUpdateWithoutProdQuestionsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8154,6 +8264,7 @@ export type UserCreateWithoutBundleDiscountInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -8223,6 +8334,7 @@ export type UserUncheckedCreateWithoutBundleDiscountInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -8308,6 +8420,7 @@ export type UserUpdateWithoutBundleDiscountInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8377,6 +8490,7 @@ export type UserUncheckedUpdateWithoutBundleDiscountInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8446,6 +8560,7 @@ export type UserCreateWithoutReturnsAsBuyerInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -8515,6 +8630,7 @@ export type UserUncheckedCreateWithoutReturnsAsBuyerInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -8589,6 +8705,7 @@ export type UserCreateWithoutReturnsAsSellerInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -8658,6 +8775,7 @@ export type UserUncheckedCreateWithoutReturnsAsSellerInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -8743,6 +8861,7 @@ export type UserUpdateWithoutReturnsAsBuyerInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8812,6 +8931,7 @@ export type UserUncheckedUpdateWithoutReturnsAsBuyerInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8892,6 +9012,7 @@ export type UserUpdateWithoutReturnsAsSellerInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8961,6 +9082,7 @@ export type UserUncheckedUpdateWithoutReturnsAsSellerInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9030,6 +9152,7 @@ export type UserCreateWithoutRatingsGivenInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -9099,6 +9222,7 @@ export type UserUncheckedCreateWithoutRatingsGivenInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -9173,6 +9297,7 @@ export type UserCreateWithoutRatingsReceivedInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -9242,6 +9367,7 @@ export type UserUncheckedCreateWithoutRatingsReceivedInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -9327,6 +9453,7 @@ export type UserUpdateWithoutRatingsGivenInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9396,6 +9523,7 @@ export type UserUncheckedUpdateWithoutRatingsGivenInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9476,6 +9604,7 @@ export type UserUpdateWithoutRatingsReceivedInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9545,6 +9674,7 @@ export type UserUncheckedUpdateWithoutRatingsReceivedInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9614,6 +9744,7 @@ export type UserCreateWithoutAuthInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -9683,6 +9814,7 @@ export type UserUncheckedCreateWithoutAuthInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -9768,6 +9900,7 @@ export type UserUpdateWithoutAuthInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9837,6 +9970,7 @@ export type UserUncheckedUpdateWithoutAuthInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9906,6 +10040,7 @@ export type UserCreateWithoutCharityGalleriesInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -9975,6 +10110,7 @@ export type UserUncheckedCreateWithoutCharityGalleriesInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -10060,6 +10196,7 @@ export type UserUpdateWithoutCharityGalleriesInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10129,6 +10266,7 @@ export type UserUncheckedUpdateWithoutCharityGalleriesInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10198,6 +10336,7 @@ export type UserCreateWithoutPictureInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -10267,6 +10406,7 @@ export type UserUncheckedCreateWithoutPictureInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -10352,6 +10492,7 @@ export type UserUpdateWithoutPictureInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10421,6 +10562,7 @@ export type UserUncheckedUpdateWithoutPictureInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10490,6 +10632,7 @@ export type UserCreateWithoutAccount_documentsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -10559,6 +10702,7 @@ export type UserUncheckedCreateWithoutAccount_documentsInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -10644,6 +10788,7 @@ export type UserUpdateWithoutAccount_documentsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10713,6 +10858,7 @@ export type UserUncheckedUpdateWithoutAccount_documentsInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10782,6 +10928,7 @@ export type UserCreateWithoutBillingAddressInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -10851,6 +10998,7 @@ export type UserUncheckedCreateWithoutBillingAddressInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -10925,6 +11073,7 @@ export type UserCreateWithoutSellerAddressInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -10994,6 +11143,7 @@ export type UserUncheckedCreateWithoutSellerAddressInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -11079,6 +11229,7 @@ export type UserUpdateWithoutBillingAddressInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11148,6 +11299,7 @@ export type UserUncheckedUpdateWithoutBillingAddressInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11228,6 +11380,7 @@ export type UserUpdateWithoutSellerAddressInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11297,6 +11450,7 @@ export type UserUncheckedUpdateWithoutSellerAddressInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11366,6 +11520,7 @@ export type UserCreateWithoutNotificationSendersInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -11435,6 +11590,7 @@ export type UserUncheckedCreateWithoutNotificationSendersInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -11509,6 +11665,7 @@ export type UserCreateWithoutNotificationReceiversInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -11578,6 +11735,7 @@ export type UserUncheckedCreateWithoutNotificationReceiversInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -11663,6 +11821,7 @@ export type UserUpdateWithoutNotificationSendersInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11732,6 +11891,7 @@ export type UserUncheckedUpdateWithoutNotificationSendersInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11812,6 +11972,7 @@ export type UserUpdateWithoutNotificationReceiversInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11881,6 +12042,7 @@ export type UserUncheckedUpdateWithoutNotificationReceiversInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11950,6 +12112,7 @@ export type UserCreateWithoutWalletInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -12019,6 +12182,7 @@ export type UserUncheckedCreateWithoutWalletInput = {
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
+  lastOnlineAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
@@ -12104,6 +12268,7 @@ export type UserUpdateWithoutWalletInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12173,6 +12338,7 @@ export type UserUncheckedUpdateWithoutWalletInput = {
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12534,6 +12700,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   mission?: boolean
   business_tags?: boolean
   isOnline?: boolean
+  lastOnlineAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDeleted?: boolean
@@ -12605,6 +12772,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   mission?: boolean
   business_tags?: boolean
   isOnline?: boolean
+  lastOnlineAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDeleted?: boolean
@@ -12639,6 +12807,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   mission?: boolean
   business_tags?: boolean
   isOnline?: boolean
+  lastOnlineAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDeleted?: boolean
@@ -12673,6 +12842,7 @@ export type UserSelectScalar = {
   mission?: boolean
   business_tags?: boolean
   isOnline?: boolean
+  lastOnlineAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDeleted?: boolean
@@ -12682,7 +12852,7 @@ export type UserSelectScalar = {
   stripeCustomerId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fname" | "lname" | "email" | "userName" | "phone" | "bio" | "description" | "country" | "state" | "city" | "address" | "zip_code" | "instagram" | "facebook" | "twitter" | "tiktok" | "website" | "support_email" | "notification" | "fcmToken" | "mission" | "business_tags" | "isOnline" | "createdAt" | "updatedAt" | "isDeleted" | "avgRating" | "vacationMode" | "stripeAccountId" | "stripeCustomerId", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fname" | "lname" | "email" | "userName" | "phone" | "bio" | "description" | "country" | "state" | "city" | "address" | "zip_code" | "instagram" | "facebook" | "twitter" | "tiktok" | "website" | "support_email" | "notification" | "fcmToken" | "mission" | "business_tags" | "isOnline" | "lastOnlineAt" | "createdAt" | "updatedAt" | "isDeleted" | "avgRating" | "vacationMode" | "stripeAccountId" | "stripeCustomerId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   auth?: boolean | Prisma.User$authArgs<ExtArgs>
   picture?: boolean | Prisma.User$pictureArgs<ExtArgs>
@@ -12790,6 +12960,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     mission: string | null
     business_tags: string[]
     isOnline: boolean
+    lastOnlineAt: Date
     createdAt: Date
     updatedAt: Date
     isDeleted: boolean
@@ -13280,6 +13451,7 @@ export interface UserFieldRefs {
   readonly mission: Prisma.FieldRef<"User", 'String'>
   readonly business_tags: Prisma.FieldRef<"User", 'String[]'>
   readonly isOnline: Prisma.FieldRef<"User", 'Boolean'>
+  readonly lastOnlineAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly isDeleted: Prisma.FieldRef<"User", 'Boolean'>

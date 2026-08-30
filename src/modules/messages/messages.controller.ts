@@ -8,7 +8,7 @@ import { PaginateOptions } from '../../helper/pagination.helper';
 
 const createMessages = catchAsync(async (req: Request, res: Response) => {
 
-  req.body.sender = req.user.id;
+  req.body.senderId = req.user.id;
 
   const result = await messagesService.createMessages(req.body);
 
@@ -20,10 +20,11 @@ const createMessages = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// Get all messages
+// Get all messages by chatId
 const getAllPreMessages = catchAsync(async (req: Request, res: Response) => {
   const options = pick(req.query, PaginateOptions);
-  const result = await messagesService.getAllPreMessages(req?.params?.id, options);
+
+  const result = await messagesService.getAllPreMessages(req?.params?.friendUserName, req?.user?.id, options);
   sendResponse(res, {
     statusCode: 200,
     success: true,
