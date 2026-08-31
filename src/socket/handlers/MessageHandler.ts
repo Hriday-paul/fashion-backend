@@ -1,7 +1,7 @@
 import { Server, Socket } from "socket.io";
 import { callbackFn } from "../../utils/CallbackFn";
 import prisma from "../../shared/prisma";
-import { Message } from "../../../generated/prisma/client";
+import { Message, User } from "../../../generated/prisma/client";
 import httpStatus from "http-status"
 import { messagesService } from "../../modules/messages/messages.service";
 import { getChatList } from "./ChatHandler";
@@ -73,7 +73,7 @@ export const MessageHandler = async (
 
 export const SendMessageHandle = async (
     io: Server,
-    payload: Message & { receiverUserName: string },
+    payload: Message & { sender: { userName: string } },
     callback: (arg: any) => void
 ) => {
     try {
@@ -81,8 +81,8 @@ export const SendMessageHandle = async (
         const reciverRoom = `user::${payload?.receiverId}`;
         const senderRoom = `user::${payload?.senderId}`;
 
-        io.to(reciverRoom).emit(`new-message::${payload?.senderId}`, payload);
-        io.to(senderRoom).emit(`new-message::${payload?.receiverUserName}`, payload);
+        io.to(senderRoom).emit(`new-message::${payload?.senderId}`, payload);
+        io.to(reciverRoom).emit(`new-message::${payload?.sender?.userName}`, payload);
 
         //---------------hit on chatlist for see last sent message with the chatList------------------//
         getChatList(payload?.senderId, io, callback)
@@ -102,6 +102,40 @@ export const SendMessageHandle = async (
         });
         // socket.emit('io-error', { success: false, message: error });
         console.error('Error in send message event:', error);
+    }
+}
+
+export const UpdateMessageHandle = async (
+    io: Server,
+    payload: Message & { sender: { userName: string } },
+    callback: (arg: any) => void
+) => {
+    try {
+
+        const reciverRoom = `user::${payload?.receiverId}`;
+        const senderRoom = `user::${payload?.senderId}`;
+
+        io.to(senderRoom).emit(`update-message::${payload?.senderId}`, payload);
+        io.to(reciverRoom).emit(`update-message::${payload?.sender?.userName}`, payload);
+
+        //---------------hit on chatlist for see last sent message with the chatList------------------//
+        getChatList(payload?.senderId, io, callback)
+        getChatList(payload?.receiverId, io, callback)
+
+        
+        callbackFn(callback, {
+            statusCode: httpStatus.OK,
+            success: true,
+            message: 'Message updated sent successfully!',
+            data: payload,
+        });
+    } catch (error: any) {
+        callbackFn(callback, {
+            success: false,
+            message: error.message,
+        });
+        // socket.emit('io-error', { success: false, message: error });
+        console.error('Error in update message event:', error);
     }
 }
 

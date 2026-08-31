@@ -1,19 +1,19 @@
 import httpStatus from 'http-status';
 import AppError from '../../error/AppError';
-import { Message } from '../../../generated/prisma/client';
+import { FileMessageType, Message } from '../../../generated/prisma/client';
 import prisma from '../../shared/prisma';
 import { paginationHelper, TPaginationOptions } from '../../helper/pagination.helper';
 import { chatService } from '../chat/chat.service';
 import { SendMessageHandle } from '../../socket/handlers/MessageHandler';
 
 type TFile = {
-  files?: { key: string; url: string }[];
+  files?: { key: string; url: string, title: string, type: FileMessageType }[];
   receiverUserName: string;
 }
 
 const createMessages = async (payload: Message & TFile) => {
 
-  const { isSeen, chatId, createdAt, receiverUserName, ...morePayload } = payload;
+  const { isSeen, chatId, createdAt, receiverUserName, offerId, ...morePayload } = payload;
 
   const files = payload?.files || []
 
@@ -25,7 +25,7 @@ const createMessages = async (payload: Message & TFile) => {
 
   morePayload.receiverId = receiver?.id;
 
-  const chat = await chatService.createChat({ currentUserId: payload.senderId, user2Id: payload.receiverId });
+  const chat = await chatService.createChat({ currentUserId: payload.senderId, user2Id: receiver?.id });
 
   const result = await prisma.message.create({
     data: {
@@ -54,7 +54,7 @@ const createMessages = async (payload: Message & TFile) => {
     }
   })
 
-  SendMessageHandle((global as any).socketio, { ...result, receiverUserName }, () => { })
+  SendMessageHandle((global as any).socketio, result, () => { })
 
   return result;
 };
@@ -99,6 +99,7 @@ const getAllPreMessages = async (friendUserName: string, currentUserId: string, 
       files: true,
       sender: {
         select: {
+          id: true,
           picture: {
             select: {
               url: true
@@ -109,6 +110,7 @@ const getAllPreMessages = async (friendUserName: string, currentUserId: string, 
       },
       receiver: {
         select: {
+          id: true,
           picture: {
             select: {
               url: true
@@ -117,7 +119,39 @@ const getAllPreMessages = async (friendUserName: string, currentUserId: string, 
           userName: true
         }
       },
-      offer: true
+      offer: {
+        include: {
+          offerItems: {
+            select: {
+              id: true,
+              product: {
+                select: {
+                  id: true,
+                  title: true,
+                  finalPrice: true,
+                  images: {
+                    take: 1,
+                    select: {
+                      id: true,
+                      url: true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          seller: {
+            select: {
+              userName: true,
+              picture: {
+                select: {
+                  url: true
+                }
+              }
+            }
+          }
+        }
+      }
     },
     orderBy: {
       createdAt: "desc"

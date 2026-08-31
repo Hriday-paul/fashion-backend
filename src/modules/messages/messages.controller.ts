@@ -5,8 +5,28 @@ import { messagesService } from './messages.service';
 import sendResponse from '../../utils/sendResponse';
 import pick from '../../shared/pick';
 import { PaginateOptions } from '../../helper/pagination.helper';
+import { uploadManyToS3 } from '../../utils/s3';
 
 const createMessages = catchAsync(async (req: Request, res: Response) => {
+
+  const files = req.files as Express.Multer.File[];
+
+  const FileAry = files?.map(image => {
+    return {
+      file: image,
+      path: `images/chat/images`,
+    };
+  });
+
+  const urls = await uploadManyToS3(FileAry);
+  req.body.files = urls.map(url => {
+    return {
+      key: url.key,
+      url: url.url,
+      title: url.title,
+      type: url?.isImage ? "IMAGE" : "DOCUMENT"
+    };
+  });
 
   req.body.senderId = req.user.id;
 

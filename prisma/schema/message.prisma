@@ -50,8 +50,15 @@ model FileMessage {
     id        String  @id @default(uuid())
     key       String
     url       String
+    title     String?
     messageId String
     message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+    type FileMessageType @default(IMAGE)
 
     @@map("document_messages")
+}
+
+enum FileMessageType {
+    IMAGE
+    DOCUMENT
 }

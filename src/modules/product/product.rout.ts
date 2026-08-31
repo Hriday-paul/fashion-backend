@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { productControler } from "./product.controler";
 import parseData from "../../middleware/parseData";
-import { addProductValidator, productByTypeValidator } from "./product.validator";
+import { acceptOfferValidator, addProductValidator, declineCounterOfferValidator, makeofferValidator, productByTypeValidator } from "./product.validator";
 import req_validator from "../../middleware/req_validation";
 import { image_Upload } from "../../utils/s3";
 import auth, { PublicAuth } from "../../middleware/auth";
@@ -27,6 +27,10 @@ router.get("/donation-support/:productId", productControler.donationSupportByPro
 router.get("/similar-from-seller/:productId", PublicAuth(), productControler.similarProductsFromSeller);
 router.get("/same-category/:productId", PublicAuth(), productControler.sameCategoryProducts);
 router.get("/same-color/:productId", PublicAuth(), productControler.sameColorProducts);
+
+router.post("/offer", makeofferValidator, req_validator(), auth(...allRoles), productControler.makeAnOfferAsBuyer);
+router.post("/offer/accept", acceptOfferValidator, req_validator(), auth(...allRoles), productControler.acceptOfferAsSeller);
+router.post("/offer/decline", declineCounterOfferValidator, req_validator(), auth(...allRoles), productControler.declineCounterOfferAsSeller);
 
 router.get("/:id", PublicAuth(), productControler.productDetails);
 

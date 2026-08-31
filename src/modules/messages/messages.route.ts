@@ -4,8 +4,8 @@ import { sendMessageValidator } from './messages.validation';
 import parseData from '../../middleware/parseData';
 import auth from '../../middleware/auth';
 import req_validator from '../../middleware/req_validation';
-import { Role } from '../../../generated/prisma/enums';
 import { allRoles } from '../user/user.rout';
+import { document_Upload } from '../../utils/s3';
 
 const router = Router();
 // const storage = memoryStorage();
@@ -14,8 +14,8 @@ const router = Router();
 router.post(
   '/send',
   auth(...allRoles),
-  // upload.single('image'),
-  // parseData(),
+  document_Upload.array('files'),
+  parseData(),
   sendMessageValidator,
   req_validator(),
   messagesController.createMessages,

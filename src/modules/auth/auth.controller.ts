@@ -52,6 +52,18 @@ const socialSignUp = catchAsync(async (req: Request, res: Response) => {
         data: result,
     });
 })
+//create user
+const socialLogin = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await authService.socialLogin(req.body);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Signin successfully',
+        data: result,
+    });
+})
 
 //login user
 const loginUser = catchAsync(async (req: Request, res: Response) => {
@@ -136,5 +148,6 @@ export const authController = {
     changePassword,
     resetPassword,
     forgotPassword,
-    refreshToken
+    refreshToken,
+    socialLogin
 }

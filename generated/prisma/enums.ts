@@ -8,6 +8,14 @@
 * 🟢 You can import this file directly.
 */
 
+export const FileMessageType = {
+  IMAGE: 'IMAGE',
+  DOCUMENT: 'DOCUMENT'
+} as const
+
+export type FileMessageType = (typeof FileMessageType)[keyof typeof FileMessageType]
+
+
 export const DeliveryChargeStatus = {
   UNPAID: 'UNPAID',
   PAID: 'PAID',

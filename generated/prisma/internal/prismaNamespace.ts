@@ -3847,7 +3847,9 @@ export const FileMessageScalarFieldEnum = {
   id: 'id',
   key: 'key',
   url: 'url',
-  messageId: 'messageId'
+  title: 'title',
+  messageId: 'messageId',
+  type: 'type'
 } as const
 
 export type FileMessageScalarFieldEnum = (typeof FileMessageScalarFieldEnum)[keyof typeof FileMessageScalarFieldEnum]
@@ -4531,6 +4533,20 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'FileMessageType'
+ */
+export type EnumFileMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileMessageType'>
+    
+
+
+/**
+ * Reference to a field of type 'FileMessageType[]'
+ */
+export type ListEnumFileMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileMessageType[]'>
     
 
 

@@ -107,3 +107,46 @@ export const productByTypeValidator = [
     .isIn(['trending', 'topSelling', 'recomended'])
     .withMessage('type must be trending, topSelling or recomended')
 ]
+
+export const makeofferValidator = [
+  body('productIds')
+    .isArray({ min: 1 })
+    .withMessage('productIds must be an array with at least one product ID'),
+  body('productIds.*')
+    .isUUID()
+    .withMessage('Each product ID must be a valid UUID'),
+  body('offerPrice')
+    .isFloat({ min: 0 })
+    .withMessage('offerPrice must be a positive number'),
+  body('sellerId')
+    .isString()
+    .withMessage('seller must be a string')
+    .notEmpty()
+    .withMessage('seller is required')
+    .isUUID()
+    .withMessage('seller must be a valid UUID'),
+]
+
+export const acceptOfferValidator = [
+  body('offerId')
+    .isString()
+    .withMessage('offerId must be a string')
+    .notEmpty()
+    .withMessage('offerId is required')
+    .isUUID()
+    .withMessage('offerId must be a valid UUID'),
+]
+
+export const declineCounterOfferValidator = [
+  body('offerId')
+    .isString()
+    .withMessage('offerId must be a string')
+    .notEmpty()
+    .withMessage('offerId is required')
+    .isUUID()
+    .withMessage('offerId must be a valid UUID'),
+
+  body('offerPrice')
+    .isFloat({ min: 0 })
+    .withMessage('offerPrice must be a positive number'),
+]

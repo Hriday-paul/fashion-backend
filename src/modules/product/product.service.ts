@@ -8,6 +8,7 @@ import { categoryService } from "../category/category.service";
 import httpStatus from "http-status";
 import { BuildFingerPrint } from "../../utils/BuildfingerPrint";
 import { chatService } from "../chat/chat.service";
+import { SendMessageHandle, UpdateMessageHandle } from "../../socket/handlers/MessageHandler";
 
 type ProductOtherPayload = {
     images: { key: string, url: string }[],
@@ -1128,6 +1129,368 @@ const donationSupportByProduct = async (productId: string) => {
 
 }
 
+const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: number, sellerId: string }, currentUserId: string,) => {
+
+    const { productIds, offerPrice, sellerId } = payload;
+
+    const products = await prisma.product.findMany({
+        where: {
+            id: { in: productIds },
+            isDeleted: false,
+            stock: { gt: 0 },
+            userId: { not: currentUserId, equals: sellerId }
+        },
+        select: {
+            finalPrice: true,
+            id: true
+        }
+    });
+
+    if (products.length !== productIds.length) {
+        throw new AppError(httpStatus.NOT_FOUND, "Some items doesn't exist");
+    }
+
+    const receiver = await prisma.user.findFirst({ where: { id: sellerId, auth: { isverified: true, status: true } }, select: { userName: true } });
+
+    if (!receiver) {
+        throw new AppError(httpStatus.NOT_FOUND, "Seller Does not exist");
+    }
+
+    const chat = await chatService.createChat({ currentUserId: currentUserId, user2Id: sellerId });
+
+    const msg = await prisma.$transaction(async (tx) => {
+
+        const offer = await tx.offer.create({
+            data: {
+                buyerId: currentUserId,
+                sellerId,
+                offeredPrice: offerPrice,
+                actualPrice: products.reduce((sum, p) => sum + p.finalPrice, 0),
+                offerItems: {
+                    create: products.map(p => ({
+                        productId: p?.id,
+                        quantity: 1
+                    }))
+                },
+                sendByBuyer: true,
+                status: "PENDING"
+            }
+        });
+
+        const msg = await tx.message.create({
+            data: {
+                receiverId: sellerId,
+                senderId: currentUserId,
+                offerId: offer?.id,
+                chatId: chat?.id
+            },
+            include: {
+                files: true,
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                offer: {
+                    include: {
+                        offerItems: {
+                            select: {
+                                id: true,
+                                product: {
+                                    select: {
+                                        finalPrice: true,
+                                        id: true,
+                                        title: true,
+                                        images: {
+                                            take: 1,
+                                            select: {
+                                                id: true,
+                                                url: true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        seller: {
+                            select: {
+                                userName: true,
+                                picture: {
+                                    select: {
+                                        url: true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+
+        return msg;
+
+    })
+
+    SendMessageHandle((global as any).socketio, msg, () => { })
+
+    return;
+}
+
+const acceptOfferAsSeller = async (offerId: string, currentUserId: string) => {
+    const offer = await prisma.offer.findFirst({
+        where: {
+            id: offerId,
+        }
+    });
+
+    if (!offer) {
+        throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
+    }
+
+    if (offer.sellerId !== currentUserId) {
+        throw new AppError(httpStatus.FORBIDDEN, "You are not authorized to accept this offer");
+    }
+
+    const updatedOffer = await prisma.offer.update({
+        where: {
+            id: offerId
+        },
+        data: {
+            status: "ACCEPTED"
+        }
+    });
+
+    const msg = await prisma.message.findFirst({
+        where: {
+            offerId: updatedOffer.id
+        },
+        include: {
+            files: true,
+            sender: {
+                select: {
+                    id: true,
+                    picture: {
+                        select: {
+                            url: true
+                        }
+                    },
+                    userName: true
+                }
+            },
+            receiver: {
+                select: {
+                    id: true,
+                    picture: {
+                        select: {
+                            url: true
+                        }
+                    },
+                    userName: true
+                }
+            },
+            offer: {
+                include: {
+                    offerItems: {
+                        select: {
+                            id: true,
+                            product: {
+                                select: {
+                                    finalPrice: true,
+                                    id: true,
+                                    title: true,
+                                    images: {
+                                        take: 1,
+                                        select: {
+                                            id: true,
+                                            url: true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    seller: {
+                        select: {
+                            userName: true,
+                            picture: {
+                                select: {
+                                    url: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    })
+
+    if (msg) {
+        UpdateMessageHandle((global as any).socketio, msg, () => { })
+    }
+
+    return;
+
+}
+
+const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPrice: number }, currentUserId: string) => {
+
+    const { offerId, offerPrice } = payload;
+
+    const offer = await prisma.offer.findFirst({
+        where: {
+            id: offerId,
+        },
+        select: {
+            buyerId: true,
+            sellerId: true,
+            offerItems: {
+                select: {
+                    product: {
+                        select: {
+                            finalPrice: true,
+                            id: true
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    if (!offer) {
+        throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
+    }
+
+    if (offer.sellerId !== currentUserId) {
+        throw new AppError(httpStatus.FORBIDDEN, "You are not authorized to accept this offer");
+    }
+
+    const chat = await chatService.createChat({ currentUserId: offer?.sellerId, user2Id: offer?.buyerId });
+
+    const msg = await prisma.$transaction(async (tx) => {
+
+        // Reject the existing offer
+        await tx.offer.update({
+            where: {
+                id: offerId
+            },
+            data: {
+                status: "REJECTED"
+            }
+        });
+
+        // Create a new offer with the counter offer price
+        const newOffer = await tx.offer.create({
+            data: {
+                buyerId: currentUserId,
+                sellerId: offer.sellerId,
+                offeredPrice: offerPrice,
+                actualPrice: offer?.offerItems?.reduce((sum, offerItem) => sum + offerItem.product.finalPrice, 0),
+                offerItems: {
+                    create: offer?.offerItems?.map(offeritem => ({
+                        productId: offeritem?.product?.id,
+                        quantity: 1
+                    }))
+                },
+                sendByBuyer: true,
+                status: "ACCEPTED"
+            }
+        });
+
+        // Create a message to notify the buyer about the counter offer
+        const msg = await tx.message.create({
+            data: {
+                receiverId: offer?.buyerId,
+                senderId: offer?.sellerId,
+                offerId: newOffer?.id,
+                chatId: chat?.id
+            },
+            include: {
+                files: true,
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                offer: {
+                    include: {
+                        offerItems: {
+                            select: {
+                                id: true,
+                                product: {
+                                    select: {
+                                        finalPrice: true,
+                                        id: true,
+                                        title: true,
+                                        images: {
+                                            take: 1,
+                                            select: {
+                                                id: true,
+                                                url: true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        seller: {
+                            select: {
+                                userName: true,
+                                picture: {
+                                    select: {
+                                        url: true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+
+        return msg;
+
+    })
+
+    SendMessageHandle((global as any).socketio, msg, () => { })
+
+    return;
+
+}
+
 export const productService = {
     addNewProduct,
 
@@ -1147,5 +1510,9 @@ export const productService = {
     donationSupportByProduct,
     sameCategoryProducts,
     sameColorProducts,
-    productStats
+    productStats,
+
+    makeAnOfferAsBuyer,
+    acceptOfferAsSeller,
+    declineCounterOfferAsSeller
 }

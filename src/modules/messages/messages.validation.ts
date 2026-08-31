@@ -1,6 +1,6 @@
-import { body, check } from "express-validator";
+import { body } from "express-validator";
 
 export const sendMessageValidator = [
-  body("text").trim().trim().not().isEmpty().withMessage("text is required"),
-  body("receiverUserName").trim().trim().not().isEmpty().withMessage("receiver is not valid")
+  body("text").trim().optional(),
+  body("receiverUserName").trim().notEmpty().withMessage("receiver is not valid")
 ]

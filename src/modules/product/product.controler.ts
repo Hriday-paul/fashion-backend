@@ -29,7 +29,12 @@ const addNewProduct = catchAsync(async (req: Request, res: Response) => {
         });
 
         const urls = await uploadManyToS3(FileAry);
-        req.body.images = urls
+        req.body.images = urls.map(url => {
+            return {
+                key: url.key,
+                url: url.url,
+            };
+        });
     }
 
     const result = await productService.addNewProduct(req.body, req.user.role, req.user
@@ -154,6 +159,7 @@ const productDetails = catchAsync(async (req: Request, res: Response) => {
         data: result,
     });
 });
+
 const productStats = catchAsync(async (req: Request, res: Response) => {
     const result = await productService.productStats(req.params.productId, req.user?.id);
     sendResponse(res, {
@@ -216,6 +222,34 @@ const recomendedProducts = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const makeAnOfferAsBuyer = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.makeAnOfferAsBuyer(req.body, req?.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Offer sent to seller successfully',
+        data: result,
+    });
+});
+const acceptOfferAsSeller = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.acceptOfferAsSeller(req.body.offerId, req?.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Offer accepted successfully',
+        data: result,
+    });
+});
+const declineCounterOfferAsSeller = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.declineCounterOfferAsSeller(req.body, req?.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Offer declined successfully',
+        data: result,
+    });
+});
+
 export const productControler = {
     addNewProduct,
     allProducts,
@@ -234,4 +268,8 @@ export const productControler = {
     sameCategoryProducts,
     sameColorProducts,
     productStats,
+
+    makeAnOfferAsBuyer,
+    acceptOfferAsSeller,
+    declineCounterOfferAsSeller
 }

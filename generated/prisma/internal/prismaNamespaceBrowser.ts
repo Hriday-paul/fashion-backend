@@ -210,7 +210,9 @@ export const FileMessageScalarFieldEnum = {
   id: 'id',
   key: 'key',
   url: 'url',
-  messageId: 'messageId'
+  title: 'title',
+  messageId: 'messageId',
+  type: 'type'
 } as const
 
 export type FileMessageScalarFieldEnum = (typeof FileMessageScalarFieldEnum)[keyof typeof FileMessageScalarFieldEnum]

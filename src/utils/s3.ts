@@ -51,8 +51,11 @@ export const document_Upload = multer({
 //upload a single file
 export const uploadToS3 = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  { file, fileName }: { file: any; fileName: string },
+  { file, fileName: fName }: { file: any; fileName: string },
 ): Promise<{ key: string, url: string }> => {
+
+  const fileName = `${Math.floor(100000 + Math.random() * 900000)}${Date.now()}-${fName}-${file.originalname}`;
+
   const command = new PutObjectCommand({
     Bucket: config.aws.bucket,
     Key: fileName,
@@ -97,13 +100,13 @@ export const uploadManyToS3 = async (
     path: string;
     key?: string;
   }[],
-): Promise<{ url: string; key: string }[]> => {
+): Promise<{ url: string; key: string, title: string, isImage: boolean }[]> => {
   try {
 
     const uploadPromises = files.map(async ({ file, path, key }) => {
       const newFileName = key
         ? key
-        : `${Math.floor(100000 + Math.random() * 900000)}${Date.now()}`;
+        : `${Math.floor(100000 + Math.random() * 900000)}${Date.now()}-${file.originalname}`;
 
       const fileKey = `${path}/${newFileName}`;
       const command = new PutObjectCommand({
@@ -115,7 +118,7 @@ export const uploadManyToS3 = async (
       await s3Client.send(command);
 
       const url = `https://${config.aws.bucket}.s3.${config.aws.region}.amazonaws.com/${fileKey}`;
-      return { url, key: newFileName };
+      return { url, key: newFileName, title: file?.originalname, isImage: file?.mimetype?.startsWith('image/') };
     });
 
     const uploadedUrls = await Promise.all(uploadPromises);

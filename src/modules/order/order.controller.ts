@@ -78,7 +78,12 @@ const cancelOrderItemBySeller = catchAsync(async (req: Request, res: Response) =
         });
 
         const urls = await uploadManyToS3(FileAry);
-        req.body.cancelEvidences = urls
+        req.body.cancelEvidences = urls.map(url => {
+            return {
+                key: url.key,
+                url: url.url,
+            };
+        });
     }
 
     await orderService.cancelOrderItemBySeller(req.body, userId);
@@ -106,7 +111,12 @@ const requestCancelOrderItem = catchAsync(async (req: Request, res: Response) =>
         });
 
         const urls = await uploadManyToS3(FileAry);
-        req.body.cancelEvidences = urls
+        req.body.cancelEvidences = urls.map(url => {
+            return {
+                key: url.key,
+                url: url.url,
+            };
+        });
     }
 
     await orderService.requestCancelOrderItem(req.body, userId);

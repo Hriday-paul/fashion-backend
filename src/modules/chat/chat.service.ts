@@ -17,7 +17,7 @@ const createChat = async (payload: TPerticipents) => {
     throw new AppError(httpStatus.BAD_REQUEST, 'You cannot create chat with yourself');
   }
 
-  const friend = await prisma.user.findFirst({ where: { id: currentUserId, auth: { isverified: true, status: true } } });
+  const friend = await prisma.user.findFirst({ where: { id: user2Id, auth: { isverified: true, status: true } } });
 
   if (!friend) {
     throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid user');
@@ -26,8 +26,18 @@ const createChat = async (payload: TPerticipents) => {
   const existingChat = await prisma.chat.findFirst({
     where: {
       OR: [
-        { user1Id: currentUserId, user2Id },
-        { user1Id: user2Id, user2Id: currentUserId },
+        {
+          AND: [
+            { user1Id: currentUserId },
+            { user2Id: user2Id }
+          ]
+        },
+        {
+          AND: [
+            { user1Id: user2Id },
+            { user2Id: currentUserId }
+          ]
+        },
       ],
     }
   });
@@ -98,6 +108,7 @@ const getMyChatList = async (userId: string, query?: Record<string, unknown>) =>
     include: {
       user1: {
         select: {
+          id: true,
           userName: true,
           picture: {
             select: {
@@ -108,6 +119,7 @@ const getMyChatList = async (userId: string, query?: Record<string, unknown>) =>
       },
       user2: {
         select: {
+          id: true,
           userName: true,
           picture: {
             select: {
@@ -118,7 +130,21 @@ const getMyChatList = async (userId: string, query?: Record<string, unknown>) =>
       },
       messages: {
         orderBy: { createdAt: "desc" },
-        take: 1
+        take: 1,
+        include: {
+          files: {
+            take: 1,
+            select: {
+              url: true,
+              type: true
+            }
+          },
+          offer: {
+            select: {
+              status: true
+            }
+          }
+        }
       },
       _count: {
         select: {
