@@ -78,7 +78,7 @@ model User {
   isDeleted Boolean  @default(false)
 
   notificationReceivers Notification[] @relation("ReceivedNotifications")
-  notificationSenders   Notification[] @relation("SentNotifications")
+  notificationSenders   Notification[] @relation("ActNotifications")
 
   sentMessages    Message[] @relation("sentMsgs")
   receiveMessages Message[] @relation("receiveMsgs")
@@ -227,11 +227,17 @@ enum Approval_Status {
 
 model Notification {
   id       String  @id @default(uuid())
-  senderId String?
-  sender   User?   @relation("SentNotifications", fields: [senderId], references: [id], onDelete: Cascade)
+  actorId String?
+  actor   User?   @relation("ActNotifications", fields: [actorId], references: [id], onDelete: Cascade)
 
   receiverId String?
   receiver   User?   @relation("ReceivedNotifications", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  productId String?
+  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  entityId String?
+  entityType String?
 
   message   String
   fcmToken  String?
@@ -241,6 +247,16 @@ model Notification {
   link      String?
   createdAt DateTime         @default(now())
   updatedAt DateTime         @default(now()) @updatedAt
+}
+
+enum NotificationEntityType {
+  PRODUCT
+  OFFER
+  ORDER
+  MESSAGE
+  USER
+  DONATION
+  RETURN
 }
 
 enum NotificationType {

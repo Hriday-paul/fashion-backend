@@ -129,6 +129,7 @@ const getAllPreMessages = async (friendUserName: string, currentUserId: string, 
                   id: true,
                   title: true,
                   finalPrice: true,
+                  stock: true,
                   images: {
                     take: 1,
                     select: {

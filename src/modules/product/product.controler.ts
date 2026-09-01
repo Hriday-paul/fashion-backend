@@ -63,6 +63,21 @@ const allProducts = catchAsync(async (req: Request, res: Response) => {
 });
 
 
+const myProducts = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials"])
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await productService.myProducts(query, options, req.user.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'My sell items successfully',
+        data: result,
+    });
+});
+
 const productsByUserName = catchAsync(async (req: Request, res: Response) => {
 
     const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials", "showItemInCart"])
@@ -222,6 +237,18 @@ const recomendedProducts = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const dropPriceForAProduct = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await productService.dropPriceForAProduct(req.body, req?.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Product price dropped successfully',
+        data: result,
+    });
+});
+
 const makeAnOfferAsBuyer = catchAsync(async (req: Request, res: Response) => {
     const result = await productService.makeAnOfferAsBuyer(req.body, req?.user?.id);
     sendResponse(res, {
@@ -258,6 +285,7 @@ export const productControler = {
     productDetails,
 
     productsByUserName,
+    myProducts,
 
     recentViewProducts,
     trendingProducts,
@@ -268,6 +296,7 @@ export const productControler = {
     sameCategoryProducts,
     sameColorProducts,
     productStats,
+    dropPriceForAProduct,
 
     makeAnOfferAsBuyer,
     acceptOfferAsSeller,

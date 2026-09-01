@@ -150,3 +150,17 @@ export const declineCounterOfferValidator = [
     .isFloat({ min: 0 })
     .withMessage('offerPrice must be a positive number'),
 ]
+
+export const dropPriceValidator = [
+  body('productId')
+    .isString()
+    .withMessage('productId must be a string')
+    .notEmpty()
+    .withMessage('productId is required')
+    .isUUID()
+    .withMessage('productId must be a valid UUID'),
+
+  body('newPrice')
+    .isFloat({ min: 0 })
+    .withMessage('newPrice must be a positive number'),
+]

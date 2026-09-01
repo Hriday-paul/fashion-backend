@@ -27,14 +27,7 @@ const initializeSocketIO = (server: HttpServer) => {
     socket.join(`user::${userId}`);
 
     // -------------get default chat list-------------
-    getChatList(userId, io, () => { })
-
-    // io.emit(myChat, chatList);
-
-    //--------user details and messages send for front end -->(as need to use)---------------//
-    // socket.on('message-page', async (payload, callback) => {
-    //   MessageHandler(userId, payload, io, socket, callback)
-    // });
+    // getChatList(userId, io, () => { })
 
     //----------------------chat list------------------------//
     socket.on('my-chat-list', async (data, callback) => {

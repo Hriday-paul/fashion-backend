@@ -189,6 +189,7 @@ model Offer {
     sendByBuyer Boolean @default(true)
 
     actionAt DateTime? // when the offer was accepted/rejected/canceled
+    expiredAt DateTime? // when the offer will expire
 
     message Message?
 
@@ -196,6 +197,8 @@ model Offer {
     updatedAt DateTime @updatedAt
 
     offerItems OfferItem[]
+
+    notifications Notification[]
 
     @@index([sellerId, buyerId])
     @@index([buyerId, sellerId])

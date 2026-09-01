@@ -9,6 +9,7 @@ import httpStatus from "http-status";
 import { BuildFingerPrint } from "../../utils/BuildfingerPrint";
 import { chatService } from "../chat/chat.service";
 import { SendMessageHandle, UpdateMessageHandle } from "../../socket/handlers/MessageHandler";
+import moment from "moment";
 
 type ProductOtherPayload = {
     images: { key: string, url: string }[],
@@ -258,15 +259,164 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
 
 }
 
-const productsByUserName = async (query: Record<string, unknown>, options: TPaginationOptions, userName: string, currentUser?: string) => {
+const myProducts = async (query: Record<string, unknown>, options: TPaginationOptions, userId: string) => {
+    const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }, { userId }];
 
-    const user = await prisma.user.findFirst({ where: { userName } });
+    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    if (!user) {
-        return { data: [] }
+    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, showItemInCart, ...moreFields } = query;
+
+    if (searchTerm) {
+        AndConditions.push({
+            OR: [
+                {
+                    title: {
+                        contains: searchTerm as string,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    description: {
+                        contains: searchTerm as string,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    tags: {
+                        has: searchTerm as string
+                    }
+                }
+            ],
+        });
     }
 
-    const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }, { userId: user?.id }];
+    if (category) {
+        AndConditions.push({
+            catagory_hierarchy: {
+                has: category as string
+            }
+        });
+    }
+
+    if (brands) {
+        const splitBrand = (brands as string).split(",")
+        AndConditions.push({
+            brandId: {
+                in: splitBrand
+            }
+        });
+    }
+    if (sizes) {
+        const splitSize = (sizes as string).split(",")
+        AndConditions.push({
+            sizeId: {
+                in: splitSize
+            }
+        });
+    }
+
+    if (conditions) {
+        const splitCondition = (conditions as string).split(",");
+        AndConditions.push({
+            condition: {
+                in: splitCondition
+            },
+        });
+    }
+    if (colors) {
+        const splitColors = (colors as string).split(",");
+        AndConditions.push({
+            color: {
+                in: splitColors
+            },
+        });
+    }
+    if (meterials) {
+        const splitMeterials = (meterials as string).split(",");
+        AndConditions.push({
+            meterials: {
+                hasSome: splitMeterials
+            },
+        });
+    }
+
+    if (minPrice || maxPrice) {
+        AndConditions.push({
+            finalPrice: {
+                gte: minPrice ? Number(minPrice) : undefined,
+                lte: maxPrice ? Number(maxPrice) : undefined,
+            },
+        });
+    }
+
+    if (Object.keys(moreFields)?.length > 0) {
+        Object.entries(moreFields).forEach(([field, value]) => {
+            AndConditions.push({
+                [field]: {
+                    equals: value,
+                },
+            });
+        });
+    }
+
+    const whereConditions: Prisma.ProductWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
+
+    const result = await prisma.product.findMany({
+        where: whereConditions,
+        skip,
+        take: limit,
+        orderBy: [
+            // {
+            //     stock: "desc"
+            // },
+            {
+                [sortBy]: sortOrder,
+            },],
+        include: {
+            images: {
+                take: 2,
+                select: {
+                    url: true,
+                    id: true
+                }
+            },
+            brand: true,
+            size: true,
+            category: true,
+            user: {
+                include: {
+                    auth: {
+                        select: {
+                            role: true
+                        }
+                    },
+                    picture: true
+                },
+            },
+            //favourite count
+            _count: {
+                select: {
+                    favourites: true,
+                    cartItems: true,
+                    offerItems: true
+                }
+            }
+        },
+    })
+
+    const total = await prisma.product.count({
+        where: whereConditions,
+    });
+
+    return {
+        meta: paginationHelper.generatePaginationMeta({ total, page, limit }),
+        data: result,
+    };
+
+}
+
+const productsByUserId = async (query: Record<string, unknown>, options: TPaginationOptions, userId: string, currentUser?: string) => {
+    const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }, { userId }];
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
@@ -375,7 +525,13 @@ const productsByUserName = async (query: Record<string, unknown>, options: TPagi
             [sortBy]: sortOrder,
         },
         include: {
-            images: true,
+            images: {
+                take: 2,
+                select: {
+                    url: true,
+                    id: true
+                }
+            },
             brand: true,
             size: true,
             category: true,
@@ -428,6 +584,20 @@ const productsByUserName = async (query: Record<string, unknown>, options: TPagi
         meta: paginationHelper.generatePaginationMeta({ total, page, limit }),
         data: result,
     };
+
+}
+
+const productsByUserName = async (query: Record<string, unknown>, options: TPaginationOptions, userName: string, currentUser?: string) => {
+
+    const user = await prisma.user.findFirst({ where: { userName } });
+
+    if (!user) {
+        return { data: [] }
+    }
+
+    const result = await productsByUserId(query, options, user?.id, currentUser);
+
+    return result;
 
 }
 
@@ -1129,7 +1299,50 @@ const donationSupportByProduct = async (productId: string) => {
 
 }
 
-const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: number, sellerId: string }, currentUserId: string,) => {
+const dropPriceForAProduct = async (payload: { productId: string, newPrice: number }, currentUserId: string) => {
+    const { productId, newPrice } = payload;
+
+    const product = await prisma.product.findFirst({
+        where: {
+            id: productId,
+            isDeleted: false
+        }
+    });
+
+    if (!product) {
+        throw new AppError(httpStatus.NOT_FOUND, "Product does not exist");
+    }
+
+    if (product.userId !== currentUserId) {
+        throw new AppError(httpStatus.FORBIDDEN, "You are not authorized to drop the price of this product");
+    }
+
+    if (product?.stock <= 0) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Product is out of stock");
+    }
+
+    if (newPrice >= product.finalPrice) {
+        throw new AppError(httpStatus.BAD_REQUEST, "New price must be less than the current price");
+    }
+
+    //calculate the percentage drop
+    const percentageDrop = (newPrice * 100) / product.price;
+
+    const updatedProduct = await prisma.product.update({
+        where: {
+            id: productId
+        },
+        data: {
+            finalPrice: newPrice,
+            discountPct: percentageDrop,
+        }
+    });
+
+    return null;
+
+}
+
+const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: number, sellerId: string }, currentUserId: string) => {
 
     const { productIds, offerPrice, sellerId } = payload;
 
@@ -1216,6 +1429,7 @@ const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: n
                                 product: {
                                     select: {
                                         finalPrice: true,
+                                        stock: true,
                                         id: true,
                                         title: true,
                                         images: {
@@ -1257,6 +1471,13 @@ const acceptOfferAsSeller = async (offerId: string, currentUserId: string) => {
     const offer = await prisma.offer.findFirst({
         where: {
             id: offerId,
+        },
+        include: {
+            offerItems: {
+                select: {
+                    productId: true
+                }
+            }
         }
     });
 
@@ -1268,12 +1489,30 @@ const acceptOfferAsSeller = async (offerId: string, currentUserId: string) => {
         throw new AppError(httpStatus.FORBIDDEN, "You are not authorized to accept this offer");
     }
 
+    const items = await prisma.product.findMany({
+        where: {
+            id: { in: offer?.offerItems?.map(item => item.productId) },
+            isDeleted: false,
+            stock: { gt: 0 }
+        },
+        select: {
+            id: true,
+            finalPrice: true
+        }
+    });
+
+    if (items.length !== offer?.offerItems?.length) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Some items are no longer available");
+    }
+
     const updatedOffer = await prisma.offer.update({
         where: {
             id: offerId
         },
         data: {
-            status: "ACCEPTED"
+            status: "ACCEPTED",
+            actionAt: new Date(),
+            expiredAt: moment().add(24, 'hours').toDate() // set expiration time to 24 hours from now
         }
     });
 
@@ -1313,6 +1552,7 @@ const acceptOfferAsSeller = async (offerId: string, currentUserId: string) => {
                             product: {
                                 select: {
                                     finalPrice: true,
+                                    stock: true,
                                     id: true,
                                     title: true,
                                     images: {
@@ -1381,12 +1621,28 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
         throw new AppError(httpStatus.FORBIDDEN, "You are not authorized to accept this offer");
     }
 
+    const items = await prisma.product.findMany({
+        where: {
+            id: { in: offer?.offerItems?.map(item => item.product.id) },
+            isDeleted: false,
+            stock: { gt: 0 }
+        },
+        select: {
+            id: true,
+            finalPrice: true
+        }
+    });
+
+    if (items.length !== offer?.offerItems?.length) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Some items are no longer available");
+    }
+
     const chat = await chatService.createChat({ currentUserId: offer?.sellerId, user2Id: offer?.buyerId });
 
-    const msg = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx) => {
 
         // Reject the existing offer
-        await tx.offer.update({
+        const rejectedOffer = await tx.offer.update({
             where: {
                 id: offerId
             },
@@ -1398,17 +1654,17 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
         // Create a new offer with the counter offer price
         const newOffer = await tx.offer.create({
             data: {
-                buyerId: currentUserId,
+                buyerId: offer.buyerId,
                 sellerId: offer.sellerId,
                 offeredPrice: offerPrice,
-                actualPrice: offer?.offerItems?.reduce((sum, offerItem) => sum + offerItem.product.finalPrice, 0),
+                actualPrice: items?.reduce((sum, p) => sum + p.finalPrice, 0),
                 offerItems: {
-                    create: offer?.offerItems?.map(offeritem => ({
-                        productId: offeritem?.product?.id,
+                    create: items?.map(p => ({
+                        productId: p?.id,
                         quantity: 1
                     }))
                 },
-                sendByBuyer: true,
+                sendByBuyer: false,
                 status: "ACCEPTED"
             }
         });
@@ -1453,6 +1709,7 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
                                 product: {
                                     select: {
                                         finalPrice: true,
+                                        stock: true,
                                         id: true,
                                         title: true,
                                         images: {
@@ -1481,14 +1738,85 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
             }
         })
 
-        return msg;
+        return { newMsg: msg, rejectedOffer, newOffer };
 
     })
 
-    SendMessageHandle((global as any).socketio, msg, () => { })
+    //sending socket message to buyer about old offer rejection
+    if (result?.rejectedOffer) {
+        const oldMsg = await prisma.message.findFirst({
+            where: {
+                offerId: result?.rejectedOffer.id
+            },
+            include: {
+                files: true,
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                offer: {
+                    include: {
+                        offerItems: {
+                            select: {
+                                id: true,
+                                product: {
+                                    select: {
+                                        finalPrice: true,
+                                        stock: true,
+                                        id: true,
+                                        title: true,
+                                        images: {
+                                            take: 1,
+                                            select: {
+                                                id: true,
+                                                url: true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        seller: {
+                            select: {
+                                userName: true,
+                                picture: {
+                                    select: {
+                                        url: true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        if (oldMsg) {
+            UpdateMessageHandle((global as any).socketio, oldMsg, () => { })
+        }
+    }
+
+    //sending socket message to buyer about new offer
+    SendMessageHandle((global as any).socketio, result?.newMsg, () => { })
 
     return;
-
 }
 
 export const productService = {
@@ -1499,6 +1827,8 @@ export const productService = {
     productDetails,
 
     productsByUserName,
+    productsByUserId,
+    myProducts,
 
     getViewKey,
 
@@ -1511,6 +1841,7 @@ export const productService = {
     sameCategoryProducts,
     sameColorProducts,
     productStats,
+    dropPriceForAProduct,
 
     makeAnOfferAsBuyer,
     acceptOfferAsSeller,

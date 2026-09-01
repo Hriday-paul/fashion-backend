@@ -4134,6 +4134,7 @@ export const OfferScalarFieldEnum = {
   status: 'status',
   sendByBuyer: 'sendByBuyer',
   actionAt: 'actionAt',
+  expiredAt: 'expiredAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
