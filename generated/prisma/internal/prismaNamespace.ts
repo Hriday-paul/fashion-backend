@@ -4059,7 +4059,10 @@ export const ProductPictureScalarFieldEnum = {
   id: 'id',
   url: 'url',
   key: 'key',
-  productId: 'productId'
+  productId: 'productId',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type ProductPictureScalarFieldEnum = (typeof ProductPictureScalarFieldEnum)[keyof typeof ProductPictureScalarFieldEnum]
@@ -4380,14 +4383,17 @@ export type BillingDetailsScalarFieldEnum = (typeof BillingDetailsScalarFieldEnu
 
 export const NotificationScalarFieldEnum = {
   id: 'id',
-  senderId: 'senderId',
+  actorId: 'actorId',
   receiverId: 'receiverId',
+  entityId: 'entityId',
+  entityType: 'entityType',
+  entityImgs: 'entityImgs',
+  groupKeyId: 'groupKeyId',
   message: 'message',
   fcmToken: 'fcmToken',
   type: 'type',
   title: 'title',
   isRead: 'isRead',
-  link: 'link',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -4856,6 +4862,20 @@ export type EnumApproval_StatusFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'Approval_Status[]'
  */
 export type ListEnumApproval_StatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Approval_Status[]'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationEntityType'
+ */
+export type EnumNotificationEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationEntityType'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationEntityType[]'
+ */
+export type ListEnumNotificationEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationEntityType[]'>
     
 
 

@@ -725,7 +725,7 @@ export type UserCreateInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -796,7 +796,7 @@ export type UserUncheckedCreateInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -867,7 +867,7 @@ export type UserUpdateInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -938,7 +938,7 @@ export type UserUncheckedUpdateInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -1764,7 +1764,7 @@ export type UserCreateWithoutFollowingInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -1834,7 +1834,7 @@ export type UserUncheckedCreateWithoutFollowingInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -1909,7 +1909,7 @@ export type UserCreateWithoutFollowersInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -1979,7 +1979,7 @@ export type UserUncheckedCreateWithoutFollowersInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -2065,7 +2065,7 @@ export type UserUpdateWithoutFollowingInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -2135,7 +2135,7 @@ export type UserUncheckedUpdateWithoutFollowingInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -2216,7 +2216,7 @@ export type UserUpdateWithoutFollowersInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -2286,7 +2286,7 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -2356,7 +2356,7 @@ export type UserCreateWithoutUser1ChatsInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user2Chats?: Prisma.ChatCreateNestedManyWithoutUser2Input
@@ -2426,7 +2426,7 @@ export type UserUncheckedCreateWithoutUser1ChatsInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user2Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser2Input
@@ -2501,7 +2501,7 @@ export type UserCreateWithoutUser2ChatsInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -2571,7 +2571,7 @@ export type UserUncheckedCreateWithoutUser2ChatsInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -2657,7 +2657,7 @@ export type UserUpdateWithoutUser1ChatsInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user2Chats?: Prisma.ChatUpdateManyWithoutUser2NestedInput
@@ -2727,7 +2727,7 @@ export type UserUncheckedUpdateWithoutUser1ChatsInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user2Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser2NestedInput
@@ -2808,7 +2808,7 @@ export type UserUpdateWithoutUser2ChatsInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -2878,7 +2878,7 @@ export type UserUncheckedUpdateWithoutUser2ChatsInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -2948,7 +2948,7 @@ export type UserCreateWithoutSentMessagesInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
   user2Chats?: Prisma.ChatCreateNestedManyWithoutUser2Input
@@ -3018,7 +3018,7 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
   user2Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser2Input
@@ -3093,7 +3093,7 @@ export type UserCreateWithoutReceiveMessagesInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
   user2Chats?: Prisma.ChatCreateNestedManyWithoutUser2Input
@@ -3163,7 +3163,7 @@ export type UserUncheckedCreateWithoutReceiveMessagesInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
   user2Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser2Input
@@ -3249,7 +3249,7 @@ export type UserUpdateWithoutSentMessagesInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
   user2Chats?: Prisma.ChatUpdateManyWithoutUser2NestedInput
@@ -3319,7 +3319,7 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
   user2Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser2NestedInput
@@ -3400,7 +3400,7 @@ export type UserUpdateWithoutReceiveMessagesInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
   user2Chats?: Prisma.ChatUpdateManyWithoutUser2NestedInput
@@ -3470,7 +3470,7 @@ export type UserUncheckedUpdateWithoutReceiveMessagesInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
   user2Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser2NestedInput
@@ -3540,7 +3540,7 @@ export type UserCreateWithoutBuyOrdersInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -3610,7 +3610,7 @@ export type UserUncheckedCreateWithoutBuyOrdersInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -3685,7 +3685,7 @@ export type UserCreateWithoutSellOrdersInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -3755,7 +3755,7 @@ export type UserUncheckedCreateWithoutSellOrdersInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -3841,7 +3841,7 @@ export type UserUpdateWithoutBuyOrdersInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -3911,7 +3911,7 @@ export type UserUncheckedUpdateWithoutBuyOrdersInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -3992,7 +3992,7 @@ export type UserUpdateWithoutSellOrdersInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -4062,7 +4062,7 @@ export type UserUncheckedUpdateWithoutSellOrdersInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -4132,7 +4132,7 @@ export type UserCreateWithoutSellDonationsInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -4202,7 +4202,7 @@ export type UserUncheckedCreateWithoutSellDonationsInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -4288,7 +4288,7 @@ export type UserUpdateWithoutSellDonationsInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -4358,7 +4358,7 @@ export type UserUncheckedUpdateWithoutSellDonationsInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -4428,7 +4428,7 @@ export type UserCreateWithoutPaymentsInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -4498,7 +4498,7 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -4584,7 +4584,7 @@ export type UserUpdateWithoutPaymentsInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -4654,7 +4654,7 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -4724,7 +4724,7 @@ export type UserCreateWithoutDonationsInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -4794,7 +4794,7 @@ export type UserUncheckedCreateWithoutDonationsInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -4869,7 +4869,7 @@ export type UserCreateWithoutDonationsReceivedInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -4939,7 +4939,7 @@ export type UserUncheckedCreateWithoutDonationsReceivedInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -5025,7 +5025,7 @@ export type UserUpdateWithoutDonationsInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -5095,7 +5095,7 @@ export type UserUncheckedUpdateWithoutDonationsInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -5176,7 +5176,7 @@ export type UserUpdateWithoutDonationsReceivedInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -5246,7 +5246,7 @@ export type UserUncheckedUpdateWithoutDonationsReceivedInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -5316,7 +5316,7 @@ export type UserCreateWithoutProductsInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -5386,7 +5386,7 @@ export type UserUncheckedCreateWithoutProductsInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -5472,7 +5472,7 @@ export type UserUpdateWithoutProductsInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -5542,7 +5542,7 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -5612,7 +5612,7 @@ export type UserCreateWithoutProductCharitiesInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -5682,7 +5682,7 @@ export type UserUncheckedCreateWithoutProductCharitiesInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -5768,7 +5768,7 @@ export type UserUpdateWithoutProductCharitiesInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -5838,7 +5838,7 @@ export type UserUncheckedUpdateWithoutProductCharitiesInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -5908,7 +5908,7 @@ export type UserCreateWithoutFavouriteProductsInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -5978,7 +5978,7 @@ export type UserUncheckedCreateWithoutFavouriteProductsInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -6064,7 +6064,7 @@ export type UserUpdateWithoutFavouriteProductsInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -6134,7 +6134,7 @@ export type UserUncheckedUpdateWithoutFavouriteProductsInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -6204,7 +6204,7 @@ export type UserCreateWithoutSellerGroupCartsInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -6274,7 +6274,7 @@ export type UserUncheckedCreateWithoutSellerGroupCartsInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -6349,7 +6349,7 @@ export type UserCreateWithoutCartsInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -6419,7 +6419,7 @@ export type UserUncheckedCreateWithoutCartsInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -6505,7 +6505,7 @@ export type UserUpdateWithoutSellerGroupCartsInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -6575,7 +6575,7 @@ export type UserUncheckedUpdateWithoutSellerGroupCartsInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -6656,7 +6656,7 @@ export type UserUpdateWithoutCartsInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -6726,7 +6726,7 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -6796,7 +6796,7 @@ export type UserCreateWithoutCartDonationCharitiesInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -6866,7 +6866,7 @@ export type UserUncheckedCreateWithoutCartDonationCharitiesInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -6952,7 +6952,7 @@ export type UserUpdateWithoutCartDonationCharitiesInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -7022,7 +7022,7 @@ export type UserUncheckedUpdateWithoutCartDonationCharitiesInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -7092,7 +7092,7 @@ export type UserCreateWithoutOffersAsSellerInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -7162,7 +7162,7 @@ export type UserUncheckedCreateWithoutOffersAsSellerInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -7237,7 +7237,7 @@ export type UserCreateWithoutOffersAsBuyerInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -7307,7 +7307,7 @@ export type UserUncheckedCreateWithoutOffersAsBuyerInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -7393,7 +7393,7 @@ export type UserUpdateWithoutOffersAsSellerInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -7463,7 +7463,7 @@ export type UserUncheckedUpdateWithoutOffersAsSellerInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -7544,7 +7544,7 @@ export type UserUpdateWithoutOffersAsBuyerInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -7614,7 +7614,7 @@ export type UserUncheckedUpdateWithoutOffersAsBuyerInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -7684,7 +7684,7 @@ export type UserCreateWithoutProductViewsInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -7754,7 +7754,7 @@ export type UserUncheckedCreateWithoutProductViewsInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -7840,7 +7840,7 @@ export type UserUpdateWithoutProductViewsInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -7910,7 +7910,7 @@ export type UserUncheckedUpdateWithoutProductViewsInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -7980,7 +7980,7 @@ export type UserCreateWithoutProdQuestionsInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -8050,7 +8050,7 @@ export type UserUncheckedCreateWithoutProdQuestionsInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -8136,7 +8136,7 @@ export type UserUpdateWithoutProdQuestionsInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -8206,7 +8206,7 @@ export type UserUncheckedUpdateWithoutProdQuestionsInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -8276,7 +8276,7 @@ export type UserCreateWithoutBundleDiscountInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -8346,7 +8346,7 @@ export type UserUncheckedCreateWithoutBundleDiscountInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -8432,7 +8432,7 @@ export type UserUpdateWithoutBundleDiscountInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -8502,7 +8502,7 @@ export type UserUncheckedUpdateWithoutBundleDiscountInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -8572,7 +8572,7 @@ export type UserCreateWithoutReturnsAsBuyerInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -8642,7 +8642,7 @@ export type UserUncheckedCreateWithoutReturnsAsBuyerInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -8717,7 +8717,7 @@ export type UserCreateWithoutReturnsAsSellerInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -8787,7 +8787,7 @@ export type UserUncheckedCreateWithoutReturnsAsSellerInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -8873,7 +8873,7 @@ export type UserUpdateWithoutReturnsAsBuyerInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -8943,7 +8943,7 @@ export type UserUncheckedUpdateWithoutReturnsAsBuyerInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -9024,7 +9024,7 @@ export type UserUpdateWithoutReturnsAsSellerInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -9094,7 +9094,7 @@ export type UserUncheckedUpdateWithoutReturnsAsSellerInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -9164,7 +9164,7 @@ export type UserCreateWithoutRatingsGivenInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -9234,7 +9234,7 @@ export type UserUncheckedCreateWithoutRatingsGivenInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -9309,7 +9309,7 @@ export type UserCreateWithoutRatingsReceivedInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -9379,7 +9379,7 @@ export type UserUncheckedCreateWithoutRatingsReceivedInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -9465,7 +9465,7 @@ export type UserUpdateWithoutRatingsGivenInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -9535,7 +9535,7 @@ export type UserUncheckedUpdateWithoutRatingsGivenInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -9616,7 +9616,7 @@ export type UserUpdateWithoutRatingsReceivedInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -9686,7 +9686,7 @@ export type UserUncheckedUpdateWithoutRatingsReceivedInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -9755,7 +9755,7 @@ export type UserCreateWithoutAuthInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -9825,7 +9825,7 @@ export type UserUncheckedCreateWithoutAuthInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -9911,7 +9911,7 @@ export type UserUpdateWithoutAuthInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -9981,7 +9981,7 @@ export type UserUncheckedUpdateWithoutAuthInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -10052,7 +10052,7 @@ export type UserCreateWithoutCharityGalleriesInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -10122,7 +10122,7 @@ export type UserUncheckedCreateWithoutCharityGalleriesInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -10208,7 +10208,7 @@ export type UserUpdateWithoutCharityGalleriesInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -10278,7 +10278,7 @@ export type UserUncheckedUpdateWithoutCharityGalleriesInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -10347,7 +10347,7 @@ export type UserCreateWithoutPictureInput = {
   auth?: Prisma.AuthCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -10417,7 +10417,7 @@ export type UserUncheckedCreateWithoutPictureInput = {
   auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -10503,7 +10503,7 @@ export type UserUpdateWithoutPictureInput = {
   auth?: Prisma.AuthUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -10573,7 +10573,7 @@ export type UserUncheckedUpdateWithoutPictureInput = {
   auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -10643,7 +10643,7 @@ export type UserCreateWithoutAccount_documentsInput = {
   auth?: Prisma.AuthCreateNestedOneWithoutUserInput
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -10713,7 +10713,7 @@ export type UserUncheckedCreateWithoutAccount_documentsInput = {
   auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -10799,7 +10799,7 @@ export type UserUpdateWithoutAccount_documentsInput = {
   auth?: Prisma.AuthUpdateOneWithoutUserNestedInput
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -10869,7 +10869,7 @@ export type UserUncheckedUpdateWithoutAccount_documentsInput = {
   auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -10940,7 +10940,7 @@ export type UserCreateWithoutBillingAddressInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -11010,7 +11010,7 @@ export type UserUncheckedCreateWithoutBillingAddressInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -11085,7 +11085,7 @@ export type UserCreateWithoutSellerAddressInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -11155,7 +11155,7 @@ export type UserUncheckedCreateWithoutSellerAddressInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -11241,7 +11241,7 @@ export type UserUpdateWithoutBillingAddressInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -11311,7 +11311,7 @@ export type UserUncheckedUpdateWithoutBillingAddressInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -11392,7 +11392,7 @@ export type UserUpdateWithoutSellerAddressInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -11462,7 +11462,7 @@ export type UserUncheckedUpdateWithoutSellerAddressInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -11676,7 +11676,7 @@ export type UserCreateWithoutNotificationReceiversInput = {
   auth?: Prisma.AuthCreateNestedOneWithoutUserInput
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -11746,7 +11746,7 @@ export type UserUncheckedCreateWithoutNotificationReceiversInput = {
   auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -11983,7 +11983,7 @@ export type UserUpdateWithoutNotificationReceiversInput = {
   auth?: Prisma.AuthUpdateOneWithoutUserNestedInput
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -12053,7 +12053,7 @@ export type UserUncheckedUpdateWithoutNotificationReceiversInput = {
   auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
@@ -12124,7 +12124,7 @@ export type UserCreateWithoutWalletInput = {
   picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
@@ -12194,7 +12194,7 @@ export type UserUncheckedCreateWithoutWalletInput = {
   picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
   account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
   notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
-  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
   user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
@@ -12280,7 +12280,7 @@ export type UserUpdateWithoutWalletInput = {
   picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
@@ -12350,7 +12350,7 @@ export type UserUncheckedUpdateWithoutWalletInput = {
   picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
   account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
-  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput

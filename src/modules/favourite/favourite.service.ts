@@ -1,5 +1,7 @@
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
+import { jobs } from "../../queues/jobs.name";
+import { notificationQueue } from "../../queues/notificaion.queue";
 import prisma from "../../shared/prisma"
 import httpStatus from "http-status";
 
@@ -39,7 +41,9 @@ const favouritesByUser = async (userId: string, options: TPaginationOptions) => 
     };
 }
 
-const addFavourite = async (productId: string, userId: string) => {
+const addFavourite = async (productId: string, currentUser: { id: string, userName: string }) => {
+
+    const { id: userId, userName: currentUserName } = currentUser;
 
     //check favourite exist
     const exist = await prisma.favourite.findFirst({ where: { userId, productId } });
@@ -47,12 +51,68 @@ const addFavourite = async (productId: string, userId: string) => {
         throw new AppError(httpStatus.CONFLICT, "Product already exist in favourite");
     }
 
+    const product = await prisma.product.findFirst({
+        where: { id: productId, isDeleted: false },
+        select: {
+            userId: true,
+            user: {
+                select: {
+                    userName: true,
+                    fcmToken: true
+                }
+            },
+            title: true,
+            images: {
+                orderBy: {
+                    order: "asc"
+                },
+                take: 1,
+                select: {
+                    url: true
+                }
+            }
+        }
+    });
+
+    if (!product) {
+        throw new AppError(httpStatus.NOT_FOUND, "Item does not exist");
+    }
+
     const favourite = await prisma.favourite.create({
         data: {
             userId,
             productId
-        }
+        },
+        // include: {
+        //     product: {
+        //         select: {
+        //             title: true,
+        //             images: {
+        //                 take: 1,
+        //                 select: {
+        //                     url: true
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
     });
+
+    //send notification
+    notificationQueue.add(jobs.notification, {
+        allowPushNotification: true, payload: {
+            title: `**${currentUserName}** added your item to favourites`,
+            message: `**${currentUserName}** added your **${product?.title}** to their favourites.`,
+            actorId: userId,
+            receiverId: product?.userId,
+            entityId: productId,
+            entityType: "PRODUCT",
+            entityImgs: product?.images[0]?.url ? [product?.images[0]?.url] : [],
+            type: "PRODUCT_LIKE",
+            fcmToken: product?.user?.fcmToken,
+            groupKeyId: null,
+        }
+    })
 
     return favourite;
 }

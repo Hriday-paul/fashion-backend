@@ -233,18 +233,18 @@ model Notification {
   receiverId String?
   receiver   User?   @relation("ReceivedNotifications", fields: [receiverId], references: [id], onDelete: Cascade)
 
-  productId String?
-  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
-
   entityId String?
-  entityType String?
+  entityType NotificationEntityType?
+
+  entityImgs String[] @default([])
+
+  groupKeyId String?
 
   message   String
   fcmToken  String?
-  type      NotificationType @default(Text)
+  type      NotificationType?
   title     String
   isRead    Boolean          @default(false)
-  link      String?
   createdAt DateTime         @default(now())
   updatedAt DateTime         @default(now()) @updatedAt
 }
@@ -260,9 +260,40 @@ enum NotificationEntityType {
 }
 
 enum NotificationType {
-  Text
-  Payment
-  Cancelled
+  //for product
+  PRODUCT_LIKE
+  PRICE_DROP
+  SOLD_OUT
+
+  //for offer
+  OFFER_RECEIVED
+  OFFER_ACCEPTED
+  OFFER_REJECTED
+  OFFER_CANCELED
+
+  //for order
+  ORDER_PLACED
+  ORDER_STATUS_CHANGED
+  ORDER_COMPLETED
+  ORDER_ITEM_CANCELED
+
+  //for message
+  MESSAGE_RECEIVED
+
+  //for user
+  FOLLOWED
+  REVIEW_RECEIVED
+
+  //for donation
+  DONATION_RECEIVED
+
+  //for return
+  RETURN_REQUESTED
+  RETURN_APPROVED
+  RETURN_REJECTED
+  RETURN_COMPLETED
+  RETURN_STATUS_CHANGED
+  RETURN_ITEM_CANCELED
 }
 
 model Setting {

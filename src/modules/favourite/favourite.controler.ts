@@ -18,7 +18,7 @@ const favouritesByUser = catchAsync(async (req: Request, res: Response) => {
 });
 
 const addFavourite = catchAsync(async (req: Request, res: Response) => {
-    const result = await favouriteService.addFavourite(req.body?.productId, req.user?.id);
+    const result = await favouriteService.addFavourite(req.body?.productId, req?.user);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,

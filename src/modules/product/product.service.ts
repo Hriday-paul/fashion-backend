@@ -10,6 +10,8 @@ import { BuildFingerPrint } from "../../utils/BuildfingerPrint";
 import { chatService } from "../chat/chat.service";
 import { SendMessageHandle, UpdateMessageHandle } from "../../socket/handlers/MessageHandler";
 import moment from "moment";
+import { notificationQueue, priceDropNotificationQueue } from "../../queues/notificaion.queue";
+import { jobs } from "../../queues/jobs.name";
 
 type ProductOtherPayload = {
     images: { key: string, url: string }[],
@@ -89,7 +91,7 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
     const res = await prisma.product.create({
         data: {
             images: { create: images },
-            charities: { create: isAllowCharity ? finalcharities : [] },
+            charities: { create: finalcharities },
             ...morePayload,
             price,
             discountPct,
@@ -214,7 +216,12 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
             [sortBy]: sortOrder,
         },
         include: {
-            images: true,
+            images: {
+                take: 1,
+                orderBy: {
+                    order: "asc"
+                }
+            },
             brand: true,
             size: true,
             category: true,
@@ -375,6 +382,9 @@ const myProducts = async (query: Record<string, unknown>, options: TPaginationOp
         include: {
             images: {
                 take: 2,
+                orderBy: {
+                    order: "asc"
+                },
                 select: {
                     url: true,
                     id: true
@@ -527,6 +537,9 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
         include: {
             images: {
                 take: 2,
+                orderBy: {
+                    order: "asc"
+                },
                 select: {
                     url: true,
                     id: true
@@ -629,6 +642,10 @@ const similarProductsFromSeller = async (productId: string, currentUser?: string
             finalPrice: true,
             price: true,
             images: {
+                orderBy: {
+                    order: "asc"
+                },
+                take: 1,
                 select: {
                     url: true
                 }
@@ -700,9 +717,10 @@ const sameCategoryProducts = async (productId: string, currentUser?: string) => 
             finalPrice: true,
             price: true,
             images: {
-                select: {
-                    url: true
-                }
+                orderBy: {
+                    order: "asc"
+                },
+                take: 1,
             },
             brand: {
                 select: {
@@ -772,9 +790,10 @@ const sameColorProducts = async (productId: string, currentUser?: string) => {
             finalPrice: true,
             price: true,
             images: {
-                select: {
-                    url: true
-                }
+                orderBy: {
+                    order: "asc"
+                },
+                take: 1,
             },
             brand: {
                 select: {
@@ -827,7 +846,12 @@ const newArrivalProducts = async () => {
             createdAt: "desc",
         },
         include: {
-            images: true,
+            images: {
+                orderBy: {
+                    order: "asc"
+                },
+                take: 1,
+            },
         },
     })
 
@@ -861,6 +885,7 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
                 include: {
                     charity: {
                         select: {
+                            id: true,
                             fname: true,
                             lname: true,
                             userName: true,
@@ -957,7 +982,7 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
         }
     })
 
-    return { ...details, sizechart };
+    return { ...details, sizechart, isMyProduct: userId === details?.userId };
     // return details;
 }
 
@@ -1008,7 +1033,12 @@ const recentViewProducts = async (viewKey: string) => {
         include: {
             product: {
                 include: {
-                    images: true
+                    images: {
+                        orderBy: {
+                            order: "asc"
+                        },
+                        take: 1,
+                    }
                 }
             }
         }
@@ -1070,7 +1100,12 @@ const trendingProducts = async (userId?: string) => {
     const trendingProducts = await prisma.product.findMany({
         where: { id: { in: trendingIds } },
         include: {
-            images: true,
+            images: {
+                orderBy: {
+                    order: "asc"
+                },
+                take: 1,
+            },
             brand: true,
             size: true,
             category: true,
@@ -1129,7 +1164,12 @@ const topSellingProducts = async (userId?: string) => {
         },
         take: 8,
         include: {
-            images: true,
+            images: {
+                orderBy: {
+                    order: "asc"
+                },
+                take: 1,
+            },
             brand: true,
             size: true,
             category: true,
@@ -1225,7 +1265,12 @@ const recomendedProducts = async (viewKey: string, userId?: string) => {
         ],
         take: 8,
         include: {
-            images: true,
+            images: {
+                orderBy: {
+                    order: "asc"
+                },
+                take: 1,
+            },
             brand: true,
             size: true,
             category: true,
@@ -1299,8 +1344,9 @@ const donationSupportByProduct = async (productId: string) => {
 
 }
 
-const dropPriceForAProduct = async (payload: { productId: string, newPrice: number }, currentUserId: string) => {
+const dropPriceForAProduct = async (payload: { productId: string, newPrice: number }, currentUser: { id: string, userName: string }) => {
     const { productId, newPrice } = payload;
+    const { id: currentUserId, userName: currentUserName } = currentUser;
 
     const product = await prisma.product.findFirst({
         where: {
@@ -1338,11 +1384,19 @@ const dropPriceForAProduct = async (payload: { productId: string, newPrice: numb
         }
     });
 
+    //send notification
+    priceDropNotificationQueue.add(jobs.priceDropNotification, {
+        productId: updatedProduct.id,
+        sellerId: updatedProduct.userId,
+    });
+
     return null;
 
 }
 
-const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: number, sellerId: string }, currentUserId: string) => {
+const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: number, sellerId: string }, currentUser: { id: string, userName: string }) => {
+
+    const { id: currentUserId, userName: currentUserName } = currentUser;
 
     const { productIds, offerPrice, sellerId } = payload;
 
@@ -1355,7 +1409,17 @@ const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: n
         },
         select: {
             finalPrice: true,
-            id: true
+            id: true,
+            userId: true,
+            images: {
+                orderBy: {
+                    order: "asc"
+                },
+                take: 1,
+                select: {
+                    url: true
+                }
+            }
         }
     });
 
@@ -1363,7 +1427,7 @@ const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: n
         throw new AppError(httpStatus.NOT_FOUND, "Some items doesn't exist");
     }
 
-    const receiver = await prisma.user.findFirst({ where: { id: sellerId, auth: { isverified: true, status: true } }, select: { userName: true } });
+    const receiver = await prisma.user.findFirst({ where: { id: sellerId, auth: { isverified: true, status: true } }, select: { userName: true, fcmToken: true, id: true } });
 
     if (!receiver) {
         throw new AppError(httpStatus.NOT_FOUND, "Seller Does not exist");
@@ -1371,7 +1435,7 @@ const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: n
 
     const chat = await chatService.createChat({ currentUserId: currentUserId, user2Id: sellerId });
 
-    const msg = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx) => {
 
         const offer = await tx.offer.create({
             data: {
@@ -1458,16 +1522,38 @@ const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: n
             }
         })
 
-        return msg;
-
+        return { msg, offer };
     })
 
-    SendMessageHandle((global as any).socketio, msg, () => { })
+    //send a message about the offer
+    SendMessageHandle((global as any).socketio, result?.msg, () => { });
+
+    const isbundle = products.length > 1;
+
+    //send notification to the seller about the offer
+    await notificationQueue.add(jobs.notification, {
+        allowPushNotification: true,
+        payload: {
+            title: `**${currentUserName}** sent you ${isbundle ? 'a bundle' : 'an'} offer`,
+            message: `**${currentUserName}** sent you ${isbundle ? 'a bundle' : 'an'} offer to purchase your items.`,
+            actorId: currentUserId,
+            receiverId: receiver?.id,
+            entityId: currentUserName,
+            entityType: "OFFER",
+            entityImgs: products?.map(p => p?.images[0]?.url),
+            type: "OFFER_RECEIVED",
+            fcmToken: receiver?.fcmToken,
+            groupKeyId: result?.offer?.id,
+        }
+    })
 
     return;
 }
 
-const acceptOfferAsSeller = async (offerId: string, currentUserId: string) => {
+const acceptOfferAsSeller = async (offerId: string, currentUser: { id: string, userName: string }) => {
+
+    const { id: currentUserId, userName: currentUserName } = currentUser;
+
     const offer = await prisma.offer.findFirst({
         where: {
             id: offerId,
@@ -1475,7 +1561,22 @@ const acceptOfferAsSeller = async (offerId: string, currentUserId: string) => {
         include: {
             offerItems: {
                 select: {
-                    productId: true
+                    productId: true,
+                    product: {
+                        select: {
+                            images: {
+                                take: 1,
+                                select: {
+                                    url: true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            buyer: {
+                select: {
+                    fcmToken: true
                 }
             }
         }
@@ -1585,19 +1686,38 @@ const acceptOfferAsSeller = async (offerId: string, currentUserId: string) => {
         UpdateMessageHandle((global as any).socketio, msg, () => { })
     }
 
+    //send notification to the buyer about the offer
+    await notificationQueue.add(jobs.notification, {
+        allowPushNotification: true,
+        payload: {
+            title: `Offer accepted.`,
+            message: `Your placed offer has been accepted! Complete the purchase within 24 hours, as the accepted offer will expire after 24 hours.`,
+            actorId: currentUserId,
+            receiverId: offer?.buyerId,
+            entityId: currentUserName,
+            entityType: "OFFER",
+            entityImgs: offer?.offerItems?.map(i => i?.product?.images[0]?.url),
+            type: "OFFER_ACCEPTED",
+            fcmToken: offer?.buyer?.fcmToken,
+            groupKeyId: offer?.id,
+        }
+    })
+
     return;
 
 }
 
-const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPrice: number }, currentUserId: string) => {
+const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPrice: number }, currentUser: { id: string, userName: string }) => {
 
     const { offerId, offerPrice } = payload;
+    const { id: currentUserId, userName: currentUserName } = currentUser;
 
     const offer = await prisma.offer.findFirst({
         where: {
             id: offerId,
         },
         select: {
+            id: true,
             buyerId: true,
             sellerId: true,
             offerItems: {
@@ -1605,9 +1725,20 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
                     product: {
                         select: {
                             finalPrice: true,
-                            id: true
+                            id: true,
+                            images: {
+                                take: 1,
+                                select: {
+                                    url: true
+                                }
+                            }
                         }
                     }
+                }
+            },
+            buyer: {
+                select: {
+                    fcmToken: true
                 }
             }
         }
@@ -1815,6 +1946,23 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
 
     //sending socket message to buyer about new offer
     SendMessageHandle((global as any).socketio, result?.newMsg, () => { })
+
+    //send notification to the buyer about the offer
+    await notificationQueue.add(jobs.notification, {
+        allowPushNotification: true,
+        payload: {
+            title: `**${currentUserName}** sent you a counter offer`,
+            message: `**${currentUserName}** sent you a counter offer after reviewing your offer.`,
+            actorId: currentUserId,
+            receiverId: offer?.buyerId,
+            entityId: currentUserName,
+            entityType: "OFFER",
+            entityImgs: offer?.offerItems?.map(i => i?.product?.images[0]?.url),
+            type: "OFFER_RECEIVED",
+            fcmToken: offer?.buyer?.fcmToken,
+            groupKeyId: offer?.id
+        }
+    })
 
     return;
 }

@@ -239,7 +239,7 @@ const recomendedProducts = catchAsync(async (req: Request, res: Response) => {
 
 const dropPriceForAProduct = catchAsync(async (req: Request, res: Response) => {
 
-    const result = await productService.dropPriceForAProduct(req.body, req?.user?.id);
+    const result = await productService.dropPriceForAProduct(req.body, req?.user);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -250,7 +250,7 @@ const dropPriceForAProduct = catchAsync(async (req: Request, res: Response) => {
 });
 
 const makeAnOfferAsBuyer = catchAsync(async (req: Request, res: Response) => {
-    const result = await productService.makeAnOfferAsBuyer(req.body, req?.user?.id);
+    const result = await productService.makeAnOfferAsBuyer(req.body, req?.user);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -259,7 +259,7 @@ const makeAnOfferAsBuyer = catchAsync(async (req: Request, res: Response) => {
     });
 });
 const acceptOfferAsSeller = catchAsync(async (req: Request, res: Response) => {
-    const result = await productService.acceptOfferAsSeller(req.body.offerId, req?.user?.id);
+    const result = await productService.acceptOfferAsSeller(req.body.offerId, req?.user);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -268,7 +268,7 @@ const acceptOfferAsSeller = catchAsync(async (req: Request, res: Response) => {
     });
 });
 const declineCounterOfferAsSeller = catchAsync(async (req: Request, res: Response) => {
-    const result = await productService.declineCounterOfferAsSeller(req.body, req?.user?.id);
+    const result = await productService.declineCounterOfferAsSeller(req.body, req?.user);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,

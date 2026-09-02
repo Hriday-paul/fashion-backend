@@ -422,7 +422,10 @@ export const ProductPictureScalarFieldEnum = {
   id: 'id',
   url: 'url',
   key: 'key',
-  productId: 'productId'
+  productId: 'productId',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type ProductPictureScalarFieldEnum = (typeof ProductPictureScalarFieldEnum)[keyof typeof ProductPictureScalarFieldEnum]
@@ -743,14 +746,17 @@ export type BillingDetailsScalarFieldEnum = (typeof BillingDetailsScalarFieldEnu
 
 export const NotificationScalarFieldEnum = {
   id: 'id',
-  senderId: 'senderId',
+  actorId: 'actorId',
   receiverId: 'receiverId',
+  entityId: 'entityId',
+  entityType: 'entityType',
+  entityImgs: 'entityImgs',
+  groupKeyId: 'groupKeyId',
   message: 'message',
   fcmToken: 'fcmToken',
   type: 'type',
   title: 'title',
   isRead: 'isRead',
-  link: 'link',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -46,7 +46,7 @@ const auth = (...userRoles: Role[]) => {
             throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized');
         }
 
-        req.user = { id: userId, role };
+        req.user = { id: userId, role, userName: isUserExist?.userName };
 
         next();
     });
@@ -88,7 +88,7 @@ export const PublicAuth = () => {
             return next(); // invalid user, but still public — just skip setting req.user
         }
 
-        req.user = { id: userId, role };
+        req.user = { id: userId, role, userName: isUserExist?.userName };
 
         return next();
     });
