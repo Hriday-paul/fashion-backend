@@ -7,6 +7,8 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/Badge'
+export type * from './models/UserBadge'
 export type * from './models/Category'
 export type * from './models/BrandByCategory'
 export type * from './models/Brand'

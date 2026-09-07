@@ -1,3 +1,5 @@
+import { jobs } from './../../queues/jobs.name';
+import { BadgeGenerateQueue } from './../../queues/badge.queue';
 import { Request } from "express";
 import { Approval_Status, Prisma, Product, Role } from "../../../generated/prisma/client";
 import AppError from "../../error/AppError";
@@ -95,6 +97,9 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
             userId
         }
     });
+
+    //check badge
+    BadgeGenerateQueue.add(jobs.badgeGenerate, { role: role as Role, type: "STYLE_STARTER", userId });
 
     return res;
 }

@@ -135,6 +135,8 @@ model User {
 
   cartDonationCharities CartDonationCharaties[]
 
+  badges UserBadge[]
+
   bundleDiscount    BundleDiscount?
 
   @@map("users")

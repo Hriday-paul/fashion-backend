@@ -150,6 +150,8 @@ const confirmDonationPayment = async (query: Record<string, any>) => {
         }
       });
 
+      badgeGenerateQueue.add(jobs.BadgeGenerate, { role: "CHARITABLE_ORGANIZATION", type: "CHARITY_SUPPORTER", userId: donation?.donorId });
+
       //send notification
       // sendAdminNotifications({
       //   title: "New Order Payment Received",

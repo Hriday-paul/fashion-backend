@@ -3,5 +3,9 @@ export const jobs = {
     markPaymentAsCompleted: 'markPaymentAsCompleted',
     makeOrder : 'makeOrder',
     refund: 'refund',
-    makeShipment : 'makeShipment',
+    makeShipment: 'makeShipment',
+    sendPushNotification: 'sendPushNotification',
+    notification: 'notification',
+    priceDropNotification: 'priceDropNotification',
+    badgeGenerate : "badgeGenerate"
 }
