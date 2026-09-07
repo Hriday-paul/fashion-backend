@@ -381,14 +381,6 @@ export type BrandUpdateOneRequiredWithoutBrandByCategoriesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BrandUpdateToOneWithWhereWithoutBrandByCategoriesInput, Prisma.BrandUpdateWithoutBrandByCategoriesInput>, Prisma.BrandUncheckedUpdateWithoutBrandByCategoriesInput>
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type BrandCreateNestedOneWithoutProductsInput = {
   create?: Prisma.XOR<Prisma.BrandCreateWithoutProductsInput, Prisma.BrandUncheckedCreateWithoutProductsInput>
   connectOrCreate?: Prisma.BrandCreateOrConnectWithoutProductsInput

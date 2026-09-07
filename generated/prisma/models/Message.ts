@@ -469,10 +469,6 @@ export type MessageUncheckedUpdateManyWithoutChatNestedInput = {
   deleteMany?: Prisma.MessageScalarWhereInput | Prisma.MessageScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type MessageCreateNestedOneWithoutFilesInput = {
   create?: Prisma.XOR<Prisma.MessageCreateWithoutFilesInput, Prisma.MessageUncheckedCreateWithoutFilesInput>
   connectOrCreate?: Prisma.MessageCreateOrConnectWithoutFilesInput

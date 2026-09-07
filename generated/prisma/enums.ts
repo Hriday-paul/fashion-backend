@@ -8,6 +8,25 @@
 * 🟢 You can import this file directly.
 */
 
+export const AssistentSellStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  LISTED: 'LISTED'
+} as const
+
+export type AssistentSellStatus = (typeof AssistentSellStatus)[keyof typeof AssistentSellStatus]
+
+
+export const PriceType = {
+  TARGET_AMOUNT: 'TARGET_AMOUNT',
+  DISCUSSION: 'DISCUSSION',
+  MARKET_PRICE: 'MARKET_PRICE'
+} as const
+
+export type PriceType = (typeof PriceType)[keyof typeof PriceType]
+
+
 export const FileMessageType = {
   IMAGE: 'IMAGE',
   DOCUMENT: 'DOCUMENT'

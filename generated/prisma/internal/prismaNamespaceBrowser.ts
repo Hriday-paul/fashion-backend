@@ -48,6 +48,9 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 
 export const ModelName = {
+  AssistentSell: 'AssistentSell',
+  BundlePicture: 'BundlePicture',
+  AssistentSellCharity: 'AssistentSellCharity',
   Category: 'Category',
   BrandByCategory: 'BrandByCategory',
   Brand: 'Brand',
@@ -108,6 +111,54 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const AssistentSellScalarFieldEnum = {
+  id: 'id',
+  itemsCount: 'itemsCount',
+  contactNumber: 'contactNumber',
+  itemsDetails: 'itemsDetails',
+  priceType: 'priceType',
+  targetPrice: 'targetPrice',
+  additionalNotes: 'additionalNotes',
+  donationPct: 'donationPct',
+  donationAnonymous: 'donationAnonymous',
+  deliveryCharge: 'deliveryCharge',
+  status: 'status',
+  sellerId: 'sellerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  weight_kg: 'weight_kg',
+  hight_cm: 'hight_cm',
+  width_cm: 'width_cm',
+  length_cm: 'length_cm'
+} as const
+
+export type AssistentSellScalarFieldEnum = (typeof AssistentSellScalarFieldEnum)[keyof typeof AssistentSellScalarFieldEnum]
+
+
+export const BundlePictureScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  key: 'key',
+  assistentSellId: 'assistentSellId',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BundlePictureScalarFieldEnum = (typeof BundlePictureScalarFieldEnum)[keyof typeof BundlePictureScalarFieldEnum]
+
+
+export const AssistentSellCharityScalarFieldEnum = {
+  id: 'id',
+  isAnonymous: 'isAnonymous',
+  assistentSellId: 'assistentSellId',
+  charityId: 'charityId',
+  createdAt: 'createdAt'
+} as const
+
+export type AssistentSellCharityScalarFieldEnum = (typeof AssistentSellCharityScalarFieldEnum)[keyof typeof AssistentSellCharityScalarFieldEnum]
 
 
 export const CategoryScalarFieldEnum = {
@@ -255,6 +306,7 @@ export const OrderScalarFieldEnum = {
   serviceFee: 'serviceFee',
   authenticationFee: 'authenticationFee',
   bundleDiscountPercent: 'bundleDiscountPercent',
+  assistentSellId: 'assistentSellId',
   courier_service_id: 'courier_service_id',
   shippingId: 'shippingId',
   isLebelGenerated: 'isLebelGenerated',
@@ -405,8 +457,10 @@ export const ProductScalarFieldEnum = {
   allow_offer: 'allow_offer',
   return_window: 'return_window',
   donation_percent: 'donation_percent',
+  donationAnonymous: 'donationAnonymous',
   isDeleted: 'isDeleted',
   userId: 'userId',
+  assistentSellId: 'assistentSellId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   weight_kg: 'weight_kg',

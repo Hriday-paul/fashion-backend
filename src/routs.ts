@@ -18,6 +18,7 @@ import { returnRoutes } from './modules/return/return.rout';
 import { reviewRouts } from './modules/review/review.rout';
 import { brandRouter } from './modules/brand/brand.rout';
 import { sizeRouter } from './modules/size/size.rout';
+import { assistentSellRouts } from './modules/assistentSell/assistentSell.rout';
 
 const router = express.Router();
 
@@ -97,6 +98,10 @@ const moduleRoutes = [
     {
         path: '/sizes',
         route: sizeRouter,
+    },
+    {
+        path: '/assistent-sell',
+        route: assistentSellRouts,
     },
 ];
 

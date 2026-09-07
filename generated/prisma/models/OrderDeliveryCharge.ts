@@ -511,14 +511,6 @@ export type OrderDeliveryChargeNullableScalarRelationFilter = {
   isNot?: Prisma.OrderDeliveryChargeWhereInput | null
 }
 
-export type FloatFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type EnumDeliveryChargeStatusFieldUpdateOperationsInput = {
   set?: $Enums.DeliveryChargeStatus
 }

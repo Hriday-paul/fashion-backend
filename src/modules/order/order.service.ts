@@ -644,7 +644,7 @@ const confirmOrderReceived = async (orderId: string, userId: string) => {
 }
 
 const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
-    const AndConditions: Prisma.OrderWhereInput[] = [{ sellerId }];
+    const AndConditions: Prisma.OrderWhereInput[] = [{ sellerId, assistentSellId: null }];
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
     const { searchTerm, status } = query;
@@ -841,7 +841,7 @@ const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>,
 }
 
 const ordersAsABuyer = async (buyerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
-    const AndConditions: Prisma.OrderWhereInput[] = [{ buyerId }];
+    const AndConditions: Prisma.OrderWhereInput[] = [{ buyerId, assistentSellId: null }];
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
     const { searchTerm, status } = query;

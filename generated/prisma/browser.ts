@@ -17,6 +17,21 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
+ * Model AssistentSell
+ * 
+ */
+export type AssistentSell = Prisma.AssistentSellModel
+/**
+ * Model BundlePicture
+ * 
+ */
+export type BundlePicture = Prisma.BundlePictureModel
+/**
+ * Model AssistentSellCharity
+ * 
+ */
+export type AssistentSellCharity = Prisma.AssistentSellCharityModel
+/**
  * Model Category
  * 
  */

@@ -35,6 +35,7 @@ model Product {
 
     charities        ProductCharity[]
     donation_percent Float            @default(0)
+    donationAnonymous Boolean @default(true)
 
     isDeleted Boolean @default(false)
 
@@ -50,6 +51,9 @@ model Product {
     questions Question[]
 
     cartItems CartItem[]
+
+    assistentSellId String?
+    assistentSell   AssistentSell? @relation(fields: [assistentSellId], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

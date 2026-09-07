@@ -68,8 +68,10 @@ export type ProductMinAggregateOutputType = {
   allow_offer: boolean | null
   return_window: number | null
   donation_percent: number | null
+  donationAnonymous: boolean | null
   isDeleted: boolean | null
   userId: string | null
+  assistentSellId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   weight_kg: number | null
@@ -95,8 +97,10 @@ export type ProductMaxAggregateOutputType = {
   allow_offer: boolean | null
   return_window: number | null
   donation_percent: number | null
+  donationAnonymous: boolean | null
   isDeleted: boolean | null
   userId: string | null
+  assistentSellId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   weight_kg: number | null
@@ -126,8 +130,10 @@ export type ProductCountAggregateOutputType = {
   allow_offer: number
   return_window: number
   donation_percent: number
+  donationAnonymous: number
   isDeleted: number
   userId: number
+  assistentSellId: number
   createdAt: number
   updatedAt: number
   weight_kg: number
@@ -181,8 +187,10 @@ export type ProductMinAggregateInputType = {
   allow_offer?: true
   return_window?: true
   donation_percent?: true
+  donationAnonymous?: true
   isDeleted?: true
   userId?: true
+  assistentSellId?: true
   createdAt?: true
   updatedAt?: true
   weight_kg?: true
@@ -208,8 +216,10 @@ export type ProductMaxAggregateInputType = {
   allow_offer?: true
   return_window?: true
   donation_percent?: true
+  donationAnonymous?: true
   isDeleted?: true
   userId?: true
+  assistentSellId?: true
   createdAt?: true
   updatedAt?: true
   weight_kg?: true
@@ -239,8 +249,10 @@ export type ProductCountAggregateInputType = {
   allow_offer?: true
   return_window?: true
   donation_percent?: true
+  donationAnonymous?: true
   isDeleted?: true
   userId?: true
+  assistentSellId?: true
   createdAt?: true
   updatedAt?: true
   weight_kg?: true
@@ -357,8 +369,10 @@ export type ProductGroupByOutputType = {
   allow_offer: boolean
   return_window: number
   donation_percent: number
+  donationAnonymous: boolean
   isDeleted: boolean
   userId: string
+  assistentSellId: string | null
   createdAt: Date
   updatedAt: Date
   weight_kg: number
@@ -411,8 +425,10 @@ export type ProductWhereInput = {
   allow_offer?: Prisma.BoolFilter<"Product"> | boolean
   return_window?: Prisma.IntFilter<"Product"> | number
   donation_percent?: Prisma.FloatFilter<"Product"> | number
+  donationAnonymous?: Prisma.BoolFilter<"Product"> | boolean
   isDeleted?: Prisma.BoolFilter<"Product"> | boolean
   userId?: Prisma.StringFilter<"Product"> | string
+  assistentSellId?: Prisma.StringNullableFilter<"Product"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   weight_kg?: Prisma.FloatFilter<"Product"> | number
@@ -430,6 +446,7 @@ export type ProductWhereInput = {
   viewers?: Prisma.ProductViewListRelationFilter
   questions?: Prisma.QuestionListRelationFilter
   cartItems?: Prisma.CartItemListRelationFilter
+  assistentSell?: Prisma.XOR<Prisma.AssistentSellNullableScalarRelationFilter, Prisma.AssistentSellWhereInput> | null
   offerItems?: Prisma.OfferItemListRelationFilter
 }
 
@@ -454,8 +471,10 @@ export type ProductOrderByWithRelationInput = {
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
+  donationAnonymous?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  assistentSellId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   weight_kg?: Prisma.SortOrder
@@ -473,6 +492,7 @@ export type ProductOrderByWithRelationInput = {
   viewers?: Prisma.ProductViewOrderByRelationAggregateInput
   questions?: Prisma.QuestionOrderByRelationAggregateInput
   cartItems?: Prisma.CartItemOrderByRelationAggregateInput
+  assistentSell?: Prisma.AssistentSellOrderByWithRelationInput
   offerItems?: Prisma.OfferItemOrderByRelationAggregateInput
 }
 
@@ -500,8 +520,10 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   allow_offer?: Prisma.BoolFilter<"Product"> | boolean
   return_window?: Prisma.IntFilter<"Product"> | number
   donation_percent?: Prisma.FloatFilter<"Product"> | number
+  donationAnonymous?: Prisma.BoolFilter<"Product"> | boolean
   isDeleted?: Prisma.BoolFilter<"Product"> | boolean
   userId?: Prisma.StringFilter<"Product"> | string
+  assistentSellId?: Prisma.StringNullableFilter<"Product"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   weight_kg?: Prisma.FloatFilter<"Product"> | number
@@ -519,6 +541,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   viewers?: Prisma.ProductViewListRelationFilter
   questions?: Prisma.QuestionListRelationFilter
   cartItems?: Prisma.CartItemListRelationFilter
+  assistentSell?: Prisma.XOR<Prisma.AssistentSellNullableScalarRelationFilter, Prisma.AssistentSellWhereInput> | null
   offerItems?: Prisma.OfferItemListRelationFilter
 }, "id">
 
@@ -543,8 +566,10 @@ export type ProductOrderByWithAggregationInput = {
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
+  donationAnonymous?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  assistentSellId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   weight_kg?: Prisma.SortOrder
@@ -582,8 +607,10 @@ export type ProductScalarWhereWithAggregatesInput = {
   allow_offer?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   return_window?: Prisma.IntWithAggregatesFilter<"Product"> | number
   donation_percent?: Prisma.FloatWithAggregatesFilter<"Product"> | number
+  donationAnonymous?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   isDeleted?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   userId?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  assistentSellId?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
   weight_kg?: Prisma.FloatWithAggregatesFilter<"Product"> | number
@@ -610,6 +637,7 @@ export type ProductCreateInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -628,6 +656,7 @@ export type ProductCreateInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
 }
 
@@ -652,8 +681,10 @@ export type ProductUncheckedCreateInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -688,6 +719,7 @@ export type ProductUpdateInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -706,6 +738,7 @@ export type ProductUpdateInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
 }
 
@@ -730,8 +763,10 @@ export type ProductUncheckedUpdateInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -769,8 +804,10 @@ export type ProductCreateManyInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -797,6 +834,7 @@ export type ProductUpdateManyMutationInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -827,8 +865,10 @@ export type ProductUncheckedUpdateManyInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -881,8 +921,10 @@ export type ProductCountOrderByAggregateInput = {
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
+  donationAnonymous?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  assistentSellId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   weight_kg?: Prisma.SortOrder
@@ -921,8 +963,10 @@ export type ProductMaxOrderByAggregateInput = {
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
+  donationAnonymous?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  assistentSellId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   weight_kg?: Prisma.SortOrder
@@ -948,8 +992,10 @@ export type ProductMinOrderByAggregateInput = {
   allow_offer?: Prisma.SortOrder
   return_window?: Prisma.SortOrder
   donation_percent?: Prisma.SortOrder
+  donationAnonymous?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  assistentSellId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   weight_kg?: Prisma.SortOrder
@@ -969,6 +1015,48 @@ export type ProductSumOrderByAggregateInput = {
   hight_cm?: Prisma.SortOrder
   width_cm?: Prisma.SortOrder
   length_cm?: Prisma.SortOrder
+}
+
+export type ProductCreateNestedManyWithoutAssistentSellInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutAssistentSellInput, Prisma.ProductUncheckedCreateWithoutAssistentSellInput> | Prisma.ProductCreateWithoutAssistentSellInput[] | Prisma.ProductUncheckedCreateWithoutAssistentSellInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutAssistentSellInput | Prisma.ProductCreateOrConnectWithoutAssistentSellInput[]
+  createMany?: Prisma.ProductCreateManyAssistentSellInputEnvelope
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+}
+
+export type ProductUncheckedCreateNestedManyWithoutAssistentSellInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutAssistentSellInput, Prisma.ProductUncheckedCreateWithoutAssistentSellInput> | Prisma.ProductCreateWithoutAssistentSellInput[] | Prisma.ProductUncheckedCreateWithoutAssistentSellInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutAssistentSellInput | Prisma.ProductCreateOrConnectWithoutAssistentSellInput[]
+  createMany?: Prisma.ProductCreateManyAssistentSellInputEnvelope
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+}
+
+export type ProductUpdateManyWithoutAssistentSellNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutAssistentSellInput, Prisma.ProductUncheckedCreateWithoutAssistentSellInput> | Prisma.ProductCreateWithoutAssistentSellInput[] | Prisma.ProductUncheckedCreateWithoutAssistentSellInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutAssistentSellInput | Prisma.ProductCreateOrConnectWithoutAssistentSellInput[]
+  upsert?: Prisma.ProductUpsertWithWhereUniqueWithoutAssistentSellInput | Prisma.ProductUpsertWithWhereUniqueWithoutAssistentSellInput[]
+  createMany?: Prisma.ProductCreateManyAssistentSellInputEnvelope
+  set?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  disconnect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  delete?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  update?: Prisma.ProductUpdateWithWhereUniqueWithoutAssistentSellInput | Prisma.ProductUpdateWithWhereUniqueWithoutAssistentSellInput[]
+  updateMany?: Prisma.ProductUpdateManyWithWhereWithoutAssistentSellInput | Prisma.ProductUpdateManyWithWhereWithoutAssistentSellInput[]
+  deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+}
+
+export type ProductUncheckedUpdateManyWithoutAssistentSellNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutAssistentSellInput, Prisma.ProductUncheckedCreateWithoutAssistentSellInput> | Prisma.ProductCreateWithoutAssistentSellInput[] | Prisma.ProductUncheckedCreateWithoutAssistentSellInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutAssistentSellInput | Prisma.ProductCreateOrConnectWithoutAssistentSellInput[]
+  upsert?: Prisma.ProductUpsertWithWhereUniqueWithoutAssistentSellInput | Prisma.ProductUpsertWithWhereUniqueWithoutAssistentSellInput[]
+  createMany?: Prisma.ProductCreateManyAssistentSellInputEnvelope
+  set?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  disconnect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  delete?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  update?: Prisma.ProductUpdateWithWhereUniqueWithoutAssistentSellInput | Prisma.ProductUpdateWithWhereUniqueWithoutAssistentSellInput[]
+  updateMany?: Prisma.ProductUpdateManyWithWhereWithoutAssistentSellInput | Prisma.ProductUpdateManyWithWhereWithoutAssistentSellInput[]
+  deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
 }
 
 export type ProductCreateNestedManyWithoutCategoryInput = {
@@ -1287,6 +1375,148 @@ export type ProductUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
 }
 
+export type ProductCreateWithoutAssistentSellInput = {
+  id?: string
+  title: string
+  description?: string | null
+  price?: number
+  discountPct?: number
+  finalPrice?: number
+  currency?: string
+  catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
+  condition: string
+  tags?: Prisma.ProductCreatetagsInput | string[]
+  meterials?: Prisma.ProductCreatemeterialsInput | string[]
+  color: string
+  care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
+  allow_offer?: boolean
+  return_window?: number
+  donation_percent?: number
+  donationAnonymous?: boolean
+  isDeleted?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
+  images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
+  brand: Prisma.BrandCreateNestedOneWithoutProductsInput
+  size: Prisma.SizeCreateNestedOneWithoutProductsInput
+  category: Prisma.CategoryCreateNestedOneWithoutProductsInput
+  charities?: Prisma.ProductCharityCreateNestedManyWithoutProductInput
+  user: Prisma.UserCreateNestedOneWithoutProductsInput
+  favourites?: Prisma.FavouriteCreateNestedManyWithoutProductInput
+  orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
+  viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
+  questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
+  cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutAssistentSellInput = {
+  id?: string
+  title: string
+  description?: string | null
+  price?: number
+  discountPct?: number
+  finalPrice?: number
+  currency?: string
+  brandId: string
+  sizeId: string
+  categoryId: string
+  catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
+  condition: string
+  tags?: Prisma.ProductCreatetagsInput | string[]
+  meterials?: Prisma.ProductCreatemeterialsInput | string[]
+  color: string
+  care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
+  allow_offer?: boolean
+  return_window?: number
+  donation_percent?: number
+  donationAnonymous?: boolean
+  isDeleted?: boolean
+  userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
+  images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
+  charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
+  favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
+  orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
+  viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
+  questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
+  cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutAssistentSellInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutAssistentSellInput, Prisma.ProductUncheckedCreateWithoutAssistentSellInput>
+}
+
+export type ProductCreateManyAssistentSellInputEnvelope = {
+  data: Prisma.ProductCreateManyAssistentSellInput | Prisma.ProductCreateManyAssistentSellInput[]
+  skipDuplicates?: boolean
+}
+
+export type ProductUpsertWithWhereUniqueWithoutAssistentSellInput = {
+  where: Prisma.ProductWhereUniqueInput
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutAssistentSellInput, Prisma.ProductUncheckedUpdateWithoutAssistentSellInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutAssistentSellInput, Prisma.ProductUncheckedCreateWithoutAssistentSellInput>
+}
+
+export type ProductUpdateWithWhereUniqueWithoutAssistentSellInput = {
+  where: Prisma.ProductWhereUniqueInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutAssistentSellInput, Prisma.ProductUncheckedUpdateWithoutAssistentSellInput>
+}
+
+export type ProductUpdateManyWithWhereWithoutAssistentSellInput = {
+  where: Prisma.ProductScalarWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateManyMutationInput, Prisma.ProductUncheckedUpdateManyWithoutAssistentSellInput>
+}
+
+export type ProductScalarWhereInput = {
+  AND?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+  OR?: Prisma.ProductScalarWhereInput[]
+  NOT?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+  id?: Prisma.StringFilter<"Product"> | string
+  title?: Prisma.StringFilter<"Product"> | string
+  description?: Prisma.StringNullableFilter<"Product"> | string | null
+  price?: Prisma.FloatFilter<"Product"> | number
+  discountPct?: Prisma.FloatFilter<"Product"> | number
+  finalPrice?: Prisma.FloatFilter<"Product"> | number
+  currency?: Prisma.StringFilter<"Product"> | string
+  brandId?: Prisma.StringFilter<"Product"> | string
+  sizeId?: Prisma.StringFilter<"Product"> | string
+  categoryId?: Prisma.StringFilter<"Product"> | string
+  catagory_hierarchy?: Prisma.StringNullableListFilter<"Product">
+  condition?: Prisma.StringFilter<"Product"> | string
+  tags?: Prisma.StringNullableListFilter<"Product">
+  meterials?: Prisma.StringNullableListFilter<"Product">
+  color?: Prisma.StringFilter<"Product"> | string
+  care_instructions?: Prisma.StringNullableListFilter<"Product">
+  stock?: Prisma.IntFilter<"Product"> | number
+  allow_offer?: Prisma.BoolFilter<"Product"> | boolean
+  return_window?: Prisma.IntFilter<"Product"> | number
+  donation_percent?: Prisma.FloatFilter<"Product"> | number
+  donationAnonymous?: Prisma.BoolFilter<"Product"> | boolean
+  isDeleted?: Prisma.BoolFilter<"Product"> | boolean
+  userId?: Prisma.StringFilter<"Product"> | string
+  assistentSellId?: Prisma.StringNullableFilter<"Product"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
+  weight_kg?: Prisma.FloatFilter<"Product"> | number
+  hight_cm?: Prisma.FloatFilter<"Product"> | number
+  width_cm?: Prisma.FloatFilter<"Product"> | number
+  length_cm?: Prisma.FloatFilter<"Product"> | number
+}
+
 export type ProductCreateWithoutCategoryInput = {
   id?: string
   title: string
@@ -1305,6 +1535,7 @@ export type ProductCreateWithoutCategoryInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1322,6 +1553,7 @@ export type ProductCreateWithoutCategoryInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
 }
 
@@ -1345,8 +1577,10 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -1389,40 +1623,6 @@ export type ProductUpdateManyWithWhereWithoutCategoryInput = {
   data: Prisma.XOR<Prisma.ProductUpdateManyMutationInput, Prisma.ProductUncheckedUpdateManyWithoutCategoryInput>
 }
 
-export type ProductScalarWhereInput = {
-  AND?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
-  OR?: Prisma.ProductScalarWhereInput[]
-  NOT?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
-  id?: Prisma.StringFilter<"Product"> | string
-  title?: Prisma.StringFilter<"Product"> | string
-  description?: Prisma.StringNullableFilter<"Product"> | string | null
-  price?: Prisma.FloatFilter<"Product"> | number
-  discountPct?: Prisma.FloatFilter<"Product"> | number
-  finalPrice?: Prisma.FloatFilter<"Product"> | number
-  currency?: Prisma.StringFilter<"Product"> | string
-  brandId?: Prisma.StringFilter<"Product"> | string
-  sizeId?: Prisma.StringFilter<"Product"> | string
-  categoryId?: Prisma.StringFilter<"Product"> | string
-  catagory_hierarchy?: Prisma.StringNullableListFilter<"Product">
-  condition?: Prisma.StringFilter<"Product"> | string
-  tags?: Prisma.StringNullableListFilter<"Product">
-  meterials?: Prisma.StringNullableListFilter<"Product">
-  color?: Prisma.StringFilter<"Product"> | string
-  care_instructions?: Prisma.StringNullableListFilter<"Product">
-  stock?: Prisma.IntFilter<"Product"> | number
-  allow_offer?: Prisma.BoolFilter<"Product"> | boolean
-  return_window?: Prisma.IntFilter<"Product"> | number
-  donation_percent?: Prisma.FloatFilter<"Product"> | number
-  isDeleted?: Prisma.BoolFilter<"Product"> | boolean
-  userId?: Prisma.StringFilter<"Product"> | string
-  createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
-  weight_kg?: Prisma.FloatFilter<"Product"> | number
-  hight_cm?: Prisma.FloatFilter<"Product"> | number
-  width_cm?: Prisma.FloatFilter<"Product"> | number
-  length_cm?: Prisma.FloatFilter<"Product"> | number
-}
-
 export type ProductCreateWithoutBrandInput = {
   id?: string
   title: string
@@ -1441,6 +1641,7 @@ export type ProductCreateWithoutBrandInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1458,6 +1659,7 @@ export type ProductCreateWithoutBrandInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
 }
 
@@ -1481,8 +1683,10 @@ export type ProductUncheckedCreateWithoutBrandInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -1543,6 +1747,7 @@ export type ProductCreateWithoutSizeInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1560,6 +1765,7 @@ export type ProductCreateWithoutSizeInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
 }
 
@@ -1583,8 +1789,10 @@ export type ProductUncheckedCreateWithoutSizeInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -1645,6 +1853,7 @@ export type ProductCreateWithoutOrderItemsInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1662,6 +1871,7 @@ export type ProductCreateWithoutOrderItemsInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
 }
 
@@ -1686,8 +1896,10 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -1737,6 +1949,7 @@ export type ProductUpdateWithoutOrderItemsInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1754,6 +1967,7 @@ export type ProductUpdateWithoutOrderItemsInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
 }
 
@@ -1778,8 +1992,10 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1813,6 +2029,7 @@ export type ProductCreateWithoutImagesInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1830,6 +2047,7 @@ export type ProductCreateWithoutImagesInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
 }
 
@@ -1854,8 +2072,10 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -1905,6 +2125,7 @@ export type ProductUpdateWithoutImagesInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1922,6 +2143,7 @@ export type ProductUpdateWithoutImagesInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
 }
 
@@ -1946,8 +2168,10 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1981,6 +2205,7 @@ export type ProductCreateWithoutCharitiesInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1998,6 +2223,7 @@ export type ProductCreateWithoutCharitiesInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
 }
 
@@ -2022,8 +2248,10 @@ export type ProductUncheckedCreateWithoutCharitiesInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -2073,6 +2301,7 @@ export type ProductUpdateWithoutCharitiesInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2090,6 +2319,7 @@ export type ProductUpdateWithoutCharitiesInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
 }
 
@@ -2114,8 +2344,10 @@ export type ProductUncheckedUpdateWithoutCharitiesInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2149,6 +2381,7 @@ export type ProductCreateWithoutFavouritesInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2166,6 +2399,7 @@ export type ProductCreateWithoutFavouritesInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
 }
 
@@ -2190,8 +2424,10 @@ export type ProductUncheckedCreateWithoutFavouritesInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -2241,6 +2477,7 @@ export type ProductUpdateWithoutFavouritesInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2258,6 +2495,7 @@ export type ProductUpdateWithoutFavouritesInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
 }
 
@@ -2282,8 +2520,10 @@ export type ProductUncheckedUpdateWithoutFavouritesInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2317,6 +2557,7 @@ export type ProductCreateWithoutCartItemsInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2334,6 +2575,7 @@ export type ProductCreateWithoutCartItemsInput = {
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
 }
 
@@ -2358,8 +2600,10 @@ export type ProductUncheckedCreateWithoutCartItemsInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -2409,6 +2653,7 @@ export type ProductUpdateWithoutCartItemsInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2426,6 +2671,7 @@ export type ProductUpdateWithoutCartItemsInput = {
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
 }
 
@@ -2450,8 +2696,10 @@ export type ProductUncheckedUpdateWithoutCartItemsInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2485,6 +2733,7 @@ export type ProductCreateWithoutOfferItemsInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2503,6 +2752,7 @@ export type ProductCreateWithoutOfferItemsInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
 }
 
 export type ProductUncheckedCreateWithoutOfferItemsInput = {
@@ -2526,8 +2776,10 @@ export type ProductUncheckedCreateWithoutOfferItemsInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -2577,6 +2829,7 @@ export type ProductUpdateWithoutOfferItemsInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2595,6 +2848,7 @@ export type ProductUpdateWithoutOfferItemsInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutOfferItemsInput = {
@@ -2618,8 +2872,10 @@ export type ProductUncheckedUpdateWithoutOfferItemsInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2653,6 +2909,7 @@ export type ProductCreateWithoutViewersInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2670,6 +2927,7 @@ export type ProductCreateWithoutViewersInput = {
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
 }
 
@@ -2694,8 +2952,10 @@ export type ProductUncheckedCreateWithoutViewersInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -2745,6 +3005,7 @@ export type ProductUpdateWithoutViewersInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2762,6 +3023,7 @@ export type ProductUpdateWithoutViewersInput = {
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
 }
 
@@ -2786,8 +3048,10 @@ export type ProductUncheckedUpdateWithoutViewersInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2821,6 +3085,7 @@ export type ProductCreateWithoutQuestionsInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2838,6 +3103,7 @@ export type ProductCreateWithoutQuestionsInput = {
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
 }
 
@@ -2862,8 +3128,10 @@ export type ProductUncheckedCreateWithoutQuestionsInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -2913,6 +3181,7 @@ export type ProductUpdateWithoutQuestionsInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2930,6 +3199,7 @@ export type ProductUpdateWithoutQuestionsInput = {
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
 }
 
@@ -2954,8 +3224,10 @@ export type ProductUncheckedUpdateWithoutQuestionsInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2989,6 +3261,7 @@ export type ProductCreateWithoutUserInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3006,6 +3279,7 @@ export type ProductCreateWithoutUserInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
 }
 
@@ -3030,7 +3304,9 @@ export type ProductUncheckedCreateWithoutUserInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -3073,6 +3349,150 @@ export type ProductUpdateManyWithWhereWithoutUserInput = {
   data: Prisma.XOR<Prisma.ProductUpdateManyMutationInput, Prisma.ProductUncheckedUpdateManyWithoutUserInput>
 }
 
+export type ProductCreateManyAssistentSellInput = {
+  id?: string
+  title: string
+  description?: string | null
+  price?: number
+  discountPct?: number
+  finalPrice?: number
+  currency?: string
+  brandId: string
+  sizeId: string
+  categoryId: string
+  catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
+  condition: string
+  tags?: Prisma.ProductCreatetagsInput | string[]
+  meterials?: Prisma.ProductCreatemeterialsInput | string[]
+  color: string
+  care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
+  allow_offer?: boolean
+  return_window?: number
+  donation_percent?: number
+  donationAnonymous?: boolean
+  isDeleted?: boolean
+  userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
+}
+
+export type ProductUpdateWithoutAssistentSellInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.FloatFieldUpdateOperationsInput | number
+  discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
+  condition?: Prisma.StringFieldUpdateOperationsInput | string
+  tags?: Prisma.ProductUpdatetagsInput | string[]
+  meterials?: Prisma.ProductUpdatemeterialsInput | string[]
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
+  brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
+  size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
+  charities?: Prisma.ProductCharityUpdateManyWithoutProductNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutProductsNestedInput
+  favourites?: Prisma.FavouriteUpdateManyWithoutProductNestedInput
+  orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
+  viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
+  questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
+  cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutAssistentSellInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.FloatFieldUpdateOperationsInput | number
+  discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  brandId?: Prisma.StringFieldUpdateOperationsInput | string
+  sizeId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
+  condition?: Prisma.StringFieldUpdateOperationsInput | string
+  tags?: Prisma.ProductUpdatetagsInput | string[]
+  meterials?: Prisma.ProductUpdatemeterialsInput | string[]
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
+  charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
+  favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
+  orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
+  viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
+  questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
+  cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateManyWithoutAssistentSellInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.FloatFieldUpdateOperationsInput | number
+  discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  brandId?: Prisma.StringFieldUpdateOperationsInput | string
+  sizeId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
+  condition?: Prisma.StringFieldUpdateOperationsInput | string
+  tags?: Prisma.ProductUpdatetagsInput | string[]
+  meterials?: Prisma.ProductUpdatemeterialsInput | string[]
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+}
+
 export type ProductCreateManyCategoryInput = {
   id?: string
   title: string
@@ -3093,8 +3513,10 @@ export type ProductCreateManyCategoryInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -3121,6 +3543,7 @@ export type ProductUpdateWithoutCategoryInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3138,6 +3561,7 @@ export type ProductUpdateWithoutCategoryInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
 }
 
@@ -3161,8 +3585,10 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -3199,8 +3625,10 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -3229,8 +3657,10 @@ export type ProductCreateManyBrandInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -3257,6 +3687,7 @@ export type ProductUpdateWithoutBrandInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3274,6 +3705,7 @@ export type ProductUpdateWithoutBrandInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
 }
 
@@ -3297,8 +3729,10 @@ export type ProductUncheckedUpdateWithoutBrandInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -3335,8 +3769,10 @@ export type ProductUncheckedUpdateManyWithoutBrandInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -3365,8 +3801,10 @@ export type ProductCreateManySizeInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId: string
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -3393,6 +3831,7 @@ export type ProductUpdateWithoutSizeInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3410,6 +3849,7 @@ export type ProductUpdateWithoutSizeInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
 }
 
@@ -3433,8 +3873,10 @@ export type ProductUncheckedUpdateWithoutSizeInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -3471,8 +3913,10 @@ export type ProductUncheckedUpdateManyWithoutSizeInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -3502,7 +3946,9 @@ export type ProductCreateManyUserInput = {
   allow_offer?: boolean
   return_window?: number
   donation_percent?: number
+  donationAnonymous?: boolean
   isDeleted?: boolean
+  assistentSellId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -3529,6 +3975,7 @@ export type ProductUpdateWithoutUserInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3546,6 +3993,7 @@ export type ProductUpdateWithoutUserInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
 }
 
@@ -3570,7 +4018,9 @@ export type ProductUncheckedUpdateWithoutUserInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -3608,7 +4058,9 @@ export type ProductUncheckedUpdateManyWithoutUserInput = {
   allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   return_window?: Prisma.IntFieldUpdateOperationsInput | number
   donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -3732,8 +4184,10 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   allow_offer?: boolean
   return_window?: boolean
   donation_percent?: boolean
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId?: boolean
+  assistentSellId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   weight_kg?: boolean
@@ -3751,6 +4205,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   viewers?: boolean | Prisma.Product$viewersArgs<ExtArgs>
   questions?: boolean | Prisma.Product$questionsArgs<ExtArgs>
   cartItems?: boolean | Prisma.Product$cartItemsArgs<ExtArgs>
+  assistentSell?: boolean | Prisma.Product$assistentSellArgs<ExtArgs>
   offerItems?: boolean | Prisma.Product$offerItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
@@ -3776,8 +4231,10 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   allow_offer?: boolean
   return_window?: boolean
   donation_percent?: boolean
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId?: boolean
+  assistentSellId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   weight_kg?: boolean
@@ -3788,6 +4245,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   size?: boolean | Prisma.SizeDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  assistentSell?: boolean | Prisma.Product$assistentSellArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -3811,8 +4269,10 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   allow_offer?: boolean
   return_window?: boolean
   donation_percent?: boolean
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId?: boolean
+  assistentSellId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   weight_kg?: boolean
@@ -3823,6 +4283,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   size?: boolean | Prisma.SizeDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  assistentSell?: boolean | Prisma.Product$assistentSellArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectScalar = {
@@ -3846,8 +4307,10 @@ export type ProductSelectScalar = {
   allow_offer?: boolean
   return_window?: boolean
   donation_percent?: boolean
+  donationAnonymous?: boolean
   isDeleted?: boolean
   userId?: boolean
+  assistentSellId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   weight_kg?: boolean
@@ -3856,7 +4319,7 @@ export type ProductSelectScalar = {
   length_cm?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "discountPct" | "finalPrice" | "currency" | "brandId" | "sizeId" | "categoryId" | "catagory_hierarchy" | "condition" | "tags" | "meterials" | "color" | "care_instructions" | "stock" | "allow_offer" | "return_window" | "donation_percent" | "isDeleted" | "userId" | "createdAt" | "updatedAt" | "weight_kg" | "hight_cm" | "width_cm" | "length_cm", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "discountPct" | "finalPrice" | "currency" | "brandId" | "sizeId" | "categoryId" | "catagory_hierarchy" | "condition" | "tags" | "meterials" | "color" | "care_instructions" | "stock" | "allow_offer" | "return_window" | "donation_percent" | "donationAnonymous" | "isDeleted" | "userId" | "assistentSellId" | "createdAt" | "updatedAt" | "weight_kg" | "hight_cm" | "width_cm" | "length_cm", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
@@ -3869,6 +4332,7 @@ export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   viewers?: boolean | Prisma.Product$viewersArgs<ExtArgs>
   questions?: boolean | Prisma.Product$questionsArgs<ExtArgs>
   cartItems?: boolean | Prisma.Product$cartItemsArgs<ExtArgs>
+  assistentSell?: boolean | Prisma.Product$assistentSellArgs<ExtArgs>
   offerItems?: boolean | Prisma.Product$offerItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -3877,12 +4341,14 @@ export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   size?: boolean | Prisma.SizeDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  assistentSell?: boolean | Prisma.Product$assistentSellArgs<ExtArgs>
 }
 export type ProductIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
   size?: boolean | Prisma.SizeDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  assistentSell?: boolean | Prisma.Product$assistentSellArgs<ExtArgs>
 }
 
 export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3899,6 +4365,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     viewers: Prisma.$ProductViewPayload<ExtArgs>[]
     questions: Prisma.$QuestionPayload<ExtArgs>[]
     cartItems: Prisma.$CartItemPayload<ExtArgs>[]
+    assistentSell: Prisma.$AssistentSellPayload<ExtArgs> | null
     offerItems: Prisma.$OfferItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -3922,8 +4389,10 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     allow_offer: boolean
     return_window: number
     donation_percent: number
+    donationAnonymous: boolean
     isDeleted: boolean
     userId: string
+    assistentSellId: string | null
     createdAt: Date
     updatedAt: Date
     weight_kg: number
@@ -4335,6 +4804,7 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   viewers<T extends Prisma.Product$viewersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$viewersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   questions<T extends Prisma.Product$questionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cartItems<T extends Prisma.Product$cartItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$cartItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CartItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assistentSell<T extends Prisma.Product$assistentSellArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$assistentSellArgs<ExtArgs>>): Prisma.Prisma__AssistentSellClient<runtime.Types.Result.GetResult<Prisma.$AssistentSellPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   offerItems<T extends Prisma.Product$offerItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$offerItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4385,8 +4855,10 @@ export interface ProductFieldRefs {
   readonly allow_offer: Prisma.FieldRef<"Product", 'Boolean'>
   readonly return_window: Prisma.FieldRef<"Product", 'Int'>
   readonly donation_percent: Prisma.FieldRef<"Product", 'Float'>
+  readonly donationAnonymous: Prisma.FieldRef<"Product", 'Boolean'>
   readonly isDeleted: Prisma.FieldRef<"Product", 'Boolean'>
   readonly userId: Prisma.FieldRef<"Product", 'String'>
+  readonly assistentSellId: Prisma.FieldRef<"Product", 'String'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly weight_kg: Prisma.FieldRef<"Product", 'Float'>
@@ -4954,6 +5426,25 @@ export type Product$cartItemsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.CartItemScalarFieldEnum | Prisma.CartItemScalarFieldEnum[]
+}
+
+/**
+ * Product.assistentSell
+ */
+export type Product$assistentSellArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AssistentSell
+   */
+  select?: Prisma.AssistentSellSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AssistentSell
+   */
+  omit?: Prisma.AssistentSellOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssistentSellInclude<ExtArgs> | null
+  where?: Prisma.AssistentSellWhereInput
 }
 
 /**

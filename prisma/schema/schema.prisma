@@ -93,6 +93,8 @@ model User {
   sellDonations    SellDonation[]
   productCharities ProductCharity[]
 
+  assistentSellCharities AssistentSellCharity[]
+
   favouriteProducts Favourite[]
 
   //--------rating------------
@@ -138,6 +140,8 @@ model User {
 
   carts CartGroup[] @relation("myCarts")
   sellerGroupCarts CartGroup[] @relation("sellerGroupCarts")
+
+  assistentSells AssistentSell[]
 
   cartDonationCharities CartDonationCharaties[]
 

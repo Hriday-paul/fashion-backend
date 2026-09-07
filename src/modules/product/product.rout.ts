@@ -6,10 +6,16 @@ import req_validator from "../../middleware/req_validation";
 import { image_Upload } from "../../utils/s3";
 import auth, { PublicAuth } from "../../middleware/auth";
 import { allRoles } from "../user/user.rout";
+import { Role } from "../../../generated/prisma/enums";
+
+export const excludedCharityRoles: Role[] = [
+    Role.CHARITABLE_ORGANIZATION,
+    // Role.CHARITY_SHOP,
+];
 
 const router = Router();
 
-router.post("/", auth(...allRoles), image_Upload.array('images'), parseData(), addProductValidator, req_validator(), productControler.addNewProduct);
+router.post("/", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), image_Upload.array('images'), parseData(), addProductValidator, req_validator(), productControler.addNewProduct);
 
 router.get("/", PublicAuth(), productControler.allProducts);
 router.get("/my-items", auth(...allRoles), productControler.myProducts);

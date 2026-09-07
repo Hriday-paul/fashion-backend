@@ -389,6 +389,9 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
+  AssistentSell: 'AssistentSell',
+  BundlePicture: 'BundlePicture',
+  AssistentSellCharity: 'AssistentSellCharity',
   Category: 'Category',
   BrandByCategory: 'BrandByCategory',
   Brand: 'Brand',
@@ -448,10 +451,232 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "follow" | "chat" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
+    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "follow" | "chat" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
+    AssistentSell: {
+      payload: Prisma.$AssistentSellPayload<ExtArgs>
+      fields: Prisma.AssistentSellFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AssistentSellFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AssistentSellFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>
+        }
+        findFirst: {
+          args: Prisma.AssistentSellFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AssistentSellFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>
+        }
+        findMany: {
+          args: Prisma.AssistentSellFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>[]
+        }
+        create: {
+          args: Prisma.AssistentSellCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>
+        }
+        createMany: {
+          args: Prisma.AssistentSellCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AssistentSellCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>[]
+        }
+        delete: {
+          args: Prisma.AssistentSellDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>
+        }
+        update: {
+          args: Prisma.AssistentSellUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>
+        }
+        deleteMany: {
+          args: Prisma.AssistentSellDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AssistentSellUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AssistentSellUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>[]
+        }
+        upsert: {
+          args: Prisma.AssistentSellUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>
+        }
+        aggregate: {
+          args: Prisma.AssistentSellAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAssistentSell>
+        }
+        groupBy: {
+          args: Prisma.AssistentSellGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssistentSellGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AssistentSellCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssistentSellCountAggregateOutputType> | number
+        }
+      }
+    }
+    BundlePicture: {
+      payload: Prisma.$BundlePicturePayload<ExtArgs>
+      fields: Prisma.BundlePictureFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BundlePictureFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BundlePictureFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>
+        }
+        findFirst: {
+          args: Prisma.BundlePictureFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BundlePictureFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>
+        }
+        findMany: {
+          args: Prisma.BundlePictureFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>[]
+        }
+        create: {
+          args: Prisma.BundlePictureCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>
+        }
+        createMany: {
+          args: Prisma.BundlePictureCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BundlePictureCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>[]
+        }
+        delete: {
+          args: Prisma.BundlePictureDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>
+        }
+        update: {
+          args: Prisma.BundlePictureUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>
+        }
+        deleteMany: {
+          args: Prisma.BundlePictureDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BundlePictureUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BundlePictureUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>[]
+        }
+        upsert: {
+          args: Prisma.BundlePictureUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>
+        }
+        aggregate: {
+          args: Prisma.BundlePictureAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBundlePicture>
+        }
+        groupBy: {
+          args: Prisma.BundlePictureGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BundlePictureGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BundlePictureCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BundlePictureCountAggregateOutputType> | number
+        }
+      }
+    }
+    AssistentSellCharity: {
+      payload: Prisma.$AssistentSellCharityPayload<ExtArgs>
+      fields: Prisma.AssistentSellCharityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AssistentSellCharityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AssistentSellCharityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>
+        }
+        findFirst: {
+          args: Prisma.AssistentSellCharityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AssistentSellCharityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>
+        }
+        findMany: {
+          args: Prisma.AssistentSellCharityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>[]
+        }
+        create: {
+          args: Prisma.AssistentSellCharityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>
+        }
+        createMany: {
+          args: Prisma.AssistentSellCharityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AssistentSellCharityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>[]
+        }
+        delete: {
+          args: Prisma.AssistentSellCharityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>
+        }
+        update: {
+          args: Prisma.AssistentSellCharityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>
+        }
+        deleteMany: {
+          args: Prisma.AssistentSellCharityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AssistentSellCharityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AssistentSellCharityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>[]
+        }
+        upsert: {
+          args: Prisma.AssistentSellCharityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>
+        }
+        aggregate: {
+          args: Prisma.AssistentSellCharityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAssistentSellCharity>
+        }
+        groupBy: {
+          args: Prisma.AssistentSellCharityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssistentSellCharityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AssistentSellCharityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssistentSellCharityCountAggregateOutputType> | number
+        }
+      }
+    }
     Category: {
       payload: Prisma.$CategoryPayload<ExtArgs>
       fields: Prisma.CategoryFieldRefs
@@ -3747,6 +3972,54 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const AssistentSellScalarFieldEnum = {
+  id: 'id',
+  itemsCount: 'itemsCount',
+  contactNumber: 'contactNumber',
+  itemsDetails: 'itemsDetails',
+  priceType: 'priceType',
+  targetPrice: 'targetPrice',
+  additionalNotes: 'additionalNotes',
+  donationPct: 'donationPct',
+  donationAnonymous: 'donationAnonymous',
+  deliveryCharge: 'deliveryCharge',
+  status: 'status',
+  sellerId: 'sellerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  weight_kg: 'weight_kg',
+  hight_cm: 'hight_cm',
+  width_cm: 'width_cm',
+  length_cm: 'length_cm'
+} as const
+
+export type AssistentSellScalarFieldEnum = (typeof AssistentSellScalarFieldEnum)[keyof typeof AssistentSellScalarFieldEnum]
+
+
+export const BundlePictureScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  key: 'key',
+  assistentSellId: 'assistentSellId',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BundlePictureScalarFieldEnum = (typeof BundlePictureScalarFieldEnum)[keyof typeof BundlePictureScalarFieldEnum]
+
+
+export const AssistentSellCharityScalarFieldEnum = {
+  id: 'id',
+  isAnonymous: 'isAnonymous',
+  assistentSellId: 'assistentSellId',
+  charityId: 'charityId',
+  createdAt: 'createdAt'
+} as const
+
+export type AssistentSellCharityScalarFieldEnum = (typeof AssistentSellCharityScalarFieldEnum)[keyof typeof AssistentSellCharityScalarFieldEnum]
+
+
 export const CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -3892,6 +4165,7 @@ export const OrderScalarFieldEnum = {
   serviceFee: 'serviceFee',
   authenticationFee: 'authenticationFee',
   bundleDiscountPercent: 'bundleDiscountPercent',
+  assistentSellId: 'assistentSellId',
   courier_service_id: 'courier_service_id',
   shippingId: 'shippingId',
   isLebelGenerated: 'isLebelGenerated',
@@ -4042,8 +4316,10 @@ export const ProductScalarFieldEnum = {
   allow_offer: 'allow_offer',
   return_window: 'return_window',
   donation_percent: 'donation_percent',
+  donationAnonymous: 'donationAnonymous',
   isDeleted: 'isDeleted',
   userId: 'userId',
+  assistentSellId: 'assistentSellId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   weight_kg: 'weight_kg',
@@ -4509,20 +4785,6 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
- * Reference to a field of type 'DateTime'
- */
-export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime[]'
- */
-export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -4537,23 +4799,16 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
- * Reference to a field of type 'Boolean'
+ * Reference to a field of type 'PriceType'
  */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+export type EnumPriceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PriceType'>
     
 
 
 /**
- * Reference to a field of type 'FileMessageType'
+ * Reference to a field of type 'PriceType[]'
  */
-export type EnumFileMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileMessageType'>
-    
-
-
-/**
- * Reference to a field of type 'FileMessageType[]'
- */
-export type ListEnumFileMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileMessageType[]'>
+export type ListEnumPriceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PriceType[]'>
     
 
 
@@ -4568,6 +4823,55 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'AssistentSellStatus'
+ */
+export type EnumAssistentSellStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssistentSellStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AssistentSellStatus[]'
+ */
+export type ListEnumAssistentSellStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssistentSellStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'FileMessageType'
+ */
+export type EnumFileMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileMessageType'>
+    
+
+
+/**
+ * Reference to a field of type 'FileMessageType[]'
+ */
+export type ListEnumFileMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileMessageType[]'>
     
 
 
@@ -5021,6 +5325,9 @@ export interface PrismaClientOptions {
   omit?: GlobalOmitConfig
 }
 export type GlobalOmitConfig = {
+  assistentSell?: Prisma.AssistentSellOmit
+  bundlePicture?: Prisma.BundlePictureOmit
+  assistentSellCharity?: Prisma.AssistentSellCharityOmit
   category?: Prisma.CategoryOmit
   brandByCategory?: Prisma.BrandByCategoryOmit
   brand?: Prisma.BrandOmit

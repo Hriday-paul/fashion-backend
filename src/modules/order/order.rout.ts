@@ -20,7 +20,7 @@ export const excludedCharityRoles: Role[] = [
 router.post("/",
     validateOrderProducts,
     req_validator(),
-    auth(...allRoles),
+    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.addNewOrder);
 
 router.post("/shipping-label/:orderId",
@@ -71,7 +71,7 @@ router.patch("/items/cancel/decline",
 router.patch("/confirm-received",
     validateOrderReceivedmark,
     req_validator(),
-    auth(...allRoles),
+    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.confirmOrderReceived);
 
 export const orderRouts = router;

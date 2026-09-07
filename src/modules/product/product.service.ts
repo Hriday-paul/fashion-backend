@@ -23,6 +23,16 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
 
     const { images, charities, donationPrivacy, createdAt, updatedAt, catagory_hierarchy, finalPrice, discountPct, price, ...morePayload } = payload;
 
+    //charity required for all roles, without eco friendly store and charity shop and charitable organization
+
+    const non_req_charity_roles: string[] = [Role.ECO_FRIENDLY_STORE, Role.CHARITY_SHOP];
+    const isAllowCharity = !non_req_charity_roles.includes(role);
+
+    if (isAllowCharity && (!charities || charities?.length === 0 || morePayload?.donation_percent < 5)) {
+
+        throw new AppError(httpStatus.BAD_REQUEST, "Minimum donation percentage and charity is required");
+    }
+
     const category = await categoryService.haveChildCategory(payload?.categoryId);
     //checking catalog is avaialable or not
     if (!category) {
@@ -36,10 +46,6 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
     //get category hierarchy list
     const categories = await categoryService.getParentChain({ categoryId: payload?.categoryId });
     const hierarchy = categories.map(cat => cat?.id);
-
-
-    const charityRoles: string[] = [Role.ECO_FRIENDLY_STORE, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP];
-    const isAllowCharity = !charityRoles.includes(role);
 
     // check payload charities exact charity or not
     if (charities?.length > 0) {
@@ -93,6 +99,7 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
             images: { create: images },
             charities: { create: finalcharities },
             ...morePayload,
+            donationAnonymous: donationPrivacy,
             price,
             discountPct,
             finalPrice: lastPrice,
