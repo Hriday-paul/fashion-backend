@@ -3974,6 +3974,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const AssistentSellScalarFieldEnum = {
   id: 'id',
+  itemsTitle: 'itemsTitle',
   itemsCount: 'itemsCount',
   contactNumber: 'contactNumber',
   itemsDetails: 'itemsDetails',

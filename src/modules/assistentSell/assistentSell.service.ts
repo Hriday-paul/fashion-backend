@@ -27,7 +27,65 @@ const myRequests = async (sellerId: string, query: Record<string, unknown>, opti
             [sortBy]: sortOrder,
         },
         include: {
-
+            pictures: {
+                take: 1,
+                orderBy: {
+                    order: 'asc'
+                },
+                select: {
+                    key: true,
+                    url: true,
+                    id: true
+                }
+            },
+            charities: {
+                select: {
+                    charityId: true,
+                    charity: {
+                        select: {
+                            fname: true,
+                            lname: true,
+                            userName: true,
+                            picture: {
+                                select: {
+                                    key: true,
+                                    url: true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            listings: {
+                select: {
+                    id: true,
+                    title: true,
+                    finalPrice: true,
+                    price: true,
+                    discountPct: true,
+                    images: {
+                        take: 1,
+                        orderBy: {
+                            order: 'asc'
+                        },
+                        select: {
+                            key: true,
+                            url: true
+                        }
+                    },
+                    size: {
+                        select: {
+                            title: true,
+                            id: true
+                        }
+                    }
+                }
+            },
+            order: {
+                select: {
+                    status: true,
+                }
+            }
         },
     })
 

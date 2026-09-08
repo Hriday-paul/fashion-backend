@@ -919,7 +919,12 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
                     },
                     _count: {
                         select: {
-                            products: true
+                            products: {
+                                where: {
+                                    stock: { gt: 0 },
+                                    isDeleted: false
+                                }
+                            }
                         }
                     },
                     userName: true,

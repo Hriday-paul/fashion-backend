@@ -1,6 +1,7 @@
 
 model AssistentSell{
     id String @id @default(cuid())
+    itemsTitle String
     itemsCount Int @default(0)
     contactNumber String?
     itemsDetails String?
@@ -74,7 +75,7 @@ model AssistentSellCharity {
     assistentSell   AssistentSell @relation(fields: [assistentSellId], references: [id], onDelete: Cascade)
 
     charityId String
-    charity   User   @relation(fields: [charityId], references: [id])
+    charity   User   @relation(fields: [charityId], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
 

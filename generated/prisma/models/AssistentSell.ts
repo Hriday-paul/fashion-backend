@@ -49,6 +49,7 @@ export type AssistentSellSumAggregateOutputType = {
 
 export type AssistentSellMinAggregateOutputType = {
   id: string | null
+  itemsTitle: string | null
   itemsCount: number | null
   contactNumber: string | null
   itemsDetails: string | null
@@ -70,6 +71,7 @@ export type AssistentSellMinAggregateOutputType = {
 
 export type AssistentSellMaxAggregateOutputType = {
   id: string | null
+  itemsTitle: string | null
   itemsCount: number | null
   contactNumber: string | null
   itemsDetails: string | null
@@ -91,6 +93,7 @@ export type AssistentSellMaxAggregateOutputType = {
 
 export type AssistentSellCountAggregateOutputType = {
   id: number
+  itemsTitle: number
   itemsCount: number
   contactNumber: number
   itemsDetails: number
@@ -136,6 +139,7 @@ export type AssistentSellSumAggregateInputType = {
 
 export type AssistentSellMinAggregateInputType = {
   id?: true
+  itemsTitle?: true
   itemsCount?: true
   contactNumber?: true
   itemsDetails?: true
@@ -157,6 +161,7 @@ export type AssistentSellMinAggregateInputType = {
 
 export type AssistentSellMaxAggregateInputType = {
   id?: true
+  itemsTitle?: true
   itemsCount?: true
   contactNumber?: true
   itemsDetails?: true
@@ -178,6 +183,7 @@ export type AssistentSellMaxAggregateInputType = {
 
 export type AssistentSellCountAggregateInputType = {
   id?: true
+  itemsTitle?: true
   itemsCount?: true
   contactNumber?: true
   itemsDetails?: true
@@ -286,6 +292,7 @@ export type AssistentSellGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type AssistentSellGroupByOutputType = {
   id: string
+  itemsTitle: string
   itemsCount: number
   contactNumber: string | null
   itemsDetails: string | null
@@ -330,6 +337,7 @@ export type AssistentSellWhereInput = {
   OR?: Prisma.AssistentSellWhereInput[]
   NOT?: Prisma.AssistentSellWhereInput | Prisma.AssistentSellWhereInput[]
   id?: Prisma.StringFilter<"AssistentSell"> | string
+  itemsTitle?: Prisma.StringFilter<"AssistentSell"> | string
   itemsCount?: Prisma.IntFilter<"AssistentSell"> | number
   contactNumber?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
   itemsDetails?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
@@ -356,6 +364,7 @@ export type AssistentSellWhereInput = {
 
 export type AssistentSellOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  itemsTitle?: Prisma.SortOrder
   itemsCount?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   itemsDetails?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -385,6 +394,7 @@ export type AssistentSellWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.AssistentSellWhereInput | Prisma.AssistentSellWhereInput[]
   OR?: Prisma.AssistentSellWhereInput[]
   NOT?: Prisma.AssistentSellWhereInput | Prisma.AssistentSellWhereInput[]
+  itemsTitle?: Prisma.StringFilter<"AssistentSell"> | string
   itemsCount?: Prisma.IntFilter<"AssistentSell"> | number
   contactNumber?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
   itemsDetails?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
@@ -411,6 +421,7 @@ export type AssistentSellWhereUniqueInput = Prisma.AtLeast<{
 
 export type AssistentSellOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  itemsTitle?: Prisma.SortOrder
   itemsCount?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   itemsDetails?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -440,6 +451,7 @@ export type AssistentSellScalarWhereWithAggregatesInput = {
   OR?: Prisma.AssistentSellScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AssistentSellScalarWhereWithAggregatesInput | Prisma.AssistentSellScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"AssistentSell"> | string
+  itemsTitle?: Prisma.StringWithAggregatesFilter<"AssistentSell"> | string
   itemsCount?: Prisma.IntWithAggregatesFilter<"AssistentSell"> | number
   contactNumber?: Prisma.StringNullableWithAggregatesFilter<"AssistentSell"> | string | null
   itemsDetails?: Prisma.StringNullableWithAggregatesFilter<"AssistentSell"> | string | null
@@ -461,6 +473,7 @@ export type AssistentSellScalarWhereWithAggregatesInput = {
 
 export type AssistentSellCreateInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -486,6 +499,7 @@ export type AssistentSellCreateInput = {
 
 export type AssistentSellUncheckedCreateInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -511,6 +525,7 @@ export type AssistentSellUncheckedCreateInput = {
 
 export type AssistentSellUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -536,6 +551,7 @@ export type AssistentSellUpdateInput = {
 
 export type AssistentSellUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -561,6 +577,7 @@ export type AssistentSellUncheckedUpdateInput = {
 
 export type AssistentSellCreateManyInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -582,6 +599,7 @@ export type AssistentSellCreateManyInput = {
 
 export type AssistentSellUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -602,6 +620,7 @@ export type AssistentSellUpdateManyMutationInput = {
 
 export type AssistentSellUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -623,6 +642,7 @@ export type AssistentSellUncheckedUpdateManyInput = {
 
 export type AssistentSellCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  itemsTitle?: Prisma.SortOrder
   itemsCount?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
   itemsDetails?: Prisma.SortOrder
@@ -655,6 +675,7 @@ export type AssistentSellAvgOrderByAggregateInput = {
 
 export type AssistentSellMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  itemsTitle?: Prisma.SortOrder
   itemsCount?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
   itemsDetails?: Prisma.SortOrder
@@ -676,6 +697,7 @@ export type AssistentSellMaxOrderByAggregateInput = {
 
 export type AssistentSellMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  itemsTitle?: Prisma.SortOrder
   itemsCount?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
   itemsDetails?: Prisma.SortOrder
@@ -878,6 +900,7 @@ export type AssistentSellUncheckedUpdateManyWithoutSellerNestedInput = {
 
 export type AssistentSellCreateWithoutPicturesInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -902,6 +925,7 @@ export type AssistentSellCreateWithoutPicturesInput = {
 
 export type AssistentSellUncheckedCreateWithoutPicturesInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -942,6 +966,7 @@ export type AssistentSellUpdateToOneWithWhereWithoutPicturesInput = {
 
 export type AssistentSellUpdateWithoutPicturesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -966,6 +991,7 @@ export type AssistentSellUpdateWithoutPicturesInput = {
 
 export type AssistentSellUncheckedUpdateWithoutPicturesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -990,6 +1016,7 @@ export type AssistentSellUncheckedUpdateWithoutPicturesInput = {
 
 export type AssistentSellCreateWithoutCharitiesInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -1014,6 +1041,7 @@ export type AssistentSellCreateWithoutCharitiesInput = {
 
 export type AssistentSellUncheckedCreateWithoutCharitiesInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -1054,6 +1082,7 @@ export type AssistentSellUpdateToOneWithWhereWithoutCharitiesInput = {
 
 export type AssistentSellUpdateWithoutCharitiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1078,6 +1107,7 @@ export type AssistentSellUpdateWithoutCharitiesInput = {
 
 export type AssistentSellUncheckedUpdateWithoutCharitiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1102,6 +1132,7 @@ export type AssistentSellUncheckedUpdateWithoutCharitiesInput = {
 
 export type AssistentSellCreateWithoutOrderInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -1126,6 +1157,7 @@ export type AssistentSellCreateWithoutOrderInput = {
 
 export type AssistentSellUncheckedCreateWithoutOrderInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -1166,6 +1198,7 @@ export type AssistentSellUpdateToOneWithWhereWithoutOrderInput = {
 
 export type AssistentSellUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1190,6 +1223,7 @@ export type AssistentSellUpdateWithoutOrderInput = {
 
 export type AssistentSellUncheckedUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1214,6 +1248,7 @@ export type AssistentSellUncheckedUpdateWithoutOrderInput = {
 
 export type AssistentSellCreateWithoutListingsInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -1238,6 +1273,7 @@ export type AssistentSellCreateWithoutListingsInput = {
 
 export type AssistentSellUncheckedCreateWithoutListingsInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -1278,6 +1314,7 @@ export type AssistentSellUpdateToOneWithWhereWithoutListingsInput = {
 
 export type AssistentSellUpdateWithoutListingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1302,6 +1339,7 @@ export type AssistentSellUpdateWithoutListingsInput = {
 
 export type AssistentSellUncheckedUpdateWithoutListingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1326,6 +1364,7 @@ export type AssistentSellUncheckedUpdateWithoutListingsInput = {
 
 export type AssistentSellCreateWithoutSellerInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -1350,6 +1389,7 @@ export type AssistentSellCreateWithoutSellerInput = {
 
 export type AssistentSellUncheckedCreateWithoutSellerInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -1403,6 +1443,7 @@ export type AssistentSellScalarWhereInput = {
   OR?: Prisma.AssistentSellScalarWhereInput[]
   NOT?: Prisma.AssistentSellScalarWhereInput | Prisma.AssistentSellScalarWhereInput[]
   id?: Prisma.StringFilter<"AssistentSell"> | string
+  itemsTitle?: Prisma.StringFilter<"AssistentSell"> | string
   itemsCount?: Prisma.IntFilter<"AssistentSell"> | number
   contactNumber?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
   itemsDetails?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
@@ -1424,6 +1465,7 @@ export type AssistentSellScalarWhereInput = {
 
 export type AssistentSellCreateManySellerInput = {
   id?: string
+  itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
   itemsDetails?: string | null
@@ -1444,6 +1486,7 @@ export type AssistentSellCreateManySellerInput = {
 
 export type AssistentSellUpdateWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1468,6 +1511,7 @@ export type AssistentSellUpdateWithoutSellerInput = {
 
 export type AssistentSellUncheckedUpdateWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1492,6 +1536,7 @@ export type AssistentSellUncheckedUpdateWithoutSellerInput = {
 
 export type AssistentSellUncheckedUpdateManyWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1561,6 +1606,7 @@ export type AssistentSellCountOutputTypeCountListingsArgs<ExtArgs extends runtim
 
 export type AssistentSellSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  itemsTitle?: boolean
   itemsCount?: boolean
   contactNumber?: boolean
   itemsDetails?: boolean
@@ -1588,6 +1634,7 @@ export type AssistentSellSelect<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type AssistentSellSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  itemsTitle?: boolean
   itemsCount?: boolean
   contactNumber?: boolean
   itemsDetails?: boolean
@@ -1610,6 +1657,7 @@ export type AssistentSellSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 
 export type AssistentSellSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  itemsTitle?: boolean
   itemsCount?: boolean
   contactNumber?: boolean
   itemsDetails?: boolean
@@ -1632,6 +1680,7 @@ export type AssistentSellSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 
 export type AssistentSellSelectScalar = {
   id?: boolean
+  itemsTitle?: boolean
   itemsCount?: boolean
   contactNumber?: boolean
   itemsDetails?: boolean
@@ -1651,7 +1700,7 @@ export type AssistentSellSelectScalar = {
   length_cm?: boolean
 }
 
-export type AssistentSellOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemsCount" | "contactNumber" | "itemsDetails" | "priceType" | "targetPrice" | "additionalNotes" | "donationPct" | "donationAnonymous" | "deliveryCharge" | "status" | "sellerId" | "createdAt" | "updatedAt" | "weight_kg" | "hight_cm" | "width_cm" | "length_cm", ExtArgs["result"]["assistentSell"]>
+export type AssistentSellOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemsTitle" | "itemsCount" | "contactNumber" | "itemsDetails" | "priceType" | "targetPrice" | "additionalNotes" | "donationPct" | "donationAnonymous" | "deliveryCharge" | "status" | "sellerId" | "createdAt" | "updatedAt" | "weight_kg" | "hight_cm" | "width_cm" | "length_cm", ExtArgs["result"]["assistentSell"]>
 export type AssistentSellInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pictures?: boolean | Prisma.AssistentSell$picturesArgs<ExtArgs>
   charities?: boolean | Prisma.AssistentSell$charitiesArgs<ExtArgs>
@@ -1678,6 +1727,7 @@ export type $AssistentSellPayload<ExtArgs extends runtime.Types.Extensions.Inter
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    itemsTitle: string
     itemsCount: number
     contactNumber: string | null
     itemsDetails: string | null
@@ -2124,6 +2174,7 @@ export interface Prisma__AssistentSellClient<T, Null = never, ExtArgs extends ru
  */
 export interface AssistentSellFieldRefs {
   readonly id: Prisma.FieldRef<"AssistentSell", 'String'>
+  readonly itemsTitle: Prisma.FieldRef<"AssistentSell", 'String'>
   readonly itemsCount: Prisma.FieldRef<"AssistentSell", 'Int'>
   readonly contactNumber: Prisma.FieldRef<"AssistentSell", 'String'>
   readonly itemsDetails: Prisma.FieldRef<"AssistentSell", 'String'>

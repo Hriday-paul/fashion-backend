@@ -2,6 +2,10 @@ import { body, query, ValidationChain } from "express-validator";
 
 export const assistentSellValidator: ValidationChain[] = [
 
+    body("itemsTitle")
+        .trim()
+        .notEmpty().withMessage("Items title is required"),
+
     body("itemsDetails")
         .optional()
         .trim(),
