@@ -73,6 +73,9 @@ model Order {
 
     bundleDiscountPercent Float @default(0)
 
+    assistentSellId String? @unique
+    assistentSell   AssistentSell? @relation(fields: [assistentSellId], references: [id], onDelete: Cascade)
+
     courier_service_id String
     shippingId String
     isLebelGenerated Boolean @default(false)

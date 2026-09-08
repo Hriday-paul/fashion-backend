@@ -26,7 +26,7 @@ async function main() {
     await connectRedis();
 
     //@ts-ignore
-    // global.socketio = io;
+    global.socketio = io;
 
   } catch (err) {
     console.error(err);

@@ -4,21 +4,22 @@ import { sendMessageValidator } from './messages.validation';
 import parseData from '../../middleware/parseData';
 import auth from '../../middleware/auth';
 import req_validator from '../../middleware/req_validation';
-import { Role } from '../../../generated/prisma/enums';
+import { allRoles } from '../user/user.rout';
+import { document_Upload } from '../../utils/s3';
 
 const router = Router();
 // const storage = memoryStorage();
 // const upload = multer({ storage });
 
-// router.post(
-//   '/send-messages',
-//   auth(USER_ROLE.user, USER_Role.ADMIN),
-//   upload.single('image'),
-//   parseData(),
-//   sendMessageValidator,
-//   req_validator(),
-//   messagesController.createMessages,
-// );
+router.post(
+  '/send',
+  auth(...allRoles),
+  document_Upload.array('files'),
+  parseData(),
+  sendMessageValidator,
+  req_validator(),
+  messagesController.createMessages,
+);
 
 // router.patch(
 //   '/seen/:chatId',
@@ -56,8 +57,8 @@ const router = Router();
 // );
 
 router.get(
-  '/pre-messages/:id',
-   auth(Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSADOR, Role.ASSISTED_SELLER, Role.CELEBRITY, Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE, Role.PROFESSIONAL_SELLER),
+  '/pre-messages/:friendUserName',
+  auth(...allRoles),
   messagesController.getAllPreMessages,
 );
 

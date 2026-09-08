@@ -71,17 +71,20 @@ model User {
 
   isOnline Boolean @default(false)
 
+  lastOnlineAt DateTime @default(now())
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   isDeleted Boolean  @default(false)
 
   notificationReceivers Notification[] @relation("ReceivedNotifications")
-  notificationSenders   Notification[] @relation("SentNotifications")
+  notificationSenders   Notification[] @relation("ActNotifications")
 
   sentMessages    Message[] @relation("sentMsgs")
   receiveMessages Message[] @relation("receiveMsgs")
 
-  chatGroups ChatParticipant[]
+  user1Chats Chat[] @relation("user1Chats")
+  user2Chats Chat[] @relation("user2Chats")
 
   payments Payment[]
 
@@ -89,6 +92,8 @@ model User {
 
   sellDonations    SellDonation[]
   productCharities ProductCharity[]
+
+  assistentSellCharities AssistentSellCharity[]
 
   favouriteProducts Favourite[]
 
@@ -120,6 +125,9 @@ model User {
   billingAddress BillingDetails? @relation("asBuyer")
   sellerAddress BillingDetails? @relation("asSeller")
 
+  offersAsBuyer  Offer[] @relation("OffersForBuyer")
+  offersAsSeller Offer[] @relation("OffersForSeller")
+
   wallet Wallet?
 
   avgRating Float @default(0)
@@ -132,6 +140,8 @@ model User {
 
   carts CartGroup[] @relation("myCarts")
   sellerGroupCarts CartGroup[] @relation("sellerGroupCarts")
+
+  assistentSells AssistentSell[]
 
   cartDonationCharities CartDonationCharaties[]
 
@@ -223,26 +233,73 @@ enum Approval_Status {
 
 model Notification {
   id       String  @id @default(uuid())
-  senderId String?
-  sender   User?   @relation("SentNotifications", fields: [senderId], references: [id], onDelete: Cascade)
+  actorId String?
+  actor   User?   @relation("ActNotifications", fields: [actorId], references: [id], onDelete: Cascade)
 
   receiverId String?
   receiver   User?   @relation("ReceivedNotifications", fields: [receiverId], references: [id], onDelete: Cascade)
 
+  entityId String?
+  entityType NotificationEntityType?
+
+  entityImgs String[] @default([])
+
+  groupKeyId String?
+
   message   String
   fcmToken  String?
-  type      NotificationType @default(Text)
+  type      NotificationType?
   title     String
   isRead    Boolean          @default(false)
-  link      String?
   createdAt DateTime         @default(now())
   updatedAt DateTime         @default(now()) @updatedAt
 }
 
+enum NotificationEntityType {
+  PRODUCT
+  OFFER
+  ORDER
+  MESSAGE
+  USER
+  DONATION
+  RETURN
+}
+
 enum NotificationType {
-  Text
-  Payment
-  Cancelled
+  //for product
+  PRODUCT_LIKE
+  PRICE_DROP
+  SOLD_OUT
+
+  //for offer
+  OFFER_RECEIVED
+  OFFER_ACCEPTED
+  OFFER_REJECTED
+  OFFER_CANCELED
+
+  //for order
+  ORDER_PLACED
+  ORDER_STATUS_CHANGED
+  ORDER_COMPLETED
+  ORDER_ITEM_CANCELED
+
+  //for message
+  MESSAGE_RECEIVED
+
+  //for user
+  FOLLOWED
+  REVIEW_RECEIVED
+
+  //for donation
+  DONATION_RECEIVED
+
+  //for return
+  RETURN_REQUESTED
+  RETURN_APPROVED
+  RETURN_REJECTED
+  RETURN_COMPLETED
+  RETURN_STATUS_CHANGED
+  RETURN_ITEM_CANCELED
 }
 
 model Setting {

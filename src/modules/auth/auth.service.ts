@@ -175,7 +175,7 @@ const loginUser = async (payload: { email: string, password: string, fcmToken?: 
     );
 
     return {
-        user: { ...userDoc, role },
+        user: { ...userDoc, auth: { role } },
         accessToken,
         refreshToken,
     };
@@ -373,10 +373,7 @@ const socialSignUp = async (payload: {
     );
 
     return {
-        user: {
-            ...userDoc,
-            role: userRole,
-        },
+        user: { ...userDoc, auth: { role } },
         accessToken,
         refreshToken,
     };
@@ -477,7 +474,7 @@ const socialLogin = async (payload: { idToken: string, fcmToken?: string }) => {
     );
 
     return {
-        user: { ...userDoc, role },
+        user: { ...userDoc, auth: { role } },
         accessToken,
         refreshToken,
     };
@@ -689,5 +686,6 @@ export const authService = {
     changePassword,
     resetPassword,
     refreshToken,
-    adminLogin
+    adminLogin,
+    socialLogin
 }

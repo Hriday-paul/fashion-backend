@@ -1,56 +1,64 @@
 model Chat {
     id String @id @default(uuid())
 
-    participants ChatParticipant[]
+    user1Id String
+    user1   User   @relation("user1Chats", fields: [user1Id], references: [id], onDelete: Cascade)
+
+    user2Id String
+    user2   User   @relation("user2Chats", fields: [user2Id], references: [id], onDelete: Cascade)
 
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
     messages  Message[]
 
+    @@unique([user1Id, user2Id])
+    @@index([user1Id, user2Id])
+    @@index([user2Id, user1Id])
     @@map("chatGroups")
 }
 
-model ChatParticipant {
-    id     String  @id @default(uuid())
-    chatId String
-    chat   Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+model Message {
+    id       String  @id @default(uuid())
+    text     String?
+    isSeen   Boolean @default(false)
+    senderId String
+    sender   User    @relation("sentMsgs", fields: [senderId], references: [id], onDelete: Cascade)
 
-    userId String
-    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    receiverId String
+    receiver   User   @relation("receiveMsgs", fields: [receiverId], references: [id], onDelete: Cascade)
+
+    chatId String
+    chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+    files FileMessage[]
+
+    offerId String? @unique
+    offer   Offer?  @relation(fields: [offerId], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    @@map("chatParticipants")
-}
-
-model Message {
-    id       String     @id @default(uuid())
-    text     String?
-    isSeen     Boolean @default(false)
-    senderId String
-    sender   User    @relation("sentMsgs",fields: [senderId], references: [id], onDelete: Cascade)
-
-    receiverId String
-    receiver   User @relation("receiveMsgs", fields: [receiverId], references: [id], onDelete: Cascade)
-
-    chatId      String
-    chat        Chat        @relation(fields: [chatId], references: [id], onDelete: Cascade)
-
-    files FileMessage[]
-
-    createdAt    DateTime      @default(now())
-    updatedAt    DateTime      @updatedAt
-
+    @@index([chatId, isSeen])
+    @@index([chatId, receiverId, isSeen])
+    @@index([receiverId, isSeen])
+    @@index([offerId])
+    @@index([senderId])
     @@map("messages")
 }
 
 model FileMessage {
-    id        String     @id @default(uuid())
+    id        String  @id @default(uuid())
     key       String
     url       String
+    title     String?
     messageId String
     message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+    type FileMessageType @default(IMAGE)
 
     @@map("document_messages")
+}
+
+enum FileMessageType {
+    IMAGE
+    DOCUMENT
 }

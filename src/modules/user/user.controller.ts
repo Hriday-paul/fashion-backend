@@ -33,7 +33,7 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
     if (files?.picture && files?.picture.length > 0) {
         image = await uploadToS3({
             file: files.picture[0],
-            fileName: `images/user/${Math.floor(100000 + Math.random() * 900000)}`,
+            fileName: `images/user/`,
         });
     }
 
@@ -49,7 +49,12 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
 
         const urls = await uploadManyToS3(FileAry);
 
-        req.body.charityImgs = urls
+        req.body.charityImgs = urls.map(url => {
+            return {
+                key: url.key,
+                url: url.url,
+            };
+        });
     }
 
 

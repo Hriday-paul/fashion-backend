@@ -5,6 +5,7 @@ import { RefundQueue } from "../queues/refund.queue";
 import { jobs } from "../queues/jobs.name";
 import config from "../config";
 import { IShipment } from "../modules/order/order.interface";
+import { notificationQueue } from "../queues/notificaion.queue";
 // import { notificationQueue } from "../queues/notification.queues";
 
 // ── Worker ──────────────────────────────────────────────────────────────────
@@ -403,11 +404,35 @@ makeOrderWorker.on("completed", async (job, result) => {
             include: {
                 items: {
                     include: {
-                        product: true
+                        product: {
+                            include: {
+                                images: {
+                                    take: 1,
+                                    select: {
+                                        url: true
+                                    }
+                                }
+                            }
+                        },
+                    }
+                },
+                user: {
+                    select: {
+                        id: true,
+                        userName: true,
+                        fcmToken: true
+                    }
+                },
+                seller: {
+                    select: {
+                        userName: true,
+                        id: true,
+                        fcmToken: true
                     }
                 }
             }
         });
+
 
         await prisma.$transaction(async (tx) => {
             await tx.product.updateMany({
@@ -425,12 +450,48 @@ makeOrderWorker.on("completed", async (job, result) => {
                     stock: {
                         decrement: 1
                     }
-                }
+                },
             })
 
             //delete the cart group after order creation success
             await tx.cartGroup.delete({ where: { id: cartGroupId } });
         })
+
+        if (cartGroup) {
+            //send notification to the seller about order creation success
+            await notificationQueue.add(jobs.notification, {
+                allowPushNotification: true,
+                payload: {
+                    title: `An order has been placed for your items`,
+                    message: `**${cartGroup?.user?.userName}** has placed an order for your items. Check your sell order list & make process to ship the items.`,
+                    actorId: cartGroup?.userId,
+                    receiverId: cartGroup?.sellerId,
+                    entityId: cartGroup?.seller?.userName,
+                    entityType: "ORDER",
+                    entityImgs: cartGroup?.items?.map(item => (item?.product?.images[0]?.url)),
+                    type: "ORDER_PLACED",
+                    fcmToken: cartGroup?.seller?.fcmToken,
+                    groupKeyId: null,
+                }
+            })
+
+            //send notification to the buyer about order creation success
+            await notificationQueue.add(jobs.notification, {
+                allowPushNotification: true,
+                payload: {
+                    title: `Purchase Successful`,
+                    message: `Your order has been placed successfully. Check your purchase order list for tracking & shipping details.`,
+                    actorId: cartGroup?.userId,
+                    receiverId: cartGroup?.userId,
+                    entityId: cartGroup?.user?.userName,
+                    entityType: "ORDER",
+                    entityImgs: cartGroup?.items?.map(item => (item?.product?.images[0]?.url)),
+                    type: "ORDER_PLACED",
+                    fcmToken: cartGroup?.user?.fcmToken,
+                    groupKeyId: null,
+                }
+            })
+        }
 
 
     } catch (err) {

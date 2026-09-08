@@ -247,7 +247,9 @@ const userDetails = async (userName: string, currentUserId?: string) => {
 
     const totalDonation = totalSellDonationAmount + totalTreeDonationAmount + totalDirectDonationAmount;
 
-    return { user: res, review: ratingAvg, isfolowing: isfolowing ? true : false, totalDonation };
+    const isCurrentUser = currentUserId === res?.id;
+
+    return { user: res, review: ratingAvg, isfolowing: isfolowing ? true : false, totalDonation, isCurrentUser };
 }
 
 const charityAbout = async (userName: string) => {

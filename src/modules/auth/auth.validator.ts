@@ -49,6 +49,10 @@ export const socialSignupValidator = [
     body('idToken').trim().not().isEmpty().withMessage('Id token is required').isString(),
 ]
 
+export const socialSignInValidator = [
+    body('idToken').trim().not().isEmpty().withMessage('Id token is required').isString(),
+]
+
 export const loginAccountValidator = [
     body('email').trim().not().isEmpty().withMessage("Email address required").isEmail().normalizeEmail({ all_lowercase: true }).withMessage('Invalid Email'),
     body('password').trim().not().isEmpty().withMessage('password is required').isString(),

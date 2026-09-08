@@ -1,0 +1,84 @@
+
+model AssistentSell{
+    id String @id @default(cuid())
+    itemsTitle String
+    itemsCount Int @default(0)
+    contactNumber String?
+    itemsDetails String?
+    priceType PriceType @default(MARKET_PRICE)
+    targetPrice Float? @default(0)
+    additionalNotes String?
+
+    pictures BundlePicture[]
+    charities AssistentSellCharity[]
+    donationPct Float @default(0)
+    donationAnonymous Boolean @default(true)
+
+    deliveryCharge Float? @default(0)
+
+    status AssistentSellStatus @default(PENDING)
+
+    listings Product[]
+
+    order Order?
+
+    sellerId String
+    seller   User @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt @default(now())
+
+    weight_kg Float // in kg, for shipping cost calculation
+    hight_cm  Float // in cm, for shipping cost calculation
+    width_cm  Float // in cm, for shipping cost calculation
+    length_cm Float // in cm, for shipping cost calculation
+
+    @@map("assistent_sells")
+    @@index([status, priceType])
+    @@index([priceType, status])
+}
+
+enum AssistentSellStatus {
+    PENDING
+    APPROVED
+    REJECTED
+    LISTED
+}
+
+enum PriceType {
+    TARGET_AMOUNT
+    DISCUSSION
+    MARKET_PRICE
+}
+
+model BundlePicture {
+    id        String  @id @default(uuid())
+    url       String
+    key       String
+    assistentSellId String
+    assistentSell   AssistentSell @relation(fields: [assistentSellId], references: [id], onDelete: Cascade)
+
+    order Int @default(autoincrement())
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt @default(now())
+
+    @@map("assistent_sell_bundle_pictures")
+}
+
+model AssistentSellCharity {
+    id String @id @default(uuid())
+
+    isAnonymous Boolean @default(false)
+
+    assistentSellId String
+    assistentSell   AssistentSell @relation(fields: [assistentSellId], references: [id], onDelete: Cascade)
+
+    charityId String
+    charity   User   @relation(fields: [charityId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+
+    @@unique([assistentSellId, charityId])
+    @@map("assistentSellCharities")
+}

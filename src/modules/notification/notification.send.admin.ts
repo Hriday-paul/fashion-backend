@@ -1,4 +1,3 @@
-import { sendNotification } from "./notification.utils";
 import prisma from "../../shared/prisma";
 import { NotificationType, Role } from "../../../generated/prisma/enums";
 
@@ -24,11 +23,11 @@ export const sendAdminNotifications = async (
 
   // const fcmToken = admin?.fcmToken ? [admin?.fcmToken] : []
 
-  sendNotification([], {
-    receiverId: admin?.id,
-    title: payload.title,
-    message: payload.message,
-    type: NotificationType.Text,
-  }, admin?.notification);
+  // sendNotification([], {
+  //   receiverId: admin?.id,
+  //   title: payload.title,
+  //   message: payload.message,
+  //   type: NotificationType.Text,
+  // }, admin?.notification);
 
 };

@@ -5,10 +5,30 @@ import { messagesService } from './messages.service';
 import sendResponse from '../../utils/sendResponse';
 import pick from '../../shared/pick';
 import { PaginateOptions } from '../../helper/pagination.helper';
+import { uploadManyToS3 } from '../../utils/s3';
 
 const createMessages = catchAsync(async (req: Request, res: Response) => {
 
-  req.body.sender = req.user.id;
+  const files = req.files as Express.Multer.File[];
+
+  const FileAry = files?.map(image => {
+    return {
+      file: image,
+      path: `images/chat/images`,
+    };
+  });
+
+  const urls = await uploadManyToS3(FileAry);
+  req.body.files = urls.map(url => {
+    return {
+      key: url.key,
+      url: url.url,
+      title: url.title,
+      type: url?.isImage ? "IMAGE" : "DOCUMENT"
+    };
+  });
+
+  req.body.senderId = req.user.id;
 
   const result = await messagesService.createMessages(req.body);
 
@@ -20,10 +40,11 @@ const createMessages = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// Get all messages
+// Get all messages by chatId
 const getAllPreMessages = catchAsync(async (req: Request, res: Response) => {
   const options = pick(req.query, PaginateOptions);
-  const result = await messagesService.getAllPreMessages(req?.user?.id, req?.params?.id, options);
+
+  const result = await messagesService.getAllPreMessages(req?.params?.friendUserName, req?.user?.id, options);
   sendResponse(res, {
     statusCode: 200,
     success: true,

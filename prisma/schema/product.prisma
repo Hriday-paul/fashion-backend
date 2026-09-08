@@ -33,8 +33,9 @@ model Product {
 
     return_window Int @default(0)
 
-    charities ProductCharity[]
-    donation_percent Float @default(0)
+    charities        ProductCharity[]
+    donation_percent Float            @default(0)
+    donationAnonymous Boolean @default(true)
 
     isDeleted Boolean @default(false)
 
@@ -51,13 +52,18 @@ model Product {
 
     cartItems CartItem[]
 
+    assistentSellId String?
+    assistentSell   AssistentSell? @relation(fields: [assistentSellId], references: [id], onDelete: Cascade)
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     weight_kg Float // in kg, for shipping cost calculation
-    hight_cm Float // in cm, for shipping cost calculation
-    width_cm Float // in cm, for shipping cost calculation
+    hight_cm  Float // in cm, for shipping cost calculation
+    width_cm  Float // in cm, for shipping cost calculation
     length_cm Float // in cm, for shipping cost calculation
+
+    offerItems OfferItem[]
 
     @@map("products")
 }
@@ -68,6 +74,11 @@ model ProductPicture {
     key       String
     productId String
     product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+    order Int @default(autoincrement())
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt @default(now())
 
     @@map("product_pictures")
 }
@@ -115,10 +126,10 @@ model CartGroup {
 
     items CartItem[]
 
-    treeGiftCost Float @default(0)
-    authenticationCost Float @default(0)
-    serviceFeeCost Float @default(2.30)
-    shippingServiceId String?
+    treeGiftCost       Float   @default(0)
+    authenticationCost Float   @default(0)
+    serviceFeeCost     Float   @default(2.30)
+    shippingServiceId  String?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -138,7 +149,7 @@ model CartItem {
     productId String
     product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-    extraDonation Float @default(0)
+    extraDonation          Float   @default(0)
     extraDonationAnonymous Boolean @default(false)
 
     quantity Int @default(1)
@@ -149,6 +160,8 @@ model CartItem {
     updatedAt DateTime @updatedAt
 
     @@unique([groupId, productId])
+    @@index([groupId, productId])
+    @@index([productId, groupId])
     @@map("cart_items")
 }
 
@@ -167,19 +180,78 @@ model CartDonationCharaties {
     @@map("cart_donation_charities")
 }
 
+model Offer {
+    id String @id @default(uuid())
+
+    sellerId String
+    seller   User   @relation("OffersForSeller", fields: [sellerId], references: [id], onDelete: Cascade)
+
+    buyerId String
+    buyer   User   @relation("OffersForBuyer", fields: [buyerId], references: [id], onDelete: Cascade)
+
+    actualPrice Float
+
+    offeredPrice Float
+
+    status OfferStatus @default(PENDING)
+
+    sendByBuyer Boolean @default(true)
+
+    actionAt  DateTime? // when the offer was accepted/rejected/canceled
+    expiredAt DateTime? // when the offer will expire
+
+    message Message?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    offerItems OfferItem[]
+
+    @@index([sellerId, buyerId])
+    @@index([buyerId, sellerId])
+    @@map("offers")
+}
+
+enum OfferStatus {
+    PENDING
+    ACCEPTED
+    REJECTED
+    CANCELED
+}
+
+model OfferItem {
+    id String @id @default(uuid())
+
+    offerId String
+    offer   Offer  @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+    productId String
+    product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+    quantity Int @default(1)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([offerId, productId])
+    @@index([productId, offerId])
+    @@map("offer_items")
+}
+
 model ProductView {
-  id        String   @id @default(uuid())
-  productKey String
-  userkey String
-  productId String
+    id         String @id @default(uuid())
+    productKey String
+    userkey    String
+    productId  String
 
-  userId    String?  // null = guest
-  user User? @relation(fields: [userId], references: [id])
+    userId String? // null = guest
+    user   User?   @relation(fields: [userId], references: [id])
 
-  createdAt DateTime @default(now())
+    createdAt DateTime @default(now())
 
-  product   Product  @relation(fields: [productId], references: [id])
-  @@map("product_views")
+    product Product @relation(fields: [productId], references: [id])
+
+    @@map("product_views")
 }
 
 model Question {
@@ -192,9 +264,9 @@ model Question {
     product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
     question String
-    answer String?
+    answer   String?
 
-    createdAt DateTime @default(now())
+    createdAt  DateTime  @default(now())
     answeredAt DateTime?
 
     @@map("questions")
@@ -202,25 +274,25 @@ model Question {
 
 // Controls whether bundle discounts are enabled for a seller
 model BundleDiscount {
-  id        String                @id @default(uuid())
-  sellerId  String                @unique
-  seller    User                @relation(fields: [sellerId], references: [id], onDelete: Cascade)
-  enabled   Boolean               @default(false)
-  tiers     BundleDiscountTier[]
-  createdAt DateTime              @default(now())
-  updatedAt DateTime              @updatedAt
+    id        String               @id @default(uuid())
+    sellerId  String               @unique
+    seller    User                 @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+    enabled   Boolean              @default(false)
+    tiers     BundleDiscountTier[]
+    createdAt DateTime             @default(now())
+    updatedAt DateTime             @updatedAt
 }
 
 // Each discount tier (e.g. "2 items → 10%", "3 items → 15%")
 model BundleDiscountTier {
-  id               String         @id @default(uuid())
-  bundleDiscountId String
-  bundleDiscount   BundleDiscount @relation(fields: [bundleDiscountId], references: [id], onDelete: Cascade)
-  itemCount        Int            // minimum number of items to qualify (e.g. 2, 3, 5)
-  discountPercent  Int
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
+    id               String         @id @default(uuid())
+    bundleDiscountId String
+    bundleDiscount   BundleDiscount @relation(fields: [bundleDiscountId], references: [id], onDelete: Cascade)
+    itemCount        Int // minimum number of items to qualify (e.g. 2, 3, 5)
+    discountPercent  Int
+    createdAt        DateTime       @default(now())
+    updatedAt        DateTime       @updatedAt
 
-  @@unique([bundleDiscountId, itemCount]) // one tier per item count per seller
-  @@index([bundleDiscountId])
+    @@unique([bundleDiscountId, itemCount]) // one tier per item count per seller
+    @@index([bundleDiscountId])
 }

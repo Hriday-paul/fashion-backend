@@ -29,7 +29,12 @@ const addNewProduct = catchAsync(async (req: Request, res: Response) => {
         });
 
         const urls = await uploadManyToS3(FileAry);
-        req.body.images = urls
+        req.body.images = urls.map(url => {
+            return {
+                key: url.key,
+                url: url.url,
+            };
+        });
     }
 
     const result = await productService.addNewProduct(req.body, req.user.role, req.user
@@ -57,6 +62,21 @@ const allProducts = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+
+const myProducts = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials"])
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await productService.myProducts(query, options, req.user.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'My sell items successfully',
+        data: result,
+    });
+});
 
 const productsByUserName = catchAsync(async (req: Request, res: Response) => {
 
@@ -155,6 +175,16 @@ const productDetails = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const productStats = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.productStats(req.params.productId, req.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Products details retrived successfully',
+        data: result,
+    });
+});
+
 const donationSupportByProduct = catchAsync(async (req: Request, res: Response) => {
     const result = await productService.donationSupportByProduct(req.params.productId);
     sendResponse(res, {
@@ -207,6 +237,46 @@ const recomendedProducts = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const dropPriceForAProduct = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await productService.dropPriceForAProduct(req.body, req?.user);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Product price dropped successfully',
+        data: result,
+    });
+});
+
+const makeAnOfferAsBuyer = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.makeAnOfferAsBuyer(req.body, req?.user);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Offer sent to seller successfully',
+        data: result,
+    });
+});
+const acceptOfferAsSeller = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.acceptOfferAsSeller(req.body.offerId, req?.user);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Offer accepted successfully',
+        data: result,
+    });
+});
+const declineCounterOfferAsSeller = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.declineCounterOfferAsSeller(req.body, req?.user);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Offer declined successfully',
+        data: result,
+    });
+});
+
 export const productControler = {
     addNewProduct,
     allProducts,
@@ -215,6 +285,7 @@ export const productControler = {
     productDetails,
 
     productsByUserName,
+    myProducts,
 
     recentViewProducts,
     trendingProducts,
@@ -223,5 +294,11 @@ export const productControler = {
     similarProductsFromSeller,
     donationSupportByProduct,
     sameCategoryProducts,
-    sameColorProducts
+    sameColorProducts,
+    productStats,
+    dropPriceForAProduct,
+
+    makeAnOfferAsBuyer,
+    acceptOfferAsSeller,
+    declineCounterOfferAsSeller
 }

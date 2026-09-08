@@ -1,14 +1,47 @@
 import AppError from "../../error/AppError";
+import { jobs } from "../../queues/jobs.name";
+import { notificationQueue } from "../../queues/notificaion.queue";
 import prisma from "../../shared/prisma"
 import httpstatus from "http-status"
 
-const folowToNewMemeber = async (folowing: string, myId: string) => {
+const folowToNewMemeber = async (folowing: string, currentUser: { id: string, userName: string }) => {
+    const { id: myId, userName: currentUserName } = currentUser;
     //stop own folow
-    if(folowing == myId){
+    if (folowing == myId) {
         throw new AppError(httpstatus.CONFLICT, "You can't folow to me")
     }
-    
+
+    //checking folowing is available or not
+    const member = await prisma.user.findFirst({
+        where: { id: folowing, isDeleted: false }, select: {
+            userName: true,
+            id: true,
+            fcmToken: true,
+        }
+    });
+
+    if (!member) {
+        throw new AppError(httpstatus.NOT_FOUND, "Member does not exist")
+    }
+
     const folow = await prisma.follow.create({ data: { followerId: myId, followingId: folowing } });
+
+    //send notification
+    notificationQueue.add(jobs.notification, {
+        allowPushNotification: true, payload: {
+            title: `**${currentUserName}** folowed you`,
+            message: `**${currentUserName}** started folowing you`,
+            actorId: myId,
+            receiverId: member?.id,
+            entityId: currentUserName,
+            entityType: "USER",
+            entityImgs: [],
+            type: "FOLLOWED",
+            fcmToken: member?.fcmToken,
+            groupKeyId: null,
+        }
+    })
+
     return folow
 }
 

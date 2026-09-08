@@ -69,6 +69,7 @@ export type OrderMinAggregateOutputType = {
   serviceFee: number | null
   authenticationFee: number | null
   bundleDiscountPercent: number | null
+  assistentSellId: string | null
   courier_service_id: string | null
   shippingId: string | null
   isLebelGenerated: boolean | null
@@ -96,6 +97,7 @@ export type OrderMaxAggregateOutputType = {
   serviceFee: number | null
   authenticationFee: number | null
   bundleDiscountPercent: number | null
+  assistentSellId: string | null
   courier_service_id: string | null
   shippingId: string | null
   isLebelGenerated: boolean | null
@@ -123,6 +125,7 @@ export type OrderCountAggregateOutputType = {
   serviceFee: number
   authenticationFee: number
   bundleDiscountPercent: number
+  assistentSellId: number
   courier_service_id: number
   shippingId: number
   isLebelGenerated: number
@@ -176,6 +179,7 @@ export type OrderMinAggregateInputType = {
   serviceFee?: true
   authenticationFee?: true
   bundleDiscountPercent?: true
+  assistentSellId?: true
   courier_service_id?: true
   shippingId?: true
   isLebelGenerated?: true
@@ -203,6 +207,7 @@ export type OrderMaxAggregateInputType = {
   serviceFee?: true
   authenticationFee?: true
   bundleDiscountPercent?: true
+  assistentSellId?: true
   courier_service_id?: true
   shippingId?: true
   isLebelGenerated?: true
@@ -230,6 +235,7 @@ export type OrderCountAggregateInputType = {
   serviceFee?: true
   authenticationFee?: true
   bundleDiscountPercent?: true
+  assistentSellId?: true
   courier_service_id?: true
   shippingId?: true
   isLebelGenerated?: true
@@ -344,6 +350,7 @@ export type OrderGroupByOutputType = {
   serviceFee: number
   authenticationFee: number
   bundleDiscountPercent: number
+  assistentSellId: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated: boolean
@@ -394,6 +401,7 @@ export type OrderWhereInput = {
   serviceFee?: Prisma.FloatFilter<"Order"> | number
   authenticationFee?: Prisma.FloatFilter<"Order"> | number
   bundleDiscountPercent?: Prisma.FloatFilter<"Order"> | number
+  assistentSellId?: Prisma.StringNullableFilter<"Order"> | string | null
   courier_service_id?: Prisma.StringFilter<"Order"> | string
   shippingId?: Prisma.StringFilter<"Order"> | string
   isLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
@@ -408,6 +416,7 @@ export type OrderWhereInput = {
   payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
   originDetails?: Prisma.XOR<Prisma.BillingDetailsNullableScalarRelationFilter, Prisma.BillingDetailsWhereInput> | null
   billingDetails?: Prisma.XOR<Prisma.BillingDetailsNullableScalarRelationFilter, Prisma.BillingDetailsWhereInput> | null
+  assistentSell?: Prisma.XOR<Prisma.AssistentSellNullableScalarRelationFilter, Prisma.AssistentSellWhereInput> | null
 }
 
 export type OrderOrderByWithRelationInput = {
@@ -430,6 +439,7 @@ export type OrderOrderByWithRelationInput = {
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
+  assistentSellId?: Prisma.SortOrderInput | Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
@@ -444,10 +454,12 @@ export type OrderOrderByWithRelationInput = {
   payment?: Prisma.PaymentOrderByWithRelationInput
   originDetails?: Prisma.BillingDetailsOrderByWithRelationInput
   billingDetails?: Prisma.BillingDetailsOrderByWithRelationInput
+  assistentSell?: Prisma.AssistentSellOrderByWithRelationInput
 }
 
 export type OrderWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  assistentSellId?: string
   AND?: Prisma.OrderWhereInput | Prisma.OrderWhereInput[]
   OR?: Prisma.OrderWhereInput[]
   NOT?: Prisma.OrderWhereInput | Prisma.OrderWhereInput[]
@@ -483,7 +495,8 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
   originDetails?: Prisma.XOR<Prisma.BillingDetailsNullableScalarRelationFilter, Prisma.BillingDetailsWhereInput> | null
   billingDetails?: Prisma.XOR<Prisma.BillingDetailsNullableScalarRelationFilter, Prisma.BillingDetailsWhereInput> | null
-}, "id">
+  assistentSell?: Prisma.XOR<Prisma.AssistentSellNullableScalarRelationFilter, Prisma.AssistentSellWhereInput> | null
+}, "id" | "assistentSellId">
 
 export type OrderOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -505,6 +518,7 @@ export type OrderOrderByWithAggregationInput = {
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
+  assistentSellId?: Prisma.SortOrderInput | Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
@@ -540,6 +554,7 @@ export type OrderScalarWhereWithAggregatesInput = {
   serviceFee?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   authenticationFee?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   bundleDiscountPercent?: Prisma.FloatWithAggregatesFilter<"Order"> | number
+  assistentSellId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   courier_service_id?: Prisma.StringWithAggregatesFilter<"Order"> | string
   shippingId?: Prisma.StringWithAggregatesFilter<"Order"> | string
   isLebelGenerated?: Prisma.BoolWithAggregatesFilter<"Order"> | boolean
@@ -577,6 +592,7 @@ export type OrderCreateInput = {
   payment?: Prisma.PaymentCreateNestedOneWithoutOrderInput
   originDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersInput
   billingDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersAsDestinationInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUncheckedCreateInput = {
@@ -599,6 +615,7 @@ export type OrderUncheckedCreateInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -641,6 +658,7 @@ export type OrderUpdateInput = {
   payment?: Prisma.PaymentUpdateOneWithoutOrderNestedInput
   originDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersNestedInput
   billingDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersAsDestinationNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateInput = {
@@ -663,6 +681,7 @@ export type OrderUncheckedUpdateInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -695,6 +714,7 @@ export type OrderCreateManyInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -745,11 +765,17 @@ export type OrderUncheckedUpdateManyInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type OrderNullableScalarRelationFilter = {
+  is?: Prisma.OrderWhereInput | null
+  isNot?: Prisma.OrderWhereInput | null
 }
 
 export type OrderScalarRelationFilter = {
@@ -777,6 +803,7 @@ export type OrderCountOrderByAggregateInput = {
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
+  assistentSellId?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
@@ -816,6 +843,7 @@ export type OrderMaxOrderByAggregateInput = {
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
+  assistentSellId?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
@@ -843,6 +871,7 @@ export type OrderMinOrderByAggregateInput = {
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
+  assistentSellId?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
@@ -862,11 +891,6 @@ export type OrderSumOrderByAggregateInput = {
   bundleDiscountPercent?: Prisma.SortOrder
 }
 
-export type OrderNullableScalarRelationFilter = {
-  is?: Prisma.OrderWhereInput | null
-  isNot?: Prisma.OrderWhereInput | null
-}
-
 export type OrderListRelationFilter = {
   every?: Prisma.OrderWhereInput
   some?: Prisma.OrderWhereInput
@@ -875,6 +899,38 @@ export type OrderListRelationFilter = {
 
 export type OrderOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type OrderCreateNestedOneWithoutAssistentSellInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutAssistentSellInput, Prisma.OrderUncheckedCreateWithoutAssistentSellInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutAssistentSellInput
+  connect?: Prisma.OrderWhereUniqueInput
+}
+
+export type OrderUncheckedCreateNestedOneWithoutAssistentSellInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutAssistentSellInput, Prisma.OrderUncheckedCreateWithoutAssistentSellInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutAssistentSellInput
+  connect?: Prisma.OrderWhereUniqueInput
+}
+
+export type OrderUpdateOneWithoutAssistentSellNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutAssistentSellInput, Prisma.OrderUncheckedCreateWithoutAssistentSellInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutAssistentSellInput
+  upsert?: Prisma.OrderUpsertWithoutAssistentSellInput
+  disconnect?: Prisma.OrderWhereInput | boolean
+  delete?: Prisma.OrderWhereInput | boolean
+  connect?: Prisma.OrderWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrderUpdateToOneWithWhereWithoutAssistentSellInput, Prisma.OrderUpdateWithoutAssistentSellInput>, Prisma.OrderUncheckedUpdateWithoutAssistentSellInput>
+}
+
+export type OrderUncheckedUpdateOneWithoutAssistentSellNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutAssistentSellInput, Prisma.OrderUncheckedCreateWithoutAssistentSellInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutAssistentSellInput
+  upsert?: Prisma.OrderUpsertWithoutAssistentSellInput
+  disconnect?: Prisma.OrderWhereInput | boolean
+  delete?: Prisma.OrderWhereInput | boolean
+  connect?: Prisma.OrderWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrderUpdateToOneWithWhereWithoutAssistentSellInput, Prisma.OrderUpdateWithoutAssistentSellInput>, Prisma.OrderUncheckedUpdateWithoutAssistentSellInput>
 }
 
 export type OrderCreateNestedOneWithoutDeliveryChargeInput = {
@@ -1131,6 +1187,150 @@ export type OrderUncheckedUpdateManyWithoutBillingDetailsNestedInput = {
   deleteMany?: Prisma.OrderScalarWhereInput | Prisma.OrderScalarWhereInput[]
 }
 
+export type OrderCreateWithoutAssistentSellInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  status?: $Enums.OrderStatus
+  currentShipTo?: $Enums.CurrentShipTo
+  authStatus?: $Enums.OrderAuthStatus
+  itemsTotal?: number
+  totalDelivery?: number
+  totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
+  treeCredit?: number
+  serviceFee?: number
+  authenticationFee?: number
+  bundleDiscountPercent?: number
+  courier_service_id: string
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
+  rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
+  buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
+  return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
+  seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
+  items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
+  deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
+  payment?: Prisma.PaymentCreateNestedOneWithoutOrderInput
+  originDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersInput
+  billingDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersAsDestinationInput
+}
+
+export type OrderUncheckedCreateWithoutAssistentSellInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  buyerId: string
+  sellerId: string
+  status?: $Enums.OrderStatus
+  currentShipTo?: $Enums.CurrentShipTo
+  authStatus?: $Enums.OrderAuthStatus
+  originDetailsId?: string | null
+  billingId?: string | null
+  itemsTotal?: number
+  totalDelivery?: number
+  totalPrice?: number
+  sellerItemsTotal?: number
+  sellerTotal?: number
+  treeCredit?: number
+  serviceFee?: number
+  authenticationFee?: number
+  bundleDiscountPercent?: number
+  courier_service_id: string
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
+  rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
+  return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
+  items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
+  payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutOrderInput
+}
+
+export type OrderCreateOrConnectWithoutAssistentSellInput = {
+  where: Prisma.OrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderCreateWithoutAssistentSellInput, Prisma.OrderUncheckedCreateWithoutAssistentSellInput>
+}
+
+export type OrderUpsertWithoutAssistentSellInput = {
+  update: Prisma.XOR<Prisma.OrderUpdateWithoutAssistentSellInput, Prisma.OrderUncheckedUpdateWithoutAssistentSellInput>
+  create: Prisma.XOR<Prisma.OrderCreateWithoutAssistentSellInput, Prisma.OrderUncheckedCreateWithoutAssistentSellInput>
+  where?: Prisma.OrderWhereInput
+}
+
+export type OrderUpdateToOneWithWhereWithoutAssistentSellInput = {
+  where?: Prisma.OrderWhereInput
+  data: Prisma.XOR<Prisma.OrderUpdateWithoutAssistentSellInput, Prisma.OrderUncheckedUpdateWithoutAssistentSellInput>
+}
+
+export type OrderUpdateWithoutAssistentSellInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  currentShipTo?: Prisma.EnumCurrentShipToFieldUpdateOperationsInput | $Enums.CurrentShipTo
+  authStatus?: Prisma.EnumOrderAuthStatusFieldUpdateOperationsInput | $Enums.OrderAuthStatus
+  itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
+  buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
+  return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
+  seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
+  items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
+  deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
+  payment?: Prisma.PaymentUpdateOneWithoutOrderNestedInput
+  originDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersNestedInput
+  billingDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersAsDestinationNestedInput
+}
+
+export type OrderUncheckedUpdateWithoutAssistentSellInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buyerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  currentShipTo?: Prisma.EnumCurrentShipToFieldUpdateOperationsInput | $Enums.CurrentShipTo
+  authStatus?: Prisma.EnumOrderAuthStatusFieldUpdateOperationsInput | $Enums.OrderAuthStatus
+  originDetailsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalDelivery?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerItemsTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  sellerTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  treeCredit?: Prisma.FloatFieldUpdateOperationsInput | number
+  serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
+  return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
+  items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
+  payment?: Prisma.PaymentUncheckedUpdateOneWithoutOrderNestedInput
+}
+
 export type OrderCreateWithoutDeliveryChargeInput = {
   id?: string
   createdAt?: Date | string
@@ -1160,6 +1360,7 @@ export type OrderCreateWithoutDeliveryChargeInput = {
   payment?: Prisma.PaymentCreateNestedOneWithoutOrderInput
   originDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersInput
   billingDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersAsDestinationInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutDeliveryChargeInput = {
@@ -1182,6 +1383,7 @@ export type OrderUncheckedCreateWithoutDeliveryChargeInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -1238,6 +1440,7 @@ export type OrderUpdateWithoutDeliveryChargeInput = {
   payment?: Prisma.PaymentUpdateOneWithoutOrderNestedInput
   originDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersNestedInput
   billingDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersAsDestinationNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutDeliveryChargeInput = {
@@ -1260,6 +1463,7 @@ export type OrderUncheckedUpdateWithoutDeliveryChargeInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1300,6 +1504,7 @@ export type OrderCreateWithoutItemsInput = {
   payment?: Prisma.PaymentCreateNestedOneWithoutOrderInput
   originDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersInput
   billingDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersAsDestinationInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutItemsInput = {
@@ -1322,6 +1527,7 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -1378,6 +1584,7 @@ export type OrderUpdateWithoutItemsInput = {
   payment?: Prisma.PaymentUpdateOneWithoutOrderNestedInput
   originDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersNestedInput
   billingDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersAsDestinationNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutItemsInput = {
@@ -1400,6 +1607,7 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1440,6 +1648,7 @@ export type OrderCreateWithoutPaymentInput = {
   deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
   originDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersInput
   billingDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersAsDestinationInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutPaymentInput = {
@@ -1462,6 +1671,7 @@ export type OrderUncheckedCreateWithoutPaymentInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -1518,6 +1728,7 @@ export type OrderUpdateWithoutPaymentInput = {
   deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
   originDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersNestedInput
   billingDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersAsDestinationNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutPaymentInput = {
@@ -1540,6 +1751,7 @@ export type OrderUncheckedUpdateWithoutPaymentInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1580,6 +1792,7 @@ export type OrderCreateWithoutReturnInput = {
   payment?: Prisma.PaymentCreateNestedOneWithoutOrderInput
   originDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersInput
   billingDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersAsDestinationInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutReturnInput = {
@@ -1602,6 +1815,7 @@ export type OrderUncheckedCreateWithoutReturnInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -1658,6 +1872,7 @@ export type OrderUpdateWithoutReturnInput = {
   payment?: Prisma.PaymentUpdateOneWithoutOrderNestedInput
   originDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersNestedInput
   billingDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersAsDestinationNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutReturnInput = {
@@ -1680,6 +1895,7 @@ export type OrderUncheckedUpdateWithoutReturnInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1720,6 +1936,7 @@ export type OrderCreateWithoutRatingInput = {
   payment?: Prisma.PaymentCreateNestedOneWithoutOrderInput
   originDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersInput
   billingDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersAsDestinationInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutRatingInput = {
@@ -1742,6 +1959,7 @@ export type OrderUncheckedCreateWithoutRatingInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -1798,6 +2016,7 @@ export type OrderUpdateWithoutRatingInput = {
   payment?: Prisma.PaymentUpdateOneWithoutOrderNestedInput
   originDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersNestedInput
   billingDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersAsDestinationNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutRatingInput = {
@@ -1820,6 +2039,7 @@ export type OrderUncheckedUpdateWithoutRatingInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1860,6 +2080,7 @@ export type OrderCreateWithoutBuyerInput = {
   payment?: Prisma.PaymentCreateNestedOneWithoutOrderInput
   originDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersInput
   billingDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersAsDestinationInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutBuyerInput = {
@@ -1881,6 +2102,7 @@ export type OrderUncheckedCreateWithoutBuyerInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -1932,6 +2154,7 @@ export type OrderCreateWithoutSellerInput = {
   payment?: Prisma.PaymentCreateNestedOneWithoutOrderInput
   originDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersInput
   billingDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersAsDestinationInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutSellerInput = {
@@ -1953,6 +2176,7 @@ export type OrderUncheckedCreateWithoutSellerInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -2014,6 +2238,7 @@ export type OrderScalarWhereInput = {
   serviceFee?: Prisma.FloatFilter<"Order"> | number
   authenticationFee?: Prisma.FloatFilter<"Order"> | number
   bundleDiscountPercent?: Prisma.FloatFilter<"Order"> | number
+  assistentSellId?: Prisma.StringNullableFilter<"Order"> | string | null
   courier_service_id?: Prisma.StringFilter<"Order"> | string
   shippingId?: Prisma.StringFilter<"Order"> | string
   isLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
@@ -2066,6 +2291,7 @@ export type OrderCreateWithoutOriginDetailsInput = {
   deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
   payment?: Prisma.PaymentCreateNestedOneWithoutOrderInput
   billingDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersAsDestinationInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutOriginDetailsInput = {
@@ -2087,6 +2313,7 @@ export type OrderUncheckedCreateWithoutOriginDetailsInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -2138,6 +2365,7 @@ export type OrderCreateWithoutBillingDetailsInput = {
   deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
   payment?: Prisma.PaymentCreateNestedOneWithoutOrderInput
   originDetails?: Prisma.BillingDetailsCreateNestedOneWithoutOrdersInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutBillingDetailsInput = {
@@ -2159,6 +2387,7 @@ export type OrderUncheckedCreateWithoutBillingDetailsInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -2232,6 +2461,7 @@ export type OrderCreateManyBuyerInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -2258,6 +2488,7 @@ export type OrderCreateManySellerInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -2294,6 +2525,7 @@ export type OrderUpdateWithoutBuyerInput = {
   payment?: Prisma.PaymentUpdateOneWithoutOrderNestedInput
   originDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersNestedInput
   billingDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersAsDestinationNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutBuyerInput = {
@@ -2315,6 +2547,7 @@ export type OrderUncheckedUpdateWithoutBuyerInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2346,6 +2579,7 @@ export type OrderUncheckedUpdateManyWithoutBuyerInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2382,6 +2616,7 @@ export type OrderUpdateWithoutSellerInput = {
   payment?: Prisma.PaymentUpdateOneWithoutOrderNestedInput
   originDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersNestedInput
   billingDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersAsDestinationNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutSellerInput = {
@@ -2403,6 +2638,7 @@ export type OrderUncheckedUpdateWithoutSellerInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2434,6 +2670,7 @@ export type OrderUncheckedUpdateManyWithoutSellerInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2460,6 +2697,7 @@ export type OrderCreateManyOriginDetailsInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -2486,6 +2724,7 @@ export type OrderCreateManyBillingDetailsInput = {
   serviceFee?: number
   authenticationFee?: number
   bundleDiscountPercent?: number
+  assistentSellId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -2522,6 +2761,7 @@ export type OrderUpdateWithoutOriginDetailsInput = {
   deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutOrderNestedInput
   billingDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersAsDestinationNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutOriginDetailsInput = {
@@ -2543,6 +2783,7 @@ export type OrderUncheckedUpdateWithoutOriginDetailsInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2574,6 +2815,7 @@ export type OrderUncheckedUpdateManyWithoutOriginDetailsInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2610,6 +2852,7 @@ export type OrderUpdateWithoutBillingDetailsInput = {
   deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutOrderNestedInput
   originDetails?: Prisma.BillingDetailsUpdateOneWithoutOrdersNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutBillingDetailsInput = {
@@ -2631,6 +2874,7 @@ export type OrderUncheckedUpdateWithoutBillingDetailsInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2662,6 +2906,7 @@ export type OrderUncheckedUpdateManyWithoutBillingDetailsInput = {
   serviceFee?: Prisma.FloatFieldUpdateOperationsInput | number
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2729,6 +2974,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   serviceFee?: boolean
   authenticationFee?: boolean
   bundleDiscountPercent?: boolean
+  assistentSellId?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
   isLebelGenerated?: boolean
@@ -2743,6 +2989,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   payment?: boolean | Prisma.Order$paymentArgs<ExtArgs>
   originDetails?: boolean | Prisma.Order$originDetailsArgs<ExtArgs>
   billingDetails?: boolean | Prisma.Order$billingDetailsArgs<ExtArgs>
+  assistentSell?: boolean | Prisma.Order$assistentSellArgs<ExtArgs>
   _count?: boolean | Prisma.OrderCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
 
@@ -2766,6 +3013,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   serviceFee?: boolean
   authenticationFee?: boolean
   bundleDiscountPercent?: boolean
+  assistentSellId?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
   isLebelGenerated?: boolean
@@ -2775,6 +3023,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   originDetails?: boolean | Prisma.Order$originDetailsArgs<ExtArgs>
   billingDetails?: boolean | Prisma.Order$billingDetailsArgs<ExtArgs>
+  assistentSell?: boolean | Prisma.Order$assistentSellArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
 
 export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2797,6 +3046,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   serviceFee?: boolean
   authenticationFee?: boolean
   bundleDiscountPercent?: boolean
+  assistentSellId?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
   isLebelGenerated?: boolean
@@ -2806,6 +3056,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   originDetails?: boolean | Prisma.Order$originDetailsArgs<ExtArgs>
   billingDetails?: boolean | Prisma.Order$billingDetailsArgs<ExtArgs>
+  assistentSell?: boolean | Prisma.Order$assistentSellArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
 
 export type OrderSelectScalar = {
@@ -2828,6 +3079,7 @@ export type OrderSelectScalar = {
   serviceFee?: boolean
   authenticationFee?: boolean
   bundleDiscountPercent?: boolean
+  assistentSellId?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
   isLebelGenerated?: boolean
@@ -2835,7 +3087,7 @@ export type OrderSelectScalar = {
   parcelId?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "buyerId" | "sellerId" | "status" | "currentShipTo" | "authStatus" | "originDetailsId" | "billingId" | "itemsTotal" | "totalDelivery" | "totalPrice" | "sellerItemsTotal" | "sellerTotal" | "treeCredit" | "serviceFee" | "authenticationFee" | "bundleDiscountPercent" | "courier_service_id" | "shippingId" | "isLebelGenerated" | "lebelUrl" | "parcelId", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "buyerId" | "sellerId" | "status" | "currentShipTo" | "authStatus" | "originDetailsId" | "billingId" | "itemsTotal" | "totalDelivery" | "totalPrice" | "sellerItemsTotal" | "sellerTotal" | "treeCredit" | "serviceFee" | "authenticationFee" | "bundleDiscountPercent" | "assistentSellId" | "courier_service_id" | "shippingId" | "isLebelGenerated" | "lebelUrl" | "parcelId", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rating?: boolean | Prisma.Order$ratingArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2846,6 +3098,7 @@ export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   payment?: boolean | Prisma.Order$paymentArgs<ExtArgs>
   originDetails?: boolean | Prisma.Order$originDetailsArgs<ExtArgs>
   billingDetails?: boolean | Prisma.Order$billingDetailsArgs<ExtArgs>
+  assistentSell?: boolean | Prisma.Order$assistentSellArgs<ExtArgs>
   _count?: boolean | Prisma.OrderCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrderIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2853,12 +3106,14 @@ export type OrderIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   originDetails?: boolean | Prisma.Order$originDetailsArgs<ExtArgs>
   billingDetails?: boolean | Prisma.Order$billingDetailsArgs<ExtArgs>
+  assistentSell?: boolean | Prisma.Order$assistentSellArgs<ExtArgs>
 }
 export type OrderIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   originDetails?: boolean | Prisma.Order$originDetailsArgs<ExtArgs>
   billingDetails?: boolean | Prisma.Order$billingDetailsArgs<ExtArgs>
+  assistentSell?: boolean | Prisma.Order$assistentSellArgs<ExtArgs>
 }
 
 export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2873,6 +3128,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     payment: Prisma.$PaymentPayload<ExtArgs> | null
     originDetails: Prisma.$BillingDetailsPayload<ExtArgs> | null
     billingDetails: Prisma.$BillingDetailsPayload<ExtArgs> | null
+    assistentSell: Prisma.$AssistentSellPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2894,6 +3150,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     serviceFee: number
     authenticationFee: number
     bundleDiscountPercent: number
+    assistentSellId: string | null
     courier_service_id: string
     shippingId: string
     isLebelGenerated: boolean
@@ -3302,6 +3559,7 @@ export interface Prisma__OrderClient<T, Null = never, ExtArgs extends runtime.Ty
   payment<T extends Prisma.Order$paymentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$paymentArgs<ExtArgs>>): Prisma.Prisma__PaymentClient<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   originDetails<T extends Prisma.Order$originDetailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$originDetailsArgs<ExtArgs>>): Prisma.Prisma__BillingDetailsClient<runtime.Types.Result.GetResult<Prisma.$BillingDetailsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   billingDetails<T extends Prisma.Order$billingDetailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$billingDetailsArgs<ExtArgs>>): Prisma.Prisma__BillingDetailsClient<runtime.Types.Result.GetResult<Prisma.$BillingDetailsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  assistentSell<T extends Prisma.Order$assistentSellArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$assistentSellArgs<ExtArgs>>): Prisma.Prisma__AssistentSellClient<runtime.Types.Result.GetResult<Prisma.$AssistentSellPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3350,6 +3608,7 @@ export interface OrderFieldRefs {
   readonly serviceFee: Prisma.FieldRef<"Order", 'Float'>
   readonly authenticationFee: Prisma.FieldRef<"Order", 'Float'>
   readonly bundleDiscountPercent: Prisma.FieldRef<"Order", 'Float'>
+  readonly assistentSellId: Prisma.FieldRef<"Order", 'String'>
   readonly courier_service_id: Prisma.FieldRef<"Order", 'String'>
   readonly shippingId: Prisma.FieldRef<"Order", 'String'>
   readonly isLebelGenerated: Prisma.FieldRef<"Order", 'Boolean'>
@@ -3891,6 +4150,25 @@ export type Order$billingDetailsArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.BillingDetailsInclude<ExtArgs> | null
   where?: Prisma.BillingDetailsWhereInput
+}
+
+/**
+ * Order.assistentSell
+ */
+export type Order$assistentSellArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AssistentSell
+   */
+  select?: Prisma.AssistentSellSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AssistentSell
+   */
+  omit?: Prisma.AssistentSellOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssistentSellInclude<ExtArgs> | null
+  where?: Prisma.AssistentSellWhereInput
 }
 
 /**

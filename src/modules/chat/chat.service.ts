@@ -1,134 +1,99 @@
 import httpStatus from 'http-status';
 import AppError from '../../error/AppError';
-import { Chat, Prisma, Role } from '../../../generated/prisma/client';
+import { Chat, Prisma } from '../../../generated/prisma/client';
 import prisma from '../../shared/prisma';
 
 type TPerticipents = {
-  participants: string[]
+  currentUserId: string;
+  user2Id: string;
 }
 
 // Create chat
-const createChat = async (payload: Chat & TPerticipents) => {
-  const user1 = await prisma.user.findFirst({ where: { id: payload?.participants[0] } });
+const createChat = async (payload: TPerticipents) => {
 
-  if (!user1) {
+  const { currentUserId, user2Id } = payload;
+
+  if (currentUserId === user2Id) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'You cannot create chat with yourself');
+  }
+
+  const friend = await prisma.user.findFirst({ where: { id: user2Id, auth: { isverified: true, status: true } } });
+
+  if (!friend) {
     throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid user');
   }
 
-  const user2 = await prisma.user.findFirst({ where: { id: payload?.participants[1] } })
-
-  if (!user2) {
-    throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid user');
-  }
-
-  const alreadyExists = await prisma.chat.findFirst({
+  const existingChat = await prisma.chat.findFirst({
     where: {
-      AND: payload?.participants.map((id) => ({
-        participants: {
-          some: { userId: id }
-        }
-      }))
-    },
-    include: {
-      participants: {
-        include: {
-          user: true
-        }
-      }
+      OR: [
+        {
+          AND: [
+            { user1Id: currentUserId },
+            { user2Id: user2Id }
+          ]
+        },
+        {
+          AND: [
+            { user1Id: user2Id },
+            { user2Id: currentUserId }
+          ]
+        },
+      ],
     }
   });
 
-  if (alreadyExists) {
-    return alreadyExists;
+  if (existingChat) {
+    return existingChat;
   }
 
   // create chat if not exist
   const result = await prisma.chat.create({
     data: {
-      participants: {
-        create: [
-          {
-            userId: payload?.participants[0]
-          },
-          {
-            userId: payload?.participants[1]
-          }
-        ]
-      }
+      user1Id: currentUserId,
+      user2Id,
     }
   })
+
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Chat creation failed');
   }
+
   return result;
 };
 
 // Get my chat list
-const getMyChatList = async (userId: string, role: Role, query?: Record<string, unknown>) => {
-
-  const isAdmin = role === Role.ADMIN;
+const getMyChatList = async (userId: string, query?: Record<string, unknown>) => {
 
   const { searchTerm } = query || {};
   const AndConditions: Prisma.ChatWhereInput[] = [
     {
-      participants: {
-        some: {
-          userId: userId,
+      OR: [
+        {
+          user1Id: userId
         },
-      },
+        {
+          user2Id: userId
+        }
+      ]
     }
   ];
-
-  if (!isAdmin) {
-    AndConditions.push({
-      participants: {
-        none: {
-          user: {
-            auth: {
-              role: Role.ADMIN,
-            },
-          },
-        },
-      },
-    });
-  }
 
   if (searchTerm) {
     AndConditions.push({
       OR: [
         {
-          participants: {
-            some: {
-              user: {
-                fname: {
-                  contains: searchTerm as string,
-                  mode: "insensitive",
-                },
-              }
+          user1: {
+            userName: {
+              contains: searchTerm as string,
+              mode: 'insensitive'
             }
           }
         },
         {
-          participants: {
-            some: {
-              user: {
-                email: {
-                  contains: searchTerm as string,
-                  mode: "insensitive",
-                },
-              }
-            }
-          }
-        },
-        {
-          participants: {
-            some: {
-              user: {
-                phone: {
-                  contains: searchTerm as string,
-                  mode: "insensitive",
-                },
-              }
+          user2: {
+            userName: {
+              contains: searchTerm as string,
+              mode: 'insensitive'
             }
           }
         }
@@ -141,19 +106,45 @@ const getMyChatList = async (userId: string, role: Role, query?: Record<string, 
   const chats = await prisma.chat.findMany({
     where: whereConditions,
     include: {
-      participants: {
-        where: { userId: { not: userId } }, // exclude current user
-        include: {
-          user: {
-            include: {
-              picture: true
+      user1: {
+        select: {
+          id: true,
+          userName: true,
+          picture: {
+            select: {
+              url: true
             }
-          },
-        },
+          }
+        }
+      },
+      user2: {
+        select: {
+          id: true,
+          userName: true,
+          picture: {
+            select: {
+              url: true
+            }
+          }
+        }
       },
       messages: {
         orderBy: { createdAt: "desc" },
-        take: 1
+        take: 1,
+        include: {
+          files: {
+            take: 1,
+            select: {
+              url: true,
+              type: true
+            }
+          },
+          offer: {
+            select: {
+              status: true
+            }
+          }
+        }
       },
       _count: {
         select: {
@@ -183,11 +174,22 @@ const getChatById = async (chatId: string) => {
   const result = await prisma.chat.findFirst({
     where: { id: chatId },
     include: {
-      participants: {
-        include: {
-          user: {
-            include: {
-              picture: true
+      user1: {
+        select: {
+          userName: true,
+          picture: {
+            select: {
+              url: true
+            }
+          }
+        }
+      },
+      user2: {
+        select: {
+          userName: true,
+          picture: {
+            select: {
+              url: true
             }
           }
         }

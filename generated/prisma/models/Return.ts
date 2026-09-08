@@ -741,14 +741,6 @@ export type EnumReturnReasonFieldUpdateOperationsInput = {
   set?: $Enums.ReturnReason
 }
 
-export type NullableFloatFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type ReturnCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.ReturnCreateWithoutItemsInput, Prisma.ReturnUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.ReturnCreateOrConnectWithoutItemsInput

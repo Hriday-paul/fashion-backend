@@ -1,155 +1,141 @@
 import { Server, Socket } from "socket.io";
 import { callbackFn } from "../../utils/CallbackFn";
 import prisma from "../../shared/prisma";
-import { Message, Role, User } from "../../../generated/prisma/client";
+import { Message, User } from "../../../generated/prisma/client";
 import httpStatus from "http-status"
 import { messagesService } from "../../modules/messages/messages.service";
 import { getChatList } from "./ChatHandler";
+import { chatService } from "../../modules/chat/chat.service";
+import { paginationHelper } from "../../helper/pagination.helper";
 
 export const MessageHandler = async (
     userId: string,
-    friendId: string,
+    payload: { chatId?: string, itemIds: string[], friendId: string },
     io: Server,
     socket: Socket,
     callback: (arg: any) => void,
 ): Promise<void> => {
-    try {
+    // try {
 
-        if (!friendId) {
-            callbackFn(callback, {
-                success: false,
-                message: 'userId is required',
-            });
-            socket.emit('io-error', {
-                success: false,
-                message: 'userId id is required',
-            });
+    //     const { chatId: pChatId, itemIds, friendId } = payload;
 
-            return;
-        }
+    //     let chatId = pChatId;
 
-        const receiverDetails = await prisma.user.findFirst({
-            where: { id: friendId },
-            include: { picture: true }
-        });
+    //     if (!pChatId && !itemIds?.length) {
+    //         callbackFn(callback, {
+    //             success: false,
+    //             message: 'chatId or itemIds is missing',
+    //         });
+    //         socket.emit('io-error', {
+    //             success: false,
+    //             message: 'chatId or itemIds is missing',
+    //         });
 
-        if (!receiverDetails) {
-            callbackFn(callback, {
-                success: false,
-                message: 'user is not found!',
-            });
-            socket.emit('io-error', {
-                success: false,
-                message: 'user is not found!',
-            });
-            return;
-        }
+    //         return;
+    //     }
 
-        socket.emit('user-details', receiverDetails);
+    //     if (!pChatId) {
+    //         const chat = await chatService.getChatByItemIds(userId, friendId, itemIds);
 
-        const getPreMessage = await prisma.message.findMany({
-            where: {
-                OR: [
-                    { senderId: userId, receiverId: friendId },
-                    { senderId: friendId, receiverId: userId },
-                ]
-            },
-            include: { files: true, receiver: { select: { picture: true } }, sender: { select: { picture: true } } },
-            orderBy: {
-                createdAt: "asc"
-            }
-        })
+    //         if (chat) {
+    //             chatId = chat?.id;
+    //         }
+    //     }
 
-        const chatId = getPreMessage[0]?.chatId
-        socket.join(`chat::${chatId}`);
+    //     const getPreMessage = !chatId ?
+    //         {
+    //             data: [],
+    //             meta: paginationHelper.generatePaginationMeta({ page: 1, limit: 25, total: 0 })
+    //         }
+    //         :
+    //         await messagesService.getAllPreMessages(chatId, { page: 1, limit: 25 });
 
-        socket.emit('message', getPreMessage || []);
+    //     const roomKeyByProdIds = itemIds?.length ? 'chat::' + itemIds?.sort().join('::') : null;
 
-        //end Notification//
-    } catch (error: any) {
-        callbackFn(callback, {
-            success: false,
-            message: error.message,
-        });
-        socket.emit('io-error', { success: false, message: error });
-        console.error('Error in message-page event:', error);
-    }
+    //     if (chatId) {
+    //         socket.join(`chat::${chatId}`);
+    //     } else {
+    //         if (roomKeyByProdIds) {
+    //             socket.join(roomKeyByProdIds);
+    //         }
+    //     }
+
+    //     //end Notification//
+    // } catch (error: any) {
+    //     callbackFn(callback, {
+    //         success: false,
+    //         message: error.message,
+    //     });
+    //     socket.emit('io-error', { success: false, message: error });
+    //     console.error('Error in message-page event:', error);
+    // }
 }
 
 export const SendMessageHandle = async (
     io: Server,
-    socket: Socket,
-    payload: Message,
-    userId: string,
-    role: Role,
+    payload: Message & { sender: { userName: string } },
     callback: (arg: any) => void
 ) => {
     try {
-        payload.senderId = userId;
 
-        if (!payload?.receiverId) {
-            callbackFn(callback, {
-                success: false,
-                message: 'receiverId is required',
-            });
-            socket.emit('io-error', {
-                success: false,
-                message: 'receiverId id is required',
-            });
-            return;
-        }
+        const reciverRoom = `user::${payload?.receiverId}`;
+        const senderRoom = `user::${payload?.senderId}`;
 
-        const result = await messagesService.createMessages(payload);
-
-        if (!result) {
-            callbackFn(callback, {
-                statusCode: httpStatus.BAD_REQUEST,
-                success: false,
-                message: 'Message sent failed',
-            });
-            socket.emit('io-error', {
-                success: false,
-                message: 'Message sent failed',
-            });
-            return;
-        }
-
-        //------------for receiver----------------
-        if (role == Role.ADMIN) {
-
-            // if sender role is admin receiver will get this message
-            io.to(`user::${payload?.receiverId}`).emit(`new-message::support`, result)
-
-        } else {
-
-            // id sender role is not admin, send message to the receiver all devices
-            const reciverRoom = `user::${payload?.receiverId}`
-
-            io.to(reciverRoom).emit(`new-message::${payload?.senderId}`, result)
-        }
-
-        //-------------------for me--------------
-        // sent message to the sender all devices
-        io.to(`user::${payload?.senderId}`).emit(`new-message::${payload?.receiverId}`, result)
+        io.to(senderRoom).emit(`new-message::${payload?.senderId}`, payload);
+        io.to(reciverRoom).emit(`new-message::${payload?.sender?.userName}`, payload);
 
         //---------------hit on chatlist for see last sent message with the chatList------------------//
-        getChatList(result?.senderId, io, socket, callback)
-        getChatList(result?.receiverId, io, socket, callback)
+        getChatList(payload?.senderId, io, callback)
+        getChatList(payload?.receiverId, io, callback)
 
         //end Notification//
         callbackFn(callback, {
             statusCode: httpStatus.OK,
             success: true,
             message: 'Message sent successfully!',
-            data: result,
+            data: payload,
         });
     } catch (error: any) {
         callbackFn(callback, {
             success: false,
             message: error.message,
         });
-        socket.emit('io-error', { success: false, message: error });
+        // socket.emit('io-error', { success: false, message: error });
         console.error('Error in send message event:', error);
+    }
+}
+
+export const UpdateMessageHandle = async (
+    io: Server,
+    payload: Message & { sender: { userName: string } },
+    callback: (arg: any) => void
+) => {
+    try {
+
+        const reciverRoom = `user::${payload?.receiverId}`;
+        const senderRoom = `user::${payload?.senderId}`;
+
+        io.to(senderRoom).emit(`update-message::${payload?.senderId}`, payload);
+        io.to(reciverRoom).emit(`update-message::${payload?.sender?.userName}`, payload);
+
+        //---------------hit on chatlist for see last sent message with the chatList------------------//
+        getChatList(payload?.senderId, io, callback)
+        getChatList(payload?.receiverId, io, callback)
+
+        
+        callbackFn(callback, {
+            statusCode: httpStatus.OK,
+            success: true,
+            message: 'Message updated sent successfully!',
+            data: payload,
+        });
+    } catch (error: any) {
+        callbackFn(callback, {
+            success: false,
+            message: error.message,
+        });
+        // socket.emit('io-error', { success: false, message: error });
+        console.error('Error in update message event:', error);
     }
 }
 
@@ -158,7 +144,6 @@ export const MsgSeenHandle = async (
     socket: Socket,
     payload: { chatId: string },
     userId: string,
-    role: Role,
     callback: (arg: any) => void
 ) => {
     try {
@@ -176,7 +161,7 @@ export const MsgSeenHandle = async (
             return;
         }
 
-        const chat = await prisma.chat.findFirst({ where: { id: chatId }, include: { participants: true } })
+        const chat = await prisma.chat.findFirst({ where: { id: chatId } })
 
         if (!chat) {
             callbackFn(callback, {
@@ -193,12 +178,12 @@ export const MsgSeenHandle = async (
         //--------update message seen---------
         await messagesService.seenMessage(userId, chatId)
 
-        const user1 = chat.participants[0];
-        const user2 = chat.participants[1];
+        const user1Id = chat.user1Id
+        const user2Id = chat.user2Id;
 
         //---------------hit on chatlist for see unread message count with the chatList------------------//
-        getChatList(user1?.id, io, socket, callback)
-        getChatList(user2?.id, io, socket, callback)
+        getChatList(user1Id, io, callback)
+        getChatList(user2Id, io, callback)
 
         // const getPreMessage = await prisma.message.findMany({
         //     where: {

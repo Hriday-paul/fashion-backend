@@ -6,7 +6,7 @@ import { folowService } from "./folow.service";
 
 const folowToNewMemeber = catchAsync(async (req, res) => {
 
-    const result = await folowService.folowToNewMemeber(req.body.memberId, req.user?.id);
+    const result = await folowService.folowToNewMemeber(req.body.memberId, req.user);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,

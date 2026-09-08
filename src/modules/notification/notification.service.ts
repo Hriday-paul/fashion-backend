@@ -8,6 +8,14 @@ const getNotificationFromDb = async (options: TPaginationOptions, userId: string
 
   const result = await prisma.notification.findMany({
     where: { receiverId: userId },
+    include: {
+      actor: {
+        select: {
+          picture: true,
+          userName: true,
+        }
+      }
+    },
     skip,
     take: limit,
     orderBy: {
@@ -28,8 +36,8 @@ const getNotificationFromDb = async (options: TPaginationOptions, userId: string
       total,
       page,
       limit,
-      unReadCount,
     },
+    unReadCount,
     data: result,
   };
 };
