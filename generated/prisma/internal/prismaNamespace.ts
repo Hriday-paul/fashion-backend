@@ -389,9 +389,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  AssistentSell: 'AssistentSell',
-  BundlePicture: 'BundlePicture',
-  AssistentSellCharity: 'AssistentSellCharity',
+  Badge: 'Badge',
+  UserBadge: 'UserBadge',
   Category: 'Category',
   BrandByCategory: 'BrandByCategory',
   Brand: 'Brand',
@@ -399,6 +398,7 @@ export const ModelName = {
   Size: 'Size',
   Follow: 'Follow',
   Chat: 'Chat',
+  ChatParticipant: 'ChatParticipant',
   Message: 'Message',
   FileMessage: 'FileMessage',
   OrderDeliveryCharge: 'OrderDeliveryCharge',
@@ -416,8 +416,6 @@ export const ModelName = {
   CartGroup: 'CartGroup',
   CartItem: 'CartItem',
   CartDonationCharaties: 'CartDonationCharaties',
-  Offer: 'Offer',
-  OfferItem: 'OfferItem',
   ProductView: 'ProductView',
   Question: 'Question',
   BundleDiscount: 'BundleDiscount',
@@ -451,229 +449,155 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "follow" | "chat" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
+    modelProps: "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "follow" | "chat" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
-    AssistentSell: {
-      payload: Prisma.$AssistentSellPayload<ExtArgs>
-      fields: Prisma.AssistentSellFieldRefs
+    Badge: {
+      payload: Prisma.$BadgePayload<ExtArgs>
+      fields: Prisma.BadgeFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.AssistentSellFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload> | null
+          args: Prisma.BadgeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BadgePayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.AssistentSellFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>
+          args: Prisma.BadgeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BadgePayload>
         }
         findFirst: {
-          args: Prisma.AssistentSellFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload> | null
+          args: Prisma.BadgeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BadgePayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.AssistentSellFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>
+          args: Prisma.BadgeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BadgePayload>
         }
         findMany: {
-          args: Prisma.AssistentSellFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>[]
+          args: Prisma.BadgeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BadgePayload>[]
         }
         create: {
-          args: Prisma.AssistentSellCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>
+          args: Prisma.BadgeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BadgePayload>
         }
         createMany: {
-          args: Prisma.AssistentSellCreateManyArgs<ExtArgs>
+          args: Prisma.BadgeCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.AssistentSellCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>[]
+          args: Prisma.BadgeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BadgePayload>[]
         }
         delete: {
-          args: Prisma.AssistentSellDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>
+          args: Prisma.BadgeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BadgePayload>
         }
         update: {
-          args: Prisma.AssistentSellUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>
+          args: Prisma.BadgeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BadgePayload>
         }
         deleteMany: {
-          args: Prisma.AssistentSellDeleteManyArgs<ExtArgs>
+          args: Prisma.BadgeDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.AssistentSellUpdateManyArgs<ExtArgs>
+          args: Prisma.BadgeUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.AssistentSellUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>[]
+          args: Prisma.BadgeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BadgePayload>[]
         }
         upsert: {
-          args: Prisma.AssistentSellUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellPayload>
+          args: Prisma.BadgeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BadgePayload>
         }
         aggregate: {
-          args: Prisma.AssistentSellAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAssistentSell>
+          args: Prisma.BadgeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBadge>
         }
         groupBy: {
-          args: Prisma.AssistentSellGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AssistentSellGroupByOutputType>[]
+          args: Prisma.BadgeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BadgeGroupByOutputType>[]
         }
         count: {
-          args: Prisma.AssistentSellCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AssistentSellCountAggregateOutputType> | number
+          args: Prisma.BadgeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BadgeCountAggregateOutputType> | number
         }
       }
     }
-    BundlePicture: {
-      payload: Prisma.$BundlePicturePayload<ExtArgs>
-      fields: Prisma.BundlePictureFieldRefs
+    UserBadge: {
+      payload: Prisma.$UserBadgePayload<ExtArgs>
+      fields: Prisma.UserBadgeFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.BundlePictureFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload> | null
+          args: Prisma.UserBadgeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.BundlePictureFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>
+          args: Prisma.UserBadgeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>
         }
         findFirst: {
-          args: Prisma.BundlePictureFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload> | null
+          args: Prisma.UserBadgeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.BundlePictureFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>
+          args: Prisma.UserBadgeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>
         }
         findMany: {
-          args: Prisma.BundlePictureFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>[]
+          args: Prisma.UserBadgeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>[]
         }
         create: {
-          args: Prisma.BundlePictureCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>
+          args: Prisma.UserBadgeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>
         }
         createMany: {
-          args: Prisma.BundlePictureCreateManyArgs<ExtArgs>
+          args: Prisma.UserBadgeCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.BundlePictureCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>[]
+          args: Prisma.UserBadgeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>[]
         }
         delete: {
-          args: Prisma.BundlePictureDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>
+          args: Prisma.UserBadgeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>
         }
         update: {
-          args: Prisma.BundlePictureUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>
+          args: Prisma.UserBadgeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>
         }
         deleteMany: {
-          args: Prisma.BundlePictureDeleteManyArgs<ExtArgs>
+          args: Prisma.UserBadgeDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.BundlePictureUpdateManyArgs<ExtArgs>
+          args: Prisma.UserBadgeUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.BundlePictureUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>[]
+          args: Prisma.UserBadgeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>[]
         }
         upsert: {
-          args: Prisma.BundlePictureUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BundlePicturePayload>
+          args: Prisma.UserBadgeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>
         }
         aggregate: {
-          args: Prisma.BundlePictureAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateBundlePicture>
+          args: Prisma.UserBadgeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserBadge>
         }
         groupBy: {
-          args: Prisma.BundlePictureGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.BundlePictureGroupByOutputType>[]
+          args: Prisma.UserBadgeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserBadgeGroupByOutputType>[]
         }
         count: {
-          args: Prisma.BundlePictureCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.BundlePictureCountAggregateOutputType> | number
-        }
-      }
-    }
-    AssistentSellCharity: {
-      payload: Prisma.$AssistentSellCharityPayload<ExtArgs>
-      fields: Prisma.AssistentSellCharityFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.AssistentSellCharityFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.AssistentSellCharityFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>
-        }
-        findFirst: {
-          args: Prisma.AssistentSellCharityFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.AssistentSellCharityFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>
-        }
-        findMany: {
-          args: Prisma.AssistentSellCharityFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>[]
-        }
-        create: {
-          args: Prisma.AssistentSellCharityCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>
-        }
-        createMany: {
-          args: Prisma.AssistentSellCharityCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.AssistentSellCharityCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>[]
-        }
-        delete: {
-          args: Prisma.AssistentSellCharityDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>
-        }
-        update: {
-          args: Prisma.AssistentSellCharityUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>
-        }
-        deleteMany: {
-          args: Prisma.AssistentSellCharityDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.AssistentSellCharityUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.AssistentSellCharityUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>[]
-        }
-        upsert: {
-          args: Prisma.AssistentSellCharityUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistentSellCharityPayload>
-        }
-        aggregate: {
-          args: Prisma.AssistentSellCharityAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAssistentSellCharity>
-        }
-        groupBy: {
-          args: Prisma.AssistentSellCharityGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AssistentSellCharityGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.AssistentSellCharityCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AssistentSellCharityCountAggregateOutputType> | number
+          args: Prisma.UserBadgeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserBadgeCountAggregateOutputType> | number
         }
       }
     }
@@ -1192,6 +1116,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ChatCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ChatCountAggregateOutputType> | number
+        }
+      }
+    }
+    ChatParticipant: {
+      payload: Prisma.$ChatParticipantPayload<ExtArgs>
+      fields: Prisma.ChatParticipantFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ChatParticipantFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatParticipantPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ChatParticipantFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatParticipantPayload>
+        }
+        findFirst: {
+          args: Prisma.ChatParticipantFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatParticipantPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ChatParticipantFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatParticipantPayload>
+        }
+        findMany: {
+          args: Prisma.ChatParticipantFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatParticipantPayload>[]
+        }
+        create: {
+          args: Prisma.ChatParticipantCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatParticipantPayload>
+        }
+        createMany: {
+          args: Prisma.ChatParticipantCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ChatParticipantCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatParticipantPayload>[]
+        }
+        delete: {
+          args: Prisma.ChatParticipantDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatParticipantPayload>
+        }
+        update: {
+          args: Prisma.ChatParticipantUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatParticipantPayload>
+        }
+        deleteMany: {
+          args: Prisma.ChatParticipantDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ChatParticipantUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ChatParticipantUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatParticipantPayload>[]
+        }
+        upsert: {
+          args: Prisma.ChatParticipantUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatParticipantPayload>
+        }
+        aggregate: {
+          args: Prisma.ChatParticipantAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChatParticipant>
+        }
+        groupBy: {
+          args: Prisma.ChatParticipantGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChatParticipantGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ChatParticipantCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChatParticipantCountAggregateOutputType> | number
         }
       }
     }
@@ -2450,154 +2448,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CartDonationCharatiesCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CartDonationCharatiesCountAggregateOutputType> | number
-        }
-      }
-    }
-    Offer: {
-      payload: Prisma.$OfferPayload<ExtArgs>
-      fields: Prisma.OfferFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.OfferFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.OfferFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>
-        }
-        findFirst: {
-          args: Prisma.OfferFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.OfferFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>
-        }
-        findMany: {
-          args: Prisma.OfferFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>[]
-        }
-        create: {
-          args: Prisma.OfferCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>
-        }
-        createMany: {
-          args: Prisma.OfferCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.OfferCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>[]
-        }
-        delete: {
-          args: Prisma.OfferDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>
-        }
-        update: {
-          args: Prisma.OfferUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>
-        }
-        deleteMany: {
-          args: Prisma.OfferDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.OfferUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.OfferUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>[]
-        }
-        upsert: {
-          args: Prisma.OfferUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>
-        }
-        aggregate: {
-          args: Prisma.OfferAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateOffer>
-        }
-        groupBy: {
-          args: Prisma.OfferGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.OfferGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.OfferCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.OfferCountAggregateOutputType> | number
-        }
-      }
-    }
-    OfferItem: {
-      payload: Prisma.$OfferItemPayload<ExtArgs>
-      fields: Prisma.OfferItemFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.OfferItemFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferItemPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.OfferItemFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferItemPayload>
-        }
-        findFirst: {
-          args: Prisma.OfferItemFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferItemPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.OfferItemFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferItemPayload>
-        }
-        findMany: {
-          args: Prisma.OfferItemFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferItemPayload>[]
-        }
-        create: {
-          args: Prisma.OfferItemCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferItemPayload>
-        }
-        createMany: {
-          args: Prisma.OfferItemCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.OfferItemCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferItemPayload>[]
-        }
-        delete: {
-          args: Prisma.OfferItemDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferItemPayload>
-        }
-        update: {
-          args: Prisma.OfferItemUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferItemPayload>
-        }
-        deleteMany: {
-          args: Prisma.OfferItemDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.OfferItemUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.OfferItemUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferItemPayload>[]
-        }
-        upsert: {
-          args: Prisma.OfferItemUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferItemPayload>
-        }
-        aggregate: {
-          args: Prisma.OfferItemAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateOfferItem>
-        }
-        groupBy: {
-          args: Prisma.OfferItemGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.OfferItemGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.OfferItemCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.OfferItemCountAggregateOutputType> | number
         }
       }
     }
@@ -3972,53 +3822,33 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const AssistentSellScalarFieldEnum = {
+export const BadgeScalarFieldEnum = {
   id: 'id',
-  itemsTitle: 'itemsTitle',
-  itemsCount: 'itemsCount',
-  contactNumber: 'contactNumber',
-  itemsDetails: 'itemsDetails',
-  priceType: 'priceType',
-  targetPrice: 'targetPrice',
-  additionalNotes: 'additionalNotes',
-  donationPct: 'donationPct',
-  donationAnonymous: 'donationAnonymous',
-  deliveryCharge: 'deliveryCharge',
-  status: 'status',
-  sellerId: 'sellerId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  weight_kg: 'weight_kg',
-  hight_cm: 'hight_cm',
-  width_cm: 'width_cm',
-  length_cm: 'length_cm'
-} as const
-
-export type AssistentSellScalarFieldEnum = (typeof AssistentSellScalarFieldEnum)[keyof typeof AssistentSellScalarFieldEnum]
-
-
-export const BundlePictureScalarFieldEnum = {
-  id: 'id',
-  url: 'url',
-  key: 'key',
-  assistentSellId: 'assistentSellId',
-  order: 'order',
+  name: 'name',
+  description: 'description',
+  icon: 'icon',
+  type: 'type',
+  target: 'target',
+  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type BundlePictureScalarFieldEnum = (typeof BundlePictureScalarFieldEnum)[keyof typeof BundlePictureScalarFieldEnum]
+export type BadgeScalarFieldEnum = (typeof BadgeScalarFieldEnum)[keyof typeof BadgeScalarFieldEnum]
 
 
-export const AssistentSellCharityScalarFieldEnum = {
+export const UserBadgeScalarFieldEnum = {
   id: 'id',
-  isAnonymous: 'isAnonymous',
-  assistentSellId: 'assistentSellId',
-  charityId: 'charityId',
-  createdAt: 'createdAt'
+  userId: 'userId',
+  badgeId: 'badgeId',
+  progress: 'progress',
+  isCompleted: 'isCompleted',
+  earnedAt: 'earnedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type AssistentSellCharityScalarFieldEnum = (typeof AssistentSellCharityScalarFieldEnum)[keyof typeof AssistentSellCharityScalarFieldEnum]
+export type UserBadgeScalarFieldEnum = (typeof UserBadgeScalarFieldEnum)[keyof typeof UserBadgeScalarFieldEnum]
 
 
 export const CategoryScalarFieldEnum = {
@@ -4093,13 +3923,22 @@ export type FollowScalarFieldEnum = (typeof FollowScalarFieldEnum)[keyof typeof 
 
 export const ChatScalarFieldEnum = {
   id: 'id',
-  user1Id: 'user1Id',
-  user2Id: 'user2Id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ChatScalarFieldEnum = (typeof ChatScalarFieldEnum)[keyof typeof ChatScalarFieldEnum]
+
+
+export const ChatParticipantScalarFieldEnum = {
+  id: 'id',
+  chatId: 'chatId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChatParticipantScalarFieldEnum = (typeof ChatParticipantScalarFieldEnum)[keyof typeof ChatParticipantScalarFieldEnum]
 
 
 export const MessageScalarFieldEnum = {
@@ -4109,7 +3948,6 @@ export const MessageScalarFieldEnum = {
   senderId: 'senderId',
   receiverId: 'receiverId',
   chatId: 'chatId',
-  offerId: 'offerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -4121,9 +3959,7 @@ export const FileMessageScalarFieldEnum = {
   id: 'id',
   key: 'key',
   url: 'url',
-  title: 'title',
-  messageId: 'messageId',
-  type: 'type'
+  messageId: 'messageId'
 } as const
 
 export type FileMessageScalarFieldEnum = (typeof FileMessageScalarFieldEnum)[keyof typeof FileMessageScalarFieldEnum]
@@ -4166,7 +4002,6 @@ export const OrderScalarFieldEnum = {
   serviceFee: 'serviceFee',
   authenticationFee: 'authenticationFee',
   bundleDiscountPercent: 'bundleDiscountPercent',
-  assistentSellId: 'assistentSellId',
   courier_service_id: 'courier_service_id',
   shippingId: 'shippingId',
   isLebelGenerated: 'isLebelGenerated',
@@ -4317,10 +4152,8 @@ export const ProductScalarFieldEnum = {
   allow_offer: 'allow_offer',
   return_window: 'return_window',
   donation_percent: 'donation_percent',
-  donationAnonymous: 'donationAnonymous',
   isDeleted: 'isDeleted',
   userId: 'userId',
-  assistentSellId: 'assistentSellId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   weight_kg: 'weight_kg',
@@ -4336,10 +4169,7 @@ export const ProductPictureScalarFieldEnum = {
   id: 'id',
   url: 'url',
   key: 'key',
-  productId: 'productId',
-  order: 'order',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  productId: 'productId'
 } as const
 
 export type ProductPictureScalarFieldEnum = (typeof ProductPictureScalarFieldEnum)[keyof typeof ProductPictureScalarFieldEnum]
@@ -4403,35 +4233,6 @@ export const CartDonationCharatiesScalarFieldEnum = {
 } as const
 
 export type CartDonationCharatiesScalarFieldEnum = (typeof CartDonationCharatiesScalarFieldEnum)[keyof typeof CartDonationCharatiesScalarFieldEnum]
-
-
-export const OfferScalarFieldEnum = {
-  id: 'id',
-  sellerId: 'sellerId',
-  buyerId: 'buyerId',
-  actualPrice: 'actualPrice',
-  offeredPrice: 'offeredPrice',
-  status: 'status',
-  sendByBuyer: 'sendByBuyer',
-  actionAt: 'actionAt',
-  expiredAt: 'expiredAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type OfferScalarFieldEnum = (typeof OfferScalarFieldEnum)[keyof typeof OfferScalarFieldEnum]
-
-
-export const OfferItemScalarFieldEnum = {
-  id: 'id',
-  offerId: 'offerId',
-  productId: 'productId',
-  quantity: 'quantity',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type OfferItemScalarFieldEnum = (typeof OfferItemScalarFieldEnum)[keyof typeof OfferItemScalarFieldEnum]
 
 
 export const ProductViewScalarFieldEnum = {
@@ -4593,7 +4394,6 @@ export const UserScalarFieldEnum = {
   mission: 'mission',
   business_tags: 'business_tags',
   isOnline: 'isOnline',
-  lastOnlineAt: 'lastOnlineAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDeleted: 'isDeleted',
@@ -4660,17 +4460,14 @@ export type BillingDetailsScalarFieldEnum = (typeof BillingDetailsScalarFieldEnu
 
 export const NotificationScalarFieldEnum = {
   id: 'id',
-  actorId: 'actorId',
+  senderId: 'senderId',
   receiverId: 'receiverId',
-  entityId: 'entityId',
-  entityType: 'entityType',
-  entityImgs: 'entityImgs',
-  groupKeyId: 'groupKeyId',
   message: 'message',
   fcmToken: 'fcmToken',
   type: 'type',
   title: 'title',
   isRead: 'isRead',
+  link: 'link',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -4786,6 +4583,20 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'BadgeType'
+ */
+export type EnumBadgeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BadgeType'>
+    
+
+
+/**
+ * Reference to a field of type 'BadgeType[]'
+ */
+export type ListEnumBadgeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BadgeType[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -4800,51 +4611,16 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
- * Reference to a field of type 'PriceType'
+ * Reference to a field of type 'BadgeRole'
  */
-export type EnumPriceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PriceType'>
+export type EnumBadgeRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BadgeRole'>
     
 
 
 /**
- * Reference to a field of type 'PriceType[]'
+ * Reference to a field of type 'BadgeRole[]'
  */
-export type ListEnumPriceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PriceType[]'>
-    
-
-
-/**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
- * Reference to a field of type 'AssistentSellStatus'
- */
-export type EnumAssistentSellStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssistentSellStatus'>
-    
-
-
-/**
- * Reference to a field of type 'AssistentSellStatus[]'
- */
-export type ListEnumAssistentSellStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssistentSellStatus[]'>
+export type ListEnumBadgeRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BadgeRole[]'>
     
 
 
@@ -4863,16 +4639,23 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'FileMessageType'
+ * Reference to a field of type 'Boolean'
  */
-export type EnumFileMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileMessageType'>
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
 /**
- * Reference to a field of type 'FileMessageType[]'
+ * Reference to a field of type 'Float'
  */
-export type ListEnumFileMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileMessageType[]'>
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 
@@ -5087,20 +4870,6 @@ export type ListEnumRefundStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
- * Reference to a field of type 'OfferStatus'
- */
-export type EnumOfferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OfferStatus'>
-    
-
-
-/**
- * Reference to a field of type 'OfferStatus[]'
- */
-export type ListEnumOfferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OfferStatus[]'>
-    
-
-
-/**
  * Reference to a field of type 'ReturnStatus'
  */
 export type EnumReturnStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReturnStatus'>
@@ -5167,20 +4936,6 @@ export type EnumApproval_StatusFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'Approval_Status[]'
  */
 export type ListEnumApproval_StatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Approval_Status[]'>
-    
-
-
-/**
- * Reference to a field of type 'NotificationEntityType'
- */
-export type EnumNotificationEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationEntityType'>
-    
-
-
-/**
- * Reference to a field of type 'NotificationEntityType[]'
- */
-export type ListEnumNotificationEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationEntityType[]'>
     
 
 
@@ -5326,9 +5081,8 @@ export interface PrismaClientOptions {
   omit?: GlobalOmitConfig
 }
 export type GlobalOmitConfig = {
-  assistentSell?: Prisma.AssistentSellOmit
-  bundlePicture?: Prisma.BundlePictureOmit
-  assistentSellCharity?: Prisma.AssistentSellCharityOmit
+  badge?: Prisma.BadgeOmit
+  userBadge?: Prisma.UserBadgeOmit
   category?: Prisma.CategoryOmit
   brandByCategory?: Prisma.BrandByCategoryOmit
   brand?: Prisma.BrandOmit
@@ -5336,6 +5090,7 @@ export type GlobalOmitConfig = {
   size?: Prisma.SizeOmit
   follow?: Prisma.FollowOmit
   chat?: Prisma.ChatOmit
+  chatParticipant?: Prisma.ChatParticipantOmit
   message?: Prisma.MessageOmit
   fileMessage?: Prisma.FileMessageOmit
   orderDeliveryCharge?: Prisma.OrderDeliveryChargeOmit
@@ -5353,8 +5108,6 @@ export type GlobalOmitConfig = {
   cartGroup?: Prisma.CartGroupOmit
   cartItem?: Prisma.CartItemOmit
   cartDonationCharaties?: Prisma.CartDonationCharatiesOmit
-  offer?: Prisma.OfferOmit
-  offerItem?: Prisma.OfferItemOmit
   productView?: Prisma.ProductViewOmit
   question?: Prisma.QuestionOmit
   bundleDiscount?: Prisma.BundleDiscountOmit

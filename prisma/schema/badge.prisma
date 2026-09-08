@@ -1,0 +1,67 @@
+enum BadgeRole {
+  GENERAL
+  ECO_FRIENDLY
+  CHARITABLE_ORGANIZATION
+  CHARITY_SHOP
+}
+
+enum BadgeType {
+  FASHION_PHILANTHROPIST
+  STYLE_STARTER
+  FIRST_PURCHASE
+  MONEY_DONOR
+  ECO_HERO
+  FIRST_SALE
+  TREE_PLANTER
+  CLOTHING_DONOR
+  FREQUENT_SELLER
+  TOP_BUYER
+  SPEEDY_SHIPPER
+  FASHION_ACTIVIST
+  TRUSTED_SELLER
+  CHARITY_SUPPORTER
+  SUSTAINABLE_MATERIALS
+  FAST_SHIPPER
+  TOP_ECO_SELLER
+  BUYERS_FAVOURITE
+  CHARITY_CHAMPION
+  TOP_CHARITY_FUNDRAISER
+  VINTAGE_COLLECTION
+}
+
+model Badge {
+  id          String      @id @default(cuid())
+  name        String                    // shown as the badge title
+  description String                    // shown under the title
+  icon        String                    // icon name (lucide key) or image URL
+  type        BadgeType                 // the type of the badge
+  target      Int                       // e.g. 10 orders, 30-day streak
+  role        BadgeRole @default(GENERAL)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  userBadges  UserBadge[]
+
+  @@index([role])
+  @@index([type])
+  @@index([role, type])
+  @@unique([type])
+}
+
+model UserBadge {
+  id          String    @id @default(cuid())
+  userId      String
+  badgeId     String
+  progress    Int       @default(0)
+  isCompleted Boolean   @default(false)
+  earnedAt    DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badge Badge @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, badgeId])
+  @@index([userId, isCompleted])
+  @@index([badgeId])
+}

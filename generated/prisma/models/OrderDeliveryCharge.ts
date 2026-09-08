@@ -515,10 +515,6 @@ export type EnumDeliveryChargeStatusFieldUpdateOperationsInput = {
   set?: $Enums.DeliveryChargeStatus
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type OrderDeliveryChargeCreateNestedOneWithoutOrderInput = {
   create?: Prisma.XOR<Prisma.OrderDeliveryChargeCreateWithoutOrderInput, Prisma.OrderDeliveryChargeUncheckedCreateWithoutOrderInput>
   connectOrCreate?: Prisma.OrderDeliveryChargeCreateOrConnectWithoutOrderInput
