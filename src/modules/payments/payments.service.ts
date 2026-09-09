@@ -1,6 +1,6 @@
 import AppError from '../../error/AppError';
 import httpStatus from 'http-status';
-import { createCheckoutSession, createDonationCheckoutSession } from './payments.utils';
+import { createDonationCheckoutSession } from './payments.utils';
 import { Payment, Prisma as GeneratedPrisma, DirectDonation } from '../../../generated/prisma/client';
 import prisma from '../../shared/prisma';
 import { paginationHelper, TPaginationOptions } from '../../helper/pagination.helper';
@@ -11,6 +11,7 @@ import config from '../../config';
 import moment from 'moment';
 import { CompletePaymentQueue } from '../../queues/completePayment.queue';
 import { jobs } from '../../queues/jobs.name';
+import { BadgeGenerateQueue } from '../../queues/badge.queue';
 
 const stripe = new Stripe(config.stripe?.stripe_api_secret as string, {
   apiVersion: "2025-03-31.basil", // Valid API version
@@ -150,7 +151,10 @@ const confirmDonationPayment = async (query: Record<string, any>) => {
         }
       });
 
-      badgeGenerateQueue.add(jobs.BadgeGenerate, { role: "CHARITABLE_ORGANIZATION", type: "CHARITY_SUPPORTER", userId: donation?.donorId });
+      //generate badge for donor
+      if (donation?.donorId) {
+        BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "MONEY_DONOR", userId: donation?.donorId });
+      }
 
       //send notification
       // sendAdminNotifications({

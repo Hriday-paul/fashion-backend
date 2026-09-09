@@ -1,5 +1,5 @@
 import { BillingDetails, Prisma, User } from "../../../generated/prisma/client";
-import { Approval_Status, Role } from "../../../generated/prisma/enums";
+import { Approval_Status, BadgeRole, Role } from "../../../generated/prisma/enums";
 import config from "../../config";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
@@ -182,29 +182,12 @@ const userDetails = async (userName: string, currentUserId?: string) => {
         include: {
             picture: true,
             auth: { select: { role: true } },
-            followers: {
-                include: {
-                    follower: {
-                        include: {
-                            picture: true,
-                            auth: {
-                                select: { role: true }
-                            }
-                        }
-                    }
+            _count: {
+                select: {
+                    followers: true,
+                    following: true,
                 }
-            }, following: {
-                include: {
-                    following: {
-                        include: {
-                            picture: true,
-                            auth: {
-                                select: { role: true }
-                            }
-                        }
-                    }
-                }
-            },
+            }
         },
     });
 
@@ -249,7 +232,17 @@ const userDetails = async (userName: string, currentUserId?: string) => {
 
     const isCurrentUser = currentUserId === res?.id;
 
-    return { user: res, review: ratingAvg, isfolowing: isfolowing ? true : false, totalDonation, isCurrentUser };
+    const badges = await prisma.userBadge.findMany({
+        where: {
+            userId: res?.id,
+            isCompleted: true
+        },
+        include: {
+            badge: true
+        }
+    });
+
+    return { user: res, review: ratingAvg, isfolowing: isfolowing ? true : false, totalDonation, isCurrentUser, badges, };
 }
 
 const charityAbout = async (userName: string) => {
@@ -644,6 +637,136 @@ const getSellerBundileTiers = async (userName: string) => {
 
 }
 
+const badgeStats = async (userId: string, role: string) => {
+
+    const badge_role: BadgeRole = role == "CHARITY_SHOP" ? BadgeRole.CHARITY_SHOP : role == "CHARITABLE_ORGANIZATION" ? BadgeRole.CHARITABLE_ORGANIZATION : role == "ECO_FRIENDLY_STORE" ? BadgeRole.ECO_FRIENDLY : BadgeRole.GENERAL;
+
+    const all_badges = await prisma.badge.findMany({
+        where: {
+            role: badge_role
+        }
+    });
+
+    const current_availableBadges = await prisma.userBadge.findMany({
+        where: {
+            userId,
+        }
+    });
+
+    // return all badges with current progress combined by mapping the current available badges with progress to the all badges and return the result
+
+    const result = all_badges ? all_badges.map((badge) => {
+        const currentBadge = current_availableBadges.find((userBadge) => userBadge.badgeId === badge.id);
+        return {
+            ...badge,
+            progress: currentBadge ? currentBadge.progress : 0,
+            isCompleted: currentBadge ? currentBadge.isCompleted : false,
+        };
+    }) : [];
+
+    return result;
+}
+
+const userFolowings = async (userName: string, options: TPaginationOptions) => {
+
+    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+    const user = await prisma.user.findFirst({ where: { userName }, select: { id: true } });
+
+    if (!user) {
+        return null;
+    }
+
+    const result = await prisma.follow.findMany({
+        where: { followerId: user?.id },
+        skip,
+        take: limit,
+        orderBy: {
+            [sortBy]: sortOrder,
+        },
+        include: {
+            following: {
+                include: {
+                    picture: true,
+                    auth: {
+                        select: { role: true }
+                    },
+                    _count: {
+                        select: {
+                            products: {
+                                where: { isDeleted: false, stock: { gt: 0 } }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const total = await prisma.follow.count({
+        where: { followerId: user?.id },
+    });
+
+    return {
+        meta: {
+            total,
+            page,
+            limit,
+        },
+        data: result,
+    };
+}
+
+const userFolowers = async (userName: string, options: TPaginationOptions) => {
+
+    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+    const user = await prisma.user.findFirst({ where: { userName }, select: { id: true } });
+
+    if (!user) {
+        return null;
+    }
+
+    const result = await prisma.follow.findMany({
+        where: { followingId: user?.id },
+        skip,
+        take: limit,
+        orderBy: {
+            [sortBy]: sortOrder,
+        },
+        include: {
+            follower: {
+                include: {
+                    picture: true,
+                    auth: {
+                        select: { role: true }
+                    },
+                    _count: {
+                        select: {
+                            products: {
+                                where: { isDeleted: false, stock: { gt: 0 } }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const total = await prisma.follow.count({
+        where: { followingId: user?.id },
+    });
+
+    return {
+        meta: {
+            total,
+            page,
+            limit,
+        },
+        data: result,
+    };
+}
+
 export const userService = {
     updateProfile,
     getUserById,
@@ -653,6 +776,8 @@ export const userService = {
     userDetails,
     UpdateNotification,
 
+    userFolowings,
+    userFolowers,
     allCharies,
     addOrUpdateBillingDetails,
     addressesByUser,
@@ -662,5 +787,6 @@ export const userService = {
     charityAbout,
     bundleDiscount,
     updateBundleDiscount,
-    getSellerBundileTiers
+    getSellerBundileTiers,
+    badgeStats
 }

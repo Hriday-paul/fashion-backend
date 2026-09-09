@@ -1,4 +1,4 @@
-import { Job, UnrecoverableError, Worker } from "bullmq";
+import { UnrecoverableError, Worker } from "bullmq";
 import { connectionInfo } from "../redis";
 import prisma from "../shared/prisma";
 import { RefundQueue } from "../queues/refund.queue";
@@ -6,7 +6,7 @@ import { jobs } from "../queues/jobs.name";
 import config from "../config";
 import { IShipment } from "../modules/order/order.interface";
 import { notificationQueue } from "../queues/notificaion.queue";
-// import { notificationQueue } from "../queues/notification.queues";
+import { BadgeGenerateQueue } from "../queues/badge.queue";
 
 // ── Worker ──────────────────────────────────────────────────────────────────
 export const makeOrderWorker = new Worker(
@@ -39,7 +39,8 @@ export const makeOrderWorker = new Worker(
                                 hight_cm: true,
                                 width_cm: true,
                                 length_cm: true,
-                                description: true
+                                description: true,
+                                isDeleted: true,
                             }
                         }
                     },
@@ -92,7 +93,7 @@ export const makeOrderWorker = new Worker(
         const bundleDiscountPercent = nearestTier ? nearestTier.discountPercent : 0;
 
         // Build order in stock items with seller info
-        const orderItems = cartgroup.items.filter((item) => item?.product?.stock > 0).map((item) => {
+        const orderItems = cartgroup.items.filter((item) => (item?.product?.stock > 0 && !item?.product?.isDeleted)).map((item) => {
             const p = item?.product;
             const donation_percent = p.donation_percent || 0;
             const extra_donation = item.extraDonation || 0;
@@ -114,9 +115,9 @@ export const makeOrderWorker = new Worker(
             };
         });
 
-        const stockoutItems = cartgroup.items.filter((item) => item?.product?.stock <= 0).map((item) => {
+        const stockoutItems = cartgroup.items.filter((item) => (item?.product?.stock <= 0 || item?.product?.isDeleted)).map((item) => {
             const p = item?.product;
-            const donation_percent = p.donation_percent || 0;
+            // const donation_percent = p.donation_percent || 0;
             const extra_donation = item.extraDonation || 0;
             const unit_price = p?.finalPrice - (p?.finalPrice * (bundleDiscountPercent / 100))
 
@@ -130,8 +131,8 @@ export const makeOrderWorker = new Worker(
                 totalPrice: unit_price + extra_donation,
                 quantity,
                 extra_donation,
-                donation_percent, // how much percent of the product price will be donated to charity from seller
-                donation_amount: (unit_price * (donation_percent / 100)), // how much amount of the product price will be donated to charity from seller
+                donation_percent : 0, // how much percent of the product price will be donated to charity from seller
+                donation_amount: 0, // how much amount of the product price will be donated to charity from seller
                 charities: item?.charities ?? [],
                 isCancelled: true,
                 cancelledBy: "SYSTEM",
@@ -148,7 +149,6 @@ export const makeOrderWorker = new Worker(
         const otherTotal = (cartgroup.serviceFeeCost || 0) + (cartgroup.treeGiftCost || 0) + (cartgroup.authenticationCost || 0);
 
         const discountedItemTotal = itemsTotal;
-
 
         const sellerDonationTotal = orderItems.reduce((acc, item) => acc + item?.donation_amount, 0);
 
@@ -351,6 +351,12 @@ export const makeOrderWorker = new Worker(
             });
 
             //send notification & email to buyer about order item stockout & partial refund
+        }
+
+        if (treeCredit > 0) {
+            const tree_count = Math.floor(treeCredit / 4); // 1 tree for every $4 spent
+            // generate badge for buyer, tree gift badge
+            BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TREE_PLANTER", userId, increment: tree_count });
         }
 
     },

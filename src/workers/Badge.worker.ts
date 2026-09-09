@@ -1,16 +1,37 @@
 import { connectionInfo } from "../redis";
-import { Job, Worker } from "bullmq"
+import { Job, UnrecoverableError, Worker } from "bullmq"
 import prisma from "../shared/prisma";
-import { BadgeRole, BadgeType, Notification, Role } from "../../generated/prisma/client";
-import { pushNotificationQueue } from "../queues/notificaion.queue";
-import { jobs } from "../queues/jobs.name";
-import { sendPushNotification } from "../modules/notification/notification.utils";
+import { BadgeRole, BadgeType } from "../../generated/prisma/client";
+import { notificationQueue } from "../queues/notificaion.queue";
+import { jobs } from "../queues/jobs.name"
+import { BadgeGenerateQueue } from "../queues/badge.queue";
 
-const badgeWorker = new Worker("badge", async (job: Job<{ role : Role, type : BadgeType, userId : string }>) => {
+const badgeWorker = new Worker("badge", async (job: Job<{ type: BadgeType, userId: string, increment?: number }>) => {
 
-    const { role, type, userId } = job.data;
+    const { type, userId, increment = 1 } = job.data;
 
-    const badge_role : BadgeRole = role == "CHARITY_SHOP" ? BadgeRole.CHARITY_SHOP : role == "CHARITABLE_ORGANIZATION" ? BadgeRole.CHARITABLE_ORGANIZATION : role == "ECO_FRIENDLY_STORE" ? BadgeRole.ECO_FRIENDLY : BadgeRole.GENERAL;
+    const userAuth = await prisma.auth.findFirst({
+        where: {
+            userId: userId
+        },
+        select: {
+            role: true,
+            user: {
+                select: {
+                    fcmToken: true,
+                    userName: true
+                }
+            }
+        }
+    });
+
+    if (!userAuth) {
+        throw new UnrecoverableError(`User with id ${userId} does not exist`);
+    }
+
+    const role = userAuth.role;
+
+    const badge_role: BadgeRole = role == "CHARITY_SHOP" ? BadgeRole.CHARITY_SHOP : role == "CHARITABLE_ORGANIZATION" ? BadgeRole.CHARITABLE_ORGANIZATION : role == "ECO_FRIENDLY_STORE" ? BadgeRole.ECO_FRIENDLY : BadgeRole.GENERAL;
 
     const badge = await prisma.badge.findFirst({
         where: {
@@ -19,11 +40,12 @@ const badgeWorker = new Worker("badge", async (job: Job<{ role : Role, type : Ba
         }
     });
 
-    if(!badge) {
-        throw new Error(`Badge does not exist for role ${badge_role} and type ${type}`);
+    if (!badge) {
+        // this badge type is not applicable for this user role, so we can just return without doing anything
+        return;
     }
 
-    //check if the user already has the badge
+    //check if the user already have the badge
     const userBadge = await prisma.userBadge.findFirst({
         where: {
             userId: userId,
@@ -31,33 +53,61 @@ const badgeWorker = new Worker("badge", async (job: Job<{ role : Role, type : Ba
         }
     });
 
-    const progress = userBadge ?( userBadge.progress + 1) : 1;
+    const alreadyCompleted = userBadge ? userBadge.isCompleted : false;
+
+    if (alreadyCompleted) {
+        //user already completed the badge, no need to update
+        return;
+    }
+
+    const progress = userBadge ? ((userBadge.progress + increment) >= badge?.target ? badge?.target : (userBadge.progress + increment)) : 1;
 
     const isCompleted = badge ? progress >= badge?.target : false;
 
-    if(userBadge && userBadge?.isCompleted) {
-        return;
-    }else if(userBadge) {
-        //update the user badge
-        await prisma.userBadge.update({
-            where: {
-                id: userBadge.id
-            },
-            data: {
-                isCompleted: isCompleted,
-                progress: progress
-            }
-        });
-    }else {
-        //create a new user badge
-        await prisma.userBadge.create({
-            data: {
+    const newbadge = await prisma.userBadge.upsert({
+        where: {
+            userId_badgeId: {
                 userId: userId,
                 badgeId: badge.id,
-                isCompleted: isCompleted,
-                progress: progress
+            },
+        },
+        update: {
+            isCompleted: isCompleted,
+            progress: progress
+        },
+        create: {
+            userId: userId,
+            badgeId: badge.id,
+            isCompleted: isCompleted,
+            progress: progress
+        },
+        include: {
+            badge: true
+        }
+    })
+
+    if (isCompleted) {
+
+        //send notification to user
+
+        //send notification
+        notificationQueue.add(jobs.notification, {
+            allowPushNotification: true, payload: {
+                title: `Congratulations! You have earned a new badge`,
+                message: `Congratulations! You have earned **${newbadge?.badge?.name}** new badge. Check it out in your profile.`,
+                actorId: userId,
+                receiverId: userId,
+                entityId: userAuth.user?.userName,
+                entityType: "BADGE",
+                entityImgs: [],
+                type: "BADGE_EARNED",
+                fcmToken: userAuth.user?.fcmToken,
+                groupKeyId: null,
             }
-        });
+        })
+
+        //check & add new fashion activist badge for 10+ badges
+        BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "FASHION_ACTIVIST", userId, increment: 1 });
     }
 
 }, { connection: connectionInfo });

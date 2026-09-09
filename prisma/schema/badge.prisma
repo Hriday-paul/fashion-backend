@@ -45,7 +45,7 @@ model Badge {
   @@index([role])
   @@index([type])
   @@index([role, type])
-  @@unique([type])
+  @@unique([type, role])
 }
 
 model UserBadge {

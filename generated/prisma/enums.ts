@@ -8,6 +8,25 @@
 * 🟢 You can import this file directly.
 */
 
+export const AssistentSellStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  LISTED: 'LISTED'
+} as const
+
+export type AssistentSellStatus = (typeof AssistentSellStatus)[keyof typeof AssistentSellStatus]
+
+
+export const PriceType = {
+  TARGET_AMOUNT: 'TARGET_AMOUNT',
+  DISCUSSION: 'DISCUSSION',
+  MARKET_PRICE: 'MARKET_PRICE'
+} as const
+
+export type PriceType = (typeof PriceType)[keyof typeof PriceType]
+
+
 export const BadgeRole = {
   GENERAL: 'GENERAL',
   ECO_FRIENDLY: 'ECO_FRIENDLY',
@@ -203,6 +222,16 @@ export const RefundStatus = {
 export type RefundStatus = (typeof RefundStatus)[keyof typeof RefundStatus]
 
 
+export const OfferStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+  CANCELED: 'CANCELED'
+} as const
+
+export type OfferStatus = (typeof OfferStatus)[keyof typeof OfferStatus]
+
+
 export const ReturnStatus = {
   REQUESTED: 'REQUESTED',
   APPROVED: 'APPROVED',
@@ -269,10 +298,43 @@ export const Approval_Status = {
 export type Approval_Status = (typeof Approval_Status)[keyof typeof Approval_Status]
 
 
+export const NotificationEntityType = {
+  PRODUCT: 'PRODUCT',
+  OFFER: 'OFFER',
+  ORDER: 'ORDER',
+  MESSAGE: 'MESSAGE',
+  USER: 'USER',
+  DONATION: 'DONATION',
+  RETURN: 'RETURN',
+  BADGE: 'BADGE'
+} as const
+
+export type NotificationEntityType = (typeof NotificationEntityType)[keyof typeof NotificationEntityType]
+
+
 export const NotificationType = {
-  Text: 'Text',
-  Payment: 'Payment',
-  Cancelled: 'Cancelled'
+  PRODUCT_LIKE: 'PRODUCT_LIKE',
+  PRICE_DROP: 'PRICE_DROP',
+  SOLD_OUT: 'SOLD_OUT',
+  OFFER_RECEIVED: 'OFFER_RECEIVED',
+  OFFER_ACCEPTED: 'OFFER_ACCEPTED',
+  OFFER_REJECTED: 'OFFER_REJECTED',
+  OFFER_CANCELED: 'OFFER_CANCELED',
+  ORDER_PLACED: 'ORDER_PLACED',
+  ORDER_STATUS_CHANGED: 'ORDER_STATUS_CHANGED',
+  ORDER_COMPLETED: 'ORDER_COMPLETED',
+  ORDER_ITEM_CANCELED: 'ORDER_ITEM_CANCELED',
+  MESSAGE_RECEIVED: 'MESSAGE_RECEIVED',
+  FOLLOWED: 'FOLLOWED',
+  REVIEW_RECEIVED: 'REVIEW_RECEIVED',
+  DONATION_RECEIVED: 'DONATION_RECEIVED',
+  RETURN_REQUESTED: 'RETURN_REQUESTED',
+  RETURN_APPROVED: 'RETURN_APPROVED',
+  RETURN_REJECTED: 'RETURN_REJECTED',
+  RETURN_COMPLETED: 'RETURN_COMPLETED',
+  RETURN_STATUS_CHANGED: 'RETURN_STATUS_CHANGED',
+  RETURN_ITEM_CANCELED: 'RETURN_ITEM_CANCELED',
+  BADGE_EARNED: 'BADGE_EARNED'
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]

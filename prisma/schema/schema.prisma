@@ -263,6 +263,7 @@ enum NotificationEntityType {
   USER
   DONATION
   RETURN
+  BADGE
 }
 
 enum NotificationType {
@@ -300,6 +301,9 @@ enum NotificationType {
   RETURN_COMPLETED
   RETURN_STATUS_CHANGED
   RETURN_ITEM_CANCELED
+
+  //Earned badge
+  BADGE_EARNED
 }
 
 model Setting {

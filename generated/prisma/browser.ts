@@ -17,6 +17,21 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
+ * Model AssistentSell
+ * 
+ */
+export type AssistentSell = Prisma.AssistentSellModel
+/**
+ * Model BundlePicture
+ * 
+ */
+export type BundlePicture = Prisma.BundlePictureModel
+/**
+ * Model AssistentSellCharity
+ * 
+ */
+export type AssistentSellCharity = Prisma.AssistentSellCharityModel
+/**
  * Model Badge
  * 
  */
@@ -61,11 +76,6 @@ export type Follow = Prisma.FollowModel
  * 
  */
 export type Chat = Prisma.ChatModel
-/**
- * Model ChatParticipant
- * 
- */
-export type ChatParticipant = Prisma.ChatParticipantModel
 /**
  * Model Message
  * 
@@ -151,6 +161,16 @@ export type CartItem = Prisma.CartItemModel
  * 
  */
 export type CartDonationCharaties = Prisma.CartDonationCharatiesModel
+/**
+ * Model Offer
+ * 
+ */
+export type Offer = Prisma.OfferModel
+/**
+ * Model OfferItem
+ * 
+ */
+export type OfferItem = Prisma.OfferItemModel
 /**
  * Model ProductView
  * 

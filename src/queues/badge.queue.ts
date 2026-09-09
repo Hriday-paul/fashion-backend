@@ -5,7 +5,7 @@ import { BadgeType, Role } from "../../generated/prisma/client";
 
 //============generate badges=============
 
-export const BadgeGenerateQueue = new Queue<{ role : Role, type : BadgeType, userId : string }>("badge", {
+export const BadgeGenerateQueue = new Queue<{ type : BadgeType, userId : string, increment ?: number }>("badge", {
     connection: connectionInfo,
     defaultJobOptions: {
         attempts: 3,

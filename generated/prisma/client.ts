@@ -26,8 +26,8 @@ export * from "./enums"
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Badges
- * const badges = await prisma.badge.findMany()
+ * // Fetch zero or more AssistentSells
+ * const assistentSells = await prisma.assistentSell.findMany()
  * ```
  * 
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
@@ -41,6 +41,21 @@ export { Prisma }
 path.join(__dirname, "query_engine-windows.dll.node")
 path.join(process.cwd(), "generated/prisma/query_engine-windows.dll.node")
 
+/**
+ * Model AssistentSell
+ * 
+ */
+export type AssistentSell = Prisma.AssistentSellModel
+/**
+ * Model BundlePicture
+ * 
+ */
+export type BundlePicture = Prisma.BundlePictureModel
+/**
+ * Model AssistentSellCharity
+ * 
+ */
+export type AssistentSellCharity = Prisma.AssistentSellCharityModel
 /**
  * Model Badge
  * 
@@ -86,11 +101,6 @@ export type Follow = Prisma.FollowModel
  * 
  */
 export type Chat = Prisma.ChatModel
-/**
- * Model ChatParticipant
- * 
- */
-export type ChatParticipant = Prisma.ChatParticipantModel
 /**
  * Model Message
  * 
@@ -176,6 +186,16 @@ export type CartItem = Prisma.CartItemModel
  * 
  */
 export type CartDonationCharaties = Prisma.CartDonationCharatiesModel
+/**
+ * Model Offer
+ * 
+ */
+export type Offer = Prisma.OfferModel
+/**
+ * Model OfferItem
+ * 
+ */
+export type OfferItem = Prisma.OfferItemModel
 /**
  * Model ProductView
  * 

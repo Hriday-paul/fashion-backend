@@ -261,6 +261,48 @@ const getSellerBundileTiers = catchAsync(async (req, res) => {
 
 })
 
+const getBadgeStats = catchAsync(async (req, res) => {
+
+    const result = await userService.badgeStats(req?.user?.id, req?.user?.role);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Badge stats retrieved successfully',
+        data: result,
+    });
+
+})
+
+const userFolowings = catchAsync(async (req, res) => {
+
+     const options = pick(req.query, PaginateOptions);
+
+    const result = await userService.userFolowings(req?.params?.userName, options);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'User folowings retrieved successfully',
+        data: result,
+    });
+
+})
+const userFolowers = catchAsync(async (req, res) => {
+
+     const options = pick(req.query, PaginateOptions);
+
+    const result = await userService.userFolowers(req?.params?.userName, options);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'User folowers retrieved successfully',
+        data: result,
+    });
+
+})
+
 
 export const userController = {
     updateProfile,
@@ -275,6 +317,9 @@ export const userController = {
     bundleDiscount,
     updateBundleDiscount,
 
+    userFolowings,
+    userFolowers,
+
     allCharies,
     memberStats,
     charityStats,
@@ -282,5 +327,6 @@ export const userController = {
     addOrUpdateBillingDetails,
     addOrUpdateSellingDetails,
     addressesByUser,
-    getSellerBundileTiers
+    getSellerBundileTiers,
+    getBadgeStats
 }

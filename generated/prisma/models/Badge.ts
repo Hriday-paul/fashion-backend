@@ -265,19 +265,20 @@ export type BadgeOrderByWithRelationInput = {
 
 export type BadgeWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  type?: $Enums.BadgeType
+  type_role?: Prisma.BadgeTypeRoleCompoundUniqueInput
   AND?: Prisma.BadgeWhereInput | Prisma.BadgeWhereInput[]
   OR?: Prisma.BadgeWhereInput[]
   NOT?: Prisma.BadgeWhereInput | Prisma.BadgeWhereInput[]
   name?: Prisma.StringFilter<"Badge"> | string
   description?: Prisma.StringFilter<"Badge"> | string
   icon?: Prisma.StringFilter<"Badge"> | string
+  type?: Prisma.EnumBadgeTypeFilter<"Badge"> | $Enums.BadgeType
   target?: Prisma.IntFilter<"Badge"> | number
   role?: Prisma.EnumBadgeRoleFilter<"Badge"> | $Enums.BadgeRole
   createdAt?: Prisma.DateTimeFilter<"Badge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Badge"> | Date | string
   userBadges?: Prisma.UserBadgeListRelationFilter
-}, "id" | "type">
+}, "id" | "type_role">
 
 export type BadgeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -399,6 +400,11 @@ export type BadgeUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type BadgeTypeRoleCompoundUniqueInput = {
+  type: $Enums.BadgeType
+  role: $Enums.BadgeRole
+}
+
 export type BadgeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -448,28 +454,12 @@ export type BadgeScalarRelationFilter = {
   isNot?: Prisma.BadgeWhereInput
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
 export type EnumBadgeTypeFieldUpdateOperationsInput = {
   set?: $Enums.BadgeType
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type EnumBadgeRoleFieldUpdateOperationsInput = {
   set?: $Enums.BadgeRole
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
 }
 
 export type BadgeCreateNestedOneWithoutUserBadgesInput = {

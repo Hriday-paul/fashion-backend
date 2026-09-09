@@ -13,7 +13,6 @@ import { chatService } from "../chat/chat.service";
 import { SendMessageHandle, UpdateMessageHandle } from "../../socket/handlers/MessageHandler";
 import moment from "moment";
 import { notificationQueue, priceDropNotificationQueue } from "../../queues/notificaion.queue";
-import { jobs } from "../../queues/jobs.name";
 
 type ProductOtherPayload = {
     images: { key: string, url: string }[],
@@ -112,7 +111,7 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
     });
 
     //check badge
-    BadgeGenerateQueue.add(jobs.badgeGenerate, { role: role as Role, type: "STYLE_STARTER", userId });
+    BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "STYLE_STARTER", userId });
 
     return res;
 }

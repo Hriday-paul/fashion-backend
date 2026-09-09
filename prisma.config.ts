@@ -5,6 +5,7 @@ export default defineConfig({
   schema: "prisma/schema",
   migrations: {
     path: "prisma/migrations",
+    seed: "tsx prisma/seeds/badge.seed.ts",
   },
   engine: "classic",
   datasource: {

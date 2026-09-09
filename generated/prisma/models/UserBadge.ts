@@ -476,10 +476,6 @@ export type UserBadgeUncheckedUpdateManyWithoutBadgeNestedInput = {
   deleteMany?: Prisma.UserBadgeScalarWhereInput | Prisma.UserBadgeScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }

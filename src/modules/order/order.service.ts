@@ -11,6 +11,7 @@ import config from "../../config";
 import { ILabel, IShipment } from "./order.interface";
 import { RefundQueue } from "../../queues/refund.queue";
 import { jobs } from "../../queues/jobs.name";
+import { BadgeGenerateQueue } from "../../queues/badge.queue";
 
 
 const addNewOrder = async (
@@ -1594,6 +1595,83 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
 
 }
 
+const markAsCompletedOrder = async (orderId: string, current_buyerId: string) => {
+    const order = await prisma.order.findFirst({
+        where: {
+            id: orderId,
+        },
+        select: {
+            buyerId: true,
+            sellerId: true,
+            status: true,
+            currentShipTo: true,
+            items: {
+                where: {
+                    isCancelled: false
+                },
+                select: {
+                    donations: {
+                        select: {
+                            amount: true
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    if (!order) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist");
+    }
+
+    if (order?.buyerId !== current_buyerId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the buyer of this order");
+    }
+
+    if (order?.status !== "DELIVERED" || order?.currentShipTo !== "BUYER") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to mark as completed the order");
+    }
+
+    //mark order as completed
+    await prisma.order.update({
+        where: {
+            id: orderId
+        },
+        data: {
+            status: "COMPLETED",
+            completedAt: new Date()
+        }
+    })
+
+    // generate badge for buyer, 1st purchase badge
+    BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "FIRST_PURCHASE", userId: order?.buyerId, increment: order?.items?.length });
+    BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TOP_BUYER", userId: order?.buyerId, increment: order?.items?.length });
+
+    // generate badge for seller, sale badge
+    BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "FIRST_SALE", userId: order?.sellerId, increment: order?.items?.length });
+    BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "FREQUENT_SELLER", userId: order?.sellerId, increment: order?.items?.length });
+
+    const sellerDonationTotal = order?.items?.reduce((acc, item) => {
+        const donationAmount = item?.donations?.reduce((donationAcc, donation) => {
+            return donationAcc + (donation?.amount || 0);
+        }, 0);
+        return acc + donationAmount;
+    }, 0);
+
+    //get charity supporter badge for seller from sell donations
+    BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "CHARITY_SUPPORTER", userId: order?.sellerId, increment: Math.ceil(sellerDonationTotal) });
+
+    //generate eco seller
+    BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TOP_ECO_SELLER", userId: order?.sellerId, increment: order?.items?.length });
+
+    //charity champion badge
+    BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "CHARITY_CHAMPION", userId: order?.sellerId, increment: Math.ceil(sellerDonationTotal) });
+
+    //top charity fundraiser badge
+    BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TOP_CHARITY_FUNDRAISER", userId: order?.sellerId, increment: Math.ceil(sellerDonationTotal) });
+
+}
+
 export const orderService = {
     addNewOrder,
     ordersAsASeller,
@@ -1604,5 +1682,6 @@ export const orderService = {
     declineCancelOrderItemBySeller,
     confirmOrderReceived,
     getShipingLebel,
-    markShippedOrder
+    markShippedOrder,
+    markAsCompletedOrder,
 }

@@ -109,11 +109,26 @@ router.get(
 );
 
 router.get(
+    '/badge-stats',
+    auth(...allRoles),
+    userController.getBadgeStats
+);
+
+router.get(
+    '/folowings/:userName',
+    userController.userFolowings,
+);
+
+router.get(
+    '/folowers/:userName',
+    userController.userFolowers,
+);
+
+router.get(
     '/:username',
     PublicAuth(),
     userController.userDetails,
 );
-
 
 router.delete(
     '/delete-account',
