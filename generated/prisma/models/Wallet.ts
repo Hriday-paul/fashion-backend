@@ -27,20 +27,16 @@ export type AggregateWallet = {
 
 export type WalletAvgAggregateOutputType = {
   balance: number | null
-  pendingBalance: number | null
 }
 
 export type WalletSumAggregateOutputType = {
   balance: number | null
-  pendingBalance: number | null
 }
 
 export type WalletMinAggregateOutputType = {
   id: string | null
   sellerId: string | null
   balance: number | null
-  pendingBalance: number | null
-  currency: string | null
   stripeConnectAccountId: string | null
   lastPayoutAt: Date | null
   createdAt: Date | null
@@ -51,8 +47,6 @@ export type WalletMaxAggregateOutputType = {
   id: string | null
   sellerId: string | null
   balance: number | null
-  pendingBalance: number | null
-  currency: string | null
   stripeConnectAccountId: string | null
   lastPayoutAt: Date | null
   createdAt: Date | null
@@ -63,8 +57,6 @@ export type WalletCountAggregateOutputType = {
   id: number
   sellerId: number
   balance: number
-  pendingBalance: number
-  currency: number
   stripeConnectAccountId: number
   lastPayoutAt: number
   createdAt: number
@@ -75,20 +67,16 @@ export type WalletCountAggregateOutputType = {
 
 export type WalletAvgAggregateInputType = {
   balance?: true
-  pendingBalance?: true
 }
 
 export type WalletSumAggregateInputType = {
   balance?: true
-  pendingBalance?: true
 }
 
 export type WalletMinAggregateInputType = {
   id?: true
   sellerId?: true
   balance?: true
-  pendingBalance?: true
-  currency?: true
   stripeConnectAccountId?: true
   lastPayoutAt?: true
   createdAt?: true
@@ -99,8 +87,6 @@ export type WalletMaxAggregateInputType = {
   id?: true
   sellerId?: true
   balance?: true
-  pendingBalance?: true
-  currency?: true
   stripeConnectAccountId?: true
   lastPayoutAt?: true
   createdAt?: true
@@ -111,8 +97,6 @@ export type WalletCountAggregateInputType = {
   id?: true
   sellerId?: true
   balance?: true
-  pendingBalance?: true
-  currency?: true
   stripeConnectAccountId?: true
   lastPayoutAt?: true
   createdAt?: true
@@ -210,8 +194,6 @@ export type WalletGroupByOutputType = {
   id: string
   sellerId: string
   balance: number
-  pendingBalance: number
-  currency: string
   stripeConnectAccountId: string | null
   lastPayoutAt: Date | null
   createdAt: Date
@@ -245,8 +227,6 @@ export type WalletWhereInput = {
   id?: Prisma.StringFilter<"Wallet"> | string
   sellerId?: Prisma.StringFilter<"Wallet"> | string
   balance?: Prisma.FloatFilter<"Wallet"> | number
-  pendingBalance?: Prisma.FloatFilter<"Wallet"> | number
-  currency?: Prisma.StringFilter<"Wallet"> | string
   stripeConnectAccountId?: Prisma.StringNullableFilter<"Wallet"> | string | null
   lastPayoutAt?: Prisma.DateTimeNullableFilter<"Wallet"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Wallet"> | Date | string
@@ -259,8 +239,6 @@ export type WalletOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   balance?: Prisma.SortOrder
-  pendingBalance?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
   stripeConnectAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
   lastPayoutAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -276,8 +254,6 @@ export type WalletWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.WalletWhereInput[]
   NOT?: Prisma.WalletWhereInput | Prisma.WalletWhereInput[]
   balance?: Prisma.FloatFilter<"Wallet"> | number
-  pendingBalance?: Prisma.FloatFilter<"Wallet"> | number
-  currency?: Prisma.StringFilter<"Wallet"> | string
   stripeConnectAccountId?: Prisma.StringNullableFilter<"Wallet"> | string | null
   lastPayoutAt?: Prisma.DateTimeNullableFilter<"Wallet"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Wallet"> | Date | string
@@ -290,8 +266,6 @@ export type WalletOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   balance?: Prisma.SortOrder
-  pendingBalance?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
   stripeConnectAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
   lastPayoutAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -310,8 +284,6 @@ export type WalletScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Wallet"> | string
   sellerId?: Prisma.StringWithAggregatesFilter<"Wallet"> | string
   balance?: Prisma.FloatWithAggregatesFilter<"Wallet"> | number
-  pendingBalance?: Prisma.FloatWithAggregatesFilter<"Wallet"> | number
-  currency?: Prisma.StringWithAggregatesFilter<"Wallet"> | string
   stripeConnectAccountId?: Prisma.StringNullableWithAggregatesFilter<"Wallet"> | string | null
   lastPayoutAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Wallet"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Wallet"> | Date | string
@@ -321,8 +293,6 @@ export type WalletScalarWhereWithAggregatesInput = {
 export type WalletCreateInput = {
   id?: string
   balance?: number
-  pendingBalance?: number
-  currency?: string
   stripeConnectAccountId?: string | null
   lastPayoutAt?: Date | string | null
   createdAt?: Date | string
@@ -335,8 +305,6 @@ export type WalletUncheckedCreateInput = {
   id?: string
   sellerId: string
   balance?: number
-  pendingBalance?: number
-  currency?: string
   stripeConnectAccountId?: string | null
   lastPayoutAt?: Date | string | null
   createdAt?: Date | string
@@ -347,8 +315,6 @@ export type WalletUncheckedCreateInput = {
 export type WalletUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.FloatFieldUpdateOperationsInput | number
-  pendingBalance?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   stripeConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPayoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -361,8 +327,6 @@ export type WalletUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.FloatFieldUpdateOperationsInput | number
-  pendingBalance?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   stripeConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPayoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -374,8 +338,6 @@ export type WalletCreateManyInput = {
   id?: string
   sellerId: string
   balance?: number
-  pendingBalance?: number
-  currency?: string
   stripeConnectAccountId?: string | null
   lastPayoutAt?: Date | string | null
   createdAt?: Date | string
@@ -385,8 +347,6 @@ export type WalletCreateManyInput = {
 export type WalletUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.FloatFieldUpdateOperationsInput | number
-  pendingBalance?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   stripeConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPayoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -397,8 +357,6 @@ export type WalletUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.FloatFieldUpdateOperationsInput | number
-  pendingBalance?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   stripeConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPayoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -414,8 +372,6 @@ export type WalletCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   balance?: Prisma.SortOrder
-  pendingBalance?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
   stripeConnectAccountId?: Prisma.SortOrder
   lastPayoutAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -424,15 +380,12 @@ export type WalletCountOrderByAggregateInput = {
 
 export type WalletAvgOrderByAggregateInput = {
   balance?: Prisma.SortOrder
-  pendingBalance?: Prisma.SortOrder
 }
 
 export type WalletMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   balance?: Prisma.SortOrder
-  pendingBalance?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
   stripeConnectAccountId?: Prisma.SortOrder
   lastPayoutAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -443,8 +396,6 @@ export type WalletMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   balance?: Prisma.SortOrder
-  pendingBalance?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
   stripeConnectAccountId?: Prisma.SortOrder
   lastPayoutAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -453,7 +404,6 @@ export type WalletMinOrderByAggregateInput = {
 
 export type WalletSumOrderByAggregateInput = {
   balance?: Prisma.SortOrder
-  pendingBalance?: Prisma.SortOrder
 }
 
 export type WalletScalarRelationFilter = {
@@ -510,8 +460,6 @@ export type WalletUpdateOneRequiredWithoutTransactionsNestedInput = {
 export type WalletCreateWithoutSellerInput = {
   id?: string
   balance?: number
-  pendingBalance?: number
-  currency?: string
   stripeConnectAccountId?: string | null
   lastPayoutAt?: Date | string | null
   createdAt?: Date | string
@@ -522,8 +470,6 @@ export type WalletCreateWithoutSellerInput = {
 export type WalletUncheckedCreateWithoutSellerInput = {
   id?: string
   balance?: number
-  pendingBalance?: number
-  currency?: string
   stripeConnectAccountId?: string | null
   lastPayoutAt?: Date | string | null
   createdAt?: Date | string
@@ -550,8 +496,6 @@ export type WalletUpdateToOneWithWhereWithoutSellerInput = {
 export type WalletUpdateWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.FloatFieldUpdateOperationsInput | number
-  pendingBalance?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   stripeConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPayoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -562,8 +506,6 @@ export type WalletUpdateWithoutSellerInput = {
 export type WalletUncheckedUpdateWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.FloatFieldUpdateOperationsInput | number
-  pendingBalance?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   stripeConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPayoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -574,8 +516,6 @@ export type WalletUncheckedUpdateWithoutSellerInput = {
 export type WalletCreateWithoutTransactionsInput = {
   id?: string
   balance?: number
-  pendingBalance?: number
-  currency?: string
   stripeConnectAccountId?: string | null
   lastPayoutAt?: Date | string | null
   createdAt?: Date | string
@@ -587,8 +527,6 @@ export type WalletUncheckedCreateWithoutTransactionsInput = {
   id?: string
   sellerId: string
   balance?: number
-  pendingBalance?: number
-  currency?: string
   stripeConnectAccountId?: string | null
   lastPayoutAt?: Date | string | null
   createdAt?: Date | string
@@ -614,8 +552,6 @@ export type WalletUpdateToOneWithWhereWithoutTransactionsInput = {
 export type WalletUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.FloatFieldUpdateOperationsInput | number
-  pendingBalance?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   stripeConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPayoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -627,8 +563,6 @@ export type WalletUncheckedUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.FloatFieldUpdateOperationsInput | number
-  pendingBalance?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   stripeConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPayoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -670,8 +604,6 @@ export type WalletSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   sellerId?: boolean
   balance?: boolean
-  pendingBalance?: boolean
-  currency?: boolean
   stripeConnectAccountId?: boolean
   lastPayoutAt?: boolean
   createdAt?: boolean
@@ -685,8 +617,6 @@ export type WalletSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   sellerId?: boolean
   balance?: boolean
-  pendingBalance?: boolean
-  currency?: boolean
   stripeConnectAccountId?: boolean
   lastPayoutAt?: boolean
   createdAt?: boolean
@@ -698,8 +628,6 @@ export type WalletSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   sellerId?: boolean
   balance?: boolean
-  pendingBalance?: boolean
-  currency?: boolean
   stripeConnectAccountId?: boolean
   lastPayoutAt?: boolean
   createdAt?: boolean
@@ -711,15 +639,13 @@ export type WalletSelectScalar = {
   id?: boolean
   sellerId?: boolean
   balance?: boolean
-  pendingBalance?: boolean
-  currency?: boolean
   stripeConnectAccountId?: boolean
   lastPayoutAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type WalletOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sellerId" | "balance" | "pendingBalance" | "currency" | "stripeConnectAccountId" | "lastPayoutAt" | "createdAt" | "updatedAt", ExtArgs["result"]["wallet"]>
+export type WalletOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sellerId" | "balance" | "stripeConnectAccountId" | "lastPayoutAt" | "createdAt" | "updatedAt", ExtArgs["result"]["wallet"]>
 export type WalletInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   transactions?: boolean | Prisma.Wallet$transactionsArgs<ExtArgs>
@@ -742,8 +668,6 @@ export type $WalletPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     id: string
     sellerId: string
     balance: number
-    pendingBalance: number
-    currency: string
     stripeConnectAccountId: string | null
     lastPayoutAt: Date | null
     createdAt: Date
@@ -1176,8 +1100,6 @@ export interface WalletFieldRefs {
   readonly id: Prisma.FieldRef<"Wallet", 'String'>
   readonly sellerId: Prisma.FieldRef<"Wallet", 'String'>
   readonly balance: Prisma.FieldRef<"Wallet", 'Float'>
-  readonly pendingBalance: Prisma.FieldRef<"Wallet", 'Float'>
-  readonly currency: Prisma.FieldRef<"Wallet", 'String'>
   readonly stripeConnectAccountId: Prisma.FieldRef<"Wallet", 'String'>
   readonly lastPayoutAt: Prisma.FieldRef<"Wallet", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Wallet", 'DateTime'>

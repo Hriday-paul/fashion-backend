@@ -45,4 +45,6 @@ router.get('/confirm-donation',
 
 router.get('/', auth(Role.ADMIN), paymentsController.getAllPayments);
 
+router.get('/sell-earnings', auth(...allRoles), paymentsController.sellEarnings);
+
 export const paymentsRoutes = router;

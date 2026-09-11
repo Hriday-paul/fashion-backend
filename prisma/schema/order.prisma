@@ -31,6 +31,8 @@ enum DeliveryChargeStatus {
 model Order {
     id String @id @default(uuid())
 
+    orderNumber String @unique @default(cuid())
+
     rating Rating?
 
     buyerId String // buyer

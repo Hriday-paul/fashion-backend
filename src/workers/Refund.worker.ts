@@ -109,6 +109,7 @@ refundWorker.on("completed", async (job, err) => {
                 where: { id: paymentId },
                 data: {
                     status: "REFUNDED",
+                    stripe_status: "REFUNDED",
                     refundedAt: new Date(),
                 }
             });

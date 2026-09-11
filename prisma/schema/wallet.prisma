@@ -7,11 +7,9 @@ model Wallet {
   seller                 User     @relation(fields: [sellerId], references: [id])
 
   // balance = withdrawable amount
-  // pendingBalance = held during return window
   balance                Float @default(0)
-  pendingBalance         Float @default(0)
 
-  currency               String   @default("USD")
+  // currency               String   @default("USD")
   stripeConnectAccountId String?
 
   lastPayoutAt           DateTime?
@@ -21,6 +19,7 @@ model Wallet {
   transactions WalletTransaction[]
 
   @@map("wallets")
+  @@index(sellerId)
 }
 
 // =============================================================

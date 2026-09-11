@@ -767,6 +767,7 @@ const userFolowers = async (userName: string, options: TPaginationOptions) => {
     };
 }
 
+
 export const userService = {
     updateProfile,
     getUserById,
