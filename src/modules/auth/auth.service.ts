@@ -311,12 +311,14 @@ const socialSignUp = async (payload: {
                         password: hashedPassword,
                         role,
                         isSocialLogin: true,
+                        isverified: true,
                     },
                     create: {
                         password: hashedPassword,
                         email,
                         role,
                         isSocialLogin: true,
+                        isverified: true,
                     },
                 },
             },
@@ -342,6 +344,7 @@ const socialSignUp = async (payload: {
                     password: hashedPassword,
                     role,
                     isSocialLogin: true,
+                    isverified: true,
                 },
             },
         },
@@ -405,7 +408,7 @@ const socialLogin = async (payload: { idToken: string, fcmToken?: string }) => {
 
     if (!user) {
         // If user not found, throw error
-        throw new AppError(httpStatus.NOT_FOUND, 'Account not found');
+        throw new AppError(httpStatus.NOT_FOUND, 'Account does not exist. Please sign up first');
     }
 
     else {
@@ -671,7 +674,13 @@ const refreshToken = async (token: string) => {
         60 * 60 * 24 * 30, //30 days
     );
 
+    const role = user?.auth?.role
+
+    const userDoc = (user as any);
+    delete userDoc.auth;
+
     return {
+        user: { ...userDoc, auth: { role } },
         accessToken,
         refreshToken
     };

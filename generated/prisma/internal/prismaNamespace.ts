@@ -4327,6 +4327,7 @@ export type OrderDeliveryChargeScalarFieldEnum = (typeof OrderDeliveryChargeScal
 
 export const OrderScalarFieldEnum = {
   id: 'id',
+  orderNumber: 'orderNumber',
   buyerId: 'buyerId',
   sellerId: 'sellerId',
   status: 'status',

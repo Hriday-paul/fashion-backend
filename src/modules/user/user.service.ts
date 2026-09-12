@@ -136,7 +136,15 @@ const allUsers = async (query: Record<string, unknown>, options: TPaginationOpti
 }
 
 const getUserById = async (id: string) => {
-    const result = await prisma.user.findFirst({ where: { id }, include: { picture: true, charityGalleries: true } });
+    const result = await prisma.user.findFirst({
+        where: { id }, include: {
+            picture: true, charityGalleries: true, auth: {
+                select: {
+                    role: true,
+                }
+            }
+        }
+    });
     return result;
 };
 

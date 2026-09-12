@@ -441,7 +441,7 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, showItemInCart, ...moreFields } = query;
+    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, showItemInCart, stock, ...moreFields } = query;
 
     if (searchTerm) {
         AndConditions.push({
@@ -523,6 +523,20 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
                 gte: minPrice ? Number(minPrice) : undefined,
                 lte: maxPrice ? Number(maxPrice) : undefined,
             },
+        });
+    }
+
+    if (stock && stock === "sold") {
+        AndConditions.push({
+            stock: {
+                lte: 0
+            }
+        });
+    } else {
+        AndConditions.push({
+            stock: {
+                gte: 1
+            }
         });
     }
 

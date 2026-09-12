@@ -29,7 +29,7 @@ router.post('/login',
 router.post('/login/social',
     socialSignInValidator,
     req_validator(),
-    authController.loginUser
+    authController.socialLogin
 )
 
 router.post('/admin/login',

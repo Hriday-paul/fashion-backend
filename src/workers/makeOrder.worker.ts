@@ -7,6 +7,14 @@ import config from "../config";
 import { IShipment } from "../modules/order/order.interface";
 import { notificationQueue } from "../queues/notificaion.queue";
 import { BadgeGenerateQueue } from "../queues/badge.queue";
+import crypto from "crypto";
+
+const generateOrderNumber = () => {
+    const timestamp = Date.now().toString(36).toUpperCase();
+    const random = crypto.randomBytes(3).toString("hex").toUpperCase();
+
+    return `#${timestamp}-${random}`;
+};
 
 // ── Worker ──────────────────────────────────────────────────────────────────
 export const makeOrderWorker = new Worker(
@@ -131,7 +139,7 @@ export const makeOrderWorker = new Worker(
                 totalPrice: unit_price + extra_donation,
                 quantity,
                 extra_donation,
-                donation_percent : 0, // how much percent of the product price will be donated to charity from seller
+                donation_percent: 0, // how much percent of the product price will be donated to charity from seller
                 donation_amount: 0, // how much amount of the product price will be donated to charity from seller
                 charities: item?.charities ?? [],
                 isCancelled: true,
@@ -173,13 +181,17 @@ export const makeOrderWorker = new Worker(
             return;
         }
 
+        const truncate = (value: string | null, max = 32) => {
+            return value?.trim().slice(0, max) || "";
+        };
+
         const shipPayload = {
             "origin_address": {
-                "line_1": sellerDetails?.address1,
-                "line_2": sellerDetails?.address2,
-                "city": sellerDetails?.city,
-                "state": sellerDetails?.state,
-                "postal_code": sellerDetails?.zip_code,
+                "line_1": truncate(sellerDetails?.address1),
+                "line_2": truncate(sellerDetails?.address2),
+                "city": truncate(sellerDetails?.city, 20),
+                "state": truncate(sellerDetails?.state, 20),
+                "postal_code": truncate(sellerDetails?.zip_code, 10),
                 "country_alpha2": sellerDetails?.countryCode,
                 "company_name": "FASHION",
                 "contact_name": cartgroup?.seller?.fname,
@@ -187,11 +199,11 @@ export const makeOrderWorker = new Worker(
                 "contact_email": cartgroup?.seller?.email
             },
             "destination_address": {
-                "line_1": billing_details?.address1,
-                "line_2": billing_details?.address2,
-                "city": billing_details?.city,
-                "state": billing_details?.state,
-                "postal_code": billing_details?.zip_code,
+                "line_1": truncate(billing_details?.address1),
+                "line_2": truncate(billing_details?.address2),
+                "city": truncate(billing_details?.city, 20),
+                "state": truncate(billing_details?.state, 20),
+                "postal_code": truncate(billing_details?.zip_code, 10),
                 "country_alpha2": billing_details?.countryCode,
                 "contact_name": billing_details?.full_name,
                 "contact_phone": billing_details?.contact,
@@ -215,7 +227,7 @@ export const makeOrderWorker = new Worker(
                 {
                     "items": orderItems?.map((item) => {
                         return {
-                            "description": item?.product?.title || "Fashion Product",
+                            "description": truncate(item?.product?.title, 64) || "Fashion Product",
                             "category": "fashion",
                             "origin_country_alpha2": billing_details?.countryCode,
                             "quantity": 1,
@@ -245,6 +257,9 @@ export const makeOrderWorker = new Worker(
 
         if (!rateRes.ok) {
             const errorData = await rateRes.json().catch(() => null);
+
+            console.log(errorData)
+
             throw new UnrecoverableError(errorData?.error?.message || "Shipment creation failed");
         }
 
@@ -261,6 +276,7 @@ export const makeOrderWorker = new Worker(
         // Create order in DB
         const order = await prisma.order.create({
             data: {
+                orderNumber: generateOrderNumber(),
                 totalPrice: total,
                 itemsTotal: discountedItemTotal,
                 treeCredit: treeCredit ?? 0,
@@ -375,7 +391,61 @@ makeOrderWorker.on("failed", async (job, err) => {
 
         if (!isExhausted && !isUnrecoverable) return; // still has retries left
 
-        const { paymentId, paymentIntentId } = job.data;
+        const { paymentId, paymentIntentId, cartGroupId } = job.data;
+
+        const cartGroup = await prisma.cartGroup.findFirst({
+            where: { id: cartGroupId },
+            include: {
+                items: {
+                    include: {
+                        product: {
+                            include: {
+                                images: {
+                                    take: 1,
+                                    select: {
+                                        url: true
+                                    }
+                                }
+                            }
+                        },
+                    }
+                },
+                user: {
+                    select: {
+                        id: true,
+                        userName: true,
+                        fcmToken: true
+                    }
+                },
+                seller: {
+                    select: {
+                        userName: true,
+                        id: true,
+                        fcmToken: true
+                    }
+                }
+            }
+        });
+
+
+        if (cartGroup) {
+            //send notification to the buyer about order creation failed
+            await notificationQueue.add(jobs.notification, {
+                allowPushNotification: true,
+                payload: {
+                    title: `Order Creation Failed`,
+                    message: `Sorry, we were unable to process your order due to a system error. Your payment will be refunded shortly.`,
+                    actorId: cartGroup?.userId,
+                    receiverId: cartGroup?.userId,
+                    entityId: cartGroup?.user?.userName,
+                    entityType: "ORDER",
+                    entityImgs: cartGroup?.items?.map(item => (item?.product?.images[0]?.url)),
+                    type: "ORDER_FAILED",
+                    fcmToken: cartGroup?.user?.fcmToken,
+                    groupKeyId: null,
+                }
+            })
+        }
 
         //refund the payment if order creation failed
         await RefundQueue.add(jobs.refund, {

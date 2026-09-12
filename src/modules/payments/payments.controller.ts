@@ -144,6 +144,29 @@ const sellEarnings = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const donationRaisedFromSell = catchAsync(async (req: Request, res: Response) => {
+  const options = pick(req.query, PaginateOptions);
+  const result = await paymentsService.donationRaisedFromSell(options, req?.user?.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    data: result,
+    message: 'Sell Donations retrieved successfully',
+  });
+});
+const directDonationRaised = catchAsync(async (req: Request, res: Response) => {
+  const options = pick(req.query, PaginateOptions);
+  const result = await paymentsService.directDonationRaised(options, req?.user?.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    data: result,
+    message: 'Direct Donations retrieved successfully',
+  });
+});
+
 export const paymentsController = {
   getAllPayments,
   getPaymentsById,
@@ -155,5 +178,7 @@ export const paymentsController = {
   donationCheckout,
   confirmDonationPayment,
 
-  sellEarnings
+  sellEarnings,
+  donationRaisedFromSell,
+  directDonationRaised
 };

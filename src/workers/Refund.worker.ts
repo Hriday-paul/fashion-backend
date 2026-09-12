@@ -30,8 +30,8 @@ export const refundWorker = new Worker(
 
         const refund = await stripe.refunds.create({
             payment_intent: intentId,
-            reverse_transfer: true,
-            refund_application_fee: true,
+            // reverse_transfer: true,
+            // refund_application_fee: true,
             amount: amount ? amount * 100 : undefined,
             metadata: {
                 paymentId,
@@ -61,6 +61,8 @@ export const refundWorker = new Worker(
 // ✅ সব retry শেষে
 refundWorker.on("failed", async (job, err) => {
     if (!job) return;
+
+    console.log(err);
 
     const isExhausted = job.attemptsMade >= (job.opts.attempts ?? 1);
     const isUnrecoverable = err instanceof UnrecoverableError;

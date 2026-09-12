@@ -12,14 +12,13 @@ import { paymentsRoutes } from './modules/payments/payments.route';
 import { questionRouts } from './modules/question/question.rout';
 import { folowRouts } from './modules/folow/folow.rout';
 import { donationRouts } from './modules/donation/donation.rout';
-import { stripeRouts } from './modules/stripe/stripe.rout';
 import { cartRouts } from './modules/cart/cart.rout';
 import { returnRoutes } from './modules/return/return.rout';
 import { reviewRouts } from './modules/review/review.rout';
 import { brandRouter } from './modules/brand/brand.rout';
 import { sizeRouter } from './modules/size/size.rout';
 import { assistentSellRouts } from './modules/assistentSell/assistentSell.rout';
-import { accountRouts } from './modules/account/account.rout';
+import { accountRouts } from './modules/ConnectAccount/account.rout';
 
 const router = express.Router();
 
@@ -87,10 +86,6 @@ const moduleRoutes = [
     {
         path: '/donations',
         route: donationRouts,
-    },
-    {
-        path: '/stripe',
-        route: stripeRouts,
     },
     {
         path: '/reviews',

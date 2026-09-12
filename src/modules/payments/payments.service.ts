@@ -379,6 +379,7 @@ const sellEarnings = async (options: TPaginationOptions, sellerId: string) => {
       [sortBy]: sortOrder,
     },
     select: {
+      orderNumber: true,
       payment: {
         select: {
           status: true,
@@ -423,6 +424,116 @@ const sellEarnings = async (options: TPaginationOptions, sellerId: string) => {
 
 }
 
+const donationRaisedFromSell = async (options: TPaginationOptions, charityId: string) => {
+
+  const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+  const donations = await prisma.sellDonation.findMany({
+    where: {
+      charityId: charityId,
+      status: "PAID",
+      total_amount: {
+        gt: 0
+      }
+    },
+    skip,
+    take: limit,
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+
+    include: {
+      orderItem: {
+        select: {
+          productId: true,
+          product: {
+            select: {
+              title: true,
+              images: {
+                take: 1,
+                orderBy: {
+                  order: "asc"
+                },
+                select: {
+                  url: true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  });
+
+  const total = await prisma.sellDonation.count({
+    where: {
+      charityId: charityId,
+      status: "PAID",
+      total_amount: {
+        gt: 0
+      }
+    }
+  })
+
+  return {
+    meta: paginationHelper.generatePaginationMeta({ page, limit, total }),
+    data: donations,
+  };
+
+}
+
+const directDonationRaised = async (options: TPaginationOptions, charityId: string) => {
+
+  const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+  const donations = await prisma.directDonation.findMany({
+    where: {
+      charityId: charityId,
+      status: "SUCCESS",
+      amount: {
+        gt: 0
+      }
+    },
+    skip,
+    take: limit,
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+    include: {
+      donor: {
+        select: {
+          userName: true,
+          fname: true,
+          lname: true,
+          picture: {
+            select: {
+              url: true
+            }
+          }
+        }
+      }
+    }
+
+  });
+
+  const total = await prisma.directDonation.count({
+    where: {
+      charityId: charityId,
+      status: "SUCCESS",
+      amount: {
+        gt: 0
+      }
+    },
+  })
+
+  return {
+    meta: paginationHelper.generatePaginationMeta({ page, limit, total }),
+    data: donations,
+  };
+
+}
+
 export const paymentsService = {
   // createPayments,
   getAllPayments,
@@ -435,5 +546,7 @@ export const paymentsService = {
   donationCheckout,
   confirmDonationPayment,
 
-  sellEarnings
+  sellEarnings,
+  donationRaisedFromSell,
+  directDonationRaised
 };

@@ -810,19 +810,11 @@ const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>,
                 }
             },
 
-            // buyer: {
-            //     select: {
-            //         fname: true,
-            //         lname: true,
-            //         email: true,
-            //         phone: true,
-            //         picture: {
-            //             select: {
-            //                 url: true
-            //             }
-            //         }
-            //     }
-            // },
+            buyer: {
+                select: {
+                    userName: true,
+                }
+            },
             billingDetails: true
         },
     })
@@ -1002,19 +994,11 @@ const ordersAsABuyer = async (buyerId: string, query: Record<string, unknown>, o
                     cancelEvidences: true
                 }
             },
-            // buyer: {
-            //     select: {
-            //         fname: true,
-            //         lname: true,
-            //         email: true,
-            //         phone: true,
-            //         picture: {
-            //             select: {
-            //                 url: true
-            //             }
-            //         }
-            //     }
-            // },
+            seller: {
+                select: {
+                    userName: true,
+                }
+            },
             billingDetails: true
         },
     })
@@ -1088,6 +1072,7 @@ const createLebelForOrder = async ({ shipment_id, orderId }: { orderId: string, 
 
     if (!rateRes.ok) {
         const errorData = await rateRes.json().catch(() => null);
+
         throw new AppError(
             httpStatus.BAD_REQUEST,
             errorData?.error?.message || 'Lebel generation failed',

@@ -99,7 +99,7 @@ markCompletePaymentWorker.on("failed", async (job, err) => {
             where: { id: paymentId },
             data: {
                 status: "FAILED",
-                stripe_status: "CANCELLED",
+                stripe_status: "REFUNDED",
                 paymentIntentId: paymentIntentId,
                 checkoutSessionId: checkoutSessionId,
                 updatedAt: new Date()
