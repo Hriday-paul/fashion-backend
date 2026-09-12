@@ -4875,8 +4875,6 @@ export const WalletScalarFieldEnum = {
   id: 'id',
   sellerId: 'sellerId',
   balance: 'balance',
-  pendingBalance: 'pendingBalance',
-  currency: 'currency',
   stripeConnectAccountId: 'stripeConnectAccountId',
   lastPayoutAt: 'lastPayoutAt',
   createdAt: 'createdAt',

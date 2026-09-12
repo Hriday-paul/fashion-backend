@@ -360,6 +360,69 @@ const deletePayments = async (id: string) => {
 const generateInvoice = async (payload: any) => {
 };
 
+const sellEarnings = async (options: TPaginationOptions, sellerId: string) => {
+
+  const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+  const orders = await prisma.order.findMany({
+    where: {
+      sellerId: sellerId,
+      payment: {
+        status: {
+          in: ["SUCCESSED", "REFUNDED"]
+        }
+      }
+    },
+    skip,
+    take: limit,
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+    select: {
+      payment: {
+        select: {
+          status: true,
+          stripe_status: true,
+          transactionId: true,
+          createdAt: true,
+        }
+      },
+      sellerTotal: true,
+      createdAt: true,
+      buyer: {
+        select: {
+          id: true,
+          fname: true,
+          lname: true,
+          userName: true,
+          picture: {
+            select: {
+              url: true
+            }
+          }
+        }
+      }
+    },
+  });
+
+  const total = await prisma.order.count({
+    where: {
+      sellerId: sellerId,
+      payment: {
+        status: {
+          in: ["SUCCESSED", "REFUNDED"]
+        }
+      }
+    }
+  })
+
+  return {
+    meta: paginationHelper.generatePaginationMeta({ page, limit, total }),
+    data: orders,
+  };
+
+}
+
 export const paymentsService = {
   // createPayments,
   getAllPayments,
@@ -371,4 +434,6 @@ export const paymentsService = {
   generateInvoice,
   donationCheckout,
   confirmDonationPayment,
+
+  sellEarnings
 };

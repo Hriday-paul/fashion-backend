@@ -182,7 +182,6 @@ export const PaymentStatus = {
   PROCESSING: 'PROCESSING',
   SUCCESSED: 'SUCCESSED',
   FAILED: 'FAILED',
-  CANCELLED: 'CANCELLED',
   REFUNDED: 'REFUNDED'
 } as const
 
@@ -192,12 +191,8 @@ export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
 export const StripePaymentStatus = {
   PENDING: 'PENDING',
   ESCROWED: 'ESCROWED',
-  DELIVERED: 'DELIVERED',
   RELEASED: 'RELEASED',
-  REFUNDED: 'REFUNDED',
-  FAILED: 'FAILED',
-  CANCELLED: 'CANCELLED',
-  DISPUTED: 'DISPUTED'
+  REFUNDED: 'REFUNDED'
 } as const
 
 export type StripePaymentStatus = (typeof StripePaymentStatus)[keyof typeof StripePaymentStatus]

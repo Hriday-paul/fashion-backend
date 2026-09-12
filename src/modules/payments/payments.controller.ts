@@ -99,14 +99,7 @@ const getAllPayments = catchAsync(async (req: Request, res: Response) => {
 const getPaymentsById = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await paymentsService.getPaymentsById(id);
-  if (!result) {
-    return sendResponse(res, {
-      success: false,
-      statusCode: httpStatus.NOT_FOUND,
-      message: 'Payment not found',
-      data: {},
-    });
-  }
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -119,14 +112,7 @@ const updatePayments = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const paymentData = req.body;
   const result = await paymentsService.updatePayments(id, paymentData); // Assume this service method exists
-  if (!result) {
-    return sendResponse(res, {
-      success: false,
-      statusCode: httpStatus.NOT_FOUND,
-      message: 'Payment not found',
-      data: {},
-    });
-  }
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -137,19 +123,24 @@ const updatePayments = catchAsync(async (req: Request, res: Response) => {
 const deletePayments = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await paymentsService.deletePayments(id);
-  if (!result) {
-    return sendResponse(res, {
-      success: false,
-      statusCode: httpStatus.NOT_FOUND,
-      message: 'Payment not found',
-      data: {},
-    });
-  }
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.NO_CONTENT,
     message: 'Payment deleted successfully',
     data: result,
+  });
+});
+
+const sellEarnings = catchAsync(async (req: Request, res: Response) => {
+  const options = pick(req.query, PaginateOptions);
+  const result = await paymentsService.sellEarnings(options, req?.user?.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    data: result,
+    message: 'Sell Earnings retrieved successfully',
   });
 });
 
@@ -162,5 +153,7 @@ export const paymentsController = {
   getPaymentsByUserId,
   getPaymentsByUserIdWithParams,
   donationCheckout,
-  confirmDonationPayment
+  confirmDonationPayment,
+
+  sellEarnings
 };

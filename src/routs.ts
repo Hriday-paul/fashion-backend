@@ -19,6 +19,7 @@ import { reviewRouts } from './modules/review/review.rout';
 import { brandRouter } from './modules/brand/brand.rout';
 import { sizeRouter } from './modules/size/size.rout';
 import { assistentSellRouts } from './modules/assistentSell/assistentSell.rout';
+import { accountRouts } from './modules/account/account.rout';
 
 const router = express.Router();
 
@@ -30,6 +31,10 @@ const moduleRoutes = [
     {
         path: '/users',
         route: userRoutes,
+    },
+    {
+        path: '/account',
+        route: accountRouts,
     },
     {
         path: '/messages',
