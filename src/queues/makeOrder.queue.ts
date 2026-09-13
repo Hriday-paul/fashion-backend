@@ -3,7 +3,7 @@ import { connectionInfo } from "../redis";
 
 //============update the db for payment is completed=============
 
-export const MakeOrderQueue = new Queue<{ cartGroupId: string, paymentId: string, paymentIntentId: string }>("make-order", {
+export const MakeOrderQueue = new Queue<{ orderId: string, paymentId: string, paymentIntentId: string }>("make-order", {
     connection: connectionInfo,
     defaultJobOptions: {
         attempts: 3,

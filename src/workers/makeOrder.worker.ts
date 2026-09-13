@@ -1,4 +1,4 @@
-import { UnrecoverableError, Worker } from "bullmq";
+import { Job, UnrecoverableError, Worker } from "bullmq";
 import { connectionInfo } from "../redis";
 import prisma from "../shared/prisma";
 import { RefundQueue } from "../queues/refund.queue";
@@ -19,16 +19,15 @@ const generateOrderNumber = () => {
 // ── Worker ──────────────────────────────────────────────────────────────────
 export const makeOrderWorker = new Worker(
     "make-order",
-    async (job) => {
+    async (job : Job<{ orderId: string; paymentId: string; paymentIntentId: string }>) => {
 
-        const { cartGroupId, paymentId, paymentIntentId } = job.data;
+        const { orderId, paymentId, paymentIntentId } = job.data;
 
-        const cartGroup = await prisma.cartGroup.findFirst({
-            where: { id: cartGroupId },
+        const order = await prisma.order.findFirst({
+            where: { id: orderId },
             include: {
                 items: {
                     include: {
-                        charities: true,
                         product: {
                             select: {
                                 title: true,
@@ -51,134 +50,58 @@ export const makeOrderWorker = new Worker(
                                 isDeleted: true,
                             }
                         }
-                    },
-
-                },
-                seller: {
-                    include: {
-                        bundleDiscount: {
-                            include: {
-                                tiers: {
-                                    select: {
-                                        discountPercent: true,
-                                        itemCount: true
-                                    }
-                                }
-                            }
-                        }
                     }
-                },
-                user: true
+                }
             }
+            // include: {
+            //     items: {
+            //         include: {
+            //             charities: true,
+            //             product: {
+            //                 select: {
+            //                     title: true,
+            //                     finalPrice: true,
+            //                     id: true,
+            //                     charities: {
+            //                         select: {
+            //                             charityId: true,
+            //                             isAnonymous: true,
+            //                         },
+            //                     },
+            //                     donation_percent: true,
+            //                     stock: true,
+            //                     userId: true,
+            //                     weight_kg: true,
+            //                     hight_cm: true,
+            //                     width_cm: true,
+            //                     length_cm: true,
+            //                     description: true,
+            //                     isDeleted: true,
+            //                 }
+            //             }
+            //         },
+
+            //     },
+            //     seller: {
+            //         include: {
+            //             bundleDiscount: {
+            //                 include: {
+            //                     tiers: {
+            //                         select: {
+            //                             discountPercent: true,
+            //                             itemCount: true
+            //                         }
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     },
+            //     user: true
+            // }
         });
 
-        if (!cartGroup) {
+        if (!order) {
             throw new UnrecoverableError("Cart group does not exist");
-        }
-
-        if (!cartGroup?.shippingServiceId) {
-            throw new UnrecoverableError("Courier service does not exist");
-        }
-
-        const cartgroup = cartGroup;
-
-        const billing_details = await prisma.billingDetails.findFirst({ where: { userId: cartgroup?.userId } });
-
-        const sellerDetails = await prisma.billingDetails.findFirst({ where: { sellerId: cartgroup?.sellerId } });
-
-        if (!billing_details || !sellerDetails) {
-            throw new UnrecoverableError(!billing_details ? "Shipping details is required" : "Seller location does not exist for place shipment");
-        }
-
-        const itemCount = cartgroup.items.length;
-
-        const bundleDiscountTiers = cartgroup?.seller?.bundleDiscount?.tiers || [];
-
-        const nearestTier = bundleDiscountTiers
-            .filter(tier => itemCount >= (tier.itemCount ?? 0))
-            .sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0))[0] ?? null;
-
-        const bundleDiscountPercent = nearestTier ? nearestTier.discountPercent : 0;
-
-        // Build order in stock items with seller info
-        const orderItems = cartgroup.items.filter((item) => (item?.product?.stock > 0 && !item?.product?.isDeleted)).map((item) => {
-            const p = item?.product;
-            const donation_percent = p.donation_percent || 0;
-            const extra_donation = item.extraDonation || 0;
-            const unit_price = p?.finalPrice - (p?.finalPrice * (bundleDiscountPercent / 100))
-
-            const quantity = item.quantity || 1;
-
-            return {
-                product: p,
-                productId: p.id,
-                sellerId: p.userId,
-                unitPrice: unit_price,
-                totalPrice: unit_price + extra_donation,
-                quantity,
-                extra_donation,
-                donation_percent, // how much percent of the product price will be donated to charity from seller
-                donation_amount: (unit_price * (donation_percent / 100)), // how much amount of the product price will be donated to charity from seller
-                charities: item?.charities ?? [],
-            };
-        });
-
-        const stockoutItems = cartgroup.items.filter((item) => (item?.product?.stock <= 0 || item?.product?.isDeleted)).map((item) => {
-            const p = item?.product;
-            // const donation_percent = p.donation_percent || 0;
-            const extra_donation = item.extraDonation || 0;
-            const unit_price = p?.finalPrice - (p?.finalPrice * (bundleDiscountPercent / 100))
-
-            const quantity = item.quantity || 1;
-
-            return {
-                product: p,
-                productId: p.id,
-                sellerId: p.userId,
-                unitPrice: unit_price,
-                totalPrice: unit_price + extra_donation,
-                quantity,
-                extra_donation,
-                donation_percent: 0, // how much percent of the product price will be donated to charity from seller
-                donation_amount: 0, // how much amount of the product price will be donated to charity from seller
-                charities: item?.charities ?? [],
-                isCancelled: true,
-                cancelledBy: "SYSTEM",
-                cancelReason: "OUT_OF_STOCK",
-                cancelReasonDetails: "Product is out of stock, please contact support for further assistance."
-            };
-        });
-
-        // ====================For Save Ordrer in DB========================
-        const itemsTotal = orderItems.reduce((acc, item) => acc + item.unitPrice, 0);
-
-        const totalExtraDonation = orderItems.reduce((acc, item) => acc + (item.extra_donation || 0), 0) + stockoutItems.reduce((acc, item) => acc + (item.extra_donation || 0), 0);
-
-        const otherTotal = (cartgroup.serviceFeeCost || 0) + (cartgroup.treeGiftCost || 0) + (cartgroup.authenticationCost || 0);
-
-        const discountedItemTotal = itemsTotal;
-
-        const sellerDonationTotal = orderItems.reduce((acc, item) => acc + item?.donation_amount, 0);
-
-        const treeCredit = cartgroup?.treeGiftCost;
-        const userId = cartgroup?.userId;
-
-        //if no available items in order, then refund the full payment amount to the buyer
-        if (orderItems.length === 0) {
-            // refund issue, don't have cart group
-
-            await RefundQueue.add(jobs.refund, {
-                paymentId: paymentId,
-                paymentIntentId,
-                reason: "Due to all items in the cart being out of stock, the order could not be processed. A full refund will be issued.",
-                triggeredBy: "System",
-                markPaymentRefunded: true
-            });
-
-            //send notification & email to buyer about order creation failure due to stockout
-
-            // no need to create order in DB, just return from here
-            return;
         }
 
         const truncate = (value: string | null, max = 32) => {
@@ -265,114 +188,12 @@ export const makeOrderWorker = new Worker(
 
         const shipmentData = await rateRes.json() as IShipment;
 
-        const shippingRate = shipmentData?.shipment?.rates.find(rate => rate?.courier_service?.id === cartGroup?.shippingServiceId)?.total_charge || 0;
-
-        const total = discountedItemTotal + otherTotal + totalExtraDonation + shippingRate;
-
-        const parcelId = shipmentData?.shipment?.parcels[0]?.id;
-
-        const shipmentItems = shipmentData?.shipment?.parcels[0]?.items || [];
-
-        // Create order in DB
-        const order = await prisma.order.create({
-            data: {
-                orderNumber: generateOrderNumber(),
-                totalPrice: total,
-                itemsTotal: discountedItemTotal,
-                treeCredit: treeCredit ?? 0,
-                buyerId: userId,
-                billingId: billing_details?.id,
-                sellerId: orderItems[0]?.sellerId,
-                sellerItemsTotal: discountedItemTotal,
-                sellerTotal: discountedItemTotal - sellerDonationTotal,
-                bundleDiscountPercent,
-                courier_service_id: cartGroup?.shippingServiceId,
-
-                parcelId,
-
-                currentShipTo: cartgroup.authenticationCost > 0 ? "AUTHENTICATION_CENTER" : "BUYER",
-
-                shippingId: shipmentData?.shipment?.easyship_shipment_id,
-                deliveryCharge: {
-                    create: {
-                        baseCharge: shippingRate,
-                        discount: 0,
-                        finalCharge: shippingRate,
-                        status: "UNPAID",
-                        totalItems: orderItems?.length || 0,
-                        totalWeight: orderItems?.reduce((acc, item) => acc + (item?.product?.weight_kg || 0), 0),
-                    }
-                },
-                totalDelivery: shippingRate,
-
-                payment: {
-                    connect: {
-                        id: paymentId
-                    }
-                },
-                items: {
-                    create: [...orderItems, ...stockoutItems].map(({ charities, sellerId, donation_amount, donation_percent, product, ...item }) => {
-                        const charityCount = charities.length;
-                        const splitAmount = charityCount > 0 ? (donation_amount / charityCount) : 0;
-                        const splitExtra = charityCount > 0 ? (item.extra_donation / charityCount) : 0;
-
-                        const dbProduct = product;
-
-                        const splitPercent = charityCount > 0 ? 100 / charityCount : 0;
-
-                        const parcelItemId = shipmentItems.find(parcelItem => parcelItem?.description === product?.title && parcelItem?.declared_customs_value === product?.finalPrice)?.id;
-
-                        return {
-                            ...item,
-                            parcelItemId,
-                            ...(charityCount > 0 && {
-                                donations: {
-                                    create: charities.map((charity) => {
-
-                                        const productCharity = dbProduct.charities.find(
-                                            (c) => c.charityId === charity?.charityId
-                                        )!;
-
-                                        return {
-                                            charityId: charity?.charityId,
-                                            amount: splitAmount,
-                                            percent: splitPercent,
-                                            extra_money: splitExtra,
-                                            total_amount: splitAmount + splitExtra,
-                                            status: 'PENDING',
-                                            isAnonymous: productCharity?.isAnonymous,
-                                        };
-                                    }),
-                                },
-                            }),
-
-                        };
-                    })
-                },
-            },
-        });
-
-        //refund the payment for stockout items
-        if (stockoutItems.length > 0) {
-            const stockoutRefundAmount = stockoutItems.reduce((acc, item) => acc + item.unitPrice, 0);
-
-            // refund issue
-            await RefundQueue.add(jobs.refund, {
-                paymentId: paymentId,
-                paymentIntentId,
-                reason: "Due to some items in the cart being out of stock, a partial refund will be issued for those items.",
-                triggeredBy: "System",
-                markPaymentRefunded: false,
-                amount: stockoutRefundAmount
-            });
-
-            //send notification & email to buyer about order item stockout & partial refund
-        }
+        const treeCredit = order?.treeCredit || 0;
 
         if (treeCredit > 0) {
             const tree_count = Math.floor(treeCredit / 4); // 1 tree for every $4 spent
             // generate badge for buyer, tree gift badge
-            BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TREE_PLANTER", userId, increment: tree_count });
+            BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TREE_PLANTER", userId: order?.buyerId, increment: tree_count });
         }
 
     },

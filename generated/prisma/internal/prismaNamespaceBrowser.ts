@@ -417,7 +417,6 @@ export const PaymentScalarFieldEnum = {
   status: 'status',
   stripe_status: 'stripe_status',
   orderId: 'orderId',
-  cartGroupId: 'cartGroupId',
   transactionId: 'transactionId',
   paymentIntentId: 'paymentIntentId',
   checkoutSessionId: 'checkoutSessionId',
@@ -546,10 +545,6 @@ export const CartGroupScalarFieldEnum = {
   id: 'id',
   sellerId: 'sellerId',
   userId: 'userId',
-  treeGiftCost: 'treeGiftCost',
-  authenticationCost: 'authenticationCost',
-  serviceFeeCost: 'serviceFeeCost',
-  shippingServiceId: 'shippingServiceId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

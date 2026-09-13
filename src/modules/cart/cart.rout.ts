@@ -31,13 +31,6 @@ router.get("/checkout/:cartGroupId/summary", auth(...(allRoles.filter(role => !e
 
 router.get("/checkout/:cartGroupId/shipping-rates", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.availableRates);
 
-router.put("/checkout/tree-gift-cost", validateCartCheckoutTreeGift, req_validator(), auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.addTreeGiftCost);
-
-router.put("/checkout/authentication-cost",
-    validateCartCheckoutAuthentication,
-    req_validator(),
-    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.addAuthenticationCost);
-
 router.get("/by-seller/:sellerUserName", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.cartsByUserSeller);
 
 router.get("/:cartGroupId", auth(...allRoles), cartControler.checkoutItem);

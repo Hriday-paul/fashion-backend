@@ -516,7 +516,7 @@ const addOrUpdateSellerAddress = async (payload: BillingDetails, sellerId: strin
         "country_alpha2": payload?.countryCode
     }
 
-    const rateRes = await fetch(`${config.easyship.easyship_base_url}/addresses/validations`, {
+    const addressRes = await fetch(`${config.easyship.easyship_base_url}/addresses/validations`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
@@ -525,8 +525,8 @@ const addOrUpdateSellerAddress = async (payload: BillingDetails, sellerId: strin
         body: JSON.stringify(shipPayload)
     });
 
-    if (!rateRes.ok) {
-        const errorData = await rateRes.json().catch(() => null);
+    if (!addressRes.ok) {
+        const errorData = await addressRes.json().catch(() => null);
         throw new AppError(
             httpStatus.BAD_REQUEST,
             errorData?.error?.message || 'Invalid Shipping Address',

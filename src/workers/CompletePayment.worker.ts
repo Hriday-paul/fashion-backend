@@ -148,11 +148,11 @@ markCompletePaymentWorker.on("completed", async (job, result) => {
         }
 
         //make order after payment is completed
-        await MakeOrderQueue.add(jobs.makeOrder, {
-            cartGroupId: payment.cartGroupId,
-            paymentId,
-            paymentIntentId,
-        });
+        // await MakeOrderQueue.add(jobs.makeOrder, {
+        //     cartGroupId: payment.cartGroupId,
+        //     paymentId,
+        //     paymentIntentId,
+        // });
 
     } catch (err) {
         console.error("markCompletePaymentWorker completed handler error:", err);

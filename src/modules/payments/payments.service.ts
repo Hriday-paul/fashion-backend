@@ -12,6 +12,9 @@ import moment from 'moment';
 import { CompletePaymentQueue } from '../../queues/completePayment.queue';
 import { jobs } from '../../queues/jobs.name';
 import { BadgeGenerateQueue } from '../../queues/badge.queue';
+import { MakeOrderQueue } from '../../queues/makeOrder.queue';
+import { RefundQueue } from '../../queues/refund.queue';
+import { notificationQueue } from '../../queues/notificaion.queue';
 
 const stripe = new Stripe(config.stripe?.stripe_api_secret as string, {
   apiVersion: "2025-03-31.basil", // Valid API version
@@ -92,7 +95,7 @@ const donationCheckout = async (payload: DirectDonation, userId: string) => {
 
 };
 
-const confirmPayment = async (query: Record<string, any>) => {
+const confirmPayment = async (query: Record<string, any>): Promise<{ url: string, message: string }> => {
 
   const { sessionId, paymentId } = query;
 
@@ -106,12 +109,143 @@ const confirmPayment = async (query: Record<string, any>) => {
     );
   }
 
-  //mark payment as complete
-  await CompletePaymentQueue.add(jobs.markPaymentAsCompleted, {
-    paymentId: paymentId,
-    paymentIntentId: paymentIntentId,
-    checkoutSessionId: sessionId
+  const payment = await prisma.payment.findFirst({
+    where: { id: paymentId },
+    include: {
+      order: {
+        select: {
+          id : true,
+          orderNumber: true,
+          treeCredit: true,
+          buyerId: true,
+          sellerId: true,
+          items: {
+            select: {
+              product: {
+                select: {
+                  id: true,
+                  title: true,
+                  images: {
+                    take: 1,
+                    orderBy: {
+                      order: "asc"
+                    },
+                    select: {
+                      url: true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          buyer: {
+            select: {
+              id: true,
+              userName: true,
+              fcmToken: true
+            }
+          },
+          seller: {
+            select: {
+              id: true,
+              userName: true,
+              fcmToken: true
+            }
+          },
+        }
+      }
+    }
   });
+
+  if (!payment) {
+    throw new AppError(httpStatus.NOT_FOUND, "Payment does not exist");
+  }
+
+  if (payment?.status === "SUCCESSED") {
+    return { url: `${config.BASE_URL}${config.success_url}`, message: "Payment already completed" };
+  }
+
+  if (payment?.status === "REFUNDED") {
+    return { url: `${config.BASE_URL}${config.cancel_url}`, message: "Payment refunded, please try again" };
+  }
+
+  if (payment?.status === "FAILED") {
+    return { url: `${config.BASE_URL}${config.cancel_url}`, message: "Payment failed, please try again" };
+  }
+
+  try {
+
+    //mark payment as complete
+    await prisma.payment.update({
+      where: { id: paymentId },
+      data: {
+        status: "SUCCESSED",
+        stripe_status: "ESCROWED",
+        paymentIntentId: paymentIntentId,
+        checkoutSessionId: sessionId,
+        updatedAt: new Date()
+      }
+    });
+
+    if (payment?.order) {
+      const treeCredit = payment?.order?.treeCredit || 0;
+
+      const tree_count = Math.floor(treeCredit / 4); // 1 tree for every $4 spent
+      // generate badge for buyer, tree gift badge
+      BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TREE_PLANTER", userId: payment?.order?.buyerId, increment: tree_count });
+
+
+      //send notification to the seller about order creation success
+      await notificationQueue.add(jobs.notification, {
+        allowPushNotification: true,
+        payload: {
+          title: `An order has been placed for your items`,
+          message: `**${payment?.order?.buyer?.userName}** has placed an order **${payment?.order?.orderNumber}** for your items. Check your sell order list & make process to ship the items.`,
+          actorId: payment?.order?.buyerId,
+          receiverId: payment?.order?.sellerId,
+          entityId: payment?.order?.buyer?.userName,
+          entityType: "ORDER",
+          entityImgs: payment?.order?.items?.map(item => (item?.product?.images[0]?.url)),
+          type: "ORDER_PLACED",
+          fcmToken: payment?.order?.seller?.fcmToken,
+          groupKeyId: null,
+        }
+      })
+
+      //send notification to the buyer about order creation success
+      await notificationQueue.add(jobs.notification, {
+        allowPushNotification: true,
+        payload: {
+          title: `Purchase Successful`,
+          message: `Your order **${payment?.order?.orderNumber}** has been placed successfully. Check your purchase order list for tracking & shipping details.`,
+          actorId: payment?.order?.buyerId,
+          receiverId: payment?.order?.buyerId,
+          entityId: payment?.order?.buyer?.userName,
+          entityType: "ORDER",
+          entityImgs: payment?.order?.items?.map(item => (item?.product?.images[0]?.url)),
+          type: "ORDER_PLACED",
+          fcmToken: payment?.order?.buyer?.fcmToken,
+          groupKeyId: null,
+        }
+      })
+
+    }
+
+    return { url: `${config.BASE_URL}${config.success_url}`, message: "Payment completed successfully" };
+
+  } catch (error: any) {
+
+    await RefundQueue.add(jobs.refund, {
+      paymentId,
+      paymentIntentId,
+      reason: error?.message ?? "System error",
+      triggeredBy: "System",
+      markPaymentRefunded: true
+    });
+
+    return { url: `${config.BASE_URL}${config.cancel_url}`, message: "Payment failed, please try again" };
+
+  }
 
 };
 

@@ -19,32 +19,14 @@ export type CartGroupModel = runtime.Types.Result.DefaultSelection<Prisma.$CartG
 
 export type AggregateCartGroup = {
   _count: CartGroupCountAggregateOutputType | null
-  _avg: CartGroupAvgAggregateOutputType | null
-  _sum: CartGroupSumAggregateOutputType | null
   _min: CartGroupMinAggregateOutputType | null
   _max: CartGroupMaxAggregateOutputType | null
-}
-
-export type CartGroupAvgAggregateOutputType = {
-  treeGiftCost: number | null
-  authenticationCost: number | null
-  serviceFeeCost: number | null
-}
-
-export type CartGroupSumAggregateOutputType = {
-  treeGiftCost: number | null
-  authenticationCost: number | null
-  serviceFeeCost: number | null
 }
 
 export type CartGroupMinAggregateOutputType = {
   id: string | null
   sellerId: string | null
   userId: string | null
-  treeGiftCost: number | null
-  authenticationCost: number | null
-  serviceFeeCost: number | null
-  shippingServiceId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,10 +35,6 @@ export type CartGroupMaxAggregateOutputType = {
   id: string | null
   sellerId: string | null
   userId: string | null
-  treeGiftCost: number | null
-  authenticationCost: number | null
-  serviceFeeCost: number | null
-  shippingServiceId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,36 +43,16 @@ export type CartGroupCountAggregateOutputType = {
   id: number
   sellerId: number
   userId: number
-  treeGiftCost: number
-  authenticationCost: number
-  serviceFeeCost: number
-  shippingServiceId: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
 
-export type CartGroupAvgAggregateInputType = {
-  treeGiftCost?: true
-  authenticationCost?: true
-  serviceFeeCost?: true
-}
-
-export type CartGroupSumAggregateInputType = {
-  treeGiftCost?: true
-  authenticationCost?: true
-  serviceFeeCost?: true
-}
-
 export type CartGroupMinAggregateInputType = {
   id?: true
   sellerId?: true
   userId?: true
-  treeGiftCost?: true
-  authenticationCost?: true
-  serviceFeeCost?: true
-  shippingServiceId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -103,10 +61,6 @@ export type CartGroupMaxAggregateInputType = {
   id?: true
   sellerId?: true
   userId?: true
-  treeGiftCost?: true
-  authenticationCost?: true
-  serviceFeeCost?: true
-  shippingServiceId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -115,10 +69,6 @@ export type CartGroupCountAggregateInputType = {
   id?: true
   sellerId?: true
   userId?: true
-  treeGiftCost?: true
-  authenticationCost?: true
-  serviceFeeCost?: true
-  shippingServiceId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -162,18 +112,6 @@ export type CartGroupAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inte
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: CartGroupAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: CartGroupSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: CartGroupMinAggregateInputType
@@ -204,8 +142,6 @@ export type CartGroupGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   _count?: CartGroupCountAggregateInputType | true
-  _avg?: CartGroupAvgAggregateInputType
-  _sum?: CartGroupSumAggregateInputType
   _min?: CartGroupMinAggregateInputType
   _max?: CartGroupMaxAggregateInputType
 }
@@ -214,15 +150,9 @@ export type CartGroupGroupByOutputType = {
   id: string
   sellerId: string
   userId: string
-  treeGiftCost: number
-  authenticationCost: number
-  serviceFeeCost: number
-  shippingServiceId: string | null
   createdAt: Date
   updatedAt: Date
   _count: CartGroupCountAggregateOutputType | null
-  _avg: CartGroupAvgAggregateOutputType | null
-  _sum: CartGroupSumAggregateOutputType | null
   _min: CartGroupMinAggregateOutputType | null
   _max: CartGroupMaxAggregateOutputType | null
 }
@@ -249,32 +179,22 @@ export type CartGroupWhereInput = {
   id?: Prisma.StringFilter<"CartGroup"> | string
   sellerId?: Prisma.StringFilter<"CartGroup"> | string
   userId?: Prisma.StringFilter<"CartGroup"> | string
-  treeGiftCost?: Prisma.FloatFilter<"CartGroup"> | number
-  authenticationCost?: Prisma.FloatFilter<"CartGroup"> | number
-  serviceFeeCost?: Prisma.FloatFilter<"CartGroup"> | number
-  shippingServiceId?: Prisma.StringNullableFilter<"CartGroup"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CartGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CartGroup"> | Date | string
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.CartItemListRelationFilter
-  payments?: Prisma.PaymentListRelationFilter
 }
 
 export type CartGroupOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  treeGiftCost?: Prisma.SortOrder
-  authenticationCost?: Prisma.SortOrder
-  serviceFeeCost?: Prisma.SortOrder
-  shippingServiceId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   seller?: Prisma.UserOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   items?: Prisma.CartItemOrderByRelationAggregateInput
-  payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
 export type CartGroupWhereUniqueInput = Prisma.AtLeast<{
@@ -285,33 +205,22 @@ export type CartGroupWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CartGroupWhereInput | Prisma.CartGroupWhereInput[]
   sellerId?: Prisma.StringFilter<"CartGroup"> | string
   userId?: Prisma.StringFilter<"CartGroup"> | string
-  treeGiftCost?: Prisma.FloatFilter<"CartGroup"> | number
-  authenticationCost?: Prisma.FloatFilter<"CartGroup"> | number
-  serviceFeeCost?: Prisma.FloatFilter<"CartGroup"> | number
-  shippingServiceId?: Prisma.StringNullableFilter<"CartGroup"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CartGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CartGroup"> | Date | string
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.CartItemListRelationFilter
-  payments?: Prisma.PaymentListRelationFilter
 }, "id" | "sellerId_userId">
 
 export type CartGroupOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  treeGiftCost?: Prisma.SortOrder
-  authenticationCost?: Prisma.SortOrder
-  serviceFeeCost?: Prisma.SortOrder
-  shippingServiceId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CartGroupCountOrderByAggregateInput
-  _avg?: Prisma.CartGroupAvgOrderByAggregateInput
   _max?: Prisma.CartGroupMaxOrderByAggregateInput
   _min?: Prisma.CartGroupMinOrderByAggregateInput
-  _sum?: Prisma.CartGroupSumOrderByAggregateInput
 }
 
 export type CartGroupScalarWhereWithAggregatesInput = {
@@ -321,88 +230,56 @@ export type CartGroupScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"CartGroup"> | string
   sellerId?: Prisma.StringWithAggregatesFilter<"CartGroup"> | string
   userId?: Prisma.StringWithAggregatesFilter<"CartGroup"> | string
-  treeGiftCost?: Prisma.FloatWithAggregatesFilter<"CartGroup"> | number
-  authenticationCost?: Prisma.FloatWithAggregatesFilter<"CartGroup"> | number
-  serviceFeeCost?: Prisma.FloatWithAggregatesFilter<"CartGroup"> | number
-  shippingServiceId?: Prisma.StringNullableWithAggregatesFilter<"CartGroup"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CartGroup"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CartGroup"> | Date | string
 }
 
 export type CartGroupCreateInput = {
   id?: string
-  treeGiftCost?: number
-  authenticationCost?: number
-  serviceFeeCost?: number
-  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   seller: Prisma.UserCreateNestedOneWithoutSellerGroupCartsInput
   user: Prisma.UserCreateNestedOneWithoutCartsInput
   items?: Prisma.CartItemCreateNestedManyWithoutGroupInput
-  payments?: Prisma.PaymentCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupUncheckedCreateInput = {
   id?: string
   sellerId: string
   userId: string
-  treeGiftCost?: number
-  authenticationCost?: number
-  serviceFeeCost?: number
-  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CartItemUncheckedCreateNestedManyWithoutGroupInput
-  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seller?: Prisma.UserUpdateOneRequiredWithoutSellerGroupCartsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
   items?: Prisma.CartItemUpdateManyWithoutGroupNestedInput
-  payments?: Prisma.PaymentUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUncheckedUpdateManyWithoutGroupNestedInput
-  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupCreateManyInput = {
   id?: string
   sellerId: string
   userId: string
-  treeGiftCost?: number
-  authenticationCost?: number
-  serviceFeeCost?: number
-  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CartGroupUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -411,17 +288,8 @@ export type CartGroupUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type CartGroupNullableScalarRelationFilter = {
-  is?: Prisma.CartGroupWhereInput | null
-  isNot?: Prisma.CartGroupWhereInput | null
 }
 
 export type CartGroupSellerIdUserIdCompoundUniqueInput = {
@@ -433,28 +301,14 @@ export type CartGroupCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  treeGiftCost?: Prisma.SortOrder
-  authenticationCost?: Prisma.SortOrder
-  serviceFeeCost?: Prisma.SortOrder
-  shippingServiceId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type CartGroupAvgOrderByAggregateInput = {
-  treeGiftCost?: Prisma.SortOrder
-  authenticationCost?: Prisma.SortOrder
-  serviceFeeCost?: Prisma.SortOrder
 }
 
 export type CartGroupMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  treeGiftCost?: Prisma.SortOrder
-  authenticationCost?: Prisma.SortOrder
-  serviceFeeCost?: Prisma.SortOrder
-  shippingServiceId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -463,18 +317,8 @@ export type CartGroupMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  treeGiftCost?: Prisma.SortOrder
-  authenticationCost?: Prisma.SortOrder
-  serviceFeeCost?: Prisma.SortOrder
-  shippingServiceId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type CartGroupSumOrderByAggregateInput = {
-  treeGiftCost?: Prisma.SortOrder
-  authenticationCost?: Prisma.SortOrder
-  serviceFeeCost?: Prisma.SortOrder
 }
 
 export type CartGroupScalarRelationFilter = {
@@ -490,22 +334,6 @@ export type CartGroupListRelationFilter = {
 
 export type CartGroupOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type CartGroupCreateNestedOneWithoutPaymentsInput = {
-  create?: Prisma.XOR<Prisma.CartGroupCreateWithoutPaymentsInput, Prisma.CartGroupUncheckedCreateWithoutPaymentsInput>
-  connectOrCreate?: Prisma.CartGroupCreateOrConnectWithoutPaymentsInput
-  connect?: Prisma.CartGroupWhereUniqueInput
-}
-
-export type CartGroupUpdateOneWithoutPaymentsNestedInput = {
-  create?: Prisma.XOR<Prisma.CartGroupCreateWithoutPaymentsInput, Prisma.CartGroupUncheckedCreateWithoutPaymentsInput>
-  connectOrCreate?: Prisma.CartGroupCreateOrConnectWithoutPaymentsInput
-  upsert?: Prisma.CartGroupUpsertWithoutPaymentsInput
-  disconnect?: Prisma.CartGroupWhereInput | boolean
-  delete?: Prisma.CartGroupWhereInput | boolean
-  connect?: Prisma.CartGroupWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CartGroupUpdateToOneWithWhereWithoutPaymentsInput, Prisma.CartGroupUpdateWithoutPaymentsInput>, Prisma.CartGroupUncheckedUpdateWithoutPaymentsInput>
 }
 
 export type CartGroupCreateNestedOneWithoutItemsInput = {
@@ -606,98 +434,20 @@ export type CartGroupUncheckedUpdateManyWithoutSellerNestedInput = {
   deleteMany?: Prisma.CartGroupScalarWhereInput | Prisma.CartGroupScalarWhereInput[]
 }
 
-export type CartGroupCreateWithoutPaymentsInput = {
-  id?: string
-  treeGiftCost?: number
-  authenticationCost?: number
-  serviceFeeCost?: number
-  shippingServiceId?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  seller: Prisma.UserCreateNestedOneWithoutSellerGroupCartsInput
-  user: Prisma.UserCreateNestedOneWithoutCartsInput
-  items?: Prisma.CartItemCreateNestedManyWithoutGroupInput
-}
-
-export type CartGroupUncheckedCreateWithoutPaymentsInput = {
-  id?: string
-  sellerId: string
-  userId: string
-  treeGiftCost?: number
-  authenticationCost?: number
-  serviceFeeCost?: number
-  shippingServiceId?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  items?: Prisma.CartItemUncheckedCreateNestedManyWithoutGroupInput
-}
-
-export type CartGroupCreateOrConnectWithoutPaymentsInput = {
-  where: Prisma.CartGroupWhereUniqueInput
-  create: Prisma.XOR<Prisma.CartGroupCreateWithoutPaymentsInput, Prisma.CartGroupUncheckedCreateWithoutPaymentsInput>
-}
-
-export type CartGroupUpsertWithoutPaymentsInput = {
-  update: Prisma.XOR<Prisma.CartGroupUpdateWithoutPaymentsInput, Prisma.CartGroupUncheckedUpdateWithoutPaymentsInput>
-  create: Prisma.XOR<Prisma.CartGroupCreateWithoutPaymentsInput, Prisma.CartGroupUncheckedCreateWithoutPaymentsInput>
-  where?: Prisma.CartGroupWhereInput
-}
-
-export type CartGroupUpdateToOneWithWhereWithoutPaymentsInput = {
-  where?: Prisma.CartGroupWhereInput
-  data: Prisma.XOR<Prisma.CartGroupUpdateWithoutPaymentsInput, Prisma.CartGroupUncheckedUpdateWithoutPaymentsInput>
-}
-
-export type CartGroupUpdateWithoutPaymentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  seller?: Prisma.UserUpdateOneRequiredWithoutSellerGroupCartsNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
-  items?: Prisma.CartItemUpdateManyWithoutGroupNestedInput
-}
-
-export type CartGroupUncheckedUpdateWithoutPaymentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.CartItemUncheckedUpdateManyWithoutGroupNestedInput
-}
-
 export type CartGroupCreateWithoutItemsInput = {
   id?: string
-  treeGiftCost?: number
-  authenticationCost?: number
-  serviceFeeCost?: number
-  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   seller: Prisma.UserCreateNestedOneWithoutSellerGroupCartsInput
   user: Prisma.UserCreateNestedOneWithoutCartsInput
-  payments?: Prisma.PaymentCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupUncheckedCreateWithoutItemsInput = {
   id?: string
   sellerId: string
   userId: string
-  treeGiftCost?: number
-  authenticationCost?: number
-  serviceFeeCost?: number
-  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupCreateOrConnectWithoutItemsInput = {
@@ -718,54 +468,34 @@ export type CartGroupUpdateToOneWithWhereWithoutItemsInput = {
 
 export type CartGroupUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seller?: Prisma.UserUpdateOneRequiredWithoutSellerGroupCartsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
-  payments?: Prisma.PaymentUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupCreateWithoutUserInput = {
   id?: string
-  treeGiftCost?: number
-  authenticationCost?: number
-  serviceFeeCost?: number
-  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   seller: Prisma.UserCreateNestedOneWithoutSellerGroupCartsInput
   items?: Prisma.CartItemCreateNestedManyWithoutGroupInput
-  payments?: Prisma.PaymentCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupUncheckedCreateWithoutUserInput = {
   id?: string
   sellerId: string
-  treeGiftCost?: number
-  authenticationCost?: number
-  serviceFeeCost?: number
-  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CartItemUncheckedCreateNestedManyWithoutGroupInput
-  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupCreateOrConnectWithoutUserInput = {
@@ -780,28 +510,18 @@ export type CartGroupCreateManyUserInputEnvelope = {
 
 export type CartGroupCreateWithoutSellerInput = {
   id?: string
-  treeGiftCost?: number
-  authenticationCost?: number
-  serviceFeeCost?: number
-  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCartsInput
   items?: Prisma.CartItemCreateNestedManyWithoutGroupInput
-  payments?: Prisma.PaymentCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupUncheckedCreateWithoutSellerInput = {
   id?: string
   userId: string
-  treeGiftCost?: number
-  authenticationCost?: number
-  serviceFeeCost?: number
-  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CartItemUncheckedCreateNestedManyWithoutGroupInput
-  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCartGroupInput
 }
 
 export type CartGroupCreateOrConnectWithoutSellerInput = {
@@ -837,10 +557,6 @@ export type CartGroupScalarWhereInput = {
   id?: Prisma.StringFilter<"CartGroup"> | string
   sellerId?: Prisma.StringFilter<"CartGroup"> | string
   userId?: Prisma.StringFilter<"CartGroup"> | string
-  treeGiftCost?: Prisma.FloatFilter<"CartGroup"> | number
-  authenticationCost?: Prisma.FloatFilter<"CartGroup"> | number
-  serviceFeeCost?: Prisma.FloatFilter<"CartGroup"> | number
-  shippingServiceId?: Prisma.StringNullableFilter<"CartGroup"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CartGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CartGroup"> | Date | string
 }
@@ -864,10 +580,6 @@ export type CartGroupUpdateManyWithWhereWithoutSellerInput = {
 export type CartGroupCreateManyUserInput = {
   id?: string
   sellerId: string
-  treeGiftCost?: number
-  authenticationCost?: number
-  serviceFeeCost?: number
-  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -875,84 +587,52 @@ export type CartGroupCreateManyUserInput = {
 export type CartGroupCreateManySellerInput = {
   id?: string
   userId: string
-  treeGiftCost?: number
-  authenticationCost?: number
-  serviceFeeCost?: number
-  shippingServiceId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CartGroupUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seller?: Prisma.UserUpdateOneRequiredWithoutSellerGroupCartsNestedInput
   items?: Prisma.CartItemUpdateManyWithoutGroupNestedInput
-  payments?: Prisma.PaymentUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUncheckedUpdateManyWithoutGroupNestedInput
-  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CartGroupUpdateWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
   items?: Prisma.CartItemUpdateManyWithoutGroupNestedInput
-  payments?: Prisma.PaymentUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupUncheckedUpdateWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUncheckedUpdateManyWithoutGroupNestedInput
-  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCartGroupNestedInput
 }
 
 export type CartGroupUncheckedUpdateManyWithoutSellerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  treeGiftCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  authenticationCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  serviceFeeCost?: Prisma.FloatFieldUpdateOperationsInput | number
-  shippingServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -964,12 +644,10 @@ export type CartGroupUncheckedUpdateManyWithoutSellerInput = {
 
 export type CartGroupCountOutputType = {
   items: number
-  payments: number
 }
 
 export type CartGroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | CartGroupCountOutputTypeCountItemsArgs
-  payments?: boolean | CartGroupCountOutputTypeCountPaymentsArgs
 }
 
 /**
@@ -989,28 +667,16 @@ export type CartGroupCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types
   where?: Prisma.CartItemWhereInput
 }
 
-/**
- * CartGroupCountOutputType without action
- */
-export type CartGroupCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PaymentWhereInput
-}
-
 
 export type CartGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   sellerId?: boolean
   userId?: boolean
-  treeGiftCost?: boolean
-  authenticationCost?: boolean
-  serviceFeeCost?: boolean
-  shippingServiceId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.CartGroup$itemsArgs<ExtArgs>
-  payments?: boolean | Prisma.CartGroup$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.CartGroupCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cartGroup"]>
 
@@ -1018,10 +684,6 @@ export type CartGroupSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   sellerId?: boolean
   userId?: boolean
-  treeGiftCost?: boolean
-  authenticationCost?: boolean
-  serviceFeeCost?: boolean
-  shippingServiceId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1032,10 +694,6 @@ export type CartGroupSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   sellerId?: boolean
   userId?: boolean
-  treeGiftCost?: boolean
-  authenticationCost?: boolean
-  serviceFeeCost?: boolean
-  shippingServiceId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1046,20 +704,15 @@ export type CartGroupSelectScalar = {
   id?: boolean
   sellerId?: boolean
   userId?: boolean
-  treeGiftCost?: boolean
-  authenticationCost?: boolean
-  serviceFeeCost?: boolean
-  shippingServiceId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CartGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sellerId" | "userId" | "treeGiftCost" | "authenticationCost" | "serviceFeeCost" | "shippingServiceId" | "createdAt" | "updatedAt", ExtArgs["result"]["cartGroup"]>
+export type CartGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sellerId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["cartGroup"]>
 export type CartGroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.CartGroup$itemsArgs<ExtArgs>
-  payments?: boolean | Prisma.CartGroup$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.CartGroupCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CartGroupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1077,16 +730,11 @@ export type $CartGroupPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     seller: Prisma.$UserPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
     items: Prisma.$CartItemPayload<ExtArgs>[]
-    payments: Prisma.$PaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     sellerId: string
     userId: string
-    treeGiftCost: number
-    authenticationCost: number
-    serviceFeeCost: number
-    shippingServiceId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["cartGroup"]>
@@ -1486,7 +1134,6 @@ export interface Prisma__CartGroupClient<T, Null = never, ExtArgs extends runtim
   seller<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.CartGroup$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CartGroup$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CartItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  payments<T extends Prisma.CartGroup$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CartGroup$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1519,10 +1166,6 @@ export interface CartGroupFieldRefs {
   readonly id: Prisma.FieldRef<"CartGroup", 'String'>
   readonly sellerId: Prisma.FieldRef<"CartGroup", 'String'>
   readonly userId: Prisma.FieldRef<"CartGroup", 'String'>
-  readonly treeGiftCost: Prisma.FieldRef<"CartGroup", 'Float'>
-  readonly authenticationCost: Prisma.FieldRef<"CartGroup", 'Float'>
-  readonly serviceFeeCost: Prisma.FieldRef<"CartGroup", 'Float'>
-  readonly shippingServiceId: Prisma.FieldRef<"CartGroup", 'String'>
   readonly createdAt: Prisma.FieldRef<"CartGroup", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CartGroup", 'DateTime'>
 }
@@ -1942,30 +1585,6 @@ export type CartGroup$itemsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.CartItemScalarFieldEnum | Prisma.CartItemScalarFieldEnum[]
-}
-
-/**
- * CartGroup.payments
- */
-export type CartGroup$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Payment
-   */
-  select?: Prisma.PaymentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Payment
-   */
-  omit?: Prisma.PaymentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PaymentInclude<ExtArgs> | null
-  where?: Prisma.PaymentWhereInput
-  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
-  cursor?: Prisma.PaymentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
 }
 
 /**

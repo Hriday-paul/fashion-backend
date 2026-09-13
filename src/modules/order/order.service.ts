@@ -12,11 +12,27 @@ import { ILabel, IShipment } from "./order.interface";
 import { RefundQueue } from "../../queues/refund.queue";
 import { jobs } from "../../queues/jobs.name";
 import { BadgeGenerateQueue } from "../../queues/badge.queue";
+import crypto from "crypto";
 
+const truncate = (value: string | null, max = 32) => {
+    return value?.trim().slice(0, max) || "";
+};
+
+const generateOrderNumber = () => {
+    const timestamp = Date.now().toString(36).toUpperCase();
+    const random = crypto.randomBytes(3).toString("hex").toUpperCase();
+
+    return `#${timestamp}-${random}`;
+};
 
 const addNewOrder = async (
     // payload: Order & { products: PayloadItem[] },
-    payload: { cartGroupId: string, shipmentServiceId: string },
+    payload: {
+        cartGroupId: string,
+        shipmentServiceId: string,
+        allowedAuthentication: boolean,
+        treeGiftCount: number
+    },
     userId: string
 ) => {
 
@@ -31,6 +47,7 @@ const addNewOrder = async (
                     charities: true,
                     product: {
                         select: {
+                            isDeleted: true,
                             title: true,
                             finalPrice: true,
                             id: true,
@@ -47,7 +64,11 @@ const addNewOrder = async (
                                 select: {
                                     url: true
                                 }
-                            }
+                            },
+                            hight_cm: true,
+                            width_cm: true,
+                            length_cm: true,
+                            weight_kg: true,
                         }
                     }
                 },
@@ -76,15 +97,25 @@ const addNewOrder = async (
     }
 
     //check cart owner is the current user
-    if (cartgroup.userId !== userId) {
+    if (cartgroup?.userId !== userId) {
         throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the owner of this cart")
     }
 
+    //buyer billing details is required to place order
     const billing_details = await prisma.billingDetails.findFirst({ where: { userId } });
 
     if (!billing_details) {
-        throw new AppError(httpStatus.NOT_FOUND, "Billing details is required")
+        throw new AppError(httpStatus.NOT_FOUND, "Shiping details is required")
     }
+
+    //seller billing details is required to place order
+    const sellerDetails = await prisma.billingDetails.findFirst({ where: { sellerId: cartgroup?.sellerId } });
+
+    if (!sellerDetails) {
+        throw new AppError(httpStatus.NOT_FOUND, "Seller location does not exist for place shipment");
+    }
+
+    console.log(billing_details, sellerDetails);
 
 
     //Validate cart products' charities belong to the product
@@ -97,6 +128,12 @@ const addNewOrder = async (
                 dbProduct.stock === 0
                     ? `"${payloadItem.product?.title}" is out of stock`
                     : `Only ${dbProduct.stock} unit(s) of "${payloadItem.product?.title}" left in stock`
+            );
+        }
+
+        if (dbProduct.isDeleted) {
+            throw new AppError(httpStatus.BAD_REQUEST,
+                `"${payloadItem.product?.title}" is no longer available`
             );
         }
 
@@ -133,89 +170,219 @@ const addNewOrder = async (
 
     const bundleDiscountPercent = nearestTier ? nearestTier.discountPercent : 0;
 
-    // order products
+
     const orderItems = cartgroup.items.map((item) => {
         const p = item?.product;
+        const donation_percent = p.donation_percent || 0;
+        const extra_donation = item.extraDonation || 0;
+        const unit_price = p?.finalPrice - (p?.finalPrice * (bundleDiscountPercent / 100))
+
+        const quantity = item.quantity || 1;
+
         return {
-            amount: p?.finalPrice - (p?.finalPrice * (bundleDiscountPercent / 100)),
-            images: p?.images.map(img => img?.url),
-            name: p?.title,
-            quantity: 1,
-        }
+            product: p,
+            productId: p.id,
+            sellerId: p.userId,
+            unitPrice: unit_price,
+            totalPrice: unit_price + extra_donation,
+            quantity,
+            extra_donation,
+            donation_percent, // how much percent of the product price will be donated to charity from seller
+            donation_amount: (unit_price * (donation_percent / 100)), // how much amount of the product price will be donated to charity from seller
+            charities: item?.charities ?? [],
+        };
     });
 
-    const extra_donation = cartgroup.items.reduce((itemSum, item) => itemSum + (item?.extraDonation ?? 0), 0);
+    const serviceFeeCost = 2.30; // fixed service fee cost
+    const authenTicationRate = 15; // fixed authentication cost per item
+    const treeGiftRate = 4; // fixed tree gift cost per item
 
-    const donation_charge = {
-        amount: extra_donation,
-        images: [],
-        name: "Extra Donation",
-        quantity: 1,
-    }
+    const totalAuthenticationCost = payload?.allowedAuthentication ? itemCount * authenTicationRate : 0;
 
-    const treeCost = {
-        amount: cartgroup.treeGiftCost,
-        images: [],
-        name: "Tree plantation cost",
-        quantity: 1,
-    }
+    const treeGiftCost = payload?.treeGiftCount * treeGiftRate; // fixed tree gift cost per item
 
-    const authenticationCost = {
-        amount: cartgroup.authenticationCost,
-        images: [],
-        name: "Authentication & Quality Control",
-        quantity: 1,
-    }
-
-    const serviceFee = {
-        amount: cartgroup.serviceFeeCost,
-        images: [],
-        name: "Service Fee",
-        quantity: 1,
-    }
-
-    // build delivery charge line item
-    const totalDeliveryCharge = 0;
-
-    const delivary_charge = {
-        amount: totalDeliveryCharge,
-        images: [],
-        name: "Delivery Charge",
-        quantity: 1,
-    }
-
-    const discountedItemTotal = orderItems.reduce((acc, item) => acc + item.amount, 0);
-    const otherTotal = (cartgroup.serviceFeeCost || 0) + (cartgroup.treeGiftCost || 0) + (cartgroup.authenticationCost || 0);
+    const discountedItemTotal = orderItems.reduce((acc, item) => acc + item.unitPrice, 0);
+    const otherTotal = serviceFeeCost + treeGiftCost + totalAuthenticationCost;
 
     const totalExtraDonation = cartgroup.items.reduce((acc, item) => acc + (item.extraDonation || 0), 0);
 
-    const total = discountedItemTotal + otherTotal + totalExtraDonation;
+    const sellerDonationTotal = orderItems.reduce((acc, item) => acc + item?.donation_amount, 0);
 
-    const sellerTotal = cartgroup.items.reduce((acc, item) => {
+    const sellerTotal = discountedItemTotal - sellerDonationTotal;
 
-        const unit_price = item?.product?.finalPrice - (item?.product?.finalPrice * (bundleDiscountPercent / 100))
+    const shipPayload = {
+        "origin_address": {
+            "line_1": truncate(sellerDetails?.address1),
+            "line_2": truncate(sellerDetails?.address2),
+            "city": truncate(sellerDetails?.city, 20),
+            "state": truncate(sellerDetails?.state, 20),
+            "postal_code": truncate(sellerDetails?.zip_code, 10),
+            "country_alpha2": sellerDetails?.countryCode,
+            "company_name": "FASHION",
+            "contact_name": cartgroup?.seller?.fname,
+            "contact_phone": cartgroup?.seller?.phone,
+            "contact_email": cartgroup?.seller?.email
+        },
+        "destination_address": {
+            "line_1": truncate(billing_details?.address1),
+            "line_2": truncate(billing_details?.address2),
+            "city": truncate(billing_details?.city, 20),
+            "state": truncate(billing_details?.state, 20),
+            "postal_code": truncate(billing_details?.zip_code, 10),
+            "country_alpha2": billing_details?.countryCode,
+            "contact_name": billing_details?.full_name,
+            "contact_phone": billing_details?.contact,
+            "contact_email": billing_details?.email
+        },
+        "return": false,
+        "incoterms": "DDP",
+        "order_data": {
+            "platform_name": "FASHION",
+        },
+        "courier_settings": {
+            "courier_service_id": payload?.shipmentServiceId
+        },
+        "shipping_settings": {
+            "units": {
+                "weight": "kg",
+                "dimensions": "cm"
+            },
+            "output_currency": "USD"
+        },
+        "parcels": [
+            {
+                "items": orderItems?.map((item) => {
+                    return {
+                        "description": truncate(item?.product?.title, 64) || "Fashion Product",
+                        "category": "fashion",
+                        "origin_country_alpha2": sellerDetails?.countryCode,
+                        "quantity": 1,
+                        "dimensions": {
+                            "height": item?.product?.hight_cm,
+                            "width": item?.product?.width_cm,
+                            "length": item?.product?.length_cm
+                        },
+                        "actual_weight": item?.product?.weight_kg,
+                        "declared_currency": "USD",
+                        "declared_customs_value": item?.product?.finalPrice || 0,
+                    }
 
-        const final_Unit_price = unit_price;
+                }),
+            }
+        ]
+    }
 
-        return acc + final_Unit_price;
-    }, 0);
-
-    //check a success payment exist for this cart group,
-    const isExistSuccessPayment = await prisma.payment.findFirst({
-        where: {
-            cartGroupId: cartgroup.id,
-            userId: userId,
-            status: "SUCCESSED"
-        }
+    const shipmentRes = await fetch(`${config.easyship.easyship_base_url}/shipments`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shipPayload)
     });
 
-    if (isExistSuccessPayment) {
-        throw new AppError(httpStatus.BAD_REQUEST, "A successful payment already exists for this cart. Please check your order history.");
+    if (!shipmentRes.ok) {
+        const errorData = await shipmentRes.json().catch(() => null);
+
+        console.log(errorData)
+
+        throw new AppError(httpStatus.BAD_REQUEST, errorData?.error?.message || "Shipment creation failed");
     }
+
+    const shipmentData = await shipmentRes.json() as IShipment;
+
+    const shippingRate = shipmentData?.shipment?.rates.find(rate => rate?.courier_service?.id === payload?.shipmentServiceId)?.total_charge;
+
+    if (!shippingRate) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Shipping rate not available for the selected courier service");
+    }
+
+    console.log(shipmentData?.shipment?.rates)
+
+    const total = discountedItemTotal + otherTotal + totalExtraDonation + shippingRate;
+
+    const parcelId = shipmentData?.shipment?.parcels[0]?.id;
+
+    const shipmentItems = shipmentData?.shipment?.parcels[0]?.items || [];
+
+    const treeCredit = treeGiftCost;
 
     const tranId = generateRandomString(10);
 
     const result = await prisma.$transaction(async (transactionClient) => {
+
+        //create new order for this cart group
+        const order = await transactionClient.order.create({
+            data: {
+                orderNumber: generateOrderNumber(),
+                totalPrice: total,
+                itemsTotal: discountedItemTotal,
+                treeCredit: treeCredit ?? 0,
+                buyerId: userId,
+                billingId: billing_details?.id,
+                sellerId: orderItems[0]?.sellerId,
+                sellerItemsTotal: discountedItemTotal,
+                sellerTotal: discountedItemTotal - sellerDonationTotal,
+                bundleDiscountPercent,
+                courier_service_id: payload?.shipmentServiceId,
+
+                parcelId,
+
+                currentShipTo: payload?.allowedAuthentication ? "AUTHENTICATION_CENTER" : "BUYER",
+
+                shippingId: shipmentData?.shipment?.easyship_shipment_id,
+                deliveryCharge: {
+                    create: {
+                        baseCharge: shippingRate,
+                        discount: 0,
+                        finalCharge: shippingRate,
+                        status: "UNPAID",
+                        totalItems: orderItems?.length || 0,
+                        totalWeight: orderItems?.reduce((acc, item) => acc + (item?.product?.weight_kg || 0), 0),
+                    }
+                },
+                totalDelivery: shippingRate,
+                items: {
+                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, ...item }) => {
+                        const charityCount = charities.length;
+                        const splitAmount = charityCount > 0 ? (donation_amount / charityCount) : 0;
+                        const splitExtra = charityCount > 0 ? (item.extra_donation / charityCount) : 0;
+
+                        const dbProduct = product;
+
+                        const splitPercent = charityCount > 0 ? 100 / charityCount : 0;
+
+                        const parcelItemId = shipmentItems.find(parcelItem => parcelItem?.description === product?.title && parcelItem?.declared_customs_value === product?.finalPrice)?.id;
+
+                        return {
+                            ...item,
+                            parcelItemId,
+                            ...(charityCount > 0 && {
+                                donations: {
+                                    create: charities.map((charity) => {
+
+                                        const productCharity = dbProduct.charities.find(
+                                            (c) => c.charityId === charity?.charityId
+                                        )!;
+
+                                        return {
+                                            charityId: charity?.charityId,
+                                            amount: splitAmount,
+                                            percent: splitPercent,
+                                            extra_money: splitExtra,
+                                            total_amount: splitAmount + splitExtra,
+                                            status: 'PENDING',
+                                            isAnonymous: productCharity?.isAnonymous,
+                                        };
+                                    }),
+                                },
+                            }),
+
+                        };
+                    })
+                },
+            },
+        });
 
         //create new payment for this cart group
         const createdPayment = await transactionClient.payment.create({
@@ -227,7 +394,7 @@ const addNewOrder = async (
                 seller_received_amount: 0,
                 status: "PENDING",
                 stripe_status: "PENDING",
-                cartGroupId: cartgroup.id,
+                orderId: order?.id,
                 transactionId: tranId,
             },
             include: {
@@ -235,24 +402,84 @@ const addNewOrder = async (
             }
         })
 
-        //save shiping serviceId to cartGroup
-        await transactionClient.cartGroup.update({
+        //dlt the cart group after order created
+        await transactionClient.cartGroup.delete({
             where: {
-                id: cartgroup.id
-            },
-            data: {
-                shippingServiceId: payload?.shipmentServiceId
+                id: payload?.cartGroupId
             }
-        })
+        });
 
         return createdPayment;
 
-    })
+    });
+
+    const total_extra_donation = cartgroup.items.reduce((itemSum, item) => itemSum + (item?.extraDonation ?? 0), 0);
+
+    const checkOutSessionItems = [];
+
+    if (total_extra_donation > 0) {
+        checkOutSessionItems.push({
+            amount: total_extra_donation,
+            images: [],
+            name: "Extra Donation",
+            quantity: 1,
+        })
+    }
+
+    if (treeGiftCost > 0) {
+        checkOutSessionItems.push({
+            amount: treeGiftCost,
+            images: [],
+            name: "Tree plantation cost",
+            quantity: 1,
+        })
+    }
+
+    if (totalAuthenticationCost > 0) {
+        checkOutSessionItems.push({
+            amount: totalAuthenticationCost,
+            images: [],
+            name: "Authentication & Quality Control",
+            quantity: 1,
+        })
+    }
+
+    checkOutSessionItems.push(
+        {
+            amount: 2.30,
+            images: [],
+            name: "Service Fee",
+            quantity: 1,
+        },
+        ...orderItems.map((item) => {
+            const p = item?.product;
+            return {
+                amount: p?.finalPrice - (p?.finalPrice * (bundleDiscountPercent / 100)),
+                images: p?.images.map(img => img?.url),
+                name: p?.title,
+                quantity: 1,
+            }
+        })
+    );
+
+
+    // build delivery charge line item
+    const totalDeliveryCharge = shippingRate;
+
+    if (totalDeliveryCharge > 0) {
+
+        checkOutSessionItems.push({
+            amount: totalDeliveryCharge,
+            images: [],
+            name: "Delivery Charge",
+            quantity: 1,
+        });
+    }
 
     // generate payment link
     const checkoutSession = await createCheckoutSession({
         // customerId: customer.id,
-        products: [...orderItems, donation_charge, delivary_charge, treeCost, authenticationCost, serviceFee],
+        products: checkOutSessionItems,
         user: cartgroup?.user,
         paymentId: result?.id
     });
@@ -645,7 +872,13 @@ const confirmOrderReceived = async (orderId: string, userId: string) => {
 }
 
 const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
-    const AndConditions: Prisma.OrderWhereInput[] = [{ sellerId, assistentSellId: null }];
+    const AndConditions: Prisma.OrderWhereInput[] = [{
+        sellerId, assistentSellId: null, payment: {
+            status: {
+                in: ["SUCCESSED", "REFUNDED"]
+            }
+        }
+    }];
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
     const { searchTerm, status } = query;
@@ -834,7 +1067,13 @@ const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>,
 }
 
 const ordersAsABuyer = async (buyerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
-    const AndConditions: Prisma.OrderWhereInput[] = [{ buyerId, assistentSellId: null }];
+    const AndConditions: Prisma.OrderWhereInput[] = [{
+        buyerId, assistentSellId: null, payment: {
+            status: {
+                in: ["SUCCESSED", "REFUNDED"]
+            }
+        }
+    }];
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
     const { searchTerm, status } = query;
