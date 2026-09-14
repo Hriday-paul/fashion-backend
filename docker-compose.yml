@@ -5,11 +5,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: docuvault-container
+    container_name: fashion-backend-container
     restart: unless-stopped
 
     ports:
-      - "4000:3000"
+      - "4000:4000"
+      - "4001:4001"
 
     env_file:
       - .env
