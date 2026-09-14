@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { chatController } from './chat.controller';
 import auth from '../../middleware/auth';
-import { USER_ROLE } from '../user/user.constants';
 import { createChatValidation } from './chat.validation';
 import req_validator from '../../middleware/req_validation';
 import { Role } from '../../../generated/prisma/enums';
