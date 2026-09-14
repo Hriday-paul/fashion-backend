@@ -27,6 +27,32 @@ export const validateOrderProducts = [
         .withMessage('treeGiftCount must be a non-negative integer').toInt(),
 ];
 
+export const validateOfferOrder = [
+    body('offerId')
+        .notEmpty()
+        .withMessage('offerId is required')
+        .isUUID()
+        .withMessage('offerId must be a valid UUID'),
+
+    body('shipmentServiceId')
+        .notEmpty()
+        .withMessage('Shipment service ID is required')
+        .isString()
+        .withMessage('Shipment service ID must be a valid string'),
+
+        body('allowedAuthentication')
+        .notEmpty()
+        .withMessage('allowedAuthentication is required')
+        .isBoolean()
+        .withMessage('allowedAuthentication must be a valid boolean').toBoolean(),
+
+    body('treeGiftCount')
+        .notEmpty()
+        .withMessage('treeGiftCount is required')
+        .isInt({ min: 0 })
+        .withMessage('treeGiftCount must be a non-negative integer').toInt(),
+];
+
 export const cancelItemsValidator = [
     body("orderId")
         .trim()

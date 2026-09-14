@@ -351,6 +351,13 @@ export type EnumOrderAuthStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumOrderAuthStatusFilter<$PrismaModel> | $Enums.OrderAuthStatus
 }
 
+export type EnumOrderPricingSourceFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderPricingSource | Prisma.EnumOrderPricingSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderPricingSource[] | Prisma.ListEnumOrderPricingSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderPricingSource[] | Prisma.ListEnumOrderPricingSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderPricingSourceFilter<$PrismaModel> | $Enums.OrderPricingSource
+}
+
 export type EnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.OrderStatus | Prisma.EnumOrderStatusFieldRefInput<$PrismaModel>
   in?: $Enums.OrderStatus[] | Prisma.ListEnumOrderStatusFieldRefInput<$PrismaModel>
@@ -379,6 +386,16 @@ export type EnumOrderAuthStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumOrderAuthStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumOrderAuthStatusFilter<$PrismaModel>
+}
+
+export type EnumOrderPricingSourceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderPricingSource | Prisma.EnumOrderPricingSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderPricingSource[] | Prisma.ListEnumOrderPricingSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderPricingSource[] | Prisma.ListEnumOrderPricingSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderPricingSourceWithAggregatesFilter<$PrismaModel> | $Enums.OrderPricingSource
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderPricingSourceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderPricingSourceFilter<$PrismaModel>
 }
 
 export type EnumOrderAuthResultFilter<$PrismaModel = never> = {
@@ -1129,6 +1146,13 @@ export type NestedEnumOrderAuthStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumOrderAuthStatusFilter<$PrismaModel> | $Enums.OrderAuthStatus
 }
 
+export type NestedEnumOrderPricingSourceFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderPricingSource | Prisma.EnumOrderPricingSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderPricingSource[] | Prisma.ListEnumOrderPricingSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderPricingSource[] | Prisma.ListEnumOrderPricingSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderPricingSourceFilter<$PrismaModel> | $Enums.OrderPricingSource
+}
+
 export type NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.OrderStatus | Prisma.EnumOrderStatusFieldRefInput<$PrismaModel>
   in?: $Enums.OrderStatus[] | Prisma.ListEnumOrderStatusFieldRefInput<$PrismaModel>
@@ -1157,6 +1181,16 @@ export type NestedEnumOrderAuthStatusWithAggregatesFilter<$PrismaModel = never> 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumOrderAuthStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumOrderAuthStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumOrderPricingSourceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderPricingSource | Prisma.EnumOrderPricingSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderPricingSource[] | Prisma.ListEnumOrderPricingSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderPricingSource[] | Prisma.ListEnumOrderPricingSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderPricingSourceWithAggregatesFilter<$PrismaModel> | $Enums.OrderPricingSource
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderPricingSourceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderPricingSourceFilter<$PrismaModel>
 }
 
 export type NestedEnumOrderAuthResultFilter<$PrismaModel = never> = {

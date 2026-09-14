@@ -3,7 +3,7 @@ import auth from "../../middleware/auth";
 import { allRoles } from "../user/user.rout";
 import req_validator from "../../middleware/req_validation";
 import { orderControler } from "./order.controller";
-import { cancelItemsValidator, validateApproveCancelReq, validateOrderProducts, validateOrderReceivedmark } from "./order.validator";
+import { cancelItemsValidator, validateApproveCancelReq, validateOfferOrder, validateOrderProducts, validateOrderReceivedmark } from "./order.validator";
 import { Role } from "../../../generated/prisma/enums";
 import parseData from "../../middleware/parseData";
 import { image_Upload } from "../../utils/s3";
@@ -22,6 +22,12 @@ router.post("/",
     req_validator(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.addNewOrder);
+
+router.post("/offer",
+    validateOfferOrder,
+    req_validator(),
+    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    orderControler.addNewOfferOrder);
 
 router.post("/shipping-label/:orderId",
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),

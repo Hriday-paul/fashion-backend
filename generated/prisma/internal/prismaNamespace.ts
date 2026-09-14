@@ -4343,6 +4343,8 @@ export const OrderScalarFieldEnum = {
   treeCredit: 'treeCredit',
   serviceFee: 'serviceFee',
   authenticationFee: 'authenticationFee',
+  pricingSource: 'pricingSource',
+  offerId: 'offerId',
   bundleDiscountPercent: 'bundleDiscountPercent',
   assistentSellId: 'assistentSellId',
   courier_service_id: 'courier_service_id',
@@ -4367,6 +4369,8 @@ export const OrderItemScalarFieldEnum = {
   quantity: 'quantity',
   weight: 'weight',
   unitPrice: 'unitPrice',
+  unitAllocatedPrice: 'unitAllocatedPrice',
+  sellerFinalUnitPrice: 'sellerFinalUnitPrice',
   totalPrice: 'totalPrice',
   isCancelled: 'isCancelled',
   authResult: 'authResult',
@@ -4376,6 +4380,7 @@ export const OrderItemScalarFieldEnum = {
   updatedAt: 'updatedAt',
   cancelledAt: 'cancelledAt',
   extra_donation: 'extra_donation',
+  sell_donation: 'sell_donation',
   cancelledBy: 'cancelledBy',
   cancelReason: 'cancelReason',
   cancelReasonDetails: 'cancelReasonDetails',
@@ -5133,6 +5138,20 @@ export type EnumOrderAuthStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'OrderAuthStatus[]'
  */
 export type ListEnumOrderAuthStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderAuthStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'OrderPricingSource'
+ */
+export type EnumOrderPricingSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderPricingSource'>
+    
+
+
+/**
+ * Reference to a field of type 'OrderPricingSource[]'
+ */
+export type ListEnumOrderPricingSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderPricingSource[]'>
     
 
 

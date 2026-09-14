@@ -7,5 +7,6 @@ export const jobs = {
     sendPushNotification: 'sendPushNotification',
     notification: 'notification',
     priceDropNotification: 'priceDropNotification',
-    badgeGenerate : "badgeGenerate"
+    badgeGenerate : "badgeGenerate",
+    stockUpdate: "stockUpdate"
 }

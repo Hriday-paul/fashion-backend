@@ -174,6 +174,8 @@ const checkoutSummary = async (cartGroupId: string, userId: string) => {
                     product: {
                         select: {
                             finalPrice: true,
+                            stock: true,
+                            isDeleted: true,
                         }
                     }
                 }
@@ -214,9 +216,13 @@ const checkoutSummary = async (cartGroupId: string, userId: string) => {
 
     const subTotal = discountedItemTotal + serviceFee + totalExtraDonation;
 
+    const haveAnyUnavailableItems = cart.items.some(item => item.product.isDeleted || item.product.stock <= 0);
+
     return {
         itemTotal: itemTotal,
         subTotal,
+        itemsCount: cart.items.length,
+        haveAnyUnavailableItems,
         serviceFeeCost: serviceFee,
         bundleDiscountPercent,
         bundleDiscountAmount: bundleDiscountAmount,
@@ -225,7 +231,9 @@ const checkoutSummary = async (cartGroupId: string, userId: string) => {
 }
 
 const addToCart = async (payload: { productId: string, quantity: number, extraDonation: number, extraDonationAnonymous: boolean, charities: { charityId: string }[] }, userId: string) => {
+
     const { productId, quantity, extraDonation, extraDonationAnonymous, charities } = payload;
+
     //check product exist
     const product = await prisma.product.findFirst({ where: { id: productId } });
     if (!product) {
@@ -346,10 +354,10 @@ const availableRates = async (cartGroupId: string, userId: string) => {
         return;
     }
 
-    if(!cartgroup?.seller?.sellerAddress){
+    if (!cartgroup?.seller?.sellerAddress) {
         return;
     }
-    
+
     const shipPayload = {
         "origin_address": {
             "line_1": truncate(cartgroup?.seller?.sellerAddress?.address1),
@@ -422,9 +430,238 @@ const availableRates = async (cartGroupId: string, userId: string) => {
 
     const rateData = await rateRes.json();
 
-    console.log(rateData);
+    return rateData;
+}
+
+const offerCheckoutItem = async (offerId: string, userId: string) => {
+
+    const offer = await prisma.offer.findFirst({
+        where: { id: offerId, buyerId: userId },
+        include: {
+            offerItems: {
+                include: {
+                    product: {
+                        include: {
+                            images: {
+                                select: {
+                                    url: true
+                                }
+                            },
+                            size: true,
+                        }
+                    }
+                }
+            },
+            seller: {
+                select: {
+                    id: true,
+                    userName: true,
+                    picture: {
+                        select: {
+                            url: true
+                        }
+                    },
+                }
+            },
+
+        }
+    });
+
+    if (!offer) {
+        throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
+    }
+
+    if (offer.status == "PENDING") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Offer is not accepted yet");
+    }
+
+    if (offer.status == "REJECTED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Offer is unavailable for checkout");
+    }
+
+    if (offer.status == "CANCELED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Offer is unavailable for checkout");
+    }
+
+    if (!offer?.expiredAt || offer?.expiredAt < new Date()) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Offer is expired");
+    }
+
+    return offer;
+}
+
+const offerAvailableRates = async (offerId: string, userId: string) => {
+    const offer = await prisma.offer.findFirst({
+        where: { id: offerId, buyerId: userId },
+        include: {
+            offerItems: {
+
+                include: {
+                    product: {
+                        select: {
+                            finalPrice: true,
+                            weight_kg: true,
+                            hight_cm: true,
+                            width_cm: true,
+                            length_cm: true,
+                        }
+                    }
+                }
+            },
+            seller: {
+                include: {
+                    sellerAddress: true,
+                }
+            }
+        }
+    });
+
+
+    if (!offer) {
+        throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
+    }
+
+    if (offer.status !== "ACCEPTED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Offer is not available for checkout");
+    }
+
+    const billing_details = await prisma.billingDetails.findFirst({ where: { userId } });
+
+    if (!billing_details) {
+        return;
+    }
+
+    if (!offer?.seller?.sellerAddress) {
+        return;
+    }
+
+    const shipPayload = {
+        "origin_address": {
+            "line_1": truncate(offer?.seller?.sellerAddress?.address1),
+            "line_2": truncate(offer?.seller?.sellerAddress?.address2),
+            "city": truncate(offer?.seller?.sellerAddress?.city, 20),
+            "state": truncate(offer?.seller?.sellerAddress?.state, 20),
+            "postal_code": truncate(offer?.seller?.sellerAddress?.zip_code, 10),
+            "country_alpha2": offer?.seller?.sellerAddress?.countryCode
+        },
+        "destination_address": {
+            "line_1": truncate(billing_details?.address1),
+            "line_2": truncate(billing_details?.address2),
+            "city": truncate(billing_details?.city, 20),
+            "state": truncate(billing_details?.state, 20),
+            "postal_code": truncate(billing_details?.zip_code, 10),
+            "country_alpha2": billing_details?.countryCode,
+            "contact_name": billing_details?.full_name,
+            "contact_email": billing_details?.email,
+            "contact_phone": billing_details?.contact
+        },
+        "incoterms": "DDP",
+        "courier_settings": {
+            "show_courier_logo_url": true
+        },
+        "shipping_settings": {
+            "units": {
+                "weight": "kg",
+                "dimensions": "cm"
+            },
+            "output_currency": "USD"
+        },
+        "parcels": [
+            {
+                "items": offer?.offerItems?.map(item => {
+                    return {
+                        "category": "fashion",
+                        "quantity": 1,
+                        "actual_weight": item?.product?.weight_kg,
+                        "dimensions": {
+                            "height": item?.product?.hight_cm,
+                            "width": item?.product?.width_cm,
+                            "length": item?.product?.length_cm
+                        },
+                        "declared_currency": "USD",
+                        "declared_customs_value": item?.product?.finalPrice || 0
+                    }
+                }),
+            }
+        ],
+        "calculate_tax_and_duties": true
+    }
+
+    const rateRes = await fetch(`${config.easyship.easyship_base_url}/rates`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shipPayload)
+    });
+
+    if (!rateRes.ok) {
+        const errorData = await rateRes.json().catch(() => null);
+        console.log(errorData);
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            errorData?.error?.message || 'Failed to fetch shipping rates',
+        );
+    }
+
+    const rateData = await rateRes.json();
 
     return rateData;
+}
+
+const offerCheckoutSummary = async (offerId: string, userId: string) => {
+
+    const offer = await prisma.offer.findFirst({
+        where: { id: offerId, buyerId: userId },
+        include: {
+            offerItems: {
+                select: {
+                    product: {
+                        select: {
+                            stock: true,
+                            isDeleted: true,
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    if (!offer) {
+        throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
+    }
+
+    if (offer.status !== "ACCEPTED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Offer is not available for checkout");
+    }
+
+    if (!offer?.expiredAt || offer?.expiredAt < new Date()) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Offer is expired");
+    }
+
+    const itemTotal = offer?.offeredPrice;
+    const totalExtraDonation = 0;
+
+    const serviceFee = 2.30; //fixed service fee of $2.30
+
+    const bundleDiscountAmount = 0;
+    const discountedItemTotal = itemTotal - bundleDiscountAmount;
+
+    const subTotal = discountedItemTotal + serviceFee + totalExtraDonation;
+
+    const haveAnyUnavailableItems = offer?.offerItems?.some(item => item?.product?.isDeleted || item?.product?.stock <= 0);
+
+    return {
+        itemTotal: itemTotal,
+        itemsCount: offer?.offerItems?.length || 0,
+        subTotal,
+        haveAnyUnavailableItems,
+        serviceFeeCost: serviceFee,
+        bundleDiscountPercent: 0,
+        bundleDiscountAmount: bundleDiscountAmount,
+        totalExtraDonation
+    };
 }
 
 export const cartService = {
@@ -433,6 +670,9 @@ export const cartService = {
     checkoutSummary,
     addToCart,
     availableRates,
+    offerAvailableRates,
     deleteCartItem,
+    offerCheckoutItem,
+    offerCheckoutSummary,
     cartsByUserSeller
 }

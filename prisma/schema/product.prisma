@@ -199,6 +199,7 @@ model Offer {
     updatedAt DateTime @updatedAt
 
     offerItems OfferItem[]
+    order Order[]
 
     @@index([sellerId, buyerId])
     @@index([buyerId, sellerId])

@@ -33,6 +33,12 @@ router.get("/checkout/:cartGroupId/shipping-rates", auth(...(allRoles.filter(rol
 
 router.get("/by-seller/:sellerUserName", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.cartsByUserSeller);
 
+router.get("/checkout/offer/:offerId/summary", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.offerCheckoutSummary);
+
+router.get("/checkout/offer/:offerId/shipping-rates", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.offerAvailableRates);
+
+router.get("/offer/:offerId", auth(...allRoles), cartControler.offerItems);
+
 router.get("/:cartGroupId", auth(...allRoles), cartControler.checkoutItem);
 
 export const cartRouts = router;

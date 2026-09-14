@@ -82,6 +82,14 @@ export const DeliveryChargeStatus = {
 export type DeliveryChargeStatus = (typeof DeliveryChargeStatus)[keyof typeof DeliveryChargeStatus]
 
 
+export const OrderPricingSource = {
+  OFFER: 'OFFER',
+  BUNDLE: 'BUNDLE'
+} as const
+
+export type OrderPricingSource = (typeof OrderPricingSource)[keyof typeof OrderPricingSource]
+
+
 export const CurrentShipTo = {
   AUTHENTICATION_CENTER: 'AUTHENTICATION_CENTER',
   BUYER: 'BUYER'

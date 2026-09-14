@@ -28,6 +28,11 @@ enum DeliveryChargeStatus {
     REFUNDED
 }
 
+enum OrderPricingSource {
+    OFFER
+    BUNDLE
+}
+
 model Order {
     id String @id @default(uuid())
 
@@ -70,6 +75,9 @@ model Order {
     serviceFee    Float @default(0) // platform service fee
     authenticationFee Float @default(0) // authentication fee
 
+    pricingSource OrderPricingSource @default(BUNDLE)
+    offerId String?
+    offer   Offer? @relation(fields: [offerId], references: [id], onDelete: Cascade)
     bundleDiscountPercent Float @default(0)
 
     assistentSellId String? @unique
@@ -132,6 +140,8 @@ model OrderItem {
     quantity   Int
     weight     Float @default(0) // NEW: snapshot of product weight at order time
     unitPrice  Float // snapshot of price at time of order, after bundle discount
+    unitAllocatedPrice Float @default(0) // snapshot of price at time of order, after bundle discount & offer allocation
+    sellerFinalUnitPrice Float @default(0) // snapshot of price at time of order, after bundle discount & offer allocation & seller donation allocation
     totalPrice Float // unitPrice * quantity
 
     isCancelled Boolean @default(false)
@@ -147,6 +157,7 @@ model OrderItem {
     cancelledAt DateTime?
 
     extra_donation   Float          @default(0)
+    sell_donation Float          @default(0)
     donations        SellDonation[]
 
     cancelledBy         CancelledBy?

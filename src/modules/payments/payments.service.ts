@@ -15,6 +15,7 @@ import { BadgeGenerateQueue } from '../../queues/badge.queue';
 import { MakeOrderQueue } from '../../queues/makeOrder.queue';
 import { RefundQueue } from '../../queues/refund.queue';
 import { notificationQueue } from '../../queues/notificaion.queue';
+import { StockUpdateQueue } from '../../queues/stockUpdate.queue';
 
 const stripe = new Stripe(config.stripe?.stripe_api_secret as string, {
   apiVersion: "2025-03-31.basil", // Valid API version
@@ -114,7 +115,7 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
     include: {
       order: {
         select: {
-          id : true,
+          id: true,
           orderNumber: true,
           treeCredit: true,
           buyerId: true,
@@ -188,11 +189,14 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
     });
 
     if (payment?.order) {
+
+      await StockUpdateQueue.add(jobs.stockUpdate, { orderId: payment?.order?.id });
+
       const treeCredit = payment?.order?.treeCredit || 0;
 
       const tree_count = Math.floor(treeCredit / 4); // 1 tree for every $4 spent
       // generate badge for buyer, tree gift badge
-      BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TREE_PLANTER", userId: payment?.order?.buyerId, increment: tree_count });
+      await BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TREE_PLANTER", userId: payment?.order?.buyerId, increment: tree_count });
 
 
       //send notification to the seller about order creation success

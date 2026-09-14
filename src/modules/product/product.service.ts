@@ -1825,6 +1825,7 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
                         quantity: 1
                     }))
                 },
+                expiredAt: moment().add(24, 'hours').toDate(), // set expiration time to 24 hours from now
                 sendByBuyer: false,
                 status: "ACCEPTED"
             }

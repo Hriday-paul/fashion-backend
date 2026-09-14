@@ -19,6 +19,18 @@ const addNewOrder = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const addNewOfferOrder = catchAsync(async (req: Request, res: Response) => {
+    // add order
+    const result = await orderService.addNewOfferOrder(req.body, req.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Order created successfully, Pay now',
+        data: result,
+    });
+});
+
 const ordersBySeller = catchAsync(async (req: Request, res: Response) => {
 
     const query = pick(req.query, ["searchTerm", "status"])
@@ -182,6 +194,7 @@ const getShippingLebel = catchAsync(async (req: Request, res: Response) => {
 
 export const orderControler = {
     addNewOrder,
+    addNewOfferOrder,
     ordersBySeller,
     ordersAsABuyer,
     confirmOrderReceived,

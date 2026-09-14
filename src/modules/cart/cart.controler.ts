@@ -79,6 +79,42 @@ const deleteCartItem = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const offerItems = catchAsync(async (req: Request, res: Response) => {
+    const offerId = req.params.offerId;
+    const result = await cartService.offerCheckoutItem(offerId, req.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Offer items retrieved successfully',
+        data: result
+    });
+});
+
+
+const offerCheckoutSummary = catchAsync(async (req: Request, res: Response) => {
+    const offerId = req.params.offerId;
+    const result = await cartService.offerCheckoutSummary(offerId, req.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Checkout summary retrieved successfully',
+        data: result
+    });
+});
+
+const offerAvailableRates = catchAsync(async (req: Request, res: Response) => {
+    const offerId = req.params.offerId;
+    const result = await cartService.offerAvailableRates(offerId, req.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Available rates retrieved successfully',
+        data: result
+    });
+});
+
 export const cartControler = {
     cartsByUser,
     addToCart,
@@ -86,5 +122,9 @@ export const cartControler = {
     checkoutSummary,
     availableRates,
     deleteCartItem,
-    cartsByUserSeller
+    cartsByUserSeller,
+
+    offerItems,
+    offerCheckoutSummary,
+    offerAvailableRates
 }
