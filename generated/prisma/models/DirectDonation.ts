@@ -39,9 +39,6 @@ export type DirectDonationMinAggregateOutputType = {
   charityId: string | null
   amount: number | null
   currency: string | null
-  status: $Enums.DirectDonationStatus | null
-  transactionId: string | null
-  paymentIntentId: string | null
   isAnonymous: boolean | null
   message: string | null
   donatedAt: Date | null
@@ -55,9 +52,6 @@ export type DirectDonationMaxAggregateOutputType = {
   charityId: string | null
   amount: number | null
   currency: string | null
-  status: $Enums.DirectDonationStatus | null
-  transactionId: string | null
-  paymentIntentId: string | null
   isAnonymous: boolean | null
   message: string | null
   donatedAt: Date | null
@@ -71,9 +65,6 @@ export type DirectDonationCountAggregateOutputType = {
   charityId: number
   amount: number
   currency: number
-  status: number
-  transactionId: number
-  paymentIntentId: number
   isAnonymous: number
   message: number
   donatedAt: number
@@ -97,9 +88,6 @@ export type DirectDonationMinAggregateInputType = {
   charityId?: true
   amount?: true
   currency?: true
-  status?: true
-  transactionId?: true
-  paymentIntentId?: true
   isAnonymous?: true
   message?: true
   donatedAt?: true
@@ -113,9 +101,6 @@ export type DirectDonationMaxAggregateInputType = {
   charityId?: true
   amount?: true
   currency?: true
-  status?: true
-  transactionId?: true
-  paymentIntentId?: true
   isAnonymous?: true
   message?: true
   donatedAt?: true
@@ -129,9 +114,6 @@ export type DirectDonationCountAggregateInputType = {
   charityId?: true
   amount?: true
   currency?: true
-  status?: true
-  transactionId?: true
-  paymentIntentId?: true
   isAnonymous?: true
   message?: true
   donatedAt?: true
@@ -228,13 +210,10 @@ export type DirectDonationGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 
 export type DirectDonationGroupByOutputType = {
   id: string
-  donorId: string | null
+  donorId: string
   charityId: string
   amount: number
   currency: string
-  status: $Enums.DirectDonationStatus
-  transactionId: string | null
-  paymentIntentId: string | null
   isAnonymous: boolean
   message: string | null
   donatedAt: Date | null
@@ -267,31 +246,26 @@ export type DirectDonationWhereInput = {
   OR?: Prisma.DirectDonationWhereInput[]
   NOT?: Prisma.DirectDonationWhereInput | Prisma.DirectDonationWhereInput[]
   id?: Prisma.StringFilter<"DirectDonation"> | string
-  donorId?: Prisma.StringNullableFilter<"DirectDonation"> | string | null
+  donorId?: Prisma.StringFilter<"DirectDonation"> | string
   charityId?: Prisma.StringFilter<"DirectDonation"> | string
   amount?: Prisma.FloatFilter<"DirectDonation"> | number
   currency?: Prisma.StringFilter<"DirectDonation"> | string
-  status?: Prisma.EnumDirectDonationStatusFilter<"DirectDonation"> | $Enums.DirectDonationStatus
-  transactionId?: Prisma.StringNullableFilter<"DirectDonation"> | string | null
-  paymentIntentId?: Prisma.StringNullableFilter<"DirectDonation"> | string | null
   isAnonymous?: Prisma.BoolFilter<"DirectDonation"> | boolean
   message?: Prisma.StringNullableFilter<"DirectDonation"> | string | null
   donatedAt?: Prisma.DateTimeNullableFilter<"DirectDonation"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"DirectDonation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DirectDonation"> | Date | string
-  donor?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  donor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   charity?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
 }
 
 export type DirectDonationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  donorId?: Prisma.SortOrderInput | Prisma.SortOrder
+  donorId?: Prisma.SortOrder
   charityId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrderInput | Prisma.SortOrder
-  paymentIntentId?: Prisma.SortOrderInput | Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   message?: Prisma.SortOrderInput | Prisma.SortOrder
   donatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -299,38 +273,34 @@ export type DirectDonationOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   donor?: Prisma.UserOrderByWithRelationInput
   charity?: Prisma.UserOrderByWithRelationInput
+  payment?: Prisma.PaymentOrderByWithRelationInput
 }
 
 export type DirectDonationWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  transactionId?: string
-  paymentIntentId?: string
   AND?: Prisma.DirectDonationWhereInput | Prisma.DirectDonationWhereInput[]
   OR?: Prisma.DirectDonationWhereInput[]
   NOT?: Prisma.DirectDonationWhereInput | Prisma.DirectDonationWhereInput[]
-  donorId?: Prisma.StringNullableFilter<"DirectDonation"> | string | null
+  donorId?: Prisma.StringFilter<"DirectDonation"> | string
   charityId?: Prisma.StringFilter<"DirectDonation"> | string
   amount?: Prisma.FloatFilter<"DirectDonation"> | number
   currency?: Prisma.StringFilter<"DirectDonation"> | string
-  status?: Prisma.EnumDirectDonationStatusFilter<"DirectDonation"> | $Enums.DirectDonationStatus
   isAnonymous?: Prisma.BoolFilter<"DirectDonation"> | boolean
   message?: Prisma.StringNullableFilter<"DirectDonation"> | string | null
   donatedAt?: Prisma.DateTimeNullableFilter<"DirectDonation"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"DirectDonation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DirectDonation"> | Date | string
-  donor?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  donor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   charity?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "transactionId" | "paymentIntentId">
+  payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
+}, "id">
 
 export type DirectDonationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  donorId?: Prisma.SortOrderInput | Prisma.SortOrder
+  donorId?: Prisma.SortOrder
   charityId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrderInput | Prisma.SortOrder
-  paymentIntentId?: Prisma.SortOrderInput | Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   message?: Prisma.SortOrderInput | Prisma.SortOrder
   donatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -348,13 +318,10 @@ export type DirectDonationScalarWhereWithAggregatesInput = {
   OR?: Prisma.DirectDonationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DirectDonationScalarWhereWithAggregatesInput | Prisma.DirectDonationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"DirectDonation"> | string
-  donorId?: Prisma.StringNullableWithAggregatesFilter<"DirectDonation"> | string | null
+  donorId?: Prisma.StringWithAggregatesFilter<"DirectDonation"> | string
   charityId?: Prisma.StringWithAggregatesFilter<"DirectDonation"> | string
   amount?: Prisma.FloatWithAggregatesFilter<"DirectDonation"> | number
   currency?: Prisma.StringWithAggregatesFilter<"DirectDonation"> | string
-  status?: Prisma.EnumDirectDonationStatusWithAggregatesFilter<"DirectDonation"> | $Enums.DirectDonationStatus
-  transactionId?: Prisma.StringNullableWithAggregatesFilter<"DirectDonation"> | string | null
-  paymentIntentId?: Prisma.StringNullableWithAggregatesFilter<"DirectDonation"> | string | null
   isAnonymous?: Prisma.BoolWithAggregatesFilter<"DirectDonation"> | boolean
   message?: Prisma.StringNullableWithAggregatesFilter<"DirectDonation"> | string | null
   donatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"DirectDonation"> | Date | string | null
@@ -366,75 +333,64 @@ export type DirectDonationCreateInput = {
   id?: string
   amount?: number
   currency?: string
-  status?: $Enums.DirectDonationStatus
-  transactionId?: string | null
-  paymentIntentId?: string | null
   isAnonymous?: boolean
   message?: string | null
   donatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  donor?: Prisma.UserCreateNestedOneWithoutDonationsInput
+  donor: Prisma.UserCreateNestedOneWithoutDonationsInput
   charity: Prisma.UserCreateNestedOneWithoutDonationsReceivedInput
+  payment?: Prisma.PaymentCreateNestedOneWithoutDonationInput
 }
 
 export type DirectDonationUncheckedCreateInput = {
   id?: string
-  donorId?: string | null
+  donorId: string
   charityId: string
   amount?: number
   currency?: string
-  status?: $Enums.DirectDonationStatus
-  transactionId?: string | null
-  paymentIntentId?: string | null
   isAnonymous?: boolean
   message?: string | null
   donatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutDonationInput
 }
 
 export type DirectDonationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumDirectDonationStatusFieldUpdateOperationsInput | $Enums.DirectDonationStatus
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donor?: Prisma.UserUpdateOneWithoutDonationsNestedInput
+  donor?: Prisma.UserUpdateOneRequiredWithoutDonationsNestedInput
   charity?: Prisma.UserUpdateOneRequiredWithoutDonationsReceivedNestedInput
+  payment?: Prisma.PaymentUpdateOneWithoutDonationNestedInput
 }
 
 export type DirectDonationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  donorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorId?: Prisma.StringFieldUpdateOperationsInput | string
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumDirectDonationStatusFieldUpdateOperationsInput | $Enums.DirectDonationStatus
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.PaymentUncheckedUpdateOneWithoutDonationNestedInput
 }
 
 export type DirectDonationCreateManyInput = {
   id?: string
-  donorId?: string | null
+  donorId: string
   charityId: string
   amount?: number
   currency?: string
-  status?: $Enums.DirectDonationStatus
-  transactionId?: string | null
-  paymentIntentId?: string | null
   isAnonymous?: boolean
   message?: string | null
   donatedAt?: Date | string | null
@@ -446,9 +402,6 @@ export type DirectDonationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumDirectDonationStatusFieldUpdateOperationsInput | $Enums.DirectDonationStatus
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -458,18 +411,20 @@ export type DirectDonationUpdateManyMutationInput = {
 
 export type DirectDonationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  donorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorId?: Prisma.StringFieldUpdateOperationsInput | string
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumDirectDonationStatusFieldUpdateOperationsInput | $Enums.DirectDonationStatus
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type DirectDonationNullableScalarRelationFilter = {
+  is?: Prisma.DirectDonationWhereInput | null
+  isNot?: Prisma.DirectDonationWhereInput | null
 }
 
 export type DirectDonationCountOrderByAggregateInput = {
@@ -478,9 +433,6 @@ export type DirectDonationCountOrderByAggregateInput = {
   charityId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
-  paymentIntentId?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   message?: Prisma.SortOrder
   donatedAt?: Prisma.SortOrder
@@ -498,9 +450,6 @@ export type DirectDonationMaxOrderByAggregateInput = {
   charityId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
-  paymentIntentId?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   message?: Prisma.SortOrder
   donatedAt?: Prisma.SortOrder
@@ -514,9 +463,6 @@ export type DirectDonationMinOrderByAggregateInput = {
   charityId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
-  paymentIntentId?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   message?: Prisma.SortOrder
   donatedAt?: Prisma.SortOrder
@@ -538,8 +484,20 @@ export type DirectDonationOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type EnumDirectDonationStatusFieldUpdateOperationsInput = {
-  set?: $Enums.DirectDonationStatus
+export type DirectDonationCreateNestedOneWithoutPaymentInput = {
+  create?: Prisma.XOR<Prisma.DirectDonationCreateWithoutPaymentInput, Prisma.DirectDonationUncheckedCreateWithoutPaymentInput>
+  connectOrCreate?: Prisma.DirectDonationCreateOrConnectWithoutPaymentInput
+  connect?: Prisma.DirectDonationWhereUniqueInput
+}
+
+export type DirectDonationUpdateOneWithoutPaymentNestedInput = {
+  create?: Prisma.XOR<Prisma.DirectDonationCreateWithoutPaymentInput, Prisma.DirectDonationUncheckedCreateWithoutPaymentInput>
+  connectOrCreate?: Prisma.DirectDonationCreateOrConnectWithoutPaymentInput
+  upsert?: Prisma.DirectDonationUpsertWithoutPaymentInput
+  disconnect?: Prisma.DirectDonationWhereInput | boolean
+  delete?: Prisma.DirectDonationWhereInput | boolean
+  connect?: Prisma.DirectDonationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DirectDonationUpdateToOneWithWhereWithoutPaymentInput, Prisma.DirectDonationUpdateWithoutPaymentInput>, Prisma.DirectDonationUncheckedUpdateWithoutPaymentInput>
 }
 
 export type DirectDonationCreateNestedManyWithoutDonorInput = {
@@ -626,19 +584,85 @@ export type DirectDonationUncheckedUpdateManyWithoutCharityNestedInput = {
   deleteMany?: Prisma.DirectDonationScalarWhereInput | Prisma.DirectDonationScalarWhereInput[]
 }
 
+export type DirectDonationCreateWithoutPaymentInput = {
+  id?: string
+  amount?: number
+  currency?: string
+  isAnonymous?: boolean
+  message?: string | null
+  donatedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  donor: Prisma.UserCreateNestedOneWithoutDonationsInput
+  charity: Prisma.UserCreateNestedOneWithoutDonationsReceivedInput
+}
+
+export type DirectDonationUncheckedCreateWithoutPaymentInput = {
+  id?: string
+  donorId: string
+  charityId: string
+  amount?: number
+  currency?: string
+  isAnonymous?: boolean
+  message?: string | null
+  donatedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type DirectDonationCreateOrConnectWithoutPaymentInput = {
+  where: Prisma.DirectDonationWhereUniqueInput
+  create: Prisma.XOR<Prisma.DirectDonationCreateWithoutPaymentInput, Prisma.DirectDonationUncheckedCreateWithoutPaymentInput>
+}
+
+export type DirectDonationUpsertWithoutPaymentInput = {
+  update: Prisma.XOR<Prisma.DirectDonationUpdateWithoutPaymentInput, Prisma.DirectDonationUncheckedUpdateWithoutPaymentInput>
+  create: Prisma.XOR<Prisma.DirectDonationCreateWithoutPaymentInput, Prisma.DirectDonationUncheckedCreateWithoutPaymentInput>
+  where?: Prisma.DirectDonationWhereInput
+}
+
+export type DirectDonationUpdateToOneWithWhereWithoutPaymentInput = {
+  where?: Prisma.DirectDonationWhereInput
+  data: Prisma.XOR<Prisma.DirectDonationUpdateWithoutPaymentInput, Prisma.DirectDonationUncheckedUpdateWithoutPaymentInput>
+}
+
+export type DirectDonationUpdateWithoutPaymentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donor?: Prisma.UserUpdateOneRequiredWithoutDonationsNestedInput
+  charity?: Prisma.UserUpdateOneRequiredWithoutDonationsReceivedNestedInput
+}
+
+export type DirectDonationUncheckedUpdateWithoutPaymentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  donorId?: Prisma.StringFieldUpdateOperationsInput | string
+  charityId?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type DirectDonationCreateWithoutDonorInput = {
   id?: string
   amount?: number
   currency?: string
-  status?: $Enums.DirectDonationStatus
-  transactionId?: string | null
-  paymentIntentId?: string | null
   isAnonymous?: boolean
   message?: string | null
   donatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   charity: Prisma.UserCreateNestedOneWithoutDonationsReceivedInput
+  payment?: Prisma.PaymentCreateNestedOneWithoutDonationInput
 }
 
 export type DirectDonationUncheckedCreateWithoutDonorInput = {
@@ -646,14 +670,12 @@ export type DirectDonationUncheckedCreateWithoutDonorInput = {
   charityId: string
   amount?: number
   currency?: string
-  status?: $Enums.DirectDonationStatus
-  transactionId?: string | null
-  paymentIntentId?: string | null
   isAnonymous?: boolean
   message?: string | null
   donatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutDonationInput
 }
 
 export type DirectDonationCreateOrConnectWithoutDonorInput = {
@@ -670,30 +692,26 @@ export type DirectDonationCreateWithoutCharityInput = {
   id?: string
   amount?: number
   currency?: string
-  status?: $Enums.DirectDonationStatus
-  transactionId?: string | null
-  paymentIntentId?: string | null
   isAnonymous?: boolean
   message?: string | null
   donatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  donor?: Prisma.UserCreateNestedOneWithoutDonationsInput
+  donor: Prisma.UserCreateNestedOneWithoutDonationsInput
+  payment?: Prisma.PaymentCreateNestedOneWithoutDonationInput
 }
 
 export type DirectDonationUncheckedCreateWithoutCharityInput = {
   id?: string
-  donorId?: string | null
+  donorId: string
   amount?: number
   currency?: string
-  status?: $Enums.DirectDonationStatus
-  transactionId?: string | null
-  paymentIntentId?: string | null
   isAnonymous?: boolean
   message?: string | null
   donatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutDonationInput
 }
 
 export type DirectDonationCreateOrConnectWithoutCharityInput = {
@@ -727,13 +745,10 @@ export type DirectDonationScalarWhereInput = {
   OR?: Prisma.DirectDonationScalarWhereInput[]
   NOT?: Prisma.DirectDonationScalarWhereInput | Prisma.DirectDonationScalarWhereInput[]
   id?: Prisma.StringFilter<"DirectDonation"> | string
-  donorId?: Prisma.StringNullableFilter<"DirectDonation"> | string | null
+  donorId?: Prisma.StringFilter<"DirectDonation"> | string
   charityId?: Prisma.StringFilter<"DirectDonation"> | string
   amount?: Prisma.FloatFilter<"DirectDonation"> | number
   currency?: Prisma.StringFilter<"DirectDonation"> | string
-  status?: Prisma.EnumDirectDonationStatusFilter<"DirectDonation"> | $Enums.DirectDonationStatus
-  transactionId?: Prisma.StringNullableFilter<"DirectDonation"> | string | null
-  paymentIntentId?: Prisma.StringNullableFilter<"DirectDonation"> | string | null
   isAnonymous?: Prisma.BoolFilter<"DirectDonation"> | boolean
   message?: Prisma.StringNullableFilter<"DirectDonation"> | string | null
   donatedAt?: Prisma.DateTimeNullableFilter<"DirectDonation"> | Date | string | null
@@ -762,9 +777,6 @@ export type DirectDonationCreateManyDonorInput = {
   charityId: string
   amount?: number
   currency?: string
-  status?: $Enums.DirectDonationStatus
-  transactionId?: string | null
-  paymentIntentId?: string | null
   isAnonymous?: boolean
   message?: string | null
   donatedAt?: Date | string | null
@@ -774,12 +786,9 @@ export type DirectDonationCreateManyDonorInput = {
 
 export type DirectDonationCreateManyCharityInput = {
   id?: string
-  donorId?: string | null
+  donorId: string
   amount?: number
   currency?: string
-  status?: $Enums.DirectDonationStatus
-  transactionId?: string | null
-  paymentIntentId?: string | null
   isAnonymous?: boolean
   message?: string | null
   donatedAt?: Date | string | null
@@ -791,15 +800,13 @@ export type DirectDonationUpdateWithoutDonorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumDirectDonationStatusFieldUpdateOperationsInput | $Enums.DirectDonationStatus
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charity?: Prisma.UserUpdateOneRequiredWithoutDonationsReceivedNestedInput
+  payment?: Prisma.PaymentUpdateOneWithoutDonationNestedInput
 }
 
 export type DirectDonationUncheckedUpdateWithoutDonorInput = {
@@ -807,14 +814,12 @@ export type DirectDonationUncheckedUpdateWithoutDonorInput = {
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumDirectDonationStatusFieldUpdateOperationsInput | $Enums.DirectDonationStatus
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.PaymentUncheckedUpdateOneWithoutDonationNestedInput
 }
 
 export type DirectDonationUncheckedUpdateManyWithoutDonorInput = {
@@ -822,9 +827,6 @@ export type DirectDonationUncheckedUpdateManyWithoutDonorInput = {
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumDirectDonationStatusFieldUpdateOperationsInput | $Enums.DirectDonationStatus
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -836,40 +838,33 @@ export type DirectDonationUpdateWithoutCharityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumDirectDonationStatusFieldUpdateOperationsInput | $Enums.DirectDonationStatus
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  donor?: Prisma.UserUpdateOneWithoutDonationsNestedInput
+  donor?: Prisma.UserUpdateOneRequiredWithoutDonationsNestedInput
+  payment?: Prisma.PaymentUpdateOneWithoutDonationNestedInput
 }
 
 export type DirectDonationUncheckedUpdateWithoutCharityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  donorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumDirectDonationStatusFieldUpdateOperationsInput | $Enums.DirectDonationStatus
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.PaymentUncheckedUpdateOneWithoutDonationNestedInput
 }
 
 export type DirectDonationUncheckedUpdateManyWithoutCharityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  donorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumDirectDonationStatusFieldUpdateOperationsInput | $Enums.DirectDonationStatus
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -885,16 +880,14 @@ export type DirectDonationSelect<ExtArgs extends runtime.Types.Extensions.Intern
   charityId?: boolean
   amount?: boolean
   currency?: boolean
-  status?: boolean
-  transactionId?: boolean
-  paymentIntentId?: boolean
   isAnonymous?: boolean
   message?: boolean
   donatedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  donor?: boolean | Prisma.DirectDonation$donorArgs<ExtArgs>
+  donor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  payment?: boolean | Prisma.DirectDonation$paymentArgs<ExtArgs>
 }, ExtArgs["result"]["directDonation"]>
 
 export type DirectDonationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -903,15 +896,12 @@ export type DirectDonationSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   charityId?: boolean
   amount?: boolean
   currency?: boolean
-  status?: boolean
-  transactionId?: boolean
-  paymentIntentId?: boolean
   isAnonymous?: boolean
   message?: boolean
   donatedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  donor?: boolean | Prisma.DirectDonation$donorArgs<ExtArgs>
+  donor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["directDonation"]>
 
@@ -921,15 +911,12 @@ export type DirectDonationSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   charityId?: boolean
   amount?: boolean
   currency?: boolean
-  status?: boolean
-  transactionId?: boolean
-  paymentIntentId?: boolean
   isAnonymous?: boolean
   message?: boolean
   donatedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  donor?: boolean | Prisma.DirectDonation$donorArgs<ExtArgs>
+  donor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["directDonation"]>
 
@@ -939,9 +926,6 @@ export type DirectDonationSelectScalar = {
   charityId?: boolean
   amount?: boolean
   currency?: boolean
-  status?: boolean
-  transactionId?: boolean
-  paymentIntentId?: boolean
   isAnonymous?: boolean
   message?: boolean
   donatedAt?: boolean
@@ -949,35 +933,34 @@ export type DirectDonationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type DirectDonationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "donorId" | "charityId" | "amount" | "currency" | "status" | "transactionId" | "paymentIntentId" | "isAnonymous" | "message" | "donatedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["directDonation"]>
+export type DirectDonationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "donorId" | "charityId" | "amount" | "currency" | "isAnonymous" | "message" | "donatedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["directDonation"]>
 export type DirectDonationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  donor?: boolean | Prisma.DirectDonation$donorArgs<ExtArgs>
+  donor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  payment?: boolean | Prisma.DirectDonation$paymentArgs<ExtArgs>
 }
 export type DirectDonationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  donor?: boolean | Prisma.DirectDonation$donorArgs<ExtArgs>
+  donor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type DirectDonationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  donor?: boolean | Prisma.DirectDonation$donorArgs<ExtArgs>
+  donor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $DirectDonationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DirectDonation"
   objects: {
-    donor: Prisma.$UserPayload<ExtArgs> | null
+    donor: Prisma.$UserPayload<ExtArgs>
     charity: Prisma.$UserPayload<ExtArgs>
+    payment: Prisma.$PaymentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    donorId: string | null
+    donorId: string
     charityId: string
     amount: number
     currency: string
-    status: $Enums.DirectDonationStatus
-    transactionId: string | null
-    paymentIntentId: string | null
     isAnonymous: boolean
     message: string | null
     donatedAt: Date | null
@@ -1377,8 +1360,9 @@ readonly fields: DirectDonationFieldRefs;
  */
 export interface Prisma__DirectDonationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  donor<T extends Prisma.DirectDonation$donorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DirectDonation$donorArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  donor<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   charity<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  payment<T extends Prisma.DirectDonation$paymentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DirectDonation$paymentArgs<ExtArgs>>): Prisma.Prisma__PaymentClient<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1413,9 +1397,6 @@ export interface DirectDonationFieldRefs {
   readonly charityId: Prisma.FieldRef<"DirectDonation", 'String'>
   readonly amount: Prisma.FieldRef<"DirectDonation", 'Float'>
   readonly currency: Prisma.FieldRef<"DirectDonation", 'String'>
-  readonly status: Prisma.FieldRef<"DirectDonation", 'DirectDonationStatus'>
-  readonly transactionId: Prisma.FieldRef<"DirectDonation", 'String'>
-  readonly paymentIntentId: Prisma.FieldRef<"DirectDonation", 'String'>
   readonly isAnonymous: Prisma.FieldRef<"DirectDonation", 'Boolean'>
   readonly message: Prisma.FieldRef<"DirectDonation", 'String'>
   readonly donatedAt: Prisma.FieldRef<"DirectDonation", 'DateTime'>
@@ -1817,22 +1798,22 @@ export type DirectDonationDeleteManyArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
- * DirectDonation.donor
+ * DirectDonation.payment
  */
-export type DirectDonation$donorArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DirectDonation$paymentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the User
+   * Select specific fields to fetch from the Payment
    */
-  select?: Prisma.UserSelect<ExtArgs> | null
+  select?: Prisma.PaymentSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the User
+   * Omit specific fields from the Payment
    */
-  omit?: Prisma.UserOmit<ExtArgs> | null
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
 }
 
 /**

@@ -4,7 +4,7 @@
 model Wallet {
   id                     String   @id @default(uuid())
   sellerId               String   @unique
-  seller                 User     @relation(fields: [sellerId], references: [id])
+  seller                 User     @relation(fields: [sellerId], references: [id], onDelete: Restrict)
 
   // balance = withdrawable amount
   balance                Float @default(0)
@@ -17,6 +17,8 @@ model Wallet {
   updatedAt              DateTime @updatedAt
 
   transactions WalletTransaction[]
+
+  payouts WalletPayout[]
 
   @@map("wallets")
   @@index(sellerId)
@@ -59,4 +61,37 @@ enum CreaditType {
 enum TxType {
     DEBIT
     CREDIT
+}
+
+model WalletPayout {
+  id            String          @id @default(uuid())
+  walletId      String
+  wallet        Wallet          @relation(fields: [walletId], references: [id], onDelete: Restrict)
+
+  amount        Float         @default(0)
+  stripePayoutId String?
+  status        PayoutStatus   @default(PENDING)
+
+  paidAt DateTime?
+
+  connectAccountId String
+  stripeBalanceTransactionId String?
+
+  payoutData Json?
+
+  userId        String
+  user          User          @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("wallet_payouts")
+  @@index([walletId])
+  @@index([userId])
+}
+
+enum PayoutStatus {
+  PENDING
+  PAID
+  FAILED
 }

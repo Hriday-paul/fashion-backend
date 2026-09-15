@@ -185,6 +185,15 @@ export const BuyerRequestCancelStatus = {
 export type BuyerRequestCancelStatus = (typeof BuyerRequestCancelStatus)[keyof typeof BuyerRequestCancelStatus]
 
 
+export const PaymentType = {
+  ORDER: 'ORDER',
+  DONATION: 'DONATION',
+  SUBSCRIPTION: 'SUBSCRIPTION'
+} as const
+
+export type PaymentType = (typeof PaymentType)[keyof typeof PaymentType]
+
+
 export const PaymentStatus = {
   PENDING: 'PENDING',
   PROCESSING: 'PROCESSING',
@@ -204,16 +213,6 @@ export const StripePaymentStatus = {
 } as const
 
 export type StripePaymentStatus = (typeof StripePaymentStatus)[keyof typeof StripePaymentStatus]
-
-
-export const DirectDonationStatus = {
-  PENDING: 'PENDING',
-  SUCCESS: 'SUCCESS',
-  FAILED: 'FAILED',
-  REFUNDED: 'REFUNDED'
-} as const
-
-export type DirectDonationStatus = (typeof DirectDonationStatus)[keyof typeof DirectDonationStatus]
 
 
 export const RefundStatus = {
@@ -309,7 +308,8 @@ export const NotificationEntityType = {
   USER: 'USER',
   DONATION: 'DONATION',
   RETURN: 'RETURN',
-  BADGE: 'BADGE'
+  BADGE: 'BADGE',
+  WITHDRAWAL: 'WITHDRAWAL'
 } as const
 
 export type NotificationEntityType = (typeof NotificationEntityType)[keyof typeof NotificationEntityType]
@@ -338,7 +338,8 @@ export const NotificationType = {
   RETURN_COMPLETED: 'RETURN_COMPLETED',
   RETURN_STATUS_CHANGED: 'RETURN_STATUS_CHANGED',
   RETURN_ITEM_CANCELED: 'RETURN_ITEM_CANCELED',
-  BADGE_EARNED: 'BADGE_EARNED'
+  BADGE_EARNED: 'BADGE_EARNED',
+  WITHDRAWAL_RECEIVED: 'WITHDRAWAL_RECEIVED'
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
@@ -369,3 +370,12 @@ export const TxType = {
 } as const
 
 export type TxType = (typeof TxType)[keyof typeof TxType]
+
+
+export const PayoutStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  FAILED: 'FAILED'
+} as const
+
+export type PayoutStatus = (typeof PayoutStatus)[keyof typeof PayoutStatus]

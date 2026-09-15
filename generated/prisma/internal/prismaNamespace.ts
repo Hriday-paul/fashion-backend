@@ -437,7 +437,8 @@ export const ModelName = {
   Notification: 'Notification',
   Setting: 'Setting',
   Wallet: 'Wallet',
-  WalletTransaction: 'WalletTransaction'
+  WalletTransaction: 'WalletTransaction',
+  WalletPayout: 'WalletPayout'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -453,7 +454,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "follow" | "chat" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction"
+    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "follow" | "chat" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction" | "walletPayout"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4083,6 +4084,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    WalletPayout: {
+      payload: Prisma.$WalletPayoutPayload<ExtArgs>
+      fields: Prisma.WalletPayoutFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WalletPayoutFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletPayoutPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WalletPayoutFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletPayoutPayload>
+        }
+        findFirst: {
+          args: Prisma.WalletPayoutFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletPayoutPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WalletPayoutFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletPayoutPayload>
+        }
+        findMany: {
+          args: Prisma.WalletPayoutFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletPayoutPayload>[]
+        }
+        create: {
+          args: Prisma.WalletPayoutCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletPayoutPayload>
+        }
+        createMany: {
+          args: Prisma.WalletPayoutCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WalletPayoutCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletPayoutPayload>[]
+        }
+        delete: {
+          args: Prisma.WalletPayoutDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletPayoutPayload>
+        }
+        update: {
+          args: Prisma.WalletPayoutUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletPayoutPayload>
+        }
+        deleteMany: {
+          args: Prisma.WalletPayoutDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WalletPayoutUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WalletPayoutUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletPayoutPayload>[]
+        }
+        upsert: {
+          args: Prisma.WalletPayoutUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletPayoutPayload>
+        }
+        aggregate: {
+          args: Prisma.WalletPayoutAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWalletPayout>
+        }
+        groupBy: {
+          args: Prisma.WalletPayoutGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WalletPayoutGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WalletPayoutCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WalletPayoutCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -4429,6 +4504,8 @@ export const PaymentScalarFieldEnum = {
   status: 'status',
   stripe_status: 'stripe_status',
   orderId: 'orderId',
+  donationId: 'donationId',
+  paymentType: 'paymentType',
   transactionId: 'transactionId',
   paymentIntentId: 'paymentIntentId',
   checkoutSessionId: 'checkoutSessionId',
@@ -4454,9 +4531,6 @@ export const DirectDonationScalarFieldEnum = {
   charityId: 'charityId',
   amount: 'amount',
   currency: 'currency',
-  status: 'status',
-  transactionId: 'transactionId',
-  paymentIntentId: 'paymentIntentId',
   isAnonymous: 'isAnonymous',
   message: 'message',
   donatedAt: 'donatedAt',
@@ -4905,6 +4979,24 @@ export const WalletTransactionScalarFieldEnum = {
 export type WalletTransactionScalarFieldEnum = (typeof WalletTransactionScalarFieldEnum)[keyof typeof WalletTransactionScalarFieldEnum]
 
 
+export const WalletPayoutScalarFieldEnum = {
+  id: 'id',
+  walletId: 'walletId',
+  amount: 'amount',
+  stripePayoutId: 'stripePayoutId',
+  status: 'status',
+  paidAt: 'paidAt',
+  connectAccountId: 'connectAccountId',
+  stripeBalanceTransactionId: 'stripeBalanceTransactionId',
+  payoutData: 'payoutData',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WalletPayoutScalarFieldEnum = (typeof WalletPayoutScalarFieldEnum)[keyof typeof WalletPayoutScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -5268,6 +5360,20 @@ export type ListEnumStripePaymentStatusFieldRefInput<$PrismaModel> = FieldRefInp
 
 
 /**
+ * Reference to a field of type 'PaymentType'
+ */
+export type EnumPaymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentType'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentType[]'
+ */
+export type ListEnumPaymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentType[]'>
+    
+
+
+/**
  * Reference to a field of type 'Json'
  */
 export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -5278,20 +5384,6 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
- * Reference to a field of type 'DirectDonationStatus'
- */
-export type EnumDirectDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DirectDonationStatus'>
-    
-
-
-/**
- * Reference to a field of type 'DirectDonationStatus[]'
- */
-export type ListEnumDirectDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DirectDonationStatus[]'>
     
 
 
@@ -5462,6 +5554,20 @@ export type EnumTxTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 export type ListEnumTxTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TxType[]'>
     
 
+
+/**
+ * Reference to a field of type 'PayoutStatus'
+ */
+export type EnumPayoutStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PayoutStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PayoutStatus[]'
+ */
+export type ListEnumPayoutStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PayoutStatus[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -5598,6 +5704,7 @@ export type GlobalOmitConfig = {
   setting?: Prisma.SettingOmit
   wallet?: Prisma.WalletOmit
   walletTransaction?: Prisma.WalletTransactionOmit
+  walletPayout?: Prisma.WalletPayoutOmit
 }
 
 /* Types for Logging */

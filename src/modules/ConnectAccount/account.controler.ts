@@ -1,3 +1,5 @@
+import { PaginateOptions } from "../../helper/pagination.helper";
+import pick from "../../shared/pick";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { paymentsService } from "../payments/payments.service";
@@ -59,10 +61,33 @@ const accountBalance = catchAsync(async (req, res) => {
     });
 });
 
+const requestToWithdraw = catchAsync(async (req, res) => {
+    const result = await accountService.requestToWithdraw(req?.user?.id, req.body.amount);
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Withdrawal request submitted successfully',
+        data: result,
+    });
+});
+
+const payoutHistory = catchAsync(async (req, res) => {
+    const options = pick(req.query, PaginateOptions);
+    const result = await accountService.payoutHistory(req?.user?.id, options);
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Payout history retrived successfully',
+        data: result,
+    });
+});
+
 export const accountControler = {
     stripLinkAccount,
     refresh,
     returnUrl,
     getConnectedAccountData,
+    requestToWithdraw,
+    payoutHistory,
     accountBalance
 }

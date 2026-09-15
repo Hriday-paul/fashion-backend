@@ -13,8 +13,13 @@ model Payment {
 
   stripe_status StripePaymentStatus @default(PENDING) // for track transfer
 
-  orderId String @unique
-  order   Order  @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  orderId String? @unique
+  order   Order?  @relation(fields: [orderId], references: [id], onDelete: SetNull)
+
+  donationId String? @unique
+  donation   DirectDonation? @relation(fields: [donationId], references: [id], onDelete: SetNull)
+
+  paymentType PaymentType @default(ORDER)
 
   transactionId          String
   paymentIntentId        String?
@@ -40,6 +45,12 @@ model Payment {
   @@map("payments")
 }
 
+enum PaymentType {
+  ORDER
+  DONATION
+  SUBSCRIPTION
+}
+
 enum PaymentStatus {
   PENDING
   PROCESSING
@@ -58,8 +69,8 @@ enum StripePaymentStatus {
 model DirectDonation {
   id String @id @default(cuid())
 
-  donorId String?
-  donor   User?   @relation("donor", fields: [donorId], references: [id], onDelete: SetNull)
+  donorId String
+  donor   User   @relation("donor", fields: [donorId], references: [id], onDelete: Restrict)
 
   charityId String
   charity   User   @relation("charity", fields: [charityId], references: [id], onDelete: Restrict)
@@ -67,10 +78,7 @@ model DirectDonation {
   amount   Float @default(0)
   currency String  @default("USD")
 
-  status DirectDonationStatus @default(PENDING)
-
-  transactionId   String? @unique
-  paymentIntentId String? @unique
+  payment Payment?
 
   // anonymous donation
   isAnonymous Boolean @default(false)
@@ -84,14 +92,6 @@ model DirectDonation {
 
   @@index([charityId])
   @@index([donorId])
-  @@index([status])
-}
-
-enum DirectDonationStatus {
-  PENDING
-  SUCCESS
-  FAILED
-  REFUNDED
 }
 
 model Refund {

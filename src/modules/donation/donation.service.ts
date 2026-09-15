@@ -6,7 +6,9 @@ const directMoneyDonations = async (userName: string) => {
 
     const donations = await prisma.directDonation.findMany({
         where: {
-            status: "SUCCESS",
+            payment: {
+                status: "SUCCESSED"
+            },
             donor: {
                 userName
             }
@@ -47,7 +49,9 @@ const memberDonationStats = async (userName: string) => {
 
     const directMoneyDonation = await prisma.directDonation.aggregate({
         where: {
-            status: "SUCCESS",
+            payment: {
+                status: "SUCCESSED"
+            },
             donorId: user?.id
         }, _sum: { amount: true }
     });

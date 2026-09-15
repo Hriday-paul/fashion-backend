@@ -31,19 +31,6 @@ const confirmPayment = catchAsync(async (req: Request, res: Response) => {
   // });
 });
 
-const confirmDonationPayment = catchAsync(async (req: Request, res: Response) => {
-
-  const result = await paymentsService.confirmDonationPayment(req?.query);
-
-  res.redirect(`${config.BASE_URL}${config.success_url}`);
-
-  // sendResponse(res, {
-  //   success: true,
-  //   statusCode: httpStatus.OK,
-  //   data: result,
-  //   message: 'payment successful',
-  // });
-});
 
 
 const getPaymentsByUserId = catchAsync(async (req: Request, res: Response) => {
@@ -176,7 +163,6 @@ export const paymentsController = {
   getPaymentsByUserId,
   getPaymentsByUserIdWithParams,
   donationCheckout,
-  confirmDonationPayment,
 
   sellEarnings,
   donationRaisedFromSell,

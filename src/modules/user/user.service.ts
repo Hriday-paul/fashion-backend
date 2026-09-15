@@ -227,7 +227,9 @@ const userDetails = async (userName: string, currentUserId?: string) => {
 
     const directMoneyDonation = await prisma.directDonation.aggregate({
         where: {
-            status: "SUCCESS",
+            payment: {
+                status: "SUCCESSED"
+            },
             donorId: currentUserId
         }, _sum: { amount: true }
     });
@@ -355,7 +357,9 @@ const memberStats = async (userName: string) => {
 
     const directMoneyDonation = await prisma.directDonation.aggregate({
         where: {
-            status: "SUCCESS",
+            payment: {
+                status: "SUCCESSED"
+            },
             donorId: user?.id
         }, _sum: { amount: true }
     });
@@ -397,7 +401,9 @@ const charityStats = async (userName: string) => {
 
     const directMoneyDonationReceived = await prisma.directDonation.aggregate({
         where: {
-            status: "SUCCESS",
+            payment: {
+                status: "SUCCESSED"
+            },
             charityId: user?.id
         }, _sum: { amount: true }
     });

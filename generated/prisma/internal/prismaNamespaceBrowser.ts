@@ -96,7 +96,8 @@ export const ModelName = {
   Notification: 'Notification',
   Setting: 'Setting',
   Wallet: 'Wallet',
-  WalletTransaction: 'WalletTransaction'
+  WalletTransaction: 'WalletTransaction',
+  WalletPayout: 'WalletPayout'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -422,6 +423,8 @@ export const PaymentScalarFieldEnum = {
   status: 'status',
   stripe_status: 'stripe_status',
   orderId: 'orderId',
+  donationId: 'donationId',
+  paymentType: 'paymentType',
   transactionId: 'transactionId',
   paymentIntentId: 'paymentIntentId',
   checkoutSessionId: 'checkoutSessionId',
@@ -447,9 +450,6 @@ export const DirectDonationScalarFieldEnum = {
   charityId: 'charityId',
   amount: 'amount',
   currency: 'currency',
-  status: 'status',
-  transactionId: 'transactionId',
-  paymentIntentId: 'paymentIntentId',
   isAnonymous: 'isAnonymous',
   message: 'message',
   donatedAt: 'donatedAt',
@@ -896,6 +896,24 @@ export const WalletTransactionScalarFieldEnum = {
 } as const
 
 export type WalletTransactionScalarFieldEnum = (typeof WalletTransactionScalarFieldEnum)[keyof typeof WalletTransactionScalarFieldEnum]
+
+
+export const WalletPayoutScalarFieldEnum = {
+  id: 'id',
+  walletId: 'walletId',
+  amount: 'amount',
+  stripePayoutId: 'stripePayoutId',
+  status: 'status',
+  paidAt: 'paidAt',
+  connectAccountId: 'connectAccountId',
+  stripeBalanceTransactionId: 'stripeBalanceTransactionId',
+  payoutData: 'payoutData',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WalletPayoutScalarFieldEnum = (typeof WalletPayoutScalarFieldEnum)[keyof typeof WalletPayoutScalarFieldEnum]
 
 
 export const SortOrder = {

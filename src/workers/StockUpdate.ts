@@ -4,7 +4,7 @@ import prisma from "../shared/prisma";
 
 
 // ── Worker ──────────────────────────────────────────────────────────────────
-export const stockUpdateWorker = new Worker(
+const stockUpdateWorker = new Worker(
     "stock-update",
     async (job: Job<{ orderId: string }>) => {
 

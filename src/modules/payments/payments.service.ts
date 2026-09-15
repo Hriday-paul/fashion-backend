@@ -1,6 +1,6 @@
 import AppError from '../../error/AppError';
 import httpStatus from 'http-status';
-import { createDonationCheckoutSession } from './payments.utils';
+import { createCheckoutSession } from './payments.utils';
 import { Payment, Prisma as GeneratedPrisma, DirectDonation } from '../../../generated/prisma/client';
 import prisma from '../../shared/prisma';
 import { paginationHelper, TPaginationOptions } from '../../helper/pagination.helper';
@@ -9,10 +9,8 @@ import generateRandomString from '../../utils/generateRandomString';
 import Stripe from 'stripe';
 import config from '../../config';
 import moment from 'moment';
-import { CompletePaymentQueue } from '../../queues/completePayment.queue';
 import { jobs } from '../../queues/jobs.name';
 import { BadgeGenerateQueue } from '../../queues/badge.queue';
-import { MakeOrderQueue } from '../../queues/makeOrder.queue';
 import { RefundQueue } from '../../queues/refund.queue';
 import { notificationQueue } from '../../queues/notificaion.queue';
 import { StockUpdateQueue } from '../../queues/stockUpdate.queue';
@@ -23,77 +21,82 @@ const stripe = new Stripe(config.stripe?.stripe_api_secret as string, {
 });
 
 //-----------------create donation checkout---------------------
-const donationCheckout = async (payload: DirectDonation, userId: string) => {
-
-  const { paymentIntentId, donatedAt, currency, status, transactionId, updatedAt, ...body } = payload;
+const donationCheckout = async (
+  payload: DirectDonation,
+  userId: string
+) => {
+  const { donatedAt, currency, updatedAt, ...body } = payload;
 
   const result = await prisma.$transaction(async (transactionClient) => {
 
-    let donation = await transactionClient.directDonation.findFirst({
-      where: { donorId: userId, charityId: payload.charityId, status: "PENDING", amount: payload.amount },
-      include: {
-        charity: true,
-        donor: true,
-      }
-    });
-
     const tranId = generateRandomString(10);
 
-    if (!donation) {
-      donation = await transactionClient.directDonation.create({
-        data: {
-          ...body,
-          transactionId: tranId,
-          donorId: userId,
-          status: "PENDING"
+    const donationdata = await transactionClient.directDonation.create({
+      data: {
+        ...body,
+        donorId: userId
+      },
+      include: {
+        charity: {
+          include: {
+            picture: true,
+          },
         },
-        include: {
-          charity: true,
-          donor: true,
-        }
-      });
-    } else {
-      await transactionClient.directDonation.update({
-        where: { id: donation.id },
-        data: { status: "PENDING", transactionId: tranId, amount: payload.amount },
-        include: {
-          charity: true,
-          donor: true,
-        }
-      });
-    }
-
-    if (!donation?.charity?.stripeAccountId) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'This charity is not set up to receive payments yet.');
-    }
-
-    if (!donation) throw new AppError(httpStatus.BAD_REQUEST, 'Donation not found');
-
-    const donation_charge = {
-      amount: donation?.amount,
-      images: [],
-      name: `Money Donation to ${donation.charity?.fname}`,
-      quantity: 1,
-    }
-
-    const checkoutSession = await createDonationCheckoutSession({
-      // customerId: customer.id,
-      products: [donation_charge],
-      user: donation?.donor!,
-      donationId: donation?.id,
-      stripeAccountId: donation?.charity?.stripeAccountId,
+        donor: true
+      },
     });
 
-    if (!checkoutSession) {
-      throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, 'Checkout session creation failed');
-    }
+    const payment = await transactionClient.payment.create({
+      data: {
+        userId,
+        total_amount: payload.amount,
+        paid_amount: 0,
+        seller_required_amount: 0,
+        seller_received_amount: 0,
+        status: "PENDING",
+        stripe_status: "PENDING",
+        donationId: donationdata.id,
+        paymentType: "DONATION",
+        transactionId: tranId,
+      },
+    });
 
-    return checkoutSession?.url
 
-  })
+    return { donationdata, payment };
+  });
 
-  return result;
+  const { donationdata: donation, payment } = result;
 
+  if (!donation) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "Donation does not exist or could not be created"
+    );
+  }
+
+  const donation_charge = {
+    amount: donation.amount,
+    images: donation.charity?.picture?.url
+      ? [donation.charity.picture.url]
+      : [],
+    name: `Money Donation to ${donation.charity?.fname}`,
+    quantity: 1,
+  };
+
+  const checkoutSession = await createCheckoutSession({
+    products: [donation_charge],
+    user: donation.donor,
+    paymentId: payment.id
+  });
+
+  if (!checkoutSession) {
+    throw new AppError(
+      httpStatus.INTERNAL_SERVER_ERROR,
+      "Checkout session creation failed"
+    );
+  }
+
+  return checkoutSession.url;
 };
 
 const confirmPayment = async (query: Record<string, any>): Promise<{ url: string, message: string }> => {
@@ -154,6 +157,21 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
             }
           },
         }
+      },
+      donation: {
+        include: {
+          charity: {
+            select: {
+              id: true,
+              fcmToken: true,
+            }
+          },
+          donor: {
+            select: {
+              userName: true
+            }
+          }
+        }
       }
     }
   });
@@ -176,19 +194,43 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
 
   try {
 
-    //mark payment as complete
-    await prisma.payment.update({
-      where: { id: paymentId },
-      data: {
-        status: "SUCCESSED",
-        stripe_status: "ESCROWED",
-        paymentIntentId: paymentIntentId,
-        checkoutSessionId: sessionId,
-        updatedAt: new Date()
-      }
-    });
+    const isOrderpayment = payment?.paymentType === "ORDER" && payment?.order;
 
-    if (payment?.order) {
+    await prisma.$transaction(async (transactionClient) => {
+
+      //mark payment as complete
+      await transactionClient.payment.update({
+        where: { id: paymentId },
+        data: {
+          status: "SUCCESSED",
+          stripe_status: isOrderpayment ? "ESCROWED" : "RELEASED",
+          paymentIntentId: paymentIntentId,
+          checkoutSessionId: sessionId,
+          updatedAt: new Date()
+        }
+      });
+
+      //if donation payment, add balance to charity wallet
+      if (payment?.paymentType === "DONATION" && payment?.donation) {
+
+        await transactionClient.wallet.upsert({
+          where: { sellerId: payment?.donation?.charityId },
+          create: {
+            balance: payment?.total_amount,
+            sellerId: payment?.donation?.charityId,
+          },
+          update: {
+            balance: {
+              increment: payment?.total_amount
+            }
+          }
+        });
+
+      }
+
+    })
+
+    if (isOrderpayment && payment?.order) {
 
       await StockUpdateQueue.add(jobs.stockUpdate, { orderId: payment?.order?.id });
 
@@ -235,7 +277,36 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
 
     }
 
-    return { url: `${config.BASE_URL}${config.success_url}`, message: "Payment completed successfully" };
+    if (payment?.paymentType === "DONATION" && payment?.donation) {
+
+      if (payment?.donation?.donorId) {
+        //generate badge for donor
+        BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "MONEY_DONOR", userId: payment?.donation?.donorId });
+      }
+
+      //send notification to the charity about donation received
+      await notificationQueue.add(jobs.notification, {
+        allowPushNotification: true,
+        payload: {
+          title: `Donation Received`,
+          message: `Congratulations! You have received a donation of **$${payment?.donation?.amount}**. Check your wallet for the updated balance.`,
+          actorId: payment?.donation?.donorId,
+          receiverId: payment?.donation?.charityId,
+          entityId: payment?.donation?.donor?.userName || payment?.donation?.donorId,
+          entityType: "DONATION",
+          entityImgs: [],
+          type: "DONATION_RECEIVED",
+          fcmToken: payment?.donation?.charity?.fcmToken,
+          groupKeyId: null,
+        }
+      })
+
+    }
+
+    return {
+      url: payment?.paymentType === "DONATION" ? `${config.BASE_URL}${config.donation_success_url}` : `${config.BASE_URL}${config.cancel_url}`,
+      message: "Payment completed successfully"
+    };
 
   } catch (error: any) {
 
@@ -249,82 +320,6 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
 
     return { url: `${config.BASE_URL}${config.cancel_url}`, message: "Payment failed, please try again" };
 
-  }
-
-};
-
-const confirmDonationPayment = async (query: Record<string, any>) => {
-
-  const { sessionId, donationId } = query;
-
-  const PaymentSession = await stripe.checkout.sessions.retrieve(sessionId);
-  const paymentIntentId = PaymentSession.payment_intent as string;
-
-  if (PaymentSession.status !== 'complete') {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'Payment session is not completed',
-    );
-  }
-
-  try {
-    const result = await prisma.$transaction(async (transactionClient) => {
-
-      const donation = await transactionClient.directDonation.findFirst({ where: { id: donationId } });
-
-      if (!donation) {
-        throw new AppError(httpStatus.NOT_FOUND, "Donation not found");
-      }
-
-      if (donation?.status == "SUCCESS") {
-        return;
-      }
-
-      await transactionClient.directDonation.update({
-        where: { id: donationId },
-        data: {
-          status: "SUCCESS",
-          paymentIntentId,
-          donatedAt: new Date(),
-        }
-      });
-
-      //generate badge for donor
-      if (donation?.donorId) {
-        BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "MONEY_DONOR", userId: donation?.donorId });
-      }
-
-      //send notification
-      // sendAdminNotifications({
-      //   title: "New Order Payment Received",
-      //   message: `A new Order payment has been successfully received from a customer. Transaction id is : ${payment?.transactionId}`
-      // });
-
-    })
-
-    return result;
-  } catch (error: any) {
-
-    if (paymentIntentId) {
-      try {
-        await stripe.refunds.create({
-          payment_intent: paymentIntentId,
-        });
-        await prisma.directDonation.update({
-          where: { id: donationId },
-          data: {
-            status: "REFUNDED",
-            paymentIntentId,
-            donatedAt: null,
-          }
-        });
-      } catch (refundError: any) {
-        console.error('Error processing refund:', refundError.message);
-        throw new AppError(httpStatus.BAD_GATEWAY, refundError.message);
-      }
-    }
-
-    throw new AppError(httpStatus.BAD_GATEWAY, error.message);
   }
 
 };
@@ -517,6 +512,7 @@ const sellEarnings = async (options: TPaginationOptions, sellerId: string) => {
       [sortBy]: sortOrder,
     },
     select: {
+      id: true,
       orderNumber: true,
       payment: {
         select: {
@@ -628,7 +624,9 @@ const directDonationRaised = async (options: TPaginationOptions, charityId: stri
   const donations = await prisma.directDonation.findMany({
     where: {
       charityId: charityId,
-      status: "SUCCESS",
+      payment: {
+        status: "SUCCESSED"
+      },
       amount: {
         gt: 0
       }
@@ -658,7 +656,9 @@ const directDonationRaised = async (options: TPaginationOptions, charityId: stri
   const total = await prisma.directDonation.count({
     where: {
       charityId: charityId,
-      status: "SUCCESS",
+      payment: {
+        status: "SUCCESSED"
+      },
       amount: {
         gt: 0
       }
@@ -682,7 +682,6 @@ export const paymentsService = {
   getPaymentsByUserId,
   generateInvoice,
   donationCheckout,
-  confirmDonationPayment,
 
   sellEarnings,
   donationRaisedFromSell,

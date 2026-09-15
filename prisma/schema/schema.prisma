@@ -147,6 +147,8 @@ model User {
 
   badges UserBadge[]
 
+  payoutRequests WalletPayout[]
+
   bundleDiscount    BundleDiscount?
 
   @@map("users")
@@ -264,6 +266,7 @@ enum NotificationEntityType {
   DONATION
   RETURN
   BADGE
+  WITHDRAWAL
 }
 
 enum NotificationType {
@@ -305,6 +308,9 @@ enum NotificationType {
 
   //Earned badge
   BADGE_EARNED
+
+  //for withdrawal
+  WITHDRAWAL_RECEIVED
 }
 
 model Setting {

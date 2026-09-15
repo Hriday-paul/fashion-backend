@@ -30,9 +30,6 @@ router.get(
 router.get('/confirm-payment',
   paymentsController.confirmPayment);
 
-router.get('/confirm-donation',
-  paymentsController.confirmDonationPayment);
-
 // router.patch('/:id', auth(USER_ROLE.school_admin), paymentsController.updatePayments);
 
 // router.delete('/:id', auth(USER_ROLE.school_admin), paymentsController.deletePayments);

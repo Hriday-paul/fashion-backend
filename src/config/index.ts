@@ -43,6 +43,7 @@ export default {
   password_pepper : process.env.PASSWORD_PEPPER,
 
   success_url: process.env.PAYMENT_SUCCESS_URL,
+  donation_success_url: process.env.DONATION_PAYMENT_SUCCESS_URL,
   cancel_url: process.env.PAYMENT_CANCEL_URL,
   database_url: process.env.DATABASE_URL,
 
