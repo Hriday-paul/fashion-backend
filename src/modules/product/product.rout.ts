@@ -20,13 +20,17 @@ router.post("/", auth(...(allRoles.filter(role => !excludedCharityRoles.includes
 router.get("/", PublicAuth(), productControler.allProducts);
 router.get("/my-items", auth(...allRoles), productControler.myProducts);
 router.get("/member/:username", PublicAuth(), productControler.productsByUserName);
-router.get("/by-type", productByTypeValidator, req_validator(), PublicAuth(), productControler.productsByType);
-router.get("/new-arrival", PublicAuth(), productControler.newArrivalProducts);
+router.get("/authenticate", PublicAuth(), productControler.authenticateProducts);
 
-router.get("/recent-views", productControler.recentViewProducts);
-router.get("/trendings", productControler.trendingProducts);
+router.get("/recent-views", PublicAuth(), productControler.recentViewProducts);
+router.get("/trendings", PublicAuth(), productControler.trendingProducts);
+
+
+router.get("/new-arrival", PublicAuth(), productControler.newArrivalProducts);
 router.get("/top-sellings", productControler.topSellingProducts);
 router.get("/recommended", PublicAuth(), productControler.recomendedProducts);
+router.get("/by-type", productByTypeValidator, req_validator(), PublicAuth(), productControler.productsByType);
+
 
 router.get("/stats/:productId", PublicAuth(), productControler.productStats);
 router.get("/donation-support/:productId", productControler.donationSupportByProduct);

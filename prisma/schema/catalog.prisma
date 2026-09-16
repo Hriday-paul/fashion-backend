@@ -94,3 +94,14 @@ model Size {
 
     @@map("sizes")
 }
+
+model Keyword {
+    id   String @id @default(uuid())
+    name String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("keywords")
+    @@index([name])
+}

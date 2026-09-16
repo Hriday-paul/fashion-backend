@@ -19,6 +19,7 @@ import { brandRouter } from './modules/brand/brand.rout';
 import { sizeRouter } from './modules/size/size.rout';
 import { assistentSellRouts } from './modules/assistentSell/assistentSell.rout';
 import { accountRouts } from './modules/ConnectAccount/account.rout';
+import { keywordRoutes } from './modules/keyword/keyword.rout';
 
 const router = express.Router();
 
@@ -102,6 +103,10 @@ const moduleRoutes = [
     {
         path: '/assistent-sell',
         route: assistentSellRouts,
+    },
+    {
+        path: '/keywords',
+        route: keywordRoutes,
     },
 ];
 

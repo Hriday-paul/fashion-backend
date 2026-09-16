@@ -67,6 +67,11 @@ export type SizeCategoryHierarchyGroup = Prisma.SizeCategoryHierarchyGroupModel
  */
 export type Size = Prisma.SizeModel
 /**
+ * Model Keyword
+ * 
+ */
+export type Keyword = Prisma.KeywordModel
+/**
  * Model Follow
  * 
  */

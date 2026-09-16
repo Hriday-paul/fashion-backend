@@ -235,17 +235,17 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
             },
             brand: true,
             size: true,
-            category: true,
-            user: {
-                include: {
-                    auth: {
-                        select: {
-                            role: true
-                        }
-                    },
-                    picture: true
-                },
-            },
+            // category: true,
+            // user: {
+            //     include: {
+            //         auth: {
+            //             select: {
+            //                 role: true
+            //             }
+            //         },
+            //         picture: true
+            //     },
+            // },
             //favourite count
             _count: {
                 select: {
@@ -1050,13 +1050,13 @@ const productStats = async (productId: string, currentUserId?: string) => {
     return stats;
 }
 
-const recentViewProducts = async (viewKey: string) => {
+const recentViewProducts = async (viewKey: string, currentUserId?: string) => {
     const products = await prisma.productView.findMany({
         where: {
             userkey: viewKey,
         },
         distinct: "productId",
-        take: 10,
+        take: 20,
         orderBy: {
             createdAt: 'desc',
         },
@@ -1068,8 +1068,25 @@ const recentViewProducts = async (viewKey: string) => {
                             order: "asc"
                         },
                         take: 1,
-                    }
-                }
+                    },
+                    _count: {
+                        select: {
+                            favourites: true
+                        }
+                    },
+                    brand: true,
+                    size: true,
+                    favourites: currentUserId
+                        ? {
+                            where: {
+                                userId: currentUserId,
+                            },
+                            select: {
+                                id: true,
+                            },
+                        }
+                        : false,
+                },
             }
         }
     })
@@ -1078,36 +1095,45 @@ const recentViewProducts = async (viewKey: string) => {
 }
 
 const trendingProducts = async (userId?: string) => {
-    const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) // last 7 days
+    const since = moment().subtract(7, 'days').toDate(); // last 7 days
 
-    const [views, orders, wishlists] = await Promise.all([
+    const [views, orders, wishlists, offers] = await Promise.all([
         // views in last 7 days
         prisma.productView.groupBy({
             by: ['productId'],
-            where: { createdAt: { gte: since } },
-            _count: { productId: true }
+            where: { createdAt: { gte: since }, product: { isDeleted: false, stock: { gt: 0 } } },
+            _count: { productId: true },
         }),
         // orders in last 7 days
         prisma.orderItem.groupBy({
             by: ['productId'],
-            where: { createdAt: { gte: since } },
+            where: {
+                createdAt: { gte: since }, product: { isDeleted: false, stock: { gt: 0 } }
+            },
             _count: { productId: true }
         }),
         // wishlists in last 7 days
         prisma.favourite.groupBy({
             by: ['productId'],
-            where: { createdAt: { gte: since } },
+            where: { createdAt: { gte: since }, product: { isDeleted: false, stock: { gt: 0 } } },
             _count: { productId: true }
         }),
+        // offers in last 7 days
+        prisma.offerItem.groupBy({
+            by: ['productId'],
+            where: { createdAt: { gte: since }, product: { isDeleted: false, stock: { gt: 0 } } },
+            _count: { productId: true }
+        })
     ])
 
     // build score map
     const scoreMap: Record<string, number> = {}
 
     const WEIGHTS = {
-        view: 1,
-        order: 5,   // orders matter most
-        wishlist: 3
+        view: 1.5,
+        order: 3,   // orders matter most
+        wishlist: 2,
+        offer: 2.5
     }
 
     views.forEach(v => {
@@ -1119,16 +1145,20 @@ const trendingProducts = async (userId?: string) => {
     wishlists.forEach(w => {
         scoreMap[w.productId] = (scoreMap[w.productId] ?? 0) + w._count.productId * WEIGHTS.wishlist
     })
+    offers.forEach(o => {
+        scoreMap[o.productId] = (scoreMap[o.productId] ?? 0) + o._count.productId * WEIGHTS.offer
+    })
 
-    // sort by score and get top 8
+    // sort by score and get top 12
     const trendingIds = Object.entries(scoreMap)
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 8)
+        .slice(0, 12)
         .map(([productId]) => productId)
 
     // fetch full product data
     const trendingProducts = await prisma.product.findMany({
         where: { id: { in: trendingIds } },
+        take: 12,
         include: {
             images: {
                 orderBy: {
@@ -1169,9 +1199,9 @@ const trendingProducts = async (userId?: string) => {
     })
 
     // preserve score order
-    const sorted = trendingIds.map(id =>
-        trendingProducts.find(p => p.id === id)
-    )
+    const sorted = trendingIds
+        .map(id => trendingProducts.find(p => p.id === id))
+        .filter((p): p is (typeof trendingProducts)[number] => p !== undefined)
 
     return sorted;
 }
@@ -1192,7 +1222,7 @@ const topSellingProducts = async (userId?: string) => {
         orderBy: {
             orderItems: { _count: 'desc' }  // sort by number of order items
         },
-        take: 8,
+        take: 12,
         include: {
             images: {
                 orderBy: {
@@ -1334,6 +1364,76 @@ const recomendedProducts = async (viewKey: string, userId?: string) => {
 
     return recommended;
 
+}
+
+const authenticateProducts = async (options: TPaginationOptions, userId?: string) => {
+
+    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+
+    const result = await prisma.product.findMany({
+        where: {
+            assistentSell: {},
+            isDeleted: false,
+            stock: { gt: 0 }
+        },
+        skip,
+        take: limit,
+        orderBy: {
+            [sortBy]: sortOrder,
+        },
+        include: {
+            images: {
+                take: 1,
+                orderBy: {
+                    order: "asc"
+                }
+            },
+            brand: true,
+            size: true,
+            category: true,
+            user: {
+                include: {
+                    auth: {
+                        select: {
+                            role: true
+                        }
+                    },
+                    picture: true
+                },
+            },
+            //favourite count
+            _count: {
+                select: {
+                    favourites: true
+                }
+            },
+            // is Favourites by user
+            favourites: userId
+                ? {
+                    where: {
+                        userId: userId,
+                    },
+                    select: {
+                        id: true,
+                    },
+                }
+                : false,
+        },
+    })
+
+    const total = await prisma.product.count({
+        where: {
+            isDeleted: false,
+            stock: { gt: 0 },
+            assistentSell: {}
+        },
+    });
+
+    return {
+        meta: paginationHelper.generatePaginationMeta({ total, page, limit }),
+        data: result,
+    };
 }
 
 const donationSupportByProduct = async (productId: string) => {
@@ -2002,6 +2102,7 @@ export const productService = {
     addNewProduct,
 
     allProducts,
+    authenticateProducts,
     newArrivalProducts,
     productDetails,
 

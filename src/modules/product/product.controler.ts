@@ -62,6 +62,19 @@ const allProducts = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const authenticateProducts = catchAsync(async (req: Request, res: Response) => {
+
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await productService.authenticateProducts(options, req.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Authenticated products retrived successfully',
+        data: result,
+    });
+});
+
 
 const myProducts = catchAsync(async (req: Request, res: Response) => {
 
@@ -197,7 +210,7 @@ const donationSupportByProduct = catchAsync(async (req: Request, res: Response) 
 
 const recentViewProducts = catchAsync(async (req: Request, res: Response) => {
     const { userkey } = await productService.getViewKey(req)
-    const result = await productService.recentViewProducts(userkey);
+    const result = await productService.recentViewProducts(userkey, req?.user?.id);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -280,6 +293,7 @@ const declineCounterOfferAsSeller = catchAsync(async (req: Request, res: Respons
 export const productControler = {
     addNewProduct,
     allProducts,
+    authenticateProducts,
     newArrivalProducts,
     productsByType,
     productDetails,

@@ -399,6 +399,7 @@ export const ModelName = {
   Brand: 'Brand',
   SizeCategoryHierarchyGroup: 'SizeCategoryHierarchyGroup',
   Size: 'Size',
+  Keyword: 'Keyword',
   Follow: 'Follow',
   Chat: 'Chat',
   Message: 'Message',
@@ -454,7 +455,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "follow" | "chat" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction" | "walletPayout"
+    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "follow" | "chat" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction" | "walletPayout"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1195,6 +1196,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SizeCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SizeCountAggregateOutputType> | number
+        }
+      }
+    }
+    Keyword: {
+      payload: Prisma.$KeywordPayload<ExtArgs>
+      fields: Prisma.KeywordFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KeywordFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeywordPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KeywordFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeywordPayload>
+        }
+        findFirst: {
+          args: Prisma.KeywordFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeywordPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KeywordFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeywordPayload>
+        }
+        findMany: {
+          args: Prisma.KeywordFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeywordPayload>[]
+        }
+        create: {
+          args: Prisma.KeywordCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeywordPayload>
+        }
+        createMany: {
+          args: Prisma.KeywordCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KeywordCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeywordPayload>[]
+        }
+        delete: {
+          args: Prisma.KeywordDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeywordPayload>
+        }
+        update: {
+          args: Prisma.KeywordUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeywordPayload>
+        }
+        deleteMany: {
+          args: Prisma.KeywordDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KeywordUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KeywordUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeywordPayload>[]
+        }
+        upsert: {
+          args: Prisma.KeywordUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeywordPayload>
+        }
+        aggregate: {
+          args: Prisma.KeywordAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKeyword>
+        }
+        groupBy: {
+          args: Prisma.KeywordGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KeywordGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KeywordCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KeywordCountAggregateOutputType> | number
         }
       }
     }
@@ -4335,6 +4410,16 @@ export const SizeScalarFieldEnum = {
 export type SizeScalarFieldEnum = (typeof SizeScalarFieldEnum)[keyof typeof SizeScalarFieldEnum]
 
 
+export const KeywordScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KeywordScalarFieldEnum = (typeof KeywordScalarFieldEnum)[keyof typeof KeywordScalarFieldEnum]
+
+
 export const FollowScalarFieldEnum = {
   id: 'id',
   followerId: 'followerId',
@@ -5665,6 +5750,7 @@ export type GlobalOmitConfig = {
   brand?: Prisma.BrandOmit
   sizeCategoryHierarchyGroup?: Prisma.SizeCategoryHierarchyGroupOmit
   size?: Prisma.SizeOmit
+  keyword?: Prisma.KeywordOmit
   follow?: Prisma.FollowOmit
   chat?: Prisma.ChatOmit
   message?: Prisma.MessageOmit

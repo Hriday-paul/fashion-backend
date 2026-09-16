@@ -58,6 +58,7 @@ export const ModelName = {
   Brand: 'Brand',
   SizeCategoryHierarchyGroup: 'SizeCategoryHierarchyGroup',
   Size: 'Size',
+  Keyword: 'Keyword',
   Follow: 'Follow',
   Chat: 'Chat',
   Message: 'Message',
@@ -252,6 +253,16 @@ export const SizeScalarFieldEnum = {
 } as const
 
 export type SizeScalarFieldEnum = (typeof SizeScalarFieldEnum)[keyof typeof SizeScalarFieldEnum]
+
+
+export const KeywordScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KeywordScalarFieldEnum = (typeof KeywordScalarFieldEnum)[keyof typeof KeywordScalarFieldEnum]
 
 
 export const FollowScalarFieldEnum = {
