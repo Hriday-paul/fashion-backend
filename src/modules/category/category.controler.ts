@@ -59,36 +59,6 @@ const getChildChain = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const addNewBrand = catchAsync(async (req: Request, res: Response) => {
-  const result = await categoryService.assignBrandToCategory(req.body);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'New Brand added successfully to a category',
-    data: result,
-  });
-});
-
-const allBrands = catchAsync(async (req: Request, res: Response) => {
-  const result = await categoryService.allBrandsByCategory(req.params.id);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Brands retrived successfully',
-    data: result,
-  });
-});
-
-const deletBrand = catchAsync(async (req: Request, res: Response) => {
-  const result = await categoryService.deletBrandToCategory(req.params.id);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Brand deleted successfully',
-    data: result,
-  });
-});
-
 
 const filteredAttributes = catchAsync(async (req: Request, res: Response) => {
 
@@ -141,10 +111,6 @@ export const categoryControler = {
   getChildChain,
 
   filteredAttributes,
-
-  addNewBrand,
-  allBrands,
-  deletBrand,
 
   // allSizes,
   // addSize,

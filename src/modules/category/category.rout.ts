@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { categoryControler } from "./category.controler";
-import { addBrandValidator, addCategoryValidator, addSizeValidator } from "./category.validator";
+import {addCategoryValidator } from "./category.validator";
 import req_validator from "../../middleware/req_validation";
 
 const router = Router();
@@ -10,10 +10,6 @@ router.get("/", categoryControler.getCategories);
 
 router.get("/child/:id", categoryControler.getChildChain);
 router.get("/parent", categoryControler.getParentChain);
-
-router.post("/brands", addBrandValidator, req_validator(), categoryControler.addNewBrand);
-router.get("/brands/:id", categoryControler.allBrands);
-router.delete("/brands/:id", categoryControler.deletBrand);
 
 router.get("/filtered-attributes", categoryControler.filteredAttributes);
 

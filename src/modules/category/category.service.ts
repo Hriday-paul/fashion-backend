@@ -138,29 +138,6 @@ const haveChildCategory = async (categoryId: string) => {
     return res;
 }
 
-const assignBrandToCategory = async (payload: { categoryId: string, brandId: string }) => {
-
-    const res = await prisma.brandByCategory.create({ data: { categoryId: payload?.categoryId, brandId: payload?.brandId } });
-    return res;
-}
-
-const deletBrandToCategory = async (brandId: string) => {
-
-    const res = await prisma.brand.delete({ where: { id: brandId } });
-    return res;
-}
-
-const allBrandsByCategory = async (categoryId: string) => {
-
-    const res = await prisma.brandByCategory.findMany({
-        where: {
-            categoryId: categoryId
-        }
-    });
-
-    return res;
-}
-
 const filteredAttributes = async (query: Record<string, unknown>) => {
     const { categoryId, brands, sizes } = query;
 
@@ -206,33 +183,6 @@ const filteredAttributes = async (query: Record<string, unknown>) => {
 
 }
 
-
-const assingedSizeByCategory = async (categoryId: string) => {
-
-    const res = await prisma.sizeCategoryHierarchyGroup.findMany({
-        where: {
-            categoryId
-        },
-        include : {
-            size: true
-        }
-    });
-
-    return res;
-}
-
-// const addSizeToCategory = async (payload: { categoryId: string, sizeId: string }) => {
-
-//     const res = await prisma.sizeByCategory.create({ data: { categoryId: payload?.categoryId, sizeId: payload?.sizeId } });
-//     return res;
-// }
-
-// const deleteSizeFromCategory = async (payload: { categoryId: string, sizeId: string }) => {
-
-//     const res = await prisma.sizeByCategory.delete({ where: { categoryId_sizeId: { categoryId: payload?.categoryId, sizeId: payload?.sizeId } } });
-//     return res;
-// }
-
 export const categoryService = {
     deleteCategory,
     addNewCategory,
@@ -242,10 +192,6 @@ export const categoryService = {
     haveChildCategory,
 
     buildChildCategoryTree,
-
-    assignBrandToCategory,
-    deletBrandToCategory,
-    allBrandsByCategory,
 
     filteredAttributes,
 

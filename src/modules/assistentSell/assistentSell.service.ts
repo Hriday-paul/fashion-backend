@@ -4,6 +4,104 @@ import { paginationHelper, TPaginationOptions } from "../../helper/pagination.he
 import prisma from "../../shared/prisma";
 import httpStatus from "http-status";
 
+const allRequests = async (query: Record<string, unknown>, options: TPaginationOptions) => {
+    const AndConditions: Prisma.AssistentSellWhereInput[] = [];
+    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+    const { searchTerm, status } = query;
+
+    if (status) {
+        AndConditions.push({
+            status: status as AssistentSellStatus
+        })
+    }
+
+    const whereConditions: Prisma.AssistentSellWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
+
+    const result = await prisma.assistentSell.findMany({
+        where: whereConditions,
+        skip,
+        take: limit,
+        orderBy: {
+            [sortBy]: sortOrder,
+        },
+        include: {
+            pictures: {
+                take: 1,
+                orderBy: {
+                    order: 'asc'
+                },
+                select: {
+                    key: true,
+                    url: true,
+                    id: true
+                }
+            },
+            charities: {
+                select: {
+                    charityId: true,
+                    charity: {
+                        select: {
+                            fname: true,
+                            lname: true,
+                            userName: true,
+                            picture: {
+                                select: {
+                                    key: true,
+                                    url: true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            listings: {
+                select: {
+                    id: true,
+                    title: true,
+                    finalPrice: true,
+                    price: true,
+                    discountPct: true,
+                    images: {
+                        take: 1,
+                        orderBy: {
+                            order: 'asc'
+                        },
+                        select: {
+                            key: true,
+                            url: true
+                        }
+                    },
+                    size: {
+                        select: {
+                            title: true,
+                            id: true
+                        }
+                    }
+                }
+            },
+            order: {
+                select: {
+                    status: true,
+                }
+            }
+        },
+    })
+
+    const total = await prisma.assistentSell.count({
+        where: whereConditions,
+    });
+
+    return {
+        meta: {
+            total,
+            page,
+            limit,
+        },
+        data: result,
+    };
+}
+
 
 const myRequests = async (sellerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
     const AndConditions: Prisma.AssistentSellWhereInput[] = [{ sellerId }];
@@ -205,6 +303,7 @@ const dltRequest = async (requestId: string, sellerId: string) => {
 }
 
 export const assistentSellService = {
+    allRequests,
     myRequests,
     addNewRequest,
     dltRequest

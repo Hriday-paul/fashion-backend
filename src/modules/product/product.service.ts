@@ -125,26 +125,19 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
     const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, ...moreFields } = query;
 
     if (searchTerm) {
-        AndConditions.push({
-            OR: [
-                {
-                    title: {
-                        contains: searchTerm as string,
-                        mode: "insensitive",
-                    },
-                },
-                {
-                    description: {
-                        contains: searchTerm as string,
-                        mode: "insensitive",
-                    },
-                },
-                {
-                    tags: {
-                        has: searchTerm as string
-                    }
-                }
-            ],
+        const tokens = (searchTerm as string).trim().split(/\s+/).filter(Boolean);
+
+        tokens.forEach((token) => {
+            AndConditions.push({
+                OR: [
+                    { brand: { name: { contains: token, mode: "insensitive" } } },
+                    { size: { title: { contains: token, mode: "insensitive" } } },
+                    { title: { contains: token, mode: "insensitive" } },
+                    { description: { contains: token, mode: "insensitive" } },
+                    { tags: { hasSome: [token] } },
+                    { catagory_hierarchy: { hasSome: [token] } }, // এটা যোগ করুন
+                ],
+            });
         });
     }
 
@@ -235,18 +228,6 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
             },
             brand: true,
             size: true,
-            // category: true,
-            // user: {
-            //     include: {
-            //         auth: {
-            //             select: {
-            //                 role: true
-            //             }
-            //         },
-            //         picture: true
-            //     },
-            // },
-            //favourite count
             _count: {
                 select: {
                     favourites: true

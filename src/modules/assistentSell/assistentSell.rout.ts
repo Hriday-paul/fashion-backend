@@ -23,7 +23,11 @@ router.post("/",
     req_validator(),
     assistentSellControler.addNewRequest);
 
-router.get("/",
+router.get("/", //all requests
+    auth(Role.ADMIN),
+    assistentSellControler.allRequests);
+
+router.get("/requests", //my requests
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     assistentSellControler.myRequests);
 

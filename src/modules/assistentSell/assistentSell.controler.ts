@@ -47,6 +47,20 @@ const addNewRequest = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const allRequests = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["status", "searchTerm"])
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await assistentSellService.allRequests(query, options);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'All Requests retrived successfully',
+        data: result,
+    });
+});
+
 
 const myRequests = catchAsync(async (req: Request, res: Response) => {
 
@@ -77,5 +91,6 @@ const dltRequest = catchAsync(async (req: Request, res: Response) => {
 export const assistentSellControler = {
     addNewRequest,
     myRequests,
-    dltRequest
+    dltRequest,
+    allRequests
 }

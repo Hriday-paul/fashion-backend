@@ -41,6 +41,36 @@ const brands = async (query: Record<string, unknown>) => {
     return result;
 }
 
+const addNewBrand = async (payload: { name: string }) => {
+    const res = await prisma.brand.create({ data: { name: payload?.name } });
+    return res;
+}
+
+const dleBrand = async (brandId: string) => {
+    const res = await prisma.brand.delete({ where: { id: brandId } });
+    return res;
+}
+
+const assignBrandToCategory = async (payload: { categoryId: string, brandId: string }[]) => {
+
+    const res = await prisma.brandByCategory.createMany({ data: payload });
+    return res;
+}
+
+const rmvBrandFromCategory = async (payload: { categoryId: string, brandId: string }) => {
+
+    const res = await prisma.brandByCategory.delete({
+        where: {
+            categoryId_brandId: { categoryId: payload?.categoryId, brandId: payload?.brandId }
+        }
+    });
+    return res;
+}
+
 export const brandService = {
-    brands
+    brands,
+    addNewBrand,
+    dleBrand,
+    assignBrandToCategory,
+    rmvBrandFromCategory
 }
