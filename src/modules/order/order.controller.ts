@@ -6,6 +6,8 @@ import { orderService } from "./order.service";
 import pick from "../../shared/pick";
 import { PaginateOptions } from "../../helper/pagination.helper";
 import { uploadManyToS3 } from "../../utils/s3";
+import { userService } from "../user/user.service";
+import AppError from "../../error/AppError";
 
 const addNewOrder = catchAsync(async (req: Request, res: Response) => {
     // add order
@@ -27,6 +29,32 @@ const addNewOfferOrder = catchAsync(async (req: Request, res: Response) => {
         statusCode: httpStatus.OK,
         success: true,
         message: 'Order created successfully, Pay now',
+        data: result,
+    });
+});
+
+const ordersForSellerByUserName = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["searchTerm", "status"])
+    const options = pick(req.query, PaginateOptions);
+
+    const userName = req.params?.userName;
+
+    const user = await userService.getuserIdByUserName(userName);
+
+    if (!user) {
+        throw new AppError(
+            httpStatus.NOT_FOUND,
+            'User does not exist',
+        );
+    }
+
+    const result = await orderService.ordersAsASeller(user?.id, query, options);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Orders retrieved successfully',
         data: result,
     });
 });
@@ -203,5 +231,7 @@ export const orderControler = {
     approveCancelOrderItemBySeller,
     declineCancelOrderItemBySeller,
     markShippedOrder,
-    getShippingLebel
+    getShippingLebel,
+
+    ordersForSellerByUserName,
 }

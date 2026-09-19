@@ -457,7 +457,7 @@ export type OrderWhereInput = {
   shippedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   rating?: Prisma.XOR<Prisma.RatingNullableScalarRelationFilter, Prisma.RatingWhereInput> | null
   buyer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  return?: Prisma.ReturnListRelationFilter
+  return?: Prisma.XOR<Prisma.ReturnNullableScalarRelationFilter, Prisma.ReturnWhereInput> | null
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.OrderItemListRelationFilter
   deliveryCharge?: Prisma.XOR<Prisma.OrderDeliveryChargeNullableScalarRelationFilter, Prisma.OrderDeliveryChargeWhereInput> | null
@@ -502,7 +502,7 @@ export type OrderOrderByWithRelationInput = {
   shippedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   rating?: Prisma.RatingOrderByWithRelationInput
   buyer?: Prisma.UserOrderByWithRelationInput
-  return?: Prisma.ReturnOrderByRelationAggregateInput
+  return?: Prisma.ReturnOrderByWithRelationInput
   seller?: Prisma.UserOrderByWithRelationInput
   items?: Prisma.OrderItemOrderByRelationAggregateInput
   deliveryCharge?: Prisma.OrderDeliveryChargeOrderByWithRelationInput
@@ -550,7 +550,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   shippedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   rating?: Prisma.XOR<Prisma.RatingNullableScalarRelationFilter, Prisma.RatingWhereInput> | null
   buyer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  return?: Prisma.ReturnListRelationFilter
+  return?: Prisma.XOR<Prisma.ReturnNullableScalarRelationFilter, Prisma.ReturnWhereInput> | null
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.OrderItemListRelationFilter
   deliveryCharge?: Prisma.XOR<Prisma.OrderDeliveryChargeNullableScalarRelationFilter, Prisma.OrderDeliveryChargeWhereInput> | null
@@ -665,7 +665,7 @@ export type OrderCreateInput = {
   shippedAt?: Date | string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
-  return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnCreateNestedOneWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
@@ -709,7 +709,7 @@ export type OrderUncheckedCreateInput = {
   cancelledAt?: Date | string | null
   shippedAt?: Date | string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
-  return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutOrderInput
@@ -743,7 +743,7 @@ export type OrderUpdateInput = {
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
-  return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUpdateOneWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
@@ -787,7 +787,7 @@ export type OrderUncheckedUpdateInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
-  return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutOrderNestedInput
@@ -1395,7 +1395,7 @@ export type OrderCreateWithoutAssistentSellInput = {
   shippedAt?: Date | string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
-  return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnCreateNestedOneWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
@@ -1437,7 +1437,7 @@ export type OrderUncheckedCreateWithoutAssistentSellInput = {
   cancelledAt?: Date | string | null
   shippedAt?: Date | string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
-  return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutOrderInput
@@ -1487,7 +1487,7 @@ export type OrderUpdateWithoutAssistentSellInput = {
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
-  return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUpdateOneWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
@@ -1529,7 +1529,7 @@ export type OrderUncheckedUpdateWithoutAssistentSellInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
-  return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutOrderNestedInput
@@ -1563,7 +1563,7 @@ export type OrderCreateWithoutDeliveryChargeInput = {
   shippedAt?: Date | string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
-  return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnCreateNestedOneWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   payment?: Prisma.PaymentCreateNestedOneWithoutOrderInput
@@ -1606,7 +1606,7 @@ export type OrderUncheckedCreateWithoutDeliveryChargeInput = {
   cancelledAt?: Date | string | null
   shippedAt?: Date | string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
-  return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutOrderInput
 }
@@ -1655,7 +1655,7 @@ export type OrderUpdateWithoutDeliveryChargeInput = {
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
-  return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUpdateOneWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutOrderNestedInput
@@ -1698,7 +1698,7 @@ export type OrderUncheckedUpdateWithoutDeliveryChargeInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
-  return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutOrderNestedInput
 }
@@ -1731,7 +1731,7 @@ export type OrderCreateWithoutItemsInput = {
   shippedAt?: Date | string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
-  return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnCreateNestedOneWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
   deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
   payment?: Prisma.PaymentCreateNestedOneWithoutOrderInput
@@ -1774,7 +1774,7 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   cancelledAt?: Date | string | null
   shippedAt?: Date | string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
-  return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnUncheckedCreateNestedOneWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutOrderInput
 }
@@ -1823,7 +1823,7 @@ export type OrderUpdateWithoutItemsInput = {
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
-  return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUpdateOneWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutOrderNestedInput
@@ -1866,7 +1866,7 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
-  return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUncheckedUpdateOneWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutOrderNestedInput
 }
@@ -1899,7 +1899,7 @@ export type OrderCreateWithoutPaymentInput = {
   shippedAt?: Date | string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
-  return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnCreateNestedOneWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
@@ -1942,7 +1942,7 @@ export type OrderUncheckedCreateWithoutPaymentInput = {
   cancelledAt?: Date | string | null
   shippedAt?: Date | string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
-  return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
 }
@@ -1991,7 +1991,7 @@ export type OrderUpdateWithoutPaymentInput = {
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
-  return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUpdateOneWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
@@ -2034,7 +2034,7 @@ export type OrderUncheckedUpdateWithoutPaymentInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
-  return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
 }
@@ -2067,7 +2067,7 @@ export type OrderCreateWithoutOfferInput = {
   shippedAt?: Date | string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
-  return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnCreateNestedOneWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
@@ -2109,7 +2109,7 @@ export type OrderUncheckedCreateWithoutOfferInput = {
   cancelledAt?: Date | string | null
   shippedAt?: Date | string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
-  return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutOrderInput
@@ -2373,7 +2373,7 @@ export type OrderCreateWithoutRatingInput = {
   cancelledAt?: Date | string | null
   shippedAt?: Date | string | null
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
-  return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnCreateNestedOneWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
@@ -2416,7 +2416,7 @@ export type OrderUncheckedCreateWithoutRatingInput = {
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
   shippedAt?: Date | string | null
-  return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutOrderInput
@@ -2465,7 +2465,7 @@ export type OrderUpdateWithoutRatingInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
-  return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUpdateOneWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
@@ -2508,7 +2508,7 @@ export type OrderUncheckedUpdateWithoutRatingInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutOrderNestedInput
@@ -2541,7 +2541,7 @@ export type OrderCreateWithoutBuyerInput = {
   cancelledAt?: Date | string | null
   shippedAt?: Date | string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
-  return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnCreateNestedOneWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
@@ -2584,7 +2584,7 @@ export type OrderUncheckedCreateWithoutBuyerInput = {
   cancelledAt?: Date | string | null
   shippedAt?: Date | string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
-  return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutOrderInput
@@ -2628,7 +2628,7 @@ export type OrderCreateWithoutSellerInput = {
   shippedAt?: Date | string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
-  return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
   payment?: Prisma.PaymentCreateNestedOneWithoutOrderInput
@@ -2670,7 +2670,7 @@ export type OrderUncheckedCreateWithoutSellerInput = {
   cancelledAt?: Date | string | null
   shippedAt?: Date | string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
-  return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutOrderInput
@@ -2746,7 +2746,7 @@ export type OrderCreateWithoutOriginDetailsInput = {
   shippedAt?: Date | string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
-  return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnCreateNestedOneWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
@@ -2788,7 +2788,7 @@ export type OrderUncheckedCreateWithoutOriginDetailsInput = {
   cancelledAt?: Date | string | null
   shippedAt?: Date | string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
-  return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutOrderInput
@@ -2832,7 +2832,7 @@ export type OrderCreateWithoutBillingDetailsInput = {
   shippedAt?: Date | string | null
   rating?: Prisma.RatingCreateNestedOneWithoutOrderInput
   buyer: Prisma.UserCreateNestedOneWithoutBuyOrdersInput
-  return?: Prisma.ReturnCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnCreateNestedOneWithoutOrderInput
   seller: Prisma.UserCreateNestedOneWithoutSellOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeCreateNestedOneWithoutOrderInput
@@ -2874,7 +2874,7 @@ export type OrderUncheckedCreateWithoutBillingDetailsInput = {
   cancelledAt?: Date | string | null
   shippedAt?: Date | string | null
   rating?: Prisma.RatingUncheckedCreateNestedOneWithoutOrderInput
-  return?: Prisma.ReturnUncheckedCreateNestedManyWithoutOrderInput
+  return?: Prisma.ReturnUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedCreateNestedOneWithoutOrderInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutOrderInput
@@ -2983,7 +2983,7 @@ export type OrderUpdateWithoutOfferInput = {
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
-  return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUpdateOneWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
@@ -3025,7 +3025,7 @@ export type OrderUncheckedUpdateWithoutOfferInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
-  return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutOrderNestedInput
@@ -3157,7 +3157,7 @@ export type OrderUpdateWithoutBuyerInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
-  return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUpdateOneWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
@@ -3200,7 +3200,7 @@ export type OrderUncheckedUpdateWithoutBuyerInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
-  return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutOrderNestedInput
@@ -3267,7 +3267,7 @@ export type OrderUpdateWithoutSellerInput = {
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
-  return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutOrderNestedInput
@@ -3309,7 +3309,7 @@ export type OrderUncheckedUpdateWithoutSellerInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
-  return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutOrderNestedInput
@@ -3442,7 +3442,7 @@ export type OrderUpdateWithoutOriginDetailsInput = {
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
-  return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUpdateOneWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
@@ -3484,7 +3484,7 @@ export type OrderUncheckedUpdateWithoutOriginDetailsInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
-  return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutOrderNestedInput
@@ -3551,7 +3551,7 @@ export type OrderUpdateWithoutBillingDetailsInput = {
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUpdateOneWithoutOrderNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutBuyOrdersNestedInput
-  return?: Prisma.ReturnUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUpdateOneWithoutOrderNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutSellOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUpdateOneWithoutOrderNestedInput
@@ -3593,7 +3593,7 @@ export type OrderUncheckedUpdateWithoutBillingDetailsInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rating?: Prisma.RatingUncheckedUpdateOneWithoutOrderNestedInput
-  return?: Prisma.ReturnUncheckedUpdateManyWithoutOrderNestedInput
+  return?: Prisma.ReturnUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   deliveryCharge?: Prisma.OrderDeliveryChargeUncheckedUpdateOneWithoutOrderNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutOrderNestedInput
@@ -3638,12 +3638,10 @@ export type OrderUncheckedUpdateManyWithoutBillingDetailsInput = {
  */
 
 export type OrderCountOutputType = {
-  return: number
   items: number
 }
 
 export type OrderCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  return?: boolean | OrderCountOutputTypeCountReturnArgs
   items?: boolean | OrderCountOutputTypeCountItemsArgs
 }
 
@@ -3655,13 +3653,6 @@ export type OrderCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
    * Select specific fields to fetch from the OrderCountOutputType
    */
   select?: Prisma.OrderCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * OrderCountOutputType without action
- */
-export type OrderCountOutputTypeCountReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ReturnWhereInput
 }
 
 /**
@@ -3869,7 +3860,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   objects: {
     rating: Prisma.$RatingPayload<ExtArgs> | null
     buyer: Prisma.$UserPayload<ExtArgs>
-    return: Prisma.$ReturnPayload<ExtArgs>[]
+    return: Prisma.$ReturnPayload<ExtArgs> | null
     seller: Prisma.$UserPayload<ExtArgs>
     items: Prisma.$OrderItemPayload<ExtArgs>[]
     deliveryCharge: Prisma.$OrderDeliveryChargePayload<ExtArgs> | null
@@ -4307,7 +4298,7 @@ export interface Prisma__OrderClient<T, Null = never, ExtArgs extends runtime.Ty
   readonly [Symbol.toStringTag]: "PrismaPromise"
   rating<T extends Prisma.Order$ratingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$ratingArgs<ExtArgs>>): Prisma.Prisma__RatingClient<runtime.Types.Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   buyer<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  return<T extends Prisma.Order$returnArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$returnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReturnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  return<T extends Prisma.Order$returnArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$returnArgs<ExtArgs>>): Prisma.Prisma__ReturnClient<runtime.Types.Result.GetResult<Prisma.$ReturnPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   seller<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.Order$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   deliveryCharge<T extends Prisma.Order$deliveryChargeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$deliveryChargeArgs<ExtArgs>>): Prisma.Prisma__OrderDeliveryChargeClient<runtime.Types.Result.GetResult<Prisma.$OrderDeliveryChargePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -4807,11 +4798,6 @@ export type Order$returnArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    */
   include?: Prisma.ReturnInclude<ExtArgs> | null
   where?: Prisma.ReturnWhereInput
-  orderBy?: Prisma.ReturnOrderByWithRelationInput | Prisma.ReturnOrderByWithRelationInput[]
-  cursor?: Prisma.ReturnWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ReturnScalarFieldEnum | Prisma.ReturnScalarFieldEnum[]
 }
 
 /**

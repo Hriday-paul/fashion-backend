@@ -10,13 +10,23 @@ import AppError from "../../error/AppError";
 
 //get all users
 const all_users = catchAsync(async (req: Request, res: Response) => {
-    const query = pick(req.query, ["searchTerm", "role"])
+    const query = pick(req.query, ["searchTerm", "role", "status", "approval_status", "isverified"]);
     const options = pick(req.query, PaginateOptions);
     const result = await userService.allUsers(query, options)
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
         message: 'Users retrive successfully',
+        data: result,
+    });
+})
+
+const approveOrDeclineUser = catchAsync(async (req: Request, res: Response) => {
+    const result = await userService.approveOrDeclineUser(req.body)
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Users updated successfully',
         data: result,
     });
 })
@@ -100,6 +110,7 @@ const memberStats: RequestHandler<{ id: string }, {}, { status: boolean }> = cat
         data: result,
     });
 })
+
 const charityStats: RequestHandler<{ id: string }, {}, { status: boolean }> = catchAsync(async (req, res) => {
     const result = await userService.charityStats(req.params.userName)
     sendResponse(res, {
@@ -276,7 +287,7 @@ const getBadgeStats = catchAsync(async (req, res) => {
 
 const userFolowings = catchAsync(async (req, res) => {
 
-     const options = pick(req.query, PaginateOptions);
+    const options = pick(req.query, PaginateOptions);
 
     const result = await userService.userFolowings(req?.params?.userName, options);
 
@@ -288,9 +299,10 @@ const userFolowings = catchAsync(async (req, res) => {
     });
 
 })
+
 const userFolowers = catchAsync(async (req, res) => {
 
-     const options = pick(req.query, PaginateOptions);
+    const options = pick(req.query, PaginateOptions);
 
     const result = await userService.userFolowers(req?.params?.userName, options);
 
@@ -301,6 +313,39 @@ const userFolowers = catchAsync(async (req, res) => {
         data: result,
     });
 
+})
+
+const userDetailsWithbalanceAdmin = catchAsync(async (req, res) => {
+    const result = await userService.userDetailsWithbalanceAdmin(req?.params?.userName);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'User details with balance retrieved successfully',
+        data: result,
+    });
+})
+
+const sellerHubStatsForAdmin = catchAsync(async (req, res) => {
+    const result = await userService.sellerHubStatsForAdmin(req?.params?.userName);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Seller hub stats retrieved successfully',
+        data: result,
+    });
+})
+
+const buyerHubStatsForAdmin = catchAsync(async (req, res) => {
+    const result = await userService.buyerHubStatsForAdmin(req?.params?.userName);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Buyer hub stats retrieved successfully',
+        data: result,
+    });
 })
 
 
@@ -316,6 +361,7 @@ export const userController = {
     UpdateNotification,
     bundleDiscount,
     updateBundleDiscount,
+    approveOrDeclineUser,
 
     userFolowings,
     userFolowers,
@@ -328,5 +374,9 @@ export const userController = {
     addOrUpdateSellingDetails,
     addressesByUser,
     getSellerBundileTiers,
-    getBadgeStats
+    getBadgeStats,
+
+    userDetailsWithbalanceAdmin,
+    sellerHubStatsForAdmin,
+    buyerHubStatsForAdmin
 }

@@ -37,6 +37,10 @@ router.get("/by-seller",
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.ordersBySeller);
 
+router.get("/by-seller/:userName",
+    auth(Role.ADMIN),
+    orderControler.ordersForSellerByUserName);
+
 router.get("/by-buyer",
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.ordersAsABuyer);
@@ -53,7 +57,7 @@ router.post("/items/cancel",
 //buyer request cancel order item
 router.post("/items/cancel/request",
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
-    image_Upload.array('evidences'), 
+    image_Upload.array('evidences'),
     parseData(),
     cancelItemsValidator,
     req_validator(),

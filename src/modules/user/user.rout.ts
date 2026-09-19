@@ -1,7 +1,7 @@
 import { Router } from "express";
 import auth, { PublicAuth } from "../../middleware/auth";
 import { userController } from "./user.controller";
-import { bundleDiscountValidator, statusUpdateValidator, validateBillingDetails } from "./user.validator";
+import { bundleDiscountValidator, statusUpdateValidator, validateApprovalStatus, validateBillingDetails } from "./user.validator";
 import req_validator from "../../middleware/req_validation";
 import { image_Upload } from "../../utils/s3";
 import parseData from "../../middleware/parseData";
@@ -31,6 +31,14 @@ router.patch(
     req_validator(),
     auth(Role.ADMIN),
     userController.update_user_status,
+);
+
+router.patch(
+    '/approve-decline',
+    validateApprovalStatus,
+    req_validator(),
+    auth(Role.ADMIN),
+    userController.approveOrDeclineUser,
 );
 
 router.patch(
@@ -122,6 +130,21 @@ router.get(
 router.get(
     '/folowers/:userName',
     userController.userFolowers,
+);
+
+router.get(
+    '/seller-hub-stats/:userName',
+    userController.sellerHubStatsForAdmin,
+);
+
+router.get(
+    '/buyer-hub-stats/:userName',
+    userController.buyerHubStatsForAdmin,
+);
+
+router.get(
+    '/user-details-with-balance/:userName',
+    userController.userDetailsWithbalanceAdmin,
 );
 
 router.get(

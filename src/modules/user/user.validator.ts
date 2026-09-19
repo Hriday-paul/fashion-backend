@@ -1,7 +1,12 @@
 import { check, body } from "express-validator";
 
 export const statusUpdateValidator = [
-  check('status').not().isEmpty().withMessage('status is required').isBoolean().withMessage("status must be boolean").toBoolean(),
+  body('status').not().isEmpty().withMessage('status is required').isBoolean().withMessage("status must be boolean").toBoolean(),
+]
+
+export const validateApprovalStatus = [
+  body('approval_status').not().isEmpty().withMessage('approval_status is required').isIn(['Approved', 'Rejected']).withMessage("approval_status must be one of PENDING, APPROVED, DECLINED"),
+  body('userId').not().isEmpty().withMessage('userId is required').isString().withMessage("userId must be a string").isUUID().withMessage("userId must be a valid UUID"),
 ]
 
 export const validateBillingDetails = [

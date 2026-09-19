@@ -1470,6 +1470,7 @@ const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>,
             buyer: {
                 select: {
                     userName: true,
+                    picture: true,
                 }
             },
             billingDetails: true

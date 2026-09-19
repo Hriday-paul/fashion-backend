@@ -65,13 +65,19 @@ const updateProfile = async (payload: User & { charityImgs: { url: string, key: 
     return result
 }
 
+const getuserIdByUserName = async (userName: string) => {
+    const user = await prisma.user.findFirst({ where: { userName }, select: { id: true } });
+
+    return user;
+};
+
 //get all users
 const allUsers = async (query: Record<string, unknown>, options: TPaginationOptions) => {
 
     const AndConditions: Prisma.UserWhereInput[] = [{ isDeleted: false, auth: { role: { not: Role.ADMIN } } }];
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const { searchTerm, role } = query;
+    const { searchTerm, role, status, approval_status, isverified } = query;
 
     if (searchTerm) {
         AndConditions.push({
@@ -106,6 +112,30 @@ const allUsers = async (query: Record<string, unknown>, options: TPaginationOpti
         });
     }
 
+    if (status) {
+        AndConditions.push({
+            auth: {
+                status: status === "true" ? true : false
+            }
+        });
+    }
+
+    if (approval_status) {
+        AndConditions.push({
+            auth: {
+                approval_status: approval_status as Approval_Status
+            }
+        });
+    }
+
+    if (isverified) {
+        AndConditions.push({
+            auth: {
+                isverified: isverified === "true" ? true : false
+            }
+        });
+    }
+
     const whereConditions: Prisma.UserWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
 
     const result = await prisma.user.findMany({
@@ -116,7 +146,7 @@ const allUsers = async (query: Record<string, unknown>, options: TPaginationOpti
             [sortBy]: sortOrder,
         },
         include: {
-            auth: { select: { status: true } },
+            auth: { select: { status: true, approval_status: true, isverified: true, role: true } },
             picture: true,
         },
     })
@@ -133,6 +163,34 @@ const allUsers = async (query: Record<string, unknown>, options: TPaginationOpti
         },
         data: result,
     };
+}
+
+const approveOrDeclineUser = async (payload: { approval_status: Approval_Status, userId: string }) => {
+
+    const auth = await prisma.auth.findFirst({ where: { userId: payload.userId } });
+
+    if (!auth) {
+        throw new AppError(
+            httpStatus.NOT_FOUND,
+            'Account does not exist',
+        );
+    }
+
+    if (auth?.approval_status !== Approval_Status.Pending) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            'Unable to update approval status',
+        );
+    }
+
+    const result = await prisma.auth.update({
+        where: { userId: auth.userId },
+        data: {
+            approval_status: payload?.approval_status
+        }
+    })
+
+    return result
 }
 
 const getUserById = async (id: string) => {
@@ -253,6 +311,192 @@ const userDetails = async (userName: string, currentUserId?: string) => {
     });
 
     return { user: res, review: ratingAvg, isfolowing: isfolowing ? true : false, totalDonation, isCurrentUser, badges, };
+}
+
+const userDetailsWithbalanceAdmin = async (userName: string) => {
+
+    const res = await prisma.user.findFirst({
+        where: { userName: userName },
+        include: {
+            picture: true,
+            auth: { select: { role: true, status: true, approval_status: true, isverified: true } },
+            wallet: {
+                select: {
+                    balance: true
+                }
+            }
+        },
+    });
+
+    return res;
+
+}
+
+const sellerHubStatsForAdmin = async (userName: string) => {
+
+    const user = await prisma.user.findFirst({ where: { userName }, include: { auth: { select: { role: true } } } });
+
+    if (!user || !user?.auth?.role) {
+        throw new AppError(
+            httpStatus.NOT_FOUND,
+            'User does not exist',
+        );
+    }
+
+    const SellDonated = await prisma.sellDonation.aggregate({
+        where: {
+            status: "PAID", orderItem: {
+                order: {
+                    sellerId: user.id
+                }
+            }
+        }, _sum: { amount: true }
+    });
+
+    const avaialbleListings = await prisma.product.count({ where: { userId: user.id, isDeleted: false, stock: { gt: 0 } } });
+
+    const soldListings = await prisma.orderItem.aggregate({
+        _sum: {
+            quantity: true,
+        },
+        where: {
+            order: {
+                status: "COMPLETED",
+                payment: {
+                    status: "SUCCESSED"
+                },
+                sellerId: user.id
+            }
+        },
+    });
+
+    const runningOrders = await prisma.order.count({
+        where: {
+            sellerId: user.id,
+            status: {
+                notIn: ["COMPLETED", "CANCELLED"]
+            },
+            payment: {
+                status: "SUCCESSED"
+            }
+        }
+    });
+
+    const cancelledOrders = await prisma.order.count({
+        where: {
+            sellerId: user.id,
+            status: "CANCELLED",
+            payment: {
+                status: "SUCCESSED"
+            }
+        }
+    });
+
+    const completedOrders = await prisma.order.count({
+        where: {
+            sellerId: user.id,
+            status: "COMPLETED",
+            payment: {
+                status: "SUCCESSED"
+            }
+        }
+    });
+
+    const returnedOrders = await prisma.return.count({
+        where: {
+            sellerId: user.id,
+            status: "COMPLETED"
+        }
+    });
+
+    return {
+        totalSellDonation: SellDonated?._sum?.amount || 0,
+        avaialbleListings,
+        soldListings: soldListings?._sum?.quantity || 0,
+        runningOrders,
+        cancelledOrders,
+        completedOrders,
+        returnedOrders
+    }
+
+}
+
+const buyerHubStatsForAdmin = async (userName: string) => {
+    const user = await prisma.user.findFirst({ where: { userName }, include: { auth: { select: { role: true } } } });
+
+    if (!user || !user?.auth?.role) {
+        throw new AppError(
+            httpStatus.NOT_FOUND,
+            'User does not exist',
+        );
+    }
+
+    const totalTreeDonation = await prisma.order.aggregate({
+        where: {
+            buyerId: user?.id,
+        }, _sum: { treeCredit: true }
+    });
+
+    const directMoneyDonation = await prisma.directDonation.aggregate({
+        where: {
+            payment: {
+                status: "SUCCESSED"
+            },
+            donorId: user?.id
+        }, _sum: { amount: true }
+    });
+
+    const extraMoneyDonation = await prisma.sellDonation.aggregate({
+        where: {
+            orderItem: {
+                order: {
+                    buyerId: user?.id,
+                    payment: {
+                        status: "SUCCESSED"
+                    }
+                }
+            }
+        }, _sum: { extra_money: true }
+    });
+
+    const runningOrders = await prisma.order.count({
+        where: {
+            buyerId: user.id,
+            status: {
+                notIn: ["COMPLETED", "CANCELLED"]
+            },
+            payment: {
+                status: "SUCCESSED"
+            }
+        }
+    });
+
+    const cancelledOrders = await prisma.order.count({
+        where: {
+            buyerId: user.id,
+            status: "CANCELLED",
+            payment: {
+                status: "SUCCESSED"
+            }
+        }
+    });
+
+    const returnedOrders = await prisma.return.count({
+        where: {
+            buyerId: user.id,
+            status: "COMPLETED"
+        }
+    });
+
+    return {
+        totalTreeDonation: totalTreeDonation?._sum?.treeCredit || 0,
+        directMoneyDonation: directMoneyDonation?._sum?.amount || 0,
+        extraMoneyDonation: extraMoneyDonation?._sum?.extra_money || 0,
+        runningOrders: runningOrders || 0,
+        cancelledOrders: cancelledOrders || 0,
+        returnedOrders: returnedOrders || 0
+    }
+
 }
 
 const charityAbout = async (userName: string) => {
@@ -783,6 +1027,7 @@ const userFolowers = async (userName: string, options: TPaginationOptions) => {
 
 
 export const userService = {
+    getuserIdByUserName,
     updateProfile,
     getUserById,
     allUsers,
@@ -790,6 +1035,8 @@ export const userService = {
     deletemyAccount,
     userDetails,
     UpdateNotification,
+
+    approveOrDeclineUser,
 
     userFolowings,
     userFolowers,
@@ -803,5 +1050,9 @@ export const userService = {
     bundleDiscount,
     updateBundleDiscount,
     getSellerBundileTiers,
-    badgeStats
+    badgeStats,
+
+    userDetailsWithbalanceAdmin,
+    sellerHubStatsForAdmin,
+    buyerHubStatsForAdmin
 }

@@ -1,6 +1,6 @@
 model Return {
     id          String       @id @default(uuid())
-    orderId     String?
+    orderId     String? @unique
     order       Order?        @relation(fields: [orderId], references: [id], onDelete: Cascade)
     buyerId     String
     buyer       User         @relation("ReturnBuyer", fields: [buyerId], references: [id])

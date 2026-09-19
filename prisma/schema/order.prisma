@@ -43,7 +43,7 @@ model Order {
     buyerId String // buyer
     buyer   User   @relation("buyer", fields: [buyerId], references: [id], onDelete: Cascade) //buyer
 
-    return Return[]
+    return Return?
 
     sellerId String
     seller   User   @relation("seller", fields: [sellerId], references: [id], onDelete: Restrict)
@@ -66,7 +66,7 @@ model Order {
 
     itemsTotal    Float @default(0) // sum of all item prices
     totalDelivery Float @default(0) // NEW: sum of all seller delivery charges
-    totalPrice    Float @default(0) // itemsTotal + total Delivery charge + treeCredit + serviceFee + authenticationFee
+    totalPrice    Float @default(0) // itemsTotal + total Delivery charge + treeCredit + serviceFee + authenticationFee == buyer total paid
     
     sellerItemsTotal Float @default(0) // sum of all items total prices - seller donation amount
     sellerTotal  Float @default(0) // sum of all items total prices - seller donation amount - bundle discount
@@ -139,7 +139,7 @@ model OrderItem {
 
     quantity   Int
     weight     Float @default(0) // NEW: snapshot of product weight at order time
-    unitPrice  Float // snapshot of price at time of order, after bundle discount
+    unitPrice  Float // snapshot of price at time of order
     unitAllocatedPrice Float @default(0) // snapshot of price at time of order, after bundle discount & offer allocation
     sellerFinalUnitPrice Float @default(0) // snapshot of price at time of order, after bundle discount & offer allocation & seller donation allocation
     totalPrice Float // unitPrice * quantity

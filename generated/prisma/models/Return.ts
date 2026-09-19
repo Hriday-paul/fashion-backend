@@ -363,10 +363,10 @@ export type ReturnOrderByWithRelationInput = {
 
 export type ReturnWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  orderId?: string
   AND?: Prisma.ReturnWhereInput | Prisma.ReturnWhereInput[]
   OR?: Prisma.ReturnWhereInput[]
   NOT?: Prisma.ReturnWhereInput | Prisma.ReturnWhereInput[]
-  orderId?: Prisma.StringNullableFilter<"Return"> | string | null
   buyerId?: Prisma.StringFilter<"Return"> | string
   sellerId?: Prisma.StringFilter<"Return"> | string
   status?: Prisma.EnumReturnStatusFilter<"Return"> | $Enums.ReturnStatus
@@ -389,7 +389,7 @@ export type ReturnWhereUniqueInput = Prisma.AtLeast<{
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.ReturnItemListRelationFilter
   evidence?: Prisma.ReturnEvidenceListRelationFilter
-}, "id">
+}, "id" | "orderId">
 
 export type ReturnOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -602,14 +602,9 @@ export type ReturnUncheckedUpdateManyInput = {
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type ReturnListRelationFilter = {
-  every?: Prisma.ReturnWhereInput
-  some?: Prisma.ReturnWhereInput
-  none?: Prisma.ReturnWhereInput
-}
-
-export type ReturnOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type ReturnNullableScalarRelationFilter = {
+  is?: Prisma.ReturnWhereInput | null
+  isNot?: Prisma.ReturnWhereInput | null
 }
 
 export type ReturnCountOrderByAggregateInput = {
@@ -691,46 +686,46 @@ export type ReturnScalarRelationFilter = {
   isNot?: Prisma.ReturnWhereInput
 }
 
-export type ReturnCreateNestedManyWithoutOrderInput = {
-  create?: Prisma.XOR<Prisma.ReturnCreateWithoutOrderInput, Prisma.ReturnUncheckedCreateWithoutOrderInput> | Prisma.ReturnCreateWithoutOrderInput[] | Prisma.ReturnUncheckedCreateWithoutOrderInput[]
-  connectOrCreate?: Prisma.ReturnCreateOrConnectWithoutOrderInput | Prisma.ReturnCreateOrConnectWithoutOrderInput[]
-  createMany?: Prisma.ReturnCreateManyOrderInputEnvelope
-  connect?: Prisma.ReturnWhereUniqueInput | Prisma.ReturnWhereUniqueInput[]
+export type ReturnListRelationFilter = {
+  every?: Prisma.ReturnWhereInput
+  some?: Prisma.ReturnWhereInput
+  none?: Prisma.ReturnWhereInput
 }
 
-export type ReturnUncheckedCreateNestedManyWithoutOrderInput = {
-  create?: Prisma.XOR<Prisma.ReturnCreateWithoutOrderInput, Prisma.ReturnUncheckedCreateWithoutOrderInput> | Prisma.ReturnCreateWithoutOrderInput[] | Prisma.ReturnUncheckedCreateWithoutOrderInput[]
-  connectOrCreate?: Prisma.ReturnCreateOrConnectWithoutOrderInput | Prisma.ReturnCreateOrConnectWithoutOrderInput[]
-  createMany?: Prisma.ReturnCreateManyOrderInputEnvelope
-  connect?: Prisma.ReturnWhereUniqueInput | Prisma.ReturnWhereUniqueInput[]
+export type ReturnOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
-export type ReturnUpdateManyWithoutOrderNestedInput = {
-  create?: Prisma.XOR<Prisma.ReturnCreateWithoutOrderInput, Prisma.ReturnUncheckedCreateWithoutOrderInput> | Prisma.ReturnCreateWithoutOrderInput[] | Prisma.ReturnUncheckedCreateWithoutOrderInput[]
-  connectOrCreate?: Prisma.ReturnCreateOrConnectWithoutOrderInput | Prisma.ReturnCreateOrConnectWithoutOrderInput[]
-  upsert?: Prisma.ReturnUpsertWithWhereUniqueWithoutOrderInput | Prisma.ReturnUpsertWithWhereUniqueWithoutOrderInput[]
-  createMany?: Prisma.ReturnCreateManyOrderInputEnvelope
-  set?: Prisma.ReturnWhereUniqueInput | Prisma.ReturnWhereUniqueInput[]
-  disconnect?: Prisma.ReturnWhereUniqueInput | Prisma.ReturnWhereUniqueInput[]
-  delete?: Prisma.ReturnWhereUniqueInput | Prisma.ReturnWhereUniqueInput[]
-  connect?: Prisma.ReturnWhereUniqueInput | Prisma.ReturnWhereUniqueInput[]
-  update?: Prisma.ReturnUpdateWithWhereUniqueWithoutOrderInput | Prisma.ReturnUpdateWithWhereUniqueWithoutOrderInput[]
-  updateMany?: Prisma.ReturnUpdateManyWithWhereWithoutOrderInput | Prisma.ReturnUpdateManyWithWhereWithoutOrderInput[]
-  deleteMany?: Prisma.ReturnScalarWhereInput | Prisma.ReturnScalarWhereInput[]
+export type ReturnCreateNestedOneWithoutOrderInput = {
+  create?: Prisma.XOR<Prisma.ReturnCreateWithoutOrderInput, Prisma.ReturnUncheckedCreateWithoutOrderInput>
+  connectOrCreate?: Prisma.ReturnCreateOrConnectWithoutOrderInput
+  connect?: Prisma.ReturnWhereUniqueInput
 }
 
-export type ReturnUncheckedUpdateManyWithoutOrderNestedInput = {
-  create?: Prisma.XOR<Prisma.ReturnCreateWithoutOrderInput, Prisma.ReturnUncheckedCreateWithoutOrderInput> | Prisma.ReturnCreateWithoutOrderInput[] | Prisma.ReturnUncheckedCreateWithoutOrderInput[]
-  connectOrCreate?: Prisma.ReturnCreateOrConnectWithoutOrderInput | Prisma.ReturnCreateOrConnectWithoutOrderInput[]
-  upsert?: Prisma.ReturnUpsertWithWhereUniqueWithoutOrderInput | Prisma.ReturnUpsertWithWhereUniqueWithoutOrderInput[]
-  createMany?: Prisma.ReturnCreateManyOrderInputEnvelope
-  set?: Prisma.ReturnWhereUniqueInput | Prisma.ReturnWhereUniqueInput[]
-  disconnect?: Prisma.ReturnWhereUniqueInput | Prisma.ReturnWhereUniqueInput[]
-  delete?: Prisma.ReturnWhereUniqueInput | Prisma.ReturnWhereUniqueInput[]
-  connect?: Prisma.ReturnWhereUniqueInput | Prisma.ReturnWhereUniqueInput[]
-  update?: Prisma.ReturnUpdateWithWhereUniqueWithoutOrderInput | Prisma.ReturnUpdateWithWhereUniqueWithoutOrderInput[]
-  updateMany?: Prisma.ReturnUpdateManyWithWhereWithoutOrderInput | Prisma.ReturnUpdateManyWithWhereWithoutOrderInput[]
-  deleteMany?: Prisma.ReturnScalarWhereInput | Prisma.ReturnScalarWhereInput[]
+export type ReturnUncheckedCreateNestedOneWithoutOrderInput = {
+  create?: Prisma.XOR<Prisma.ReturnCreateWithoutOrderInput, Prisma.ReturnUncheckedCreateWithoutOrderInput>
+  connectOrCreate?: Prisma.ReturnCreateOrConnectWithoutOrderInput
+  connect?: Prisma.ReturnWhereUniqueInput
+}
+
+export type ReturnUpdateOneWithoutOrderNestedInput = {
+  create?: Prisma.XOR<Prisma.ReturnCreateWithoutOrderInput, Prisma.ReturnUncheckedCreateWithoutOrderInput>
+  connectOrCreate?: Prisma.ReturnCreateOrConnectWithoutOrderInput
+  upsert?: Prisma.ReturnUpsertWithoutOrderInput
+  disconnect?: Prisma.ReturnWhereInput | boolean
+  delete?: Prisma.ReturnWhereInput | boolean
+  connect?: Prisma.ReturnWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ReturnUpdateToOneWithWhereWithoutOrderInput, Prisma.ReturnUpdateWithoutOrderInput>, Prisma.ReturnUncheckedUpdateWithoutOrderInput>
+}
+
+export type ReturnUncheckedUpdateOneWithoutOrderNestedInput = {
+  create?: Prisma.XOR<Prisma.ReturnCreateWithoutOrderInput, Prisma.ReturnUncheckedCreateWithoutOrderInput>
+  connectOrCreate?: Prisma.ReturnCreateOrConnectWithoutOrderInput
+  upsert?: Prisma.ReturnUpsertWithoutOrderInput
+  disconnect?: Prisma.ReturnWhereInput | boolean
+  delete?: Prisma.ReturnWhereInput | boolean
+  connect?: Prisma.ReturnWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ReturnUpdateToOneWithWhereWithoutOrderInput, Prisma.ReturnUpdateWithoutOrderInput>, Prisma.ReturnUncheckedUpdateWithoutOrderInput>
 }
 
 export type EnumReturnStatusFieldUpdateOperationsInput = {
@@ -904,50 +899,61 @@ export type ReturnCreateOrConnectWithoutOrderInput = {
   create: Prisma.XOR<Prisma.ReturnCreateWithoutOrderInput, Prisma.ReturnUncheckedCreateWithoutOrderInput>
 }
 
-export type ReturnCreateManyOrderInputEnvelope = {
-  data: Prisma.ReturnCreateManyOrderInput | Prisma.ReturnCreateManyOrderInput[]
-  skipDuplicates?: boolean
-}
-
-export type ReturnUpsertWithWhereUniqueWithoutOrderInput = {
-  where: Prisma.ReturnWhereUniqueInput
+export type ReturnUpsertWithoutOrderInput = {
   update: Prisma.XOR<Prisma.ReturnUpdateWithoutOrderInput, Prisma.ReturnUncheckedUpdateWithoutOrderInput>
   create: Prisma.XOR<Prisma.ReturnCreateWithoutOrderInput, Prisma.ReturnUncheckedCreateWithoutOrderInput>
+  where?: Prisma.ReturnWhereInput
 }
 
-export type ReturnUpdateWithWhereUniqueWithoutOrderInput = {
-  where: Prisma.ReturnWhereUniqueInput
+export type ReturnUpdateToOneWithWhereWithoutOrderInput = {
+  where?: Prisma.ReturnWhereInput
   data: Prisma.XOR<Prisma.ReturnUpdateWithoutOrderInput, Prisma.ReturnUncheckedUpdateWithoutOrderInput>
 }
 
-export type ReturnUpdateManyWithWhereWithoutOrderInput = {
-  where: Prisma.ReturnScalarWhereInput
-  data: Prisma.XOR<Prisma.ReturnUpdateManyMutationInput, Prisma.ReturnUncheckedUpdateManyWithoutOrderInput>
+export type ReturnUpdateWithoutOrderInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumReturnStatusFieldUpdateOperationsInput | $Enums.ReturnStatus
+  reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  buyer?: Prisma.UserUpdateOneRequiredWithoutReturnsAsBuyerNestedInput
+  seller?: Prisma.UserUpdateOneRequiredWithoutReturnsAsSellerNestedInput
+  items?: Prisma.ReturnItemUpdateManyWithoutReturnNestedInput
+  evidence?: Prisma.ReturnEvidenceUpdateManyWithoutReturnNestedInput
 }
 
-export type ReturnScalarWhereInput = {
-  AND?: Prisma.ReturnScalarWhereInput | Prisma.ReturnScalarWhereInput[]
-  OR?: Prisma.ReturnScalarWhereInput[]
-  NOT?: Prisma.ReturnScalarWhereInput | Prisma.ReturnScalarWhereInput[]
-  id?: Prisma.StringFilter<"Return"> | string
-  orderId?: Prisma.StringNullableFilter<"Return"> | string | null
-  buyerId?: Prisma.StringFilter<"Return"> | string
-  sellerId?: Prisma.StringFilter<"Return"> | string
-  status?: Prisma.EnumReturnStatusFilter<"Return"> | $Enums.ReturnStatus
-  reason?: Prisma.EnumReturnReasonFilter<"Return"> | $Enums.ReturnReason
-  description?: Prisma.StringNullableFilter<"Return"> | string | null
-  declineReason?: Prisma.StringNullableFilter<"Return"> | string | null
-  trackingNumber?: Prisma.StringNullableFilter<"Return"> | string | null
-  trackingCarrier?: Prisma.StringNullableFilter<"Return"> | string | null
-  refundAmount?: Prisma.FloatNullableFilter<"Return"> | number | null
-  refundedAt?: Prisma.DateTimeNullableFilter<"Return"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"Return"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Return"> | Date | string
-  courier_service_id?: Prisma.StringNullableFilter<"Return"> | string | null
-  shippingId?: Prisma.StringNullableFilter<"Return"> | string | null
-  isLebelGenerated?: Prisma.BoolFilter<"Return"> | boolean
-  lebelUrl?: Prisma.StringNullableFilter<"Return"> | string | null
-  parcelId?: Prisma.StringNullableFilter<"Return"> | string | null
+export type ReturnUncheckedUpdateWithoutOrderInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  buyerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumReturnStatusFieldUpdateOperationsInput | $Enums.ReturnStatus
+  reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnNestedInput
+  evidence?: Prisma.ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput
 }
 
 export type ReturnCreateWithoutItemsInput = {
@@ -1294,6 +1300,31 @@ export type ReturnUpdateManyWithWhereWithoutBuyerInput = {
   data: Prisma.XOR<Prisma.ReturnUpdateManyMutationInput, Prisma.ReturnUncheckedUpdateManyWithoutBuyerInput>
 }
 
+export type ReturnScalarWhereInput = {
+  AND?: Prisma.ReturnScalarWhereInput | Prisma.ReturnScalarWhereInput[]
+  OR?: Prisma.ReturnScalarWhereInput[]
+  NOT?: Prisma.ReturnScalarWhereInput | Prisma.ReturnScalarWhereInput[]
+  id?: Prisma.StringFilter<"Return"> | string
+  orderId?: Prisma.StringNullableFilter<"Return"> | string | null
+  buyerId?: Prisma.StringFilter<"Return"> | string
+  sellerId?: Prisma.StringFilter<"Return"> | string
+  status?: Prisma.EnumReturnStatusFilter<"Return"> | $Enums.ReturnStatus
+  reason?: Prisma.EnumReturnReasonFilter<"Return"> | $Enums.ReturnReason
+  description?: Prisma.StringNullableFilter<"Return"> | string | null
+  declineReason?: Prisma.StringNullableFilter<"Return"> | string | null
+  trackingNumber?: Prisma.StringNullableFilter<"Return"> | string | null
+  trackingCarrier?: Prisma.StringNullableFilter<"Return"> | string | null
+  refundAmount?: Prisma.FloatNullableFilter<"Return"> | number | null
+  refundedAt?: Prisma.DateTimeNullableFilter<"Return"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Return"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Return"> | Date | string
+  courier_service_id?: Prisma.StringNullableFilter<"Return"> | string | null
+  shippingId?: Prisma.StringNullableFilter<"Return"> | string | null
+  isLebelGenerated?: Prisma.BoolFilter<"Return"> | boolean
+  lebelUrl?: Prisma.StringNullableFilter<"Return"> | string | null
+  parcelId?: Prisma.StringNullableFilter<"Return"> | string | null
+}
+
 export type ReturnUpsertWithWhereUniqueWithoutSellerInput = {
   where: Prisma.ReturnWhereUniqueInput
   update: Prisma.XOR<Prisma.ReturnUpdateWithoutSellerInput, Prisma.ReturnUncheckedUpdateWithoutSellerInput>
@@ -1308,94 +1339,6 @@ export type ReturnUpdateWithWhereUniqueWithoutSellerInput = {
 export type ReturnUpdateManyWithWhereWithoutSellerInput = {
   where: Prisma.ReturnScalarWhereInput
   data: Prisma.XOR<Prisma.ReturnUpdateManyMutationInput, Prisma.ReturnUncheckedUpdateManyWithoutSellerInput>
-}
-
-export type ReturnCreateManyOrderInput = {
-  id?: string
-  buyerId: string
-  sellerId: string
-  status?: $Enums.ReturnStatus
-  reason: $Enums.ReturnReason
-  description?: string | null
-  declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
-}
-
-export type ReturnUpdateWithoutOrderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumReturnStatusFieldUpdateOperationsInput | $Enums.ReturnStatus
-  reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  buyer?: Prisma.UserUpdateOneRequiredWithoutReturnsAsBuyerNestedInput
-  seller?: Prisma.UserUpdateOneRequiredWithoutReturnsAsSellerNestedInput
-  items?: Prisma.ReturnItemUpdateManyWithoutReturnNestedInput
-  evidence?: Prisma.ReturnEvidenceUpdateManyWithoutReturnNestedInput
-}
-
-export type ReturnUncheckedUpdateWithoutOrderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  buyerId?: Prisma.StringFieldUpdateOperationsInput | string
-  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumReturnStatusFieldUpdateOperationsInput | $Enums.ReturnStatus
-  reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnNestedInput
-  evidence?: Prisma.ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput
-}
-
-export type ReturnUncheckedUpdateManyWithoutOrderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  buyerId?: Prisma.StringFieldUpdateOperationsInput | string
-  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumReturnStatusFieldUpdateOperationsInput | $Enums.ReturnStatus
-  reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ReturnCreateManyBuyerInput = {
