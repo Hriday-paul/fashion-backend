@@ -1,4 +1,5 @@
 import AppError from "../../error/AppError";
+import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import prisma from "../../shared/prisma"
 import httpstatus from "http-status"
 
@@ -107,10 +108,8 @@ const selldonations = async (userName: string) => {
             status: "PAID",
 
             // 🔥 ignore records where are 0
-            NOT: {
-                AND: [
-                    { amount: 0 }
-                ]
+            amount: {
+                gt: 0
             },
 
             orderItem: {
@@ -129,6 +128,15 @@ const selldonations = async (userName: string) => {
                     product: {
                         select: {
                             title: true,
+                            images: {
+                                take: 1,
+                                orderBy: {
+                                    order: "asc"
+                                },
+                                select: {
+                                    url: true,
+                                }
+                            },
                             category: {
                                 select: {
                                     name: true
@@ -328,11 +336,118 @@ const sellerCharitySupportStats = async (userName: string) => {
 
 }
 
+const charityStats = async (userName: string) => {
+    const user = await prisma.user.findFirst({ where: { userName } });
+
+    if (!user) {
+        throw new AppError(httpstatus.NOT_FOUND, "User Does not exist")
+    }
+
+    const directDonationraised = await prisma.directDonation.aggregate({
+        _sum: {
+            amount: true,
+        },
+        where: {
+            charityId: user?.id,
+            payment: {
+                status: "SUCCESSED"
+            }
+        },
+    });
+
+    const extraDonationRaised = await prisma.sellDonation.aggregate({
+        _sum: {
+            extra_money: true,
+        },
+        where: {
+            charityId: user?.id,
+            orderItem: {
+                order: {
+                    payment: {
+                        status: "SUCCESSED"
+                    }
+                }
+            }
+        },
+    });
+
+    const sellDonationRaised = await prisma.sellDonation.aggregate({
+        _sum: {
+            amount: true,
+        },
+        where: {
+            charityId: user?.id,
+            status: "PAID"
+        },
+    });
+
+    const totalRaised =
+        (directDonationraised._sum?.amount || 0) +
+        (extraDonationRaised._sum?.extra_money || 0) +
+        (sellDonationRaised._sum?.amount || 0);
+
+    return {
+        directDonationraised: directDonationraised._sum?.amount || 0,
+        extraDonationRaised: extraDonationRaised._sum?.extra_money || 0,
+        sellDonationRaised: sellDonationRaised._sum?.amount || 0,
+        totalRaised
+    }
+}
+
+const extraDonationsRaised = async (options: TPaginationOptions, userName: string) => {
+
+    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+    const user = await prisma.user.findFirst({ where: { userName } });
+
+    if (!user) {
+        throw new AppError(httpstatus.NOT_FOUND, "User Does not exist")
+    }
+
+    const extraDonationRaised = await prisma.sellDonation.findMany({
+        where: {
+            charityId: user?.id,
+            orderItem: {
+                order: {
+                    payment: {
+                        status: "SUCCESSED"
+                    }
+                }
+            }
+        },
+        skip,
+        take: limit,
+        orderBy: {
+            [sortBy]: sortOrder,
+        },
+    });
+
+    const total = await prisma.sellDonation.count({
+        where: {
+            charityId: user?.id,
+            orderItem: {
+                order: {
+                    payment: {
+                        status: "SUCCESSED"
+                    }
+                }
+            }
+        },
+    });
+
+    return {
+        meta: paginationHelper.generatePaginationMeta({ page, limit, total }),
+        data: extraDonationRaised,
+    };
+}
+
 export const donationService = {
     memberDonationStats,
     selldonations,
     purchaseDonationsContribute,
     treeDonations,
     directMoneyDonations,
-    sellerCharitySupportStats
+    sellerCharitySupportStats,
+    charityStats,
+    extraDonationsRaised
 }

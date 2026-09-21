@@ -80,15 +80,26 @@ model Order {
     offer   Offer? @relation(fields: [offerId], references: [id], onDelete: Cascade)
     bundleDiscountPercent Float @default(0)
 
+    extraDonation Float @default(0) // extra donation amount added by buyer
+
     assistentSellId String? @unique
     assistentSell   AssistentSell? @relation(fields: [assistentSellId], references: [id], onDelete: Cascade)
 
+    allowedAuthentication Boolean @default(false)
+
+    //step1 shipment
     courier_service_id String
     shippingId String
     isLebelGenerated Boolean @default(false)
     lebelUrl String?
-
     parcelId String?
+
+    //step2 shipment, auth center to buyer
+    authCourierServiceId String?
+    authShippingId String?
+    isAuthLebelGenerated Boolean @default(false)
+    authLebelUrl String?
+    authParcelId String?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

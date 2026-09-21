@@ -387,7 +387,9 @@ const sellerHubStatsForAdmin = async (userName: string) => {
             sellerId: user.id,
             status: "CANCELLED",
             payment: {
-                status: "SUCCESSED"
+                status: {
+                    in: ["SUCCESSED", "REFUNDED"]
+                }
             }
         }
     });
@@ -476,7 +478,9 @@ const buyerHubStatsForAdmin = async (userName: string) => {
             buyerId: user.id,
             status: "CANCELLED",
             payment: {
-                status: "SUCCESSED"
+                status: {
+                    in: ["SUCCESSED", "REFUNDED"]
+                }
             }
         }
     });

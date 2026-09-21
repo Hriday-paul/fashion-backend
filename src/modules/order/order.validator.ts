@@ -14,7 +14,7 @@ export const validateOrderProducts = [
         .isString()
         .withMessage('Shipment service ID must be a valid string'),
 
-        body('allowedAuthentication')
+    body('allowedAuthentication')
         .notEmpty()
         .withMessage('allowedAuthentication is required')
         .isBoolean()
@@ -40,7 +40,7 @@ export const validateOfferOrder = [
         .isString()
         .withMessage('Shipment service ID must be a valid string'),
 
-        body('allowedAuthentication')
+    body('allowedAuthentication')
         .notEmpty()
         .withMessage('allowedAuthentication is required')
         .isBoolean()
@@ -101,4 +101,28 @@ export const validateApproveCancelReq = [
         .isUUID()
         .withMessage('Item ID must be a valid ID'),
 
+]
+
+export const validateOrderAuthResult = [
+    body('orderId')
+        .notEmpty()
+        .withMessage('Order ID is required')
+        .isUUID()
+        .withMessage('Order ID must be a valid ID'),
+
+    body('items')
+        .isArray({ min: 1 })
+        .withMessage('Items must be a non-empty array'),
+
+    body('items.*.itemId')
+        .notEmpty()
+        .withMessage('Item ID is required')
+        .isUUID()
+        .withMessage('Item ID must be a valid ID'),
+
+    body('items.*.result')
+        .notEmpty()
+        .withMessage('Result is required')
+        .isIn(['PASSED', 'FAILED'])
+        .withMessage('Wrong result passed'),
 ]

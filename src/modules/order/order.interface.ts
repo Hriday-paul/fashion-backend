@@ -226,7 +226,16 @@ export interface IShipment {
         },
         "set_as_residential": false,
         "shipment_state": "created",
-        "shipping_documents": [],
+        "shipping_documents": [
+            {
+                "base64_encoded_strings": [],
+                "category": "label",
+                "format": "url",
+                "page_size": "4x6",
+                "required": true,
+                "url": "https://api.easyship.com/shipment/v1/shipments/01563646-58c1-4607-8fe0-cae3e33c0005/shipping_documents/label?page_size=4x6"
+            }
+        ],
         "shipping_settings": {
             "b13a_filing": null,
             "label_customization_fields": []
@@ -348,7 +357,7 @@ export interface ILabel {
                         "origin_customs_value": 100,
                         "quantity": 1,
                         "sku": "12341234"
-                    }, 
+                    },
                 ],
                 "total_actual_weight": 30
             }
@@ -414,7 +423,7 @@ export interface ILabel {
         "tracking_page_url": "http://api.easyship.com:9003/shipment-tracking/ESSG10006001",
         "trackings": [
             {
-                "tracking_number" : string,
+                "tracking_number": string,
                 "alternate_tracking_number": string | null,
             }
         ],

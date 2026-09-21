@@ -35,6 +35,7 @@ export type OrderAvgAggregateOutputType = {
   serviceFee: number | null
   authenticationFee: number | null
   bundleDiscountPercent: number | null
+  extraDonation: number | null
 }
 
 export type OrderSumAggregateOutputType = {
@@ -47,6 +48,7 @@ export type OrderSumAggregateOutputType = {
   serviceFee: number | null
   authenticationFee: number | null
   bundleDiscountPercent: number | null
+  extraDonation: number | null
 }
 
 export type OrderMinAggregateOutputType = {
@@ -70,12 +72,19 @@ export type OrderMinAggregateOutputType = {
   pricingSource: $Enums.OrderPricingSource | null
   offerId: string | null
   bundleDiscountPercent: number | null
+  extraDonation: number | null
   assistentSellId: string | null
+  allowedAuthentication: boolean | null
   courier_service_id: string | null
   shippingId: string | null
   isLebelGenerated: boolean | null
   lebelUrl: string | null
   parcelId: string | null
+  authCourierServiceId: string | null
+  authShippingId: string | null
+  isAuthLebelGenerated: boolean | null
+  authLebelUrl: string | null
+  authParcelId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   completedAt: Date | null
@@ -104,12 +113,19 @@ export type OrderMaxAggregateOutputType = {
   pricingSource: $Enums.OrderPricingSource | null
   offerId: string | null
   bundleDiscountPercent: number | null
+  extraDonation: number | null
   assistentSellId: string | null
+  allowedAuthentication: boolean | null
   courier_service_id: string | null
   shippingId: string | null
   isLebelGenerated: boolean | null
   lebelUrl: string | null
   parcelId: string | null
+  authCourierServiceId: string | null
+  authShippingId: string | null
+  isAuthLebelGenerated: boolean | null
+  authLebelUrl: string | null
+  authParcelId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   completedAt: Date | null
@@ -138,12 +154,19 @@ export type OrderCountAggregateOutputType = {
   pricingSource: number
   offerId: number
   bundleDiscountPercent: number
+  extraDonation: number
   assistentSellId: number
+  allowedAuthentication: number
   courier_service_id: number
   shippingId: number
   isLebelGenerated: number
   lebelUrl: number
   parcelId: number
+  authCourierServiceId: number
+  authShippingId: number
+  isAuthLebelGenerated: number
+  authLebelUrl: number
+  authParcelId: number
   createdAt: number
   updatedAt: number
   completedAt: number
@@ -163,6 +186,7 @@ export type OrderAvgAggregateInputType = {
   serviceFee?: true
   authenticationFee?: true
   bundleDiscountPercent?: true
+  extraDonation?: true
 }
 
 export type OrderSumAggregateInputType = {
@@ -175,6 +199,7 @@ export type OrderSumAggregateInputType = {
   serviceFee?: true
   authenticationFee?: true
   bundleDiscountPercent?: true
+  extraDonation?: true
 }
 
 export type OrderMinAggregateInputType = {
@@ -198,12 +223,19 @@ export type OrderMinAggregateInputType = {
   pricingSource?: true
   offerId?: true
   bundleDiscountPercent?: true
+  extraDonation?: true
   assistentSellId?: true
+  allowedAuthentication?: true
   courier_service_id?: true
   shippingId?: true
   isLebelGenerated?: true
   lebelUrl?: true
   parcelId?: true
+  authCourierServiceId?: true
+  authShippingId?: true
+  isAuthLebelGenerated?: true
+  authLebelUrl?: true
+  authParcelId?: true
   createdAt?: true
   updatedAt?: true
   completedAt?: true
@@ -232,12 +264,19 @@ export type OrderMaxAggregateInputType = {
   pricingSource?: true
   offerId?: true
   bundleDiscountPercent?: true
+  extraDonation?: true
   assistentSellId?: true
+  allowedAuthentication?: true
   courier_service_id?: true
   shippingId?: true
   isLebelGenerated?: true
   lebelUrl?: true
   parcelId?: true
+  authCourierServiceId?: true
+  authShippingId?: true
+  isAuthLebelGenerated?: true
+  authLebelUrl?: true
+  authParcelId?: true
   createdAt?: true
   updatedAt?: true
   completedAt?: true
@@ -266,12 +305,19 @@ export type OrderCountAggregateInputType = {
   pricingSource?: true
   offerId?: true
   bundleDiscountPercent?: true
+  extraDonation?: true
   assistentSellId?: true
+  allowedAuthentication?: true
   courier_service_id?: true
   shippingId?: true
   isLebelGenerated?: true
   lebelUrl?: true
   parcelId?: true
+  authCourierServiceId?: true
+  authShippingId?: true
+  isAuthLebelGenerated?: true
+  authLebelUrl?: true
+  authParcelId?: true
   createdAt?: true
   updatedAt?: true
   completedAt?: true
@@ -387,12 +433,19 @@ export type OrderGroupByOutputType = {
   pricingSource: $Enums.OrderPricingSource
   offerId: string | null
   bundleDiscountPercent: number
+  extraDonation: number
   assistentSellId: string | null
+  allowedAuthentication: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated: boolean
   lebelUrl: string | null
   parcelId: string | null
+  authCourierServiceId: string | null
+  authShippingId: string | null
+  isAuthLebelGenerated: boolean
+  authLebelUrl: string | null
+  authParcelId: string | null
   createdAt: Date
   updatedAt: Date
   completedAt: Date | null
@@ -444,12 +497,19 @@ export type OrderWhereInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFilter<"Order"> | $Enums.OrderPricingSource
   offerId?: Prisma.StringNullableFilter<"Order"> | string | null
   bundleDiscountPercent?: Prisma.FloatFilter<"Order"> | number
+  extraDonation?: Prisma.FloatFilter<"Order"> | number
   assistentSellId?: Prisma.StringNullableFilter<"Order"> | string | null
+  allowedAuthentication?: Prisma.BoolFilter<"Order"> | boolean
   courier_service_id?: Prisma.StringFilter<"Order"> | string
   shippingId?: Prisma.StringFilter<"Order"> | string
   isLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
   lebelUrl?: Prisma.StringNullableFilter<"Order"> | string | null
   parcelId?: Prisma.StringNullableFilter<"Order"> | string | null
+  authCourierServiceId?: Prisma.StringNullableFilter<"Order"> | string | null
+  authShippingId?: Prisma.StringNullableFilter<"Order"> | string | null
+  isAuthLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
+  authLebelUrl?: Prisma.StringNullableFilter<"Order"> | string | null
+  authParcelId?: Prisma.StringNullableFilter<"Order"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
@@ -489,12 +549,19 @@ export type OrderOrderByWithRelationInput = {
   pricingSource?: Prisma.SortOrder
   offerId?: Prisma.SortOrderInput | Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
+  extraDonation?: Prisma.SortOrder
   assistentSellId?: Prisma.SortOrderInput | Prisma.SortOrder
+  allowedAuthentication?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
   lebelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   parcelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  authCourierServiceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  authShippingId?: Prisma.SortOrderInput | Prisma.SortOrder
+  isAuthLebelGenerated?: Prisma.SortOrder
+  authLebelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  authParcelId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -538,11 +605,18 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   pricingSource?: Prisma.EnumOrderPricingSourceFilter<"Order"> | $Enums.OrderPricingSource
   offerId?: Prisma.StringNullableFilter<"Order"> | string | null
   bundleDiscountPercent?: Prisma.FloatFilter<"Order"> | number
+  extraDonation?: Prisma.FloatFilter<"Order"> | number
+  allowedAuthentication?: Prisma.BoolFilter<"Order"> | boolean
   courier_service_id?: Prisma.StringFilter<"Order"> | string
   shippingId?: Prisma.StringFilter<"Order"> | string
   isLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
   lebelUrl?: Prisma.StringNullableFilter<"Order"> | string | null
   parcelId?: Prisma.StringNullableFilter<"Order"> | string | null
+  authCourierServiceId?: Prisma.StringNullableFilter<"Order"> | string | null
+  authShippingId?: Prisma.StringNullableFilter<"Order"> | string | null
+  isAuthLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
+  authLebelUrl?: Prisma.StringNullableFilter<"Order"> | string | null
+  authParcelId?: Prisma.StringNullableFilter<"Order"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
@@ -582,12 +656,19 @@ export type OrderOrderByWithAggregationInput = {
   pricingSource?: Prisma.SortOrder
   offerId?: Prisma.SortOrderInput | Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
+  extraDonation?: Prisma.SortOrder
   assistentSellId?: Prisma.SortOrderInput | Prisma.SortOrder
+  allowedAuthentication?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
   lebelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   parcelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  authCourierServiceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  authShippingId?: Prisma.SortOrderInput | Prisma.SortOrder
+  isAuthLebelGenerated?: Prisma.SortOrder
+  authLebelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  authParcelId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -624,12 +705,19 @@ export type OrderScalarWhereWithAggregatesInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceWithAggregatesFilter<"Order"> | $Enums.OrderPricingSource
   offerId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   bundleDiscountPercent?: Prisma.FloatWithAggregatesFilter<"Order"> | number
+  extraDonation?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   assistentSellId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  allowedAuthentication?: Prisma.BoolWithAggregatesFilter<"Order"> | boolean
   courier_service_id?: Prisma.StringWithAggregatesFilter<"Order"> | string
   shippingId?: Prisma.StringWithAggregatesFilter<"Order"> | string
   isLebelGenerated?: Prisma.BoolWithAggregatesFilter<"Order"> | boolean
   lebelUrl?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   parcelId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  authCourierServiceId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  authShippingId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  isAuthLebelGenerated?: Prisma.BoolWithAggregatesFilter<"Order"> | boolean
+  authLebelUrl?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  authParcelId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Order"> | Date | string
   completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
@@ -653,11 +741,18 @@ export type OrderCreateInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -697,12 +792,19 @@ export type OrderUncheckedCreateInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -731,11 +833,18 @@ export type OrderUpdateInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -775,12 +884,19 @@ export type OrderUncheckedUpdateInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -814,12 +930,19 @@ export type OrderCreateManyInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -843,11 +966,18 @@ export type OrderUpdateManyMutationInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -876,12 +1006,19 @@ export type OrderUncheckedUpdateManyInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -920,12 +1057,19 @@ export type OrderCountOrderByAggregateInput = {
   pricingSource?: Prisma.SortOrder
   offerId?: Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
+  extraDonation?: Prisma.SortOrder
   assistentSellId?: Prisma.SortOrder
+  allowedAuthentication?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
   lebelUrl?: Prisma.SortOrder
   parcelId?: Prisma.SortOrder
+  authCourierServiceId?: Prisma.SortOrder
+  authShippingId?: Prisma.SortOrder
+  isAuthLebelGenerated?: Prisma.SortOrder
+  authLebelUrl?: Prisma.SortOrder
+  authParcelId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
@@ -943,6 +1087,7 @@ export type OrderAvgOrderByAggregateInput = {
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
+  extraDonation?: Prisma.SortOrder
 }
 
 export type OrderMaxOrderByAggregateInput = {
@@ -966,12 +1111,19 @@ export type OrderMaxOrderByAggregateInput = {
   pricingSource?: Prisma.SortOrder
   offerId?: Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
+  extraDonation?: Prisma.SortOrder
   assistentSellId?: Prisma.SortOrder
+  allowedAuthentication?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
   lebelUrl?: Prisma.SortOrder
   parcelId?: Prisma.SortOrder
+  authCourierServiceId?: Prisma.SortOrder
+  authShippingId?: Prisma.SortOrder
+  isAuthLebelGenerated?: Prisma.SortOrder
+  authLebelUrl?: Prisma.SortOrder
+  authParcelId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
@@ -1000,12 +1152,19 @@ export type OrderMinOrderByAggregateInput = {
   pricingSource?: Prisma.SortOrder
   offerId?: Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
+  extraDonation?: Prisma.SortOrder
   assistentSellId?: Prisma.SortOrder
+  allowedAuthentication?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
   lebelUrl?: Prisma.SortOrder
   parcelId?: Prisma.SortOrder
+  authCourierServiceId?: Prisma.SortOrder
+  authShippingId?: Prisma.SortOrder
+  isAuthLebelGenerated?: Prisma.SortOrder
+  authLebelUrl?: Prisma.SortOrder
+  authParcelId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
@@ -1023,6 +1182,7 @@ export type OrderSumOrderByAggregateInput = {
   serviceFee?: Prisma.SortOrder
   authenticationFee?: Prisma.SortOrder
   bundleDiscountPercent?: Prisma.SortOrder
+  extraDonation?: Prisma.SortOrder
 }
 
 export type OrderListRelationFilter = {
@@ -1383,11 +1543,18 @@ export type OrderCreateWithoutAssistentSellInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -1426,11 +1593,18 @@ export type OrderUncheckedCreateWithoutAssistentSellInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -1475,11 +1649,18 @@ export type OrderUpdateWithoutAssistentSellInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1518,11 +1699,18 @@ export type OrderUncheckedUpdateWithoutAssistentSellInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1551,11 +1739,18 @@ export type OrderCreateWithoutDeliveryChargeInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -1594,12 +1789,19 @@ export type OrderUncheckedCreateWithoutDeliveryChargeInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -1643,11 +1845,18 @@ export type OrderUpdateWithoutDeliveryChargeInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1686,12 +1895,19 @@ export type OrderUncheckedUpdateWithoutDeliveryChargeInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1719,11 +1935,18 @@ export type OrderCreateWithoutItemsInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -1762,12 +1985,19 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -1811,11 +2041,18 @@ export type OrderUpdateWithoutItemsInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1854,12 +2091,19 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1887,11 +2131,18 @@ export type OrderCreateWithoutPaymentInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -1930,12 +2181,19 @@ export type OrderUncheckedCreateWithoutPaymentInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -1979,11 +2237,18 @@ export type OrderUpdateWithoutPaymentInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2022,12 +2287,19 @@ export type OrderUncheckedUpdateWithoutPaymentInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2055,11 +2327,18 @@ export type OrderCreateWithoutOfferInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2097,12 +2376,19 @@ export type OrderUncheckedCreateWithoutOfferInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2165,12 +2451,19 @@ export type OrderScalarWhereInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFilter<"Order"> | $Enums.OrderPricingSource
   offerId?: Prisma.StringNullableFilter<"Order"> | string | null
   bundleDiscountPercent?: Prisma.FloatFilter<"Order"> | number
+  extraDonation?: Prisma.FloatFilter<"Order"> | number
   assistentSellId?: Prisma.StringNullableFilter<"Order"> | string | null
+  allowedAuthentication?: Prisma.BoolFilter<"Order"> | boolean
   courier_service_id?: Prisma.StringFilter<"Order"> | string
   shippingId?: Prisma.StringFilter<"Order"> | string
   isLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
   lebelUrl?: Prisma.StringNullableFilter<"Order"> | string | null
   parcelId?: Prisma.StringNullableFilter<"Order"> | string | null
+  authCourierServiceId?: Prisma.StringNullableFilter<"Order"> | string | null
+  authShippingId?: Prisma.StringNullableFilter<"Order"> | string | null
+  isAuthLebelGenerated?: Prisma.BoolFilter<"Order"> | boolean
+  authLebelUrl?: Prisma.StringNullableFilter<"Order"> | string | null
+  authParcelId?: Prisma.StringNullableFilter<"Order"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
@@ -2194,11 +2487,18 @@ export type OrderCreateWithoutReturnInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2237,12 +2537,19 @@ export type OrderUncheckedCreateWithoutReturnInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2286,11 +2593,18 @@ export type OrderUpdateWithoutReturnInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2329,12 +2643,19 @@ export type OrderUncheckedUpdateWithoutReturnInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2362,11 +2683,18 @@ export type OrderCreateWithoutRatingInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2405,12 +2733,19 @@ export type OrderUncheckedCreateWithoutRatingInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2454,11 +2789,18 @@ export type OrderUpdateWithoutRatingInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2497,12 +2839,19 @@ export type OrderUncheckedUpdateWithoutRatingInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2530,11 +2879,18 @@ export type OrderCreateWithoutBuyerInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2572,12 +2928,19 @@ export type OrderUncheckedCreateWithoutBuyerInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2616,11 +2979,18 @@ export type OrderCreateWithoutSellerInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2658,12 +3028,19 @@ export type OrderUncheckedCreateWithoutSellerInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2734,11 +3111,18 @@ export type OrderCreateWithoutOriginDetailsInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2776,12 +3160,19 @@ export type OrderUncheckedCreateWithoutOriginDetailsInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2820,11 +3211,18 @@ export type OrderCreateWithoutBillingDetailsInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2862,12 +3260,19 @@ export type OrderUncheckedCreateWithoutBillingDetailsInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2942,12 +3347,19 @@ export type OrderCreateManyOfferInput = {
   authenticationFee?: number
   pricingSource?: $Enums.OrderPricingSource
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -2971,11 +3383,18 @@ export type OrderUpdateWithoutOfferInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3013,12 +3432,19 @@ export type OrderUncheckedUpdateWithoutOfferInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3051,12 +3477,19 @@ export type OrderUncheckedUpdateManyWithoutOfferInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3084,12 +3517,19 @@ export type OrderCreateManyBuyerInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -3117,12 +3557,19 @@ export type OrderCreateManySellerInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -3146,11 +3593,18 @@ export type OrderUpdateWithoutBuyerInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3188,12 +3642,19 @@ export type OrderUncheckedUpdateWithoutBuyerInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3226,12 +3687,19 @@ export type OrderUncheckedUpdateManyWithoutBuyerInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3255,11 +3723,18 @@ export type OrderUpdateWithoutSellerInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3297,12 +3772,19 @@ export type OrderUncheckedUpdateWithoutSellerInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3335,12 +3817,19 @@ export type OrderUncheckedUpdateManyWithoutSellerInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3368,12 +3857,19 @@ export type OrderCreateManyOriginDetailsInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -3401,12 +3897,19 @@ export type OrderCreateManyBillingDetailsInput = {
   pricingSource?: $Enums.OrderPricingSource
   offerId?: string | null
   bundleDiscountPercent?: number
+  extraDonation?: number
   assistentSellId?: string | null
+  allowedAuthentication?: boolean
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
   lebelUrl?: string | null
   parcelId?: string | null
+  authCourierServiceId?: string | null
+  authShippingId?: string | null
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: string | null
+  authParcelId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completedAt?: Date | string | null
@@ -3430,11 +3933,18 @@ export type OrderUpdateWithoutOriginDetailsInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3472,12 +3982,19 @@ export type OrderUncheckedUpdateWithoutOriginDetailsInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3510,12 +4027,19 @@ export type OrderUncheckedUpdateManyWithoutOriginDetailsInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3539,11 +4063,18 @@ export type OrderUpdateWithoutBillingDetailsInput = {
   authenticationFee?: Prisma.FloatFieldUpdateOperationsInput | number
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3581,12 +4112,19 @@ export type OrderUncheckedUpdateWithoutBillingDetailsInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3619,12 +4157,19 @@ export type OrderUncheckedUpdateManyWithoutBillingDetailsInput = {
   pricingSource?: Prisma.EnumOrderPricingSourceFieldUpdateOperationsInput | $Enums.OrderPricingSource
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bundleDiscountPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extraDonation?: Prisma.FloatFieldUpdateOperationsInput | number
   assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  allowedAuthentication?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authCourierServiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authShippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAuthLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authLebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authParcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3684,12 +4229,19 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   pricingSource?: boolean
   offerId?: boolean
   bundleDiscountPercent?: boolean
+  extraDonation?: boolean
   assistentSellId?: boolean
+  allowedAuthentication?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
   isLebelGenerated?: boolean
   lebelUrl?: boolean
   parcelId?: boolean
+  authCourierServiceId?: boolean
+  authShippingId?: boolean
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: boolean
+  authParcelId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   completedAt?: boolean
@@ -3730,12 +4282,19 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   pricingSource?: boolean
   offerId?: boolean
   bundleDiscountPercent?: boolean
+  extraDonation?: boolean
   assistentSellId?: boolean
+  allowedAuthentication?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
   isLebelGenerated?: boolean
   lebelUrl?: boolean
   parcelId?: boolean
+  authCourierServiceId?: boolean
+  authShippingId?: boolean
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: boolean
+  authParcelId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   completedAt?: boolean
@@ -3770,12 +4329,19 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   pricingSource?: boolean
   offerId?: boolean
   bundleDiscountPercent?: boolean
+  extraDonation?: boolean
   assistentSellId?: boolean
+  allowedAuthentication?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
   isLebelGenerated?: boolean
   lebelUrl?: boolean
   parcelId?: boolean
+  authCourierServiceId?: boolean
+  authShippingId?: boolean
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: boolean
+  authParcelId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   completedAt?: boolean
@@ -3810,12 +4376,19 @@ export type OrderSelectScalar = {
   pricingSource?: boolean
   offerId?: boolean
   bundleDiscountPercent?: boolean
+  extraDonation?: boolean
   assistentSellId?: boolean
+  allowedAuthentication?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
   isLebelGenerated?: boolean
   lebelUrl?: boolean
   parcelId?: boolean
+  authCourierServiceId?: boolean
+  authShippingId?: boolean
+  isAuthLebelGenerated?: boolean
+  authLebelUrl?: boolean
+  authParcelId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   completedAt?: boolean
@@ -3823,7 +4396,7 @@ export type OrderSelectScalar = {
   shippedAt?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderNumber" | "buyerId" | "sellerId" | "status" | "currentShipTo" | "authStatus" | "originDetailsId" | "billingId" | "itemsTotal" | "totalDelivery" | "totalPrice" | "sellerItemsTotal" | "sellerTotal" | "treeCredit" | "serviceFee" | "authenticationFee" | "pricingSource" | "offerId" | "bundleDiscountPercent" | "assistentSellId" | "courier_service_id" | "shippingId" | "isLebelGenerated" | "lebelUrl" | "parcelId" | "createdAt" | "updatedAt" | "completedAt" | "cancelledAt" | "shippedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderNumber" | "buyerId" | "sellerId" | "status" | "currentShipTo" | "authStatus" | "originDetailsId" | "billingId" | "itemsTotal" | "totalDelivery" | "totalPrice" | "sellerItemsTotal" | "sellerTotal" | "treeCredit" | "serviceFee" | "authenticationFee" | "pricingSource" | "offerId" | "bundleDiscountPercent" | "extraDonation" | "assistentSellId" | "allowedAuthentication" | "courier_service_id" | "shippingId" | "isLebelGenerated" | "lebelUrl" | "parcelId" | "authCourierServiceId" | "authShippingId" | "isAuthLebelGenerated" | "authLebelUrl" | "authParcelId" | "createdAt" | "updatedAt" | "completedAt" | "cancelledAt" | "shippedAt", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rating?: boolean | Prisma.Order$ratingArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -3891,12 +4464,19 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     pricingSource: $Enums.OrderPricingSource
     offerId: string | null
     bundleDiscountPercent: number
+    extraDonation: number
     assistentSellId: string | null
+    allowedAuthentication: boolean
     courier_service_id: string
     shippingId: string
     isLebelGenerated: boolean
     lebelUrl: string | null
     parcelId: string | null
+    authCourierServiceId: string | null
+    authShippingId: string | null
+    isAuthLebelGenerated: boolean
+    authLebelUrl: string | null
+    authParcelId: string | null
     createdAt: Date
     updatedAt: Date
     completedAt: Date | null
@@ -4356,12 +4936,19 @@ export interface OrderFieldRefs {
   readonly pricingSource: Prisma.FieldRef<"Order", 'OrderPricingSource'>
   readonly offerId: Prisma.FieldRef<"Order", 'String'>
   readonly bundleDiscountPercent: Prisma.FieldRef<"Order", 'Float'>
+  readonly extraDonation: Prisma.FieldRef<"Order", 'Float'>
   readonly assistentSellId: Prisma.FieldRef<"Order", 'String'>
+  readonly allowedAuthentication: Prisma.FieldRef<"Order", 'Boolean'>
   readonly courier_service_id: Prisma.FieldRef<"Order", 'String'>
   readonly shippingId: Prisma.FieldRef<"Order", 'String'>
   readonly isLebelGenerated: Prisma.FieldRef<"Order", 'Boolean'>
   readonly lebelUrl: Prisma.FieldRef<"Order", 'String'>
   readonly parcelId: Prisma.FieldRef<"Order", 'String'>
+  readonly authCourierServiceId: Prisma.FieldRef<"Order", 'String'>
+  readonly authShippingId: Prisma.FieldRef<"Order", 'String'>
+  readonly isAuthLebelGenerated: Prisma.FieldRef<"Order", 'Boolean'>
+  readonly authLebelUrl: Prisma.FieldRef<"Order", 'String'>
+  readonly authParcelId: Prisma.FieldRef<"Order", 'String'>
   readonly createdAt: Prisma.FieldRef<"Order", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Order", 'DateTime'>
   readonly completedAt: Prisma.FieldRef<"Order", 'DateTime'>

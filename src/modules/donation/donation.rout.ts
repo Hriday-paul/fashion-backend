@@ -3,6 +3,7 @@ import auth from "../../middleware/auth";
 import { allRoles } from "../user/user.rout";
 import req_validator from "../../middleware/req_validation";
 import { donationControler } from "./donation.controler";
+import { Role } from "../../../generated/prisma/enums";
 
 const router = Router();
 
@@ -25,5 +26,21 @@ router.get("/tree/:username",
 
 router.get("/seller-charity-support/:username",
     donationControler.sellerCharitySupportStats);
+
+router.get("/charity-stats/:userName",
+    auth(Role.ADMIN),
+    donationControler.charityStats);
+
+router.get("/sell-raised/:userName",
+    auth(Role.ADMIN),
+    donationControler.sellDonationsRaised);
+
+router.get("/direct-raised/:userName",
+    auth(Role.ADMIN),
+    donationControler.directDonationRaised);
+
+    router.get("/extra-raised/:userName",
+    auth(Role.ADMIN),
+    donationControler.extraDonationsRaised);
 
 export const donationRouts = router;

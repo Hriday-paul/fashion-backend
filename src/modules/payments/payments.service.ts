@@ -139,7 +139,8 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
                     }
                   }
                 }
-              }
+              },
+              extra_donation: true,
             }
           },
           buyer: {
@@ -315,7 +316,7 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
       paymentIntentId,
       reason: error?.message ?? "System error",
       triggeredBy: "System",
-      markPaymentRefunded: true
+      markPaymentRefunded: true,
     });
 
     return { url: `${config.BASE_URL}${config.cancel_url}`, message: "Payment failed, please try again" };

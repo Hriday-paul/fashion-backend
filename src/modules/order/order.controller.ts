@@ -89,6 +89,47 @@ const ordersAsABuyer = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const ordersAsABuyerByUserName = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["searchTerm", "status"])
+    const options = pick(req.query, PaginateOptions);
+
+    const userName = req.params?.userName;
+
+    const user = await userService.getuserIdByUserName(userName);
+
+    if (!user) {
+        throw new AppError(
+            httpStatus.NOT_FOUND,
+            'User does not exist',
+        );
+    }
+
+    const result = await orderService.ordersAsABuyer(user?.id, query, options);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Orders retrieved successfully',
+        data: result,
+    });
+});
+
+const authenticationOrders = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["searchTerm", "status", "paymentStatus", "authStatus", "dateFrom", "dateTo", "currentShipTo"])
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await orderService.authenticationOrders(query, options);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Orders retrieved successfully',
+        data: result,
+    });
+});
+
 //buyer mark order received
 const confirmOrderReceived = catchAsync(async (req: Request, res: Response) => {
     const { id: userId } = req.user;
@@ -104,7 +145,6 @@ const confirmOrderReceived = catchAsync(async (req: Request, res: Response) => {
 
 
 const cancelOrderItemBySeller = catchAsync(async (req: Request, res: Response) => {
-    const { id: userId } = req.user;
 
     const files = req.files as Express.Multer.File[];
 
@@ -126,7 +166,7 @@ const cancelOrderItemBySeller = catchAsync(async (req: Request, res: Response) =
         });
     }
 
-    await orderService.cancelOrderItemBySeller(req.body, userId);
+    await orderService.cancelOrderItemBySeller(req.body, req.user);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -206,6 +246,35 @@ const markShippedOrder = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const markOrderReceivedFromAuthCenter = catchAsync(async (req: Request, res: Response) => {
+    await orderService.markOrderReceivedFromAuthCenter(req.body?.orderId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Order marked as received from authentication center successfully',
+    });
+});
+
+const markOrderAuthInProgress = catchAsync(async (req: Request, res: Response) => {
+    await orderService.markOrderAuthInProgress(req.body?.orderId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Order marked as in progress for authentication successfully',
+    });
+});
+const addAuthResultToOrder = catchAsync(async (req: Request, res: Response) => {
+    await orderService.addAuthResultToOrder(req.body);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Authentication result added to order successfully',
+    });
+});
+
 const getShippingLebel = catchAsync(async (req: Request, res: Response) => {
     const { orderId } = req.params;
     const { id: userId } = req.user;
@@ -220,9 +289,24 @@ const getShippingLebel = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const getAuthShippingLebel = catchAsync(async (req: Request, res: Response) => {
+    const { orderId } = req.params;
+    const { id: userId } = req.user;
+
+    const labelUrl = await orderService.getAuthShippingLebel(userId, orderId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Shipping label retrieved successfully',
+        data: { labelUrl },
+    });
+});
+
 export const orderControler = {
     addNewOrder,
     addNewOfferOrder,
+    authenticationOrders,
     ordersBySeller,
     ordersAsABuyer,
     confirmOrderReceived,
@@ -234,4 +318,9 @@ export const orderControler = {
     getShippingLebel,
 
     ordersForSellerByUserName,
+    ordersAsABuyerByUserName,
+    markOrderReceivedFromAuthCenter,
+    markOrderAuthInProgress,
+    addAuthResultToOrder,
+    getAuthShippingLebel
 }

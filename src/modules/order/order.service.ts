@@ -1,5 +1,5 @@
-import { CancelledBy, CurrentShipTo, OrderAuthStatus } from "../../../generated/prisma/browser";
-import { CancelReason, OrderItem, OrderStatus, Prisma, Product, SellDonation } from "../../../generated/prisma/client";
+import { CancelledBy, CurrentShipTo, OrderAuthStatus, PaymentStatus, Role } from "../../../generated/prisma/browser";
+import { CancelReason, OrderAuthResult, OrderItem, OrderStatus, Prisma, Product, SellDonation } from "../../../generated/prisma/client";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import { DistributePaymentQueue } from "../../queues/payment.queue";
@@ -13,6 +13,7 @@ import { RefundQueue } from "../../queues/refund.queue";
 import { jobs } from "../../queues/jobs.name";
 import { BadgeGenerateQueue } from "../../queues/badge.queue";
 import crypto from "crypto";
+import { notificationQueue } from "../../queues/notificaion.queue";
 
 const truncate = (value: string | null, max = 32) => {
     return value?.trim().slice(0, max) || "";
@@ -210,7 +211,7 @@ const addNewOrder = async (
 
     const totalExtraDonation = cartgroup.items.reduce((acc, item) => acc + (item.extraDonation || 0), 0);
 
-    const sellerTotal = orderItems.reduce((acc, item) => acc + item?.sellerFinalUnitPrice, 0)
+    const sellerTotal = orderItems.reduce((acc, item) => acc + item?.sellerFinalUnitPrice, 0);
 
     const shipPayload = {
         "origin_address": {
@@ -221,9 +222,9 @@ const addNewOrder = async (
             "postal_code": truncate(sellerDetails?.zip_code, 10),
             "country_alpha2": sellerDetails?.countryCode,
             "company_name": "FASHION",
-            "contact_name": cartgroup?.seller?.fname,
-            "contact_phone": cartgroup?.seller?.phone,
-            "contact_email": cartgroup?.seller?.email
+            "contact_name": sellerDetails?.full_name,
+            "contact_phone": sellerDetails?.contact,
+            "contact_email": sellerDetails?.email
         },
         "destination_address": {
             "line_1": truncate(billing_details?.address1),
@@ -266,7 +267,7 @@ const addNewOrder = async (
                         },
                         "actual_weight": item?.product?.weight_kg,
                         "declared_currency": "USD",
-                        "declared_customs_value": item?.product?.finalPrice || 0,
+                        "declared_customs_value": item?.unitPrice || 0,
                     }
 
                 }),
@@ -328,7 +329,13 @@ const addNewOrder = async (
 
                 authenticationFee: totalAuthenticationCost,
 
+                allowedAuthentication: payload?.allowedAuthentication,
+
+                extraDonation: totalExtraDonation,
+
                 serviceFee: serviceFeeCost,
+
+                originDetailsId: sellerDetails?.id,
 
                 parcelId,
 
@@ -659,9 +666,9 @@ const addNewOfferOrder = async (
             "postal_code": truncate(sellerDetails?.zip_code, 10),
             "country_alpha2": sellerDetails?.countryCode,
             "company_name": "FASHION",
-            "contact_name": offer?.seller?.fname,
-            "contact_phone": offer?.seller?.phone,
-            "contact_email": offer?.seller?.email
+            "contact_name": sellerDetails?.full_name,
+            "contact_phone": sellerDetails?.contact,
+            "contact_email": sellerDetails?.email
         },
         "destination_address": {
             "line_1": truncate(billing_details?.address1),
@@ -704,7 +711,7 @@ const addNewOfferOrder = async (
                         },
                         "actual_weight": item?.product?.weight_kg,
                         "declared_currency": "USD",
-                        "declared_customs_value": item?.product?.finalPrice || 0,
+                        "declared_customs_value": item?.unitPrice || 0,
                     }
 
                 }),
@@ -767,6 +774,12 @@ const addNewOfferOrder = async (
                 parcelId,
                 authenticationFee: totalAuthenticationCost,
                 serviceFee: serviceFeeCost,
+
+                allowedAuthentication: payload?.allowedAuthentication,
+
+                extraDonation: totalExtraDonation,
+
+                originDetailsId: sellerDetails?.id,
 
                 pricingSource: "OFFER",
 
@@ -1314,19 +1327,43 @@ const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>,
                     id: {
                         contains: searchTerm as string,
                         mode: "insensitive",
+                    }
+                },
+                {
+                    orderNumber: {
+                        contains: searchTerm as string,
+                        mode: "insensitive",
                     },
                 },
                 {
                     buyer: {
                         OR: [
                             {
-                                fname: {
+                                userName: {
                                     contains: searchTerm as string,
                                     mode: "insensitive",
                                 },
                             },
                             {
-                                lname: {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                phone: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ],
+                    }
+                },
+                {
+                    seller: {
+                        OR: [
+                            {
+                                userName: {
                                     contains: searchTerm as string,
                                     mode: "insensitive",
                                 },
@@ -1383,32 +1420,39 @@ const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>,
                     }
                 },
                 {
-                    items: {
-                        some: {
-                            product: {
-                                OR: [
-                                    {
-                                        title: {
-                                            contains: searchTerm as string,
-                                            mode: "insensitive",
-                                        },
-                                    },
-                                    {
-                                        description: {
-                                            contains: searchTerm as string,
-                                            mode: "insensitive",
-                                        }
-                                    },
-                                    {
-                                        id: {
-                                            contains: searchTerm as string,
-                                            mode: "insensitive",
-                                        },
-                                    },
-
-                                ]
+                    originDetails: {
+                        OR: [
+                            {
+                                full_name: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
                             },
-                        }
+                            {
+                                contact: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address1: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address2: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ]
                     }
                 },
             ],
@@ -1458,21 +1502,27 @@ const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>,
                             _count: true
                         },
                     },
-                    returnItem: {
+                    cancelEvidences: true,
+                    donations: {
                         include: {
-
+                            charity: {
+                                select: {
+                                    userName: true,
+                                    picture: true
+                                }
+                            }
                         }
-                    },
-                    cancelEvidences: true
+                    }
                 }
             },
-
+            payment: true,
             buyer: {
                 select: {
                     userName: true,
                     picture: true,
                 }
             },
+            originDetails: true,
             billingDetails: true
         },
     })
@@ -1492,6 +1542,7 @@ const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>,
 }
 
 const ordersAsABuyer = async (buyerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
+
     const AndConditions: Prisma.OrderWhereInput[] = [{
         buyerId, assistentSellId: null, payment: {
             status: {
@@ -1510,19 +1561,43 @@ const ordersAsABuyer = async (buyerId: string, query: Record<string, unknown>, o
                     id: {
                         contains: searchTerm as string,
                         mode: "insensitive",
+                    }
+                },
+                {
+                    orderNumber: {
+                        contains: searchTerm as string,
+                        mode: "insensitive",
                     },
                 },
                 {
                     buyer: {
                         OR: [
                             {
-                                fname: {
+                                userName: {
                                     contains: searchTerm as string,
                                     mode: "insensitive",
                                 },
                             },
                             {
-                                lname: {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                phone: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ],
+                    }
+                },
+                {
+                    seller: {
+                        OR: [
+                            {
+                                userName: {
                                     contains: searchTerm as string,
                                     mode: "insensitive",
                                 },
@@ -1579,32 +1654,39 @@ const ordersAsABuyer = async (buyerId: string, query: Record<string, unknown>, o
                     }
                 },
                 {
-                    items: {
-                        some: {
-                            product: {
-                                OR: [
-                                    {
-                                        title: {
-                                            contains: searchTerm as string,
-                                            mode: "insensitive",
-                                        },
-                                    },
-                                    {
-                                        description: {
-                                            contains: searchTerm as string,
-                                            mode: "insensitive",
-                                        }
-                                    },
-                                    {
-                                        id: {
-                                            contains: searchTerm as string,
-                                            mode: "insensitive",
-                                        },
-                                    },
-
-                                ]
+                    originDetails: {
+                        OR: [
+                            {
+                                full_name: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
                             },
-                        }
+                            {
+                                contact: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address1: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address2: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ]
                     }
                 },
             ],
@@ -1655,14 +1737,300 @@ const ordersAsABuyer = async (buyerId: string, query: Record<string, unknown>, o
                         },
                     },
                     returnItem: true,
-                    cancelEvidences: true
+                    cancelEvidences: true,
+                    donations: {
+                        include: {
+                            charity: {
+                                select: {
+                                    userName: true,
+                                    picture: true
+                                }
+                            }
+                        }
+                    }
                 }
             },
             seller: {
                 select: {
                     userName: true,
+                    picture: true,
                 }
             },
+            payment: true,
+            originDetails: true,
+            billingDetails: true
+        },
+    })
+
+    const total = await prisma.order.count({
+        where: whereConditions,
+    });
+
+    return {
+        meta: {
+            total,
+            page,
+            limit,
+        },
+        data: result,
+    };
+}
+
+const authenticationOrders = async (query: Record<string, unknown>, options: TPaginationOptions) => {
+
+    const AndConditions: Prisma.OrderWhereInput[] = [{
+        allowedAuthentication: true,
+        assistentSellId: null,
+        payment: {
+            status: {
+                in: ["SUCCESSED", "REFUNDED"]
+            }
+        }
+    }];
+
+    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+    const { searchTerm, status, paymentStatus, authStatus, dateFrom, dateTo, currentShipTo } = query;
+
+    if (searchTerm) {
+        AndConditions.push({
+            OR: [
+                {
+                    id: {
+                        contains: searchTerm as string,
+                        mode: "insensitive",
+                    }
+                },
+                {
+                    orderNumber: {
+                        contains: searchTerm as string,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    buyer: {
+                        OR: [
+                            {
+                                userName: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                phone: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ],
+                    }
+                },
+                {
+                    seller: {
+                        OR: [
+                            {
+                                userName: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                phone: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ],
+                    }
+                },
+                {
+                    billingDetails: {
+                        OR: [
+                            {
+                                full_name: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                contact: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address1: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address2: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    originDetails: {
+                        OR: [
+                            {
+                                full_name: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                contact: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address1: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address2: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ]
+                    }
+                },
+            ],
+        });
+    }
+
+    if (status) {
+        AndConditions.push({
+            status: status as OrderStatus
+        })
+    }
+
+    if (paymentStatus) {
+        AndConditions.push({
+            payment: {
+                status: paymentStatus as PaymentStatus
+            }
+        })
+    }
+
+    if (authStatus) {
+        AndConditions.push({
+            authStatus: authStatus as OrderAuthStatus
+        })
+    }
+
+    if (dateFrom && dateTo) {
+        const fromDate = new Date(dateFrom as string);
+        const toDate = new Date(dateTo as string);
+
+        AndConditions.push({
+            createdAt: {
+                gte: fromDate,
+                lte: toDate
+            }
+        })
+    }
+
+    if (currentShipTo) {
+        AndConditions.push({
+            currentShipTo: currentShipTo as CurrentShipTo
+        })
+    }
+
+    const whereConditions: Prisma.OrderWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
+
+    const result = await prisma.order.findMany({
+        where: whereConditions,
+        skip,
+        take: limit,
+        orderBy: {
+            [sortBy]: sortOrder,
+        },
+        include: {
+            items: {
+                include: {
+                    product: {
+                        select: {
+                            title: true,
+                            id: true,
+                            images: {
+                                take: 1,
+                                orderBy: {
+                                    order: "asc"
+                                },
+                                select: {
+                                    id: true,
+                                    url: true
+                                }
+                            },
+                            category: {
+                                select: {
+                                    name: true
+                                }
+                            },
+                            size: {
+                                select: {
+                                    title: true
+                                }
+                            },
+                            _count: true
+                        },
+                    },
+                }
+            },
+            payment: {
+                select: {
+                    status: true,
+                    stripe_status: true,
+                    id: true,
+                    paid_amount: true,
+                }
+            },
+            buyer: {
+                select: {
+                    userName: true,
+                    picture: true,
+                }
+            },
+            seller: {
+                select: {
+                    userName: true,
+                    picture: true,
+                }
+            },
+            originDetails: true,
             billingDetails: true
         },
     })
@@ -1877,23 +2245,28 @@ const cancelFullOrderShipment = async ({ shipment_id, orderId, items, cancelReas
             })
         })
 
-        //update sell donations
-        await transactionClient.sellDonation.updateMany({
-            where: {
-                orderItemId: {
-                    in: itemIds
-                }
-            },
-            data: items?.flatMap(item => {
-                return item?.donations?.map(donation => {
-                    return {
-                        amount: 0,
-                        percent: 0,
-                        total_amount: donation?.extra_money,
-                    }
-                })
-            })
-        })
+        const sellDonations = items?.flatMap(item =>
+            item?.donations?.map(donation => ({
+                id: donation.id,
+                amount: 0,
+                percent: 0,
+                total_amount: donation.extra_money,
+            })) ?? []
+        );
+
+        // Update sell donations
+        for (const donation of sellDonations) {
+            await transactionClient.sellDonation.update({
+                where: {
+                    id: donation.id,
+                },
+                data: {
+                    amount: donation.amount,
+                    percent: donation.percent,
+                    total_amount: donation.total_amount,
+                },
+            });
+        }
 
 
     })
@@ -1968,23 +2341,28 @@ const dltOrderShipment = async ({ orderId, shipment_id, items, cancelReason, can
             })
         })
 
-        //update sell donations
-        await transactionClient.sellDonation.updateMany({
-            where: {
-                orderItemId: {
-                    in: itemIds
-                }
-            },
-            data: items?.flatMap(item => {
-                return item?.donations?.map(donation => {
-                    return {
-                        amount: 0,
-                        percent: 0,
-                        total_amount: donation?.extra_money,
-                    }
-                })
-            })
-        })
+        const sellDonations = items?.flatMap(item =>
+            item?.donations?.map(donation => ({
+                id: donation.id,
+                amount: 0,
+                percent: 0,
+                total_amount: donation.extra_money,
+            })) ?? []
+        );
+
+        // Update sell donations
+        for (const donation of sellDonations) {
+            await transactionClient.sellDonation.update({
+                where: {
+                    id: donation.id,
+                },
+                data: {
+                    amount: donation.amount,
+                    percent: donation.percent,
+                    total_amount: donation.total_amount,
+                },
+            });
+        }
 
     })
 
@@ -2045,7 +2423,7 @@ const updateOrderShipment = async ({ orderItems, shipment_id, parcelId }: { ship
 
 }
 
-const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: string[], cancelReason: string, cancelReasonDescription: string, cancelEvidences: { key: string, url: string }[] }, current_sellerId: string) => {
+const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: string[], cancelReason: string, cancelReasonDescription: string, cancelEvidences: { key: string, url: string }[] }, cUser: { id: string, userName: string, role: string }) => {
 
     const { orderId, itemIds, cancelEvidences, cancelReason, cancelReasonDescription } = payload;
 
@@ -2073,7 +2451,7 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
         throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
     }
 
-    if (order?.sellerId !== current_sellerId) {
+    if (order?.sellerId !== cUser?.id && cUser?.role !== Role.ADMIN) {
         throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order")
     }
     if (order?.status === "CANCELLED") {
@@ -2121,7 +2499,7 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
 
     const ids = orderItems.map(item => item?.id);
 
-    const refundAmount = orderItems.reduce((acc, item) => acc + (item?.unitPrice || 0), 0);
+    const refundAmount = orderItems.reduce((acc, item) => acc + (item?.unitAllocatedPrice || 0), 0);
 
     if (!order?.payment || !order?.payment?.paymentIntentId) {
         throw new AppError(httpStatus.BAD_REQUEST, "Payment not found for this order, contact support")
@@ -2207,23 +2585,28 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
                 })
             })
 
-            //update sell donations
-            await transactionClient.sellDonation.updateMany({
-                where: {
-                    orderItemId: {
-                        in: itemIds
-                    }
-                },
-                data: orderItems?.flatMap(item => {
-                    return item?.donations?.map(donation => {
-                        return {
-                            amount: 0,
-                            percent: 0,
-                            total_amount: donation?.extra_money,
-                        }
-                    })
-                })
-            })
+            const sellDonations = orderItems?.flatMap(item =>
+                item?.donations?.map(donation => ({
+                    id: donation.id,
+                    amount: 0,
+                    percent: 0,
+                    total_amount: donation.extra_money,
+                })) ?? []
+            );
+
+            // Update sell donations
+            for (const donation of sellDonations) {
+                await transactionClient.sellDonation.update({
+                    where: {
+                        id: donation.id,
+                    },
+                    data: {
+                        amount: donation.amount,
+                        percent: donation.percent,
+                        total_amount: donation.total_amount,
+                    },
+                });
+            }
 
         })
     }
@@ -2236,7 +2619,7 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
         paymentIntentId,
         reason: "Order item(s) cancelled by seller",
         triggeredBy: "Seller",
-        markPaymentRefunded: false,
+        markPaymentRefunded: allowCancelFullOrder ? true : false,
         amount: refundAmount
     });
 
@@ -2321,6 +2704,613 @@ const markAsCompletedOrder = async (orderId: string, current_buyerId: string) =>
 
 }
 
+const markOrderReceivedFromAuthCenter = async (orderId: string) => {
+    const order = await prisma.order.findFirst({
+        where: {
+            id: orderId,
+        },
+        select: {
+            status: true,
+            currentShipTo: true,
+            orderNumber: true,
+            sellerId: true,
+            seller: {
+                select: {
+                    fcmToken: true,
+                }
+            },
+            buyerId: true,
+            buyer: {
+                select: {
+                    fcmToken: true,
+                }
+            },
+            items: {
+                where: {
+                    isCancelled: false
+                },
+                select: {
+                    product: {
+                        select: {
+                            images: {
+                                take: 1,
+                                orderBy: {
+                                    order: "asc"
+                                },
+                                select: {
+                                    url: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    if (!order) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist");
+    }
+
+    if (order?.status !== "DELIVERED" || order?.currentShipTo !== "AUTHENTICATION_CENTER") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to mark as received the order");
+    }
+
+    // Mark the order as received from the authentication center
+    await prisma.order.update({
+        where: {
+            id: orderId
+        },
+        data: {
+            authStatus: "ITEM_RECEIVED",
+        }
+    });
+
+    // Notify the buyer
+    notificationQueue.add(jobs.notification, {
+        allowPushNotification: true,
+        payload: {
+            title: "Authentication Center Marked Received Order",
+            message: `Authentication center has marked your placed **${order?.orderNumber}** order as **Received** for verification. `,
+            actorId: order?.buyerId,
+            receiverId: order?.buyerId,
+            fcmToken: order?.buyer?.fcmToken,
+            entityImgs: order?.items?.map(item => item?.product?.images?.[0]?.url).filter(Boolean) || [],
+            entityId: orderId,
+            entityType: "ORDER",
+            type: "ORDER_AUTH_STATUS_CHANGED",
+            groupKeyId: null,
+        }
+    });
+
+    // Notify the seller
+    notificationQueue.add(jobs.notification, {
+        allowPushNotification: true,
+        payload: {
+            title: "Authentication Center Marked Received Order",
+            message: `Authentication center has marked your sold **${order?.orderNumber}** order as **Received** for verification. `,
+            actorId: order?.sellerId,
+            receiverId: order?.sellerId,
+            fcmToken: order?.seller?.fcmToken,
+            entityImgs: order?.items?.map(item => item?.product?.images?.[0]?.url).filter(Boolean) || [],
+            entityId: orderId,
+            entityType: "ORDER",
+            type: "ORDER_AUTH_STATUS_CHANGED",
+            groupKeyId: null,
+        }
+    });
+}
+
+const markOrderAuthInProgress = async (orderId: string) => {
+    const order = await prisma.order.findFirst({
+        where: {
+            id: orderId,
+        },
+        select: {
+            status: true,
+            currentShipTo: true,
+            orderNumber: true,
+            sellerId: true,
+            authStatus: true,
+            seller: {
+                select: {
+                    fcmToken: true,
+                }
+            },
+            buyerId: true,
+            buyer: {
+                select: {
+                    fcmToken: true,
+                }
+            },
+            items: {
+                where: {
+                    isCancelled: false
+                },
+                select: {
+                    product: {
+                        select: {
+                            images: {
+                                take: 1,
+                                orderBy: {
+                                    order: "asc"
+                                },
+                                select: {
+                                    url: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    if (!order) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist");
+    }
+
+    if (order?.status !== "DELIVERED" || order?.currentShipTo !== "AUTHENTICATION_CENTER" || order?.authStatus !== "ITEM_RECEIVED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to mark as in progress authentication for the order");
+    }
+
+    // Mark the order as received from the authentication center
+    await prisma.order.update({
+        where: {
+            id: orderId
+        },
+        data: {
+            authStatus: "IN_PROGRESS",
+        }
+    });
+
+    // Notify the buyer
+    notificationQueue.add(jobs.notification, {
+        allowPushNotification: true,
+        payload: {
+            title: "Order Authentication In Progress",
+            message: `Authentication center has marked your placed **${order?.orderNumber}** order verification as **In Progress**. `,
+            actorId: order?.buyerId,
+            receiverId: order?.buyerId,
+            fcmToken: order?.buyer?.fcmToken,
+            entityImgs: order?.items?.map(item => item?.product?.images?.[0]?.url).filter(Boolean) || [],
+            entityId: orderId,
+            entityType: "ORDER",
+            type: "ORDER_AUTH_STATUS_CHANGED",
+            groupKeyId: null,
+        }
+    });
+
+    // Notify the seller
+    notificationQueue.add(jobs.notification, {
+        allowPushNotification: true,
+        payload: {
+            title: "Authentication Center Marked Received Order",
+            message: `Authentication center has marked your sold **${order?.orderNumber}** order verification as **In Progress**. `,
+            actorId: order?.sellerId,
+            receiverId: order?.sellerId,
+            fcmToken: order?.seller?.fcmToken,
+            entityImgs: order?.items?.map(item => item?.product?.images?.[0]?.url).filter(Boolean) || [],
+            entityId: orderId,
+            entityType: "ORDER",
+            type: "ORDER_AUTH_STATUS_CHANGED",
+            groupKeyId: null,
+        }
+    });
+}
+
+const addAuthResultToOrder = async (payload: { orderId: string; items: { itemId: string; result: OrderAuthResult }[] }) => {
+    const { orderId, items } = payload;
+
+    const order = await prisma.order.findFirst({
+        where: {
+            id: orderId,
+        },
+        select: {
+            status: true,
+            currentShipTo: true,
+            orderNumber: true,
+            sellerId: true,
+            authStatus: true,
+            seller: {
+                select: {
+                    fcmToken: true,
+                }
+            },
+            buyerId: true,
+            buyer: {
+                select: {
+                    fcmToken: true,
+                }
+            },
+            items: {
+                where: {
+                    isCancelled: false
+                },
+                select: {
+                    id: true,
+                    unitAllocatedPrice: true,
+                    product: {
+                        select: {
+                            images: {
+                                take: 1,
+                                orderBy: {
+                                    order: "asc"
+                                },
+                                select: {
+                                    url: true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            payment: {
+                select: {
+                    paymentIntentId: true,
+                    id: true,
+                }
+            }
+        }
+    });
+
+    if (!order) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist");
+    }
+
+    if (order?.status !== "DELIVERED" || order?.currentShipTo !== "AUTHENTICATION_CENTER" || order?.authStatus !== "IN_PROGRESS") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to add authentication result for the order");
+    }
+
+    if (!order?.payment || !order?.payment?.paymentIntentId) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Payment not found for this order, contact support")
+    }
+
+    for (const item of items) {
+        const orderItem = order.items.find(i => i.id === item.itemId);
+        if (!orderItem) {
+            throw new AppError(httpStatus.NOT_FOUND, "Order item does not exist or is cancelled");
+        }
+    }
+
+    await prisma.$transaction(async (transactionClient) => {
+
+        for (const item of items) {
+            await transactionClient.orderItem.update({
+                where: {
+                    id: item.itemId
+                },
+                data: {
+                    authResult: item.result
+                }
+            });
+        }
+
+        await transactionClient.order.update({
+            where: {
+                id: orderId
+            },
+            data: {
+                authStatus: "RESPONDED"
+            }
+        });
+
+    });
+
+    // Notify the buyer
+    notificationQueue.add(jobs.notification, {
+        allowPushNotification: true,
+        payload: {
+            title: "Order Authentication Result Available",
+            message: `Authentication completed for your placed **${order?.orderNumber}** order. Please check the order details for the authentication result.`,
+            actorId: order?.buyerId,
+            receiverId: order?.buyerId,
+            fcmToken: order?.buyer?.fcmToken,
+            entityImgs: order?.items?.map(item => item?.product?.images?.[0]?.url).filter(Boolean) || [],
+            entityId: orderId,
+            entityType: "ORDER",
+            type: "ORDER_AUTH_STATUS_CHANGED",
+            groupKeyId: null,
+        }
+    });
+
+    // Notify the seller
+    notificationQueue.add(jobs.notification, {
+        allowPushNotification: true,
+        payload: {
+            title: "Order Authentication Result Available",
+            message: `Authentication completed for sold **${order?.orderNumber}** order. Please check the order details for the authentication result.`,
+            actorId: order?.sellerId,
+            receiverId: order?.sellerId,
+            fcmToken: order?.seller?.fcmToken,
+            entityImgs: order?.items?.map(item => item?.product?.images?.[0]?.url).filter(Boolean) || [],
+            entityId: orderId,
+            entityType: "ORDER",
+            type: "ORDER_AUTH_STATUS_CHANGED",
+            groupKeyId: null,
+        }
+    });
+
+    const failedItems = order.items.filter(item => {
+        const resultItem = items.find(i => i.itemId === item.id);
+        return resultItem?.result === "FAILED";
+    });
+
+    const refundAmount = failedItems.reduce((acc, item) => acc + (item?.unitAllocatedPrice || 0), 0);
+
+    if (refundAmount > 0) {
+        await RefundQueue.add(jobs.refund, {
+            paymentId: order?.payment?.id,
+            paymentIntentId: order?.payment?.paymentIntentId,
+            reason: "Order item(s) failed authentication",
+            triggeredBy: "Authentication Center",
+            markPaymentRefunded: false,
+            amount: refundAmount
+        });
+    }
+
+
+};
+
+const generateOrderAuthShipment = async (adminId: string, orderId: string) => {
+
+    const order = await prisma.order.findFirst({
+        where: {
+            id: orderId,
+        },
+        select: {
+            courier_service_id: true,
+            status: true,
+            currentShipTo: true,
+            orderNumber: true,
+            sellerId: true,
+            authStatus: true,
+            seller: {
+                select: {
+                    fcmToken: true,
+                }
+            },
+            buyerId: true,
+            buyer: {
+                select: {
+                    fcmToken: true,
+                }
+            },
+            items: {
+                where: {
+                    isCancelled: false,
+                    authResult: "PASSED"
+                },
+                select: {
+                    id: true,
+                    unitPrice: true,
+                    product: {
+                        select: {
+                            title: true,
+                            hight_cm: true,
+                            width_cm: true,
+                            length_cm: true,
+                            weight_kg: true,
+                        }
+                    }
+                }
+            },
+            billingDetails: true
+        }
+    });
+
+    if (!order) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist");
+    }
+
+    if (order?.status !== "DELIVERED" || order?.currentShipTo !== "AUTHENTICATION_CENTER" || order?.authStatus !== "RESPONDED") {
+        throw new AppError(httpStatus.BAD_REQUEST, "Unable to generate shipment for the order");
+    }
+
+    if (order?.items?.length === 0) {
+        throw new AppError(httpStatus.BAD_REQUEST, "No items available for the shipment, all items are either cancelled or failed authentication.");
+    }
+
+    const billing_details = order?.billingDetails;
+
+    if (!billing_details) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Shipping address not available for the create a shipment.");
+    }
+
+    const authCenterlocation = await prisma.billingDetails.findFirst({ where: { sellerId: adminId } });
+
+    const sellerDetails = authCenterlocation;
+
+    if (!sellerDetails) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Authentication center address not available for the create a shipment.");
+    }
+
+    const shipPayload = {
+        "origin_address": {
+            "line_1": truncate(sellerDetails?.address1),
+            "line_2": truncate(sellerDetails?.address2),
+            "city": truncate(sellerDetails?.city, 20),
+            "state": truncate(sellerDetails?.state, 20),
+            "postal_code": truncate(sellerDetails?.zip_code, 10),
+            "country_alpha2": sellerDetails?.countryCode,
+            "company_name": "FASHION",
+            "contact_name": sellerDetails?.full_name,
+            "contact_phone": sellerDetails?.contact,
+            "contact_email": sellerDetails?.email
+        },
+        "destination_address": {
+            "line_1": truncate(billing_details?.address1),
+            "line_2": truncate(billing_details?.address2),
+            "city": truncate(billing_details?.city, 20),
+            "state": truncate(billing_details?.state, 20),
+            "postal_code": truncate(billing_details?.zip_code, 10),
+            "country_alpha2": billing_details?.countryCode,
+            "contact_name": billing_details?.full_name,
+            "contact_phone": billing_details?.contact,
+            "contact_email": billing_details?.email
+        },
+        "return": false,
+        "incoterms": "DDP",
+        "order_data": {
+            "platform_name": "FASHION",
+        },
+        "courier_settings": {
+            "courier_service_id": order?.courier_service_id
+        },
+        "shipping_settings": {
+            "units": {
+                "weight": "kg",
+                "dimensions": "cm"
+            },
+            "output_currency": "USD",
+            "buy_label": true,
+            "buy_label_synchronous": true,
+            "printing_options": {
+                "format": "url"
+            },
+        },
+        "parcels": [
+            {
+                "items": order?.items?.map((item) => {
+                    return {
+                        "description": truncate(item?.product?.title, 64) || "Fashion Product",
+                        "category": "fashion",
+                        "origin_country_alpha2": sellerDetails?.countryCode,
+                        "quantity": 1,
+                        "dimensions": {
+                            "height": item?.product?.hight_cm,
+                            "width": item?.product?.width_cm,
+                            "length": item?.product?.length_cm
+                        },
+                        "actual_weight": item?.product?.weight_kg,
+                        "declared_currency": "USD",
+                        "declared_customs_value": item?.unitPrice || 0,
+                    }
+
+                }),
+            }
+        ]
+    }
+
+    const shipmentRes = await fetch(`${config.easyship.easyship_base_url}/shipments`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shipPayload)
+    });
+
+    if (!shipmentRes.ok) {
+        const errorData = await shipmentRes.json().catch(() => null);
+
+        console.log(errorData)
+
+        throw new AppError(httpStatus.BAD_REQUEST, errorData?.error?.message || "Shipment creation failed");
+    }
+
+    const shipmentData = await shipmentRes.json() as IShipment;
+
+    const parcelId = shipmentData?.shipment?.parcels[0]?.id;
+    const shippingId = shipmentData?.shipment?.easyship_shipment_id;
+
+    const labelDoc = shipmentData?.shipment?.shipping_documents?.find(doc => doc.category === "label");
+
+    await prisma.order.update({
+        where: {
+            id: orderId
+        },
+        data: {
+            authCourierServiceId: order?.courier_service_id,
+            authParcelId: parcelId,
+            authShippingId: shippingId,
+            isAuthLebelGenerated: labelDoc?.url ? true : false,
+            authLebelUrl: labelDoc?.url || null,
+        }
+    });
+
+    if (!labelDoc?.url) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Label generation failed, try again");
+    }
+
+    return labelDoc?.url || null;
+
+}
+
+const createLebelForAuthShipment = async ({ shipment_id, orderId }: { orderId: string, shipment_id: string }) => {
+
+    const payload = {
+        "printing_options": {
+            "format": "url"
+        },
+    }
+
+    const rateRes = await fetch(`${config.easyship.easyship_base_url}/shipments/${shipment_id}/label`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    });
+
+    if (!rateRes.ok) {
+        const errorData = await rateRes.json().catch(() => null);
+
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            errorData?.error?.message || 'Lebel generation failed',
+        );
+    }
+
+    const data = await rateRes.json() as ILabel;
+
+    const labelDoc = data?.shipment?.shipping_documents?.find(doc => doc.category === "label");
+
+    await prisma.order.update({
+        where: {
+            id: orderId
+        },
+        data: {
+            authLebelUrl: labelDoc?.url,
+            isAuthLebelGenerated: true
+        }
+    })
+
+    return labelDoc?.url || null;
+}
+
+const getAuthShippingLebel = async (adminId: string, orderId: string) => {
+    const order = await prisma.order.findFirst({
+        where: {
+            id: orderId,
+        },
+        select: {
+            authLebelUrl: true,
+            isAuthLebelGenerated: true,
+            authShippingId: true,
+        }
+    });
+
+    if (!order) {
+        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist");
+    }
+
+    if (order?.authLebelUrl) {
+        return order?.authLebelUrl;
+    }
+    //just generate the label for the existing shipment
+    else if (order?.authShippingId) {
+        return await createLebelForAuthShipment({ shipment_id: order.authShippingId, orderId });
+    }
+    //generate the shipment and label for the order
+    else {
+        const labelUrl = await generateOrderAuthShipment(adminId, orderId);
+
+        return labelUrl;
+    }
+}
+
 export const orderService = {
     addNewOrder,
     addNewOfferOrder,
@@ -2334,4 +3324,9 @@ export const orderService = {
     getShipingLebel,
     markShippedOrder,
     markAsCompletedOrder,
+    authenticationOrders,
+    markOrderReceivedFromAuthCenter,
+    addAuthResultToOrder,
+    markOrderAuthInProgress,
+    getAuthShippingLebel
 }
