@@ -31,7 +31,48 @@ const peopleSuggestions = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const addNewKeyword = catchAsync(async (req: Request, res: Response) => {
+    const result = await keywordService.addNewKeyword(req.body);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'New keyword added successfully',
+        data: result,
+    });
+});
+
+
+const allkeywords = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["searchTerm"])
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await keywordService.allKeywords(query, options);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Keywords retrieved successfully',
+        data: result,
+    });
+});
+
+const dltKeyword = catchAsync(async (req: Request, res: Response) => {
+    const result = await keywordService.dltKeyword(req.params.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Keyword deleted successfully',
+        data: result,
+    });
+});
+
 export const keywordControler = {
     searchSuggestions,
-    peopleSuggestions
+    peopleSuggestions,
+    addNewKeyword,
+    allkeywords,
+    dltKeyword
 };

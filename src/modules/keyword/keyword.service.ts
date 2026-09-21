@@ -1,4 +1,5 @@
 import { Prisma } from "../../../generated/prisma/client";
+import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import prisma from "../../shared/prisma";
 
 type SearchSuggestion = {
@@ -297,7 +298,77 @@ const peopleSuggestions = async (q: string) => {
   return results;
 };
 
+const addNewKeyword = async (payload: { keyword: string }) => {
+  const { keyword } = payload;
+  const newKeyword = await prisma.keyword.create({
+    data: {
+      name: keyword,
+    }
+  });
+
+  return newKeyword;
+}
+
+const allKeywords = async (query: Record<string, unknown>, options: TPaginationOptions) => {
+  const AndConditions: Prisma.KeywordWhereInput[] = [];
+  const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+  const { searchTerm } = query;
+
+  if (searchTerm) {
+    AndConditions.push({
+      OR: [
+        {
+          name: {
+            contains: searchTerm as string,
+            mode: "insensitive",
+          }
+        },
+
+      ],
+    });
+  }
+
+  const whereConditions: Prisma.KeywordWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
+
+  const result = await prisma.keyword.findMany({
+    where: whereConditions,
+    skip,
+    take: limit,
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+  })
+
+  const total = await prisma.keyword.count({
+    where: whereConditions,
+  });
+
+  return {
+    meta: {
+      total,
+      page,
+      limit,
+    },
+    data: result,
+  };
+}
+
+const dltKeyword = async (keywordId: string) => {
+  const deletedKeyword = await prisma.keyword.delete({
+    where: {
+      id: keywordId,
+    }
+  });
+
+  return deletedKeyword;
+}
+
+
 export const keywordService = {
   searchSuggestions,
-  peopleSuggestions
+  peopleSuggestions,
+  addNewKeyword,
+  allKeywords,
+  dltKeyword
 };

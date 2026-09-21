@@ -1,12 +1,9 @@
 import { Router } from "express";
-import auth from "../../middleware/auth";
-import { allRoles } from "../user/user.rout";
 import req_validator from "../../middleware/req_validation";
 import { Role } from "../../../generated/prisma/enums";
-import parseData from "../../middleware/parseData";
-import { image_Upload } from "../../utils/s3";
 import { keywordControler } from "./keyword.controler";
-import { keywordSuggestionProducts } from "./keyword.validator";
+import { addNewKeywordValidator, keywordSuggestionProducts } from "./keyword.validator";
+import auth from "../../middleware/auth";
 
 const router = Router();
 
@@ -19,5 +16,19 @@ router.get("/people",
     keywordSuggestionProducts,
     req_validator(),
     keywordControler.peopleSuggestions);
+
+router.post("/",
+    addNewKeywordValidator,
+    req_validator(),
+    auth(Role.ADMIN),
+    keywordControler.addNewKeyword);
+
+router.get("/",
+    auth(Role.ADMIN),
+    keywordControler.allkeywords);
+
+router.delete("/:id",
+    auth(Role.ADMIN),
+    keywordControler.dltKeyword);
 
 export const keywordRoutes = router;
