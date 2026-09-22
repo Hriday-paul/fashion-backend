@@ -116,6 +116,27 @@ const addNewOrder = async (
         throw new AppError(httpStatus.NOT_FOUND, "Seller location does not exist for place shipment");
     }
 
+    let authAddress: string | null = null;
+
+    //authentication center address is required to place order if authentication is allowed
+    if (payload?.allowedAuthentication) {
+        const admin = await prisma.user.findFirst({
+            where: {
+                auth: {
+                    role: "ADMIN"
+                }
+            },
+            include: {
+                sellerAddress: true
+            }
+        });
+
+        if (!admin || !admin?.sellerAddress) {
+            throw new AppError(httpStatus.NOT_FOUND, "Unable to place order, authentication center address is not available");
+        }
+        authAddress = admin?.sellerAddress?.id;
+    }
+
 
     //Validate cart products' charities belong to the product
     for (const payloadItem of cartgroup.items) {
@@ -336,6 +357,8 @@ const addNewOrder = async (
                 serviceFee: serviceFeeCost,
 
                 originDetailsId: sellerDetails?.id,
+
+                authDetailsId: authAddress,
 
                 parcelId,
 
@@ -588,6 +611,26 @@ const addNewOfferOrder = async (
         throw new AppError(httpStatus.NOT_FOUND, "Seller location does not exist for place shipment");
     }
 
+    let authAddress: string | null = null;
+
+    //authentication center address is required to place order if authentication is allowed
+    if (payload?.allowedAuthentication) {
+        const admin = await prisma.user.findFirst({
+            where: {
+                auth: {
+                    role: "ADMIN"
+                }
+            },
+            include: {
+                sellerAddress: true
+            }
+        });
+
+        if (!admin || !admin?.sellerAddress) {
+            throw new AppError(httpStatus.NOT_FOUND, "Unable to place order, authentication center address is not available");
+        }
+        authAddress = admin?.sellerAddress?.id;
+    }
 
     //Validate products stock and availability'
     for (const payloadItem of offer.offerItems) {
@@ -780,6 +823,7 @@ const addNewOfferOrder = async (
                 extraDonation: totalExtraDonation,
 
                 originDetailsId: sellerDetails?.id,
+                authDetailsId: authAddress,
 
                 pricingSource: "OFFER",
 
@@ -3229,11 +3273,7 @@ const generateOrderAuthShipment = async (adminId: string, orderId: string) => {
         }
     });
 
-    if (!labelDoc?.url) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Label generation failed, try again");
-    }
-
-    return labelDoc?.url || null;
+    return { labelUrl: labelDoc?.url || null, shippingId, parcelId };
 
 }
 
@@ -3257,6 +3297,8 @@ const createLebelForAuthShipment = async ({ shipment_id, orderId }: { orderId: s
     if (!rateRes.ok) {
         const errorData = await rateRes.json().catch(() => null);
 
+        console.log(errorData);
+
         throw new AppError(
             httpStatus.BAD_REQUEST,
             errorData?.error?.message || 'Lebel generation failed',
@@ -3276,6 +3318,13 @@ const createLebelForAuthShipment = async ({ shipment_id, orderId }: { orderId: s
             isAuthLebelGenerated: true
         }
     })
+
+    if (!labelDoc?.url) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            'Lebel generation failed, try again later',
+        );
+    }
 
     return labelDoc?.url || null;
 }
@@ -3305,9 +3354,14 @@ const getAuthShippingLebel = async (adminId: string, orderId: string) => {
     }
     //generate the shipment and label for the order
     else {
-        const labelUrl = await generateOrderAuthShipment(adminId, orderId);
+        const { labelUrl, shippingId } = await generateOrderAuthShipment(adminId, orderId);
 
-        return labelUrl;
+        //if label is not generated, then generate the label for the existing shipment
+        if (!labelUrl) {
+            return await createLebelForAuthShipment({ shipment_id: shippingId, orderId });
+        } else {
+            return labelUrl;
+        }
     }
 }
 

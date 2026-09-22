@@ -210,6 +210,10 @@ model BillingDetails {
   orders Order[] @relation("origin")
   ordersAsDestination Order[] @relation("destination")
 
+  ordersAsAuthCenter Order[] @relation("auth")
+
+  assistantSellOrigins AssistentSell[]
+
   contact String?
 
   @@map("billing_details")

@@ -58,9 +58,15 @@ model Order {
     currentShipTo CurrentShipTo @default(BUYER)
     authStatus OrderAuthStatus @default(NOT_STARTED)
 
+    //origin address
     originDetailsId String?
     originDetails BillingDetails? @relation("origin", fields: [originDetailsId], references: [id], onDelete: Restrict)
 
+    //authentication center address
+    authDetailsId String?
+    authDetails BillingDetails? @relation("auth", fields: [authDetailsId], references: [id], onDelete: Restrict)
+
+    //destination address
     billingId      String?
     billingDetails BillingDetails? @relation("destination",fields: [billingId], references: [id], onDelete: Restrict)
 

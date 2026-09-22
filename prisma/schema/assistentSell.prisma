@@ -25,6 +25,9 @@ model AssistentSell{
     sellerId String
     seller   User @relation(fields: [sellerId], references: [id], onDelete: Cascade)
 
+    sellerAddressId String
+    sellerAddress   BillingDetails @relation(fields: [sellerAddressId], references: [id], onDelete: Cascade)
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt @default(now())
 

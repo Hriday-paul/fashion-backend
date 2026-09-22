@@ -27,7 +27,6 @@ const allRequests = async (query: Record<string, unknown>, options: TPaginationO
         },
         include: {
             pictures: {
-                take: 1,
                 orderBy: {
                     order: 'asc'
                 },
@@ -55,27 +54,12 @@ const allRequests = async (query: Record<string, unknown>, options: TPaginationO
                     }
                 }
             },
-            listings: {
-                select: {
-                    id: true,
-                    title: true,
-                    finalPrice: true,
-                    price: true,
-                    discountPct: true,
-                    images: {
-                        take: 1,
-                        orderBy: {
-                            order: 'asc'
-                        },
-                        select: {
-                            key: true,
-                            url: true
-                        }
-                    },
-                    size: {
-                        select: {
-                            title: true,
-                            id: true
+            seller : {
+                select : {
+                    userName : true,
+                    picture : {
+                        select : {
+                            url : true,
                         }
                     }
                 }
@@ -83,6 +67,8 @@ const allRequests = async (query: Record<string, unknown>, options: TPaginationO
             order: {
                 select: {
                     status: true,
+                    originDetails: true,
+                    billingDetails: true,
                 }
             }
         },
@@ -252,12 +238,24 @@ const addNewRequest = async (payload: AssistentSell & OtherPayload, sellerId: st
 
     const finalcharities = isAllowCharity ? charities?.map(i => ({ charityId: i, isAnonymous: donationAnonymous ? true : false })) : [];
 
+    //validatity seller address
+    const sellerAddress = await prisma.billingDetails.findFirst({
+        where: {
+            sellerId: sellerId
+        }
+    });
+
+    if (!sellerAddress) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Please add your shipping address before creating a request");
+    }
+
     const result = await prisma.assistentSell.create({
         data: {
             ...data,
             sellerId,
             status: "PENDING",
             donationAnonymous,
+            sellerAddressId: sellerAddress?.id,
             pictures: { create: pictures },
             charities: { create: finalcharities },
         }

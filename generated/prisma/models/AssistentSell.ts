@@ -61,6 +61,7 @@ export type AssistentSellMinAggregateOutputType = {
   deliveryCharge: number | null
   status: $Enums.AssistentSellStatus | null
   sellerId: string | null
+  sellerAddressId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   weight_kg: number | null
@@ -83,6 +84,7 @@ export type AssistentSellMaxAggregateOutputType = {
   deliveryCharge: number | null
   status: $Enums.AssistentSellStatus | null
   sellerId: string | null
+  sellerAddressId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   weight_kg: number | null
@@ -105,6 +107,7 @@ export type AssistentSellCountAggregateOutputType = {
   deliveryCharge: number
   status: number
   sellerId: number
+  sellerAddressId: number
   createdAt: number
   updatedAt: number
   weight_kg: number
@@ -151,6 +154,7 @@ export type AssistentSellMinAggregateInputType = {
   deliveryCharge?: true
   status?: true
   sellerId?: true
+  sellerAddressId?: true
   createdAt?: true
   updatedAt?: true
   weight_kg?: true
@@ -173,6 +177,7 @@ export type AssistentSellMaxAggregateInputType = {
   deliveryCharge?: true
   status?: true
   sellerId?: true
+  sellerAddressId?: true
   createdAt?: true
   updatedAt?: true
   weight_kg?: true
@@ -195,6 +200,7 @@ export type AssistentSellCountAggregateInputType = {
   deliveryCharge?: true
   status?: true
   sellerId?: true
+  sellerAddressId?: true
   createdAt?: true
   updatedAt?: true
   weight_kg?: true
@@ -304,6 +310,7 @@ export type AssistentSellGroupByOutputType = {
   deliveryCharge: number | null
   status: $Enums.AssistentSellStatus
   sellerId: string
+  sellerAddressId: string
   createdAt: Date
   updatedAt: Date
   weight_kg: number
@@ -349,6 +356,7 @@ export type AssistentSellWhereInput = {
   deliveryCharge?: Prisma.FloatNullableFilter<"AssistentSell"> | number | null
   status?: Prisma.EnumAssistentSellStatusFilter<"AssistentSell"> | $Enums.AssistentSellStatus
   sellerId?: Prisma.StringFilter<"AssistentSell"> | string
+  sellerAddressId?: Prisma.StringFilter<"AssistentSell"> | string
   createdAt?: Prisma.DateTimeFilter<"AssistentSell"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AssistentSell"> | Date | string
   weight_kg?: Prisma.FloatFilter<"AssistentSell"> | number
@@ -360,6 +368,7 @@ export type AssistentSellWhereInput = {
   listings?: Prisma.ProductListRelationFilter
   order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  sellerAddress?: Prisma.XOR<Prisma.BillingDetailsScalarRelationFilter, Prisma.BillingDetailsWhereInput>
 }
 
 export type AssistentSellOrderByWithRelationInput = {
@@ -376,6 +385,7 @@ export type AssistentSellOrderByWithRelationInput = {
   deliveryCharge?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
+  sellerAddressId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   weight_kg?: Prisma.SortOrder
@@ -387,6 +397,7 @@ export type AssistentSellOrderByWithRelationInput = {
   listings?: Prisma.ProductOrderByRelationAggregateInput
   order?: Prisma.OrderOrderByWithRelationInput
   seller?: Prisma.UserOrderByWithRelationInput
+  sellerAddress?: Prisma.BillingDetailsOrderByWithRelationInput
 }
 
 export type AssistentSellWhereUniqueInput = Prisma.AtLeast<{
@@ -406,6 +417,7 @@ export type AssistentSellWhereUniqueInput = Prisma.AtLeast<{
   deliveryCharge?: Prisma.FloatNullableFilter<"AssistentSell"> | number | null
   status?: Prisma.EnumAssistentSellStatusFilter<"AssistentSell"> | $Enums.AssistentSellStatus
   sellerId?: Prisma.StringFilter<"AssistentSell"> | string
+  sellerAddressId?: Prisma.StringFilter<"AssistentSell"> | string
   createdAt?: Prisma.DateTimeFilter<"AssistentSell"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AssistentSell"> | Date | string
   weight_kg?: Prisma.FloatFilter<"AssistentSell"> | number
@@ -417,6 +429,7 @@ export type AssistentSellWhereUniqueInput = Prisma.AtLeast<{
   listings?: Prisma.ProductListRelationFilter
   order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  sellerAddress?: Prisma.XOR<Prisma.BillingDetailsScalarRelationFilter, Prisma.BillingDetailsWhereInput>
 }, "id">
 
 export type AssistentSellOrderByWithAggregationInput = {
@@ -433,6 +446,7 @@ export type AssistentSellOrderByWithAggregationInput = {
   deliveryCharge?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
+  sellerAddressId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   weight_kg?: Prisma.SortOrder
@@ -463,6 +477,7 @@ export type AssistentSellScalarWhereWithAggregatesInput = {
   deliveryCharge?: Prisma.FloatNullableWithAggregatesFilter<"AssistentSell"> | number | null
   status?: Prisma.EnumAssistentSellStatusWithAggregatesFilter<"AssistentSell"> | $Enums.AssistentSellStatus
   sellerId?: Prisma.StringWithAggregatesFilter<"AssistentSell"> | string
+  sellerAddressId?: Prisma.StringWithAggregatesFilter<"AssistentSell"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AssistentSell"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AssistentSell"> | Date | string
   weight_kg?: Prisma.FloatWithAggregatesFilter<"AssistentSell"> | number
@@ -495,6 +510,7 @@ export type AssistentSellCreateInput = {
   listings?: Prisma.ProductCreateNestedManyWithoutAssistentSellInput
   order?: Prisma.OrderCreateNestedOneWithoutAssistentSellInput
   seller: Prisma.UserCreateNestedOneWithoutAssistentSellsInput
+  sellerAddress: Prisma.BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput
 }
 
 export type AssistentSellUncheckedCreateInput = {
@@ -511,6 +527,7 @@ export type AssistentSellUncheckedCreateInput = {
   deliveryCharge?: number | null
   status?: $Enums.AssistentSellStatus
   sellerId: string
+  sellerAddressId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -547,6 +564,7 @@ export type AssistentSellUpdateInput = {
   listings?: Prisma.ProductUpdateManyWithoutAssistentSellNestedInput
   order?: Prisma.OrderUpdateOneWithoutAssistentSellNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutAssistentSellsNestedInput
+  sellerAddress?: Prisma.BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput
 }
 
 export type AssistentSellUncheckedUpdateInput = {
@@ -563,6 +581,7 @@ export type AssistentSellUncheckedUpdateInput = {
   deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -589,6 +608,7 @@ export type AssistentSellCreateManyInput = {
   deliveryCharge?: number | null
   status?: $Enums.AssistentSellStatus
   sellerId: string
+  sellerAddressId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -632,6 +652,7 @@ export type AssistentSellUncheckedUpdateManyInput = {
   deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -654,6 +675,7 @@ export type AssistentSellCountOrderByAggregateInput = {
   deliveryCharge?: Prisma.SortOrder
   status?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
+  sellerAddressId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   weight_kg?: Prisma.SortOrder
@@ -687,6 +709,7 @@ export type AssistentSellMaxOrderByAggregateInput = {
   deliveryCharge?: Prisma.SortOrder
   status?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
+  sellerAddressId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   weight_kg?: Prisma.SortOrder
@@ -709,6 +732,7 @@ export type AssistentSellMinOrderByAggregateInput = {
   deliveryCharge?: Prisma.SortOrder
   status?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
+  sellerAddressId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   weight_kg?: Prisma.SortOrder
@@ -898,6 +922,48 @@ export type AssistentSellUncheckedUpdateManyWithoutSellerNestedInput = {
   deleteMany?: Prisma.AssistentSellScalarWhereInput | Prisma.AssistentSellScalarWhereInput[]
 }
 
+export type AssistentSellCreateNestedManyWithoutSellerAddressInput = {
+  create?: Prisma.XOR<Prisma.AssistentSellCreateWithoutSellerAddressInput, Prisma.AssistentSellUncheckedCreateWithoutSellerAddressInput> | Prisma.AssistentSellCreateWithoutSellerAddressInput[] | Prisma.AssistentSellUncheckedCreateWithoutSellerAddressInput[]
+  connectOrCreate?: Prisma.AssistentSellCreateOrConnectWithoutSellerAddressInput | Prisma.AssistentSellCreateOrConnectWithoutSellerAddressInput[]
+  createMany?: Prisma.AssistentSellCreateManySellerAddressInputEnvelope
+  connect?: Prisma.AssistentSellWhereUniqueInput | Prisma.AssistentSellWhereUniqueInput[]
+}
+
+export type AssistentSellUncheckedCreateNestedManyWithoutSellerAddressInput = {
+  create?: Prisma.XOR<Prisma.AssistentSellCreateWithoutSellerAddressInput, Prisma.AssistentSellUncheckedCreateWithoutSellerAddressInput> | Prisma.AssistentSellCreateWithoutSellerAddressInput[] | Prisma.AssistentSellUncheckedCreateWithoutSellerAddressInput[]
+  connectOrCreate?: Prisma.AssistentSellCreateOrConnectWithoutSellerAddressInput | Prisma.AssistentSellCreateOrConnectWithoutSellerAddressInput[]
+  createMany?: Prisma.AssistentSellCreateManySellerAddressInputEnvelope
+  connect?: Prisma.AssistentSellWhereUniqueInput | Prisma.AssistentSellWhereUniqueInput[]
+}
+
+export type AssistentSellUpdateManyWithoutSellerAddressNestedInput = {
+  create?: Prisma.XOR<Prisma.AssistentSellCreateWithoutSellerAddressInput, Prisma.AssistentSellUncheckedCreateWithoutSellerAddressInput> | Prisma.AssistentSellCreateWithoutSellerAddressInput[] | Prisma.AssistentSellUncheckedCreateWithoutSellerAddressInput[]
+  connectOrCreate?: Prisma.AssistentSellCreateOrConnectWithoutSellerAddressInput | Prisma.AssistentSellCreateOrConnectWithoutSellerAddressInput[]
+  upsert?: Prisma.AssistentSellUpsertWithWhereUniqueWithoutSellerAddressInput | Prisma.AssistentSellUpsertWithWhereUniqueWithoutSellerAddressInput[]
+  createMany?: Prisma.AssistentSellCreateManySellerAddressInputEnvelope
+  set?: Prisma.AssistentSellWhereUniqueInput | Prisma.AssistentSellWhereUniqueInput[]
+  disconnect?: Prisma.AssistentSellWhereUniqueInput | Prisma.AssistentSellWhereUniqueInput[]
+  delete?: Prisma.AssistentSellWhereUniqueInput | Prisma.AssistentSellWhereUniqueInput[]
+  connect?: Prisma.AssistentSellWhereUniqueInput | Prisma.AssistentSellWhereUniqueInput[]
+  update?: Prisma.AssistentSellUpdateWithWhereUniqueWithoutSellerAddressInput | Prisma.AssistentSellUpdateWithWhereUniqueWithoutSellerAddressInput[]
+  updateMany?: Prisma.AssistentSellUpdateManyWithWhereWithoutSellerAddressInput | Prisma.AssistentSellUpdateManyWithWhereWithoutSellerAddressInput[]
+  deleteMany?: Prisma.AssistentSellScalarWhereInput | Prisma.AssistentSellScalarWhereInput[]
+}
+
+export type AssistentSellUncheckedUpdateManyWithoutSellerAddressNestedInput = {
+  create?: Prisma.XOR<Prisma.AssistentSellCreateWithoutSellerAddressInput, Prisma.AssistentSellUncheckedCreateWithoutSellerAddressInput> | Prisma.AssistentSellCreateWithoutSellerAddressInput[] | Prisma.AssistentSellUncheckedCreateWithoutSellerAddressInput[]
+  connectOrCreate?: Prisma.AssistentSellCreateOrConnectWithoutSellerAddressInput | Prisma.AssistentSellCreateOrConnectWithoutSellerAddressInput[]
+  upsert?: Prisma.AssistentSellUpsertWithWhereUniqueWithoutSellerAddressInput | Prisma.AssistentSellUpsertWithWhereUniqueWithoutSellerAddressInput[]
+  createMany?: Prisma.AssistentSellCreateManySellerAddressInputEnvelope
+  set?: Prisma.AssistentSellWhereUniqueInput | Prisma.AssistentSellWhereUniqueInput[]
+  disconnect?: Prisma.AssistentSellWhereUniqueInput | Prisma.AssistentSellWhereUniqueInput[]
+  delete?: Prisma.AssistentSellWhereUniqueInput | Prisma.AssistentSellWhereUniqueInput[]
+  connect?: Prisma.AssistentSellWhereUniqueInput | Prisma.AssistentSellWhereUniqueInput[]
+  update?: Prisma.AssistentSellUpdateWithWhereUniqueWithoutSellerAddressInput | Prisma.AssistentSellUpdateWithWhereUniqueWithoutSellerAddressInput[]
+  updateMany?: Prisma.AssistentSellUpdateManyWithWhereWithoutSellerAddressInput | Prisma.AssistentSellUpdateManyWithWhereWithoutSellerAddressInput[]
+  deleteMany?: Prisma.AssistentSellScalarWhereInput | Prisma.AssistentSellScalarWhereInput[]
+}
+
 export type AssistentSellCreateWithoutPicturesInput = {
   id?: string
   itemsTitle: string
@@ -921,6 +987,7 @@ export type AssistentSellCreateWithoutPicturesInput = {
   listings?: Prisma.ProductCreateNestedManyWithoutAssistentSellInput
   order?: Prisma.OrderCreateNestedOneWithoutAssistentSellInput
   seller: Prisma.UserCreateNestedOneWithoutAssistentSellsInput
+  sellerAddress: Prisma.BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput
 }
 
 export type AssistentSellUncheckedCreateWithoutPicturesInput = {
@@ -937,6 +1004,7 @@ export type AssistentSellUncheckedCreateWithoutPicturesInput = {
   deliveryCharge?: number | null
   status?: $Enums.AssistentSellStatus
   sellerId: string
+  sellerAddressId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -987,6 +1055,7 @@ export type AssistentSellUpdateWithoutPicturesInput = {
   listings?: Prisma.ProductUpdateManyWithoutAssistentSellNestedInput
   order?: Prisma.OrderUpdateOneWithoutAssistentSellNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutAssistentSellsNestedInput
+  sellerAddress?: Prisma.BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput
 }
 
 export type AssistentSellUncheckedUpdateWithoutPicturesInput = {
@@ -1003,6 +1072,7 @@ export type AssistentSellUncheckedUpdateWithoutPicturesInput = {
   deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1037,6 +1107,7 @@ export type AssistentSellCreateWithoutCharitiesInput = {
   listings?: Prisma.ProductCreateNestedManyWithoutAssistentSellInput
   order?: Prisma.OrderCreateNestedOneWithoutAssistentSellInput
   seller: Prisma.UserCreateNestedOneWithoutAssistentSellsInput
+  sellerAddress: Prisma.BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput
 }
 
 export type AssistentSellUncheckedCreateWithoutCharitiesInput = {
@@ -1053,6 +1124,7 @@ export type AssistentSellUncheckedCreateWithoutCharitiesInput = {
   deliveryCharge?: number | null
   status?: $Enums.AssistentSellStatus
   sellerId: string
+  sellerAddressId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -1103,6 +1175,7 @@ export type AssistentSellUpdateWithoutCharitiesInput = {
   listings?: Prisma.ProductUpdateManyWithoutAssistentSellNestedInput
   order?: Prisma.OrderUpdateOneWithoutAssistentSellNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutAssistentSellsNestedInput
+  sellerAddress?: Prisma.BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput
 }
 
 export type AssistentSellUncheckedUpdateWithoutCharitiesInput = {
@@ -1119,6 +1192,7 @@ export type AssistentSellUncheckedUpdateWithoutCharitiesInput = {
   deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1153,6 +1227,7 @@ export type AssistentSellCreateWithoutOrderInput = {
   charities?: Prisma.AssistentSellCharityCreateNestedManyWithoutAssistentSellInput
   listings?: Prisma.ProductCreateNestedManyWithoutAssistentSellInput
   seller: Prisma.UserCreateNestedOneWithoutAssistentSellsInput
+  sellerAddress: Prisma.BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput
 }
 
 export type AssistentSellUncheckedCreateWithoutOrderInput = {
@@ -1169,6 +1244,7 @@ export type AssistentSellUncheckedCreateWithoutOrderInput = {
   deliveryCharge?: number | null
   status?: $Enums.AssistentSellStatus
   sellerId: string
+  sellerAddressId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -1219,6 +1295,7 @@ export type AssistentSellUpdateWithoutOrderInput = {
   charities?: Prisma.AssistentSellCharityUpdateManyWithoutAssistentSellNestedInput
   listings?: Prisma.ProductUpdateManyWithoutAssistentSellNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutAssistentSellsNestedInput
+  sellerAddress?: Prisma.BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput
 }
 
 export type AssistentSellUncheckedUpdateWithoutOrderInput = {
@@ -1235,6 +1312,7 @@ export type AssistentSellUncheckedUpdateWithoutOrderInput = {
   deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1269,6 +1347,7 @@ export type AssistentSellCreateWithoutListingsInput = {
   charities?: Prisma.AssistentSellCharityCreateNestedManyWithoutAssistentSellInput
   order?: Prisma.OrderCreateNestedOneWithoutAssistentSellInput
   seller: Prisma.UserCreateNestedOneWithoutAssistentSellsInput
+  sellerAddress: Prisma.BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput
 }
 
 export type AssistentSellUncheckedCreateWithoutListingsInput = {
@@ -1285,6 +1364,7 @@ export type AssistentSellUncheckedCreateWithoutListingsInput = {
   deliveryCharge?: number | null
   status?: $Enums.AssistentSellStatus
   sellerId: string
+  sellerAddressId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -1335,6 +1415,7 @@ export type AssistentSellUpdateWithoutListingsInput = {
   charities?: Prisma.AssistentSellCharityUpdateManyWithoutAssistentSellNestedInput
   order?: Prisma.OrderUpdateOneWithoutAssistentSellNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutAssistentSellsNestedInput
+  sellerAddress?: Prisma.BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput
 }
 
 export type AssistentSellUncheckedUpdateWithoutListingsInput = {
@@ -1351,6 +1432,7 @@ export type AssistentSellUncheckedUpdateWithoutListingsInput = {
   deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1385,6 +1467,7 @@ export type AssistentSellCreateWithoutSellerInput = {
   charities?: Prisma.AssistentSellCharityCreateNestedManyWithoutAssistentSellInput
   listings?: Prisma.ProductCreateNestedManyWithoutAssistentSellInput
   order?: Prisma.OrderCreateNestedOneWithoutAssistentSellInput
+  sellerAddress: Prisma.BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput
 }
 
 export type AssistentSellUncheckedCreateWithoutSellerInput = {
@@ -1400,6 +1483,7 @@ export type AssistentSellUncheckedCreateWithoutSellerInput = {
   donationAnonymous?: boolean
   deliveryCharge?: number | null
   status?: $Enums.AssistentSellStatus
+  sellerAddressId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -1455,12 +1539,91 @@ export type AssistentSellScalarWhereInput = {
   deliveryCharge?: Prisma.FloatNullableFilter<"AssistentSell"> | number | null
   status?: Prisma.EnumAssistentSellStatusFilter<"AssistentSell"> | $Enums.AssistentSellStatus
   sellerId?: Prisma.StringFilter<"AssistentSell"> | string
+  sellerAddressId?: Prisma.StringFilter<"AssistentSell"> | string
   createdAt?: Prisma.DateTimeFilter<"AssistentSell"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AssistentSell"> | Date | string
   weight_kg?: Prisma.FloatFilter<"AssistentSell"> | number
   hight_cm?: Prisma.FloatFilter<"AssistentSell"> | number
   width_cm?: Prisma.FloatFilter<"AssistentSell"> | number
   length_cm?: Prisma.FloatFilter<"AssistentSell"> | number
+}
+
+export type AssistentSellCreateWithoutSellerAddressInput = {
+  id?: string
+  itemsTitle: string
+  itemsCount?: number
+  contactNumber?: string | null
+  itemsDetails?: string | null
+  priceType?: $Enums.PriceType
+  targetPrice?: number | null
+  additionalNotes?: string | null
+  donationPct?: number
+  donationAnonymous?: boolean
+  deliveryCharge?: number | null
+  status?: $Enums.AssistentSellStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
+  pictures?: Prisma.BundlePictureCreateNestedManyWithoutAssistentSellInput
+  charities?: Prisma.AssistentSellCharityCreateNestedManyWithoutAssistentSellInput
+  listings?: Prisma.ProductCreateNestedManyWithoutAssistentSellInput
+  order?: Prisma.OrderCreateNestedOneWithoutAssistentSellInput
+  seller: Prisma.UserCreateNestedOneWithoutAssistentSellsInput
+}
+
+export type AssistentSellUncheckedCreateWithoutSellerAddressInput = {
+  id?: string
+  itemsTitle: string
+  itemsCount?: number
+  contactNumber?: string | null
+  itemsDetails?: string | null
+  priceType?: $Enums.PriceType
+  targetPrice?: number | null
+  additionalNotes?: string | null
+  donationPct?: number
+  donationAnonymous?: boolean
+  deliveryCharge?: number | null
+  status?: $Enums.AssistentSellStatus
+  sellerId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
+  pictures?: Prisma.BundlePictureUncheckedCreateNestedManyWithoutAssistentSellInput
+  charities?: Prisma.AssistentSellCharityUncheckedCreateNestedManyWithoutAssistentSellInput
+  listings?: Prisma.ProductUncheckedCreateNestedManyWithoutAssistentSellInput
+  order?: Prisma.OrderUncheckedCreateNestedOneWithoutAssistentSellInput
+}
+
+export type AssistentSellCreateOrConnectWithoutSellerAddressInput = {
+  where: Prisma.AssistentSellWhereUniqueInput
+  create: Prisma.XOR<Prisma.AssistentSellCreateWithoutSellerAddressInput, Prisma.AssistentSellUncheckedCreateWithoutSellerAddressInput>
+}
+
+export type AssistentSellCreateManySellerAddressInputEnvelope = {
+  data: Prisma.AssistentSellCreateManySellerAddressInput | Prisma.AssistentSellCreateManySellerAddressInput[]
+  skipDuplicates?: boolean
+}
+
+export type AssistentSellUpsertWithWhereUniqueWithoutSellerAddressInput = {
+  where: Prisma.AssistentSellWhereUniqueInput
+  update: Prisma.XOR<Prisma.AssistentSellUpdateWithoutSellerAddressInput, Prisma.AssistentSellUncheckedUpdateWithoutSellerAddressInput>
+  create: Prisma.XOR<Prisma.AssistentSellCreateWithoutSellerAddressInput, Prisma.AssistentSellUncheckedCreateWithoutSellerAddressInput>
+}
+
+export type AssistentSellUpdateWithWhereUniqueWithoutSellerAddressInput = {
+  where: Prisma.AssistentSellWhereUniqueInput
+  data: Prisma.XOR<Prisma.AssistentSellUpdateWithoutSellerAddressInput, Prisma.AssistentSellUncheckedUpdateWithoutSellerAddressInput>
+}
+
+export type AssistentSellUpdateManyWithWhereWithoutSellerAddressInput = {
+  where: Prisma.AssistentSellScalarWhereInput
+  data: Prisma.XOR<Prisma.AssistentSellUpdateManyMutationInput, Prisma.AssistentSellUncheckedUpdateManyWithoutSellerAddressInput>
 }
 
 export type AssistentSellCreateManySellerInput = {
@@ -1476,6 +1639,7 @@ export type AssistentSellCreateManySellerInput = {
   donationAnonymous?: boolean
   deliveryCharge?: number | null
   status?: $Enums.AssistentSellStatus
+  sellerAddressId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   weight_kg: number
@@ -1507,6 +1671,7 @@ export type AssistentSellUpdateWithoutSellerInput = {
   charities?: Prisma.AssistentSellCharityUpdateManyWithoutAssistentSellNestedInput
   listings?: Prisma.ProductUpdateManyWithoutAssistentSellNestedInput
   order?: Prisma.OrderUpdateOneWithoutAssistentSellNestedInput
+  sellerAddress?: Prisma.BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput
 }
 
 export type AssistentSellUncheckedUpdateWithoutSellerInput = {
@@ -1522,6 +1687,7 @@ export type AssistentSellUncheckedUpdateWithoutSellerInput = {
   donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
+  sellerAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1547,6 +1713,103 @@ export type AssistentSellUncheckedUpdateManyWithoutSellerInput = {
   donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
+  sellerAddressId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+}
+
+export type AssistentSellCreateManySellerAddressInput = {
+  id?: string
+  itemsTitle: string
+  itemsCount?: number
+  contactNumber?: string | null
+  itemsDetails?: string | null
+  priceType?: $Enums.PriceType
+  targetPrice?: number | null
+  additionalNotes?: string | null
+  donationPct?: number
+  donationAnonymous?: boolean
+  deliveryCharge?: number | null
+  status?: $Enums.AssistentSellStatus
+  sellerId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
+}
+
+export type AssistentSellUpdateWithoutSellerAddressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
+  targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  additionalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donationPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  pictures?: Prisma.BundlePictureUpdateManyWithoutAssistentSellNestedInput
+  charities?: Prisma.AssistentSellCharityUpdateManyWithoutAssistentSellNestedInput
+  listings?: Prisma.ProductUpdateManyWithoutAssistentSellNestedInput
+  order?: Prisma.OrderUpdateOneWithoutAssistentSellNestedInput
+  seller?: Prisma.UserUpdateOneRequiredWithoutAssistentSellsNestedInput
+}
+
+export type AssistentSellUncheckedUpdateWithoutSellerAddressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
+  targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  additionalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donationPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
+  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  pictures?: Prisma.BundlePictureUncheckedUpdateManyWithoutAssistentSellNestedInput
+  charities?: Prisma.AssistentSellCharityUncheckedUpdateManyWithoutAssistentSellNestedInput
+  listings?: Prisma.ProductUncheckedUpdateManyWithoutAssistentSellNestedInput
+  order?: Prisma.OrderUncheckedUpdateOneWithoutAssistentSellNestedInput
+}
+
+export type AssistentSellUncheckedUpdateManyWithoutSellerAddressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
+  targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  additionalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donationPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
+  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1618,6 +1881,7 @@ export type AssistentSellSelect<ExtArgs extends runtime.Types.Extensions.Interna
   deliveryCharge?: boolean
   status?: boolean
   sellerId?: boolean
+  sellerAddressId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   weight_kg?: boolean
@@ -1629,6 +1893,7 @@ export type AssistentSellSelect<ExtArgs extends runtime.Types.Extensions.Interna
   listings?: boolean | Prisma.AssistentSell$listingsArgs<ExtArgs>
   order?: boolean | Prisma.AssistentSell$orderArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sellerAddress?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.AssistentSellCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assistentSell"]>
 
@@ -1646,6 +1911,7 @@ export type AssistentSellSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   deliveryCharge?: boolean
   status?: boolean
   sellerId?: boolean
+  sellerAddressId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   weight_kg?: boolean
@@ -1653,6 +1919,7 @@ export type AssistentSellSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   width_cm?: boolean
   length_cm?: boolean
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sellerAddress?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assistentSell"]>
 
 export type AssistentSellSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1669,6 +1936,7 @@ export type AssistentSellSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   deliveryCharge?: boolean
   status?: boolean
   sellerId?: boolean
+  sellerAddressId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   weight_kg?: boolean
@@ -1676,6 +1944,7 @@ export type AssistentSellSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   width_cm?: boolean
   length_cm?: boolean
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sellerAddress?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assistentSell"]>
 
 export type AssistentSellSelectScalar = {
@@ -1692,6 +1961,7 @@ export type AssistentSellSelectScalar = {
   deliveryCharge?: boolean
   status?: boolean
   sellerId?: boolean
+  sellerAddressId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   weight_kg?: boolean
@@ -1700,20 +1970,23 @@ export type AssistentSellSelectScalar = {
   length_cm?: boolean
 }
 
-export type AssistentSellOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemsTitle" | "itemsCount" | "contactNumber" | "itemsDetails" | "priceType" | "targetPrice" | "additionalNotes" | "donationPct" | "donationAnonymous" | "deliveryCharge" | "status" | "sellerId" | "createdAt" | "updatedAt" | "weight_kg" | "hight_cm" | "width_cm" | "length_cm", ExtArgs["result"]["assistentSell"]>
+export type AssistentSellOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemsTitle" | "itemsCount" | "contactNumber" | "itemsDetails" | "priceType" | "targetPrice" | "additionalNotes" | "donationPct" | "donationAnonymous" | "deliveryCharge" | "status" | "sellerId" | "sellerAddressId" | "createdAt" | "updatedAt" | "weight_kg" | "hight_cm" | "width_cm" | "length_cm", ExtArgs["result"]["assistentSell"]>
 export type AssistentSellInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pictures?: boolean | Prisma.AssistentSell$picturesArgs<ExtArgs>
   charities?: boolean | Prisma.AssistentSell$charitiesArgs<ExtArgs>
   listings?: boolean | Prisma.AssistentSell$listingsArgs<ExtArgs>
   order?: boolean | Prisma.AssistentSell$orderArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sellerAddress?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.AssistentSellCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AssistentSellIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sellerAddress?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
 }
 export type AssistentSellIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sellerAddress?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
 }
 
 export type $AssistentSellPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1724,6 +1997,7 @@ export type $AssistentSellPayload<ExtArgs extends runtime.Types.Extensions.Inter
     listings: Prisma.$ProductPayload<ExtArgs>[]
     order: Prisma.$OrderPayload<ExtArgs> | null
     seller: Prisma.$UserPayload<ExtArgs>
+    sellerAddress: Prisma.$BillingDetailsPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1739,6 +2013,7 @@ export type $AssistentSellPayload<ExtArgs extends runtime.Types.Extensions.Inter
     deliveryCharge: number | null
     status: $Enums.AssistentSellStatus
     sellerId: string
+    sellerAddressId: string
     createdAt: Date
     updatedAt: Date
     weight_kg: number
@@ -2144,6 +2419,7 @@ export interface Prisma__AssistentSellClient<T, Null = never, ExtArgs extends ru
   listings<T extends Prisma.AssistentSell$listingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssistentSell$listingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   order<T extends Prisma.AssistentSell$orderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssistentSell$orderArgs<ExtArgs>>): Prisma.Prisma__OrderClient<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   seller<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  sellerAddress<T extends Prisma.BillingDetailsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillingDetailsDefaultArgs<ExtArgs>>): Prisma.Prisma__BillingDetailsClient<runtime.Types.Result.GetResult<Prisma.$BillingDetailsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2186,6 +2462,7 @@ export interface AssistentSellFieldRefs {
   readonly deliveryCharge: Prisma.FieldRef<"AssistentSell", 'Float'>
   readonly status: Prisma.FieldRef<"AssistentSell", 'AssistentSellStatus'>
   readonly sellerId: Prisma.FieldRef<"AssistentSell", 'String'>
+  readonly sellerAddressId: Prisma.FieldRef<"AssistentSell", 'String'>
   readonly createdAt: Prisma.FieldRef<"AssistentSell", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"AssistentSell", 'DateTime'>
   readonly weight_kg: Prisma.FieldRef<"AssistentSell", 'Float'>

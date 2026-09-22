@@ -249,6 +249,8 @@ export type BillingDetailsWhereInput = {
   seller?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   orders?: Prisma.OrderListRelationFilter
   ordersAsDestination?: Prisma.OrderListRelationFilter
+  ordersAsAuthCenter?: Prisma.OrderListRelationFilter
+  assistantSellOrigins?: Prisma.AssistentSellListRelationFilter
 }
 
 export type BillingDetailsOrderByWithRelationInput = {
@@ -269,6 +271,8 @@ export type BillingDetailsOrderByWithRelationInput = {
   seller?: Prisma.UserOrderByWithRelationInput
   orders?: Prisma.OrderOrderByRelationAggregateInput
   ordersAsDestination?: Prisma.OrderOrderByRelationAggregateInput
+  ordersAsAuthCenter?: Prisma.OrderOrderByRelationAggregateInput
+  assistantSellOrigins?: Prisma.AssistentSellOrderByRelationAggregateInput
 }
 
 export type BillingDetailsWhereUniqueInput = Prisma.AtLeast<{
@@ -292,6 +296,8 @@ export type BillingDetailsWhereUniqueInput = Prisma.AtLeast<{
   seller?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   orders?: Prisma.OrderListRelationFilter
   ordersAsDestination?: Prisma.OrderListRelationFilter
+  ordersAsAuthCenter?: Prisma.OrderListRelationFilter
+  assistantSellOrigins?: Prisma.AssistentSellListRelationFilter
 }, "id" | "userId" | "sellerId">
 
 export type BillingDetailsOrderByWithAggregationInput = {
@@ -348,6 +354,8 @@ export type BillingDetailsCreateInput = {
   seller?: Prisma.UserCreateNestedOneWithoutSellerAddressInput
   orders?: Prisma.OrderCreateNestedManyWithoutOriginDetailsInput
   ordersAsDestination?: Prisma.OrderCreateNestedManyWithoutBillingDetailsInput
+  ordersAsAuthCenter?: Prisma.OrderCreateNestedManyWithoutAuthDetailsInput
+  assistantSellOrigins?: Prisma.AssistentSellCreateNestedManyWithoutSellerAddressInput
 }
 
 export type BillingDetailsUncheckedCreateInput = {
@@ -366,6 +374,8 @@ export type BillingDetailsUncheckedCreateInput = {
   contact?: string | null
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOriginDetailsInput
   ordersAsDestination?: Prisma.OrderUncheckedCreateNestedManyWithoutBillingDetailsInput
+  ordersAsAuthCenter?: Prisma.OrderUncheckedCreateNestedManyWithoutAuthDetailsInput
+  assistantSellOrigins?: Prisma.AssistentSellUncheckedCreateNestedManyWithoutSellerAddressInput
 }
 
 export type BillingDetailsUpdateInput = {
@@ -384,6 +394,8 @@ export type BillingDetailsUpdateInput = {
   seller?: Prisma.UserUpdateOneWithoutSellerAddressNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOriginDetailsNestedInput
   ordersAsDestination?: Prisma.OrderUpdateManyWithoutBillingDetailsNestedInput
+  ordersAsAuthCenter?: Prisma.OrderUpdateManyWithoutAuthDetailsNestedInput
+  assistantSellOrigins?: Prisma.AssistentSellUpdateManyWithoutSellerAddressNestedInput
 }
 
 export type BillingDetailsUncheckedUpdateInput = {
@@ -402,6 +414,8 @@ export type BillingDetailsUncheckedUpdateInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOriginDetailsNestedInput
   ordersAsDestination?: Prisma.OrderUncheckedUpdateManyWithoutBillingDetailsNestedInput
+  ordersAsAuthCenter?: Prisma.OrderUncheckedUpdateManyWithoutAuthDetailsNestedInput
+  assistantSellOrigins?: Prisma.AssistentSellUncheckedUpdateManyWithoutSellerAddressNestedInput
 }
 
 export type BillingDetailsCreateManyInput = {
@@ -448,6 +462,11 @@ export type BillingDetailsUncheckedUpdateManyInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type BillingDetailsScalarRelationFilter = {
+  is?: Prisma.BillingDetailsWhereInput
+  isNot?: Prisma.BillingDetailsWhereInput
 }
 
 export type BillingDetailsNullableScalarRelationFilter = {
@@ -503,9 +522,29 @@ export type BillingDetailsMinOrderByAggregateInput = {
   contact?: Prisma.SortOrder
 }
 
+export type BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput = {
+  create?: Prisma.XOR<Prisma.BillingDetailsCreateWithoutAssistantSellOriginsInput, Prisma.BillingDetailsUncheckedCreateWithoutAssistantSellOriginsInput>
+  connectOrCreate?: Prisma.BillingDetailsCreateOrConnectWithoutAssistantSellOriginsInput
+  connect?: Prisma.BillingDetailsWhereUniqueInput
+}
+
+export type BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput = {
+  create?: Prisma.XOR<Prisma.BillingDetailsCreateWithoutAssistantSellOriginsInput, Prisma.BillingDetailsUncheckedCreateWithoutAssistantSellOriginsInput>
+  connectOrCreate?: Prisma.BillingDetailsCreateOrConnectWithoutAssistantSellOriginsInput
+  upsert?: Prisma.BillingDetailsUpsertWithoutAssistantSellOriginsInput
+  connect?: Prisma.BillingDetailsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BillingDetailsUpdateToOneWithWhereWithoutAssistantSellOriginsInput, Prisma.BillingDetailsUpdateWithoutAssistantSellOriginsInput>, Prisma.BillingDetailsUncheckedUpdateWithoutAssistantSellOriginsInput>
+}
+
 export type BillingDetailsCreateNestedOneWithoutOrdersInput = {
   create?: Prisma.XOR<Prisma.BillingDetailsCreateWithoutOrdersInput, Prisma.BillingDetailsUncheckedCreateWithoutOrdersInput>
   connectOrCreate?: Prisma.BillingDetailsCreateOrConnectWithoutOrdersInput
+  connect?: Prisma.BillingDetailsWhereUniqueInput
+}
+
+export type BillingDetailsCreateNestedOneWithoutOrdersAsAuthCenterInput = {
+  create?: Prisma.XOR<Prisma.BillingDetailsCreateWithoutOrdersAsAuthCenterInput, Prisma.BillingDetailsUncheckedCreateWithoutOrdersAsAuthCenterInput>
+  connectOrCreate?: Prisma.BillingDetailsCreateOrConnectWithoutOrdersAsAuthCenterInput
   connect?: Prisma.BillingDetailsWhereUniqueInput
 }
 
@@ -523,6 +562,16 @@ export type BillingDetailsUpdateOneWithoutOrdersNestedInput = {
   delete?: Prisma.BillingDetailsWhereInput | boolean
   connect?: Prisma.BillingDetailsWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.BillingDetailsUpdateToOneWithWhereWithoutOrdersInput, Prisma.BillingDetailsUpdateWithoutOrdersInput>, Prisma.BillingDetailsUncheckedUpdateWithoutOrdersInput>
+}
+
+export type BillingDetailsUpdateOneWithoutOrdersAsAuthCenterNestedInput = {
+  create?: Prisma.XOR<Prisma.BillingDetailsCreateWithoutOrdersAsAuthCenterInput, Prisma.BillingDetailsUncheckedCreateWithoutOrdersAsAuthCenterInput>
+  connectOrCreate?: Prisma.BillingDetailsCreateOrConnectWithoutOrdersAsAuthCenterInput
+  upsert?: Prisma.BillingDetailsUpsertWithoutOrdersAsAuthCenterInput
+  disconnect?: Prisma.BillingDetailsWhereInput | boolean
+  delete?: Prisma.BillingDetailsWhereInput | boolean
+  connect?: Prisma.BillingDetailsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BillingDetailsUpdateToOneWithWhereWithoutOrdersAsAuthCenterInput, Prisma.BillingDetailsUpdateWithoutOrdersAsAuthCenterInput>, Prisma.BillingDetailsUncheckedUpdateWithoutOrdersAsAuthCenterInput>
 }
 
 export type BillingDetailsUpdateOneWithoutOrdersAsDestinationNestedInput = {
@@ -599,6 +648,98 @@ export type BillingDetailsUncheckedUpdateOneWithoutSellerNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BillingDetailsUpdateToOneWithWhereWithoutSellerInput, Prisma.BillingDetailsUpdateWithoutSellerInput>, Prisma.BillingDetailsUncheckedUpdateWithoutSellerInput>
 }
 
+export type BillingDetailsCreateWithoutAssistantSellOriginsInput = {
+  id?: string
+  country: string
+  countryCode?: string
+  full_name?: string | null
+  address1: string
+  address2?: string | null
+  zip_code: string
+  state: string
+  email?: string | null
+  city: string
+  contact?: string | null
+  user?: Prisma.UserCreateNestedOneWithoutBillingAddressInput
+  seller?: Prisma.UserCreateNestedOneWithoutSellerAddressInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOriginDetailsInput
+  ordersAsDestination?: Prisma.OrderCreateNestedManyWithoutBillingDetailsInput
+  ordersAsAuthCenter?: Prisma.OrderCreateNestedManyWithoutAuthDetailsInput
+}
+
+export type BillingDetailsUncheckedCreateWithoutAssistantSellOriginsInput = {
+  id?: string
+  userId?: string | null
+  sellerId?: string | null
+  country: string
+  countryCode?: string
+  full_name?: string | null
+  address1: string
+  address2?: string | null
+  zip_code: string
+  state: string
+  email?: string | null
+  city: string
+  contact?: string | null
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOriginDetailsInput
+  ordersAsDestination?: Prisma.OrderUncheckedCreateNestedManyWithoutBillingDetailsInput
+  ordersAsAuthCenter?: Prisma.OrderUncheckedCreateNestedManyWithoutAuthDetailsInput
+}
+
+export type BillingDetailsCreateOrConnectWithoutAssistantSellOriginsInput = {
+  where: Prisma.BillingDetailsWhereUniqueInput
+  create: Prisma.XOR<Prisma.BillingDetailsCreateWithoutAssistantSellOriginsInput, Prisma.BillingDetailsUncheckedCreateWithoutAssistantSellOriginsInput>
+}
+
+export type BillingDetailsUpsertWithoutAssistantSellOriginsInput = {
+  update: Prisma.XOR<Prisma.BillingDetailsUpdateWithoutAssistantSellOriginsInput, Prisma.BillingDetailsUncheckedUpdateWithoutAssistantSellOriginsInput>
+  create: Prisma.XOR<Prisma.BillingDetailsCreateWithoutAssistantSellOriginsInput, Prisma.BillingDetailsUncheckedCreateWithoutAssistantSellOriginsInput>
+  where?: Prisma.BillingDetailsWhereInput
+}
+
+export type BillingDetailsUpdateToOneWithWhereWithoutAssistantSellOriginsInput = {
+  where?: Prisma.BillingDetailsWhereInput
+  data: Prisma.XOR<Prisma.BillingDetailsUpdateWithoutAssistantSellOriginsInput, Prisma.BillingDetailsUncheckedUpdateWithoutAssistantSellOriginsInput>
+}
+
+export type BillingDetailsUpdateWithoutAssistantSellOriginsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address1?: Prisma.StringFieldUpdateOperationsInput | string
+  address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUpdateOneWithoutBillingAddressNestedInput
+  seller?: Prisma.UserUpdateOneWithoutSellerAddressNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOriginDetailsNestedInput
+  ordersAsDestination?: Prisma.OrderUpdateManyWithoutBillingDetailsNestedInput
+  ordersAsAuthCenter?: Prisma.OrderUpdateManyWithoutAuthDetailsNestedInput
+}
+
+export type BillingDetailsUncheckedUpdateWithoutAssistantSellOriginsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address1?: Prisma.StringFieldUpdateOperationsInput | string
+  address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOriginDetailsNestedInput
+  ordersAsDestination?: Prisma.OrderUncheckedUpdateManyWithoutBillingDetailsNestedInput
+  ordersAsAuthCenter?: Prisma.OrderUncheckedUpdateManyWithoutAuthDetailsNestedInput
+}
+
 export type BillingDetailsCreateWithoutOrdersInput = {
   id?: string
   country: string
@@ -614,6 +755,8 @@ export type BillingDetailsCreateWithoutOrdersInput = {
   user?: Prisma.UserCreateNestedOneWithoutBillingAddressInput
   seller?: Prisma.UserCreateNestedOneWithoutSellerAddressInput
   ordersAsDestination?: Prisma.OrderCreateNestedManyWithoutBillingDetailsInput
+  ordersAsAuthCenter?: Prisma.OrderCreateNestedManyWithoutAuthDetailsInput
+  assistantSellOrigins?: Prisma.AssistentSellCreateNestedManyWithoutSellerAddressInput
 }
 
 export type BillingDetailsUncheckedCreateWithoutOrdersInput = {
@@ -631,11 +774,56 @@ export type BillingDetailsUncheckedCreateWithoutOrdersInput = {
   city: string
   contact?: string | null
   ordersAsDestination?: Prisma.OrderUncheckedCreateNestedManyWithoutBillingDetailsInput
+  ordersAsAuthCenter?: Prisma.OrderUncheckedCreateNestedManyWithoutAuthDetailsInput
+  assistantSellOrigins?: Prisma.AssistentSellUncheckedCreateNestedManyWithoutSellerAddressInput
 }
 
 export type BillingDetailsCreateOrConnectWithoutOrdersInput = {
   where: Prisma.BillingDetailsWhereUniqueInput
   create: Prisma.XOR<Prisma.BillingDetailsCreateWithoutOrdersInput, Prisma.BillingDetailsUncheckedCreateWithoutOrdersInput>
+}
+
+export type BillingDetailsCreateWithoutOrdersAsAuthCenterInput = {
+  id?: string
+  country: string
+  countryCode?: string
+  full_name?: string | null
+  address1: string
+  address2?: string | null
+  zip_code: string
+  state: string
+  email?: string | null
+  city: string
+  contact?: string | null
+  user?: Prisma.UserCreateNestedOneWithoutBillingAddressInput
+  seller?: Prisma.UserCreateNestedOneWithoutSellerAddressInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOriginDetailsInput
+  ordersAsDestination?: Prisma.OrderCreateNestedManyWithoutBillingDetailsInput
+  assistantSellOrigins?: Prisma.AssistentSellCreateNestedManyWithoutSellerAddressInput
+}
+
+export type BillingDetailsUncheckedCreateWithoutOrdersAsAuthCenterInput = {
+  id?: string
+  userId?: string | null
+  sellerId?: string | null
+  country: string
+  countryCode?: string
+  full_name?: string | null
+  address1: string
+  address2?: string | null
+  zip_code: string
+  state: string
+  email?: string | null
+  city: string
+  contact?: string | null
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOriginDetailsInput
+  ordersAsDestination?: Prisma.OrderUncheckedCreateNestedManyWithoutBillingDetailsInput
+  assistantSellOrigins?: Prisma.AssistentSellUncheckedCreateNestedManyWithoutSellerAddressInput
+}
+
+export type BillingDetailsCreateOrConnectWithoutOrdersAsAuthCenterInput = {
+  where: Prisma.BillingDetailsWhereUniqueInput
+  create: Prisma.XOR<Prisma.BillingDetailsCreateWithoutOrdersAsAuthCenterInput, Prisma.BillingDetailsUncheckedCreateWithoutOrdersAsAuthCenterInput>
 }
 
 export type BillingDetailsCreateWithoutOrdersAsDestinationInput = {
@@ -653,6 +841,8 @@ export type BillingDetailsCreateWithoutOrdersAsDestinationInput = {
   user?: Prisma.UserCreateNestedOneWithoutBillingAddressInput
   seller?: Prisma.UserCreateNestedOneWithoutSellerAddressInput
   orders?: Prisma.OrderCreateNestedManyWithoutOriginDetailsInput
+  ordersAsAuthCenter?: Prisma.OrderCreateNestedManyWithoutAuthDetailsInput
+  assistantSellOrigins?: Prisma.AssistentSellCreateNestedManyWithoutSellerAddressInput
 }
 
 export type BillingDetailsUncheckedCreateWithoutOrdersAsDestinationInput = {
@@ -670,6 +860,8 @@ export type BillingDetailsUncheckedCreateWithoutOrdersAsDestinationInput = {
   city: string
   contact?: string | null
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOriginDetailsInput
+  ordersAsAuthCenter?: Prisma.OrderUncheckedCreateNestedManyWithoutAuthDetailsInput
+  assistantSellOrigins?: Prisma.AssistentSellUncheckedCreateNestedManyWithoutSellerAddressInput
 }
 
 export type BillingDetailsCreateOrConnectWithoutOrdersAsDestinationInput = {
@@ -703,6 +895,8 @@ export type BillingDetailsUpdateWithoutOrdersInput = {
   user?: Prisma.UserUpdateOneWithoutBillingAddressNestedInput
   seller?: Prisma.UserUpdateOneWithoutSellerAddressNestedInput
   ordersAsDestination?: Prisma.OrderUpdateManyWithoutBillingDetailsNestedInput
+  ordersAsAuthCenter?: Prisma.OrderUpdateManyWithoutAuthDetailsNestedInput
+  assistantSellOrigins?: Prisma.AssistentSellUpdateManyWithoutSellerAddressNestedInput
 }
 
 export type BillingDetailsUncheckedUpdateWithoutOrdersInput = {
@@ -720,6 +914,57 @@ export type BillingDetailsUncheckedUpdateWithoutOrdersInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ordersAsDestination?: Prisma.OrderUncheckedUpdateManyWithoutBillingDetailsNestedInput
+  ordersAsAuthCenter?: Prisma.OrderUncheckedUpdateManyWithoutAuthDetailsNestedInput
+  assistantSellOrigins?: Prisma.AssistentSellUncheckedUpdateManyWithoutSellerAddressNestedInput
+}
+
+export type BillingDetailsUpsertWithoutOrdersAsAuthCenterInput = {
+  update: Prisma.XOR<Prisma.BillingDetailsUpdateWithoutOrdersAsAuthCenterInput, Prisma.BillingDetailsUncheckedUpdateWithoutOrdersAsAuthCenterInput>
+  create: Prisma.XOR<Prisma.BillingDetailsCreateWithoutOrdersAsAuthCenterInput, Prisma.BillingDetailsUncheckedCreateWithoutOrdersAsAuthCenterInput>
+  where?: Prisma.BillingDetailsWhereInput
+}
+
+export type BillingDetailsUpdateToOneWithWhereWithoutOrdersAsAuthCenterInput = {
+  where?: Prisma.BillingDetailsWhereInput
+  data: Prisma.XOR<Prisma.BillingDetailsUpdateWithoutOrdersAsAuthCenterInput, Prisma.BillingDetailsUncheckedUpdateWithoutOrdersAsAuthCenterInput>
+}
+
+export type BillingDetailsUpdateWithoutOrdersAsAuthCenterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address1?: Prisma.StringFieldUpdateOperationsInput | string
+  address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUpdateOneWithoutBillingAddressNestedInput
+  seller?: Prisma.UserUpdateOneWithoutSellerAddressNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOriginDetailsNestedInput
+  ordersAsDestination?: Prisma.OrderUpdateManyWithoutBillingDetailsNestedInput
+  assistantSellOrigins?: Prisma.AssistentSellUpdateManyWithoutSellerAddressNestedInput
+}
+
+export type BillingDetailsUncheckedUpdateWithoutOrdersAsAuthCenterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address1?: Prisma.StringFieldUpdateOperationsInput | string
+  address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOriginDetailsNestedInput
+  ordersAsDestination?: Prisma.OrderUncheckedUpdateManyWithoutBillingDetailsNestedInput
+  assistantSellOrigins?: Prisma.AssistentSellUncheckedUpdateManyWithoutSellerAddressNestedInput
 }
 
 export type BillingDetailsUpsertWithoutOrdersAsDestinationInput = {
@@ -748,6 +993,8 @@ export type BillingDetailsUpdateWithoutOrdersAsDestinationInput = {
   user?: Prisma.UserUpdateOneWithoutBillingAddressNestedInput
   seller?: Prisma.UserUpdateOneWithoutSellerAddressNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOriginDetailsNestedInput
+  ordersAsAuthCenter?: Prisma.OrderUpdateManyWithoutAuthDetailsNestedInput
+  assistantSellOrigins?: Prisma.AssistentSellUpdateManyWithoutSellerAddressNestedInput
 }
 
 export type BillingDetailsUncheckedUpdateWithoutOrdersAsDestinationInput = {
@@ -765,6 +1012,8 @@ export type BillingDetailsUncheckedUpdateWithoutOrdersAsDestinationInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOriginDetailsNestedInput
+  ordersAsAuthCenter?: Prisma.OrderUncheckedUpdateManyWithoutAuthDetailsNestedInput
+  assistantSellOrigins?: Prisma.AssistentSellUncheckedUpdateManyWithoutSellerAddressNestedInput
 }
 
 export type BillingDetailsCreateWithoutUserInput = {
@@ -782,6 +1031,8 @@ export type BillingDetailsCreateWithoutUserInput = {
   seller?: Prisma.UserCreateNestedOneWithoutSellerAddressInput
   orders?: Prisma.OrderCreateNestedManyWithoutOriginDetailsInput
   ordersAsDestination?: Prisma.OrderCreateNestedManyWithoutBillingDetailsInput
+  ordersAsAuthCenter?: Prisma.OrderCreateNestedManyWithoutAuthDetailsInput
+  assistantSellOrigins?: Prisma.AssistentSellCreateNestedManyWithoutSellerAddressInput
 }
 
 export type BillingDetailsUncheckedCreateWithoutUserInput = {
@@ -799,6 +1050,8 @@ export type BillingDetailsUncheckedCreateWithoutUserInput = {
   contact?: string | null
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOriginDetailsInput
   ordersAsDestination?: Prisma.OrderUncheckedCreateNestedManyWithoutBillingDetailsInput
+  ordersAsAuthCenter?: Prisma.OrderUncheckedCreateNestedManyWithoutAuthDetailsInput
+  assistantSellOrigins?: Prisma.AssistentSellUncheckedCreateNestedManyWithoutSellerAddressInput
 }
 
 export type BillingDetailsCreateOrConnectWithoutUserInput = {
@@ -821,6 +1074,8 @@ export type BillingDetailsCreateWithoutSellerInput = {
   user?: Prisma.UserCreateNestedOneWithoutBillingAddressInput
   orders?: Prisma.OrderCreateNestedManyWithoutOriginDetailsInput
   ordersAsDestination?: Prisma.OrderCreateNestedManyWithoutBillingDetailsInput
+  ordersAsAuthCenter?: Prisma.OrderCreateNestedManyWithoutAuthDetailsInput
+  assistantSellOrigins?: Prisma.AssistentSellCreateNestedManyWithoutSellerAddressInput
 }
 
 export type BillingDetailsUncheckedCreateWithoutSellerInput = {
@@ -838,6 +1093,8 @@ export type BillingDetailsUncheckedCreateWithoutSellerInput = {
   contact?: string | null
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOriginDetailsInput
   ordersAsDestination?: Prisma.OrderUncheckedCreateNestedManyWithoutBillingDetailsInput
+  ordersAsAuthCenter?: Prisma.OrderUncheckedCreateNestedManyWithoutAuthDetailsInput
+  assistantSellOrigins?: Prisma.AssistentSellUncheckedCreateNestedManyWithoutSellerAddressInput
 }
 
 export type BillingDetailsCreateOrConnectWithoutSellerInput = {
@@ -871,6 +1128,8 @@ export type BillingDetailsUpdateWithoutUserInput = {
   seller?: Prisma.UserUpdateOneWithoutSellerAddressNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOriginDetailsNestedInput
   ordersAsDestination?: Prisma.OrderUpdateManyWithoutBillingDetailsNestedInput
+  ordersAsAuthCenter?: Prisma.OrderUpdateManyWithoutAuthDetailsNestedInput
+  assistantSellOrigins?: Prisma.AssistentSellUpdateManyWithoutSellerAddressNestedInput
 }
 
 export type BillingDetailsUncheckedUpdateWithoutUserInput = {
@@ -888,6 +1147,8 @@ export type BillingDetailsUncheckedUpdateWithoutUserInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOriginDetailsNestedInput
   ordersAsDestination?: Prisma.OrderUncheckedUpdateManyWithoutBillingDetailsNestedInput
+  ordersAsAuthCenter?: Prisma.OrderUncheckedUpdateManyWithoutAuthDetailsNestedInput
+  assistantSellOrigins?: Prisma.AssistentSellUncheckedUpdateManyWithoutSellerAddressNestedInput
 }
 
 export type BillingDetailsUpsertWithoutSellerInput = {
@@ -916,6 +1177,8 @@ export type BillingDetailsUpdateWithoutSellerInput = {
   user?: Prisma.UserUpdateOneWithoutBillingAddressNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOriginDetailsNestedInput
   ordersAsDestination?: Prisma.OrderUpdateManyWithoutBillingDetailsNestedInput
+  ordersAsAuthCenter?: Prisma.OrderUpdateManyWithoutAuthDetailsNestedInput
+  assistantSellOrigins?: Prisma.AssistentSellUpdateManyWithoutSellerAddressNestedInput
 }
 
 export type BillingDetailsUncheckedUpdateWithoutSellerInput = {
@@ -933,6 +1196,8 @@ export type BillingDetailsUncheckedUpdateWithoutSellerInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOriginDetailsNestedInput
   ordersAsDestination?: Prisma.OrderUncheckedUpdateManyWithoutBillingDetailsNestedInput
+  ordersAsAuthCenter?: Prisma.OrderUncheckedUpdateManyWithoutAuthDetailsNestedInput
+  assistantSellOrigins?: Prisma.AssistentSellUncheckedUpdateManyWithoutSellerAddressNestedInput
 }
 
 
@@ -943,11 +1208,15 @@ export type BillingDetailsUncheckedUpdateWithoutSellerInput = {
 export type BillingDetailsCountOutputType = {
   orders: number
   ordersAsDestination: number
+  ordersAsAuthCenter: number
+  assistantSellOrigins: number
 }
 
 export type BillingDetailsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orders?: boolean | BillingDetailsCountOutputTypeCountOrdersArgs
   ordersAsDestination?: boolean | BillingDetailsCountOutputTypeCountOrdersAsDestinationArgs
+  ordersAsAuthCenter?: boolean | BillingDetailsCountOutputTypeCountOrdersAsAuthCenterArgs
+  assistantSellOrigins?: boolean | BillingDetailsCountOutputTypeCountAssistantSellOriginsArgs
 }
 
 /**
@@ -974,6 +1243,20 @@ export type BillingDetailsCountOutputTypeCountOrdersAsDestinationArgs<ExtArgs ex
   where?: Prisma.OrderWhereInput
 }
 
+/**
+ * BillingDetailsCountOutputType without action
+ */
+export type BillingDetailsCountOutputTypeCountOrdersAsAuthCenterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrderWhereInput
+}
+
+/**
+ * BillingDetailsCountOutputType without action
+ */
+export type BillingDetailsCountOutputTypeCountAssistantSellOriginsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AssistentSellWhereInput
+}
+
 
 export type BillingDetailsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -993,6 +1276,8 @@ export type BillingDetailsSelect<ExtArgs extends runtime.Types.Extensions.Intern
   seller?: boolean | Prisma.BillingDetails$sellerArgs<ExtArgs>
   orders?: boolean | Prisma.BillingDetails$ordersArgs<ExtArgs>
   ordersAsDestination?: boolean | Prisma.BillingDetails$ordersAsDestinationArgs<ExtArgs>
+  ordersAsAuthCenter?: boolean | Prisma.BillingDetails$ordersAsAuthCenterArgs<ExtArgs>
+  assistantSellOrigins?: boolean | Prisma.BillingDetails$assistantSellOriginsArgs<ExtArgs>
   _count?: boolean | Prisma.BillingDetailsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["billingDetails"]>
 
@@ -1054,6 +1339,8 @@ export type BillingDetailsInclude<ExtArgs extends runtime.Types.Extensions.Inter
   seller?: boolean | Prisma.BillingDetails$sellerArgs<ExtArgs>
   orders?: boolean | Prisma.BillingDetails$ordersArgs<ExtArgs>
   ordersAsDestination?: boolean | Prisma.BillingDetails$ordersAsDestinationArgs<ExtArgs>
+  ordersAsAuthCenter?: boolean | Prisma.BillingDetails$ordersAsAuthCenterArgs<ExtArgs>
+  assistantSellOrigins?: boolean | Prisma.BillingDetails$assistantSellOriginsArgs<ExtArgs>
   _count?: boolean | Prisma.BillingDetailsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BillingDetailsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1072,6 +1359,8 @@ export type $BillingDetailsPayload<ExtArgs extends runtime.Types.Extensions.Inte
     seller: Prisma.$UserPayload<ExtArgs> | null
     orders: Prisma.$OrderPayload<ExtArgs>[]
     ordersAsDestination: Prisma.$OrderPayload<ExtArgs>[]
+    ordersAsAuthCenter: Prisma.$OrderPayload<ExtArgs>[]
+    assistantSellOrigins: Prisma.$AssistentSellPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1485,6 +1774,8 @@ export interface Prisma__BillingDetailsClient<T, Null = never, ExtArgs extends r
   seller<T extends Prisma.BillingDetails$sellerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillingDetails$sellerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   orders<T extends Prisma.BillingDetails$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillingDetails$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ordersAsDestination<T extends Prisma.BillingDetails$ordersAsDestinationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillingDetails$ordersAsDestinationArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ordersAsAuthCenter<T extends Prisma.BillingDetails$ordersAsAuthCenterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillingDetails$ordersAsAuthCenterArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assistantSellOrigins<T extends Prisma.BillingDetails$assistantSellOriginsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillingDetails$assistantSellOriginsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssistentSellPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2006,6 +2297,54 @@ export type BillingDetails$ordersAsDestinationArgs<ExtArgs extends runtime.Types
   take?: number
   skip?: number
   distinct?: Prisma.OrderScalarFieldEnum | Prisma.OrderScalarFieldEnum[]
+}
+
+/**
+ * BillingDetails.ordersAsAuthCenter
+ */
+export type BillingDetails$ordersAsAuthCenterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Order
+   */
+  select?: Prisma.OrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Order
+   */
+  omit?: Prisma.OrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderInclude<ExtArgs> | null
+  where?: Prisma.OrderWhereInput
+  orderBy?: Prisma.OrderOrderByWithRelationInput | Prisma.OrderOrderByWithRelationInput[]
+  cursor?: Prisma.OrderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrderScalarFieldEnum | Prisma.OrderScalarFieldEnum[]
+}
+
+/**
+ * BillingDetails.assistantSellOrigins
+ */
+export type BillingDetails$assistantSellOriginsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AssistentSell
+   */
+  select?: Prisma.AssistentSellSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AssistentSell
+   */
+  omit?: Prisma.AssistentSellOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssistentSellInclude<ExtArgs> | null
+  where?: Prisma.AssistentSellWhereInput
+  orderBy?: Prisma.AssistentSellOrderByWithRelationInput | Prisma.AssistentSellOrderByWithRelationInput[]
+  cursor?: Prisma.AssistentSellWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AssistentSellScalarFieldEnum | Prisma.AssistentSellScalarFieldEnum[]
 }
 
 /**
