@@ -7,22 +7,20 @@ export async function UserSeed(prisma: PrismaClient) {
 
     const email = config.admin_email
 
-    await prisma.user.create({
+    await prisma.user.update({
+        where: {
+            email
+        },
         data: {
-            fname: "Admin",
-            phone: "423232323",
-            email,
             auth: {
-                create: {
-                    password: config.admin_password,
-                    email,
-                    isverified: true,
-                    approval_status : "Approved",
-                    role: Role.ADMIN
+                update: {
+                    data: {
+                        password: config.admin_password,
+                    }
                 }
             }
         }
     })
 
-    console.log("Admin created");
+    console.log("Admin password updated successfully");
 }
