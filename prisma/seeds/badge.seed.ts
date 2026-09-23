@@ -167,6 +167,7 @@ export async function BandgeSeed(prisma: PrismaClient) {
             },
 
         ],
+        skipDuplicates: true,
     });
 
     console.log(badges.count, "badges created");
