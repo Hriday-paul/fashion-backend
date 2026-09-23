@@ -6,13 +6,13 @@ import { UserSeed } from "./user.seed";
 
 async function main() {
 
-    await BandgeSeed(prisma);
+    // await BandgeSeed(prisma);
 
-    await CategorySeed(prisma);
+    // await CategorySeed(prisma);
 
-    await KeywordSeed(prisma);
+    // await KeywordSeed(prisma);
 
-    await UserSeed(prisma);
+    // await UserSeed(prisma);
     
 }
 main()
