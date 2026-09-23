@@ -12,7 +12,7 @@ async function main() {
 
     // await KeywordSeed(prisma);
 
-    await UserSeed(prisma);
+    // await UserSeed(prisma);
     
 }
 main()
