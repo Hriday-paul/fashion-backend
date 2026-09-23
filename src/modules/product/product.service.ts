@@ -1455,7 +1455,7 @@ const donationSupportByProduct = async (productId: string) => {
 
 }
 
-const dropPriceForAProduct = async (payload: { productId: string, newPrice: number }, currentUser: { id: string, userName: string }) => {
+const dropPriceForAProduct = async (payload: { productId: string, newPrice: number }, currentUser: { id: string, userName: string, role : string }) => {
     const { productId, newPrice } = payload;
     const { id: currentUserId, userName: currentUserName } = currentUser;
 
@@ -1470,7 +1470,7 @@ const dropPriceForAProduct = async (payload: { productId: string, newPrice: numb
         throw new AppError(httpStatus.NOT_FOUND, "Product does not exist");
     }
 
-    if (product.userId !== currentUserId) {
+    if (product.userId !== currentUserId && currentUser.role !== Role.ADMIN) {
         throw new AppError(httpStatus.FORBIDDEN, "You are not authorized to drop the price of this product");
     }
 
@@ -2079,6 +2079,34 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
     return;
 }
 
+const dltAProduct = async (productId: string, currentUser: { id: string, userName: string, role: string }) => {
+    const { id: currentUserId, userName: currentUserName } = currentUser;
+
+    const product = await prisma.product.findFirst({
+        where: {
+            id: productId,
+            isDeleted: false
+        }
+    });
+    if (!product) {
+        throw new AppError(httpStatus.NOT_FOUND, "Product does not exist");
+    }
+
+    //check if the product belongs to the current user
+    if (product.userId !== currentUserId && currentUser.role !== Role.ADMIN) {
+        throw new AppError(httpStatus.FORBIDDEN, "You are not authorized to delete this listing");
+    }
+
+    await prisma.product.update({
+        where: {
+            id: productId
+        },
+        data: {
+            isDeleted: true
+        }
+    });
+}
+
 export const productService = {
     addNewProduct,
 
@@ -2090,6 +2118,7 @@ export const productService = {
     productsByUserName,
     productsByUserId,
     myProducts,
+    dltAProduct,
 
     getViewKey,
 

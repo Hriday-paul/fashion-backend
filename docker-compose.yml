@@ -16,12 +16,13 @@ services:
       - .env
 
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
     volumes:
       - ./public:/app/public
 
-    command: sh -c "npx prisma migrate deploy && npm start"
+    command: sh -c "npx prisma migrate deploy && npx prisma db seed && npm start"
 
   postgres:
     image: postgres:17

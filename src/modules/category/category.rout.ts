@@ -13,8 +13,5 @@ router.get("/parent", categoryControler.getParentChain);
 
 router.get("/filtered-attributes", categoryControler.filteredAttributes);
 
-// router.get("/sizes/:id", categoryControler.allSizes);
-// router.post("/sizes", addSizeValidator, req_validator(), categoryControler.addSize);
-// router.delete("/sizes/:id", categoryControler.deleteSize);
 
 export const categoryRouter = router;

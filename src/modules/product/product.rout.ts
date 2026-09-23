@@ -47,4 +47,6 @@ router.post("/price/drop", dropPriceValidator, req_validator(), auth(...allRoles
 
 router.get("/:id", PublicAuth(), productControler.productDetails);
 
+router.delete("/:productId", auth(Role.ADMIN), productControler.dltAProduct);
+
 export const productRouts = router;

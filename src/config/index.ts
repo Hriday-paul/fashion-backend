@@ -65,5 +65,8 @@ export default {
 
   easyship,
 
+  admin_email: process.env.ADMIN_EMAIL,
+  admin_password: process.env.ADMIN_PASSWORD,
+
   flight_api_key : process.env.AEROAPI_KEY
 };

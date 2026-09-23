@@ -8,7 +8,6 @@ import multer from 'multer'
 import cookieParser from 'cookie-parser';
 import helmet from "helmet";
 import globalErrorHandler from "./middleware/globalErrorhandler";
-import { DefaultTask } from "./utils/DefaultTask";
 dotenv.config();
 
 import "./workers/index"
@@ -19,7 +18,7 @@ multer();
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 app.use(cors({
-  origin: ["http://localhost:5001", "http://10.10.28.6:5001", "https://fashi-on.com", "https://www.fashi-on.com", "http://localhost:3003"],
+  origin: ["http://localhost:5001", "http://10.10.28.6:5001", "http://localhost:3003", "https://fashi-on.com", "https://www.fashi-on.com", "https://admin.fashi-on.com", "https://www.admin.fashi-on.com"],
   credentials: true
 }));
 
@@ -31,8 +30,6 @@ app.use(express.static('public'));
 app.get("/", (req: Request, res: Response) => {
   res.send("-------------------- 🎇 Server running 🎇 -------------------------");
 });
-
-DefaultTask()
 
 app.use("/api", router);
 

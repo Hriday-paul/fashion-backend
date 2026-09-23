@@ -1,4 +1,5 @@
 import { body, query, ValidationChain } from "express-validator";
+import { addProductValidator } from "../product/product.validator";
 
 export const assistentSellValidator: ValidationChain[] = [
 
@@ -61,3 +62,33 @@ export const assistentSellValidator: ValidationChain[] = [
         .optional()
         .isBoolean().withMessage("Donation Anonymous must be a boolean").toBoolean(),
 ];
+
+export const assistentSellRespondValidator: ValidationChain[] = [
+
+    body("requestId")
+        .trim()
+        .notEmpty().withMessage("Request ID is required"),
+
+    body("status")
+        .trim()
+        .notEmpty().withMessage("Status is required")
+        .isIn(["APPROVED", "REJECTED"])
+        .withMessage("Status is invalid"),
+]
+
+export const assistentSellListValidator: ValidationChain[] = [
+
+    body("requestId")
+        .trim()
+        .notEmpty().withMessage("Request ID is required"),
+]
+
+export const addAssitedSellListingValidator: ValidationChain[] = [
+
+    body("assistentSellId")
+        .trim()
+        .notEmpty().withMessage("Assistent Sell ID is required"),
+
+    ...addProductValidator
+
+]

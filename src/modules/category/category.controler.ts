@@ -4,6 +4,7 @@ import { categoryService } from "./category.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import pick from "../../shared/pick";
+import prisma from "../../shared/prisma";
 
 const addNewCategory = catchAsync(async (req: Request, res: Response) => {
   const result = await categoryService.addNewCategory(req.body);
@@ -73,36 +74,6 @@ const filteredAttributes = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// const allSizes = catchAsync(async (req: Request, res: Response) => {
-//   const result = await categoryService.assingedSizeByCategory(req.params.id);
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: 'Sizes retrived successfully',
-//     data: result,
-//   });
-// });
-
-// const addSize = catchAsync(async (req: Request, res: Response) => {
-//   const result = await categoryService.addSizeToCategory(req.body);
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: 'Size created successfully',
-//     data: result,
-//   });
-// });
-
-// const deleteSize = catchAsync(async (req: Request, res: Response) => {
-//   const result = await categoryService.deleteSizeFromCategory(req.body);
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: 'Size deleted successfully',
-//     data: result,
-//   });
-// });
-
 export const categoryControler = {
   addNewCategory,
   deleteCategory,
@@ -111,8 +82,4 @@ export const categoryControler = {
   getChildChain,
 
   filteredAttributes,
-
-  // allSizes,
-  // addSize,
-  // deleteSize
 }

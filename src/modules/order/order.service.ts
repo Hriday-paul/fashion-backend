@@ -48,6 +48,7 @@ const addNewOrder = async (
                     charities: true,
                     product: {
                         select: {
+                            assistentSellId: true,
                             isDeleted: true,
                             title: true,
                             finalPrice: true,
@@ -201,7 +202,13 @@ const addNewOrder = async (
 
         const quantity = item.quantity || 1;
 
-        const donation_amount = (allocateUnitPrice * (donation_percent / 100));
+        const assisted_sell_commision = item?.product?.assistentSellId ? (allocateUnitPrice * 0.3) : 0; // 30% commission for assisted sell products
+
+        const sellerGrossShareUnit = allocateUnitPrice - assisted_sell_commision;
+
+        const donation_amount = (sellerGrossShareUnit * (donation_percent / 100));
+
+        const sellerUnitPrice = sellerGrossShareUnit - donation_amount;
 
         return {
             product: p,
@@ -209,7 +216,7 @@ const addNewOrder = async (
             sellerId: p.userId,
             unitPrice: unit_price,
             unitAllocatedPrice: allocateUnitPrice,
-            sellerFinalUnitPrice: allocateUnitPrice - donation_amount,
+            sellerFinalUnitPrice: sellerUnitPrice,
             totalPrice: allocateUnitPrice + extra_donation,
             quantity,
             extra_donation,
@@ -545,6 +552,7 @@ const addNewOfferOrder = async (
                 include: {
                     product: {
                         select: {
+                            assistentSellId: true,
                             isDeleted: true,
                             title: true,
                             finalPrice: true,
@@ -665,9 +673,15 @@ const addNewOfferOrder = async (
 
         const allocateUnitPrice = offer?.offeredPrice * itemRatio;
 
-        const donation_amount = (allocateUnitPrice * (donation_percent / 100));
-
         const quantity = item.quantity || 1;
+
+        const assisted_sell_commision = item?.product?.assistentSellId ? (allocateUnitPrice * 0.3) : 0; // 30% commission for assisted sell products
+
+        const sellerGrossShareUnit = allocateUnitPrice - assisted_sell_commision;
+
+        const donation_amount = (sellerGrossShareUnit * (donation_percent / 100));
+
+        const sellerUnitPrice = sellerGrossShareUnit - donation_amount;
 
         return {
             product: p,
@@ -675,7 +689,7 @@ const addNewOfferOrder = async (
             sellerId: p.userId,
             unitPrice: unit_price,
             unitAllocatedPrice: allocateUnitPrice,
-            sellerFinalUnitPrice: allocateUnitPrice - donation_amount,
+            sellerFinalUnitPrice: sellerUnitPrice,
             totalPrice: allocateUnitPrice + extra_donation,
             quantity,
             extra_donation,

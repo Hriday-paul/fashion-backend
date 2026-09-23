@@ -49,7 +49,7 @@ const addNewRequest = catchAsync(async (req: Request, res: Response) => {
 
 const allRequests = catchAsync(async (req: Request, res: Response) => {
 
-    const query = pick(req.query, ["status", "searchTerm"])
+    const query = pick(req.query, ["status", "priceType", "searchTerm"])
     const options = pick(req.query, PaginateOptions);
 
     const result = await assistentSellService.allRequests(query, options);
@@ -77,6 +77,18 @@ const myRequests = catchAsync(async (req: Request, res: Response) => {
 });
 
 
+const requestDetails = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await assistentSellService.requestDetails(req.params?.requestId);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Request details retrived successfully',
+        data: result,
+    });
+});
+
+
 const dltRequest = catchAsync(async (req: Request, res: Response) => {
 
     const result = await assistentSellService.dltRequest(req?.params?.id, req.user?.id);
@@ -88,9 +100,105 @@ const dltRequest = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const acceptDeclineRequest = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await assistentSellService.acceptDeclineRequest(req?.body);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Request updated successfully',
+        data: result,
+    });
+});
+
+const markAsListed = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await assistentSellService.markAsListed(req?.body?.requestId);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Request listed successfully',
+        data: result,
+    });
+});
+
+const requestListingStats = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await assistentSellService.requestListingStats(req?.params?.requestId);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Listing stats retrieved successfully',
+        data: result,
+    });
+});
+
+const listings = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["status", "searchTerm"])
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await assistentSellService.listings(req?.params?.requestId, query, options);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Listing retrieved successfully',
+        data: result,
+    });
+});
+
+const addNewListing = catchAsync(async (req: Request, res: Response) => {
+
+    const files = req.files as Express.Multer.File[];
+
+    if (!files || files.length <= 0) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            'Minimum 1 image is required',
+        );
+    }
+
+    if (files.length <= 0) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            'Minimum 1 image is required',
+        );
+    }
+
+    const FileAry = files?.map(image => {
+        return {
+            file: image,
+            path: `images/products/images`,
+        };
+    });
+
+    const urls = await uploadManyToS3(FileAry);
+    req.body.images = urls.map(url => {
+        return {
+            key: url.key,
+            url: url.url,
+        };
+    });
+
+
+    const result = await assistentSellService.addNewListing(req?.body);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'New item listed successfully',
+        data: result,
+    });
+});
+
 export const assistentSellControler = {
     addNewRequest,
     myRequests,
+    requestDetails,
     dltRequest,
-    allRequests
+    allRequests,
+    acceptDeclineRequest,
+    markAsListed,
+    requestListingStats,
+    listings,
+    addNewListing
 }

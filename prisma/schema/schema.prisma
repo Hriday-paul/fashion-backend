@@ -271,6 +271,7 @@ enum NotificationEntityType {
   RETURN
   BADGE
   WITHDRAWAL
+  ASSISTED_SELL
 }
 
 enum NotificationType {
@@ -316,6 +317,10 @@ enum NotificationType {
 
   //for withdrawal
   WITHDRAWAL_RECEIVED
+
+  //assisted sell
+  ASSISTED_SELL_REQUEESTED
+  ASSISTED_SELL_STATUS_UPDATED
 }
 
 model Setting {

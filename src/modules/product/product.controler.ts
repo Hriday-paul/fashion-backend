@@ -12,33 +12,40 @@ const addNewProduct = catchAsync(async (req: Request, res: Response) => {
 
     const files = req.files as Express.Multer.File[];
 
-    if (files) {
-
-        if (files.length <= 0) {
-            throw new AppError(
-                httpStatus.BAD_REQUEST,
-                'Minimum 1 image is required',
-            );
-        }
-
-        const FileAry = files?.map(image => {
-            return {
-                file: image,
-                path: `images/products/images`,
-            };
-        });
-
-        const urls = await uploadManyToS3(FileAry);
-        req.body.images = urls.map(url => {
-            return {
-                key: url.key,
-                url: url.url,
-            };
-        });
+    if (!files || files.length <= 0) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            'Minimum 1 image is required',
+        );
     }
 
-    const result = await productService.addNewProduct(req.body, req.user.role, req.user
-        ?.id);
+    if (files.length <= 0) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            'Minimum 1 image is required',
+        );
+    }
+
+    const FileAry = files?.map(image => {
+        return {
+            file: image,
+            path: `images/products/images`,
+        };
+    });
+
+    const urls = await uploadManyToS3(FileAry);
+    req.body.images = urls.map(url => {
+        return {
+            key: url.key,
+            url: url.url,
+        };
+    });
+
+    //dlt assistentSellId from req.body
+    delete req.body.assistentSellId;
+
+    const result = await productService.addNewProduct(req.body, req.user.role, req.user?.id);
+
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -58,6 +65,18 @@ const allProducts = catchAsync(async (req: Request, res: Response) => {
         statusCode: httpStatus.OK,
         success: true,
         message: 'Products retrived successfully',
+        data: result,
+    });
+});
+
+
+const dltAProduct = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await productService.dltAProduct(req.params.productId, req.user);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Listing deleted successfully',
         data: result,
     });
 });
@@ -314,5 +333,6 @@ export const productControler = {
 
     makeAnOfferAsBuyer,
     acceptOfferAsSeller,
-    declineCounterOfferAsSeller
+    declineCounterOfferAsSeller,
+    dltAProduct,
 }
