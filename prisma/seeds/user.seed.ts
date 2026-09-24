@@ -5,7 +5,5 @@ import config from "../../src/config";
 
 export async function UserSeed(prisma: PrismaClient) {
 
-
-
     console.log("users created");
 }

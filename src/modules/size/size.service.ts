@@ -1,7 +1,5 @@
 import prisma from "../../shared/prisma";
 import { Prisma, Size } from "../../../generated/prisma/client";
-import AppError from "../../error/AppError";
-import httpStatus from "http-status";
 
 const allsizes = async (query: Record<string, unknown>) => {
 
@@ -21,10 +19,6 @@ const allsizes = async (query: Record<string, unknown>) => {
     else {
         AndConditions.push({
             parentId: null
-        }, {
-            id: {
-                in: ["9b19e7bc-6f46-46c5-bf1d-862fa4c4cc75", "58ab4f77-1ce0-4ff5-8163-181a9b636ba4"]
-            }
         })
     }
 

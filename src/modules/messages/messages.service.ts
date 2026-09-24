@@ -207,10 +207,15 @@ const getMessagesById = async (id: string) => {
   return null;
 };
 
-const unreadMessageCount = async (id: string) => {
+const unreadMessageCount = async (userId: string) => {
+  const count = await prisma.message.count({
+    where: {
+      receiverId: userId,
+      isSeen: false,
+    },
+  });
 
-
-  return null;
+  return count;
 };
 
 const deleteMessages = async (id: string) => {
@@ -256,5 +261,4 @@ export const messagesService = {
   deleteMessages,
   seenMessage,
   unreadMessageCount,
-
 };

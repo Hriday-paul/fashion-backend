@@ -44,11 +44,11 @@ router.post(
 //   messagesController.deleteMessages,
 // );
 
-// router.get(
-//   '/unread-count',
-//   auth(USER_ROLE.company, USER_ROLE.patient, USER_ROLE.staf, USER_Role.ADMIN),
-//   messagesController.unreadMessageCount,
-// );
+router.get(
+  '/unread-count',
+  auth(...allRoles),
+  messagesController.unreadMessageCount,
+);
 
 // router.get(
 //   '/:id',
