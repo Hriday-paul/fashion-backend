@@ -76,3 +76,7 @@ export const changePasswordValidator = [
     body('newPassword').trim().not().isEmpty().withMessage('newPassword is required').isString(),
     body('confirmPassword').trim().not().isEmpty().withMessage('confirmPassword is required').isString(),
 ]
+
+export const userNameCheckerValidator = [
+    body('userName').trim().not().isEmpty().withMessage('Username is required').isString().withMessage('Username should be string').isLength({ min: 1 }).withMessage('Username min length is 1'),
+]

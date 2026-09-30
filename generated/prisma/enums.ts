@@ -72,16 +72,6 @@ export const FileMessageType = {
 export type FileMessageType = (typeof FileMessageType)[keyof typeof FileMessageType]
 
 
-export const DeliveryChargeStatus = {
-  UNPAID: 'UNPAID',
-  PAID: 'PAID',
-  WAIVED: 'WAIVED',
-  REFUNDED: 'REFUNDED'
-} as const
-
-export type DeliveryChargeStatus = (typeof DeliveryChargeStatus)[keyof typeof DeliveryChargeStatus]
-
-
 export const OrderPricingSource = {
   OFFER: 'OFFER',
   BUNDLE: 'BUNDLE'
@@ -100,9 +90,7 @@ export type CurrentShipTo = (typeof CurrentShipTo)[keyof typeof CurrentShipTo]
 
 export const OrderStatus = {
   PENDING: 'PENDING',
-  SHIPPED: 'SHIPPED',
-  OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
-  DELIVERED: 'DELIVERED',
+  SHIPPING: 'SHIPPING',
   COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED'
 } as const
@@ -238,9 +226,7 @@ export const ReturnStatus = {
   REQUESTED: 'REQUESTED',
   APPROVED: 'APPROVED',
   DECLINED: 'DECLINED',
-  SHIPPED: 'SHIPPED',
-  OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
-  DELIVERED: 'DELIVERED',
+  SHIPPING: 'SHIPPING',
   COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED'
 } as const
@@ -356,6 +342,18 @@ export const SettingKey = {
 } as const
 
 export type SettingKey = (typeof SettingKey)[keyof typeof SettingKey]
+
+
+export const ShipmentStatus = {
+  PENDING: 'PENDING',
+  PICKED_UP: 'PICKED_UP',
+  IN_TRANSIT: 'IN_TRANSIT',
+  OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type ShipmentStatus = (typeof ShipmentStatus)[keyof typeof ShipmentStatus]
 
 
 export const CreaditType = {

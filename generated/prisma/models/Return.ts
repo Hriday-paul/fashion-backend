@@ -19,18 +19,8 @@ export type ReturnModel = runtime.Types.Result.DefaultSelection<Prisma.$ReturnPa
 
 export type AggregateReturn = {
   _count: ReturnCountAggregateOutputType | null
-  _avg: ReturnAvgAggregateOutputType | null
-  _sum: ReturnSumAggregateOutputType | null
   _min: ReturnMinAggregateOutputType | null
   _max: ReturnMaxAggregateOutputType | null
-}
-
-export type ReturnAvgAggregateOutputType = {
-  refundAmount: number | null
-}
-
-export type ReturnSumAggregateOutputType = {
-  refundAmount: number | null
 }
 
 export type ReturnMinAggregateOutputType = {
@@ -42,17 +32,8 @@ export type ReturnMinAggregateOutputType = {
   reason: $Enums.ReturnReason | null
   description: string | null
   declineReason: string | null
-  trackingNumber: string | null
-  trackingCarrier: string | null
-  refundAmount: number | null
-  refundedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
-  courier_service_id: string | null
-  shippingId: string | null
-  isLebelGenerated: boolean | null
-  lebelUrl: string | null
-  parcelId: string | null
 }
 
 export type ReturnMaxAggregateOutputType = {
@@ -64,17 +45,8 @@ export type ReturnMaxAggregateOutputType = {
   reason: $Enums.ReturnReason | null
   description: string | null
   declineReason: string | null
-  trackingNumber: string | null
-  trackingCarrier: string | null
-  refundAmount: number | null
-  refundedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
-  courier_service_id: string | null
-  shippingId: string | null
-  isLebelGenerated: boolean | null
-  lebelUrl: string | null
-  parcelId: string | null
 }
 
 export type ReturnCountAggregateOutputType = {
@@ -86,28 +58,11 @@ export type ReturnCountAggregateOutputType = {
   reason: number
   description: number
   declineReason: number
-  trackingNumber: number
-  trackingCarrier: number
-  refundAmount: number
-  refundedAt: number
   createdAt: number
   updatedAt: number
-  courier_service_id: number
-  shippingId: number
-  isLebelGenerated: number
-  lebelUrl: number
-  parcelId: number
   _all: number
 }
 
-
-export type ReturnAvgAggregateInputType = {
-  refundAmount?: true
-}
-
-export type ReturnSumAggregateInputType = {
-  refundAmount?: true
-}
 
 export type ReturnMinAggregateInputType = {
   id?: true
@@ -118,17 +73,8 @@ export type ReturnMinAggregateInputType = {
   reason?: true
   description?: true
   declineReason?: true
-  trackingNumber?: true
-  trackingCarrier?: true
-  refundAmount?: true
-  refundedAt?: true
   createdAt?: true
   updatedAt?: true
-  courier_service_id?: true
-  shippingId?: true
-  isLebelGenerated?: true
-  lebelUrl?: true
-  parcelId?: true
 }
 
 export type ReturnMaxAggregateInputType = {
@@ -140,17 +86,8 @@ export type ReturnMaxAggregateInputType = {
   reason?: true
   description?: true
   declineReason?: true
-  trackingNumber?: true
-  trackingCarrier?: true
-  refundAmount?: true
-  refundedAt?: true
   createdAt?: true
   updatedAt?: true
-  courier_service_id?: true
-  shippingId?: true
-  isLebelGenerated?: true
-  lebelUrl?: true
-  parcelId?: true
 }
 
 export type ReturnCountAggregateInputType = {
@@ -162,17 +99,8 @@ export type ReturnCountAggregateInputType = {
   reason?: true
   description?: true
   declineReason?: true
-  trackingNumber?: true
-  trackingCarrier?: true
-  refundAmount?: true
-  refundedAt?: true
   createdAt?: true
   updatedAt?: true
-  courier_service_id?: true
-  shippingId?: true
-  isLebelGenerated?: true
-  lebelUrl?: true
-  parcelId?: true
   _all?: true
 }
 
@@ -214,18 +142,6 @@ export type ReturnAggregateArgs<ExtArgs extends runtime.Types.Extensions.Interna
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: ReturnAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: ReturnSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: ReturnMinAggregateInputType
@@ -256,8 +172,6 @@ export type ReturnGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   _count?: ReturnCountAggregateInputType | true
-  _avg?: ReturnAvgAggregateInputType
-  _sum?: ReturnSumAggregateInputType
   _min?: ReturnMinAggregateInputType
   _max?: ReturnMaxAggregateInputType
 }
@@ -271,20 +185,9 @@ export type ReturnGroupByOutputType = {
   reason: $Enums.ReturnReason
   description: string | null
   declineReason: string | null
-  trackingNumber: string | null
-  trackingCarrier: string | null
-  refundAmount: number | null
-  refundedAt: Date | null
   createdAt: Date
   updatedAt: Date
-  courier_service_id: string | null
-  shippingId: string | null
-  isLebelGenerated: boolean
-  lebelUrl: string | null
-  parcelId: string | null
   _count: ReturnCountAggregateOutputType | null
-  _avg: ReturnAvgAggregateOutputType | null
-  _sum: ReturnSumAggregateOutputType | null
   _min: ReturnMinAggregateOutputType | null
   _max: ReturnMaxAggregateOutputType | null
 }
@@ -316,22 +219,14 @@ export type ReturnWhereInput = {
   reason?: Prisma.EnumReturnReasonFilter<"Return"> | $Enums.ReturnReason
   description?: Prisma.StringNullableFilter<"Return"> | string | null
   declineReason?: Prisma.StringNullableFilter<"Return"> | string | null
-  trackingNumber?: Prisma.StringNullableFilter<"Return"> | string | null
-  trackingCarrier?: Prisma.StringNullableFilter<"Return"> | string | null
-  refundAmount?: Prisma.FloatNullableFilter<"Return"> | number | null
-  refundedAt?: Prisma.DateTimeNullableFilter<"Return"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Return"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Return"> | Date | string
-  courier_service_id?: Prisma.StringNullableFilter<"Return"> | string | null
-  shippingId?: Prisma.StringNullableFilter<"Return"> | string | null
-  isLebelGenerated?: Prisma.BoolFilter<"Return"> | boolean
-  lebelUrl?: Prisma.StringNullableFilter<"Return"> | string | null
-  parcelId?: Prisma.StringNullableFilter<"Return"> | string | null
   order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
   buyer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.ReturnItemListRelationFilter
   evidence?: Prisma.ReturnEvidenceListRelationFilter
+  shipment?: Prisma.XOR<Prisma.ShipmentNullableScalarRelationFilter, Prisma.ShipmentWhereInput> | null
 }
 
 export type ReturnOrderByWithRelationInput = {
@@ -343,22 +238,14 @@ export type ReturnOrderByWithRelationInput = {
   reason?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   declineReason?: Prisma.SortOrderInput | Prisma.SortOrder
-  trackingNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  trackingCarrier?: Prisma.SortOrderInput | Prisma.SortOrder
-  refundAmount?: Prisma.SortOrderInput | Prisma.SortOrder
-  refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  courier_service_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  shippingId?: Prisma.SortOrderInput | Prisma.SortOrder
-  isLebelGenerated?: Prisma.SortOrder
-  lebelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  parcelId?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.OrderOrderByWithRelationInput
   buyer?: Prisma.UserOrderByWithRelationInput
   seller?: Prisma.UserOrderByWithRelationInput
   items?: Prisma.ReturnItemOrderByRelationAggregateInput
   evidence?: Prisma.ReturnEvidenceOrderByRelationAggregateInput
+  shipment?: Prisma.ShipmentOrderByWithRelationInput
 }
 
 export type ReturnWhereUniqueInput = Prisma.AtLeast<{
@@ -373,22 +260,14 @@ export type ReturnWhereUniqueInput = Prisma.AtLeast<{
   reason?: Prisma.EnumReturnReasonFilter<"Return"> | $Enums.ReturnReason
   description?: Prisma.StringNullableFilter<"Return"> | string | null
   declineReason?: Prisma.StringNullableFilter<"Return"> | string | null
-  trackingNumber?: Prisma.StringNullableFilter<"Return"> | string | null
-  trackingCarrier?: Prisma.StringNullableFilter<"Return"> | string | null
-  refundAmount?: Prisma.FloatNullableFilter<"Return"> | number | null
-  refundedAt?: Prisma.DateTimeNullableFilter<"Return"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Return"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Return"> | Date | string
-  courier_service_id?: Prisma.StringNullableFilter<"Return"> | string | null
-  shippingId?: Prisma.StringNullableFilter<"Return"> | string | null
-  isLebelGenerated?: Prisma.BoolFilter<"Return"> | boolean
-  lebelUrl?: Prisma.StringNullableFilter<"Return"> | string | null
-  parcelId?: Prisma.StringNullableFilter<"Return"> | string | null
   order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
   buyer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.ReturnItemListRelationFilter
   evidence?: Prisma.ReturnEvidenceListRelationFilter
+  shipment?: Prisma.XOR<Prisma.ShipmentNullableScalarRelationFilter, Prisma.ShipmentWhereInput> | null
 }, "id" | "orderId">
 
 export type ReturnOrderByWithAggregationInput = {
@@ -400,22 +279,11 @@ export type ReturnOrderByWithAggregationInput = {
   reason?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   declineReason?: Prisma.SortOrderInput | Prisma.SortOrder
-  trackingNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  trackingCarrier?: Prisma.SortOrderInput | Prisma.SortOrder
-  refundAmount?: Prisma.SortOrderInput | Prisma.SortOrder
-  refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  courier_service_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  shippingId?: Prisma.SortOrderInput | Prisma.SortOrder
-  isLebelGenerated?: Prisma.SortOrder
-  lebelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  parcelId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ReturnCountOrderByAggregateInput
-  _avg?: Prisma.ReturnAvgOrderByAggregateInput
   _max?: Prisma.ReturnMaxOrderByAggregateInput
   _min?: Prisma.ReturnMinOrderByAggregateInput
-  _sum?: Prisma.ReturnSumOrderByAggregateInput
 }
 
 export type ReturnScalarWhereWithAggregatesInput = {
@@ -430,17 +298,8 @@ export type ReturnScalarWhereWithAggregatesInput = {
   reason?: Prisma.EnumReturnReasonWithAggregatesFilter<"Return"> | $Enums.ReturnReason
   description?: Prisma.StringNullableWithAggregatesFilter<"Return"> | string | null
   declineReason?: Prisma.StringNullableWithAggregatesFilter<"Return"> | string | null
-  trackingNumber?: Prisma.StringNullableWithAggregatesFilter<"Return"> | string | null
-  trackingCarrier?: Prisma.StringNullableWithAggregatesFilter<"Return"> | string | null
-  refundAmount?: Prisma.FloatNullableWithAggregatesFilter<"Return"> | number | null
-  refundedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Return"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Return"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Return"> | Date | string
-  courier_service_id?: Prisma.StringNullableWithAggregatesFilter<"Return"> | string | null
-  shippingId?: Prisma.StringNullableWithAggregatesFilter<"Return"> | string | null
-  isLebelGenerated?: Prisma.BoolWithAggregatesFilter<"Return"> | boolean
-  lebelUrl?: Prisma.StringNullableWithAggregatesFilter<"Return"> | string | null
-  parcelId?: Prisma.StringNullableWithAggregatesFilter<"Return"> | string | null
 }
 
 export type ReturnCreateInput = {
@@ -449,22 +308,14 @@ export type ReturnCreateInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
   order?: Prisma.OrderCreateNestedOneWithoutReturnInput
   buyer: Prisma.UserCreateNestedOneWithoutReturnsAsBuyerInput
   seller: Prisma.UserCreateNestedOneWithoutReturnsAsSellerInput
   items?: Prisma.ReturnItemCreateNestedManyWithoutReturnInput
   evidence?: Prisma.ReturnEvidenceCreateNestedManyWithoutReturnInput
+  shipment?: Prisma.ShipmentCreateNestedOneWithoutReturnInput
 }
 
 export type ReturnUncheckedCreateInput = {
@@ -476,19 +327,11 @@ export type ReturnUncheckedCreateInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
   items?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutReturnInput
   evidence?: Prisma.ReturnEvidenceUncheckedCreateNestedManyWithoutReturnInput
+  shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutReturnInput
 }
 
 export type ReturnUpdateInput = {
@@ -497,22 +340,14 @@ export type ReturnUpdateInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.OrderUpdateOneWithoutReturnNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutReturnsAsBuyerNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutReturnsAsSellerNestedInput
   items?: Prisma.ReturnItemUpdateManyWithoutReturnNestedInput
   evidence?: Prisma.ReturnEvidenceUpdateManyWithoutReturnNestedInput
+  shipment?: Prisma.ShipmentUpdateOneWithoutReturnNestedInput
 }
 
 export type ReturnUncheckedUpdateInput = {
@@ -524,19 +359,11 @@ export type ReturnUncheckedUpdateInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnNestedInput
   evidence?: Prisma.ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput
+  shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutReturnNestedInput
 }
 
 export type ReturnCreateManyInput = {
@@ -548,17 +375,8 @@ export type ReturnCreateManyInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
 }
 
 export type ReturnUpdateManyMutationInput = {
@@ -567,17 +385,8 @@ export type ReturnUpdateManyMutationInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ReturnUncheckedUpdateManyInput = {
@@ -589,17 +398,8 @@ export type ReturnUncheckedUpdateManyInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ReturnNullableScalarRelationFilter = {
@@ -616,21 +416,8 @@ export type ReturnCountOrderByAggregateInput = {
   reason?: Prisma.SortOrder
   description?: Prisma.SortOrder
   declineReason?: Prisma.SortOrder
-  trackingNumber?: Prisma.SortOrder
-  trackingCarrier?: Prisma.SortOrder
-  refundAmount?: Prisma.SortOrder
-  refundedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  courier_service_id?: Prisma.SortOrder
-  shippingId?: Prisma.SortOrder
-  isLebelGenerated?: Prisma.SortOrder
-  lebelUrl?: Prisma.SortOrder
-  parcelId?: Prisma.SortOrder
-}
-
-export type ReturnAvgOrderByAggregateInput = {
-  refundAmount?: Prisma.SortOrder
 }
 
 export type ReturnMaxOrderByAggregateInput = {
@@ -642,17 +429,8 @@ export type ReturnMaxOrderByAggregateInput = {
   reason?: Prisma.SortOrder
   description?: Prisma.SortOrder
   declineReason?: Prisma.SortOrder
-  trackingNumber?: Prisma.SortOrder
-  trackingCarrier?: Prisma.SortOrder
-  refundAmount?: Prisma.SortOrder
-  refundedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  courier_service_id?: Prisma.SortOrder
-  shippingId?: Prisma.SortOrder
-  isLebelGenerated?: Prisma.SortOrder
-  lebelUrl?: Prisma.SortOrder
-  parcelId?: Prisma.SortOrder
 }
 
 export type ReturnMinOrderByAggregateInput = {
@@ -664,21 +442,8 @@ export type ReturnMinOrderByAggregateInput = {
   reason?: Prisma.SortOrder
   description?: Prisma.SortOrder
   declineReason?: Prisma.SortOrder
-  trackingNumber?: Prisma.SortOrder
-  trackingCarrier?: Prisma.SortOrder
-  refundAmount?: Prisma.SortOrder
-  refundedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  courier_service_id?: Prisma.SortOrder
-  shippingId?: Prisma.SortOrder
-  isLebelGenerated?: Prisma.SortOrder
-  lebelUrl?: Prisma.SortOrder
-  parcelId?: Prisma.SortOrder
-}
-
-export type ReturnSumOrderByAggregateInput = {
-  refundAmount?: Prisma.SortOrder
 }
 
 export type ReturnScalarRelationFilter = {
@@ -848,27 +613,35 @@ export type ReturnUncheckedUpdateManyWithoutSellerNestedInput = {
   deleteMany?: Prisma.ReturnScalarWhereInput | Prisma.ReturnScalarWhereInput[]
 }
 
+export type ReturnCreateNestedOneWithoutShipmentInput = {
+  create?: Prisma.XOR<Prisma.ReturnCreateWithoutShipmentInput, Prisma.ReturnUncheckedCreateWithoutShipmentInput>
+  connectOrCreate?: Prisma.ReturnCreateOrConnectWithoutShipmentInput
+  connect?: Prisma.ReturnWhereUniqueInput
+}
+
+export type ReturnUpdateOneWithoutShipmentNestedInput = {
+  create?: Prisma.XOR<Prisma.ReturnCreateWithoutShipmentInput, Prisma.ReturnUncheckedCreateWithoutShipmentInput>
+  connectOrCreate?: Prisma.ReturnCreateOrConnectWithoutShipmentInput
+  upsert?: Prisma.ReturnUpsertWithoutShipmentInput
+  disconnect?: Prisma.ReturnWhereInput | boolean
+  delete?: Prisma.ReturnWhereInput | boolean
+  connect?: Prisma.ReturnWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ReturnUpdateToOneWithWhereWithoutShipmentInput, Prisma.ReturnUpdateWithoutShipmentInput>, Prisma.ReturnUncheckedUpdateWithoutShipmentInput>
+}
+
 export type ReturnCreateWithoutOrderInput = {
   id?: string
   status?: $Enums.ReturnStatus
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
   buyer: Prisma.UserCreateNestedOneWithoutReturnsAsBuyerInput
   seller: Prisma.UserCreateNestedOneWithoutReturnsAsSellerInput
   items?: Prisma.ReturnItemCreateNestedManyWithoutReturnInput
   evidence?: Prisma.ReturnEvidenceCreateNestedManyWithoutReturnInput
+  shipment?: Prisma.ShipmentCreateNestedOneWithoutReturnInput
 }
 
 export type ReturnUncheckedCreateWithoutOrderInput = {
@@ -879,19 +652,11 @@ export type ReturnUncheckedCreateWithoutOrderInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
   items?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutReturnInput
   evidence?: Prisma.ReturnEvidenceUncheckedCreateNestedManyWithoutReturnInput
+  shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutReturnInput
 }
 
 export type ReturnCreateOrConnectWithoutOrderInput = {
@@ -916,21 +681,13 @@ export type ReturnUpdateWithoutOrderInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   buyer?: Prisma.UserUpdateOneRequiredWithoutReturnsAsBuyerNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutReturnsAsSellerNestedInput
   items?: Prisma.ReturnItemUpdateManyWithoutReturnNestedInput
   evidence?: Prisma.ReturnEvidenceUpdateManyWithoutReturnNestedInput
+  shipment?: Prisma.ShipmentUpdateOneWithoutReturnNestedInput
 }
 
 export type ReturnUncheckedUpdateWithoutOrderInput = {
@@ -941,19 +698,11 @@ export type ReturnUncheckedUpdateWithoutOrderInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnNestedInput
   evidence?: Prisma.ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput
+  shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutReturnNestedInput
 }
 
 export type ReturnCreateWithoutItemsInput = {
@@ -962,21 +711,13 @@ export type ReturnCreateWithoutItemsInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
   order?: Prisma.OrderCreateNestedOneWithoutReturnInput
   buyer: Prisma.UserCreateNestedOneWithoutReturnsAsBuyerInput
   seller: Prisma.UserCreateNestedOneWithoutReturnsAsSellerInput
   evidence?: Prisma.ReturnEvidenceCreateNestedManyWithoutReturnInput
+  shipment?: Prisma.ShipmentCreateNestedOneWithoutReturnInput
 }
 
 export type ReturnUncheckedCreateWithoutItemsInput = {
@@ -988,18 +729,10 @@ export type ReturnUncheckedCreateWithoutItemsInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
   evidence?: Prisma.ReturnEvidenceUncheckedCreateNestedManyWithoutReturnInput
+  shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutReturnInput
 }
 
 export type ReturnCreateOrConnectWithoutItemsInput = {
@@ -1024,21 +757,13 @@ export type ReturnUpdateWithoutItemsInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.OrderUpdateOneWithoutReturnNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutReturnsAsBuyerNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutReturnsAsSellerNestedInput
   evidence?: Prisma.ReturnEvidenceUpdateManyWithoutReturnNestedInput
+  shipment?: Prisma.ShipmentUpdateOneWithoutReturnNestedInput
 }
 
 export type ReturnUncheckedUpdateWithoutItemsInput = {
@@ -1050,18 +775,10 @@ export type ReturnUncheckedUpdateWithoutItemsInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evidence?: Prisma.ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput
+  shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutReturnNestedInput
 }
 
 export type ReturnCreateWithoutEvidenceInput = {
@@ -1070,21 +787,13 @@ export type ReturnCreateWithoutEvidenceInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
   order?: Prisma.OrderCreateNestedOneWithoutReturnInput
   buyer: Prisma.UserCreateNestedOneWithoutReturnsAsBuyerInput
   seller: Prisma.UserCreateNestedOneWithoutReturnsAsSellerInput
   items?: Prisma.ReturnItemCreateNestedManyWithoutReturnInput
+  shipment?: Prisma.ShipmentCreateNestedOneWithoutReturnInput
 }
 
 export type ReturnUncheckedCreateWithoutEvidenceInput = {
@@ -1096,18 +805,10 @@ export type ReturnUncheckedCreateWithoutEvidenceInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
   items?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutReturnInput
+  shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutReturnInput
 }
 
 export type ReturnCreateOrConnectWithoutEvidenceInput = {
@@ -1132,21 +833,13 @@ export type ReturnUpdateWithoutEvidenceInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.OrderUpdateOneWithoutReturnNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutReturnsAsBuyerNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutReturnsAsSellerNestedInput
   items?: Prisma.ReturnItemUpdateManyWithoutReturnNestedInput
+  shipment?: Prisma.ShipmentUpdateOneWithoutReturnNestedInput
 }
 
 export type ReturnUncheckedUpdateWithoutEvidenceInput = {
@@ -1158,18 +851,10 @@ export type ReturnUncheckedUpdateWithoutEvidenceInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnNestedInput
+  shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutReturnNestedInput
 }
 
 export type ReturnCreateWithoutBuyerInput = {
@@ -1178,21 +863,13 @@ export type ReturnCreateWithoutBuyerInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
   order?: Prisma.OrderCreateNestedOneWithoutReturnInput
   seller: Prisma.UserCreateNestedOneWithoutReturnsAsSellerInput
   items?: Prisma.ReturnItemCreateNestedManyWithoutReturnInput
   evidence?: Prisma.ReturnEvidenceCreateNestedManyWithoutReturnInput
+  shipment?: Prisma.ShipmentCreateNestedOneWithoutReturnInput
 }
 
 export type ReturnUncheckedCreateWithoutBuyerInput = {
@@ -1203,19 +880,11 @@ export type ReturnUncheckedCreateWithoutBuyerInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
   items?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutReturnInput
   evidence?: Prisma.ReturnEvidenceUncheckedCreateNestedManyWithoutReturnInput
+  shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutReturnInput
 }
 
 export type ReturnCreateOrConnectWithoutBuyerInput = {
@@ -1234,21 +903,13 @@ export type ReturnCreateWithoutSellerInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
   order?: Prisma.OrderCreateNestedOneWithoutReturnInput
   buyer: Prisma.UserCreateNestedOneWithoutReturnsAsBuyerInput
   items?: Prisma.ReturnItemCreateNestedManyWithoutReturnInput
   evidence?: Prisma.ReturnEvidenceCreateNestedManyWithoutReturnInput
+  shipment?: Prisma.ShipmentCreateNestedOneWithoutReturnInput
 }
 
 export type ReturnUncheckedCreateWithoutSellerInput = {
@@ -1259,19 +920,11 @@ export type ReturnUncheckedCreateWithoutSellerInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
   items?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutReturnInput
   evidence?: Prisma.ReturnEvidenceUncheckedCreateNestedManyWithoutReturnInput
+  shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutReturnInput
 }
 
 export type ReturnCreateOrConnectWithoutSellerInput = {
@@ -1312,17 +965,8 @@ export type ReturnScalarWhereInput = {
   reason?: Prisma.EnumReturnReasonFilter<"Return"> | $Enums.ReturnReason
   description?: Prisma.StringNullableFilter<"Return"> | string | null
   declineReason?: Prisma.StringNullableFilter<"Return"> | string | null
-  trackingNumber?: Prisma.StringNullableFilter<"Return"> | string | null
-  trackingCarrier?: Prisma.StringNullableFilter<"Return"> | string | null
-  refundAmount?: Prisma.FloatNullableFilter<"Return"> | number | null
-  refundedAt?: Prisma.DateTimeNullableFilter<"Return"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Return"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Return"> | Date | string
-  courier_service_id?: Prisma.StringNullableFilter<"Return"> | string | null
-  shippingId?: Prisma.StringNullableFilter<"Return"> | string | null
-  isLebelGenerated?: Prisma.BoolFilter<"Return"> | boolean
-  lebelUrl?: Prisma.StringNullableFilter<"Return"> | string | null
-  parcelId?: Prisma.StringNullableFilter<"Return"> | string | null
 }
 
 export type ReturnUpsertWithWhereUniqueWithoutSellerInput = {
@@ -1341,6 +985,82 @@ export type ReturnUpdateManyWithWhereWithoutSellerInput = {
   data: Prisma.XOR<Prisma.ReturnUpdateManyMutationInput, Prisma.ReturnUncheckedUpdateManyWithoutSellerInput>
 }
 
+export type ReturnCreateWithoutShipmentInput = {
+  id?: string
+  status?: $Enums.ReturnStatus
+  reason: $Enums.ReturnReason
+  description?: string | null
+  declineReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  order?: Prisma.OrderCreateNestedOneWithoutReturnInput
+  buyer: Prisma.UserCreateNestedOneWithoutReturnsAsBuyerInput
+  seller: Prisma.UserCreateNestedOneWithoutReturnsAsSellerInput
+  items?: Prisma.ReturnItemCreateNestedManyWithoutReturnInput
+  evidence?: Prisma.ReturnEvidenceCreateNestedManyWithoutReturnInput
+}
+
+export type ReturnUncheckedCreateWithoutShipmentInput = {
+  id?: string
+  orderId?: string | null
+  buyerId: string
+  sellerId: string
+  status?: $Enums.ReturnStatus
+  reason: $Enums.ReturnReason
+  description?: string | null
+  declineReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutReturnInput
+  evidence?: Prisma.ReturnEvidenceUncheckedCreateNestedManyWithoutReturnInput
+}
+
+export type ReturnCreateOrConnectWithoutShipmentInput = {
+  where: Prisma.ReturnWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReturnCreateWithoutShipmentInput, Prisma.ReturnUncheckedCreateWithoutShipmentInput>
+}
+
+export type ReturnUpsertWithoutShipmentInput = {
+  update: Prisma.XOR<Prisma.ReturnUpdateWithoutShipmentInput, Prisma.ReturnUncheckedUpdateWithoutShipmentInput>
+  create: Prisma.XOR<Prisma.ReturnCreateWithoutShipmentInput, Prisma.ReturnUncheckedCreateWithoutShipmentInput>
+  where?: Prisma.ReturnWhereInput
+}
+
+export type ReturnUpdateToOneWithWhereWithoutShipmentInput = {
+  where?: Prisma.ReturnWhereInput
+  data: Prisma.XOR<Prisma.ReturnUpdateWithoutShipmentInput, Prisma.ReturnUncheckedUpdateWithoutShipmentInput>
+}
+
+export type ReturnUpdateWithoutShipmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumReturnStatusFieldUpdateOperationsInput | $Enums.ReturnStatus
+  reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.OrderUpdateOneWithoutReturnNestedInput
+  buyer?: Prisma.UserUpdateOneRequiredWithoutReturnsAsBuyerNestedInput
+  seller?: Prisma.UserUpdateOneRequiredWithoutReturnsAsSellerNestedInput
+  items?: Prisma.ReturnItemUpdateManyWithoutReturnNestedInput
+  evidence?: Prisma.ReturnEvidenceUpdateManyWithoutReturnNestedInput
+}
+
+export type ReturnUncheckedUpdateWithoutShipmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  buyerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumReturnStatusFieldUpdateOperationsInput | $Enums.ReturnStatus
+  reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnNestedInput
+  evidence?: Prisma.ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput
+}
+
 export type ReturnCreateManyBuyerInput = {
   id?: string
   orderId?: string | null
@@ -1349,17 +1069,8 @@ export type ReturnCreateManyBuyerInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
 }
 
 export type ReturnCreateManySellerInput = {
@@ -1370,17 +1081,8 @@ export type ReturnCreateManySellerInput = {
   reason: $Enums.ReturnReason
   description?: string | null
   declineReason?: string | null
-  trackingNumber?: string | null
-  trackingCarrier?: string | null
-  refundAmount?: number | null
-  refundedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  courier_service_id?: string | null
-  shippingId?: string | null
-  isLebelGenerated?: boolean
-  lebelUrl?: string | null
-  parcelId?: string | null
 }
 
 export type ReturnUpdateWithoutBuyerInput = {
@@ -1389,21 +1091,13 @@ export type ReturnUpdateWithoutBuyerInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.OrderUpdateOneWithoutReturnNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutReturnsAsSellerNestedInput
   items?: Prisma.ReturnItemUpdateManyWithoutReturnNestedInput
   evidence?: Prisma.ReturnEvidenceUpdateManyWithoutReturnNestedInput
+  shipment?: Prisma.ShipmentUpdateOneWithoutReturnNestedInput
 }
 
 export type ReturnUncheckedUpdateWithoutBuyerInput = {
@@ -1414,19 +1108,11 @@ export type ReturnUncheckedUpdateWithoutBuyerInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnNestedInput
   evidence?: Prisma.ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput
+  shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutReturnNestedInput
 }
 
 export type ReturnUncheckedUpdateManyWithoutBuyerInput = {
@@ -1437,17 +1123,8 @@ export type ReturnUncheckedUpdateManyWithoutBuyerInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ReturnUpdateWithoutSellerInput = {
@@ -1456,21 +1133,13 @@ export type ReturnUpdateWithoutSellerInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.OrderUpdateOneWithoutReturnNestedInput
   buyer?: Prisma.UserUpdateOneRequiredWithoutReturnsAsBuyerNestedInput
   items?: Prisma.ReturnItemUpdateManyWithoutReturnNestedInput
   evidence?: Prisma.ReturnEvidenceUpdateManyWithoutReturnNestedInput
+  shipment?: Prisma.ShipmentUpdateOneWithoutReturnNestedInput
 }
 
 export type ReturnUncheckedUpdateWithoutSellerInput = {
@@ -1481,19 +1150,11 @@ export type ReturnUncheckedUpdateWithoutSellerInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnNestedInput
   evidence?: Prisma.ReturnEvidenceUncheckedUpdateManyWithoutReturnNestedInput
+  shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutReturnNestedInput
 }
 
 export type ReturnUncheckedUpdateManyWithoutSellerInput = {
@@ -1504,17 +1165,8 @@ export type ReturnUncheckedUpdateManyWithoutSellerInput = {
   reason?: Prisma.EnumReturnReasonFieldUpdateOperationsInput | $Enums.ReturnReason
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   declineReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trackingCarrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  refundAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courier_service_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shippingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1566,22 +1218,14 @@ export type ReturnSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   reason?: boolean
   description?: boolean
   declineReason?: boolean
-  trackingNumber?: boolean
-  trackingCarrier?: boolean
-  refundAmount?: boolean
-  refundedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  courier_service_id?: boolean
-  shippingId?: boolean
-  isLebelGenerated?: boolean
-  lebelUrl?: boolean
-  parcelId?: boolean
   order?: boolean | Prisma.Return$orderArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Return$itemsArgs<ExtArgs>
   evidence?: boolean | Prisma.Return$evidenceArgs<ExtArgs>
+  shipment?: boolean | Prisma.Return$shipmentArgs<ExtArgs>
   _count?: boolean | Prisma.ReturnCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["return"]>
 
@@ -1594,17 +1238,8 @@ export type ReturnSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   reason?: boolean
   description?: boolean
   declineReason?: boolean
-  trackingNumber?: boolean
-  trackingCarrier?: boolean
-  refundAmount?: boolean
-  refundedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  courier_service_id?: boolean
-  shippingId?: boolean
-  isLebelGenerated?: boolean
-  lebelUrl?: boolean
-  parcelId?: boolean
   order?: boolean | Prisma.Return$orderArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1619,17 +1254,8 @@ export type ReturnSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   reason?: boolean
   description?: boolean
   declineReason?: boolean
-  trackingNumber?: boolean
-  trackingCarrier?: boolean
-  refundAmount?: boolean
-  refundedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  courier_service_id?: boolean
-  shippingId?: boolean
-  isLebelGenerated?: boolean
-  lebelUrl?: boolean
-  parcelId?: boolean
   order?: boolean | Prisma.Return$orderArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1644,26 +1270,18 @@ export type ReturnSelectScalar = {
   reason?: boolean
   description?: boolean
   declineReason?: boolean
-  trackingNumber?: boolean
-  trackingCarrier?: boolean
-  refundAmount?: boolean
-  refundedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  courier_service_id?: boolean
-  shippingId?: boolean
-  isLebelGenerated?: boolean
-  lebelUrl?: boolean
-  parcelId?: boolean
 }
 
-export type ReturnOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "buyerId" | "sellerId" | "status" | "reason" | "description" | "declineReason" | "trackingNumber" | "trackingCarrier" | "refundAmount" | "refundedAt" | "createdAt" | "updatedAt" | "courier_service_id" | "shippingId" | "isLebelGenerated" | "lebelUrl" | "parcelId", ExtArgs["result"]["return"]>
+export type ReturnOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "buyerId" | "sellerId" | "status" | "reason" | "description" | "declineReason" | "createdAt" | "updatedAt", ExtArgs["result"]["return"]>
 export type ReturnInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.Return$orderArgs<ExtArgs>
   buyer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Return$itemsArgs<ExtArgs>
   evidence?: boolean | Prisma.Return$evidenceArgs<ExtArgs>
+  shipment?: boolean | Prisma.Return$shipmentArgs<ExtArgs>
   _count?: boolean | Prisma.ReturnCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ReturnIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1685,6 +1303,7 @@ export type $ReturnPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     seller: Prisma.$UserPayload<ExtArgs>
     items: Prisma.$ReturnItemPayload<ExtArgs>[]
     evidence: Prisma.$ReturnEvidencePayload<ExtArgs>[]
+    shipment: Prisma.$ShipmentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1695,17 +1314,8 @@ export type $ReturnPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     reason: $Enums.ReturnReason
     description: string | null
     declineReason: string | null
-    trackingNumber: string | null
-    trackingCarrier: string | null
-    refundAmount: number | null
-    refundedAt: Date | null
     createdAt: Date
     updatedAt: Date
-    courier_service_id: string | null
-    shippingId: string | null
-    isLebelGenerated: boolean
-    lebelUrl: string | null
-    parcelId: string | null
   }, ExtArgs["result"]["return"]>
   composites: {}
 }
@@ -2105,6 +1715,7 @@ export interface Prisma__ReturnClient<T, Null = never, ExtArgs extends runtime.T
   seller<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.Return$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Return$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReturnItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   evidence<T extends Prisma.Return$evidenceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Return$evidenceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReturnEvidencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  shipment<T extends Prisma.Return$shipmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Return$shipmentArgs<ExtArgs>>): Prisma.Prisma__ShipmentClient<runtime.Types.Result.GetResult<Prisma.$ShipmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2142,17 +1753,8 @@ export interface ReturnFieldRefs {
   readonly reason: Prisma.FieldRef<"Return", 'ReturnReason'>
   readonly description: Prisma.FieldRef<"Return", 'String'>
   readonly declineReason: Prisma.FieldRef<"Return", 'String'>
-  readonly trackingNumber: Prisma.FieldRef<"Return", 'String'>
-  readonly trackingCarrier: Prisma.FieldRef<"Return", 'String'>
-  readonly refundAmount: Prisma.FieldRef<"Return", 'Float'>
-  readonly refundedAt: Prisma.FieldRef<"Return", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Return", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Return", 'DateTime'>
-  readonly courier_service_id: Prisma.FieldRef<"Return", 'String'>
-  readonly shippingId: Prisma.FieldRef<"Return", 'String'>
-  readonly isLebelGenerated: Prisma.FieldRef<"Return", 'Boolean'>
-  readonly lebelUrl: Prisma.FieldRef<"Return", 'String'>
-  readonly parcelId: Prisma.FieldRef<"Return", 'String'>
 }
     
 
@@ -2613,6 +2215,25 @@ export type Return$evidenceArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.ReturnEvidenceScalarFieldEnum | Prisma.ReturnEvidenceScalarFieldEnum[]
+}
+
+/**
+ * Return.shipment
+ */
+export type Return$shipmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Shipment
+   */
+  select?: Prisma.ShipmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Shipment
+   */
+  omit?: Prisma.ShipmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ShipmentInclude<ExtArgs> | null
+  where?: Prisma.ShipmentWhereInput
 }
 
 /**

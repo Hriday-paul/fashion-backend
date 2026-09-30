@@ -140,6 +140,20 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+
+const usernameChacker = catchAsync(async (req: Request, res: Response) => {
+    const { userName } = req.body;
+
+    const result = await authService.usernameChacker(userName);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Username availability checked successfully',
+        data: result,
+    });
+});
+
 export const authController = {
     createUser,
     loginUser,
@@ -149,5 +163,6 @@ export const authController = {
     resetPassword,
     forgotPassword,
     refreshToken,
-    socialLogin
+    socialLogin,
+    usernameChacker
 }

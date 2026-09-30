@@ -92,11 +92,6 @@ export type Message = Prisma.MessageModel
  */
 export type FileMessage = Prisma.FileMessageModel
 /**
- * Model OrderDeliveryCharge
- * 
- */
-export type OrderDeliveryCharge = Prisma.OrderDeliveryChargeModel
-/**
  * Model Order
  * 
  */
@@ -256,6 +251,16 @@ export type Notification = Prisma.NotificationModel
  * 
  */
 export type Setting = Prisma.SettingModel
+/**
+ * Model Shipment
+ * 
+ */
+export type Shipment = Prisma.ShipmentModel
+/**
+ * Model ShipmentEvent
+ * 
+ */
+export type ShipmentEvent = Prisma.ShipmentEventModel
 /**
  * Model Wallet
  * 

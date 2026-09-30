@@ -1,32 +1,3 @@
-// ─── NEW: delivery charge per seller group ───────────────────────────────────
-model OrderDeliveryCharge {
-    id String @id @default(uuid())
-
-    orderId String @unique
-    order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
-
-    totalItems  Int   @default(0) // snapshot: total item count at time of order
-    totalWeight Float @default(0) // snapshot: total weight (kg) at time of order
-
-    baseCharge  Float @default(0) // charge calculated from count/weight
-    discount    Float @default(0)
-    finalCharge Float @default(0) // baseCharge - discount
-
-    status DeliveryChargeStatus @default(UNPAID)
-
-    paidAt    DateTime?
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
-
-    @@map("order_delivery_charges")
-}
-
-enum DeliveryChargeStatus {
-    UNPAID
-    PAID
-    WAIVED
-    REFUNDED
-}
 
 enum OrderPricingSource {
     OFFER
@@ -50,8 +21,6 @@ model Order {
 
     items OrderItem[]
 
-    deliveryCharge OrderDeliveryCharge?
-
     payment Payment?
 
     status OrderStatus @default(PENDING)
@@ -62,16 +31,12 @@ model Order {
     originDetailsId String?
     originDetails BillingDetails? @relation("origin", fields: [originDetailsId], references: [id], onDelete: Restrict)
 
-    //authentication center address
-    authDetailsId String?
-    authDetails BillingDetails? @relation("auth", fields: [authDetailsId], references: [id], onDelete: Restrict)
-
     //destination address
     billingId      String?
     billingDetails BillingDetails? @relation("destination",fields: [billingId], references: [id], onDelete: Restrict)
 
     itemsTotal    Float @default(0) // sum of all item prices
-    totalDelivery Float @default(0) // NEW: sum of all seller delivery charges
+    totalDelivery Float @default(0) // delivery charges
     totalPrice    Float @default(0) // itemsTotal + total Delivery charge + treeCredit + serviceFee + authenticationFee == buyer total paid
     
     sellerItemsTotal Float @default(0) // sum of all items total prices - seller donation amount
@@ -88,31 +53,21 @@ model Order {
 
     extraDonation Float @default(0) // extra donation amount added by buyer
 
-    assistentSellId String? @unique
-    assistentSell   AssistentSell? @relation(fields: [assistentSellId], references: [id], onDelete: Cascade)
-
     allowedAuthentication Boolean @default(false)
 
     //step1 shipment
-    courier_service_id String
-    shippingId String
-    isLebelGenerated Boolean @default(false)
-    lebelUrl String?
-    parcelId String?
+    shipmentId String @unique
+    shipment   Shipment @relation("OrderShipments", fields: [shipmentId], references: [id], onDelete: Cascade)
 
     //step2 shipment, auth center to buyer
-    authCourierServiceId String?
-    authShippingId String?
-    isAuthLebelGenerated Boolean @default(false)
-    authLebelUrl String?
-    authParcelId String?
+    authShipmentId String? @unique
+    authShipment   Shipment? @relation("AuthOrderShipments", fields: [authShipmentId], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     completedAt DateTime?
     cancelledAt DateTime?
-    shippedAt DateTime?
 
     @@index([buyerId, sellerId])
     @@map("orders")
@@ -125,9 +80,7 @@ enum CurrentShipTo {
 
 enum OrderStatus {
     PENDING
-    SHIPPED
-    OUT_FOR_DELIVERY
-    DELIVERED
+    SHIPPING
     COMPLETED
     CANCELLED
 }

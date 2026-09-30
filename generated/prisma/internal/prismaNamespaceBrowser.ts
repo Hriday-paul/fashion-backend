@@ -63,7 +63,6 @@ export const ModelName = {
   Chat: 'Chat',
   Message: 'Message',
   FileMessage: 'FileMessage',
-  OrderDeliveryCharge: 'OrderDeliveryCharge',
   Order: 'Order',
   OrderItem: 'OrderItem',
   CancelOrderEvidence: 'CancelOrderEvidence',
@@ -96,6 +95,8 @@ export const ModelName = {
   BillingDetails: 'BillingDetails',
   Notification: 'Notification',
   Setting: 'Setting',
+  Shipment: 'Shipment',
+  ShipmentEvent: 'ShipmentEvent',
   Wallet: 'Wallet',
   WalletTransaction: 'WalletTransaction',
   WalletPayout: 'WalletPayout'
@@ -314,23 +315,6 @@ export const FileMessageScalarFieldEnum = {
 export type FileMessageScalarFieldEnum = (typeof FileMessageScalarFieldEnum)[keyof typeof FileMessageScalarFieldEnum]
 
 
-export const OrderDeliveryChargeScalarFieldEnum = {
-  id: 'id',
-  orderId: 'orderId',
-  totalItems: 'totalItems',
-  totalWeight: 'totalWeight',
-  baseCharge: 'baseCharge',
-  discount: 'discount',
-  finalCharge: 'finalCharge',
-  status: 'status',
-  paidAt: 'paidAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type OrderDeliveryChargeScalarFieldEnum = (typeof OrderDeliveryChargeScalarFieldEnum)[keyof typeof OrderDeliveryChargeScalarFieldEnum]
-
-
 export const OrderScalarFieldEnum = {
   id: 'id',
   orderNumber: 'orderNumber',
@@ -340,7 +324,6 @@ export const OrderScalarFieldEnum = {
   currentShipTo: 'currentShipTo',
   authStatus: 'authStatus',
   originDetailsId: 'originDetailsId',
-  authDetailsId: 'authDetailsId',
   billingId: 'billingId',
   itemsTotal: 'itemsTotal',
   totalDelivery: 'totalDelivery',
@@ -354,23 +337,13 @@ export const OrderScalarFieldEnum = {
   offerId: 'offerId',
   bundleDiscountPercent: 'bundleDiscountPercent',
   extraDonation: 'extraDonation',
-  assistentSellId: 'assistentSellId',
   allowedAuthentication: 'allowedAuthentication',
-  courier_service_id: 'courier_service_id',
-  shippingId: 'shippingId',
-  isLebelGenerated: 'isLebelGenerated',
-  lebelUrl: 'lebelUrl',
-  parcelId: 'parcelId',
-  authCourierServiceId: 'authCourierServiceId',
-  authShippingId: 'authShippingId',
-  isAuthLebelGenerated: 'isAuthLebelGenerated',
-  authLebelUrl: 'authLebelUrl',
-  authParcelId: 'authParcelId',
+  shipmentId: 'shipmentId',
+  authShipmentId: 'authShipmentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   completedAt: 'completedAt',
-  cancelledAt: 'cancelledAt',
-  shippedAt: 'shippedAt'
+  cancelledAt: 'cancelledAt'
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
@@ -687,17 +660,8 @@ export const ReturnScalarFieldEnum = {
   reason: 'reason',
   description: 'description',
   declineReason: 'declineReason',
-  trackingNumber: 'trackingNumber',
-  trackingCarrier: 'trackingCarrier',
-  refundAmount: 'refundAmount',
-  refundedAt: 'refundedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  courier_service_id: 'courier_service_id',
-  shippingId: 'shippingId',
-  isLebelGenerated: 'isLebelGenerated',
-  lebelUrl: 'lebelUrl',
-  parcelId: 'parcelId'
+  updatedAt: 'updatedAt'
 } as const
 
 export type ReturnScalarFieldEnum = (typeof ReturnScalarFieldEnum)[keyof typeof ReturnScalarFieldEnum]
@@ -883,6 +847,43 @@ export const SettingScalarFieldEnum = {
 } as const
 
 export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
+
+
+export const ShipmentScalarFieldEnum = {
+  id: 'id',
+  assitentSellId: 'assitentSellId',
+  returnId: 'returnId',
+  courier_service_id: 'courier_service_id',
+  shippingId: 'shippingId',
+  isLebelGenerated: 'isLebelGenerated',
+  lebelUrl: 'lebelUrl',
+  parcelId: 'parcelId',
+  trackingNumber: 'trackingNumber',
+  trackingUrl: 'trackingUrl',
+  deliveryCharge: 'deliveryCharge',
+  originId: 'originId',
+  destinationId: 'destinationId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ShipmentScalarFieldEnum = (typeof ShipmentScalarFieldEnum)[keyof typeof ShipmentScalarFieldEnum]
+
+
+export const ShipmentEventScalarFieldEnum = {
+  id: 'id',
+  shipmentId: 'shipmentId',
+  shipmentStatus: 'shipmentStatus',
+  eventType: 'eventType',
+  eventDescription: 'eventDescription',
+  eventLocation: 'eventLocation',
+  eventTime: 'eventTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ShipmentEventScalarFieldEnum = (typeof ShipmentEventScalarFieldEnum)[keyof typeof ShipmentEventScalarFieldEnum]
 
 
 export const WalletScalarFieldEnum = {

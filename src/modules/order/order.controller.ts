@@ -233,19 +233,6 @@ const declineCancelOrderItemBySeller = catchAsync(async (req: Request, res: Resp
     });
 });
 
-const markShippedOrder = catchAsync(async (req: Request, res: Response) => {
-    const { sellerGroupId } = req.params;
-    const { id: userId } = req.user;
-
-    await orderService.markShippedOrder(sellerGroupId, userId);
-
-    sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: 'Order marked as shipped successfully',
-    });
-});
-
 const markOrderReceivedFromAuthCenter = catchAsync(async (req: Request, res: Response) => {
     await orderService.markOrderReceivedFromAuthCenter(req.body?.orderId);
 
@@ -303,6 +290,19 @@ const getAuthShippingLebel = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const orderDetails = catchAsync(async (req: Request, res: Response) => {
+    const { orderCode } = req.params;
+
+    const data = await orderService.orderDetails(orderCode);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Order details retrieved successfully',
+        data,
+    });
+});
+
 export const orderControler = {
     addNewOrder,
     addNewOfferOrder,
@@ -314,7 +314,6 @@ export const orderControler = {
     requestCancelOrderItem,
     approveCancelOrderItemBySeller,
     declineCancelOrderItemBySeller,
-    markShippedOrder,
     getShippingLebel,
 
     ordersForSellerByUserName,
@@ -322,5 +321,6 @@ export const orderControler = {
     markOrderReceivedFromAuthCenter,
     markOrderAuthInProgress,
     addAuthResultToOrder,
-    getAuthShippingLebel
+    getAuthShippingLebel,
+    orderDetails
 }

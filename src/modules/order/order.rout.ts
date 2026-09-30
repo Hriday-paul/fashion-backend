@@ -114,4 +114,7 @@ router.patch("/auth-result",
     auth(Role.ADMIN),
     orderControler.addAuthResultToOrder);
 
+router.get("/details/:orderCode",
+    orderControler.orderDetails);
+
 export const orderRouts = router;

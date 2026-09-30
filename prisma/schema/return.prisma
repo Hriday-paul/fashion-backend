@@ -14,14 +14,6 @@ model Return {
     // Seller decline
     declineReason String?
 
-    // Shipping back
-    trackingNumber String?
-    trackingCarrier String?
-
-    // Refund
-    refundAmount Float?
-    refundedAt   DateTime?
-
     items     ReturnItem[]
 
     // for attach photo or videos as reason
@@ -30,12 +22,7 @@ model Return {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    courier_service_id String?
-    shippingId String?
-    isLebelGenerated Boolean @default(false)
-    lebelUrl String?
-
-    parcelId String?
+    shipment Shipment?
 
     @@index([orderId])
     @@index([buyerId])
@@ -71,9 +58,7 @@ enum ReturnStatus {
     REQUESTED        // buyer tapped "Request return"
     APPROVED         // seller approved or auto-approved
     DECLINED         // seller rejected with reason
-    SHIPPED
-    OUT_FOR_DELIVERY
-    DELIVERED
+    SHIPPING
     COMPLETED
     CANCELLED
 }

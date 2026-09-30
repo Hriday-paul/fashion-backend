@@ -1,0 +1,66 @@
+model Shipment {
+    id String @id @default(uuid())
+
+    order Order? @relation("OrderShipments")
+    authOrder Order? @relation("AuthOrderShipments")
+
+    assitentSellId String? @unique
+    assitentSell  AssistentSell? @relation(fields: [assitentSellId], references: [id], onDelete: Cascade)
+
+    returnId String? @unique
+    return   Return? @relation(fields: [returnId], references: [id], onDelete: Cascade)
+
+    courier_service_id String
+    shippingId String
+    isLebelGenerated Boolean @default(false)
+    lebelUrl String?
+    parcelId String?
+
+    trackingNumber String?
+    trackingUrl    String?
+
+    deliveryCharge Float @default(0)
+
+    originId String
+    origin   BillingDetails @relation("OriginAddress", fields: [originId], references: [id], onDelete: Cascade)
+
+    destinationId String
+    destination   BillingDetails @relation("DestinationAddress", fields: [destinationId], references: [id], onDelete: Cascade)
+
+    status ShipmentStatus @default(PENDING)
+
+    events ShipmentEvent[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("shipments")
+}
+
+enum ShipmentStatus {
+    PENDING
+    PICKED_UP
+    IN_TRANSIT
+    OUT_FOR_DELIVERY
+    DELIVERED
+    CANCELLED
+}
+
+model ShipmentEvent {
+    id String @id @default(uuid())
+
+    shipmentId String
+    shipment   Shipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+
+    shipmentStatus ShipmentStatus
+
+    eventType String
+    eventDescription String?
+    eventLocation String?
+    eventTime DateTime
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("ship_events")
+}

@@ -686,6 +686,15 @@ const refreshToken = async (token: string) => {
     };
 };
 
+const usernameChacker = async (username: string) => {
+    const user = await prisma.user.findFirst({ where: { userName: username } });
+    if (user) {
+        throw new AppError(httpStatus.CONFLICT, 'Username already exists');
+    }
+
+    return { message: 'Username is available' };
+}
+
 
 export const authService = {
     createUser,
@@ -696,5 +705,6 @@ export const authService = {
     resetPassword,
     refreshToken,
     adminLogin,
-    socialLogin
+    socialLogin,
+    usernameChacker
 }

@@ -20,6 +20,7 @@ import { sizeRouter } from './modules/size/size.rout';
 import { assistentSellRouts } from './modules/assistentSell/assistentSell.rout';
 import { accountRouts } from './modules/ConnectAccount/account.rout';
 import { keywordRoutes } from './modules/keyword/keyword.rout';
+import { shipmentRouter } from './modules/shipment/shipment.rout';
 
 const router = express.Router();
 
@@ -107,6 +108,10 @@ const moduleRoutes = [
     {
         path: '/keywords',
         route: keywordRoutes,
+    },
+    {
+        path: '/shipment',
+        route: shipmentRouter,
     },
 ];
 

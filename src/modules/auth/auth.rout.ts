@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { authController } from "./auth.controller";
-import { changePasswordValidator, createAccountValidator, forgotPasswordValidator, loginAccountValidator, refreshTokenValidator, resetPasswordValidator, socialSignInValidator, socialSignupValidator } from "./auth.validator";
+import { changePasswordValidator, createAccountValidator, forgotPasswordValidator, loginAccountValidator, refreshTokenValidator, resetPasswordValidator, socialSignInValidator, socialSignupValidator, userNameCheckerValidator } from "./auth.validator";
 import req_validator from "../../middleware/req_validation";
 import { otpResendValidator, otpVerifyValidator } from "../otp/otp.validation";
 import { otpControllers } from "../otp/otp.controller";
@@ -65,6 +65,12 @@ router.post(
     req_validator(),
     otpControllers.resendOtp,
 );
+
+router.post('/check-username',
+    userNameCheckerValidator,
+    req_validator(),
+    authController.usernameChacker
+)
 
 router.post('/forgot-password', forgotPasswordValidator, req_validator(), authController.forgotPassword);
 router.patch('/reset-password', resetPasswordValidator, req_validator(), authController.resetPassword);

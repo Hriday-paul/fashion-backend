@@ -366,7 +366,7 @@ export type AssistentSellWhereInput = {
   pictures?: Prisma.BundlePictureListRelationFilter
   charities?: Prisma.AssistentSellCharityListRelationFilter
   listings?: Prisma.ProductListRelationFilter
-  order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
+  shipment?: Prisma.XOR<Prisma.ShipmentNullableScalarRelationFilter, Prisma.ShipmentWhereInput> | null
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   sellerAddress?: Prisma.XOR<Prisma.BillingDetailsScalarRelationFilter, Prisma.BillingDetailsWhereInput>
 }
@@ -395,7 +395,7 @@ export type AssistentSellOrderByWithRelationInput = {
   pictures?: Prisma.BundlePictureOrderByRelationAggregateInput
   charities?: Prisma.AssistentSellCharityOrderByRelationAggregateInput
   listings?: Prisma.ProductOrderByRelationAggregateInput
-  order?: Prisma.OrderOrderByWithRelationInput
+  shipment?: Prisma.ShipmentOrderByWithRelationInput
   seller?: Prisma.UserOrderByWithRelationInput
   sellerAddress?: Prisma.BillingDetailsOrderByWithRelationInput
 }
@@ -427,7 +427,7 @@ export type AssistentSellWhereUniqueInput = Prisma.AtLeast<{
   pictures?: Prisma.BundlePictureListRelationFilter
   charities?: Prisma.AssistentSellCharityListRelationFilter
   listings?: Prisma.ProductListRelationFilter
-  order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
+  shipment?: Prisma.XOR<Prisma.ShipmentNullableScalarRelationFilter, Prisma.ShipmentWhereInput> | null
   seller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   sellerAddress?: Prisma.XOR<Prisma.BillingDetailsScalarRelationFilter, Prisma.BillingDetailsWhereInput>
 }, "id">
@@ -508,7 +508,7 @@ export type AssistentSellCreateInput = {
   pictures?: Prisma.BundlePictureCreateNestedManyWithoutAssistentSellInput
   charities?: Prisma.AssistentSellCharityCreateNestedManyWithoutAssistentSellInput
   listings?: Prisma.ProductCreateNestedManyWithoutAssistentSellInput
-  order?: Prisma.OrderCreateNestedOneWithoutAssistentSellInput
+  shipment?: Prisma.ShipmentCreateNestedOneWithoutAssitentSellInput
   seller: Prisma.UserCreateNestedOneWithoutAssistentSellsInput
   sellerAddress: Prisma.BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput
 }
@@ -537,7 +537,7 @@ export type AssistentSellUncheckedCreateInput = {
   pictures?: Prisma.BundlePictureUncheckedCreateNestedManyWithoutAssistentSellInput
   charities?: Prisma.AssistentSellCharityUncheckedCreateNestedManyWithoutAssistentSellInput
   listings?: Prisma.ProductUncheckedCreateNestedManyWithoutAssistentSellInput
-  order?: Prisma.OrderUncheckedCreateNestedOneWithoutAssistentSellInput
+  shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutAssitentSellInput
 }
 
 export type AssistentSellUpdateInput = {
@@ -562,7 +562,7 @@ export type AssistentSellUpdateInput = {
   pictures?: Prisma.BundlePictureUpdateManyWithoutAssistentSellNestedInput
   charities?: Prisma.AssistentSellCharityUpdateManyWithoutAssistentSellNestedInput
   listings?: Prisma.ProductUpdateManyWithoutAssistentSellNestedInput
-  order?: Prisma.OrderUpdateOneWithoutAssistentSellNestedInput
+  shipment?: Prisma.ShipmentUpdateOneWithoutAssitentSellNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutAssistentSellsNestedInput
   sellerAddress?: Prisma.BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput
 }
@@ -591,7 +591,7 @@ export type AssistentSellUncheckedUpdateInput = {
   pictures?: Prisma.BundlePictureUncheckedUpdateManyWithoutAssistentSellNestedInput
   charities?: Prisma.AssistentSellCharityUncheckedUpdateManyWithoutAssistentSellNestedInput
   listings?: Prisma.ProductUncheckedUpdateManyWithoutAssistentSellNestedInput
-  order?: Prisma.OrderUncheckedUpdateOneWithoutAssistentSellNestedInput
+  shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutAssitentSellNestedInput
 }
 
 export type AssistentSellCreateManyInput = {
@@ -848,22 +848,6 @@ export type AssistentSellUpdateOneRequiredWithoutCharitiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AssistentSellUpdateToOneWithWhereWithoutCharitiesInput, Prisma.AssistentSellUpdateWithoutCharitiesInput>, Prisma.AssistentSellUncheckedUpdateWithoutCharitiesInput>
 }
 
-export type AssistentSellCreateNestedOneWithoutOrderInput = {
-  create?: Prisma.XOR<Prisma.AssistentSellCreateWithoutOrderInput, Prisma.AssistentSellUncheckedCreateWithoutOrderInput>
-  connectOrCreate?: Prisma.AssistentSellCreateOrConnectWithoutOrderInput
-  connect?: Prisma.AssistentSellWhereUniqueInput
-}
-
-export type AssistentSellUpdateOneWithoutOrderNestedInput = {
-  create?: Prisma.XOR<Prisma.AssistentSellCreateWithoutOrderInput, Prisma.AssistentSellUncheckedCreateWithoutOrderInput>
-  connectOrCreate?: Prisma.AssistentSellCreateOrConnectWithoutOrderInput
-  upsert?: Prisma.AssistentSellUpsertWithoutOrderInput
-  disconnect?: Prisma.AssistentSellWhereInput | boolean
-  delete?: Prisma.AssistentSellWhereInput | boolean
-  connect?: Prisma.AssistentSellWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AssistentSellUpdateToOneWithWhereWithoutOrderInput, Prisma.AssistentSellUpdateWithoutOrderInput>, Prisma.AssistentSellUncheckedUpdateWithoutOrderInput>
-}
-
 export type AssistentSellCreateNestedOneWithoutListingsInput = {
   create?: Prisma.XOR<Prisma.AssistentSellCreateWithoutListingsInput, Prisma.AssistentSellUncheckedCreateWithoutListingsInput>
   connectOrCreate?: Prisma.AssistentSellCreateOrConnectWithoutListingsInput
@@ -964,6 +948,22 @@ export type AssistentSellUncheckedUpdateManyWithoutSellerAddressNestedInput = {
   deleteMany?: Prisma.AssistentSellScalarWhereInput | Prisma.AssistentSellScalarWhereInput[]
 }
 
+export type AssistentSellCreateNestedOneWithoutShipmentInput = {
+  create?: Prisma.XOR<Prisma.AssistentSellCreateWithoutShipmentInput, Prisma.AssistentSellUncheckedCreateWithoutShipmentInput>
+  connectOrCreate?: Prisma.AssistentSellCreateOrConnectWithoutShipmentInput
+  connect?: Prisma.AssistentSellWhereUniqueInput
+}
+
+export type AssistentSellUpdateOneWithoutShipmentNestedInput = {
+  create?: Prisma.XOR<Prisma.AssistentSellCreateWithoutShipmentInput, Prisma.AssistentSellUncheckedCreateWithoutShipmentInput>
+  connectOrCreate?: Prisma.AssistentSellCreateOrConnectWithoutShipmentInput
+  upsert?: Prisma.AssistentSellUpsertWithoutShipmentInput
+  disconnect?: Prisma.AssistentSellWhereInput | boolean
+  delete?: Prisma.AssistentSellWhereInput | boolean
+  connect?: Prisma.AssistentSellWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AssistentSellUpdateToOneWithWhereWithoutShipmentInput, Prisma.AssistentSellUpdateWithoutShipmentInput>, Prisma.AssistentSellUncheckedUpdateWithoutShipmentInput>
+}
+
 export type AssistentSellCreateWithoutPicturesInput = {
   id?: string
   itemsTitle: string
@@ -985,7 +985,7 @@ export type AssistentSellCreateWithoutPicturesInput = {
   length_cm: number
   charities?: Prisma.AssistentSellCharityCreateNestedManyWithoutAssistentSellInput
   listings?: Prisma.ProductCreateNestedManyWithoutAssistentSellInput
-  order?: Prisma.OrderCreateNestedOneWithoutAssistentSellInput
+  shipment?: Prisma.ShipmentCreateNestedOneWithoutAssitentSellInput
   seller: Prisma.UserCreateNestedOneWithoutAssistentSellsInput
   sellerAddress: Prisma.BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput
 }
@@ -1013,7 +1013,7 @@ export type AssistentSellUncheckedCreateWithoutPicturesInput = {
   length_cm: number
   charities?: Prisma.AssistentSellCharityUncheckedCreateNestedManyWithoutAssistentSellInput
   listings?: Prisma.ProductUncheckedCreateNestedManyWithoutAssistentSellInput
-  order?: Prisma.OrderUncheckedCreateNestedOneWithoutAssistentSellInput
+  shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutAssitentSellInput
 }
 
 export type AssistentSellCreateOrConnectWithoutPicturesInput = {
@@ -1053,7 +1053,7 @@ export type AssistentSellUpdateWithoutPicturesInput = {
   length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   charities?: Prisma.AssistentSellCharityUpdateManyWithoutAssistentSellNestedInput
   listings?: Prisma.ProductUpdateManyWithoutAssistentSellNestedInput
-  order?: Prisma.OrderUpdateOneWithoutAssistentSellNestedInput
+  shipment?: Prisma.ShipmentUpdateOneWithoutAssitentSellNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutAssistentSellsNestedInput
   sellerAddress?: Prisma.BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput
 }
@@ -1081,7 +1081,7 @@ export type AssistentSellUncheckedUpdateWithoutPicturesInput = {
   length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   charities?: Prisma.AssistentSellCharityUncheckedUpdateManyWithoutAssistentSellNestedInput
   listings?: Prisma.ProductUncheckedUpdateManyWithoutAssistentSellNestedInput
-  order?: Prisma.OrderUncheckedUpdateOneWithoutAssistentSellNestedInput
+  shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutAssitentSellNestedInput
 }
 
 export type AssistentSellCreateWithoutCharitiesInput = {
@@ -1105,7 +1105,7 @@ export type AssistentSellCreateWithoutCharitiesInput = {
   length_cm: number
   pictures?: Prisma.BundlePictureCreateNestedManyWithoutAssistentSellInput
   listings?: Prisma.ProductCreateNestedManyWithoutAssistentSellInput
-  order?: Prisma.OrderCreateNestedOneWithoutAssistentSellInput
+  shipment?: Prisma.ShipmentCreateNestedOneWithoutAssitentSellInput
   seller: Prisma.UserCreateNestedOneWithoutAssistentSellsInput
   sellerAddress: Prisma.BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput
 }
@@ -1133,7 +1133,7 @@ export type AssistentSellUncheckedCreateWithoutCharitiesInput = {
   length_cm: number
   pictures?: Prisma.BundlePictureUncheckedCreateNestedManyWithoutAssistentSellInput
   listings?: Prisma.ProductUncheckedCreateNestedManyWithoutAssistentSellInput
-  order?: Prisma.OrderUncheckedCreateNestedOneWithoutAssistentSellInput
+  shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutAssitentSellInput
 }
 
 export type AssistentSellCreateOrConnectWithoutCharitiesInput = {
@@ -1173,7 +1173,7 @@ export type AssistentSellUpdateWithoutCharitiesInput = {
   length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   pictures?: Prisma.BundlePictureUpdateManyWithoutAssistentSellNestedInput
   listings?: Prisma.ProductUpdateManyWithoutAssistentSellNestedInput
-  order?: Prisma.OrderUpdateOneWithoutAssistentSellNestedInput
+  shipment?: Prisma.ShipmentUpdateOneWithoutAssitentSellNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutAssistentSellsNestedInput
   sellerAddress?: Prisma.BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput
 }
@@ -1201,127 +1201,7 @@ export type AssistentSellUncheckedUpdateWithoutCharitiesInput = {
   length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   pictures?: Prisma.BundlePictureUncheckedUpdateManyWithoutAssistentSellNestedInput
   listings?: Prisma.ProductUncheckedUpdateManyWithoutAssistentSellNestedInput
-  order?: Prisma.OrderUncheckedUpdateOneWithoutAssistentSellNestedInput
-}
-
-export type AssistentSellCreateWithoutOrderInput = {
-  id?: string
-  itemsTitle: string
-  itemsCount?: number
-  contactNumber?: string | null
-  itemsDetails?: string | null
-  priceType?: $Enums.PriceType
-  targetPrice?: number | null
-  additionalNotes?: string | null
-  donationPct?: number
-  donationAnonymous?: boolean
-  deliveryCharge?: number | null
-  status?: $Enums.AssistentSellStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  weight_kg: number
-  hight_cm: number
-  width_cm: number
-  length_cm: number
-  pictures?: Prisma.BundlePictureCreateNestedManyWithoutAssistentSellInput
-  charities?: Prisma.AssistentSellCharityCreateNestedManyWithoutAssistentSellInput
-  listings?: Prisma.ProductCreateNestedManyWithoutAssistentSellInput
-  seller: Prisma.UserCreateNestedOneWithoutAssistentSellsInput
-  sellerAddress: Prisma.BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput
-}
-
-export type AssistentSellUncheckedCreateWithoutOrderInput = {
-  id?: string
-  itemsTitle: string
-  itemsCount?: number
-  contactNumber?: string | null
-  itemsDetails?: string | null
-  priceType?: $Enums.PriceType
-  targetPrice?: number | null
-  additionalNotes?: string | null
-  donationPct?: number
-  donationAnonymous?: boolean
-  deliveryCharge?: number | null
-  status?: $Enums.AssistentSellStatus
-  sellerId: string
-  sellerAddressId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  weight_kg: number
-  hight_cm: number
-  width_cm: number
-  length_cm: number
-  pictures?: Prisma.BundlePictureUncheckedCreateNestedManyWithoutAssistentSellInput
-  charities?: Prisma.AssistentSellCharityUncheckedCreateNestedManyWithoutAssistentSellInput
-  listings?: Prisma.ProductUncheckedCreateNestedManyWithoutAssistentSellInput
-}
-
-export type AssistentSellCreateOrConnectWithoutOrderInput = {
-  where: Prisma.AssistentSellWhereUniqueInput
-  create: Prisma.XOR<Prisma.AssistentSellCreateWithoutOrderInput, Prisma.AssistentSellUncheckedCreateWithoutOrderInput>
-}
-
-export type AssistentSellUpsertWithoutOrderInput = {
-  update: Prisma.XOR<Prisma.AssistentSellUpdateWithoutOrderInput, Prisma.AssistentSellUncheckedUpdateWithoutOrderInput>
-  create: Prisma.XOR<Prisma.AssistentSellCreateWithoutOrderInput, Prisma.AssistentSellUncheckedCreateWithoutOrderInput>
-  where?: Prisma.AssistentSellWhereInput
-}
-
-export type AssistentSellUpdateToOneWithWhereWithoutOrderInput = {
-  where?: Prisma.AssistentSellWhereInput
-  data: Prisma.XOR<Prisma.AssistentSellUpdateWithoutOrderInput, Prisma.AssistentSellUncheckedUpdateWithoutOrderInput>
-}
-
-export type AssistentSellUpdateWithoutOrderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
-  itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
-  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
-  targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  additionalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  donationPct?: Prisma.FloatFieldUpdateOperationsInput | number
-  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
-  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
-  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
-  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
-  pictures?: Prisma.BundlePictureUpdateManyWithoutAssistentSellNestedInput
-  charities?: Prisma.AssistentSellCharityUpdateManyWithoutAssistentSellNestedInput
-  listings?: Prisma.ProductUpdateManyWithoutAssistentSellNestedInput
-  seller?: Prisma.UserUpdateOneRequiredWithoutAssistentSellsNestedInput
-  sellerAddress?: Prisma.BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput
-}
-
-export type AssistentSellUncheckedUpdateWithoutOrderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
-  itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
-  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
-  targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  additionalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  donationPct?: Prisma.FloatFieldUpdateOperationsInput | number
-  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
-  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
-  sellerAddressId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
-  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
-  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
-  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
-  pictures?: Prisma.BundlePictureUncheckedUpdateManyWithoutAssistentSellNestedInput
-  charities?: Prisma.AssistentSellCharityUncheckedUpdateManyWithoutAssistentSellNestedInput
-  listings?: Prisma.ProductUncheckedUpdateManyWithoutAssistentSellNestedInput
+  shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutAssitentSellNestedInput
 }
 
 export type AssistentSellCreateWithoutListingsInput = {
@@ -1345,7 +1225,7 @@ export type AssistentSellCreateWithoutListingsInput = {
   length_cm: number
   pictures?: Prisma.BundlePictureCreateNestedManyWithoutAssistentSellInput
   charities?: Prisma.AssistentSellCharityCreateNestedManyWithoutAssistentSellInput
-  order?: Prisma.OrderCreateNestedOneWithoutAssistentSellInput
+  shipment?: Prisma.ShipmentCreateNestedOneWithoutAssitentSellInput
   seller: Prisma.UserCreateNestedOneWithoutAssistentSellsInput
   sellerAddress: Prisma.BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput
 }
@@ -1373,7 +1253,7 @@ export type AssistentSellUncheckedCreateWithoutListingsInput = {
   length_cm: number
   pictures?: Prisma.BundlePictureUncheckedCreateNestedManyWithoutAssistentSellInput
   charities?: Prisma.AssistentSellCharityUncheckedCreateNestedManyWithoutAssistentSellInput
-  order?: Prisma.OrderUncheckedCreateNestedOneWithoutAssistentSellInput
+  shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutAssitentSellInput
 }
 
 export type AssistentSellCreateOrConnectWithoutListingsInput = {
@@ -1413,7 +1293,7 @@ export type AssistentSellUpdateWithoutListingsInput = {
   length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   pictures?: Prisma.BundlePictureUpdateManyWithoutAssistentSellNestedInput
   charities?: Prisma.AssistentSellCharityUpdateManyWithoutAssistentSellNestedInput
-  order?: Prisma.OrderUpdateOneWithoutAssistentSellNestedInput
+  shipment?: Prisma.ShipmentUpdateOneWithoutAssitentSellNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutAssistentSellsNestedInput
   sellerAddress?: Prisma.BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput
 }
@@ -1441,7 +1321,7 @@ export type AssistentSellUncheckedUpdateWithoutListingsInput = {
   length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
   pictures?: Prisma.BundlePictureUncheckedUpdateManyWithoutAssistentSellNestedInput
   charities?: Prisma.AssistentSellCharityUncheckedUpdateManyWithoutAssistentSellNestedInput
-  order?: Prisma.OrderUncheckedUpdateOneWithoutAssistentSellNestedInput
+  shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutAssitentSellNestedInput
 }
 
 export type AssistentSellCreateWithoutSellerInput = {
@@ -1466,7 +1346,7 @@ export type AssistentSellCreateWithoutSellerInput = {
   pictures?: Prisma.BundlePictureCreateNestedManyWithoutAssistentSellInput
   charities?: Prisma.AssistentSellCharityCreateNestedManyWithoutAssistentSellInput
   listings?: Prisma.ProductCreateNestedManyWithoutAssistentSellInput
-  order?: Prisma.OrderCreateNestedOneWithoutAssistentSellInput
+  shipment?: Prisma.ShipmentCreateNestedOneWithoutAssitentSellInput
   sellerAddress: Prisma.BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput
 }
 
@@ -1493,7 +1373,7 @@ export type AssistentSellUncheckedCreateWithoutSellerInput = {
   pictures?: Prisma.BundlePictureUncheckedCreateNestedManyWithoutAssistentSellInput
   charities?: Prisma.AssistentSellCharityUncheckedCreateNestedManyWithoutAssistentSellInput
   listings?: Prisma.ProductUncheckedCreateNestedManyWithoutAssistentSellInput
-  order?: Prisma.OrderUncheckedCreateNestedOneWithoutAssistentSellInput
+  shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutAssitentSellInput
 }
 
 export type AssistentSellCreateOrConnectWithoutSellerInput = {
@@ -1570,7 +1450,7 @@ export type AssistentSellCreateWithoutSellerAddressInput = {
   pictures?: Prisma.BundlePictureCreateNestedManyWithoutAssistentSellInput
   charities?: Prisma.AssistentSellCharityCreateNestedManyWithoutAssistentSellInput
   listings?: Prisma.ProductCreateNestedManyWithoutAssistentSellInput
-  order?: Prisma.OrderCreateNestedOneWithoutAssistentSellInput
+  shipment?: Prisma.ShipmentCreateNestedOneWithoutAssitentSellInput
   seller: Prisma.UserCreateNestedOneWithoutAssistentSellsInput
 }
 
@@ -1597,7 +1477,7 @@ export type AssistentSellUncheckedCreateWithoutSellerAddressInput = {
   pictures?: Prisma.BundlePictureUncheckedCreateNestedManyWithoutAssistentSellInput
   charities?: Prisma.AssistentSellCharityUncheckedCreateNestedManyWithoutAssistentSellInput
   listings?: Prisma.ProductUncheckedCreateNestedManyWithoutAssistentSellInput
-  order?: Prisma.OrderUncheckedCreateNestedOneWithoutAssistentSellInput
+  shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutAssitentSellInput
 }
 
 export type AssistentSellCreateOrConnectWithoutSellerAddressInput = {
@@ -1624,6 +1504,126 @@ export type AssistentSellUpdateWithWhereUniqueWithoutSellerAddressInput = {
 export type AssistentSellUpdateManyWithWhereWithoutSellerAddressInput = {
   where: Prisma.AssistentSellScalarWhereInput
   data: Prisma.XOR<Prisma.AssistentSellUpdateManyMutationInput, Prisma.AssistentSellUncheckedUpdateManyWithoutSellerAddressInput>
+}
+
+export type AssistentSellCreateWithoutShipmentInput = {
+  id?: string
+  itemsTitle: string
+  itemsCount?: number
+  contactNumber?: string | null
+  itemsDetails?: string | null
+  priceType?: $Enums.PriceType
+  targetPrice?: number | null
+  additionalNotes?: string | null
+  donationPct?: number
+  donationAnonymous?: boolean
+  deliveryCharge?: number | null
+  status?: $Enums.AssistentSellStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
+  pictures?: Prisma.BundlePictureCreateNestedManyWithoutAssistentSellInput
+  charities?: Prisma.AssistentSellCharityCreateNestedManyWithoutAssistentSellInput
+  listings?: Prisma.ProductCreateNestedManyWithoutAssistentSellInput
+  seller: Prisma.UserCreateNestedOneWithoutAssistentSellsInput
+  sellerAddress: Prisma.BillingDetailsCreateNestedOneWithoutAssistantSellOriginsInput
+}
+
+export type AssistentSellUncheckedCreateWithoutShipmentInput = {
+  id?: string
+  itemsTitle: string
+  itemsCount?: number
+  contactNumber?: string | null
+  itemsDetails?: string | null
+  priceType?: $Enums.PriceType
+  targetPrice?: number | null
+  additionalNotes?: string | null
+  donationPct?: number
+  donationAnonymous?: boolean
+  deliveryCharge?: number | null
+  status?: $Enums.AssistentSellStatus
+  sellerId: string
+  sellerAddressId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
+  pictures?: Prisma.BundlePictureUncheckedCreateNestedManyWithoutAssistentSellInput
+  charities?: Prisma.AssistentSellCharityUncheckedCreateNestedManyWithoutAssistentSellInput
+  listings?: Prisma.ProductUncheckedCreateNestedManyWithoutAssistentSellInput
+}
+
+export type AssistentSellCreateOrConnectWithoutShipmentInput = {
+  where: Prisma.AssistentSellWhereUniqueInput
+  create: Prisma.XOR<Prisma.AssistentSellCreateWithoutShipmentInput, Prisma.AssistentSellUncheckedCreateWithoutShipmentInput>
+}
+
+export type AssistentSellUpsertWithoutShipmentInput = {
+  update: Prisma.XOR<Prisma.AssistentSellUpdateWithoutShipmentInput, Prisma.AssistentSellUncheckedUpdateWithoutShipmentInput>
+  create: Prisma.XOR<Prisma.AssistentSellCreateWithoutShipmentInput, Prisma.AssistentSellUncheckedCreateWithoutShipmentInput>
+  where?: Prisma.AssistentSellWhereInput
+}
+
+export type AssistentSellUpdateToOneWithWhereWithoutShipmentInput = {
+  where?: Prisma.AssistentSellWhereInput
+  data: Prisma.XOR<Prisma.AssistentSellUpdateWithoutShipmentInput, Prisma.AssistentSellUncheckedUpdateWithoutShipmentInput>
+}
+
+export type AssistentSellUpdateWithoutShipmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
+  targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  additionalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donationPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  pictures?: Prisma.BundlePictureUpdateManyWithoutAssistentSellNestedInput
+  charities?: Prisma.AssistentSellCharityUpdateManyWithoutAssistentSellNestedInput
+  listings?: Prisma.ProductUpdateManyWithoutAssistentSellNestedInput
+  seller?: Prisma.UserUpdateOneRequiredWithoutAssistentSellsNestedInput
+  sellerAddress?: Prisma.BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput
+}
+
+export type AssistentSellUncheckedUpdateWithoutShipmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
+  targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  additionalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donationPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deliveryCharge?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumAssistentSellStatusFieldUpdateOperationsInput | $Enums.AssistentSellStatus
+  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerAddressId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  pictures?: Prisma.BundlePictureUncheckedUpdateManyWithoutAssistentSellNestedInput
+  charities?: Prisma.AssistentSellCharityUncheckedUpdateManyWithoutAssistentSellNestedInput
+  listings?: Prisma.ProductUncheckedUpdateManyWithoutAssistentSellNestedInput
 }
 
 export type AssistentSellCreateManySellerInput = {
@@ -1670,7 +1670,7 @@ export type AssistentSellUpdateWithoutSellerInput = {
   pictures?: Prisma.BundlePictureUpdateManyWithoutAssistentSellNestedInput
   charities?: Prisma.AssistentSellCharityUpdateManyWithoutAssistentSellNestedInput
   listings?: Prisma.ProductUpdateManyWithoutAssistentSellNestedInput
-  order?: Prisma.OrderUpdateOneWithoutAssistentSellNestedInput
+  shipment?: Prisma.ShipmentUpdateOneWithoutAssitentSellNestedInput
   sellerAddress?: Prisma.BillingDetailsUpdateOneRequiredWithoutAssistantSellOriginsNestedInput
 }
 
@@ -1697,7 +1697,7 @@ export type AssistentSellUncheckedUpdateWithoutSellerInput = {
   pictures?: Prisma.BundlePictureUncheckedUpdateManyWithoutAssistentSellNestedInput
   charities?: Prisma.AssistentSellCharityUncheckedUpdateManyWithoutAssistentSellNestedInput
   listings?: Prisma.ProductUncheckedUpdateManyWithoutAssistentSellNestedInput
-  order?: Prisma.OrderUncheckedUpdateOneWithoutAssistentSellNestedInput
+  shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutAssitentSellNestedInput
 }
 
 export type AssistentSellUncheckedUpdateManyWithoutSellerInput = {
@@ -1766,7 +1766,7 @@ export type AssistentSellUpdateWithoutSellerAddressInput = {
   pictures?: Prisma.BundlePictureUpdateManyWithoutAssistentSellNestedInput
   charities?: Prisma.AssistentSellCharityUpdateManyWithoutAssistentSellNestedInput
   listings?: Prisma.ProductUpdateManyWithoutAssistentSellNestedInput
-  order?: Prisma.OrderUpdateOneWithoutAssistentSellNestedInput
+  shipment?: Prisma.ShipmentUpdateOneWithoutAssitentSellNestedInput
   seller?: Prisma.UserUpdateOneRequiredWithoutAssistentSellsNestedInput
 }
 
@@ -1793,7 +1793,7 @@ export type AssistentSellUncheckedUpdateWithoutSellerAddressInput = {
   pictures?: Prisma.BundlePictureUncheckedUpdateManyWithoutAssistentSellNestedInput
   charities?: Prisma.AssistentSellCharityUncheckedUpdateManyWithoutAssistentSellNestedInput
   listings?: Prisma.ProductUncheckedUpdateManyWithoutAssistentSellNestedInput
-  order?: Prisma.OrderUncheckedUpdateOneWithoutAssistentSellNestedInput
+  shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutAssitentSellNestedInput
 }
 
 export type AssistentSellUncheckedUpdateManyWithoutSellerAddressInput = {
@@ -1891,7 +1891,7 @@ export type AssistentSellSelect<ExtArgs extends runtime.Types.Extensions.Interna
   pictures?: boolean | Prisma.AssistentSell$picturesArgs<ExtArgs>
   charities?: boolean | Prisma.AssistentSell$charitiesArgs<ExtArgs>
   listings?: boolean | Prisma.AssistentSell$listingsArgs<ExtArgs>
-  order?: boolean | Prisma.AssistentSell$orderArgs<ExtArgs>
+  shipment?: boolean | Prisma.AssistentSell$shipmentArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   sellerAddress?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.AssistentSellCountOutputTypeDefaultArgs<ExtArgs>
@@ -1975,7 +1975,7 @@ export type AssistentSellInclude<ExtArgs extends runtime.Types.Extensions.Intern
   pictures?: boolean | Prisma.AssistentSell$picturesArgs<ExtArgs>
   charities?: boolean | Prisma.AssistentSell$charitiesArgs<ExtArgs>
   listings?: boolean | Prisma.AssistentSell$listingsArgs<ExtArgs>
-  order?: boolean | Prisma.AssistentSell$orderArgs<ExtArgs>
+  shipment?: boolean | Prisma.AssistentSell$shipmentArgs<ExtArgs>
   seller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   sellerAddress?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.AssistentSellCountOutputTypeDefaultArgs<ExtArgs>
@@ -1995,7 +1995,7 @@ export type $AssistentSellPayload<ExtArgs extends runtime.Types.Extensions.Inter
     pictures: Prisma.$BundlePicturePayload<ExtArgs>[]
     charities: Prisma.$AssistentSellCharityPayload<ExtArgs>[]
     listings: Prisma.$ProductPayload<ExtArgs>[]
-    order: Prisma.$OrderPayload<ExtArgs> | null
+    shipment: Prisma.$ShipmentPayload<ExtArgs> | null
     seller: Prisma.$UserPayload<ExtArgs>
     sellerAddress: Prisma.$BillingDetailsPayload<ExtArgs>
   }
@@ -2417,7 +2417,7 @@ export interface Prisma__AssistentSellClient<T, Null = never, ExtArgs extends ru
   pictures<T extends Prisma.AssistentSell$picturesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssistentSell$picturesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BundlePicturePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   charities<T extends Prisma.AssistentSell$charitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssistentSell$charitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssistentSellCharityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   listings<T extends Prisma.AssistentSell$listingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssistentSell$listingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  order<T extends Prisma.AssistentSell$orderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssistentSell$orderArgs<ExtArgs>>): Prisma.Prisma__OrderClient<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  shipment<T extends Prisma.AssistentSell$shipmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssistentSell$shipmentArgs<ExtArgs>>): Prisma.Prisma__ShipmentClient<runtime.Types.Result.GetResult<Prisma.$ShipmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   seller<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   sellerAddress<T extends Prisma.BillingDetailsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillingDetailsDefaultArgs<ExtArgs>>): Prisma.Prisma__BillingDetailsClient<runtime.Types.Result.GetResult<Prisma.$BillingDetailsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
@@ -2937,22 +2937,22 @@ export type AssistentSell$listingsArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 /**
- * AssistentSell.order
+ * AssistentSell.shipment
  */
-export type AssistentSell$orderArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type AssistentSell$shipmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Order
+   * Select specific fields to fetch from the Shipment
    */
-  select?: Prisma.OrderSelect<ExtArgs> | null
+  select?: Prisma.ShipmentSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Order
+   * Omit specific fields from the Shipment
    */
-  omit?: Prisma.OrderOmit<ExtArgs> | null
+  omit?: Prisma.ShipmentOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.OrderInclude<ExtArgs> | null
-  where?: Prisma.OrderWhereInput
+  include?: Prisma.ShipmentInclude<ExtArgs> | null
+  where?: Prisma.ShipmentWhereInput
 }
 
 /**

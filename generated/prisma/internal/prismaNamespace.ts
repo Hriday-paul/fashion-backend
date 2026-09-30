@@ -404,7 +404,6 @@ export const ModelName = {
   Chat: 'Chat',
   Message: 'Message',
   FileMessage: 'FileMessage',
-  OrderDeliveryCharge: 'OrderDeliveryCharge',
   Order: 'Order',
   OrderItem: 'OrderItem',
   CancelOrderEvidence: 'CancelOrderEvidence',
@@ -437,6 +436,8 @@ export const ModelName = {
   BillingDetails: 'BillingDetails',
   Notification: 'Notification',
   Setting: 'Setting',
+  Shipment: 'Shipment',
+  ShipmentEvent: 'ShipmentEvent',
   Wallet: 'Wallet',
   WalletTransaction: 'WalletTransaction',
   WalletPayout: 'WalletPayout'
@@ -455,7 +456,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "follow" | "chat" | "message" | "fileMessage" | "orderDeliveryCharge" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "wallet" | "walletTransaction" | "walletPayout"
+    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "follow" | "chat" | "message" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction" | "walletPayout"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1566,80 +1567,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.FileMessageCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.FileMessageCountAggregateOutputType> | number
-        }
-      }
-    }
-    OrderDeliveryCharge: {
-      payload: Prisma.$OrderDeliveryChargePayload<ExtArgs>
-      fields: Prisma.OrderDeliveryChargeFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.OrderDeliveryChargeFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrderDeliveryChargePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.OrderDeliveryChargeFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrderDeliveryChargePayload>
-        }
-        findFirst: {
-          args: Prisma.OrderDeliveryChargeFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrderDeliveryChargePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.OrderDeliveryChargeFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrderDeliveryChargePayload>
-        }
-        findMany: {
-          args: Prisma.OrderDeliveryChargeFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrderDeliveryChargePayload>[]
-        }
-        create: {
-          args: Prisma.OrderDeliveryChargeCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrderDeliveryChargePayload>
-        }
-        createMany: {
-          args: Prisma.OrderDeliveryChargeCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.OrderDeliveryChargeCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrderDeliveryChargePayload>[]
-        }
-        delete: {
-          args: Prisma.OrderDeliveryChargeDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrderDeliveryChargePayload>
-        }
-        update: {
-          args: Prisma.OrderDeliveryChargeUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrderDeliveryChargePayload>
-        }
-        deleteMany: {
-          args: Prisma.OrderDeliveryChargeDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.OrderDeliveryChargeUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.OrderDeliveryChargeUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrderDeliveryChargePayload>[]
-        }
-        upsert: {
-          args: Prisma.OrderDeliveryChargeUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrderDeliveryChargePayload>
-        }
-        aggregate: {
-          args: Prisma.OrderDeliveryChargeAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateOrderDeliveryCharge>
-        }
-        groupBy: {
-          args: Prisma.OrderDeliveryChargeGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.OrderDeliveryChargeGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.OrderDeliveryChargeCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.OrderDeliveryChargeCountAggregateOutputType> | number
         }
       }
     }
@@ -4011,6 +3938,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Shipment: {
+      payload: Prisma.$ShipmentPayload<ExtArgs>
+      fields: Prisma.ShipmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ShipmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ShipmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentPayload>
+        }
+        findFirst: {
+          args: Prisma.ShipmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ShipmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentPayload>
+        }
+        findMany: {
+          args: Prisma.ShipmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentPayload>[]
+        }
+        create: {
+          args: Prisma.ShipmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentPayload>
+        }
+        createMany: {
+          args: Prisma.ShipmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ShipmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentPayload>[]
+        }
+        delete: {
+          args: Prisma.ShipmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentPayload>
+        }
+        update: {
+          args: Prisma.ShipmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.ShipmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ShipmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ShipmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.ShipmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentPayload>
+        }
+        aggregate: {
+          args: Prisma.ShipmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateShipment>
+        }
+        groupBy: {
+          args: Prisma.ShipmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ShipmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ShipmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ShipmentCountAggregateOutputType> | number
+        }
+      }
+    }
+    ShipmentEvent: {
+      payload: Prisma.$ShipmentEventPayload<ExtArgs>
+      fields: Prisma.ShipmentEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ShipmentEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ShipmentEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentEventPayload>
+        }
+        findFirst: {
+          args: Prisma.ShipmentEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ShipmentEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentEventPayload>
+        }
+        findMany: {
+          args: Prisma.ShipmentEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentEventPayload>[]
+        }
+        create: {
+          args: Prisma.ShipmentEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentEventPayload>
+        }
+        createMany: {
+          args: Prisma.ShipmentEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ShipmentEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentEventPayload>[]
+        }
+        delete: {
+          args: Prisma.ShipmentEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentEventPayload>
+        }
+        update: {
+          args: Prisma.ShipmentEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.ShipmentEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ShipmentEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ShipmentEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.ShipmentEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShipmentEventPayload>
+        }
+        aggregate: {
+          args: Prisma.ShipmentEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateShipmentEvent>
+        }
+        groupBy: {
+          args: Prisma.ShipmentEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ShipmentEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ShipmentEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ShipmentEventCountAggregateOutputType> | number
+        }
+      }
+    }
     Wallet: {
       payload: Prisma.$WalletPayload<ExtArgs>
       fields: Prisma.WalletFieldRefs
@@ -4469,23 +4544,6 @@ export const FileMessageScalarFieldEnum = {
 export type FileMessageScalarFieldEnum = (typeof FileMessageScalarFieldEnum)[keyof typeof FileMessageScalarFieldEnum]
 
 
-export const OrderDeliveryChargeScalarFieldEnum = {
-  id: 'id',
-  orderId: 'orderId',
-  totalItems: 'totalItems',
-  totalWeight: 'totalWeight',
-  baseCharge: 'baseCharge',
-  discount: 'discount',
-  finalCharge: 'finalCharge',
-  status: 'status',
-  paidAt: 'paidAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type OrderDeliveryChargeScalarFieldEnum = (typeof OrderDeliveryChargeScalarFieldEnum)[keyof typeof OrderDeliveryChargeScalarFieldEnum]
-
-
 export const OrderScalarFieldEnum = {
   id: 'id',
   orderNumber: 'orderNumber',
@@ -4495,7 +4553,6 @@ export const OrderScalarFieldEnum = {
   currentShipTo: 'currentShipTo',
   authStatus: 'authStatus',
   originDetailsId: 'originDetailsId',
-  authDetailsId: 'authDetailsId',
   billingId: 'billingId',
   itemsTotal: 'itemsTotal',
   totalDelivery: 'totalDelivery',
@@ -4509,23 +4566,13 @@ export const OrderScalarFieldEnum = {
   offerId: 'offerId',
   bundleDiscountPercent: 'bundleDiscountPercent',
   extraDonation: 'extraDonation',
-  assistentSellId: 'assistentSellId',
   allowedAuthentication: 'allowedAuthentication',
-  courier_service_id: 'courier_service_id',
-  shippingId: 'shippingId',
-  isLebelGenerated: 'isLebelGenerated',
-  lebelUrl: 'lebelUrl',
-  parcelId: 'parcelId',
-  authCourierServiceId: 'authCourierServiceId',
-  authShippingId: 'authShippingId',
-  isAuthLebelGenerated: 'isAuthLebelGenerated',
-  authLebelUrl: 'authLebelUrl',
-  authParcelId: 'authParcelId',
+  shipmentId: 'shipmentId',
+  authShipmentId: 'authShipmentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   completedAt: 'completedAt',
-  cancelledAt: 'cancelledAt',
-  shippedAt: 'shippedAt'
+  cancelledAt: 'cancelledAt'
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
@@ -4842,17 +4889,8 @@ export const ReturnScalarFieldEnum = {
   reason: 'reason',
   description: 'description',
   declineReason: 'declineReason',
-  trackingNumber: 'trackingNumber',
-  trackingCarrier: 'trackingCarrier',
-  refundAmount: 'refundAmount',
-  refundedAt: 'refundedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  courier_service_id: 'courier_service_id',
-  shippingId: 'shippingId',
-  isLebelGenerated: 'isLebelGenerated',
-  lebelUrl: 'lebelUrl',
-  parcelId: 'parcelId'
+  updatedAt: 'updatedAt'
 } as const
 
 export type ReturnScalarFieldEnum = (typeof ReturnScalarFieldEnum)[keyof typeof ReturnScalarFieldEnum]
@@ -5038,6 +5076,43 @@ export const SettingScalarFieldEnum = {
 } as const
 
 export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
+
+
+export const ShipmentScalarFieldEnum = {
+  id: 'id',
+  assitentSellId: 'assitentSellId',
+  returnId: 'returnId',
+  courier_service_id: 'courier_service_id',
+  shippingId: 'shippingId',
+  isLebelGenerated: 'isLebelGenerated',
+  lebelUrl: 'lebelUrl',
+  parcelId: 'parcelId',
+  trackingNumber: 'trackingNumber',
+  trackingUrl: 'trackingUrl',
+  deliveryCharge: 'deliveryCharge',
+  originId: 'originId',
+  destinationId: 'destinationId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ShipmentScalarFieldEnum = (typeof ShipmentScalarFieldEnum)[keyof typeof ShipmentScalarFieldEnum]
+
+
+export const ShipmentEventScalarFieldEnum = {
+  id: 'id',
+  shipmentId: 'shipmentId',
+  shipmentStatus: 'shipmentStatus',
+  eventType: 'eventType',
+  eventDescription: 'eventDescription',
+  eventLocation: 'eventLocation',
+  eventTime: 'eventTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ShipmentEventScalarFieldEnum = (typeof ShipmentEventScalarFieldEnum)[keyof typeof ShipmentEventScalarFieldEnum]
 
 
 export const WalletScalarFieldEnum = {
@@ -5268,20 +5343,6 @@ export type EnumFileMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'FileMessageType[]'
  */
 export type ListEnumFileMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileMessageType[]'>
-    
-
-
-/**
- * Reference to a field of type 'DeliveryChargeStatus'
- */
-export type EnumDeliveryChargeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeliveryChargeStatus'>
-    
-
-
-/**
- * Reference to a field of type 'DeliveryChargeStatus[]'
- */
-export type ListEnumDeliveryChargeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeliveryChargeStatus[]'>
     
 
 
@@ -5622,6 +5683,20 @@ export type ListEnumSettingKeyFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'ShipmentStatus'
+ */
+export type EnumShipmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShipmentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ShipmentStatus[]'
+ */
+export type ListEnumShipmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShipmentStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'CreaditType'
  */
 export type EnumCreaditTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CreaditType'>
@@ -5764,7 +5839,6 @@ export type GlobalOmitConfig = {
   chat?: Prisma.ChatOmit
   message?: Prisma.MessageOmit
   fileMessage?: Prisma.FileMessageOmit
-  orderDeliveryCharge?: Prisma.OrderDeliveryChargeOmit
   order?: Prisma.OrderOmit
   orderItem?: Prisma.OrderItemOmit
   cancelOrderEvidence?: Prisma.CancelOrderEvidenceOmit
@@ -5797,6 +5871,8 @@ export type GlobalOmitConfig = {
   billingDetails?: Prisma.BillingDetailsOmit
   notification?: Prisma.NotificationOmit
   setting?: Prisma.SettingOmit
+  shipment?: Prisma.ShipmentOmit
+  shipmentEvent?: Prisma.ShipmentEventOmit
   wallet?: Prisma.WalletOmit
   walletTransaction?: Prisma.WalletTransactionOmit
   walletPayout?: Prisma.WalletPayoutOmit

@@ -1194,7 +1194,7 @@ const topSellingProducts = async (userId?: string) => {
             orderItems: {
                 some: {
                     order: {
-                        status: "DELIVERED"
+                        status: "COMPLETED"
                     }
                 }
             },

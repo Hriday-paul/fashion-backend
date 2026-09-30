@@ -102,13 +102,7 @@ const allRequests = async (query: Record<string, unknown>, options: TPaginationO
                     }
                 }
             },
-            order: {
-                select: {
-                    status: true,
-                    originDetails: true,
-                    billingDetails: true,
-                }
-            }
+            shipment : true,
         },
     })
 
@@ -125,7 +119,6 @@ const allRequests = async (query: Record<string, unknown>, options: TPaginationO
         data: result,
     };
 }
-
 
 const myRequests = async (sellerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
     const AndConditions: Prisma.AssistentSellWhereInput[] = [{ sellerId }];
@@ -203,7 +196,7 @@ const myRequests = async (sellerId: string, query: Record<string, unknown>, opti
                     }
                 }
             },
-            order: {
+            shipment : {
                 select: {
                     status: true,
                 }
@@ -263,13 +256,11 @@ const requestDetails = async (requestId: string) => {
     return result;
 }
 
-
 type OtherPayload = {
     pictures: { key: string, url: string }[],
     charities: string[],
     donationAnonymous: boolean,
 }
-
 
 const addNewRequest = async (payload: AssistentSell & OtherPayload, sellerId: string, role: string) => {
 

@@ -4,7 +4,6 @@ import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import pick from "../../shared/pick";
 import { sizeService } from "./size.service";
-import { brandService } from "../brand/brand.service";
 
 const allsizes = catchAsync(async (req: Request, res: Response) => {
 

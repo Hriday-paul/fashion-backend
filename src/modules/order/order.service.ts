@@ -340,6 +340,18 @@ const addNewOrder = async (
 
     const result = await prisma.$transaction(async (transactionClient) => {
 
+        const shipment = await transactionClient.shipment.create({
+            data: {
+                courier_service_id: payload?.shipmentServiceId,
+                shippingId: shipmentData?.shipment?.easyship_shipment_id,
+                parcelId: parcelId,
+                trackingUrl: shipmentData?.shipment?.tracking_page_url,
+                deliveryCharge: shippingRate,
+                originId: sellerDetails?.id,
+                destinationId: (payload?.allowedAuthentication && authAddress) ? authAddress : billing_details?.id
+            }
+        });
+
         //create new order for this cart group
         const order = await transactionClient.order.create({
             data: {
@@ -353,7 +365,6 @@ const addNewOrder = async (
                 sellerItemsTotal: discountedItemTotal,
                 sellerTotal: sellerTotal,
                 bundleDiscountPercent,
-                courier_service_id: payload?.shipmentServiceId,
 
                 authenticationFee: totalAuthenticationCost,
 
@@ -365,25 +376,12 @@ const addNewOrder = async (
 
                 originDetailsId: sellerDetails?.id,
 
-                authDetailsId: authAddress,
-
-                parcelId,
-
                 pricingSource: "BUNDLE",
+
+                shipmentId: shipment?.id,
 
                 currentShipTo: payload?.allowedAuthentication ? "AUTHENTICATION_CENTER" : "BUYER",
 
-                shippingId: shipmentData?.shipment?.easyship_shipment_id,
-                deliveryCharge: {
-                    create: {
-                        baseCharge: shippingRate,
-                        discount: 0,
-                        finalCharge: shippingRate,
-                        status: "UNPAID",
-                        totalItems: orderItems?.length || 0,
-                        totalWeight: orderItems?.reduce((acc, item) => acc + (item?.product?.weight_kg || 0), 0),
-                    }
-                },
                 totalDelivery: shippingRate,
                 items: {
                     create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, ...item }) => {
@@ -464,7 +462,7 @@ const addNewOrder = async (
             const p = item?.product;
             return {
                 amount: item?.unitAllocatedPrice,
-                images: p?.images.map(img => img?.url),
+                images: p.images.map((image) => encodeURI(image?.url)),
                 name: p?.title,
                 quantity: 1,
             }
@@ -813,6 +811,18 @@ const addNewOfferOrder = async (
 
     const result = await prisma.$transaction(async (transactionClient) => {
 
+        const shipment = await transactionClient.shipment.create({
+            data: {
+                courier_service_id: payload?.shipmentServiceId,
+                shippingId: shipmentData?.shipment?.easyship_shipment_id,
+                parcelId: parcelId,
+                trackingUrl: shipmentData?.shipment?.tracking_page_url,
+                deliveryCharge: shippingRate,
+                originId: sellerDetails?.id,
+                destinationId: (payload?.allowedAuthentication && authAddress) ? authAddress : billing_details?.id
+            }
+        });
+
         //create new order for this cart group
         const order = await transactionClient.order.create({
             data: {
@@ -826,9 +836,6 @@ const addNewOfferOrder = async (
                 sellerItemsTotal: offer?.offeredPrice,
                 sellerTotal,
                 bundleDiscountPercent: 0,
-                courier_service_id: payload?.shipmentServiceId,
-
-                parcelId,
                 authenticationFee: totalAuthenticationCost,
                 serviceFee: serviceFeeCost,
 
@@ -837,23 +844,12 @@ const addNewOfferOrder = async (
                 extraDonation: totalExtraDonation,
 
                 originDetailsId: sellerDetails?.id,
-                authDetailsId: authAddress,
-
                 pricingSource: "OFFER",
 
                 currentShipTo: payload?.allowedAuthentication ? "AUTHENTICATION_CENTER" : "BUYER",
 
-                shippingId: shipmentData?.shipment?.easyship_shipment_id,
-                deliveryCharge: {
-                    create: {
-                        baseCharge: shippingRate,
-                        discount: 0,
-                        finalCharge: shippingRate,
-                        status: "UNPAID",
-                        totalItems: orderItems?.length || 0,
-                        totalWeight: orderItems?.reduce((acc, item) => acc + (item?.product?.weight_kg || 0), 0),
-                    }
-                },
+                shipmentId: shipment?.id,
+
                 totalDelivery: shippingRate,
                 items: {
                     create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, ...item }) => {
@@ -925,7 +921,7 @@ const addNewOfferOrder = async (
             const p = item?.product;
             return {
                 amount: item?.unitAllocatedPrice,
-                images: p?.images.map(img => img?.url),
+                images: p.images.map((image) => encodeURI(image?.url)),
                 name: p?.title,
                 quantity: 1,
             }
@@ -958,7 +954,6 @@ const addNewOfferOrder = async (
             quantity: 1,
         }
     );
-
 
     // build delivery charge line item
     const totalDeliveryCharge = shippingRate;
@@ -1017,9 +1012,7 @@ const requestCancelOrderItem = async (payload: { orderId: string, itemIds: strin
     }
 
     //check allow to cancel
-    const isDirectToBuyer =
-        order.authStatus === OrderAuthStatus.NOT_STARTED &&
-        order.currentShipTo === CurrentShipTo.BUYER;
+    const isDirectToBuyer = !order?.allowedAuthentication
 
     const isAuthRound =
         order.currentShipTo === CurrentShipTo.AUTHENTICATION_CENTER;
@@ -1100,10 +1093,11 @@ const approveCancelOrderItemBySeller = async (orderItemId: string, current_selle
         include: {
             order: {
                 include: {
-                    payment: true
+                    payment: true,
+                    shipment: true
                 }
             },
-            donations: true
+            donations: true,
         }
     })
 
@@ -1133,16 +1127,11 @@ const approveCancelOrderItemBySeller = async (orderItemId: string, current_selle
     const order = orderItem?.order;
 
     //check allow to cancel
-    const isDirectToBuyer =
-        order.authStatus === OrderAuthStatus.NOT_STARTED &&
-        order.currentShipTo === CurrentShipTo.BUYER;
+    const isDirectToBuyer = !order?.allowedAuthentication
 
-    const isAuthRound =
-        order.currentShipTo === CurrentShipTo.AUTHENTICATION_CENTER;
+    const isAuthRound = order.currentShipTo === CurrentShipTo.AUTHENTICATION_CENTER;
 
-    const canCancel =
-        order.status === OrderStatus.PENDING &&
-        (isDirectToBuyer || isAuthRound);
+    const canCancel = order.status === OrderStatus.PENDING && (isDirectToBuyer || isAuthRound);
 
     if (!canCancel) {
         throw new AppError(
@@ -1172,9 +1161,9 @@ const approveCancelOrderItemBySeller = async (orderItemId: string, current_selle
     const refundAmount = orderItem?.unitPrice;
 
     //if the available items count is 0, then cancel the whole order
-    if (availableItems.length === 0 && order?.isLebelGenerated) {
+    if (availableItems.length === 0 && order?.shipment?.isLebelGenerated) {
         await cancelFullOrderShipment({
-            shipment_id: order?.shippingId,
+            shipment_id: order?.shipment?.shippingId,
             orderId: order?.id,
             cancelReason: orderItem?.cancelReason || "OTHER",
             cancelReasonDescription: orderItem?.cancelReasonDetails || "Cancelled by Buyer request",
@@ -1189,7 +1178,7 @@ const approveCancelOrderItemBySeller = async (orderItemId: string, current_selle
     } else if (availableItems.length === 0) {
 
         await dltOrderShipment({
-            shipment_id: order?.shippingId,
+            shipment_id: order?.shipment?.shippingId,
             orderId: order?.id,
             cancelReason: orderItem?.cancelReason || "OTHER",
             cancelReasonDescription: orderItem?.cancelReasonDetails || "Cancelled by Buyer request",
@@ -1205,9 +1194,9 @@ const approveCancelOrderItemBySeller = async (orderItemId: string, current_selle
     } else {
 
 
-        if (order?.parcelId) {
+        if (order?.shipment?.parcelId) {
             //update the shipment to remove the cancelled items
-            await updateOrderShipment({ shipment_id: order?.shippingId, orderItems: availableItems, parcelId: order?.parcelId });
+            await updateOrderShipment({ shipment_id: order?.shipment?.shippingId, orderItems: availableItems, parcelId: order?.shipment?.parcelId });
         }
 
         await prisma.$transaction(async (transactionClient) => {
@@ -1322,6 +1311,7 @@ const confirmOrderReceived = async (orderId: string, userId: string) => {
             id: orderId,
         },
         include: {
+            shipment: true,
             items: {
                 select: {
                     isCancelled: true,
@@ -1332,10 +1322,10 @@ const confirmOrderReceived = async (orderId: string, userId: string) => {
     })
 
     if (!order) {
-        throw new AppError(httpStatus.NOT_FOUND, "Order not found")
+        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
     }
 
-    if (order?.status !== "DELIVERED" || order?.currentShipTo !== "BUYER") {
+    if (order?.shipment?.status !== "DELIVERED" || order?.currentShipTo !== "BUYER") {
         throw new AppError(httpStatus.BAD_REQUEST, "Unable to process confirm order received")
     }
 
@@ -1368,7 +1358,7 @@ const confirmOrderReceived = async (orderId: string, userId: string) => {
 
 const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
     const AndConditions: Prisma.OrderWhereInput[] = [{
-        sellerId, assistentSellId: null, payment: {
+        sellerId, payment: {
             status: {
                 in: ["SUCCESSED", "REFUNDED"]
             }
@@ -1580,6 +1570,8 @@ const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>,
                     picture: true,
                 }
             },
+            shipment: true,
+            authShipment: true,
             originDetails: true,
             billingDetails: true
         },
@@ -1602,7 +1594,7 @@ const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>,
 const ordersAsABuyer = async (buyerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
 
     const AndConditions: Prisma.OrderWhereInput[] = [{
-        buyerId, assistentSellId: null, payment: {
+        buyerId, payment: {
             status: {
                 in: ["SUCCESSED", "REFUNDED"]
             }
@@ -1816,7 +1808,9 @@ const ordersAsABuyer = async (buyerId: string, query: Record<string, unknown>, o
             },
             payment: true,
             originDetails: true,
-            billingDetails: true
+            billingDetails: true,
+            shipment: true,
+            authShipment: true,
         },
     })
 
@@ -1838,7 +1832,6 @@ const authenticationOrders = async (query: Record<string, unknown>, options: TPa
 
     const AndConditions: Prisma.OrderWhereInput[] = [{
         allowedAuthentication: true,
-        assistentSellId: null,
         payment: {
             status: {
                 in: ["SUCCESSED", "REFUNDED"]
@@ -2089,7 +2082,9 @@ const authenticationOrders = async (query: Record<string, unknown>, options: TPa
                 }
             },
             originDetails: true,
-            billingDetails: true
+            billingDetails: true,
+            shipment: true,
+            authShipment: true,
         },
     })
 
@@ -2107,43 +2102,7 @@ const authenticationOrders = async (query: Record<string, unknown>, options: TPa
     };
 }
 
-const markShippedOrder = async (orderId: string, current_sellerId: string) => {
-
-    const order = await prisma.order.findFirst({
-        where: {
-            id: orderId,
-        },
-        include: {
-            items: true,
-        }
-    })
-
-    if (!order) {
-        throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
-    }
-
-    if (order?.status !== "PENDING") {
-        throw new AppError(httpStatus.BAD_REQUEST, "Unable to process mark as shipped the order")
-    }
-
-    if (order?.sellerId !== current_sellerId) {
-        throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order")
-    }
-
-    await prisma.order.update({
-        where: {
-            id: orderId
-        },
-        data: {
-            status: "SHIPPED"
-        }
-    })
-
-    return;
-
-}
-
-const createLebelForOrder = async ({ shipment_id, orderId }: { orderId: string, shipment_id: string }) => {
+const createLebelForOrder = async ({ shipment_id, dbShipmentId }: { dbShipmentId: string, shipment_id: string }) => {
 
     const payload = {
         "printing_options": {
@@ -2173,9 +2132,9 @@ const createLebelForOrder = async ({ shipment_id, orderId }: { orderId: string, 
 
     const labelDoc = data?.shipment?.shipping_documents?.find(doc => doc.category === "label");
 
-    await prisma.order.update({
+    await prisma.shipment.update({
         where: {
-            id: orderId
+            id: dbShipmentId
         },
         data: {
             lebelUrl: labelDoc?.url,
@@ -2187,7 +2146,7 @@ const createLebelForOrder = async ({ shipment_id, orderId }: { orderId: string, 
 }
 
 const getShipingLebel = async (orderId: string, current_sellerId: string) => {
-    const order = await prisma.order.findFirst({ where: { id: orderId } });
+    const order = await prisma.order.findFirst({ where: { id: orderId }, include: { shipment: true } });
 
     if (!order) {
         throw new AppError(httpStatus.NOT_FOUND, "Order does not exist")
@@ -2201,18 +2160,18 @@ const getShipingLebel = async (orderId: string, current_sellerId: string) => {
         throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the seller of this order")
     }
 
-    if (order?.lebelUrl) {
-        return order?.lebelUrl;
+    if (order?.shipment?.lebelUrl) {
+        return order?.shipment?.lebelUrl;
     }
 
-    else if (order?.isLebelGenerated) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Label already generated but not found, please contact support")
+    else if (order?.shipment?.isLebelGenerated) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Label already generated but not available, please contact support")
     }
 
-    const labelUrl = await createLebelForOrder({ shipment_id: order?.shippingId, orderId: order?.id });
+    const labelUrl = await createLebelForOrder({ shipment_id: order?.shipment?.shippingId, dbShipmentId: order?.shipment?.id });
 
     if (!labelUrl) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Label generated but not found, please contact support")
+        throw new AppError(httpStatus.BAD_REQUEST, "Label generated but not available, please contact support")
     }
 
     return labelUrl;
@@ -2501,6 +2460,7 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
                     product: true,
                 }
             },
+            shipment: true,
             payment: true,
         }
     })
@@ -2517,16 +2477,11 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
     }
 
     //check allow to cancel
-    const isDirectToBuyer =
-        order.authStatus === OrderAuthStatus.NOT_STARTED &&
-        order.currentShipTo === CurrentShipTo.BUYER;
+    const isDirectToBuyer = !order?.allowedAuthentication;
 
-    const isAuthRound =
-        order.currentShipTo === CurrentShipTo.AUTHENTICATION_CENTER;
+    const isAuthRound = order.currentShipTo === CurrentShipTo.AUTHENTICATION_CENTER;
 
-    const canCancel =
-        order.status === OrderStatus.PENDING &&
-        (isDirectToBuyer || isAuthRound);
+    const canCancel = order.status === OrderStatus.PENDING && (isDirectToBuyer || isAuthRound);
 
     if (!canCancel) {
         throw new AppError(
@@ -2563,9 +2518,9 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
         throw new AppError(httpStatus.BAD_REQUEST, "Payment not found for this order, contact support")
     }
 
-    if (allowCancelFullOrder && order?.isLebelGenerated) {
+    if (allowCancelFullOrder && order?.shipment?.isLebelGenerated) {
         await cancelFullOrderShipment({
-            shipment_id: order?.shippingId,
+            shipment_id: order?.shipment?.shippingId,
             orderId: order?.id,
             cancelReason,
             cancelReasonDescription,
@@ -2579,7 +2534,7 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
         });
     } else if (allowCancelFullOrder) {
         await dltOrderShipment({
-            shipment_id: order?.shippingId,
+            shipment_id: order?.shipment?.shippingId,
             orderId: order?.id,
             cancelReason,
             cancelReasonDescription,
@@ -2593,9 +2548,9 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
         });
     } else {
 
-        if (order?.parcelId) {
+        if (order?.shipment?.parcelId) {
             //update the shipment to remove the cancelled items
-            await updateOrderShipment({ shipment_id: order?.shippingId, orderItems: order?.items, parcelId: order?.parcelId });
+            await updateOrderShipment({ shipment_id: order?.shipment?.shippingId, orderItems: order?.items, parcelId: order?.shipment?.parcelId });
         }
 
         await prisma.$transaction(async (transactionClient) => {
@@ -2706,6 +2661,12 @@ const markAsCompletedOrder = async (orderId: string, current_buyerId: string) =>
                         }
                     }
                 }
+            },
+            shipment: {
+                select: {
+                    id: true,
+                    status: true
+                }
             }
         }
     });
@@ -2718,19 +2679,33 @@ const markAsCompletedOrder = async (orderId: string, current_buyerId: string) =>
         throw new AppError(httpStatus.UNAUTHORIZED, "Permission denied, you are not the buyer of this order");
     }
 
-    if (order?.status !== "DELIVERED" || order?.currentShipTo !== "BUYER") {
+    if (order?.shipment?.status !== "DELIVERED" || order?.currentShipTo !== "BUYER") {
         throw new AppError(httpStatus.BAD_REQUEST, "Unable to mark as completed the order");
     }
 
-    //mark order as completed
-    await prisma.order.update({
-        where: {
-            id: orderId
-        },
-        data: {
-            status: "COMPLETED",
-            completedAt: new Date()
-        }
+    await prisma.$transaction(async (transactionClient) => {
+
+        //mark order as completed
+        await transactionClient.order.update({
+            where: {
+                id: orderId
+            },
+            data: {
+                status: "COMPLETED",
+                completedAt: new Date()
+            }
+        })
+
+        //generate event
+        await transactionClient.shipmentEvent.create({
+            data: {
+                eventType: "ORDER_COMPLETED",
+                shipmentStatus: "DELIVERED",
+                eventTime: new Date(),
+                eventDescription: "Congratulations! Your order has been marked as completed.",
+                shipmentId: order?.shipment?.id,
+            }
+        });
     })
 
     // generate badge for buyer, 1st purchase badge
@@ -2802,6 +2777,12 @@ const markOrderReceivedFromAuthCenter = async (orderId: string) => {
                         }
                     }
                 }
+            },
+            shipment: {
+                select: {
+                    id: true,
+                    status: true
+                }
             }
         }
     });
@@ -2810,19 +2791,32 @@ const markOrderReceivedFromAuthCenter = async (orderId: string) => {
         throw new AppError(httpStatus.NOT_FOUND, "Order does not exist");
     }
 
-    if (order?.status !== "DELIVERED" || order?.currentShipTo !== "AUTHENTICATION_CENTER") {
+    if (order?.shipment?.status !== "DELIVERED" || order?.currentShipTo !== "AUTHENTICATION_CENTER") {
         throw new AppError(httpStatus.BAD_REQUEST, "Unable to mark as received the order");
     }
 
     // Mark the order as received from the authentication center
-    await prisma.order.update({
-        where: {
-            id: orderId
-        },
-        data: {
-            authStatus: "ITEM_RECEIVED",
-        }
-    });
+    await prisma.$transaction(async (transactionClient) => {
+        await transactionClient.order.update({
+            where: {
+                id: orderId
+            },
+            data: {
+                authStatus: "ITEM_RECEIVED",
+            }
+        });
+
+        //generate event
+        await transactionClient.shipmentEvent.create({
+            data: {
+                eventType: "ORDER_AUTH_STATUS_CHANGED",
+                shipmentStatus: "DELIVERED",
+                eventTime: new Date(),
+                eventDescription: "Authentication center has marked the order as received for verification",
+                shipmentId: order?.shipment?.id,
+            }
+        });
+    })
 
     // Notify the buyer
     notificationQueue.add(jobs.notification, {
@@ -2900,6 +2894,12 @@ const markOrderAuthInProgress = async (orderId: string) => {
                         }
                     }
                 }
+            },
+            shipment: {
+                select: {
+                    id: true,
+                    status: true
+                }
             }
         }
     });
@@ -2908,19 +2908,35 @@ const markOrderAuthInProgress = async (orderId: string) => {
         throw new AppError(httpStatus.NOT_FOUND, "Order does not exist");
     }
 
-    if (order?.status !== "DELIVERED" || order?.currentShipTo !== "AUTHENTICATION_CENTER" || order?.authStatus !== "ITEM_RECEIVED") {
+    if (order?.shipment?.status !== "DELIVERED" || order?.currentShipTo !== "AUTHENTICATION_CENTER" || order?.authStatus !== "ITEM_RECEIVED") {
         throw new AppError(httpStatus.BAD_REQUEST, "Unable to mark as in progress authentication for the order");
     }
 
-    // Mark the order as received from the authentication center
-    await prisma.order.update({
-        where: {
-            id: orderId
-        },
-        data: {
-            authStatus: "IN_PROGRESS",
-        }
-    });
+    await prisma.$transaction(async (transactionClient) => {
+
+        // Mark the order as received from the authentication center
+        await transactionClient.order.update({
+            where: {
+                id: orderId
+            },
+            data: {
+                authStatus: "IN_PROGRESS",
+            }
+        });
+
+        //generate event
+        await transactionClient.shipmentEvent.create({
+            data: {
+                eventType: "ORDER_AUTH_STATUS_CHANGED",
+                shipmentStatus: "DELIVERED",
+                eventTime: new Date(),
+                eventDescription: "Authentication center has marked the order verification as in progress",
+                shipmentId: order?.shipment?.id,
+            }
+        });
+    })
+
+
 
     // Notify the buyer
     notificationQueue.add(jobs.notification, {
@@ -3008,6 +3024,12 @@ const addAuthResultToOrder = async (payload: { orderId: string; items: { itemId:
                     paymentIntentId: true,
                     id: true,
                 }
+            },
+            shipment: {
+                select: {
+                    id: true,
+                    status: true
+                }
             }
         }
     });
@@ -3016,7 +3038,7 @@ const addAuthResultToOrder = async (payload: { orderId: string; items: { itemId:
         throw new AppError(httpStatus.NOT_FOUND, "Order does not exist");
     }
 
-    if (order?.status !== "DELIVERED" || order?.currentShipTo !== "AUTHENTICATION_CENTER" || order?.authStatus !== "IN_PROGRESS") {
+    if (order?.shipment?.status !== "DELIVERED" || order?.currentShipTo !== "AUTHENTICATION_CENTER" || order?.authStatus !== "IN_PROGRESS") {
         throw new AppError(httpStatus.BAD_REQUEST, "Unable to add authentication result for the order");
     }
 
@@ -3050,6 +3072,17 @@ const addAuthResultToOrder = async (payload: { orderId: string; items: { itemId:
             },
             data: {
                 authStatus: "RESPONDED"
+            }
+        });
+
+        //generate event
+        await transactionClient.shipmentEvent.create({
+            data: {
+                eventType: "ORDER_AUTH_STATUS_CHANGED",
+                shipmentStatus: "DELIVERED",
+                eventTime: new Date(),
+                eventDescription: "Your order verification has been completed by the authentication center.",
+                shipmentId: order?.shipment?.id,
             }
         });
 
@@ -3117,7 +3150,6 @@ const generateOrderAuthShipment = async (adminId: string, orderId: string) => {
             id: orderId,
         },
         select: {
-            courier_service_id: true,
             status: true,
             currentShipTo: true,
             orderNumber: true,
@@ -3153,7 +3185,18 @@ const generateOrderAuthShipment = async (adminId: string, orderId: string) => {
                     }
                 }
             },
-            billingDetails: true
+            billingDetails: true,
+            shipment: {
+                select: {
+                    status: true,
+                    courier_service_id: true,
+                }
+            },
+            authShipment: {
+                select: {
+                    status: true,
+                }
+            },
         }
     });
 
@@ -3161,7 +3204,7 @@ const generateOrderAuthShipment = async (adminId: string, orderId: string) => {
         throw new AppError(httpStatus.NOT_FOUND, "Order does not exist");
     }
 
-    if (order?.status !== "DELIVERED" || order?.currentShipTo !== "AUTHENTICATION_CENTER" || order?.authStatus !== "RESPONDED") {
+    if (order?.shipment?.status !== "DELIVERED" || order?.currentShipTo !== "AUTHENTICATION_CENTER" || order?.authStatus !== "RESPONDED") {
         throw new AppError(httpStatus.BAD_REQUEST, "Unable to generate shipment for the order");
     }
 
@@ -3213,7 +3256,7 @@ const generateOrderAuthShipment = async (adminId: string, orderId: string) => {
             "platform_name": "FASHION",
         },
         "courier_settings": {
-            "courier_service_id": order?.courier_service_id
+            "courier_service_id": order?.shipment?.courier_service_id
         },
         "shipping_settings": {
             "units": {
@@ -3272,26 +3315,44 @@ const generateOrderAuthShipment = async (adminId: string, orderId: string) => {
     const parcelId = shipmentData?.shipment?.parcels[0]?.id;
     const shippingId = shipmentData?.shipment?.easyship_shipment_id;
 
+    const shippingRate = shipmentData?.shipment?.rates.find(rate => rate?.courier_service?.id === order?.shipment?.courier_service_id)?.total_charge;
+
     const labelDoc = shipmentData?.shipment?.shipping_documents?.find(doc => doc.category === "label");
 
-    await prisma.order.update({
-        where: {
-            id: orderId
-        },
-        data: {
-            authCourierServiceId: order?.courier_service_id,
-            authParcelId: parcelId,
-            authShippingId: shippingId,
-            isAuthLebelGenerated: labelDoc?.url ? true : false,
-            authLebelUrl: labelDoc?.url || null,
-        }
-    });
+    const dbShipment = await prisma.$transaction(async (transactionClient) => {
 
-    return { labelUrl: labelDoc?.url || null, shippingId, parcelId };
+        const shipment = await transactionClient.shipment.create({
+            data: {
+                courier_service_id: order?.shipment?.courier_service_id,
+                shippingId: shippingId,
+                parcelId: parcelId,
+                trackingUrl: shipmentData?.shipment?.tracking_page_url,
+                isLebelGenerated: labelDoc?.url ? true : false,
+                lebelUrl: labelDoc?.url || null,
+                deliveryCharge: shippingRate,
+                originId: authCenterlocation?.id,
+                destinationId: billing_details?.id,
+            }
+        });
+
+        await transactionClient.order.update({
+            where: {
+                id: orderId
+            },
+            data: {
+                authShipmentId: shipment?.id,
+            }
+        });
+
+        return shipment;
+
+    })
+
+    return { labelUrl: labelDoc?.url || null, shippingId, parcelId, dbShipmentId: dbShipment?.id };
 
 }
 
-const createLebelForAuthShipment = async ({ shipment_id, orderId }: { orderId: string, shipment_id: string }) => {
+const createLebelForAuthShipment = async ({ shipment_id, dbShipmentId }: { dbShipmentId: string, shipment_id: string }) => {
 
     const payload = {
         "printing_options": {
@@ -3323,13 +3384,13 @@ const createLebelForAuthShipment = async ({ shipment_id, orderId }: { orderId: s
 
     const labelDoc = data?.shipment?.shipping_documents?.find(doc => doc.category === "label");
 
-    await prisma.order.update({
+    await prisma.shipment.update({
         where: {
-            id: orderId
+            id: dbShipmentId
         },
         data: {
-            authLebelUrl: labelDoc?.url,
-            isAuthLebelGenerated: true
+            lebelUrl: labelDoc?.url,
+            isLebelGenerated: true
         }
     })
 
@@ -3349,9 +3410,13 @@ const getAuthShippingLebel = async (adminId: string, orderId: string) => {
             id: orderId,
         },
         select: {
-            authLebelUrl: true,
-            isAuthLebelGenerated: true,
-            authShippingId: true,
+            authShipment: {
+                select: {
+                    id: true,
+                    lebelUrl: true,
+                    shippingId: true,
+                }
+            }
         }
     });
 
@@ -3359,24 +3424,111 @@ const getAuthShippingLebel = async (adminId: string, orderId: string) => {
         throw new AppError(httpStatus.NOT_FOUND, "Order does not exist");
     }
 
-    if (order?.authLebelUrl) {
-        return order?.authLebelUrl;
+    if (order?.authShipment?.lebelUrl) {
+        return order?.authShipment?.lebelUrl;
     }
     //just generate the label for the existing shipment
-    else if (order?.authShippingId) {
-        return await createLebelForAuthShipment({ shipment_id: order.authShippingId, orderId });
+    else if (order?.authShipment) {
+        return await createLebelForAuthShipment({ shipment_id: order?.authShipment?.shippingId, dbShipmentId: order?.authShipment?.id });
     }
     //generate the shipment and label for the order
     else {
-        const { labelUrl, shippingId } = await generateOrderAuthShipment(adminId, orderId);
+        const { labelUrl, shippingId, dbShipmentId } = await generateOrderAuthShipment(adminId, orderId);
 
         //if label is not generated, then generate the label for the existing shipment
         if (!labelUrl) {
-            return await createLebelForAuthShipment({ shipment_id: shippingId, orderId });
+            return await createLebelForAuthShipment({ shipment_id: shippingId, dbShipmentId });
         } else {
             return labelUrl;
         }
     }
+}
+
+const orderDetails = async (orderNumber: string) => {
+
+    const haveHashBefore = orderNumber.startsWith("#");
+
+    const orderCode = haveHashBefore ? orderNumber : `#${orderNumber}`;
+
+    const order = await prisma.order.findFirst({
+        where: {
+            orderNumber: orderCode
+        },
+        include: {
+            items: {
+                where: {
+                    isCancelled: false
+                },
+                include: {
+                    product: {
+                        select: {
+                            title: true,
+                            id: true,
+                            condition: true,
+                            finalPrice: true,
+                            images: {
+                                select: {
+                                    url: true
+                                }
+                            },
+                            category: {
+                                select: {
+                                    name: true
+                                }
+                            },
+                            size: {
+                                select: {
+                                    title: true
+                                }
+                            },
+                        },
+                    },
+                }
+            },
+            seller: {
+                select: {
+                    userName: true,
+                    picture: true,
+                }
+            },
+            payment: true,
+            shipment: {
+                include: {
+                    origin: true,
+                    destination: true,
+                }
+            },
+            authShipment: {
+                include: {
+                    origin: true,
+                    destination: true,
+                }
+            },
+        },
+    });
+
+    if (!order) {
+        return { order: null, events: [] };
+    }
+
+    const shipmentIds = [order?.shipmentId]
+
+    if (order?.authShipmentId) {
+        shipmentIds.push(order?.authShipmentId)
+    }
+
+    const events = await prisma.shipmentEvent.findMany({
+        where: {
+            shipmentId: {
+                in: shipmentIds
+            }
+        },
+        orderBy: {
+            eventTime: 'desc'
+        }
+    });
+
+    return { order, events };
 }
 
 export const orderService = {
@@ -3390,11 +3542,11 @@ export const orderService = {
     declineCancelOrderItemBySeller,
     confirmOrderReceived,
     getShipingLebel,
-    markShippedOrder,
     markAsCompletedOrder,
     authenticationOrders,
     markOrderReceivedFromAuthCenter,
     addAuthResultToOrder,
     markOrderAuthInProgress,
-    getAuthShippingLebel
+    getAuthShippingLebel,
+    orderDetails
 }
