@@ -118,11 +118,11 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
 
 const allProducts = async (query: Record<string, unknown>, options: TPaginationOptions, userId?: string) => {
 
-    const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false, stock: { gt: 0 } }];
+    const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }];
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, ...moreFields } = query;
+    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, stock, ...moreFields } = query;
 
     if (searchTerm) {
         const tokens = (searchTerm as string).trim().split(/\s+/).filter(Boolean);
@@ -191,6 +191,20 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
         });
     }
 
+    if (stock && stock === "sold") {
+        AndConditions.push({
+            stock: {
+                lte: 0
+            }
+        });
+    } else if (stock && stock !== "all") {
+        AndConditions.push({
+            stock: {
+                gte: 1
+            }
+        });
+    }
+
     if (minPrice || maxPrice) {
         AndConditions.push({
             finalPrice: {
@@ -231,6 +245,11 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
             _count: {
                 select: {
                     favourites: true
+                }
+            },
+            user : {
+                select : {
+                    userName : true,
                 }
             },
             // is Favourites by user
@@ -928,6 +947,8 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
                     },
                     userName: true,
                     avgRating: true,
+                    email: true,
+                    phone: true,
                     ratingsReceived: {
 
                     }
@@ -1455,8 +1476,10 @@ const donationSupportByProduct = async (productId: string) => {
 
 }
 
-const dropPriceForAProduct = async (payload: { productId: string, newPrice: number }, currentUser: { id: string, userName: string, role : string }) => {
+const dropPriceForAProduct = async (payload: { productId: string, newPrice: number }, currentUser: { id: string, userName: string, role: string }) => {
+
     const { productId, newPrice } = payload;
+
     const { id: currentUserId, userName: currentUserName } = currentUser;
 
     const product = await prisma.product.findFirst({
@@ -1483,7 +1506,9 @@ const dropPriceForAProduct = async (payload: { productId: string, newPrice: numb
     }
 
     //calculate the percentage drop
-    const percentageDrop = (newPrice * 100) / product.price;
+    const percentageDrop = Number(
+        ((newPrice * 100) / product.price).toFixed(2)
+    );
 
     const updatedProduct = await prisma.product.update({
         where: {

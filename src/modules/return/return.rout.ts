@@ -14,6 +14,14 @@ export const excludedCharityRoles: Role[] = [
     // Role.CHARITY_SHOP,
 ];
 
+router.get("/",
+    auth(Role.ADMIN),
+    returnController.returns);
+
+router.get("/stats",
+    auth(Role.ADMIN),
+    returnController.returnStats);
+
 router.get("/by-buyer",
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     returnController.returnsAsABuyer);

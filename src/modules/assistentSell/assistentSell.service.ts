@@ -723,6 +723,12 @@ const addNewListing = async (payload: Product & ProductOtherPayload) => {
 
 }
 
+const assitedSellsEarnings = async (query: Record<string, unknown>, options: TPaginationOptions) => {
+    const AndConditions: Prisma.AssistentSellWhereInput[] = [];
+    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+    
+}
+
 export const assistentSellService = {
     allRequests,
     myRequests,

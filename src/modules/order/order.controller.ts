@@ -59,6 +59,21 @@ const ordersForSellerByUserName = catchAsync(async (req: Request, res: Response)
     });
 });
 
+const orders = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["searchTerm", "status", "currentShipTo", "paymentStatus"])
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await orderService.orders(query, options);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Orders retrieved successfully',
+        data: result,
+    });
+});
+
 const ordersBySeller = catchAsync(async (req: Request, res: Response) => {
 
     const query = pick(req.query, ["searchTerm", "status"])
@@ -303,10 +318,23 @@ const orderDetails = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const orderStats = catchAsync(async (req: Request, res: Response) => {
+
+    const data = await orderService.orderStats();
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Order stats retrieved successfully',
+        data,
+    });
+});
+
 export const orderControler = {
     addNewOrder,
     addNewOfferOrder,
     authenticationOrders,
+    orders,
     ordersBySeller,
     ordersAsABuyer,
     confirmOrderReceived,
@@ -322,5 +350,6 @@ export const orderControler = {
     markOrderAuthInProgress,
     addAuthResultToOrder,
     getAuthShippingLebel,
-    orderDetails
+    orderDetails,
+    orderStats
 }

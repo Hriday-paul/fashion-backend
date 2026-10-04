@@ -215,6 +215,7 @@ const addNewOrder = async (
             productId: p.id,
             sellerId: p.userId,
             unitPrice: unit_price,
+            assisted_sell_commision,
             unitAllocatedPrice: allocateUnitPrice,
             sellerFinalUnitPrice: sellerUnitPrice,
             totalPrice: allocateUnitPrice + extra_donation,
@@ -240,6 +241,8 @@ const addNewOrder = async (
     const totalExtraDonation = cartgroup.items.reduce((acc, item) => acc + (item.extraDonation || 0), 0);
 
     const sellerTotal = orderItems.reduce((acc, item) => acc + item?.sellerFinalUnitPrice, 0);
+
+    const totalAssitedSellCommission = orderItems.reduce((acc, item) => acc + item?.assisted_sell_commision, 0);
 
     const shipPayload = {
         "origin_address": {
@@ -366,6 +369,8 @@ const addNewOrder = async (
                 sellerTotal: sellerTotal,
                 bundleDiscountPercent,
 
+                assistedSellCommission: totalAssitedSellCommission,
+
                 authenticationFee: totalAuthenticationCost,
 
                 allowedAuthentication: payload?.allowedAuthentication,
@@ -384,7 +389,7 @@ const addNewOrder = async (
 
                 totalDelivery: shippingRate,
                 items: {
-                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, ...item }) => {
+                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, assisted_sell_commision, ...item }) => {
                         const charityCount = charities.length;
                         const splitAmount = charityCount > 0 ? (donation_amount / charityCount) : 0;
                         const splitExtra = charityCount > 0 ? (item.extra_donation / charityCount) : 0;
@@ -398,6 +403,7 @@ const addNewOrder = async (
                         return {
                             ...item,
                             parcelItemId,
+                            assistedSellCommission : assisted_sell_commision,
                             sell_donation: donation_amount,
                             ...(charityCount > 0 && {
                                 donations: {
@@ -686,6 +692,7 @@ const addNewOfferOrder = async (
             productId: p.id,
             sellerId: p.userId,
             unitPrice: unit_price,
+            assisted_sell_commision,
             unitAllocatedPrice: allocateUnitPrice,
             sellerFinalUnitPrice: sellerUnitPrice,
             totalPrice: allocateUnitPrice + extra_donation,
@@ -711,6 +718,8 @@ const addNewOfferOrder = async (
     const totalExtraDonation = 0;
 
     const sellerTotal = orderItems.reduce((acc, item) => acc + item?.sellerFinalUnitPrice, 0);
+
+    const totalAssitedSellCommission = orderItems.reduce((acc, item) => acc + item?.assisted_sell_commision, 0);
 
     const shipPayload = {
         "origin_address": {
@@ -831,6 +840,7 @@ const addNewOfferOrder = async (
                 itemsTotal: discountedItemTotal,
                 treeCredit: treeCredit ?? 0,
                 buyerId: userId,
+                assistedSellCommission: totalAssitedSellCommission,
                 billingId: billing_details?.id,
                 sellerId: orderItems[0]?.sellerId,
                 sellerItemsTotal: offer?.offeredPrice,
@@ -852,7 +862,7 @@ const addNewOfferOrder = async (
 
                 totalDelivery: shippingRate,
                 items: {
-                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, ...item }) => {
+                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, assisted_sell_commision, ...item }) => {
                         const charityCount = charities.length;
                         const splitAmount = charityCount > 0 ? (donation_amount / charityCount) : 0;
                         const splitExtra = charityCount > 0 ? (item.extra_donation / charityCount) : 0;
@@ -866,6 +876,7 @@ const addNewOfferOrder = async (
                         return {
                             ...item,
                             sell_donation: donation_amount,
+                            assistedSellCommission : assisted_sell_commision,
                             parcelItemId,
                             ...(charityCount > 0 && {
                                 donations: {
@@ -1354,6 +1365,255 @@ const confirmOrderReceived = async (orderId: string, userId: string) => {
     //     }
     // );
 
+}
+
+const orders = async (query: Record<string, unknown>, options: TPaginationOptions) => {
+    const AndConditions: Prisma.OrderWhereInput[] = [];
+    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+    const { searchTerm, status, paymentStatus, currentShipTo } = query;
+
+    if (searchTerm) {
+        AndConditions.push({
+            OR: [
+                {
+                    id: {
+                        contains: searchTerm as string,
+                        mode: "insensitive",
+                    }
+                },
+                {
+                    orderNumber: {
+                        contains: searchTerm as string,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    buyer: {
+                        OR: [
+                            {
+                                userName: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                phone: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ],
+                    }
+                },
+                {
+                    seller: {
+                        OR: [
+                            {
+                                userName: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                phone: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ],
+                    }
+                },
+                {
+                    billingDetails: {
+                        OR: [
+                            {
+                                full_name: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                contact: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address1: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address2: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    originDetails: {
+                        OR: [
+                            {
+                                full_name: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                },
+                            },
+                            {
+                                contact: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                email: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address1: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            },
+                            {
+                                address2: {
+                                    contains: searchTerm as string,
+                                    mode: "insensitive",
+                                }
+                            }
+                        ]
+                    }
+                },
+            ],
+        });
+    }
+
+    if (status) {
+        AndConditions.push({
+            status: status as OrderStatus
+        })
+    }
+
+    if( paymentStatus) {
+        AndConditions.push({
+            payment: {
+                status: paymentStatus as PaymentStatus
+            }
+        })
+    }
+    
+    if( currentShipTo) {
+        AndConditions.push({
+            currentShipTo: currentShipTo as CurrentShipTo
+        })
+    }
+
+    const whereConditions: Prisma.OrderWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
+
+    const result = await prisma.order.findMany({
+        where: whereConditions,
+        skip,
+        take: limit,
+        orderBy: {
+            [sortBy]: sortOrder,
+        },
+        include: {
+            items: {
+                include: {
+                    product: {
+                        select: {
+                            title: true,
+                            description: true,
+                            id: true,
+                            condition: true,
+                            finalPrice: true,
+                            images: {
+                                select: {
+                                    url: true
+                                }
+                            },
+                            category: {
+                                select: {
+                                    name: true
+                                }
+                            },
+                            size: {
+                                select: {
+                                    title: true
+                                }
+                            },
+                            _count: true
+                        },
+                    },
+                    cancelEvidences: true,
+                    donations: {
+                        include: {
+                            charity: {
+                                select: {
+                                    userName: true,
+                                    picture: true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            payment: true,
+            buyer: {
+                select: {
+                    userName: true,
+                    picture: true,
+                }
+            },
+            seller: {
+                select: {
+                    userName: true,
+                    picture: true,
+                }
+            },
+            shipment: true,
+            authShipment: true,
+            originDetails: true,
+            billingDetails: true
+        },
+    })
+
+    const total = await prisma.order.count({
+        where: whereConditions,
+    });
+
+    return {
+        meta: {
+            total,
+            page,
+            limit,
+        },
+        data: result,
+    };
 }
 
 const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
@@ -3531,7 +3791,57 @@ const orderDetails = async (orderNumber: string) => {
     return { order, events };
 }
 
+const orderStats = async () => {
+
+    const totalOrders = await prisma.order.count();
+    const totalSells = await prisma.order.aggregate({
+        _sum: {
+            itemsTotal: true,
+        },
+        where: {
+            payment: {
+                status: 'SUCCESSED'
+            }
+        }
+    });
+
+    const pendingOrders = await prisma.order.count({
+        where: {
+            status: "PENDING"
+        }
+    });
+
+    const shippingOrder = await prisma.order.count({
+        where: {
+            status: "SHIPPING"
+        }
+    });
+
+    const completedOrder = await prisma.order.count({
+        where: {
+            status: "COMPLETED"
+        }
+    });
+
+    const cancelledOrder = await prisma.order.count({
+        where: {
+            status: "CANCELLED"
+        }
+    });
+
+    return {
+        totalOrders,
+        totalSells : totalSells?._sum?.itemsTotal || 0,
+        pendingOrders,
+        shippingOrder,
+        completedOrder,
+        cancelledOrder
+    };
+
+}
+
 export const orderService = {
+    orders,
     addNewOrder,
     addNewOfferOrder,
     ordersAsASeller,
@@ -3548,5 +3858,7 @@ export const orderService = {
     addAuthResultToOrder,
     markOrderAuthInProgress,
     getAuthShippingLebel,
-    orderDetails
+    orderDetails,
+
+    orderStats
 }

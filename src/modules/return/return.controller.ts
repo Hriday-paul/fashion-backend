@@ -37,7 +37,36 @@ const returnsAsASeller = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const returns = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["searchTerm", "status", "reason"])
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await returnService.returns(query, options);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Returns retrieved successfully',
+        data: result,
+    });
+});
+
+const returnStats = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await returnService.returnStats();
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Returns stats retrieved successfully',
+        data: result,
+    });
+});
+
 export const returnController = {
     returnsAsABuyer,
-    returnsAsASeller
+    returnsAsASeller,
+    returns,
+    returnStats
 }

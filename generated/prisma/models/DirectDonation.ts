@@ -422,11 +422,6 @@ export type DirectDonationUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type DirectDonationNullableScalarRelationFilter = {
-  is?: Prisma.DirectDonationWhereInput | null
-  isNot?: Prisma.DirectDonationWhereInput | null
-}
-
 export type DirectDonationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   donorId?: Prisma.SortOrder
@@ -472,6 +467,11 @@ export type DirectDonationMinOrderByAggregateInput = {
 
 export type DirectDonationSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
+}
+
+export type DirectDonationNullableScalarRelationFilter = {
+  is?: Prisma.DirectDonationWhereInput | null
+  isNot?: Prisma.DirectDonationWhereInput | null
 }
 
 export type DirectDonationListRelationFilter = {

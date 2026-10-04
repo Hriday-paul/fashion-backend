@@ -42,6 +42,8 @@ model Order {
     sellerItemsTotal Float @default(0) // sum of all items total prices - seller donation amount
     sellerTotal  Float @default(0) // sum of all items total prices - seller donation amount - bundle discount
 
+    assistedSellCommission Float @default(0) // total assisted sell commission
+
     treeCredit    Float @default(0) // gifted for tree planner
     serviceFee    Float @default(0) // platform service fee
     authenticationFee Float @default(0) // authentication fee
@@ -113,6 +115,8 @@ model OrderItem {
     unitAllocatedPrice Float @default(0) // snapshot of price at time of order, after bundle discount & offer allocation
     sellerFinalUnitPrice Float @default(0) // snapshot of price at time of order, after bundle discount & offer allocation & seller donation allocation
     totalPrice Float // unitPrice * quantity
+
+    assistedSellCommission Float @default(0)
 
     isCancelled Boolean @default(false)
     authResult OrderAuthResult @default(NOT_PROCESSED)

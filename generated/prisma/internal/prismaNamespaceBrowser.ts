@@ -59,6 +59,7 @@ export const ModelName = {
   SizeCategoryHierarchyGroup: 'SizeCategoryHierarchyGroup',
   Size: 'Size',
   Keyword: 'Keyword',
+  DirectDonation: 'DirectDonation',
   Follow: 'Follow',
   Chat: 'Chat',
   Message: 'Message',
@@ -68,7 +69,6 @@ export const ModelName = {
   CancelOrderEvidence: 'CancelOrderEvidence',
   SellDonation: 'SellDonation',
   Payment: 'Payment',
-  DirectDonation: 'DirectDonation',
   Refund: 'Refund',
   Product: 'Product',
   ProductPicture: 'ProductPicture',
@@ -267,6 +267,22 @@ export const KeywordScalarFieldEnum = {
 export type KeywordScalarFieldEnum = (typeof KeywordScalarFieldEnum)[keyof typeof KeywordScalarFieldEnum]
 
 
+export const DirectDonationScalarFieldEnum = {
+  id: 'id',
+  donorId: 'donorId',
+  charityId: 'charityId',
+  amount: 'amount',
+  currency: 'currency',
+  isAnonymous: 'isAnonymous',
+  message: 'message',
+  donatedAt: 'donatedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DirectDonationScalarFieldEnum = (typeof DirectDonationScalarFieldEnum)[keyof typeof DirectDonationScalarFieldEnum]
+
+
 export const FollowScalarFieldEnum = {
   id: 'id',
   followerId: 'followerId',
@@ -330,6 +346,7 @@ export const OrderScalarFieldEnum = {
   totalPrice: 'totalPrice',
   sellerItemsTotal: 'sellerItemsTotal',
   sellerTotal: 'sellerTotal',
+  assistedSellCommission: 'assistedSellCommission',
   treeCredit: 'treeCredit',
   serviceFee: 'serviceFee',
   authenticationFee: 'authenticationFee',
@@ -359,6 +376,7 @@ export const OrderItemScalarFieldEnum = {
   unitAllocatedPrice: 'unitAllocatedPrice',
   sellerFinalUnitPrice: 'sellerFinalUnitPrice',
   totalPrice: 'totalPrice',
+  assistedSellCommission: 'assistedSellCommission',
   isCancelled: 'isCancelled',
   authResult: 'authResult',
   buyerRequestCancel: 'buyerRequestCancel',
@@ -435,22 +453,6 @@ export const PaymentScalarFieldEnum = {
 } as const
 
 export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
-
-
-export const DirectDonationScalarFieldEnum = {
-  id: 'id',
-  donorId: 'donorId',
-  charityId: 'charityId',
-  amount: 'amount',
-  currency: 'currency',
-  isAnonymous: 'isAnonymous',
-  message: 'message',
-  donatedAt: 'donatedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type DirectDonationScalarFieldEnum = (typeof DirectDonationScalarFieldEnum)[keyof typeof DirectDonationScalarFieldEnum]
 
 
 export const RefundScalarFieldEnum = {

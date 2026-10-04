@@ -23,7 +23,8 @@ const auth = (...userRoles: Role[]) => {
         } catch (err) {
             throw new AppError(httpStatus.UNAUTHORIZED, 'unauthorized');
         }
-        const { role, userId } = decode;
+        const { userId } = decode;
+
         const isUserExist = await prisma.user.findFirst({ where: { id: userId }, include: { auth: true } });
 
         if (!isUserExist) {
@@ -45,6 +46,8 @@ const auth = (...userRoles: Role[]) => {
         if (userRoles && !userRoles.includes(isUserExist?.auth?.role)) {
             throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized');
         }
+
+        const role = isUserExist?.auth?.role;
 
         req.user = { id: userId, role, userName: isUserExist?.userName };
 

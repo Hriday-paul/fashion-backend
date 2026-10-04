@@ -400,6 +400,7 @@ export const ModelName = {
   SizeCategoryHierarchyGroup: 'SizeCategoryHierarchyGroup',
   Size: 'Size',
   Keyword: 'Keyword',
+  DirectDonation: 'DirectDonation',
   Follow: 'Follow',
   Chat: 'Chat',
   Message: 'Message',
@@ -409,7 +410,6 @@ export const ModelName = {
   CancelOrderEvidence: 'CancelOrderEvidence',
   SellDonation: 'SellDonation',
   Payment: 'Payment',
-  DirectDonation: 'DirectDonation',
   Refund: 'Refund',
   Product: 'Product',
   ProductPicture: 'ProductPicture',
@@ -456,7 +456,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "follow" | "chat" | "message" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "directDonation" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction" | "walletPayout"
+    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "directDonation" | "follow" | "chat" | "message" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction" | "walletPayout"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1274,6 +1274,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DirectDonation: {
+      payload: Prisma.$DirectDonationPayload<ExtArgs>
+      fields: Prisma.DirectDonationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DirectDonationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DirectDonationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
+        }
+        findFirst: {
+          args: Prisma.DirectDonationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DirectDonationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
+        }
+        findMany: {
+          args: Prisma.DirectDonationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>[]
+        }
+        create: {
+          args: Prisma.DirectDonationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
+        }
+        createMany: {
+          args: Prisma.DirectDonationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DirectDonationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>[]
+        }
+        delete: {
+          args: Prisma.DirectDonationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
+        }
+        update: {
+          args: Prisma.DirectDonationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
+        }
+        deleteMany: {
+          args: Prisma.DirectDonationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DirectDonationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DirectDonationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>[]
+        }
+        upsert: {
+          args: Prisma.DirectDonationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
+        }
+        aggregate: {
+          args: Prisma.DirectDonationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDirectDonation>
+        }
+        groupBy: {
+          args: Prisma.DirectDonationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DirectDonationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DirectDonationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DirectDonationCountAggregateOutputType> | number
+        }
+      }
+    }
     Follow: {
       payload: Prisma.$FollowPayload<ExtArgs>
       fields: Prisma.FollowFieldRefs
@@ -1937,80 +2011,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.PaymentCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.PaymentCountAggregateOutputType> | number
-        }
-      }
-    }
-    DirectDonation: {
-      payload: Prisma.$DirectDonationPayload<ExtArgs>
-      fields: Prisma.DirectDonationFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.DirectDonationFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.DirectDonationFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
-        }
-        findFirst: {
-          args: Prisma.DirectDonationFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.DirectDonationFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
-        }
-        findMany: {
-          args: Prisma.DirectDonationFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>[]
-        }
-        create: {
-          args: Prisma.DirectDonationCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
-        }
-        createMany: {
-          args: Prisma.DirectDonationCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.DirectDonationCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>[]
-        }
-        delete: {
-          args: Prisma.DirectDonationDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
-        }
-        update: {
-          args: Prisma.DirectDonationUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
-        }
-        deleteMany: {
-          args: Prisma.DirectDonationDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.DirectDonationUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.DirectDonationUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>[]
-        }
-        upsert: {
-          args: Prisma.DirectDonationUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DirectDonationPayload>
-        }
-        aggregate: {
-          args: Prisma.DirectDonationAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateDirectDonation>
-        }
-        groupBy: {
-          args: Prisma.DirectDonationGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.DirectDonationGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.DirectDonationCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.DirectDonationCountAggregateOutputType> | number
         }
       }
     }
@@ -4496,6 +4496,22 @@ export const KeywordScalarFieldEnum = {
 export type KeywordScalarFieldEnum = (typeof KeywordScalarFieldEnum)[keyof typeof KeywordScalarFieldEnum]
 
 
+export const DirectDonationScalarFieldEnum = {
+  id: 'id',
+  donorId: 'donorId',
+  charityId: 'charityId',
+  amount: 'amount',
+  currency: 'currency',
+  isAnonymous: 'isAnonymous',
+  message: 'message',
+  donatedAt: 'donatedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DirectDonationScalarFieldEnum = (typeof DirectDonationScalarFieldEnum)[keyof typeof DirectDonationScalarFieldEnum]
+
+
 export const FollowScalarFieldEnum = {
   id: 'id',
   followerId: 'followerId',
@@ -4559,6 +4575,7 @@ export const OrderScalarFieldEnum = {
   totalPrice: 'totalPrice',
   sellerItemsTotal: 'sellerItemsTotal',
   sellerTotal: 'sellerTotal',
+  assistedSellCommission: 'assistedSellCommission',
   treeCredit: 'treeCredit',
   serviceFee: 'serviceFee',
   authenticationFee: 'authenticationFee',
@@ -4588,6 +4605,7 @@ export const OrderItemScalarFieldEnum = {
   unitAllocatedPrice: 'unitAllocatedPrice',
   sellerFinalUnitPrice: 'sellerFinalUnitPrice',
   totalPrice: 'totalPrice',
+  assistedSellCommission: 'assistedSellCommission',
   isCancelled: 'isCancelled',
   authResult: 'authResult',
   buyerRequestCancel: 'buyerRequestCancel',
@@ -4664,22 +4682,6 @@ export const PaymentScalarFieldEnum = {
 } as const
 
 export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
-
-
-export const DirectDonationScalarFieldEnum = {
-  id: 'id',
-  donorId: 'donorId',
-  charityId: 'charityId',
-  amount: 'amount',
-  currency: 'currency',
-  isAnonymous: 'isAnonymous',
-  message: 'message',
-  donatedAt: 'donatedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type DirectDonationScalarFieldEnum = (typeof DirectDonationScalarFieldEnum)[keyof typeof DirectDonationScalarFieldEnum]
 
 
 export const RefundScalarFieldEnum = {
@@ -5835,6 +5837,7 @@ export type GlobalOmitConfig = {
   sizeCategoryHierarchyGroup?: Prisma.SizeCategoryHierarchyGroupOmit
   size?: Prisma.SizeOmit
   keyword?: Prisma.KeywordOmit
+  directDonation?: Prisma.DirectDonationOmit
   follow?: Prisma.FollowOmit
   chat?: Prisma.ChatOmit
   message?: Prisma.MessageOmit
@@ -5844,7 +5847,6 @@ export type GlobalOmitConfig = {
   cancelOrderEvidence?: Prisma.CancelOrderEvidenceOmit
   sellDonation?: Prisma.SellDonationOmit
   payment?: Prisma.PaymentOmit
-  directDonation?: Prisma.DirectDonationOmit
   refund?: Prisma.RefundOmit
   product?: Prisma.ProductOmit
   productPicture?: Prisma.ProductPictureOmit

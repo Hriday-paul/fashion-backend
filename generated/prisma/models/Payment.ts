@@ -833,6 +833,38 @@ export type PaymentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type PaymentCreateNestedOneWithoutDonationInput = {
+  create?: Prisma.XOR<Prisma.PaymentCreateWithoutDonationInput, Prisma.PaymentUncheckedCreateWithoutDonationInput>
+  connectOrCreate?: Prisma.PaymentCreateOrConnectWithoutDonationInput
+  connect?: Prisma.PaymentWhereUniqueInput
+}
+
+export type PaymentUncheckedCreateNestedOneWithoutDonationInput = {
+  create?: Prisma.XOR<Prisma.PaymentCreateWithoutDonationInput, Prisma.PaymentUncheckedCreateWithoutDonationInput>
+  connectOrCreate?: Prisma.PaymentCreateOrConnectWithoutDonationInput
+  connect?: Prisma.PaymentWhereUniqueInput
+}
+
+export type PaymentUpdateOneWithoutDonationNestedInput = {
+  create?: Prisma.XOR<Prisma.PaymentCreateWithoutDonationInput, Prisma.PaymentUncheckedCreateWithoutDonationInput>
+  connectOrCreate?: Prisma.PaymentCreateOrConnectWithoutDonationInput
+  upsert?: Prisma.PaymentUpsertWithoutDonationInput
+  disconnect?: Prisma.PaymentWhereInput | boolean
+  delete?: Prisma.PaymentWhereInput | boolean
+  connect?: Prisma.PaymentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PaymentUpdateToOneWithWhereWithoutDonationInput, Prisma.PaymentUpdateWithoutDonationInput>, Prisma.PaymentUncheckedUpdateWithoutDonationInput>
+}
+
+export type PaymentUncheckedUpdateOneWithoutDonationNestedInput = {
+  create?: Prisma.XOR<Prisma.PaymentCreateWithoutDonationInput, Prisma.PaymentUncheckedCreateWithoutDonationInput>
+  connectOrCreate?: Prisma.PaymentCreateOrConnectWithoutDonationInput
+  upsert?: Prisma.PaymentUpsertWithoutDonationInput
+  disconnect?: Prisma.PaymentWhereInput | boolean
+  delete?: Prisma.PaymentWhereInput | boolean
+  connect?: Prisma.PaymentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PaymentUpdateToOneWithWhereWithoutDonationInput, Prisma.PaymentUpdateWithoutDonationInput>, Prisma.PaymentUncheckedUpdateWithoutDonationInput>
+}
+
 export type PaymentCreateNestedOneWithoutOrderInput = {
   create?: Prisma.XOR<Prisma.PaymentCreateWithoutOrderInput, Prisma.PaymentUncheckedCreateWithoutOrderInput>
   connectOrCreate?: Prisma.PaymentCreateOrConnectWithoutOrderInput
@@ -875,38 +907,6 @@ export type EnumStripePaymentStatusFieldUpdateOperationsInput = {
 
 export type EnumPaymentTypeFieldUpdateOperationsInput = {
   set?: $Enums.PaymentType
-}
-
-export type PaymentCreateNestedOneWithoutDonationInput = {
-  create?: Prisma.XOR<Prisma.PaymentCreateWithoutDonationInput, Prisma.PaymentUncheckedCreateWithoutDonationInput>
-  connectOrCreate?: Prisma.PaymentCreateOrConnectWithoutDonationInput
-  connect?: Prisma.PaymentWhereUniqueInput
-}
-
-export type PaymentUncheckedCreateNestedOneWithoutDonationInput = {
-  create?: Prisma.XOR<Prisma.PaymentCreateWithoutDonationInput, Prisma.PaymentUncheckedCreateWithoutDonationInput>
-  connectOrCreate?: Prisma.PaymentCreateOrConnectWithoutDonationInput
-  connect?: Prisma.PaymentWhereUniqueInput
-}
-
-export type PaymentUpdateOneWithoutDonationNestedInput = {
-  create?: Prisma.XOR<Prisma.PaymentCreateWithoutDonationInput, Prisma.PaymentUncheckedCreateWithoutDonationInput>
-  connectOrCreate?: Prisma.PaymentCreateOrConnectWithoutDonationInput
-  upsert?: Prisma.PaymentUpsertWithoutDonationInput
-  disconnect?: Prisma.PaymentWhereInput | boolean
-  delete?: Prisma.PaymentWhereInput | boolean
-  connect?: Prisma.PaymentWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PaymentUpdateToOneWithWhereWithoutDonationInput, Prisma.PaymentUpdateWithoutDonationInput>, Prisma.PaymentUncheckedUpdateWithoutDonationInput>
-}
-
-export type PaymentUncheckedUpdateOneWithoutDonationNestedInput = {
-  create?: Prisma.XOR<Prisma.PaymentCreateWithoutDonationInput, Prisma.PaymentUncheckedCreateWithoutDonationInput>
-  connectOrCreate?: Prisma.PaymentCreateOrConnectWithoutDonationInput
-  upsert?: Prisma.PaymentUpsertWithoutDonationInput
-  disconnect?: Prisma.PaymentWhereInput | boolean
-  delete?: Prisma.PaymentWhereInput | boolean
-  connect?: Prisma.PaymentWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PaymentUpdateToOneWithWhereWithoutDonationInput, Prisma.PaymentUpdateWithoutDonationInput>, Prisma.PaymentUncheckedUpdateWithoutDonationInput>
 }
 
 export type PaymentCreateNestedOneWithoutRefundsInput = {
@@ -963,134 +963,6 @@ export type PaymentUncheckedUpdateManyWithoutUserNestedInput = {
   update?: Prisma.PaymentUpdateWithWhereUniqueWithoutUserInput | Prisma.PaymentUpdateWithWhereUniqueWithoutUserInput[]
   updateMany?: Prisma.PaymentUpdateManyWithWhereWithoutUserInput | Prisma.PaymentUpdateManyWithWhereWithoutUserInput[]
   deleteMany?: Prisma.PaymentScalarWhereInput | Prisma.PaymentScalarWhereInput[]
-}
-
-export type PaymentCreateWithoutOrderInput = {
-  id?: string
-  total_amount?: number
-  paid_amount?: number
-  seller_required_amount?: number
-  seller_received_amount?: number
-  status?: $Enums.PaymentStatus
-  stripe_status?: $Enums.StripePaymentStatus
-  paymentType?: $Enums.PaymentType
-  transactionId: string
-  paymentIntentId?: string | null
-  checkoutSessionId?: string | null
-  stripeTransferId?: string | null
-  stripeRefundId?: string | null
-  transferGroup?: string | null
-  sellerConnectAccountId?: string | null
-  escrowedAt?: Date | string | null
-  releasedAt?: Date | string | null
-  refundedAt?: Date | string | null
-  reconciledAt?: Date | string | null
-  paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  user?: Prisma.UserCreateNestedOneWithoutPaymentsInput
-  donation?: Prisma.DirectDonationCreateNestedOneWithoutPaymentInput
-  refunds?: Prisma.RefundCreateNestedManyWithoutPaymentInput
-}
-
-export type PaymentUncheckedCreateWithoutOrderInput = {
-  id?: string
-  userId?: string | null
-  total_amount?: number
-  paid_amount?: number
-  seller_required_amount?: number
-  seller_received_amount?: number
-  status?: $Enums.PaymentStatus
-  stripe_status?: $Enums.StripePaymentStatus
-  donationId?: string | null
-  paymentType?: $Enums.PaymentType
-  transactionId: string
-  paymentIntentId?: string | null
-  checkoutSessionId?: string | null
-  stripeTransferId?: string | null
-  stripeRefundId?: string | null
-  transferGroup?: string | null
-  sellerConnectAccountId?: string | null
-  escrowedAt?: Date | string | null
-  releasedAt?: Date | string | null
-  refundedAt?: Date | string | null
-  reconciledAt?: Date | string | null
-  paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  refunds?: Prisma.RefundUncheckedCreateNestedManyWithoutPaymentInput
-}
-
-export type PaymentCreateOrConnectWithoutOrderInput = {
-  where: Prisma.PaymentWhereUniqueInput
-  create: Prisma.XOR<Prisma.PaymentCreateWithoutOrderInput, Prisma.PaymentUncheckedCreateWithoutOrderInput>
-}
-
-export type PaymentUpsertWithoutOrderInput = {
-  update: Prisma.XOR<Prisma.PaymentUpdateWithoutOrderInput, Prisma.PaymentUncheckedUpdateWithoutOrderInput>
-  create: Prisma.XOR<Prisma.PaymentCreateWithoutOrderInput, Prisma.PaymentUncheckedCreateWithoutOrderInput>
-  where?: Prisma.PaymentWhereInput
-}
-
-export type PaymentUpdateToOneWithWhereWithoutOrderInput = {
-  where?: Prisma.PaymentWhereInput
-  data: Prisma.XOR<Prisma.PaymentUpdateWithoutOrderInput, Prisma.PaymentUncheckedUpdateWithoutOrderInput>
-}
-
-export type PaymentUpdateWithoutOrderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  paid_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  seller_required_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  seller_received_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
-  stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
-  paymentType?: Prisma.EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stripeTransferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transferGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sellerConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  escrowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneWithoutPaymentsNestedInput
-  donation?: Prisma.DirectDonationUpdateOneWithoutPaymentNestedInput
-  refunds?: Prisma.RefundUpdateManyWithoutPaymentNestedInput
-}
-
-export type PaymentUncheckedUpdateWithoutOrderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  paid_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  seller_required_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  seller_received_amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
-  stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
-  donationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentType?: Prisma.EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stripeTransferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transferGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sellerConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  escrowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  refunds?: Prisma.RefundUncheckedUpdateManyWithoutPaymentNestedInput
 }
 
 export type PaymentCreateWithoutDonationInput = {
@@ -1203,6 +1075,134 @@ export type PaymentUncheckedUpdateWithoutDonationInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
   orderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentType?: Prisma.EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
+  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeTransferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transferGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escrowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refunds?: Prisma.RefundUncheckedUpdateManyWithoutPaymentNestedInput
+}
+
+export type PaymentCreateWithoutOrderInput = {
+  id?: string
+  total_amount?: number
+  paid_amount?: number
+  seller_required_amount?: number
+  seller_received_amount?: number
+  status?: $Enums.PaymentStatus
+  stripe_status?: $Enums.StripePaymentStatus
+  paymentType?: $Enums.PaymentType
+  transactionId: string
+  paymentIntentId?: string | null
+  checkoutSessionId?: string | null
+  stripeTransferId?: string | null
+  stripeRefundId?: string | null
+  transferGroup?: string | null
+  sellerConnectAccountId?: string | null
+  escrowedAt?: Date | string | null
+  releasedAt?: Date | string | null
+  refundedAt?: Date | string | null
+  reconciledAt?: Date | string | null
+  paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutPaymentsInput
+  donation?: Prisma.DirectDonationCreateNestedOneWithoutPaymentInput
+  refunds?: Prisma.RefundCreateNestedManyWithoutPaymentInput
+}
+
+export type PaymentUncheckedCreateWithoutOrderInput = {
+  id?: string
+  userId?: string | null
+  total_amount?: number
+  paid_amount?: number
+  seller_required_amount?: number
+  seller_received_amount?: number
+  status?: $Enums.PaymentStatus
+  stripe_status?: $Enums.StripePaymentStatus
+  donationId?: string | null
+  paymentType?: $Enums.PaymentType
+  transactionId: string
+  paymentIntentId?: string | null
+  checkoutSessionId?: string | null
+  stripeTransferId?: string | null
+  stripeRefundId?: string | null
+  transferGroup?: string | null
+  sellerConnectAccountId?: string | null
+  escrowedAt?: Date | string | null
+  releasedAt?: Date | string | null
+  refundedAt?: Date | string | null
+  reconciledAt?: Date | string | null
+  paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  refunds?: Prisma.RefundUncheckedCreateNestedManyWithoutPaymentInput
+}
+
+export type PaymentCreateOrConnectWithoutOrderInput = {
+  where: Prisma.PaymentWhereUniqueInput
+  create: Prisma.XOR<Prisma.PaymentCreateWithoutOrderInput, Prisma.PaymentUncheckedCreateWithoutOrderInput>
+}
+
+export type PaymentUpsertWithoutOrderInput = {
+  update: Prisma.XOR<Prisma.PaymentUpdateWithoutOrderInput, Prisma.PaymentUncheckedUpdateWithoutOrderInput>
+  create: Prisma.XOR<Prisma.PaymentCreateWithoutOrderInput, Prisma.PaymentUncheckedCreateWithoutOrderInput>
+  where?: Prisma.PaymentWhereInput
+}
+
+export type PaymentUpdateToOneWithWhereWithoutOrderInput = {
+  where?: Prisma.PaymentWhereInput
+  data: Prisma.XOR<Prisma.PaymentUpdateWithoutOrderInput, Prisma.PaymentUncheckedUpdateWithoutOrderInput>
+}
+
+export type PaymentUpdateWithoutOrderInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  paid_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  seller_required_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  seller_received_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
+  paymentType?: Prisma.EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
+  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeTransferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transferGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerConnectAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escrowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutPaymentsNestedInput
+  donation?: Prisma.DirectDonationUpdateOneWithoutPaymentNestedInput
+  refunds?: Prisma.RefundUpdateManyWithoutPaymentNestedInput
+}
+
+export type PaymentUncheckedUpdateWithoutOrderInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  paid_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  seller_required_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  seller_received_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  stripe_status?: Prisma.EnumStripePaymentStatusFieldUpdateOperationsInput | $Enums.StripePaymentStatus
+  donationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentType?: Prisma.EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
   paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null

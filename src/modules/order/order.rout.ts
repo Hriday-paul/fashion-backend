@@ -15,7 +15,8 @@ export const excludedCharityRoles: Role[] = [
     // Role.CHARITY_SHOP,
 ];
 
-// router.get("/", auth(...allRoles), favouriteControler.favouritesByUser);
+router.get("/", auth(Role.ADMIN), orderControler.orders);
+router.get("/stats", auth(Role.ADMIN), orderControler.orderStats);
 
 router.post("/",
     validateOrderProducts,

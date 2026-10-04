@@ -66,34 +66,6 @@ enum StripePaymentStatus {
   REFUNDED // buyer refunded, money returned to buyer
 }
 
-model DirectDonation {
-  id String @id @default(cuid())
-
-  donorId String
-  donor   User   @relation("donor", fields: [donorId], references: [id], onDelete: Restrict)
-
-  charityId String
-  charity   User   @relation("charity", fields: [charityId], references: [id], onDelete: Restrict)
-
-  amount   Float @default(0)
-  currency String  @default("USD")
-
-  payment Payment?
-
-  // anonymous donation
-  isAnonymous Boolean @default(false)
-
-  // donor message
-  message String?
-
-  donatedAt DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  @@index([charityId])
-  @@index([donorId])
-}
-
 model Refund {
   id String @id @default(cuid())
 

@@ -13,11 +13,6 @@ async function main() {
     // await KeywordSeed(prisma);
 
     // await UserSeed(prisma);
-
-    //dlt all assistentSells
-    await prisma.assistentSell.deleteMany({});
-
-    console.log("assistentSells deleted successfully");
     
 }
 

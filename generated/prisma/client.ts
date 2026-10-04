@@ -97,6 +97,11 @@ export type Size = Prisma.SizeModel
  */
 export type Keyword = Prisma.KeywordModel
 /**
+ * Model DirectDonation
+ * 
+ */
+export type DirectDonation = Prisma.DirectDonationModel
+/**
  * Model Follow
  * 
  */
@@ -141,11 +146,6 @@ export type SellDonation = Prisma.SellDonationModel
  * 
  */
 export type Payment = Prisma.PaymentModel
-/**
- * Model DirectDonation
- * 
- */
-export type DirectDonation = Prisma.DirectDonationModel
 /**
  * Model Refund
  * 

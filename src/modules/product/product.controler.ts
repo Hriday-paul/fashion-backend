@@ -57,7 +57,7 @@ const addNewProduct = catchAsync(async (req: Request, res: Response) => {
 
 const allProducts = catchAsync(async (req: Request, res: Response) => {
 
-    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials"])
+    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials", "stock"])
     const options = pick(req.query, PaginateOptions);
 
     const result = await productService.allProducts(query, options, req.user?.id);
