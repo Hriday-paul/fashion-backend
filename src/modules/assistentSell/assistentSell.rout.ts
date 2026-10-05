@@ -27,6 +27,10 @@ router.get("/", //all requests
     auth(Role.ADMIN),
     assistentSellControler.allRequests);
 
+router.get("/earnings", //all requests
+    auth(Role.ADMIN),
+    assistentSellControler.assitedSellsEarnings);
+
 router.get("/requests", //my requests
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     assistentSellControler.myRequests);

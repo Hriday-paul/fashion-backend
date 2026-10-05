@@ -40,7 +40,7 @@ model Order {
     totalPrice    Float @default(0) // itemsTotal + total Delivery charge + treeCredit + serviceFee + authenticationFee == buyer total paid
     
     sellerItemsTotal Float @default(0) // sum of all items total prices - seller donation amount
-    sellerTotal  Float @default(0) // sum of all items total prices - seller donation amount - bundle discount
+    sellerTotal  Float @default(0) // sum of all items total prices - seller donation amount
 
     assistedSellCommission Float @default(0) // total assisted sell commission
 
@@ -117,6 +117,8 @@ model OrderItem {
     totalPrice Float // unitPrice * quantity
 
     assistedSellCommission Float @default(0)
+
+    unitAuthFee Float @default(0)
 
     isCancelled Boolean @default(false)
     authResult OrderAuthResult @default(NOT_PROCESSED)

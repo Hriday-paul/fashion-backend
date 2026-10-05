@@ -102,7 +102,7 @@ const allRequests = async (query: Record<string, unknown>, options: TPaginationO
                     }
                 }
             },
-            shipment : true,
+            shipment: true,
         },
     })
 
@@ -196,7 +196,7 @@ const myRequests = async (sellerId: string, query: Record<string, unknown>, opti
                     }
                 }
             },
-            shipment : {
+            shipment: {
                 select: {
                     status: true,
                 }
@@ -724,9 +724,161 @@ const addNewListing = async (payload: Product & ProductOtherPayload) => {
 }
 
 const assitedSellsEarnings = async (query: Record<string, unknown>, options: TPaginationOptions) => {
-    const AndConditions: Prisma.AssistentSellWhereInput[] = [];
+
+    const AndConditions: Prisma.OrderItemWhereInput[] = [{
+        assistedSellCommission: { gt: 0 },
+        order: {
+            payment: {
+                status: {
+                    in: ["SUCCESSED", "REFUNDED"]
+                }
+            },
+            status: "COMPLETED"
+        }
+    }];
+
+    const { searchTerm, startDate, endDate } = query;
+
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
-    
+
+    if (searchTerm) {
+        AndConditions.push({
+            OR: [
+                {
+                    order: {
+                        orderNumber: {
+                            contains: searchTerm as string,
+                            mode: 'insensitive'
+                        },
+                        buyer: {
+                            userName: {
+                                contains: searchTerm as string,
+                                mode: 'insensitive'
+                            }
+                        },
+                        seller: {
+                            userName: {
+                                contains: searchTerm as string,
+                                mode: 'insensitive'
+                            }
+                        }
+                    }
+                },
+                {
+                    product: {
+                        title: {
+                            contains: searchTerm as string,
+                            mode: 'insensitive'
+                        }
+                    }
+                },
+                {
+                    assistedSellCommission: {
+                        equals: parseFloat(searchTerm as string)
+                    }
+                }
+            ]
+        })
+    }
+
+    if (startDate) {
+        AndConditions.push({
+            order: {
+                completedAt: {
+                    gte: new Date(startDate as string)
+                }
+            }
+        })
+    }
+
+    if (endDate) {
+        AndConditions.push({
+            order: {
+                completedAt: {
+                    lte: new Date(endDate as string)
+                }
+            }
+        })
+    }
+
+    const whereConditions: Prisma.OrderItemWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
+
+    const result = await prisma.orderItem.findMany({
+        where: whereConditions,
+        skip,
+        take: limit,
+        orderBy: {
+            [sortBy]: sortOrder,
+        },
+        select: {
+            order: {
+                select: {
+                    orderNumber: true,
+                    id: true,
+                    buyer: {
+                        select: {
+                            userName: true,
+                            picture: {
+                                select: {
+                                    url: true
+                                }
+                            }
+                        }
+                    },
+                    seller: {
+                        select: {
+                            userName: true,
+                            picture: {
+                                select: {
+                                    url: true
+                                }
+                            }
+                        }
+                    },
+                    completedAt: true,
+                },
+            },
+            id: true,
+            assistedSellCommission: true,
+            product: {
+                select: {
+                    id: true,
+                    title: true,
+                    images: {
+                        take: 1,
+                        orderBy: {
+                            order: 'asc'
+                        },
+                        select: {
+                            id: true,
+                            url: true,
+                            key: true
+                        }
+                    },
+                    brand: {
+                        select: {
+                            name: true
+                        }
+                    },
+                    size: {
+                        select: {
+                            title: true
+                        }
+                    }
+                }
+            }
+        },
+    })
+
+    const total = await prisma.orderItem.count({
+        where: whereConditions,
+    });
+
+    return {
+        meta: paginationHelper.generatePaginationMeta({ limit, page, total }),
+        data: result,
+    };
+
 }
 
 export const assistentSellService = {
@@ -740,4 +892,5 @@ export const assistentSellService = {
     listings,
     addNewListing,
     requestListingStats,
+    assitedSellsEarnings
 }

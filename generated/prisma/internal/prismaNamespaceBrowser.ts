@@ -377,6 +377,7 @@ export const OrderItemScalarFieldEnum = {
   sellerFinalUnitPrice: 'sellerFinalUnitPrice',
   totalPrice: 'totalPrice',
   assistedSellCommission: 'assistedSellCommission',
+  unitAuthFee: 'unitAuthFee',
   isCancelled: 'isCancelled',
   authResult: 'authResult',
   buyerRequestCancel: 'buyerRequestCancel',

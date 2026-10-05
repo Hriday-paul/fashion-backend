@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "OrderItem" ADD COLUMN     "unitAuthFee" DOUBLE PRECISION NOT NULL DEFAULT 0;

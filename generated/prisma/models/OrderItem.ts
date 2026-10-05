@@ -33,6 +33,7 @@ export type OrderItemAvgAggregateOutputType = {
   sellerFinalUnitPrice: number | null
   totalPrice: number | null
   assistedSellCommission: number | null
+  unitAuthFee: number | null
   extra_donation: number | null
   sell_donation: number | null
 }
@@ -45,6 +46,7 @@ export type OrderItemSumAggregateOutputType = {
   sellerFinalUnitPrice: number | null
   totalPrice: number | null
   assistedSellCommission: number | null
+  unitAuthFee: number | null
   extra_donation: number | null
   sell_donation: number | null
 }
@@ -60,6 +62,7 @@ export type OrderItemMinAggregateOutputType = {
   sellerFinalUnitPrice: number | null
   totalPrice: number | null
   assistedSellCommission: number | null
+  unitAuthFee: number | null
   isCancelled: boolean | null
   authResult: $Enums.OrderAuthResult | null
   buyerRequestCancel: $Enums.BuyerRequestCancelStatus | null
@@ -86,6 +89,7 @@ export type OrderItemMaxAggregateOutputType = {
   sellerFinalUnitPrice: number | null
   totalPrice: number | null
   assistedSellCommission: number | null
+  unitAuthFee: number | null
   isCancelled: boolean | null
   authResult: $Enums.OrderAuthResult | null
   buyerRequestCancel: $Enums.BuyerRequestCancelStatus | null
@@ -112,6 +116,7 @@ export type OrderItemCountAggregateOutputType = {
   sellerFinalUnitPrice: number
   totalPrice: number
   assistedSellCommission: number
+  unitAuthFee: number
   isCancelled: number
   authResult: number
   buyerRequestCancel: number
@@ -137,6 +142,7 @@ export type OrderItemAvgAggregateInputType = {
   sellerFinalUnitPrice?: true
   totalPrice?: true
   assistedSellCommission?: true
+  unitAuthFee?: true
   extra_donation?: true
   sell_donation?: true
 }
@@ -149,6 +155,7 @@ export type OrderItemSumAggregateInputType = {
   sellerFinalUnitPrice?: true
   totalPrice?: true
   assistedSellCommission?: true
+  unitAuthFee?: true
   extra_donation?: true
   sell_donation?: true
 }
@@ -164,6 +171,7 @@ export type OrderItemMinAggregateInputType = {
   sellerFinalUnitPrice?: true
   totalPrice?: true
   assistedSellCommission?: true
+  unitAuthFee?: true
   isCancelled?: true
   authResult?: true
   buyerRequestCancel?: true
@@ -190,6 +198,7 @@ export type OrderItemMaxAggregateInputType = {
   sellerFinalUnitPrice?: true
   totalPrice?: true
   assistedSellCommission?: true
+  unitAuthFee?: true
   isCancelled?: true
   authResult?: true
   buyerRequestCancel?: true
@@ -216,6 +225,7 @@ export type OrderItemCountAggregateInputType = {
   sellerFinalUnitPrice?: true
   totalPrice?: true
   assistedSellCommission?: true
+  unitAuthFee?: true
   isCancelled?: true
   authResult?: true
   buyerRequestCancel?: true
@@ -329,6 +339,7 @@ export type OrderItemGroupByOutputType = {
   sellerFinalUnitPrice: number
   totalPrice: number
   assistedSellCommission: number
+  unitAuthFee: number
   isCancelled: boolean
   authResult: $Enums.OrderAuthResult
   buyerRequestCancel: $Enums.BuyerRequestCancelStatus
@@ -378,6 +389,7 @@ export type OrderItemWhereInput = {
   sellerFinalUnitPrice?: Prisma.FloatFilter<"OrderItem"> | number
   totalPrice?: Prisma.FloatFilter<"OrderItem"> | number
   assistedSellCommission?: Prisma.FloatFilter<"OrderItem"> | number
+  unitAuthFee?: Prisma.FloatFilter<"OrderItem"> | number
   isCancelled?: Prisma.BoolFilter<"OrderItem"> | boolean
   authResult?: Prisma.EnumOrderAuthResultFilter<"OrderItem"> | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFilter<"OrderItem"> | $Enums.BuyerRequestCancelStatus
@@ -409,6 +421,7 @@ export type OrderItemOrderByWithRelationInput = {
   sellerFinalUnitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
   assistedSellCommission?: Prisma.SortOrder
+  unitAuthFee?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
   authResult?: Prisma.SortOrder
   buyerRequestCancel?: Prisma.SortOrder
@@ -443,6 +456,7 @@ export type OrderItemWhereUniqueInput = Prisma.AtLeast<{
   sellerFinalUnitPrice?: Prisma.FloatFilter<"OrderItem"> | number
   totalPrice?: Prisma.FloatFilter<"OrderItem"> | number
   assistedSellCommission?: Prisma.FloatFilter<"OrderItem"> | number
+  unitAuthFee?: Prisma.FloatFilter<"OrderItem"> | number
   isCancelled?: Prisma.BoolFilter<"OrderItem"> | boolean
   authResult?: Prisma.EnumOrderAuthResultFilter<"OrderItem"> | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFilter<"OrderItem"> | $Enums.BuyerRequestCancelStatus
@@ -474,6 +488,7 @@ export type OrderItemOrderByWithAggregationInput = {
   sellerFinalUnitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
   assistedSellCommission?: Prisma.SortOrder
+  unitAuthFee?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
   authResult?: Prisma.SortOrder
   buyerRequestCancel?: Prisma.SortOrder
@@ -508,6 +523,7 @@ export type OrderItemScalarWhereWithAggregatesInput = {
   sellerFinalUnitPrice?: Prisma.FloatWithAggregatesFilter<"OrderItem"> | number
   totalPrice?: Prisma.FloatWithAggregatesFilter<"OrderItem"> | number
   assistedSellCommission?: Prisma.FloatWithAggregatesFilter<"OrderItem"> | number
+  unitAuthFee?: Prisma.FloatWithAggregatesFilter<"OrderItem"> | number
   isCancelled?: Prisma.BoolWithAggregatesFilter<"OrderItem"> | boolean
   authResult?: Prisma.EnumOrderAuthResultWithAggregatesFilter<"OrderItem"> | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusWithAggregatesFilter<"OrderItem"> | $Enums.BuyerRequestCancelStatus
@@ -532,6 +548,7 @@ export type OrderItemCreateInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -563,6 +580,7 @@ export type OrderItemUncheckedCreateInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -590,6 +608,7 @@ export type OrderItemUpdateInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -621,6 +640,7 @@ export type OrderItemUncheckedUpdateInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -650,6 +670,7 @@ export type OrderItemCreateManyInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -674,6 +695,7 @@ export type OrderItemUpdateManyMutationInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -700,6 +722,7 @@ export type OrderItemUncheckedUpdateManyInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -736,6 +759,7 @@ export type OrderItemCountOrderByAggregateInput = {
   sellerFinalUnitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
   assistedSellCommission?: Prisma.SortOrder
+  unitAuthFee?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
   authResult?: Prisma.SortOrder
   buyerRequestCancel?: Prisma.SortOrder
@@ -759,6 +783,7 @@ export type OrderItemAvgOrderByAggregateInput = {
   sellerFinalUnitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
   assistedSellCommission?: Prisma.SortOrder
+  unitAuthFee?: Prisma.SortOrder
   extra_donation?: Prisma.SortOrder
   sell_donation?: Prisma.SortOrder
 }
@@ -774,6 +799,7 @@ export type OrderItemMaxOrderByAggregateInput = {
   sellerFinalUnitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
   assistedSellCommission?: Prisma.SortOrder
+  unitAuthFee?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
   authResult?: Prisma.SortOrder
   buyerRequestCancel?: Prisma.SortOrder
@@ -800,6 +826,7 @@ export type OrderItemMinOrderByAggregateInput = {
   sellerFinalUnitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
   assistedSellCommission?: Prisma.SortOrder
+  unitAuthFee?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
   authResult?: Prisma.SortOrder
   buyerRequestCancel?: Prisma.SortOrder
@@ -823,6 +850,7 @@ export type OrderItemSumOrderByAggregateInput = {
   sellerFinalUnitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
   assistedSellCommission?: Prisma.SortOrder
+  unitAuthFee?: Prisma.SortOrder
   extra_donation?: Prisma.SortOrder
   sell_donation?: Prisma.SortOrder
 }
@@ -983,6 +1011,7 @@ export type OrderItemCreateWithoutOrderInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -1012,6 +1041,7 @@ export type OrderItemUncheckedCreateWithoutOrderInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -1070,6 +1100,7 @@ export type OrderItemScalarWhereInput = {
   sellerFinalUnitPrice?: Prisma.FloatFilter<"OrderItem"> | number
   totalPrice?: Prisma.FloatFilter<"OrderItem"> | number
   assistedSellCommission?: Prisma.FloatFilter<"OrderItem"> | number
+  unitAuthFee?: Prisma.FloatFilter<"OrderItem"> | number
   isCancelled?: Prisma.BoolFilter<"OrderItem"> | boolean
   authResult?: Prisma.EnumOrderAuthResultFilter<"OrderItem"> | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFilter<"OrderItem"> | $Enums.BuyerRequestCancelStatus
@@ -1094,6 +1125,7 @@ export type OrderItemCreateWithoutCancelEvidencesInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -1124,6 +1156,7 @@ export type OrderItemUncheckedCreateWithoutCancelEvidencesInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -1166,6 +1199,7 @@ export type OrderItemUpdateWithoutCancelEvidencesInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -1196,6 +1230,7 @@ export type OrderItemUncheckedUpdateWithoutCancelEvidencesInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -1222,6 +1257,7 @@ export type OrderItemCreateWithoutDonationsInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -1252,6 +1288,7 @@ export type OrderItemUncheckedCreateWithoutDonationsInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -1294,6 +1331,7 @@ export type OrderItemUpdateWithoutDonationsInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -1324,6 +1362,7 @@ export type OrderItemUncheckedUpdateWithoutDonationsInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -1350,6 +1389,7 @@ export type OrderItemCreateWithoutProductInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -1379,6 +1419,7 @@ export type OrderItemUncheckedCreateWithoutProductInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -1432,6 +1473,7 @@ export type OrderItemCreateWithoutReturnItemInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -1462,6 +1504,7 @@ export type OrderItemUncheckedCreateWithoutReturnItemInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -1504,6 +1547,7 @@ export type OrderItemUpdateWithoutReturnItemInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -1534,6 +1578,7 @@ export type OrderItemUncheckedUpdateWithoutReturnItemInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -1561,6 +1606,7 @@ export type OrderItemCreateManyOrderInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -1585,6 +1631,7 @@ export type OrderItemUpdateWithoutOrderInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -1614,6 +1661,7 @@ export type OrderItemUncheckedUpdateWithoutOrderInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -1642,6 +1690,7 @@ export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -1667,6 +1716,7 @@ export type OrderItemCreateManyProductInput = {
   sellerFinalUnitPrice?: number
   totalPrice: number
   assistedSellCommission?: number
+  unitAuthFee?: number
   isCancelled?: boolean
   authResult?: $Enums.OrderAuthResult
   buyerRequestCancel?: $Enums.BuyerRequestCancelStatus
@@ -1691,6 +1741,7 @@ export type OrderItemUpdateWithoutProductInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -1720,6 +1771,7 @@ export type OrderItemUncheckedUpdateWithoutProductInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -1748,6 +1800,7 @@ export type OrderItemUncheckedUpdateManyWithoutProductInput = {
   sellerFinalUnitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   assistedSellCommission?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitAuthFee?: Prisma.FloatFieldUpdateOperationsInput | number
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authResult?: Prisma.EnumOrderAuthResultFieldUpdateOperationsInput | $Enums.OrderAuthResult
   buyerRequestCancel?: Prisma.EnumBuyerRequestCancelStatusFieldUpdateOperationsInput | $Enums.BuyerRequestCancelStatus
@@ -1814,6 +1867,7 @@ export type OrderItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   sellerFinalUnitPrice?: boolean
   totalPrice?: boolean
   assistedSellCommission?: boolean
+  unitAuthFee?: boolean
   isCancelled?: boolean
   authResult?: boolean
   buyerRequestCancel?: boolean
@@ -1846,6 +1900,7 @@ export type OrderItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   sellerFinalUnitPrice?: boolean
   totalPrice?: boolean
   assistedSellCommission?: boolean
+  unitAuthFee?: boolean
   isCancelled?: boolean
   authResult?: boolean
   buyerRequestCancel?: boolean
@@ -1874,6 +1929,7 @@ export type OrderItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   sellerFinalUnitPrice?: boolean
   totalPrice?: boolean
   assistedSellCommission?: boolean
+  unitAuthFee?: boolean
   isCancelled?: boolean
   authResult?: boolean
   buyerRequestCancel?: boolean
@@ -1902,6 +1958,7 @@ export type OrderItemSelectScalar = {
   sellerFinalUnitPrice?: boolean
   totalPrice?: boolean
   assistedSellCommission?: boolean
+  unitAuthFee?: boolean
   isCancelled?: boolean
   authResult?: boolean
   buyerRequestCancel?: boolean
@@ -1917,7 +1974,7 @@ export type OrderItemSelectScalar = {
   parcelItemId?: boolean
 }
 
-export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "productId" | "quantity" | "weight" | "unitPrice" | "unitAllocatedPrice" | "sellerFinalUnitPrice" | "totalPrice" | "assistedSellCommission" | "isCancelled" | "authResult" | "buyerRequestCancel" | "cancellationRequestAt" | "createdAt" | "updatedAt" | "cancelledAt" | "extra_donation" | "sell_donation" | "cancelledBy" | "cancelReason" | "cancelReasonDetails" | "parcelItemId", ExtArgs["result"]["orderItem"]>
+export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "productId" | "quantity" | "weight" | "unitPrice" | "unitAllocatedPrice" | "sellerFinalUnitPrice" | "totalPrice" | "assistedSellCommission" | "unitAuthFee" | "isCancelled" | "authResult" | "buyerRequestCancel" | "cancellationRequestAt" | "createdAt" | "updatedAt" | "cancelledAt" | "extra_donation" | "sell_donation" | "cancelledBy" | "cancelReason" | "cancelReasonDetails" | "parcelItemId", ExtArgs["result"]["orderItem"]>
 export type OrderItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -1955,6 +2012,7 @@ export type $OrderItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     sellerFinalUnitPrice: number
     totalPrice: number
     assistedSellCommission: number
+    unitAuthFee: number
     isCancelled: boolean
     authResult: $Enums.OrderAuthResult
     buyerRequestCancel: $Enums.BuyerRequestCancelStatus
@@ -2406,6 +2464,7 @@ export interface OrderItemFieldRefs {
   readonly sellerFinalUnitPrice: Prisma.FieldRef<"OrderItem", 'Float'>
   readonly totalPrice: Prisma.FieldRef<"OrderItem", 'Float'>
   readonly assistedSellCommission: Prisma.FieldRef<"OrderItem", 'Float'>
+  readonly unitAuthFee: Prisma.FieldRef<"OrderItem", 'Float'>
   readonly isCancelled: Prisma.FieldRef<"OrderItem", 'Boolean'>
   readonly authResult: Prisma.FieldRef<"OrderItem", 'OrderAuthResult'>
   readonly buyerRequestCancel: Prisma.FieldRef<"OrderItem", 'BuyerRequestCancelStatus'>

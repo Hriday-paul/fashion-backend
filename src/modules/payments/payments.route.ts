@@ -46,4 +46,6 @@ router.get('/sell-earnings', auth(...allRoles), paymentsController.sellEarnings)
 router.get('/sell-donation-raised', auth(Role.CHARITY_SHOP, Role.CHARITABLE_ORGANIZATION), paymentsController.donationRaisedFromSell);
 router.get('/direct-donation-raised', auth(Role.CHARITY_SHOP, Role.CHARITABLE_ORGANIZATION), paymentsController.directDonationRaised);
 
+router.get('/platform-earnings-stats', auth(Role.ADMIN), paymentsController.platformEarnignStats);
+
 export const paymentsRoutes = router;

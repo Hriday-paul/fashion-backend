@@ -190,6 +190,21 @@ const addNewListing = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const assitedSellsEarnings = catchAsync(async (req: Request, res: Response) => {
+
+    const query = pick(req.query, ["searchTerm", "startDate", "endDate"])
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await assistentSellService.assitedSellsEarnings(query, options);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Assisted sells earnings retrieved successfully',
+        data: result,
+    });
+});
+
 export const assistentSellControler = {
     addNewRequest,
     myRequests,
@@ -200,5 +215,7 @@ export const assistentSellControler = {
     markAsListed,
     requestListingStats,
     listings,
-    addNewListing
+    addNewListing,
+
+    assitedSellsEarnings
 }

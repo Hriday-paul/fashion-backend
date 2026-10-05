@@ -673,6 +673,60 @@ const directDonationRaised = async (options: TPaginationOptions, charityId: stri
 
 }
 
+const platformEarnignStats = async () => {
+
+  const assitedSellEarnings = await prisma.order.aggregate({
+    where: {
+      status: "COMPLETED",
+      assistedSellCommission: { gt: 0 },
+      payment: {
+        status: {
+          in: ["SUCCESSED", "REFUNDED"]
+        }
+      },
+    },
+    _sum: {
+      assistedSellCommission: true
+    },
+  });
+
+  const authenticationEarnings = await prisma.order.aggregate({
+    where: {
+      authStatus: "RESPONDED",
+      authenticationFee: { gt: 0 },
+      allowedAuthentication: true,
+      payment: {
+        status: {
+          in: ["SUCCESSED", "REFUNDED"]
+        }
+      },
+    },
+    _sum: {
+      authenticationFee: true
+    },
+  });
+
+  const serviceFeeEarnings = await prisma.order.aggregate({
+    where: {
+      serviceFee: { gt: 0 },
+      payment: {
+        status: {
+          in: ["SUCCESSED", "REFUNDED"]
+        }
+      },
+    },
+    _sum: {
+      serviceFee: true
+    },
+  });
+
+  return {
+    assitedSellEarnings : assitedSellEarnings._sum.assistedSellCommission || 0,
+    authenticationEarnings : authenticationEarnings._sum.authenticationFee || 0,
+    serviceFeeEarnings : serviceFeeEarnings._sum.serviceFee || 0
+  };
+
+}
 
 export const paymentsService = {
   // createPayments,
@@ -687,5 +741,6 @@ export const paymentsService = {
 
   sellEarnings,
   donationRaisedFromSell,
-  directDonationRaised
+  directDonationRaised,
+  platformEarnignStats
 };

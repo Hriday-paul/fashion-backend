@@ -210,6 +210,8 @@ const addNewOrder = async (
 
         const sellerUnitPrice = sellerGrossShareUnit - donation_amount;
 
+        const unitAuthFee = payload?.allowedAuthentication ? authenTicationRate : 0; // fixed authentication cost per item
+
         return {
             product: p,
             productId: p.id,
@@ -218,6 +220,7 @@ const addNewOrder = async (
             assisted_sell_commision,
             unitAllocatedPrice: allocateUnitPrice,
             sellerFinalUnitPrice: sellerUnitPrice,
+            unitAuthFee,
             totalPrice: allocateUnitPrice + extra_donation,
             quantity,
             extra_donation,
@@ -231,7 +234,7 @@ const addNewOrder = async (
     const authenTicationRate = 15; // fixed authentication cost per item
     const treeGiftRate = 4; // fixed tree gift cost per item
 
-    const totalAuthenticationCost = payload?.allowedAuthentication ? itemCount * authenTicationRate : 0;
+    const totalAuthenticationCost = orderItems.reduce((acc, item) => acc + item.unitAuthFee, 0);
 
     const treeGiftCost = payload?.treeGiftCount * treeGiftRate; // fixed tree gift cost per item
 
@@ -389,7 +392,7 @@ const addNewOrder = async (
 
                 totalDelivery: shippingRate,
                 items: {
-                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, assisted_sell_commision, ...item }) => {
+                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, assisted_sell_commision, unitAuthFee, ...item }) => {
                         const charityCount = charities.length;
                         const splitAmount = charityCount > 0 ? (donation_amount / charityCount) : 0;
                         const splitExtra = charityCount > 0 ? (item.extra_donation / charityCount) : 0;
@@ -404,6 +407,7 @@ const addNewOrder = async (
                             ...item,
                             parcelItemId,
                             assistedSellCommission : assisted_sell_commision,
+                            unitAuthFee,
                             sell_donation: donation_amount,
                             ...(charityCount > 0 && {
                                 donations: {
@@ -687,6 +691,8 @@ const addNewOfferOrder = async (
 
         const sellerUnitPrice = sellerGrossShareUnit - donation_amount;
 
+        const unitAuthFee = payload?.allowedAuthentication ? authenTicationRate : 0; // fixed authentication cost per item
+
         return {
             product: p,
             productId: p.id,
@@ -700,6 +706,7 @@ const addNewOfferOrder = async (
             extra_donation,
             donation_percent, // how much percent of the product price will be donated to charity from seller
             donation_amount, // how much amount of the product price will be donated to charity from seller
+            unitAuthFee,
             charities: p?.charities,
         };
     });
@@ -708,7 +715,7 @@ const addNewOfferOrder = async (
     const authenTicationRate = 15; // fixed authentication cost per item
     const treeGiftRate = 4; // fixed tree gift cost per item
 
-    const totalAuthenticationCost = payload?.allowedAuthentication ? itemCount * authenTicationRate : 0;
+    const totalAuthenticationCost = orderItems.reduce((acc, item) => acc + item.unitAuthFee, 0);
 
     const treeGiftCost = payload?.treeGiftCount * treeGiftRate; // fixed tree gift cost per item
 
@@ -862,7 +869,7 @@ const addNewOfferOrder = async (
 
                 totalDelivery: shippingRate,
                 items: {
-                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, assisted_sell_commision, ...item }) => {
+                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, assisted_sell_commision, unitAuthFee, ...item }) => {
                         const charityCount = charities.length;
                         const splitAmount = charityCount > 0 ? (donation_amount / charityCount) : 0;
                         const splitExtra = charityCount > 0 ? (item.extra_donation / charityCount) : 0;
@@ -877,6 +884,7 @@ const addNewOfferOrder = async (
                             ...item,
                             sell_donation: donation_amount,
                             assistedSellCommission : assisted_sell_commision,
+                            unitAuthFee,
                             parcelItemId,
                             ...(charityCount > 0 && {
                                 donations: {
@@ -2488,6 +2496,8 @@ const cancelFullOrderShipment = async ({ shipment_id, orderId, items, cancelReas
                 totalPrice: price?.buyerTotalNow,
                 itemsTotal: 0,
                 sellerItemsTotal: 0,
+                authenticationFee: 0,
+                assistedSellCommission: 0,
                 sellerTotal: price?.sellerTotalNow
             }
         })
@@ -2499,6 +2509,9 @@ const cancelFullOrderShipment = async ({ shipment_id, orderId, items, cancelReas
                 isCancelled: false
             },
             data: {
+                unitAuthFee: 0,
+                sell_donation: 0,
+                assistedSellCommission: 0,
                 isCancelled: true,
                 cancelReason: cancelReason as CancelReason,
                 cancelReasonDetails: cancelReasonDescription,
@@ -2584,7 +2597,10 @@ const dltOrderShipment = async ({ orderId, shipment_id, items, cancelReason, can
                 totalPrice: price?.buyerTotalNow,
                 itemsTotal: 0,
                 sellerItemsTotal: 0,
-                sellerTotal: price?.sellerTotalNow
+                authenticationFee: 0,
+                assistedSellCommission: 0,
+                sellerTotal: price?.sellerTotalNow,
+                
             }
         })
 
@@ -2599,7 +2615,10 @@ const dltOrderShipment = async ({ orderId, shipment_id, items, cancelReason, can
                 cancelReason: cancelReason as CancelReason,
                 cancelReasonDetails: cancelReasonDescription,
                 cancelledBy,
+                assistedSellCommission: 0,
                 cancelledAt: new Date(),
+                unitAuthFee: 0,
+                sell_donation: 0,
             },
         })
 
@@ -2773,6 +2792,10 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
     const ids = orderItems.map(item => item?.id);
 
     const refundAmount = orderItems.reduce((acc, item) => acc + (item?.unitAllocatedPrice || 0), 0);
+    const authenticationFee = orderItems.reduce((acc, item) => acc + (item?.unitAuthFee || 0), 0);
+    const assitedSellCommision = orderItems.reduce((acc, item) => acc + (item?.assistedSellCommission || 0), 0);
+
+    const sellerRefundItemsTotal = orderItems.reduce((acc, item) => acc + (item?.sellerFinalUnitPrice || 0), 0)
 
     if (!order?.payment || !order?.payment?.paymentIntentId) {
         throw new AppError(httpStatus.BAD_REQUEST, "Payment not found for this order, contact support")
@@ -2787,7 +2810,7 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
             cancelEvidences,
             items: orderItems,
             price: {
-                buyerTotalNow: order?.totalPrice - order?.itemsTotal,
+                buyerTotalNow: order?.totalPrice - (order?.itemsTotal + authenticationFee),
                 sellerTotalNow: order?.sellerTotal - order?.sellerItemsTotal
             },
             cancelledBy: "SELLER"
@@ -2801,7 +2824,7 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
             cancelEvidences,
             items: orderItems,
             price: {
-                buyerTotalNow: order?.totalPrice - order?.itemsTotal,
+                buyerTotalNow: order?.totalPrice - (order?.itemsTotal + authenticationFee),
                 sellerTotalNow: order?.sellerTotal - order?.sellerItemsTotal
             },
             cancelledBy: "SELLER"
@@ -2821,10 +2844,12 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
                     id: order?.id
                 },
                 data: {
+                    authenticationFee: order?.authenticationFee - authenticationFee,
                     totalPrice: order?.totalPrice - refundAmount,
-                    sellerTotal: order?.sellerTotal - refundAmount,
+                    sellerTotal: order?.sellerTotal - sellerRefundItemsTotal,
                     itemsTotal: order?.itemsTotal - refundAmount,
-                    sellerItemsTotal: order?.sellerItemsTotal - refundAmount
+                    sellerItemsTotal: order?.sellerItemsTotal - sellerRefundItemsTotal,
+                    assistedSellCommission : order?.assistedSellCommission - assitedSellCommision
                 }
             });
 
@@ -2841,6 +2866,9 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
                     cancelledBy: "SELLER",
                     cancelReason: cancelReason as CancelReason,
                     cancelReasonDetails: cancelReasonDescription,
+                    unitAuthFee: 0,
+                    sell_donation: 0,
+                    assistedSellCommission: 0,
                 }
             })
 
@@ -2893,7 +2921,7 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
         reason: "Order item(s) cancelled by seller",
         triggeredBy: "Seller",
         markPaymentRefunded: allowCancelFullOrder ? true : false,
-        amount: refundAmount
+        amount: refundAmount + authenticationFee
     });
 
     return;
