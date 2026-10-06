@@ -62,6 +62,9 @@ export type PaymentMinAggregateOutputType = {
   releasedAt: Date | null
   refundedAt: Date | null
   reconciledAt: Date | null
+  paidAt: Date | null
+  cancelledAt: Date | null
+  failedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -89,6 +92,9 @@ export type PaymentMaxAggregateOutputType = {
   releasedAt: Date | null
   refundedAt: Date | null
   reconciledAt: Date | null
+  paidAt: Date | null
+  cancelledAt: Date | null
+  failedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -116,6 +122,9 @@ export type PaymentCountAggregateOutputType = {
   releasedAt: number
   refundedAt: number
   reconciledAt: number
+  paidAt: number
+  cancelledAt: number
+  failedAt: number
   paymentData: number
   createdAt: number
   updatedAt: number
@@ -160,6 +169,9 @@ export type PaymentMinAggregateInputType = {
   releasedAt?: true
   refundedAt?: true
   reconciledAt?: true
+  paidAt?: true
+  cancelledAt?: true
+  failedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -187,6 +199,9 @@ export type PaymentMaxAggregateInputType = {
   releasedAt?: true
   refundedAt?: true
   reconciledAt?: true
+  paidAt?: true
+  cancelledAt?: true
+  failedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -214,6 +229,9 @@ export type PaymentCountAggregateInputType = {
   releasedAt?: true
   refundedAt?: true
   reconciledAt?: true
+  paidAt?: true
+  cancelledAt?: true
+  failedAt?: true
   paymentData?: true
   createdAt?: true
   updatedAt?: true
@@ -329,6 +347,9 @@ export type PaymentGroupByOutputType = {
   releasedAt: Date | null
   refundedAt: Date | null
   reconciledAt: Date | null
+  paidAt: Date | null
+  cancelledAt: Date | null
+  failedAt: Date | null
   paymentData: runtime.JsonValue | null
   createdAt: Date
   updatedAt: Date
@@ -380,6 +401,9 @@ export type PaymentWhereInput = {
   releasedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   refundedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   reconciledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  failedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   paymentData?: Prisma.JsonNullableFilter<"Payment">
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
@@ -412,6 +436,9 @@ export type PaymentOrderByWithRelationInput = {
   releasedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reconciledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  failedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentData?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -447,6 +474,9 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   releasedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   refundedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   reconciledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  failedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   paymentData?: Prisma.JsonNullableFilter<"Payment">
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
@@ -479,6 +509,9 @@ export type PaymentOrderByWithAggregationInput = {
   releasedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reconciledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  failedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentData?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -515,6 +548,9 @@ export type PaymentScalarWhereWithAggregatesInput = {
   releasedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
   refundedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
   reconciledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
+  cancelledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
+  failedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
   paymentData?: Prisma.JsonNullableWithAggregatesFilter<"Payment">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
@@ -540,6 +576,9 @@ export type PaymentCreateInput = {
   releasedAt?: Date | string | null
   refundedAt?: Date | string | null
   reconciledAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  failedAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -572,6 +611,9 @@ export type PaymentUncheckedCreateInput = {
   releasedAt?: Date | string | null
   refundedAt?: Date | string | null
   reconciledAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  failedAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -598,6 +640,9 @@ export type PaymentUpdateInput = {
   releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -630,6 +675,9 @@ export type PaymentUncheckedUpdateInput = {
   releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -659,6 +707,9 @@ export type PaymentCreateManyInput = {
   releasedAt?: Date | string | null
   refundedAt?: Date | string | null
   reconciledAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  failedAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -684,6 +735,9 @@ export type PaymentUpdateManyMutationInput = {
   releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -712,6 +766,9 @@ export type PaymentUncheckedUpdateManyInput = {
   releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -745,6 +802,9 @@ export type PaymentCountOrderByAggregateInput = {
   releasedAt?: Prisma.SortOrder
   refundedAt?: Prisma.SortOrder
   reconciledAt?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
+  failedAt?: Prisma.SortOrder
   paymentData?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -780,6 +840,9 @@ export type PaymentMaxOrderByAggregateInput = {
   releasedAt?: Prisma.SortOrder
   refundedAt?: Prisma.SortOrder
   reconciledAt?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
+  failedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -807,6 +870,9 @@ export type PaymentMinOrderByAggregateInput = {
   releasedAt?: Prisma.SortOrder
   refundedAt?: Prisma.SortOrder
   reconciledAt?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
+  failedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -985,6 +1051,9 @@ export type PaymentCreateWithoutDonationInput = {
   releasedAt?: Date | string | null
   refundedAt?: Date | string | null
   reconciledAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  failedAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1015,6 +1084,9 @@ export type PaymentUncheckedCreateWithoutDonationInput = {
   releasedAt?: Date | string | null
   refundedAt?: Date | string | null
   reconciledAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  failedAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1057,6 +1129,9 @@ export type PaymentUpdateWithoutDonationInput = {
   releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1087,6 +1162,9 @@ export type PaymentUncheckedUpdateWithoutDonationInput = {
   releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1113,6 +1191,9 @@ export type PaymentCreateWithoutOrderInput = {
   releasedAt?: Date | string | null
   refundedAt?: Date | string | null
   reconciledAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  failedAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1143,6 +1224,9 @@ export type PaymentUncheckedCreateWithoutOrderInput = {
   releasedAt?: Date | string | null
   refundedAt?: Date | string | null
   reconciledAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  failedAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1185,6 +1269,9 @@ export type PaymentUpdateWithoutOrderInput = {
   releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1215,6 +1302,9 @@ export type PaymentUncheckedUpdateWithoutOrderInput = {
   releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1241,6 +1331,9 @@ export type PaymentCreateWithoutRefundsInput = {
   releasedAt?: Date | string | null
   refundedAt?: Date | string | null
   reconciledAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  failedAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1272,6 +1365,9 @@ export type PaymentUncheckedCreateWithoutRefundsInput = {
   releasedAt?: Date | string | null
   refundedAt?: Date | string | null
   reconciledAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  failedAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1313,6 +1409,9 @@ export type PaymentUpdateWithoutRefundsInput = {
   releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1344,6 +1443,9 @@ export type PaymentUncheckedUpdateWithoutRefundsInput = {
   releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1369,6 +1471,9 @@ export type PaymentCreateWithoutUserInput = {
   releasedAt?: Date | string | null
   refundedAt?: Date | string | null
   reconciledAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  failedAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1399,6 +1504,9 @@ export type PaymentUncheckedCreateWithoutUserInput = {
   releasedAt?: Date | string | null
   refundedAt?: Date | string | null
   reconciledAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  failedAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1457,6 +1565,9 @@ export type PaymentScalarWhereInput = {
   releasedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   refundedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   reconciledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  failedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   paymentData?: Prisma.JsonNullableFilter<"Payment">
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
@@ -1484,6 +1595,9 @@ export type PaymentCreateManyUserInput = {
   releasedAt?: Date | string | null
   refundedAt?: Date | string | null
   reconciledAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  failedAt?: Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1509,6 +1623,9 @@ export type PaymentUpdateWithoutUserInput = {
   releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1539,6 +1656,9 @@ export type PaymentUncheckedUpdateWithoutUserInput = {
   releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1567,6 +1687,9 @@ export type PaymentUncheckedUpdateManyWithoutUserInput = {
   releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1626,6 +1749,9 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   releasedAt?: boolean
   refundedAt?: boolean
   reconciledAt?: boolean
+  paidAt?: boolean
+  cancelledAt?: boolean
+  failedAt?: boolean
   paymentData?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1659,6 +1785,9 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   releasedAt?: boolean
   refundedAt?: boolean
   reconciledAt?: boolean
+  paidAt?: boolean
+  cancelledAt?: boolean
+  failedAt?: boolean
   paymentData?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1690,6 +1819,9 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   releasedAt?: boolean
   refundedAt?: boolean
   reconciledAt?: boolean
+  paidAt?: boolean
+  cancelledAt?: boolean
+  failedAt?: boolean
   paymentData?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1721,12 +1853,15 @@ export type PaymentSelectScalar = {
   releasedAt?: boolean
   refundedAt?: boolean
   reconciledAt?: boolean
+  paidAt?: boolean
+  cancelledAt?: boolean
+  failedAt?: boolean
   paymentData?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "total_amount" | "paid_amount" | "seller_required_amount" | "seller_received_amount" | "status" | "stripe_status" | "orderId" | "donationId" | "paymentType" | "transactionId" | "paymentIntentId" | "checkoutSessionId" | "stripeTransferId" | "stripeRefundId" | "transferGroup" | "sellerConnectAccountId" | "escrowedAt" | "releasedAt" | "refundedAt" | "reconciledAt" | "paymentData" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "total_amount" | "paid_amount" | "seller_required_amount" | "seller_received_amount" | "status" | "stripe_status" | "orderId" | "donationId" | "paymentType" | "transactionId" | "paymentIntentId" | "checkoutSessionId" | "stripeTransferId" | "stripeRefundId" | "transferGroup" | "sellerConnectAccountId" | "escrowedAt" | "releasedAt" | "refundedAt" | "reconciledAt" | "paidAt" | "cancelledAt" | "failedAt" | "paymentData" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Payment$userArgs<ExtArgs>
   order?: boolean | Prisma.Payment$orderArgs<ExtArgs>
@@ -1776,6 +1911,9 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     releasedAt: Date | null
     refundedAt: Date | null
     reconciledAt: Date | null
+    paidAt: Date | null
+    cancelledAt: Date | null
+    failedAt: Date | null
     paymentData: runtime.JsonValue | null
     createdAt: Date
     updatedAt: Date
@@ -2228,6 +2366,9 @@ export interface PaymentFieldRefs {
   readonly releasedAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly refundedAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly reconciledAt: Prisma.FieldRef<"Payment", 'DateTime'>
+  readonly paidAt: Prisma.FieldRef<"Payment", 'DateTime'>
+  readonly cancelledAt: Prisma.FieldRef<"Payment", 'DateTime'>
+  readonly failedAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly paymentData: Prisma.FieldRef<"Payment", 'Json'>
   readonly createdAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Payment", 'DateTime'>

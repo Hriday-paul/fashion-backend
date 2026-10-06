@@ -10,6 +10,9 @@ const stripe = {
 const easyship = {
   easyship_api_key: process.env.EASYSHIP_API_KEY,
   easyship_base_url: process.env.EASYSHIP_BASE_URL,
+
+  easyship_prod_api_key: process.env.EASYSHIP_PROD_API_KEY,
+  easyship_prod_base_url: process.env.EASYSHIP_PROD_BASE_URL,
 }
 
 const message = {

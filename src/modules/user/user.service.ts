@@ -679,10 +679,10 @@ const addOrUpdateBillingDetails = async (payload: BillingDetails, userId: string
         "country_alpha2": payload?.countryCode
     }
 
-    const rateRes = await fetch(`${config.easyship.easyship_base_url}/addresses/validations`, {
+    const rateRes = await fetch(`${config.easyship.easyship_prod_base_url}/addresses/validations`, {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Authorization': `Bearer ${config.easyship.easyship_prod_api_key}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(shipPayload)
@@ -770,10 +770,10 @@ const addOrUpdateSellerAddress = async (payload: BillingDetails, sellerId: strin
         "country_alpha2": payload?.countryCode
     }
 
-    const addressRes = await fetch(`${config.easyship.easyship_base_url}/addresses/validations`, {
+    const addressRes = await fetch(`${config.easyship.easyship_prod_base_url}/addresses/validations`, {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Authorization': `Bearer ${config.easyship.easyship_prod_api_key}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(shipPayload)

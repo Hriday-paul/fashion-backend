@@ -41,6 +41,7 @@ router.get('/confirm-payment',
 // );
 
 router.get('/', auth(Role.ADMIN), paymentsController.getAllPayments);
+router.get('/stats', auth(Role.ADMIN), paymentsController.paymentStats);
 
 router.get('/sell-earnings', auth(...allRoles), paymentsController.sellEarnings);
 router.get('/sell-donation-raised', auth(Role.CHARITY_SHOP, Role.CHARITABLE_ORGANIZATION), paymentsController.donationRaisedFromSell);

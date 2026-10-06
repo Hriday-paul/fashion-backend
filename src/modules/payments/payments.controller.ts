@@ -72,7 +72,7 @@ const getPaymentsByUserIdWithParams = catchAsync(async (req: Request, res: Respo
 });
 
 const getAllPayments = catchAsync(async (req: Request, res: Response) => {
-  const query = pick(req.query, ["searchTerm", "type"])
+  const query = pick(req.query, ["searchTerm", "status", "paymentType", "startDate", "endDate"]);
   const options = pick(req.query, PaginateOptions);
   const result = await paymentsService.getAllPayments(query, options);
   sendResponse(res, {
@@ -80,6 +80,18 @@ const getAllPayments = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     data: result,
     message: 'All payments retrieved successfully',
+  });
+});
+
+const paymentStats = catchAsync(async (req: Request, res: Response) => {
+
+  const result = await paymentsService.paymentStats();
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    data: result,
+    message: 'Payment stats retrieved successfully',
   });
 });
 
@@ -168,6 +180,7 @@ const platformEarnignStats = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const paymentsController = {
+  paymentStats,
   getAllPayments,
   getPaymentsById,
   updatePayments,

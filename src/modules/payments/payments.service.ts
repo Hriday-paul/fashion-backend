@@ -1,7 +1,7 @@
 import AppError from '../../error/AppError';
 import httpStatus from 'http-status';
 import { createCheckoutSession } from './payments.utils';
-import { Payment, Prisma as GeneratedPrisma, DirectDonation } from '../../../generated/prisma/client';
+import { Payment, Prisma as GeneratedPrisma, DirectDonation, PaymentStatus, PaymentType } from '../../../generated/prisma/client';
 import prisma from '../../shared/prisma';
 import { paginationHelper, TPaginationOptions } from '../../helper/pagination.helper';
 import generateRandomString from '../../utils/generateRandomString';
@@ -327,14 +327,10 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
 
 const getAllPayments = async (query: Record<string, unknown>, options: TPaginationOptions) => {
 
-  const AndConditions: GeneratedPrisma.PaymentWhereInput[] = [
-    {
-      status: "SUCCESSED"
-    }
-  ];
+  const AndConditions: GeneratedPrisma.PaymentWhereInput[] = [];
 
   const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
-  const { searchTerm } = query;
+  const { searchTerm, startDate, endDate, status, paymentType } = query;
 
   if (searchTerm) {
     AndConditions.push({
@@ -348,7 +344,7 @@ const getAllPayments = async (query: Record<string, unknown>, options: TPaginati
 
         {
           user: {
-            fname: {
+            userName: {
               contains: searchTerm as string,
               mode: "insensitive",
             }
@@ -375,6 +371,36 @@ const getAllPayments = async (query: Record<string, unknown>, options: TPaginati
     });
   }
 
+  if (startDate) {
+    const start = moment(startDate as string).startOf('day').toDate();
+    AndConditions.push({
+      createdAt: {
+        gte: start
+      }
+    });
+  }
+
+  if (endDate) {
+    const end = moment(endDate as string).endOf('day').toDate();
+    AndConditions.push({
+      createdAt: {
+        lte: end
+      }
+    });
+  }
+
+  if (status) {
+    AndConditions.push({
+      status: status as PaymentStatus
+    });
+  }
+
+  if (paymentType) {
+    AndConditions.push({
+      paymentType: paymentType as PaymentType
+    });
+  }
+
   const whereConditions: GeneratedPrisma.PaymentWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
 
   const payments = await prisma.payment.findMany({
@@ -385,27 +411,17 @@ const getAllPayments = async (query: Record<string, unknown>, options: TPaginati
       [sortBy]: sortOrder,
     },
     include: {
-      user: { include: { picture: true } }
-    },
-  });
-
-  const total_earning = await prisma.payment.aggregate({
-    where: { status: "SUCCESSED" },
-    _sum: { total_amount: true },
-  })
-
-  const startOfTodayUTC = moment.utc().startOf("day").toDate();
-  const endOfTodayUTC = moment.utc().endOf("day").toDate();
-
-  const today_earning = await prisma.payment.aggregate({
-    where: {
-      createdAt: {
-        gte: startOfTodayUTC,
-        lte: endOfTodayUTC,
+      user: {
+        select: {
+          userName: true,
+          picture: {
+            select: {
+              url: true
+            }
+          }
+        }
       },
-    },
-    _sum: {
-      total_amount: true,
+      refunds: true
     },
   });
 
@@ -414,15 +430,47 @@ const getAllPayments = async (query: Record<string, unknown>, options: TPaginati
   });
 
   return {
-    meta: {
-      total,
-      page,
-      limit,
-    },
-    data: { payments, today_earning, total_earning },
+    meta: paginationHelper.generatePaginationMeta({ page, limit, total }),
+    data: payments,
   };
 
 };
+
+const paymentStats = async () => {
+  const totalSuccessPaymentAmount = await prisma.payment.aggregate({
+    where: {
+      status: "SUCCESSED"
+    },
+    _sum: {
+      paid_amount: true
+    }
+  });
+
+  const canceledPaymentAmount = await prisma.payment.aggregate({
+    where: {
+      status: "CANCELLED"
+    },
+    _sum: {
+      paid_amount: true
+    }
+  });
+
+  const failedPaymentAmount = await prisma.payment.aggregate({
+    where: {
+      status: "FAILED"
+    },
+    _sum: {
+      paid_amount: true
+    }
+  });
+
+  return {
+    totalSuccessPaymentAmount: totalSuccessPaymentAmount._sum.paid_amount || 0,
+    canceledPaymentAmount: canceledPaymentAmount._sum.paid_amount || 0,
+    failedPaymentAmount: failedPaymentAmount._sum.paid_amount || 0
+  };
+
+}
 
 const getPaymentsByUserId = async (
   options: TPaginationOptions,
@@ -721,9 +769,9 @@ const platformEarnignStats = async () => {
   });
 
   return {
-    assitedSellEarnings : assitedSellEarnings._sum.assistedSellCommission || 0,
-    authenticationEarnings : authenticationEarnings._sum.authenticationFee || 0,
-    serviceFeeEarnings : serviceFeeEarnings._sum.serviceFee || 0
+    assitedSellEarnings: assitedSellEarnings._sum.assistedSellCommission || 0,
+    authenticationEarnings: authenticationEarnings._sum.authenticationFee || 0,
+    serviceFeeEarnings: serviceFeeEarnings._sum.serviceFee || 0
   };
 
 }
@@ -742,5 +790,6 @@ export const paymentsService = {
   sellEarnings,
   donationRaisedFromSell,
   directDonationRaised,
-  platformEarnignStats
+  platformEarnignStats,
+  paymentStats
 };

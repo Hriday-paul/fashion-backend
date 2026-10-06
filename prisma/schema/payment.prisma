@@ -35,6 +35,10 @@ model Payment {
   refundedAt   DateTime? // buyer refunded
   reconciledAt DateTime? // last reconciliation check
 
+  paidAt DateTime? // buyer paid
+  cancelledAt DateTime? // buyer cancelled
+  failedAt DateTime? // payment failed
+
   paymentData Json?
 
   refunds Refund[]
@@ -56,6 +60,7 @@ enum PaymentStatus {
   PROCESSING
   SUCCESSED
   FAILED
+  CANCELLED
   REFUNDED
 }
 

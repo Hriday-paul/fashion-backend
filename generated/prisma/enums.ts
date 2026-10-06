@@ -187,6 +187,7 @@ export const PaymentStatus = {
   PROCESSING: 'PROCESSING',
   SUCCESSED: 'SUCCESSED',
   FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
   REFUNDED: 'REFUNDED'
 } as const
 
