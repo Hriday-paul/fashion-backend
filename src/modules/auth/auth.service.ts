@@ -1,4 +1,3 @@
-
 import AppError from "../../error/AppError"
 import httpStatus from 'http-status'
 import bcrypt from 'bcrypt'
@@ -49,8 +48,8 @@ const createUser = async (payload: User & TUserMore) => {
             ...body,
             auth: {
                 upsert: {
-                    update: { password: hashedPassword, role },
-                    create: { password: hashedPassword, email, role }
+                    update: { password: hashedPassword, role, approval_status: role === Role.INDIVIDUAL_USER ? "Approved" : "Pending" },
+                    create: { password: hashedPassword, email, role, approval_status: role === Role.INDIVIDUAL_USER ? "Approved" : "Pending" }
                 }
             }
         },
@@ -60,7 +59,8 @@ const createUser = async (payload: User & TUserMore) => {
                 create: {
                     email,
                     password: hashedPassword,
-                    role
+                    role,
+                    approval_status: role === Role.INDIVIDUAL_USER ? "Approved" : "Pending"
                 }
             }
         },
@@ -88,16 +88,16 @@ const loginUser = async (payload: { email: string, password: string, fcmToken?: 
 
     if (!user) {
         // If user not found, throw error
-        throw new AppError(httpStatus.NOT_FOUND, 'Account not found');
+        throw new AppError(httpStatus.NOT_FOUND, 'Account does not exist');
     }
 
     else {
         if (!user?.auth?.status) {
-            throw new AppError(httpStatus.FORBIDDEN, 'Your account is blocked');
+            throw new AppError(httpStatus.FORBIDDEN, 'Your account is blocked', 603);
         }
 
         if (user?.auth?.isDeleted) {
-            throw new AppError(httpStatus.FORBIDDEN, 'Your account is deleted');
+            throw new AppError(httpStatus.FORBIDDEN, 'Your account is deleted', 606);
         }
 
         if (!user?.auth?.isverified) {
@@ -110,6 +110,13 @@ const loginUser = async (payload: { email: string, password: string, fcmToken?: 
                 httpStatus.METHOD_NOT_ALLOWED,
                 'This account is connected by social login. Please use social login to access your account.',
             );
+        }
+
+        if (user?.auth?.approval_status === "Pending") {
+            throw new AppError(httpStatus.FORBIDDEN, 'Your account is under review. We will notify you once it is approved', 604);
+        }
+        if (user?.auth?.approval_status === "Rejected") {
+            throw new AppError(httpStatus.FORBIDDEN, 'Your account is rejected. Please contact support for further assistance', 605);
         }
 
 
@@ -312,6 +319,7 @@ const socialSignUp = async (payload: {
                         role,
                         isSocialLogin: true,
                         isverified: true,
+                        approval_status: role === Role.INDIVIDUAL_USER ? "Approved" : "Pending"
                     },
                     create: {
                         password: hashedPassword,
@@ -319,6 +327,7 @@ const socialSignUp = async (payload: {
                         role,
                         isSocialLogin: true,
                         isverified: true,
+                        approval_status: role === Role.INDIVIDUAL_USER ? "Approved" : "Pending"
                     },
                 },
             },
@@ -345,6 +354,7 @@ const socialSignUp = async (payload: {
                     role,
                     isSocialLogin: true,
                     isverified: true,
+                    approval_status: role === Role.INDIVIDUAL_USER ? "Approved" : "Pending"
                 },
             },
         },
@@ -413,15 +423,22 @@ const socialLogin = async (payload: { idToken: string, fcmToken?: string }) => {
 
     else {
         if (!user?.auth?.status) {
-            throw new AppError(httpStatus.FORBIDDEN, 'Your account is blocked');
+            throw new AppError(httpStatus.FORBIDDEN, 'Your account is blocked', 603);
         }
 
         if (user?.auth?.isDeleted) {
-            throw new AppError(httpStatus.FORBIDDEN, 'Your account is deleted');
+            throw new AppError(httpStatus.FORBIDDEN, 'Your account is deleted', 606);
         }
 
         if (!user?.auth?.isverified) {
             throw new AppError(httpStatus.BAD_REQUEST, 'Your account is not verified');
+        }
+
+        if (user?.auth?.approval_status === "Pending") {
+            throw new AppError(httpStatus.FORBIDDEN, 'Your account is under review. We will notify you once it is approved', 604);
+        }
+        if (user?.auth?.approval_status === "Rejected") {
+            throw new AppError(httpStatus.FORBIDDEN, 'Your account is rejected. Please contact support for further assistance', 605);
         }
 
         // Update FCM token if provided

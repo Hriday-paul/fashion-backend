@@ -297,7 +297,8 @@ export const NotificationEntityType = {
   RETURN: 'RETURN',
   BADGE: 'BADGE',
   WITHDRAWAL: 'WITHDRAWAL',
-  ASSISTED_SELL: 'ASSISTED_SELL'
+  ASSISTED_SELL: 'ASSISTED_SELL',
+  OTHER: 'OTHER'
 } as const
 
 export type NotificationEntityType = (typeof NotificationEntityType)[keyof typeof NotificationEntityType]
@@ -330,7 +331,8 @@ export const NotificationType = {
   BADGE_EARNED: 'BADGE_EARNED',
   WITHDRAWAL_RECEIVED: 'WITHDRAWAL_RECEIVED',
   ASSISTED_SELL_REQUEESTED: 'ASSISTED_SELL_REQUEESTED',
-  ASSISTED_SELL_STATUS_UPDATED: 'ASSISTED_SELL_STATUS_UPDATED'
+  ASSISTED_SELL_STATUS_UPDATED: 'ASSISTED_SELL_STATUS_UPDATED',
+  OTHER: 'OTHER'
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]

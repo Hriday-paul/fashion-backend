@@ -8,6 +8,8 @@ import prisma from '../../shared/prisma';
 import fs from 'fs';
 import path from 'path';
 import { sendEmail } from '../../utils/mailSender';
+import { notificationQueue } from '../../queues/notificaion.queue';
+import { jobs } from '../../queues/jobs.name';
 
 const verifyOtp = async (token: string, otp: string | number) => {
 
@@ -31,7 +33,7 @@ const verifyOtp = async (token: string, otp: string | number) => {
   const user = await prisma.user.findFirst({ where: { id: decode?.userId }, include: { auth: true } })
 
   if (!user || !user?.auth) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'User not found');
+    throw new AppError(httpStatus.BAD_REQUEST, 'User does not exist');
   }
   if (new Date() > user?.auth?.expiredAt) {
     throw new AppError(
@@ -66,6 +68,24 @@ const verifyOtp = async (token: string, otp: string | number) => {
       }
     },
   )
+  
+  //if previous user is not verified then guess the new user, send the notification to the user that he is verified and can now use the app
+  // Send welcome notification to the user
+  await notificationQueue.add(jobs.notification, {
+    allowPushNotification: true,
+    payload: {
+      title: `Welcome to the Fashi-on`,
+      message: user?.auth?.approval_status == "Approved" ? `Welcome ${user?.fname} to the **Fashi-on**. We are glad to have you on board!` : `Welcome ${user?.fname} to the **Fashi-on**. Your account is under review. We will notify you once it is approved.`,
+      actorId: user?.id,
+      receiverId: user?.id,
+      entityId: user?.userName,
+      entityType: "OTHER",
+      entityImgs: [],
+      type: "OTHER",
+      fcmToken: user?.fcmToken,
+      groupKeyId: null,
+    }
+  })
 
   const jwtPayload = {
     role: user?.auth?.role,
