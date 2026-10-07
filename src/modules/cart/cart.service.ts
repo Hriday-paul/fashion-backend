@@ -2,6 +2,8 @@ import config from "../../config";
 import AppError from "../../error/AppError";
 import prisma from "../../shared/prisma"
 import httpStatus from "http-status";
+import crypto from "crypto";
+import { redisPub } from "../../redis";
 
 const cartsByUser = async (userId: string) => {
 
@@ -120,7 +122,8 @@ const cartsByUserSeller = async (userId: string, sellerUserName: string) => {
         total,
         bundleDiscountPercent,
         bundleDiscountAmount,
-        cartGroupId: cart?.id || null
+        cartGroupId: cart?.id || null,
+        sellerId: seller?.id
     };
 }
 
@@ -246,6 +249,11 @@ const addToCart = async (payload: { productId: string, quantity: number, extraDo
         throw new AppError(httpStatus.CONFLICT, "Product already exist in cart");
     }
 
+    //check own product
+    if (product?.userId === userId) {
+        throw new AppError(httpStatus.BAD_REQUEST, "You cannot add your own product to cart");
+    }
+
     const sellerId = product?.userId;
 
     const cartGroup = await prisma.cartGroup.upsert({
@@ -313,6 +321,47 @@ const truncate = (value: string | null, max = 32) => {
     return value?.trim().slice(0, max) || "";
 };
 
+const normalize = (v?: string | null) => (v ?? "").trim().toLowerCase();
+
+const buildRatesCacheKey = (shipPayload: any) => {
+    const keyData = {
+        v: 1, // bump when payload structure changes
+        origin: {
+            l1: normalize(shipPayload.origin_address.line_1),
+            l2: normalize(shipPayload.origin_address.line_2),
+            city: normalize(shipPayload.origin_address.city),
+            state: normalize(shipPayload.origin_address.state),
+            zip: normalize(shipPayload.origin_address.postal_code),
+            cc: normalize(shipPayload.origin_address.country_alpha2),
+        },
+        dest: {
+            l1: normalize(shipPayload.destination_address.line_1),
+            l2: normalize(shipPayload.destination_address.line_2),
+            city: normalize(shipPayload.destination_address.city),
+            state: normalize(shipPayload.destination_address.state),
+            zip: normalize(shipPayload.destination_address.postal_code),
+            cc: normalize(shipPayload.destination_address.country_alpha2),
+            // contact name/email/phone omitted: they don't affect rates
+        },
+        incoterms: shipPayload.incoterms,
+        currency: shipPayload.shipping_settings.output_currency,
+        items: shipPayload.parcels[0].items
+            .map((i: any) => ({
+                q: i.quantity,
+                w: i.actual_weight,
+                h: i.dimensions.height,
+                wd: i.dimensions.width,
+                l: i.dimensions.length,
+                p: i.declared_customs_value,
+            }))
+            // sort so item order in the cart doesn't change the key
+            .sort((a: any, b: any) => JSON.stringify(a).localeCompare(JSON.stringify(b))),
+    };
+
+    const hash = crypto.createHash("sha256").update(JSON.stringify(keyData)).digest("hex");
+    return `shipping:rates:${hash}`;
+};
+
 const availableRates = async (cartGroupId: string, userId: string) => {
     const cartgroup = await prisma.cartGroup.findFirst({
         where: { id: cartGroupId, userId },
@@ -355,6 +404,10 @@ const availableRates = async (cartGroupId: string, userId: string) => {
     }
 
     if (!cartgroup?.seller?.sellerAddress) {
+        return;
+    }
+
+    if(cartgroup?.items?.length === 0) {
         return;
     }
 
@@ -410,6 +463,13 @@ const availableRates = async (cartGroupId: string, userId: string) => {
         "calculate_tax_and_duties": true
     }
 
+    const cacheKey = buildRatesCacheKey(shipPayload);
+
+    const cached = await redisPub.get(cacheKey);
+    if (cached) {
+        return JSON.parse(cached);
+    }
+
     const rateRes = await fetch(`${config.easyship.easyship_base_url}/rates`, {
         method: 'POST',
         headers: {
@@ -429,6 +489,11 @@ const availableRates = async (cartGroupId: string, userId: string) => {
     }
 
     const rateData = await rateRes.json();
+
+    // Cache the result for future use
+    await redisPub.set(cacheKey, JSON.stringify(rateData), {
+        EX: 3600, // expire after 1 hour
+    });
 
     return rateData;
 }
@@ -495,7 +560,6 @@ const offerAvailableRates = async (offerId: string, userId: string) => {
         where: { id: offerId, buyerId: userId },
         include: {
             offerItems: {
-
                 include: {
                     product: {
                         select: {
@@ -532,6 +596,10 @@ const offerAvailableRates = async (offerId: string, userId: string) => {
     }
 
     if (!offer?.seller?.sellerAddress) {
+        return;
+    }
+
+    if(offer?.offerItems?.length === 0) {
         return;
     }
 
@@ -587,6 +655,13 @@ const offerAvailableRates = async (offerId: string, userId: string) => {
         "calculate_tax_and_duties": true
     }
 
+    const cacheKey = buildRatesCacheKey(shipPayload);
+
+    const cached = await redisPub.get(cacheKey);
+    if (cached) {
+        return JSON.parse(cached);
+    }
+
     const rateRes = await fetch(`${config.easyship.easyship_base_url}/rates`, {
         method: 'POST',
         headers: {
@@ -606,6 +681,11 @@ const offerAvailableRates = async (offerId: string, userId: string) => {
     }
 
     const rateData = await rateRes.json();
+
+    // Cache the result for future use
+    await redisPub.set(cacheKey, JSON.stringify(rateData), {
+        EX: 3600, // expire after 1 hour
+    });
 
     return rateData;
 }

@@ -141,7 +141,28 @@ const getMyChatList = async (userId: string, query?: Record<string, unknown>) =>
           },
           offer: {
             select: {
-              status: true
+              status: true,
+              sellerId: true,
+              buyerId: true,
+              offerItems : {
+                select : {
+                  id: true,
+                  product : {
+                    select : {
+                      images : {
+                        take : 1,
+                        orderBy : {
+                          order : 'asc'
+                        },
+                        select : {
+                          url: true,
+                          id: true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }

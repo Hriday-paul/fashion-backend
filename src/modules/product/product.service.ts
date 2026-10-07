@@ -247,9 +247,9 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
                     favourites: true
                 }
             },
-            user : {
-                select : {
-                    userName : true,
+            user: {
+                select: {
+                    userName: true,
                 }
             },
             // is Favourites by user
@@ -1505,9 +1505,8 @@ const dropPriceForAProduct = async (payload: { productId: string, newPrice: numb
         throw new AppError(httpStatus.BAD_REQUEST, "New price must be less than the current price");
     }
 
-    //calculate the percentage drop
     const percentageDrop = Number(
-        ((newPrice * 100) / product.price).toFixed(2)
+        (((product.price - newPrice) / product.price) * 100).toFixed(2)
     );
 
     const updatedProduct = await prisma.product.update({

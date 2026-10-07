@@ -21,6 +21,7 @@ import { assistentSellRouts } from './modules/assistentSell/assistentSell.rout';
 import { accountRouts } from './modules/ConnectAccount/account.rout';
 import { keywordRoutes } from './modules/keyword/keyword.rout';
 import { shipmentRouter } from './modules/shipment/shipment.rout';
+import { dashboardRouts } from './modules/dashboard/dashboard.rout';
 
 const router = express.Router();
 
@@ -113,6 +114,10 @@ const moduleRoutes = [
         path: '/shipment',
         route: shipmentRouter,
     },
+    {
+        path: '/dashboard',
+        route: dashboardRouts,
+    }
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.route));

@@ -192,6 +192,11 @@ const addNewOrder = async (
     const bundleDiscountPercent = nearestTier ? nearestTier.discountPercent : 0;
 
 
+    const serviceFeeCost = 2.30; // fixed service fee cost
+    const authenTicationRate = 15; // fixed authentication cost per item
+    const treeGiftRate = 4; // fixed tree gift cost per item
+
+
     const orderItems = cartgroup.items.map((item) => {
         const p = item?.product;
         const donation_percent = p.donation_percent || 0;
@@ -229,10 +234,6 @@ const addNewOrder = async (
             charities: item?.charities ?? [],
         };
     });
-
-    const serviceFeeCost = 2.30; // fixed service fee cost
-    const authenTicationRate = 15; // fixed authentication cost per item
-    const treeGiftRate = 4; // fixed tree gift cost per item
 
     const totalAuthenticationCost = orderItems.reduce((acc, item) => acc + item.unitAuthFee, 0);
 
@@ -406,7 +407,7 @@ const addNewOrder = async (
                         return {
                             ...item,
                             parcelItemId,
-                            assistedSellCommission : assisted_sell_commision,
+                            assistedSellCommission: assisted_sell_commision,
                             unitAuthFee,
                             sell_donation: donation_amount,
                             ...(charityCount > 0 && {
@@ -629,6 +630,10 @@ const addNewOfferOrder = async (
 
     let authAddress: string | null = null;
 
+    const serviceFeeCost = 2.30; // fixed service fee cost
+    const authenTicationRate = 15; // fixed authentication cost per item
+    const treeGiftRate = 4; // fixed tree gift cost per item
+
     //authentication center address is required to place order if authentication is allowed
     if (payload?.allowedAuthentication) {
         const admin = await prisma.user.findFirst({
@@ -710,10 +715,6 @@ const addNewOfferOrder = async (
             charities: p?.charities,
         };
     });
-
-    const serviceFeeCost = 2.30; // fixed service fee cost
-    const authenTicationRate = 15; // fixed authentication cost per item
-    const treeGiftRate = 4; // fixed tree gift cost per item
 
     const totalAuthenticationCost = orderItems.reduce((acc, item) => acc + item.unitAuthFee, 0);
 
@@ -883,7 +884,7 @@ const addNewOfferOrder = async (
                         return {
                             ...item,
                             sell_donation: donation_amount,
-                            assistedSellCommission : assisted_sell_commision,
+                            assistedSellCommission: assisted_sell_commision,
                             unitAuthFee,
                             parcelItemId,
                             ...(charityCount > 0 && {
@@ -1526,15 +1527,15 @@ const orders = async (query: Record<string, unknown>, options: TPaginationOption
         })
     }
 
-    if( paymentStatus) {
+    if (paymentStatus) {
         AndConditions.push({
             payment: {
                 status: paymentStatus as PaymentStatus
             }
         })
     }
-    
-    if( currentShipTo) {
+
+    if (currentShipTo) {
         AndConditions.push({
             currentShipTo: currentShipTo as CurrentShipTo
         })
@@ -2600,7 +2601,7 @@ const dltOrderShipment = async ({ orderId, shipment_id, items, cancelReason, can
                 authenticationFee: 0,
                 assistedSellCommission: 0,
                 sellerTotal: price?.sellerTotalNow,
-                
+
             }
         })
 
@@ -2849,7 +2850,7 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
                     sellerTotal: order?.sellerTotal - sellerRefundItemsTotal,
                     itemsTotal: order?.itemsTotal - refundAmount,
                     sellerItemsTotal: order?.sellerItemsTotal - sellerRefundItemsTotal,
-                    assistedSellCommission : order?.assistedSellCommission - assitedSellCommision
+                    assistedSellCommission: order?.assistedSellCommission - assitedSellCommision
                 }
             });
 
@@ -3859,7 +3860,7 @@ const orderStats = async () => {
 
     return {
         totalOrders,
-        totalSells : totalSells?._sum?.itemsTotal || 0,
+        totalSells: totalSells?._sum?.itemsTotal || 0,
         pendingOrders,
         shippingOrder,
         completedOrder,
