@@ -6,6 +6,7 @@ import auth from '../../middleware/auth';
 import req_validator from '../../middleware/req_validation';
 import { allRoles } from '../user/user.rout';
 import { document_Upload } from '../../utils/s3';
+import { rateLimiter } from '../../middleware/RateLimiter';
 
 const router = Router();
 // const storage = memoryStorage();
@@ -13,6 +14,7 @@ const router = Router();
 
 router.post(
   '/send',
+   rateLimiter({max : 40}),
   auth(...allRoles),
   document_Upload.array('files'),
   parseData(),

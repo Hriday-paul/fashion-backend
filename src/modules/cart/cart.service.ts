@@ -4,8 +4,17 @@ import prisma from "../../shared/prisma"
 import httpStatus from "http-status";
 import crypto from "crypto";
 import { redisPub } from "../../redis";
+import { redisKeys } from "../../redis/keys";
+import { BillingDetails, CartGroup, Offer, Prisma, Size, User } from "../../../generated/prisma/client";
 
 const cartsByUser = async (userId: string) => {
+
+    //check on redis cache first
+    const cacheKey = await redisKeys.userCartKey({ userId });
+    const cachedData = await redisPub.get(cacheKey);
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
 
     const carts = await prisma.cartGroup.findMany({
         where: { userId, items: { some: {} } },
@@ -55,10 +64,21 @@ const cartsByUser = async (userId: string) => {
         }
     });
 
+    //set cache for 1 hour
+    await redisPub.setEx(cacheKey, 3600, JSON.stringify(carts));
+
     return carts;
 }
 
 const cartsByUserSeller = async (userId: string, sellerUserName: string) => {
+
+    //check on redis cache first
+    const cacheKey = await redisKeys.userCartSpecificSellerKey({ userId, sellerUserName });
+    const cachedData = await redisPub.get(cacheKey);
+
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
 
     const seller = await prisma.user.findFirst({
         where: { userName: sellerUserName },
@@ -116,7 +136,7 @@ const cartsByUserSeller = async (userId: string, sellerUserName: string) => {
     const bundleDiscountAmount = subTotal * (bundleDiscountPercent / 100);
     const total = subTotal - bundleDiscountAmount;
 
-    return {
+    const result = {
         items: cart?.items || [],
         subTotal,
         total,
@@ -125,11 +145,52 @@ const cartsByUserSeller = async (userId: string, sellerUserName: string) => {
         cartGroupId: cart?.id || null,
         sellerId: seller?.id
     };
+
+    //set cache for 1 hour
+    await redisPub.setEx(cacheKey, 3600, JSON.stringify(result));
+
+    return result;
+}
+
+interface Icartgroup extends CartGroup {
+    items: {
+        product: {
+            images: {
+                url: string;
+            }[];
+            size: Size,
+            finalPrice: number;
+            isDeleted: boolean;
+            stock: number;
+        },
+        extraDonation: number;
+    }[],
+    seller: {
+        id: string;
+        userName: string;
+        picture: {
+            url: string;
+        } | null;
+        bundleDiscount: {
+            tiers: {
+                itemCount: number;
+                discountPercent: number;
+            }[]
+        };
+    }
 }
 
 const checkoutItem = async (cartGroupId: string, userId: string) => {
 
-    const carts = await prisma.cartGroup.findFirst({
+    //check redis cache first
+    const cacheKey = await redisKeys.userCheckoutCartItemKey({ userId, cartGroupId });
+    const cachedData = await redisPub.get(cacheKey);
+
+    if (cachedData) {
+        return JSON.parse(cachedData) as Icartgroup;
+    }
+
+    const cart = await prisma.cartGroup.findFirst({
         where: { id: cartGroupId, userId },
         include: {
             items: {
@@ -155,49 +216,30 @@ const checkoutItem = async (cartGroupId: string, userId: string) => {
                             url: true
                         }
                     },
-                }
-            },
-        }
-    });
-
-    if (!carts) {
-        throw new AppError(httpStatus.NOT_FOUND, "Cart does not exist");
-    }
-
-    return carts;
-}
-
-const checkoutSummary = async (cartGroupId: string, userId: string) => {
-
-    const cart = await prisma.cartGroup.findFirst({
-        where: { id: cartGroupId, userId },
-        include: {
-            items: {
-                include: {
-                    product: {
-                        select: {
-                            finalPrice: true,
-                            stock: true,
-                            isDeleted: true,
-                        }
-                    }
-                }
-            },
-            seller: {
-                include: {
                     bundleDiscount: {
-                        include: {
+                        select: {
                             tiers: true
                         }
                     }
                 }
-            }
+            },
         }
     });
+
 
     if (!cart) {
         throw new AppError(httpStatus.NOT_FOUND, "Cart does not exist");
     }
+
+    //set cache for 1 hour
+    await redisPub.setEx(cacheKey, 3600, JSON.stringify(cart));
+
+    return cart;
+}
+
+const checkoutSummary = async (cartGroupId: string, userId: string) => {
+
+    const cart = await checkoutItem(cartGroupId, userId);
 
     const itemCount = cart.items.length;
 
@@ -301,6 +343,9 @@ const addToCart = async (payload: { productId: string, quantity: number, extraDo
         }
     });
 
+    //ignore cache
+    await redisKeys.incrementUserCartVersion({ userId });
+
     return cartGroup;
 
 }
@@ -314,6 +359,10 @@ const deleteCartItem = async (productId: string, userId: string) => {
     }
 
     await prisma.cartItem.delete({ where: { id: cartItemExist.id } });
+
+    //ignore cache
+    await redisKeys.incrementUserCartVersion({ userId });
+
     return;
 }
 
@@ -407,7 +456,7 @@ const availableRates = async (cartGroupId: string, userId: string) => {
         return;
     }
 
-    if(cartgroup?.items?.length === 0) {
+    if (cartgroup?.items?.length === 0) {
         return;
     }
 
@@ -498,39 +547,89 @@ const availableRates = async (cartGroupId: string, userId: string) => {
     return rateData;
 }
 
+type Ioffer = Prisma.OfferGetPayload<{
+    include: {
+        offerItems: {
+            include: {
+                product: {
+                    include: {
+                        images: {
+                            select: {
+                                url: true;
+                            };
+                        };
+                        size: true;
+                    };
+                };
+            };
+        };
+        seller: {
+            select: {
+                id: true;
+                userName: true;
+                picture: {
+                    select: {
+                        url: true;
+                    };
+                };
+                sellerAddress: true;
+            };
+        };
+    };
+}>;
+
 const offerCheckoutItem = async (offerId: string, userId: string) => {
 
-    const offer = await prisma.offer.findFirst({
-        where: { id: offerId, buyerId: userId },
-        include: {
-            offerItems: {
-                include: {
-                    product: {
-                        include: {
-                            images: {
-                                select: {
-                                    url: true
-                                }
-                            },
-                            size: true,
+    //check on redis cache first
+    const cacheKey = await redisKeys.offerItemsKey({ offerId });
+    const cachedData = await redisPub.get(cacheKey);
+
+    let offer: Ioffer | null = null;
+
+    if (cachedData) {
+        const cachedOffer = JSON.parse(cachedData);
+
+        offer = cachedOffer as Ioffer
+    } else {
+
+        const fresh_offer = await prisma.offer.findFirst({
+            where: { id: offerId, buyerId: userId },
+            include: {
+                offerItems: {
+                    include: {
+                        product: {
+                            include: {
+                                images: {
+                                    select: {
+                                        url: true
+                                    }
+                                },
+                                size: true,
+                            }
                         }
                     }
-                }
-            },
-            seller: {
-                select: {
-                    id: true,
-                    userName: true,
-                    picture: {
-                        select: {
-                            url: true
-                        }
-                    },
-                }
-            },
+                },
+                seller: {
+                    select: {
+                        id: true,
+                        userName: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        sellerAddress: true
+                    }
+                },
 
+            }
+        });
+        if (fresh_offer) {
+            offer = fresh_offer;
+            //set cache for 1 hour
+            await redisPub.setEx(cacheKey, 3600, JSON.stringify(fresh_offer));
         }
-    });
+    }
 
     if (!offer) {
         throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
@@ -556,38 +655,8 @@ const offerCheckoutItem = async (offerId: string, userId: string) => {
 }
 
 const offerAvailableRates = async (offerId: string, userId: string) => {
-    const offer = await prisma.offer.findFirst({
-        where: { id: offerId, buyerId: userId },
-        include: {
-            offerItems: {
-                include: {
-                    product: {
-                        select: {
-                            finalPrice: true,
-                            weight_kg: true,
-                            hight_cm: true,
-                            width_cm: true,
-                            length_cm: true,
-                        }
-                    }
-                }
-            },
-            seller: {
-                include: {
-                    sellerAddress: true,
-                }
-            }
-        }
-    });
 
-
-    if (!offer) {
-        throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
-    }
-
-    if (offer.status !== "ACCEPTED") {
-        throw new AppError(httpStatus.BAD_REQUEST, "Offer is not available for checkout");
-    }
+    const offer = await offerCheckoutItem(offerId, userId);
 
     const billing_details = await prisma.billingDetails.findFirst({ where: { userId } });
 
@@ -599,7 +668,7 @@ const offerAvailableRates = async (offerId: string, userId: string) => {
         return;
     }
 
-    if(offer?.offerItems?.length === 0) {
+    if (offer?.offerItems?.length === 0) {
         return;
     }
 
@@ -692,33 +761,7 @@ const offerAvailableRates = async (offerId: string, userId: string) => {
 
 const offerCheckoutSummary = async (offerId: string, userId: string) => {
 
-    const offer = await prisma.offer.findFirst({
-        where: { id: offerId, buyerId: userId },
-        include: {
-            offerItems: {
-                select: {
-                    product: {
-                        select: {
-                            stock: true,
-                            isDeleted: true,
-                        }
-                    }
-                }
-            }
-        }
-    });
-
-    if (!offer) {
-        throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
-    }
-
-    if (offer.status !== "ACCEPTED") {
-        throw new AppError(httpStatus.BAD_REQUEST, "Offer is not available for checkout");
-    }
-
-    if (!offer?.expiredAt || offer?.expiredAt < new Date()) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Offer is expired");
-    }
+    const offer = await offerCheckoutItem(offerId, userId);
 
     const itemTotal = offer?.offeredPrice;
     const totalExtraDonation = 0;

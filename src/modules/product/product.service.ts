@@ -13,6 +13,7 @@ import { chatService } from "../chat/chat.service";
 import { SendMessageHandle, UpdateMessageHandle } from "../../socket/handlers/MessageHandler";
 import moment from "moment";
 import { notificationQueue, priceDropNotificationQueue } from "../../queues/notificaion.queue";
+import { redisKeys } from '../../redis/keys';
 
 type ProductOtherPayload = {
     images: { key: string, url: string }[],
@@ -113,6 +114,9 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
     //check badge
     BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "STYLE_STARTER", userId });
 
+    //dlt cache
+    await redisKeys.incrementUserVersion({ userId });
+
     return res;
 }
 
@@ -122,10 +126,13 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, stock, ...moreFields } = query;
+    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, stock, authenticate, ...moreFields } = query;
+
+    const cacheQuery: { [key: string]: unknown } = { limit, skip, sortBy, sortOrder, page };
 
     if (searchTerm) {
-        const tokens = (searchTerm as string).trim().split(/\s+/).filter(Boolean);
+        const tokens = (searchTerm as string).trim().toLowerCase().split(/\s+/).filter(Boolean);
+        cacheQuery.searchTerm = tokens.sort();
 
         tokens.forEach((token) => {
             AndConditions.push({
@@ -147,10 +154,12 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
                 has: category as string
             }
         });
+        cacheQuery.category = category;
     }
 
     if (brands) {
-        const splitBrand = (brands as string).split(",")
+        const splitBrand = (brands as string).split(",").map((s) => s.trim()).filter(Boolean).sort();
+        cacheQuery.brands = splitBrand;
         AndConditions.push({
             brandId: {
                 in: splitBrand
@@ -158,7 +167,8 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
         });
     }
     if (sizes) {
-        const splitSize = (sizes as string).split(",")
+        const splitSize = (sizes as string).split(",").map((s) => s.trim()).filter(Boolean).sort();
+        cacheQuery.sizes = splitSize;
         AndConditions.push({
             sizeId: {
                 in: splitSize
@@ -167,7 +177,8 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
     }
 
     if (conditions) {
-        const splitCondition = (conditions as string).split(",");
+        const splitCondition = (conditions as string).toLowerCase().split(",").map((s) => s.trim()).filter(Boolean).sort();
+        cacheQuery.conditions = splitCondition;
         AndConditions.push({
             condition: {
                 in: splitCondition
@@ -175,7 +186,8 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
         });
     }
     if (colors) {
-        const splitColors = (colors as string).split(",");
+        const splitColors = (colors as string).toLowerCase().split(",").map((s) => s.trim()).filter(Boolean).sort();
+        cacheQuery.colors = splitColors;
         AndConditions.push({
             color: {
                 in: splitColors
@@ -183,7 +195,8 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
         });
     }
     if (meterials) {
-        const splitMeterials = (meterials as string).split(",");
+        const splitMeterials = (meterials as string).toLowerCase().split(",").map((s) => s.trim()).filter(Boolean).sort();
+        cacheQuery.meterials = splitMeterials;
         AndConditions.push({
             meterials: {
                 hasSome: splitMeterials
@@ -192,12 +205,14 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
     }
 
     if (stock && stock === "sold") {
+        cacheQuery.stock = "sold";
         AndConditions.push({
             stock: {
                 lte: 0
             }
         });
     } else if (stock && stock !== "all") {
+        cacheQuery.stock = "available";
         AndConditions.push({
             stock: {
                 gte: 1
@@ -212,21 +227,42 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
                 lte: maxPrice ? Number(maxPrice) : undefined,
             },
         });
+        cacheQuery.minPrice = minPrice ? Number(minPrice) : undefined;
+        cacheQuery.maxPrice = maxPrice ? Number(maxPrice) : undefined;
+    }
+
+    if (authenticate && authenticate === "true") {
+        AndConditions.push({
+            assistentSell: {}
+        })
+        cacheQuery.authenticate = "true";
     }
 
     if (Object.keys(moreFields)?.length > 0) {
         Object.entries(moreFields).forEach(([field, value]) => {
-            AndConditions.push({
-                [field]: {
-                    equals: value,
-                },
-            });
+            if (value !== undefined && value !== null) {
+                AndConditions.push({
+                    [field]: {
+                        equals: value,
+                    },
+                });
+                cacheQuery[field] = value;
+            }
         });
     }
 
     const whereConditions: Prisma.ProductWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
 
-    const result = await prisma.product.findMany({
+    // Generate a cache key based on the query
+    const cacheKey = await redisKeys.productsKey({ query: cacheQuery, userId });
+    const cachedData = await redisPub.get(cacheKey);
+
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
+
+    // If no cached data, fetch from the database
+    const response = await prisma.product.findMany({
         where: whereConditions,
         skip,
         take: limit,
@@ -270,169 +306,17 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
         where: whereConditions,
     });
 
-    return {
+    const result = {
         meta: paginationHelper.generatePaginationMeta({ total, page, limit }),
-        data: result,
+        data: response,
     };
 
-}
-
-const myProducts = async (query: Record<string, unknown>, options: TPaginationOptions, userId: string) => {
-    const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }, { userId }];
-
-    const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
-
-    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, showItemInCart, ...moreFields } = query;
-
-    if (searchTerm) {
-        AndConditions.push({
-            OR: [
-                {
-                    title: {
-                        contains: searchTerm as string,
-                        mode: "insensitive",
-                    },
-                },
-                {
-                    description: {
-                        contains: searchTerm as string,
-                        mode: "insensitive",
-                    },
-                },
-                {
-                    tags: {
-                        has: searchTerm as string
-                    }
-                }
-            ],
-        });
-    }
-
-    if (category) {
-        AndConditions.push({
-            catagory_hierarchy: {
-                has: category as string
-            }
-        });
-    }
-
-    if (brands) {
-        const splitBrand = (brands as string).split(",")
-        AndConditions.push({
-            brandId: {
-                in: splitBrand
-            }
-        });
-    }
-    if (sizes) {
-        const splitSize = (sizes as string).split(",")
-        AndConditions.push({
-            sizeId: {
-                in: splitSize
-            }
-        });
-    }
-
-    if (conditions) {
-        const splitCondition = (conditions as string).split(",");
-        AndConditions.push({
-            condition: {
-                in: splitCondition
-            },
-        });
-    }
-    if (colors) {
-        const splitColors = (colors as string).split(",");
-        AndConditions.push({
-            color: {
-                in: splitColors
-            },
-        });
-    }
-    if (meterials) {
-        const splitMeterials = (meterials as string).split(",");
-        AndConditions.push({
-            meterials: {
-                hasSome: splitMeterials
-            },
-        });
-    }
-
-    if (minPrice || maxPrice) {
-        AndConditions.push({
-            finalPrice: {
-                gte: minPrice ? Number(minPrice) : undefined,
-                lte: maxPrice ? Number(maxPrice) : undefined,
-            },
-        });
-    }
-
-    if (Object.keys(moreFields)?.length > 0) {
-        Object.entries(moreFields).forEach(([field, value]) => {
-            AndConditions.push({
-                [field]: {
-                    equals: value,
-                },
-            });
-        });
-    }
-
-    const whereConditions: Prisma.ProductWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
-
-    const result = await prisma.product.findMany({
-        where: whereConditions,
-        skip,
-        take: limit,
-        orderBy: [
-            // {
-            //     stock: "desc"
-            // },
-            {
-                [sortBy]: sortOrder,
-            },],
-        include: {
-            images: {
-                take: 2,
-                orderBy: {
-                    order: "asc"
-                },
-                select: {
-                    url: true,
-                    id: true
-                }
-            },
-            brand: true,
-            size: true,
-            category: true,
-            user: {
-                include: {
-                    auth: {
-                        select: {
-                            role: true
-                        }
-                    },
-                    picture: true
-                },
-            },
-            //favourite count
-            _count: {
-                select: {
-                    favourites: true,
-                    cartItems: true,
-                    offerItems: true
-                }
-            }
-        },
-    })
-
-    const total = await prisma.product.count({
-        where: whereConditions,
+    // Cache the result
+    await redisPub.set(cacheKey, JSON.stringify(result), {
+        EX: 60 * 10, // Cache for 10 minutes
     });
 
-    return {
-        meta: paginationHelper.generatePaginationMeta({ total, page, limit }),
-        data: result,
-    };
+    return result;
 
 }
 
@@ -441,29 +325,25 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, showItemInCart, stock, ...moreFields } = query;
+    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, showItemInCart, stock, authenticate, ...moreFields } = query;
+
+    const cacheQuery: { [key: string]: unknown } = { limit, skip, sortBy, sortOrder, page };
 
     if (searchTerm) {
-        AndConditions.push({
-            OR: [
-                {
-                    title: {
-                        contains: searchTerm as string,
-                        mode: "insensitive",
-                    },
-                },
-                {
-                    description: {
-                        contains: searchTerm as string,
-                        mode: "insensitive",
-                    },
-                },
-                {
-                    tags: {
-                        has: searchTerm as string
-                    }
-                }
-            ],
+
+        const tokens = (searchTerm as string).trim().toLowerCase().split(/\s+/).filter(Boolean);
+        cacheQuery.searchTerm = tokens.sort();
+
+        tokens.forEach((token) => {
+            AndConditions.push({
+                OR: [
+                    { brand: { name: { contains: token, mode: "insensitive" } } },
+                    { size: { title: { contains: token, mode: "insensitive" } } },
+                    { title: { contains: token, mode: "insensitive" } },
+                    { description: { contains: token, mode: "insensitive" } },
+                    { tags: { hasSome: [token] } },
+                ],
+            });
         });
     }
 
@@ -473,48 +353,56 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
                 has: category as string
             }
         });
+        cacheQuery.category = category;
     }
 
     if (brands) {
-        const splitBrand = (brands as string).split(",")
+        const splitBrand = (brands as string).split(",").map((s) => s.trim()).filter(Boolean).sort();
+        cacheQuery.brands = splitBrand;
+
         AndConditions.push({
             brandId: {
                 in: splitBrand
             }
         });
+        cacheQuery.brands = splitBrand;
     }
     if (sizes) {
-        const splitSize = (sizes as string).split(",")
+        const splitSize = (sizes as string).split(",").map((s) => s.trim()).filter(Boolean).sort();
         AndConditions.push({
             sizeId: {
-                in: splitSize
+                in: splitSize,
             }
         });
+        cacheQuery.sizes = splitSize;
     }
 
     if (conditions) {
-        const splitCondition = (conditions as string).split(",");
+        const splitCondition = (conditions as string).split(",").map((s) => s.trim()).filter(Boolean).sort();
         AndConditions.push({
             condition: {
                 in: splitCondition
             },
         });
+        cacheQuery.conditions = splitCondition;
     }
     if (colors) {
-        const splitColors = (colors as string).split(",");
+        const splitColors = (colors as string).split(",").map((s) => s.trim()).filter(Boolean).sort();
         AndConditions.push({
             color: {
                 in: splitColors
             },
         });
+        cacheQuery.colors = splitColors;
     }
     if (meterials) {
-        const splitMeterials = (meterials as string).split(",");
+        const splitMeterials = (meterials as string).split(",").map((s) => s.trim()).filter(Boolean).sort();
         AndConditions.push({
             meterials: {
                 hasSome: splitMeterials
             },
         });
+        cacheQuery.meterials = splitMeterials;
     }
 
     if (minPrice || maxPrice) {
@@ -524,15 +412,19 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
                 lte: maxPrice ? Number(maxPrice) : undefined,
             },
         });
+        cacheQuery.minPrice = minPrice ? Number(minPrice) : undefined;
+        cacheQuery.maxPrice = maxPrice ? Number(maxPrice) : undefined;
     }
 
     if (stock && stock === "sold") {
+        cacheQuery.stock = "sold";
         AndConditions.push({
             stock: {
                 lte: 0
             }
         });
-    } else {
+    } else if (stock && stock !== "on-sale") {
+        cacheQuery.stock = "available";
         AndConditions.push({
             stock: {
                 gte: 1
@@ -540,17 +432,33 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
         });
     }
 
+    if (authenticate && authenticate === "true") {
+        cacheQuery.authenticate = "true";
+        AndConditions.push({
+            assistentSell: {}
+        })
+    }
+
     if (Object.keys(moreFields)?.length > 0) {
         Object.entries(moreFields).forEach(([field, value]) => {
-            AndConditions.push({
-                [field]: {
-                    equals: value,
-                },
-            });
+            if (value !== undefined && value !== null) {
+                AndConditions.push({
+                    [field]: {
+                        equals: value,
+                    },
+                });
+                cacheQuery[field] = value;
+            }
         });
     }
 
     const whereConditions: Prisma.ProductWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
+
+    const cacheKey = await redisKeys.sellerProductsKey({ query: cacheQuery, sellerId: userId, cUserId: currentUser });
+    const cachedData = await redisPub.get(cacheKey);
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
 
     const result = await prisma.product.findMany({
         where: whereConditions,
@@ -586,7 +494,9 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
             //favourite count
             _count: {
                 select: {
-                    favourites: true
+                    favourites: true,
+                    cartItems: true,
+                    offerItems: true
                 }
             },
             // is Favourites by user
@@ -618,10 +528,15 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
         where: whereConditions,
     });
 
-    return {
+    const res = {
         meta: paginationHelper.generatePaginationMeta({ total, page, limit }),
         data: result,
     };
+
+    //set on redis cache
+    await redisPub.setEx(cacheKey, 60 * 10, JSON.stringify(res)); //10 minutes cache
+
+    return res;
 
 }
 
@@ -2141,7 +2056,6 @@ export const productService = {
 
     productsByUserName,
     productsByUserId,
-    myProducts,
     dltAProduct,
 
     getViewKey,

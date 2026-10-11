@@ -5,10 +5,11 @@ import { allRoles } from "../user/user.rout";
 import { accountControler } from "./account.controler";
 import { payoutValidator } from "./account.validator";
 import req_validator from "../../middleware/req_validation";
+import { rateLimiter } from "../../middleware/RateLimiter";
 
 const router = Router();
 
-router.patch("/connect", auth(...allRoles), accountControler.stripLinkAccount);
+router.patch("/connect", rateLimiter(), auth(...allRoles), accountControler.stripLinkAccount);
 
 router.get("/account-data", auth(...allRoles), accountControler.getConnectedAccountData);
 
@@ -20,7 +21,7 @@ router.get("/balance", auth(...allRoles), accountControler.accountBalance);
 
 router.get("/payouts", auth(...allRoles), accountControler.payoutHistory);
 
-router.post("/payouts", payoutValidator, req_validator(), auth(...allRoles), accountControler.requestToWithdraw);
+router.post("/payouts", rateLimiter(), payoutValidator, req_validator(), auth(...allRoles), accountControler.requestToWithdraw);
 
 
 export const accountRouts = router;

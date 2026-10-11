@@ -4,6 +4,7 @@ import req_validator from "../../middleware/req_validation";
 import { settingsControler } from "./settings.controler";
 import { SettingsValidator, updateSettingsValidator } from "./settings.validator";
 import { Role } from "../../../generated/prisma/enums";
+import { rateLimiter } from "../../middleware/RateLimiter";
 
 const router = Router();
 
@@ -11,6 +12,7 @@ router.get('/:key', SettingsValidator, req_validator(), settingsControler.single
 
 router.patch(
     '/',
+     rateLimiter(),
     auth(Role.ADMIN),
     updateSettingsValidator,
     req_validator(),

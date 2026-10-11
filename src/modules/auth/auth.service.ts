@@ -101,7 +101,7 @@ const loginUser = async (payload: { email: string, password: string, fcmToken?: 
         }
 
         if (!user?.auth?.isverified) {
-            throw new AppError(httpStatus.BAD_REQUEST, 'Your account is not verified');
+            throw new AppError(httpStatus.BAD_REQUEST, 'Account verification is not completed. Please sign up again to complete the verification process');
         }
 
         //check account is account is connected by social login or not
@@ -431,7 +431,7 @@ const socialLogin = async (payload: { idToken: string, fcmToken?: string }) => {
         }
 
         if (!user?.auth?.isverified) {
-            throw new AppError(httpStatus.BAD_REQUEST, 'Your account is not verified');
+            throw new AppError(httpStatus.BAD_REQUEST, 'Account verification is not completed. Please sign up again to complete the verification process');
         }
 
         if (user?.auth?.approval_status === "Pending") {

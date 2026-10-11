@@ -3,6 +3,8 @@ import { Approval_Status, BadgeRole, Role } from "../../../generated/prisma/enum
 import config from "../../config";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
+import { redisPub } from "../../redis";
+import { redisKeys } from "../../redis/keys";
 import prisma from "../../shared/prisma";
 import httpStatus from 'http-status'
 
@@ -679,7 +681,7 @@ const addOrUpdateBillingDetails = async (payload: BillingDetails, userId: string
         "country_alpha2": payload?.countryCode
     }
 
-    const rateRes = await fetch(`${config.easyship.easyship_prod_base_url}/addresses/validations`, {
+    const addressRes = await fetch(`${config.easyship.easyship_prod_base_url}/addresses/validations`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${config.easyship.easyship_prod_api_key}`,
@@ -688,8 +690,8 @@ const addOrUpdateBillingDetails = async (payload: BillingDetails, userId: string
         body: JSON.stringify(shipPayload)
     });
 
-    if (!rateRes.ok) {
-        const errorData = await rateRes.json().catch(() => null);
+    if (!addressRes.ok) {
+        const errorData = await addressRes.json().catch(() => null);
         throw new AppError(
             httpStatus.BAD_REQUEST,
             errorData?.error?.message || 'Invalid Shipping Address',
@@ -714,19 +716,8 @@ const addOrUpdateBillingDetails = async (payload: BillingDetails, userId: string
 
     await prisma.$transaction(async (tx) => {
 
-        if (existBuyingAddress && existBuyingAddress?.orders?.length === 0 && existBuyingAddress?.ordersAsDestination?.length === 0 && !existBuyingAddress?.sellerId) {
-
-            await tx.billingDetails.update({
-                where: { userId }, data: {
-                    ...payload,
-                    userId
-                }
-            });
-
-            return;
-        }
         //if just a address is exist, just soft delete the address
-        else if (existBuyingAddress) {
+        if (existBuyingAddress) {
 
             await tx.billingDetails.update({
                 where: { userId }, data: {
@@ -735,29 +726,45 @@ const addOrUpdateBillingDetails = async (payload: BillingDetails, userId: string
             });
         }
 
-        const existSellingAddress = await tx.billingDetails.findFirst({ where: { sellerId: userId } });
-
         const res = await tx.billingDetails.create({
             data: {
                 ...payload,
                 userId,
-                ...(!existSellingAddress ? { sellerId: userId } : { userId: null })
+                sellerId: null
             }
         })
     })
+
+    //dlt the cache for user address
+    const cacheKey = redisKeys.userAddressKey({ userId });
+    await redisPub.del(cacheKey);
 
     return;
 }
 
 const addressesByUser = async (userId: string) => {
+
+    //lookup on cache
+    const cacheKey = redisKeys.userAddressKey({ userId });
+    const cachedData = await redisPub.get(cacheKey);
+
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
+
     const buyingAddress = await prisma.billingDetails.findFirst({ where: { userId } });
 
     const sellingAddress = await prisma.billingDetails.findFirst({ where: { sellerId: userId } });
 
-    return {
+    const result = {
         buyingAddress,
         sellingAddress
     }
+
+    //set cache for 1 hour
+    await redisPub.setEx(cacheKey, 3600, JSON.stringify(result));
+
+    return result;
 }
 
 const addOrUpdateSellerAddress = async (payload: BillingDetails, sellerId: string) => {
@@ -803,23 +810,10 @@ const addOrUpdateSellerAddress = async (payload: BillingDetails, sellerId: strin
         }
     });
 
-    // Check if the existing address is exist & did not used in any order & did not used in any buyer address, if yes then can update the existing address, otherwise create new address
-
     await prisma.$transaction(async (tx) => {
 
-        if (existSellingAddress && existSellingAddress?.orders?.length === 0 && existSellingAddress?.ordersAsDestination?.length === 0 && !existSellingAddress?.userId) {
-
-            await tx.billingDetails.update({
-                where: { sellerId }, data: {
-                    ...payload,
-                    sellerId
-                }
-            });
-
-            return;
-        }
         //if just a address is exist, just soft delete the address
-        else if (existSellingAddress) {
+        if (existSellingAddress) {
 
             await tx.billingDetails.update({
                 where: { sellerId }, data: {
@@ -828,17 +822,19 @@ const addOrUpdateSellerAddress = async (payload: BillingDetails, sellerId: strin
             });
         }
 
-        const existBuyingAddress = await tx.billingDetails.findFirst({ where: { userId: sellerId } });
-
+        //create new address
         const res = await tx.billingDetails.create({
             data: {
                 ...payload,
                 sellerId,
-                ...(!existBuyingAddress ? { userId: sellerId } : { userId: null })
+                userId: null
             }
         })
     })
 
+    //dlt the cache for user address
+    const cacheKey = redisKeys.userAddressKey({ userId: sellerId });
+    await redisPub.del(cacheKey);
 
     return;
 }

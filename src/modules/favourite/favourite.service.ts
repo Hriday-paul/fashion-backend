@@ -2,12 +2,21 @@ import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import { jobs } from "../../queues/jobs.name";
 import { notificationQueue } from "../../queues/notificaion.queue";
+import { redisPub } from "../../redis";
+import { redisKeys } from "../../redis/keys";
 import prisma from "../../shared/prisma"
 import httpStatus from "http-status";
 
 const favouritesByUser = async (userId: string, options: TPaginationOptions) => {
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
+
+    const cacheKey = await redisKeys.userFavouriteProductsKey({ userId, query: { limit, skip, sortBy, sortOrder, page } });
+
+    const cached = await redisPub.get(cacheKey);
+    if (cached) {
+        return JSON.parse(cached);
+    }
 
     const favourites = await prisma.favourite.findMany({
         where: { userId },
@@ -31,7 +40,7 @@ const favouritesByUser = async (userId: string, options: TPaginationOptions) => 
         where: { userId },
     });
 
-    return {
+    const result = {
         meta: paginationHelper.generatePaginationMeta({
             total,
             page,
@@ -39,16 +48,40 @@ const favouritesByUser = async (userId: string, options: TPaginationOptions) => 
         }),
         data: favourites,
     };
+
+    // cache the result for 1 hour
+    await redisPub.setEx(cacheKey, 3600, JSON.stringify(result));
+
+    return result;
+}
+
+const favouriteItem = async (productId: string, userId: string) => {
+
+    //check on redis
+    const cacheKey = await redisKeys.userFavouriteItemKey({ userId, productId });
+    const cached = await redisPub.get(cacheKey);
+    if (cached) {
+        return JSON.parse(cached);
+    }
+
+    const favouriteItem = await prisma.favourite.findFirst({ where: { userId, productId } });
+
+    if (favouriteItem) {
+        //set on redis
+        await redisPub.setEx(cacheKey, 3600, JSON.stringify(favouriteItem));
+    }
+
+    return favouriteItem;
 }
 
 const addFavourite = async (productId: string, currentUser: { id: string, userName: string }) => {
 
     const { id: userId, userName: currentUserName } = currentUser;
 
-    //check favourite exist
-    const exist = await prisma.favourite.findFirst({ where: { userId, productId } });
-    if (exist) {
-        throw new AppError(httpStatus.CONFLICT, "Product already exist in favourite");
+    const favourite_item = await favouriteItem(productId, userId);
+
+    if (favourite_item) {
+        throw new AppError(httpStatus.CONFLICT, "Product already exist in favourites");
     }
 
     const product = await prisma.product.findFirst({
@@ -114,13 +147,16 @@ const addFavourite = async (productId: string, currentUser: { id: string, userNa
         }
     })
 
+    //invalid redis cache
+    await redisKeys.incrementUserVersion({ userId });
+
     return favourite;
 }
 
 const deleteFavourite = async (productId: string, userId: string) => {
 
     //check favourite exist
-    const exist = await prisma.favourite.findFirst({ where: { userId, productId } });
+    const exist = await favouriteItem(productId, userId);
     if (!exist) {
         throw new AppError(httpStatus.CONFLICT, "Favourite does not exist");
     }
@@ -128,6 +164,10 @@ const deleteFavourite = async (productId: string, userId: string) => {
     const favourite = await prisma.favourite.delete({
         where: { id: exist?.id }
     });
+
+    //invalid redis cache
+    await redisKeys.incrementUserVersion({ userId });
+
 
     return favourite;
 }

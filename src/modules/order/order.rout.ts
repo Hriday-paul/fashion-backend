@@ -7,6 +7,7 @@ import { cancelItemsValidator, validateApproveCancelReq, validateOfferOrder, val
 import { Role } from "../../../generated/prisma/enums";
 import parseData from "../../middleware/parseData";
 import { image_Upload } from "../../utils/s3";
+import { rateLimiter } from "../../middleware/RateLimiter";
 
 const router = Router();
 
@@ -19,22 +20,26 @@ router.get("/", auth(Role.ADMIN), orderControler.orders);
 router.get("/stats", auth(Role.ADMIN), orderControler.orderStats);
 
 router.post("/",
+    rateLimiter(),
     validateOrderProducts,
     req_validator(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.addNewOrder);
 
 router.post("/offer",
+    rateLimiter(),
     validateOfferOrder,
     req_validator(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.addNewOfferOrder);
 
 router.post("/shipping-label/:orderId",
+    rateLimiter(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.getShippingLebel);
 
 router.post("/shipping-auth-label/:orderId",
+    rateLimiter({ max: 10 }),
     auth(Role.ADMIN),
     orderControler.getAuthShippingLebel);
 
@@ -60,6 +65,7 @@ router.get("/by-buyer/:userName",
 
 //seller cancel order item
 router.post("/items/cancel",
+    rateLimiter(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     image_Upload.array('evidences'),
     parseData(),
@@ -69,6 +75,7 @@ router.post("/items/cancel",
 
 //buyer request cancel order item
 router.post("/items/cancel/request",
+    rateLimiter(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     image_Upload.array('evidences'),
     parseData(),
@@ -79,6 +86,7 @@ router.post("/items/cancel/request",
 
 //seller approve buyer cancel request
 router.patch("/items/cancel/approve",
+    rateLimiter(),
     validateApproveCancelReq,
     req_validator(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
@@ -86,30 +94,35 @@ router.patch("/items/cancel/approve",
 
 //seller decline buyer cancel request
 router.patch("/items/cancel/decline",
+    rateLimiter(),
     validateApproveCancelReq,
     req_validator(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.declineCancelOrderItemBySeller);
 
 router.patch("/confirm-received",
+     rateLimiter(),
     validateOrderReceivedmark,
     req_validator(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.confirmOrderReceived);
 
 router.patch("/auth-received",
+    rateLimiter({max: 20}),
     validateOrderReceivedmark,
     req_validator(),
     auth(Role.ADMIN),
     orderControler.markOrderReceivedFromAuthCenter);
 
 router.patch("/auth-in-progress",
+     rateLimiter({max: 20}),
     validateOrderReceivedmark,
     req_validator(),
     auth(Role.ADMIN),
     orderControler.markOrderAuthInProgress);
 
 router.patch("/auth-result",
+     rateLimiter({max: 20}),
     validateOrderAuthResult,
     req_validator(),
     auth(Role.ADMIN),

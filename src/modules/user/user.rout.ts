@@ -6,6 +6,7 @@ import req_validator from "../../middleware/req_validation";
 import { image_Upload } from "../../utils/s3";
 import parseData from "../../middleware/parseData";
 import { Role } from "../../../generated/prisma/enums";
+import { rateLimiter } from "../../middleware/RateLimiter";
 
 const router = Router();
 
@@ -19,6 +20,7 @@ export const allRoles: Role[] = [Role.ADMIN, Role.INDIVIDUAL_USER, Role.AMBASSAD
 
 router.patch(
     '/update-my-profile',
+    rateLimiter(),
     auth(...allRoles),
     image_Upload.fields([{ name: "picture", maxCount: 1 }, { name: "charityImgs", maxCount: 8 }]),
     parseData(),
@@ -27,6 +29,7 @@ router.patch(
 
 router.patch(
     '/status/:id',
+    rateLimiter({ max: 50 }),
     statusUpdateValidator,
     req_validator(),
     auth(Role.ADMIN),
@@ -35,6 +38,7 @@ router.patch(
 
 router.patch(
     '/approve-decline',
+    rateLimiter({ max: 50 }),
     validateApprovalStatus,
     req_validator(),
     auth(Role.ADMIN),
@@ -43,6 +47,7 @@ router.patch(
 
 router.patch(
     '/notofication',
+    rateLimiter(),
     statusUpdateValidator,
     req_validator(),
     auth(...allRoles),
@@ -63,6 +68,7 @@ router.get(
 
 router.put(
     '/bundle-discount',
+    rateLimiter(),
     bundleDiscountValidator,
     req_validator(),
     auth(...allRoles),
@@ -93,6 +99,7 @@ router.get(
 //------shipping details--------
 router.put(
     '/buying-details',
+    rateLimiter(),
     validateBillingDetails,
     req_validator(),
     auth(...allRoles),
@@ -100,6 +107,7 @@ router.put(
 );
 router.put(
     '/selling-address',
+    rateLimiter(),
     validateBillingDetails,
     req_validator(),
     auth(...allRoles),
@@ -155,12 +163,14 @@ router.get(
 
 router.delete(
     '/delete-account',
+    rateLimiter(),
     auth(...allRoles),
     userController.deletemyAccount,
 );
 
 router.delete(
     '/delete-account/:id',
+    rateLimiter({ max: 20 }),
     auth(Role.ADMIN),
     userController.deleteUser,
 );

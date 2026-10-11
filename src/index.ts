@@ -17,7 +17,7 @@ multer();
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 app.use(cors({
-  origin: ["http://localhost:5001", "http://10.10.28.6:5001", "http://localhost:3003", "https://fashi-on.com", "https://www.fashi-on.com", "https://admin.fashi-on.com", "https://www.admin.fashi-on.com"],
+  origin: ["http://localhost:5001", "http://10.10.28.6:5001", "http://localhost:3003", "http://localhost:3002", "https://fashi-on.com", "https://www.fashi-on.com", "https://admin.fashi-on.com", "https://www.admin.fashi-on.com"],
   credentials: true
 }));
 

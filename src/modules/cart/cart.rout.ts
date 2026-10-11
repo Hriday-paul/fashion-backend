@@ -7,6 +7,7 @@ import req_validator from "../../middleware/req_validation";
 import { cartControler } from "./cart.controler";
 import { validateCartAdd, validateCartCheckoutAuthentication, validateCartCheckoutTreeGift } from "./cart.validator";
 import { Role } from "../../../generated/prisma/enums";
+import { rateLimiter } from "../../middleware/RateLimiter";
 
 const router = Router();
 
@@ -18,12 +19,14 @@ export const excludedCharityRoles: Role[] = [
 router.get("/", auth(...allRoles), cartControler.cartsByUser);
 
 router.post("/",
+    rateLimiter({ max: 10 }),
     validateCartAdd,
     req_validator(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     cartControler.addToCart);
 
 router.delete("/:productId",
+    rateLimiter({ max: 10 }),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     cartControler.deleteCartItem);
 

@@ -7,6 +7,7 @@ import { assistentSellControler } from "./assistentSell.controler";
 import { addAssitedSellListingValidator, assistentSellListValidator, assistentSellRespondValidator, assistentSellValidator } from "./assistentSell.validator";
 import parseData from "../../middleware/parseData";
 import { image_Upload } from "../../utils/s3";
+import { rateLimiter } from "../../middleware/RateLimiter";
 
 const router = Router();
 
@@ -16,6 +17,7 @@ export const excludedCharityRoles: Role[] = [
 ];
 
 router.post("/",
+    rateLimiter(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     image_Upload.array('images'),
     parseData(),
@@ -36,16 +38,19 @@ router.get("/requests", //my requests
     assistentSellControler.myRequests);
 
 router.delete("/:id",
+    rateLimiter(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     assistentSellControler.dltRequest);
 
 router.patch("/accept-decline",
+    rateLimiter({ max: 10 }),
     auth(Role.ADMIN),
     assistentSellRespondValidator,
     req_validator(),
     assistentSellControler.acceptDeclineRequest);
 
 router.patch("/listed",
+    rateLimiter(),
     auth(Role.ADMIN),
     assistentSellListValidator,
     req_validator(),
@@ -60,6 +65,7 @@ router.get("/listings/:requestId",
     assistentSellControler.listings);
 
 router.post("/listings",
+    rateLimiter({max: 10}),
     auth(Role.ADMIN),
     image_Upload.array('images'),
     parseData(),

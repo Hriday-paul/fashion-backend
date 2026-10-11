@@ -7,6 +7,7 @@ import { image_Upload } from "../../utils/s3";
 import auth, { PublicAuth } from "../../middleware/auth";
 import { allRoles } from "../user/user.rout";
 import { Role } from "../../../generated/prisma/enums";
+import { rateLimiter } from "../../middleware/RateLimiter";
 
 export const excludedCharityRoles: Role[] = [
     Role.CHARITABLE_ORGANIZATION,
@@ -15,7 +16,7 @@ export const excludedCharityRoles: Role[] = [
 
 const router = Router();
 
-router.post("/", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), image_Upload.array('images'), parseData(), addProductValidator, req_validator(), productControler.addNewProduct);
+router.post("/", rateLimiter(), auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), image_Upload.array('images'), parseData(), addProductValidator, req_validator(), productControler.addNewProduct);
 
 router.get("/", PublicAuth(), productControler.allProducts);
 router.get("/my-items", auth(...allRoles), productControler.myProducts);
@@ -39,14 +40,14 @@ router.get("/similar-from-seller/:productId", PublicAuth(), productControler.sim
 router.get("/same-category/:productId", PublicAuth(), productControler.sameCategoryProducts);
 router.get("/same-color/:productId", PublicAuth(), productControler.sameColorProducts);
 
-router.post("/offer", makeofferValidator, req_validator(), auth(...allRoles), productControler.makeAnOfferAsBuyer);
-router.post("/offer/accept", acceptOfferValidator, req_validator(), auth(...allRoles), productControler.acceptOfferAsSeller);
-router.post("/offer/decline", declineCounterOfferValidator, req_validator(), auth(...allRoles), productControler.declineCounterOfferAsSeller);
+router.post("/offer",  rateLimiter(), makeofferValidator, req_validator(), auth(...allRoles), productControler.makeAnOfferAsBuyer);
+router.post("/offer/accept",  rateLimiter(), acceptOfferValidator, req_validator(), auth(...allRoles), productControler.acceptOfferAsSeller);
+router.post("/offer/decline",  rateLimiter(), declineCounterOfferValidator, req_validator(), auth(...allRoles), productControler.declineCounterOfferAsSeller);
 
-router.post("/price/drop", dropPriceValidator, req_validator(), auth(...allRoles), productControler.dropPriceForAProduct);
+router.post("/price/drop", rateLimiter(), dropPriceValidator, req_validator(), auth(...allRoles), productControler.dropPriceForAProduct);
 
 router.get("/:id", PublicAuth(), productControler.productDetails);
 
-router.delete("/:productId", auth(Role.ADMIN), productControler.dltAProduct);
+router.delete("/:productId",  rateLimiter(), auth(Role.ADMIN), productControler.dltAProduct);
 
 export const productRouts = router;

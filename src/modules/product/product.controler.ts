@@ -57,7 +57,7 @@ const addNewProduct = catchAsync(async (req: Request, res: Response) => {
 
 const allProducts = catchAsync(async (req: Request, res: Response) => {
 
-    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials", "stock"])
+    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials", "stock", "authenticate"])
     const options = pick(req.query, PaginateOptions);
 
     const result = await productService.allProducts(query, options, req.user?.id);
@@ -97,10 +97,10 @@ const authenticateProducts = catchAsync(async (req: Request, res: Response) => {
 
 const myProducts = catchAsync(async (req: Request, res: Response) => {
 
-    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials"])
+    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials", "authenticate"])
     const options = pick(req.query, PaginateOptions);
 
-    const result = await productService.myProducts(query, options, req.user.id);
+    const result = await productService.productsByUserId(query, options, req.user.id, req.user?.id);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -112,7 +112,7 @@ const myProducts = catchAsync(async (req: Request, res: Response) => {
 
 const productsByUserName = catchAsync(async (req: Request, res: Response) => {
 
-    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials", "stock", "showItemInCart"])
+    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials", "stock", "showItemInCart", "authenticate"])
     const options = pick(req.query, PaginateOptions);
 
     const result = await productService.productsByUserName(query, options, req.params.username, req.user?.id);
