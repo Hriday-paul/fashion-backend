@@ -10,6 +10,7 @@ model Category {
     products Product[]
 
     brands BrandByCategory[]
+    materials materialByCategory[]
     sizeCategoryHierarchyGroups SizeCategoryHierarchyGroup[]
 
     sizeGuide String?
@@ -51,6 +52,39 @@ model Brand {
     updatedAt DateTime @updatedAt
 
     @@map("brands")
+}
+
+model materialByCategory {
+    id         String @id @default(uuid())
+    categoryId String
+    materialId    String
+
+    category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    material    Material    @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("material_by_category")
+    @@index([categoryId, materialId])
+    @@index([materialId, categoryId])
+    @@unique([categoryId, materialId])
+}
+
+model Material {
+    id   String @id @default(uuid())
+    name String
+
+    order Int @default(autoincrement())
+
+    materialByCategories materialByCategory[]
+
+    productMaterials ProductMaterial[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("materials")
 }
 
 model SizeCategoryHierarchyGroup {

@@ -2,11 +2,12 @@ import { Router } from "express";
 import { authController } from "./auth.controller";
 import { changePasswordValidator, createAccountValidator, forgotPasswordValidator, loginAccountValidator, refreshTokenValidator, resetPasswordValidator, socialSignInValidator, socialSignupValidator, userNameCheckerValidator } from "./auth.validator";
 import req_validator from "../../middleware/req_validation";
-import { otpResendValidator, otpVerifyValidator } from "../otp/otp.validation";
+import { otpPhoneResendValidator, otpResendValidator, otpVerifyValidator } from "../otp/otp.validation";
 import { otpControllers } from "../otp/otp.controller";
 import auth from "../../middleware/auth";
 import { Role } from "../../../generated/prisma/enums";
 import { rateLimiter } from "../../middleware/RateLimiter";
+import { allRoles } from "../user/user.rout";
 
 const router = Router();
 
@@ -68,11 +69,28 @@ router.post(
 );
 
 router.post(
+    '/verify-phone-otp',
+    rateLimiter(),
+    otpVerifyValidator,
+    req_validator(),
+    otpControllers.phoneVerifyOtp,
+);
+
+router.post(
     '/resend-otp',
     rateLimiter({ windowMs: 1 * 60 * 1000, max: 2, msg: 'Only 2 request allowed per minutes. please try again after a minute' }),
     otpResendValidator,
     req_validator(),
     otpControllers.resendOtp,
+);
+
+router.post(
+    '/resend-phone-otp',
+    rateLimiter({ windowMs: 1 * 60 * 1000, max: 2, msg: 'Only 2 request allowed per minutes. please try again after a minute' }),
+    auth(...allRoles),
+    otpPhoneResendValidator,
+    req_validator(),
+    otpControllers.resendOtpIntoPhone,
 );
 
 router.post('/check-username',

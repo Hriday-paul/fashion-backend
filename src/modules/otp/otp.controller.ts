@@ -25,7 +25,30 @@ const resendOtp = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const resendOtpIntoPhone = catchAsync(async (req: Request, res: Response) => {
+  const result = await otpServices.resendOtpIntoPhone(req?.body?.phone, req?.user?.id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'OTP sent successfully',
+    data: result,
+  });
+});
+
+const phoneVerifyOtp = catchAsync(async (req: Request, res: Response) => {
+  const token = req?.headers?.token || req?.body?.token;
+  const result = await otpServices.verifyPhoneOtp(token as string, req.body.otp);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'OTP verified successfully',
+    data: result,
+  });
+});
+
 export const otpControllers = {
   verifyOtp,
   resendOtp,
+  phoneVerifyOtp,
+  resendOtpIntoPhone
 };

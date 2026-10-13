@@ -193,6 +193,7 @@ export type CategoryWhereInput = {
   children?: Prisma.CategoryListRelationFilter
   products?: Prisma.ProductListRelationFilter
   brands?: Prisma.BrandByCategoryListRelationFilter
+  materials?: Prisma.MaterialByCategoryListRelationFilter
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupListRelationFilter
 }
 
@@ -207,6 +208,7 @@ export type CategoryOrderByWithRelationInput = {
   children?: Prisma.CategoryOrderByRelationAggregateInput
   products?: Prisma.ProductOrderByRelationAggregateInput
   brands?: Prisma.BrandByCategoryOrderByRelationAggregateInput
+  materials?: Prisma.materialByCategoryOrderByRelationAggregateInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupOrderByRelationAggregateInput
 }
 
@@ -224,6 +226,7 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   children?: Prisma.CategoryListRelationFilter
   products?: Prisma.ProductListRelationFilter
   brands?: Prisma.BrandByCategoryListRelationFilter
+  materials?: Prisma.MaterialByCategoryListRelationFilter
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupListRelationFilter
 }, "id">
 
@@ -261,6 +264,7 @@ export type CategoryCreateInput = {
   children?: Prisma.CategoryCreateNestedManyWithoutParentInput
   products?: Prisma.ProductCreateNestedManyWithoutCategoryInput
   brands?: Prisma.BrandByCategoryCreateNestedManyWithoutCategoryInput
+  materials?: Prisma.materialByCategoryCreateNestedManyWithoutCategoryInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupCreateNestedManyWithoutCategoryInput
 }
 
@@ -274,6 +278,7 @@ export type CategoryUncheckedCreateInput = {
   children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutCategoryInput
   brands?: Prisma.BrandByCategoryUncheckedCreateNestedManyWithoutCategoryInput
+  materials?: Prisma.materialByCategoryUncheckedCreateNestedManyWithoutCategoryInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -287,6 +292,7 @@ export type CategoryUpdateInput = {
   children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
   products?: Prisma.ProductUpdateManyWithoutCategoryNestedInput
   brands?: Prisma.BrandByCategoryUpdateManyWithoutCategoryNestedInput
+  materials?: Prisma.materialByCategoryUpdateManyWithoutCategoryNestedInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUpdateManyWithoutCategoryNestedInput
 }
 
@@ -300,6 +306,7 @@ export type CategoryUncheckedUpdateInput = {
   children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutCategoryNestedInput
   brands?: Prisma.BrandByCategoryUncheckedUpdateManyWithoutCategoryNestedInput
+  materials?: Prisma.materialByCategoryUncheckedUpdateManyWithoutCategoryNestedInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
@@ -448,6 +455,20 @@ export type CategoryUpdateOneRequiredWithoutBrandsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutBrandsInput, Prisma.CategoryUpdateWithoutBrandsInput>, Prisma.CategoryUncheckedUpdateWithoutBrandsInput>
 }
 
+export type CategoryCreateNestedOneWithoutMaterialsInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutMaterialsInput, Prisma.CategoryUncheckedCreateWithoutMaterialsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutMaterialsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneRequiredWithoutMaterialsNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutMaterialsInput, Prisma.CategoryUncheckedCreateWithoutMaterialsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutMaterialsInput
+  upsert?: Prisma.CategoryUpsertWithoutMaterialsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutMaterialsInput, Prisma.CategoryUpdateWithoutMaterialsInput>, Prisma.CategoryUncheckedUpdateWithoutMaterialsInput>
+}
+
 export type CategoryCreateNestedOneWithoutSizeCategoryHierarchyGroupsInput = {
   create?: Prisma.XOR<Prisma.CategoryCreateWithoutSizeCategoryHierarchyGroupsInput, Prisma.CategoryUncheckedCreateWithoutSizeCategoryHierarchyGroupsInput>
   connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutSizeCategoryHierarchyGroupsInput
@@ -485,6 +506,7 @@ export type CategoryCreateWithoutChildrenInput = {
   parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
   products?: Prisma.ProductCreateNestedManyWithoutCategoryInput
   brands?: Prisma.BrandByCategoryCreateNestedManyWithoutCategoryInput
+  materials?: Prisma.materialByCategoryCreateNestedManyWithoutCategoryInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupCreateNestedManyWithoutCategoryInput
 }
 
@@ -497,6 +519,7 @@ export type CategoryUncheckedCreateWithoutChildrenInput = {
   updatedAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutCategoryInput
   brands?: Prisma.BrandByCategoryUncheckedCreateNestedManyWithoutCategoryInput
+  materials?: Prisma.materialByCategoryUncheckedCreateNestedManyWithoutCategoryInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -514,6 +537,7 @@ export type CategoryCreateWithoutParentInput = {
   children?: Prisma.CategoryCreateNestedManyWithoutParentInput
   products?: Prisma.ProductCreateNestedManyWithoutCategoryInput
   brands?: Prisma.BrandByCategoryCreateNestedManyWithoutCategoryInput
+  materials?: Prisma.materialByCategoryCreateNestedManyWithoutCategoryInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupCreateNestedManyWithoutCategoryInput
 }
 
@@ -526,6 +550,7 @@ export type CategoryUncheckedCreateWithoutParentInput = {
   children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutCategoryInput
   brands?: Prisma.BrandByCategoryUncheckedCreateNestedManyWithoutCategoryInput
+  materials?: Prisma.materialByCategoryUncheckedCreateNestedManyWithoutCategoryInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -559,6 +584,7 @@ export type CategoryUpdateWithoutChildrenInput = {
   parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
   products?: Prisma.ProductUpdateManyWithoutCategoryNestedInput
   brands?: Prisma.BrandByCategoryUpdateManyWithoutCategoryNestedInput
+  materials?: Prisma.materialByCategoryUpdateManyWithoutCategoryNestedInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUpdateManyWithoutCategoryNestedInput
 }
 
@@ -571,6 +597,7 @@ export type CategoryUncheckedUpdateWithoutChildrenInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutCategoryNestedInput
   brands?: Prisma.BrandByCategoryUncheckedUpdateManyWithoutCategoryNestedInput
+  materials?: Prisma.materialByCategoryUncheckedUpdateManyWithoutCategoryNestedInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
@@ -611,6 +638,7 @@ export type CategoryCreateWithoutBrandsInput = {
   parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
   children?: Prisma.CategoryCreateNestedManyWithoutParentInput
   products?: Prisma.ProductCreateNestedManyWithoutCategoryInput
+  materials?: Prisma.materialByCategoryCreateNestedManyWithoutCategoryInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupCreateNestedManyWithoutCategoryInput
 }
 
@@ -623,6 +651,7 @@ export type CategoryUncheckedCreateWithoutBrandsInput = {
   updatedAt?: Date | string
   children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutCategoryInput
+  materials?: Prisma.materialByCategoryUncheckedCreateNestedManyWithoutCategoryInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -651,6 +680,7 @@ export type CategoryUpdateWithoutBrandsInput = {
   parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
   children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
   products?: Prisma.ProductUpdateManyWithoutCategoryNestedInput
+  materials?: Prisma.materialByCategoryUpdateManyWithoutCategoryNestedInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUpdateManyWithoutCategoryNestedInput
 }
 
@@ -663,6 +693,75 @@ export type CategoryUncheckedUpdateWithoutBrandsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutCategoryNestedInput
+  materials?: Prisma.materialByCategoryUncheckedUpdateManyWithoutCategoryNestedInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutMaterialsInput = {
+  id?: string
+  name: string
+  sizeGuide?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.CategoryCreateNestedManyWithoutParentInput
+  products?: Prisma.ProductCreateNestedManyWithoutCategoryInput
+  brands?: Prisma.BrandByCategoryCreateNestedManyWithoutCategoryInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutMaterialsInput = {
+  id?: string
+  name: string
+  parentId?: string | null
+  sizeGuide?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutCategoryInput
+  brands?: Prisma.BrandByCategoryUncheckedCreateNestedManyWithoutCategoryInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutMaterialsInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutMaterialsInput, Prisma.CategoryUncheckedCreateWithoutMaterialsInput>
+}
+
+export type CategoryUpsertWithoutMaterialsInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutMaterialsInput, Prisma.CategoryUncheckedUpdateWithoutMaterialsInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutMaterialsInput, Prisma.CategoryUncheckedCreateWithoutMaterialsInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutMaterialsInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutMaterialsInput, Prisma.CategoryUncheckedUpdateWithoutMaterialsInput>
+}
+
+export type CategoryUpdateWithoutMaterialsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  sizeGuide?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
+  products?: Prisma.ProductUpdateManyWithoutCategoryNestedInput
+  brands?: Prisma.BrandByCategoryUpdateManyWithoutCategoryNestedInput
+  sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutMaterialsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeGuide?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutCategoryNestedInput
+  brands?: Prisma.BrandByCategoryUncheckedUpdateManyWithoutCategoryNestedInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
@@ -676,6 +775,7 @@ export type CategoryCreateWithoutSizeCategoryHierarchyGroupsInput = {
   children?: Prisma.CategoryCreateNestedManyWithoutParentInput
   products?: Prisma.ProductCreateNestedManyWithoutCategoryInput
   brands?: Prisma.BrandByCategoryCreateNestedManyWithoutCategoryInput
+  materials?: Prisma.materialByCategoryCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutSizeCategoryHierarchyGroupsInput = {
@@ -688,6 +788,7 @@ export type CategoryUncheckedCreateWithoutSizeCategoryHierarchyGroupsInput = {
   children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutCategoryInput
   brands?: Prisma.BrandByCategoryUncheckedCreateNestedManyWithoutCategoryInput
+  materials?: Prisma.materialByCategoryUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutSizeCategoryHierarchyGroupsInput = {
@@ -716,6 +817,7 @@ export type CategoryUpdateWithoutSizeCategoryHierarchyGroupsInput = {
   children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
   products?: Prisma.ProductUpdateManyWithoutCategoryNestedInput
   brands?: Prisma.BrandByCategoryUpdateManyWithoutCategoryNestedInput
+  materials?: Prisma.materialByCategoryUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutSizeCategoryHierarchyGroupsInput = {
@@ -728,6 +830,7 @@ export type CategoryUncheckedUpdateWithoutSizeCategoryHierarchyGroupsInput = {
   children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutCategoryNestedInput
   brands?: Prisma.BrandByCategoryUncheckedUpdateManyWithoutCategoryNestedInput
+  materials?: Prisma.materialByCategoryUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateWithoutProductsInput = {
@@ -739,6 +842,7 @@ export type CategoryCreateWithoutProductsInput = {
   parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
   children?: Prisma.CategoryCreateNestedManyWithoutParentInput
   brands?: Prisma.BrandByCategoryCreateNestedManyWithoutCategoryInput
+  materials?: Prisma.materialByCategoryCreateNestedManyWithoutCategoryInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupCreateNestedManyWithoutCategoryInput
 }
 
@@ -751,6 +855,7 @@ export type CategoryUncheckedCreateWithoutProductsInput = {
   updatedAt?: Date | string
   children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
   brands?: Prisma.BrandByCategoryUncheckedCreateNestedManyWithoutCategoryInput
+  materials?: Prisma.materialByCategoryUncheckedCreateNestedManyWithoutCategoryInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -779,6 +884,7 @@ export type CategoryUpdateWithoutProductsInput = {
   parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
   children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
   brands?: Prisma.BrandByCategoryUpdateManyWithoutCategoryNestedInput
+  materials?: Prisma.materialByCategoryUpdateManyWithoutCategoryNestedInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUpdateManyWithoutCategoryNestedInput
 }
 
@@ -791,6 +897,7 @@ export type CategoryUncheckedUpdateWithoutProductsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
   brands?: Prisma.BrandByCategoryUncheckedUpdateManyWithoutCategoryNestedInput
+  materials?: Prisma.materialByCategoryUncheckedUpdateManyWithoutCategoryNestedInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
@@ -811,6 +918,7 @@ export type CategoryUpdateWithoutParentInput = {
   children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
   products?: Prisma.ProductUpdateManyWithoutCategoryNestedInput
   brands?: Prisma.BrandByCategoryUpdateManyWithoutCategoryNestedInput
+  materials?: Prisma.materialByCategoryUpdateManyWithoutCategoryNestedInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUpdateManyWithoutCategoryNestedInput
 }
 
@@ -823,6 +931,7 @@ export type CategoryUncheckedUpdateWithoutParentInput = {
   children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutCategoryNestedInput
   brands?: Prisma.BrandByCategoryUncheckedUpdateManyWithoutCategoryNestedInput
+  materials?: Prisma.materialByCategoryUncheckedUpdateManyWithoutCategoryNestedInput
   sizeCategoryHierarchyGroups?: Prisma.SizeCategoryHierarchyGroupUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
@@ -843,6 +952,7 @@ export type CategoryCountOutputType = {
   children: number
   products: number
   brands: number
+  materials: number
   sizeCategoryHierarchyGroups: number
 }
 
@@ -850,6 +960,7 @@ export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensio
   children?: boolean | CategoryCountOutputTypeCountChildrenArgs
   products?: boolean | CategoryCountOutputTypeCountProductsArgs
   brands?: boolean | CategoryCountOutputTypeCountBrandsArgs
+  materials?: boolean | CategoryCountOutputTypeCountMaterialsArgs
   sizeCategoryHierarchyGroups?: boolean | CategoryCountOutputTypeCountSizeCategoryHierarchyGroupsArgs
 }
 
@@ -887,6 +998,13 @@ export type CategoryCountOutputTypeCountBrandsArgs<ExtArgs extends runtime.Types
 /**
  * CategoryCountOutputType without action
  */
+export type CategoryCountOutputTypeCountMaterialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.materialByCategoryWhereInput
+}
+
+/**
+ * CategoryCountOutputType without action
+ */
 export type CategoryCountOutputTypeCountSizeCategoryHierarchyGroupsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SizeCategoryHierarchyGroupWhereInput
 }
@@ -903,6 +1021,7 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   children?: boolean | Prisma.Category$childrenArgs<ExtArgs>
   products?: boolean | Prisma.Category$productsArgs<ExtArgs>
   brands?: boolean | Prisma.Category$brandsArgs<ExtArgs>
+  materials?: boolean | Prisma.Category$materialsArgs<ExtArgs>
   sizeCategoryHierarchyGroups?: boolean | Prisma.Category$sizeCategoryHierarchyGroupsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
@@ -942,6 +1061,7 @@ export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   children?: boolean | Prisma.Category$childrenArgs<ExtArgs>
   products?: boolean | Prisma.Category$productsArgs<ExtArgs>
   brands?: boolean | Prisma.Category$brandsArgs<ExtArgs>
+  materials?: boolean | Prisma.Category$materialsArgs<ExtArgs>
   sizeCategoryHierarchyGroups?: boolean | Prisma.Category$sizeCategoryHierarchyGroupsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -959,6 +1079,7 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     children: Prisma.$CategoryPayload<ExtArgs>[]
     products: Prisma.$ProductPayload<ExtArgs>[]
     brands: Prisma.$BrandByCategoryPayload<ExtArgs>[]
+    materials: Prisma.$materialByCategoryPayload<ExtArgs>[]
     sizeCategoryHierarchyGroups: Prisma.$SizeCategoryHierarchyGroupPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1366,6 +1487,7 @@ export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime
   children<T extends Prisma.Category$childrenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   products<T extends Prisma.Category$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   brands<T extends Prisma.Category$brandsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$brandsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BrandByCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  materials<T extends Prisma.Category$materialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$materialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$materialByCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sizeCategoryHierarchyGroups<T extends Prisma.Category$sizeCategoryHierarchyGroupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$sizeCategoryHierarchyGroupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SizeCategoryHierarchyGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1886,6 +2008,30 @@ export type Category$brandsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.BrandByCategoryScalarFieldEnum | Prisma.BrandByCategoryScalarFieldEnum[]
+}
+
+/**
+ * Category.materials
+ */
+export type Category$materialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the materialByCategory
+   */
+  select?: Prisma.materialByCategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the materialByCategory
+   */
+  omit?: Prisma.materialByCategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.materialByCategoryInclude<ExtArgs> | null
+  where?: Prisma.materialByCategoryWhereInput
+  orderBy?: Prisma.materialByCategoryOrderByWithRelationInput | Prisma.materialByCategoryOrderByWithRelationInput[]
+  cursor?: Prisma.materialByCategoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MaterialByCategoryScalarFieldEnum | Prisma.MaterialByCategoryScalarFieldEnum[]
 }
 
 /**

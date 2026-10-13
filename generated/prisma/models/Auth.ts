@@ -32,6 +32,7 @@ export type AuthMinAggregateOutputType = {
   isSocialLogin: boolean | null
   isDeleted: boolean | null
   isverified: boolean | null
+  isPhoneVerified: boolean | null
   otp: string | null
   otp_status: boolean | null
   expiredAt: Date | null
@@ -50,6 +51,7 @@ export type AuthMaxAggregateOutputType = {
   isSocialLogin: boolean | null
   isDeleted: boolean | null
   isverified: boolean | null
+  isPhoneVerified: boolean | null
   otp: string | null
   otp_status: boolean | null
   expiredAt: Date | null
@@ -68,6 +70,7 @@ export type AuthCountAggregateOutputType = {
   isSocialLogin: number
   isDeleted: number
   isverified: number
+  isPhoneVerified: number
   otp: number
   otp_status: number
   expiredAt: number
@@ -88,6 +91,7 @@ export type AuthMinAggregateInputType = {
   isSocialLogin?: true
   isDeleted?: true
   isverified?: true
+  isPhoneVerified?: true
   otp?: true
   otp_status?: true
   expiredAt?: true
@@ -106,6 +110,7 @@ export type AuthMaxAggregateInputType = {
   isSocialLogin?: true
   isDeleted?: true
   isverified?: true
+  isPhoneVerified?: true
   otp?: true
   otp_status?: true
   expiredAt?: true
@@ -124,6 +129,7 @@ export type AuthCountAggregateInputType = {
   isSocialLogin?: true
   isDeleted?: true
   isverified?: true
+  isPhoneVerified?: true
   otp?: true
   otp_status?: true
   expiredAt?: true
@@ -215,6 +221,7 @@ export type AuthGroupByOutputType = {
   isSocialLogin: boolean
   isDeleted: boolean
   isverified: boolean
+  isPhoneVerified: boolean
   otp: string | null
   otp_status: boolean
   expiredAt: Date
@@ -254,6 +261,7 @@ export type AuthWhereInput = {
   isSocialLogin?: Prisma.BoolFilter<"Auth"> | boolean
   isDeleted?: Prisma.BoolFilter<"Auth"> | boolean
   isverified?: Prisma.BoolFilter<"Auth"> | boolean
+  isPhoneVerified?: Prisma.BoolFilter<"Auth"> | boolean
   otp?: Prisma.StringNullableFilter<"Auth"> | string | null
   otp_status?: Prisma.BoolFilter<"Auth"> | boolean
   expiredAt?: Prisma.DateTimeFilter<"Auth"> | Date | string
@@ -273,6 +281,7 @@ export type AuthOrderByWithRelationInput = {
   isSocialLogin?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   isverified?: Prisma.SortOrder
+  isPhoneVerified?: Prisma.SortOrder
   otp?: Prisma.SortOrderInput | Prisma.SortOrder
   otp_status?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
@@ -296,6 +305,7 @@ export type AuthWhereUniqueInput = Prisma.AtLeast<{
   isSocialLogin?: Prisma.BoolFilter<"Auth"> | boolean
   isDeleted?: Prisma.BoolFilter<"Auth"> | boolean
   isverified?: Prisma.BoolFilter<"Auth"> | boolean
+  isPhoneVerified?: Prisma.BoolFilter<"Auth"> | boolean
   otp?: Prisma.StringNullableFilter<"Auth"> | string | null
   otp_status?: Prisma.BoolFilter<"Auth"> | boolean
   expiredAt?: Prisma.DateTimeFilter<"Auth"> | Date | string
@@ -314,6 +324,7 @@ export type AuthOrderByWithAggregationInput = {
   isSocialLogin?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   isverified?: Prisma.SortOrder
+  isPhoneVerified?: Prisma.SortOrder
   otp?: Prisma.SortOrderInput | Prisma.SortOrder
   otp_status?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
@@ -338,6 +349,7 @@ export type AuthScalarWhereWithAggregatesInput = {
   isSocialLogin?: Prisma.BoolWithAggregatesFilter<"Auth"> | boolean
   isDeleted?: Prisma.BoolWithAggregatesFilter<"Auth"> | boolean
   isverified?: Prisma.BoolWithAggregatesFilter<"Auth"> | boolean
+  isPhoneVerified?: Prisma.BoolWithAggregatesFilter<"Auth"> | boolean
   otp?: Prisma.StringNullableWithAggregatesFilter<"Auth"> | string | null
   otp_status?: Prisma.BoolWithAggregatesFilter<"Auth"> | boolean
   expiredAt?: Prisma.DateTimeWithAggregatesFilter<"Auth"> | Date | string
@@ -356,6 +368,7 @@ export type AuthCreateInput = {
   isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
+  isPhoneVerified?: boolean
   otp?: string | null
   otp_status?: boolean
   expiredAt?: Date | string
@@ -374,6 +387,7 @@ export type AuthUncheckedCreateInput = {
   isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
+  isPhoneVerified?: boolean
   otp?: string | null
   otp_status?: boolean
   expiredAt?: Date | string
@@ -392,6 +406,7 @@ export type AuthUpdateInput = {
   isSocialLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isverified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   otp_status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -410,6 +425,7 @@ export type AuthUncheckedUpdateInput = {
   isSocialLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isverified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   otp_status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -428,6 +444,7 @@ export type AuthCreateManyInput = {
   isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
+  isPhoneVerified?: boolean
   otp?: string | null
   otp_status?: boolean
   expiredAt?: Date | string
@@ -446,6 +463,7 @@ export type AuthUpdateManyMutationInput = {
   isSocialLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isverified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   otp_status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -463,6 +481,7 @@ export type AuthUncheckedUpdateManyInput = {
   isSocialLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isverified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   otp_status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -481,6 +500,7 @@ export type AuthCountOrderByAggregateInput = {
   isSocialLogin?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   isverified?: Prisma.SortOrder
+  isPhoneVerified?: Prisma.SortOrder
   otp?: Prisma.SortOrder
   otp_status?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
@@ -499,6 +519,7 @@ export type AuthMaxOrderByAggregateInput = {
   isSocialLogin?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   isverified?: Prisma.SortOrder
+  isPhoneVerified?: Prisma.SortOrder
   otp?: Prisma.SortOrder
   otp_status?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
@@ -517,6 +538,7 @@ export type AuthMinOrderByAggregateInput = {
   isSocialLogin?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   isverified?: Prisma.SortOrder
+  isPhoneVerified?: Prisma.SortOrder
   otp?: Prisma.SortOrder
   otp_status?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
@@ -580,6 +602,7 @@ export type AuthCreateWithoutUserInput = {
   isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
+  isPhoneVerified?: boolean
   otp?: string | null
   otp_status?: boolean
   expiredAt?: Date | string
@@ -597,6 +620,7 @@ export type AuthUncheckedCreateWithoutUserInput = {
   isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
+  isPhoneVerified?: boolean
   otp?: string | null
   otp_status?: boolean
   expiredAt?: Date | string
@@ -630,6 +654,7 @@ export type AuthUpdateWithoutUserInput = {
   isSocialLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isverified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   otp_status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -647,6 +672,7 @@ export type AuthUncheckedUpdateWithoutUserInput = {
   isSocialLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isverified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   otp_status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -666,6 +692,7 @@ export type AuthSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
+  isPhoneVerified?: boolean
   otp?: boolean
   otp_status?: boolean
   expiredAt?: boolean
@@ -685,6 +712,7 @@ export type AuthSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
+  isPhoneVerified?: boolean
   otp?: boolean
   otp_status?: boolean
   expiredAt?: boolean
@@ -704,6 +732,7 @@ export type AuthSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
+  isPhoneVerified?: boolean
   otp?: boolean
   otp_status?: boolean
   expiredAt?: boolean
@@ -723,6 +752,7 @@ export type AuthSelectScalar = {
   isSocialLogin?: boolean
   isDeleted?: boolean
   isverified?: boolean
+  isPhoneVerified?: boolean
   otp?: boolean
   otp_status?: boolean
   expiredAt?: boolean
@@ -732,7 +762,7 @@ export type AuthSelectScalar = {
   userId?: boolean
 }
 
-export type AuthOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "role" | "status" | "isSocialLogin" | "isDeleted" | "isverified" | "otp" | "otp_status" | "expiredAt" | "last_loginAt" | "passwordChangedAt" | "approval_status" | "userId", ExtArgs["result"]["auth"]>
+export type AuthOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "role" | "status" | "isSocialLogin" | "isDeleted" | "isverified" | "isPhoneVerified" | "otp" | "otp_status" | "expiredAt" | "last_loginAt" | "passwordChangedAt" | "approval_status" | "userId", ExtArgs["result"]["auth"]>
 export type AuthInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -757,6 +787,7 @@ export type $AuthPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     isSocialLogin: boolean
     isDeleted: boolean
     isverified: boolean
+    isPhoneVerified: boolean
     otp: string | null
     otp_status: boolean
     expiredAt: Date
@@ -1196,6 +1227,7 @@ export interface AuthFieldRefs {
   readonly isSocialLogin: Prisma.FieldRef<"Auth", 'Boolean'>
   readonly isDeleted: Prisma.FieldRef<"Auth", 'Boolean'>
   readonly isverified: Prisma.FieldRef<"Auth", 'Boolean'>
+  readonly isPhoneVerified: Prisma.FieldRef<"Auth", 'Boolean'>
   readonly otp: Prisma.FieldRef<"Auth", 'String'>
   readonly otp_status: Prisma.FieldRef<"Auth", 'Boolean'>
   readonly expiredAt: Prisma.FieldRef<"Auth", 'DateTime'>

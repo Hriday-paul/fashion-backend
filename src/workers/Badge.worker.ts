@@ -1,10 +1,11 @@
-import { connectionInfo } from "../redis";
+import { connectionInfo, redisPub } from "../redis";
 import { Job, UnrecoverableError, Worker } from "bullmq"
 import prisma from "../shared/prisma";
 import { BadgeRole, BadgeType } from "../../generated/prisma/client";
 import { notificationQueue } from "../queues/notificaion.queue";
 import { jobs } from "../queues/jobs.name"
 import { BadgeGenerateQueue } from "../queues/badge.queue";
+import { redisKeys } from "../redis/keys";
 
 const badgeWorker = new Worker("badge", async (job: Job<{ type: BadgeType, userId: string, increment?: number }>) => {
 
@@ -52,6 +53,10 @@ const badgeWorker = new Worker("badge", async (job: Job<{ type: BadgeType, userI
             badgeId: badge.id
         }
     });
+
+    //dlte the cache for user badges
+    const cacheKey = await redisKeys.badgesStatsUserKey({ userId });
+    await redisPub.del(cacheKey);
 
     const alreadyCompleted = userBadge ? userBadge.isCompleted : false;
 

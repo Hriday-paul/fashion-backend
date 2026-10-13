@@ -48,8 +48,8 @@ const createUser = async (payload: User & TUserMore) => {
             ...body,
             auth: {
                 upsert: {
-                    update: { password: hashedPassword, role, approval_status: role === Role.INDIVIDUAL_USER ? "Approved" : "Pending" },
-                    create: { password: hashedPassword, email, role, approval_status: role === Role.INDIVIDUAL_USER ? "Approved" : "Pending" }
+                    update: { password: hashedPassword, role, approval_status: role === Role.INDIVIDUAL_USER ? "Approved" : undefined },
+                    create: { password: hashedPassword, email, role, approval_status: role === Role.INDIVIDUAL_USER ? "Approved" : undefined }
                 }
             }
         },
@@ -60,7 +60,7 @@ const createUser = async (payload: User & TUserMore) => {
                     email,
                     password: hashedPassword,
                     role,
-                    approval_status: role === Role.INDIVIDUAL_USER ? "Approved" : "Pending"
+                    approval_status: role === Role.INDIVIDUAL_USER ? "Approved" : undefined
                 }
             }
         },

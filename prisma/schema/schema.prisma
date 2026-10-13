@@ -17,6 +17,7 @@ model Auth {
   isSocialLogin     Boolean  @default(false)
   isDeleted         Boolean  @default(false)
   isverified        Boolean  @default(false)
+  isPhoneVerified     Boolean  @default(false)
   otp               String?
   otp_status        Boolean  @default(true)
   expiredAt         DateTime @default(now())

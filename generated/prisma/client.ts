@@ -82,6 +82,16 @@ export type BrandByCategory = Prisma.BrandByCategoryModel
  */
 export type Brand = Prisma.BrandModel
 /**
+ * Model materialByCategory
+ * 
+ */
+export type materialByCategory = Prisma.materialByCategoryModel
+/**
+ * Model Material
+ * 
+ */
+export type Material = Prisma.MaterialModel
+/**
  * Model SizeCategoryHierarchyGroup
  * 
  */
@@ -156,6 +166,11 @@ export type Refund = Prisma.RefundModel
  * 
  */
 export type Product = Prisma.ProductModel
+/**
+ * Model ProductMaterial
+ * 
+ */
+export type ProductMaterial = Prisma.ProductMaterialModel
 /**
  * Model ProductPicture
  * 

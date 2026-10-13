@@ -201,6 +201,7 @@ const getUserById = async (id: string) => {
             picture: true, charityGalleries: true, auth: {
                 select: {
                     role: true,
+                    isPhoneVerified: true,
                 }
             }
         }
@@ -249,7 +250,7 @@ const userDetails = async (userName: string, currentUserId?: string) => {
         where: { userName: userName },
         include: {
             picture: true,
-            auth: { select: { role: true } },
+            auth: { select: { role: true, isverified: true, isPhoneVerified: true } },
             _count: {
                 select: {
                     followers: true,
@@ -769,6 +770,15 @@ const addressesByUser = async (userId: string) => {
 
 const addOrUpdateSellerAddress = async (payload: BillingDetails, sellerId: string) => {
 
+    const countryCode = payload?.countryCode?.toUpperCase();
+
+    if (countryCode !== "UK") {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            'Only UK address is allowed for sell listings',
+        );
+    }
+
     const shipPayload = {
         "line_1": payload?.address1,
         "city": payload?.city,
@@ -840,15 +850,21 @@ const addOrUpdateSellerAddress = async (payload: BillingDetails, sellerId: strin
 }
 
 const bundleDiscount = async (userId: string) => {
+
+    const cacheKey = await redisKeys.bundleDiscountTiersKey({ sellerId: userId });
+    const cachedData = await redisPub.get(cacheKey);
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
+
     const res = await prisma.bundleDiscount.findFirst({ where: { sellerId: userId }, include: { tiers: true } });
 
-    if (!res) {
-        return {
-            enabled: false,
-            tiers: []
-        }
-    }
-    return res;
+    const result = res || { enabled: false, tiers: [] };
+
+    //set cache for 1 hour
+    await redisPub.setEx(cacheKey, 3600, JSON.stringify(result));
+
+    return result;
 }
 
 const updateBundleDiscount = async (
@@ -878,6 +894,10 @@ const updateBundleDiscount = async (
         return bundleDiscount;
     });
 
+    //invalidate cache
+    const cacheKey = await redisKeys.bundleDiscountTiersKey({ sellerId: userId });
+    await redisPub.del(cacheKey);
+
     return res;
 };
 
@@ -889,13 +909,32 @@ const getSellerBundileTiers = async (userName: string) => {
         throw new AppError(httpStatus.NOT_FOUND, "User Does not exist")
     }
 
+    //lookup on cache
+    const cacheKey = await redisKeys.bundleDiscountTiersKey({ sellerId: user.id });
+    const cachedData = await redisPub.get(cacheKey);
+
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
+
     const res = await prisma.bundleDiscount.findFirst({ where: { sellerId: user.id }, include: { tiers: true } });
+
+    //set cache for 1 hour
+    await redisPub.setEx(cacheKey, 3600, JSON.stringify(res));
 
     return res;
 
 }
 
 const badgeStats = async (userId: string, role: string) => {
+
+    //lookup on cache
+    const cacheKey = await redisKeys.badgesStatsUserKey({ userId });
+    const cachedData = await redisPub.get(cacheKey);
+
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
 
     const badge_role: BadgeRole = role == "CHARITY_SHOP" ? BadgeRole.CHARITY_SHOP : role == "CHARITABLE_ORGANIZATION" ? BadgeRole.CHARITABLE_ORGANIZATION : role == "ECO_FRIENDLY_STORE" ? BadgeRole.ECO_FRIENDLY : BadgeRole.GENERAL;
 
@@ -921,6 +960,9 @@ const badgeStats = async (userId: string, role: string) => {
             isCompleted: currentBadge ? currentBadge.isCompleted : false,
         };
     }) : [];
+
+    //set cache for 1 hour
+    await redisPub.setEx(cacheKey, 3600, JSON.stringify(result));
 
     return result;
 }

@@ -6,6 +6,7 @@ import crypto from "crypto";
 import { redisPub } from "../../redis";
 import { redisKeys } from "../../redis/keys";
 import { BillingDetails, CartGroup, Offer, Prisma, Size, User } from "../../../generated/prisma/client";
+import { offerService } from "../offer/offer.service";
 
 const cartsByUser = async (userId: string) => {
 
@@ -573,8 +574,14 @@ type Ioffer = Prisma.OfferGetPayload<{
                     };
                 };
                 sellerAddress: true;
+                fcmToken: true;
             };
         };
+        buyer: {
+            select: {
+                fcmToken: true;
+            }
+        }
     };
 }>;
 
@@ -592,47 +599,15 @@ const offerCheckoutItem = async (offerId: string, userId: string) => {
         offer = cachedOffer as Ioffer
     } else {
 
-        const fresh_offer = await prisma.offer.findFirst({
-            where: { id: offerId, buyerId: userId },
-            include: {
-                offerItems: {
-                    include: {
-                        product: {
-                            include: {
-                                images: {
-                                    select: {
-                                        url: true
-                                    }
-                                },
-                                size: true,
-                            }
-                        }
-                    }
-                },
-                seller: {
-                    select: {
-                        id: true,
-                        userName: true,
-                        picture: {
-                            select: {
-                                url: true
-                            }
-                        },
-                        sellerAddress: true
-                    }
-                },
-
-            }
-        });
-        if (fresh_offer) {
-            offer = fresh_offer;
-            //set cache for 1 hour
-            await redisPub.setEx(cacheKey, 3600, JSON.stringify(fresh_offer));
-        }
+        offer = await offerService.offerDetils(offerId);
     }
 
     if (!offer) {
         throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
+    }
+
+    if( offer.buyerId !== userId) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "You are not the owner of this offer");
     }
 
     if (offer.status == "PENDING") {

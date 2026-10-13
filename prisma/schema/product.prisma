@@ -65,7 +65,26 @@ model Product {
 
     offerItems OfferItem[]
 
+    materials ProductMaterial[]
+
     @@map("products")
+}
+
+model ProductMaterial {
+    id         String @id @default(uuid())
+    productId  String
+    materialId String
+
+    product  Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+    material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("product_materials")
+    @@index([productId, materialId])
+    @@index([materialId, productId])
+    @@unique([productId, materialId])
 }
 
 model ProductPicture {

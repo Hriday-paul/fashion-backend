@@ -5,6 +5,7 @@ import { Notification } from "../../generated/prisma/client";
 import { pushNotificationQueue } from "../queues/notificaion.queue";
 import { jobs } from "../queues/jobs.name";
 import { sendPushNotification } from "../modules/notification/notification.utils";
+import { redisKeys } from "../redis/keys";
 
 const notificationWorker = new Worker("notification", async (job: Job<{ allowPushNotification: boolean, payload: Notification }>) => {
 
@@ -22,6 +23,11 @@ const notificationWorker = new Worker("notification", async (job: Job<{ allowPus
     await prisma.notification.create({
         data: payload
     });
+
+    if (payload?.receiverId) {
+        //increment redis notification version for cache invalidation
+        await redisKeys.incrementNotificationVersion({ userId: payload.receiverId });
+    }
 
 }, { connection: connectionInfo });
 
@@ -127,5 +133,8 @@ const priceDropNotificationWorker = new Worker("price-drop-notification", async 
             message: `The price of **${product?.title}** has dropped to **$${product?.finalPrice}**. Check it out!`
         }))
     });
+
+    //increment redis notification version for cache invalidation
+    await Promise.allSettled(users.map(user => redisKeys.incrementNotificationVersion({ userId: user?.id })));
 
 }, { connection: connectionInfo });

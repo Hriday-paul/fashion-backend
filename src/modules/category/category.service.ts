@@ -1,13 +1,31 @@
 import { Brand, Category, Size } from "../../../generated/prisma/client";
+import { redisPub } from "../../redis";
+import { redisKeys } from "../../redis/keys";
 import prisma from "../../shared/prisma";
 
 const addNewCategory = async (payload: Category) => {
     const res = await prisma.category.create({ data: payload });
+
+    //delete the cache for categories
+    const allCatsCacheKey = await redisKeys.categoriesKey();
+    await redisPub.del(allCatsCacheKey);
+
+    //increment category version for cache invalidation
+    await redisKeys.incrementCategoriesVersion();
+
     return res;
 }
 
 const deleteCategory = async (categoryId: string) => {
     const res = await prisma.category.delete({ where: { id: categoryId } });
+
+    //delete the cache for categories
+    const allCatsCacheKey = await redisKeys.categoriesKey();
+    await redisPub.del(allCatsCacheKey);
+
+    //increment category version for cache invalidation
+    await redisKeys.incrementCategoriesVersion();
+
     return res;
 }
 
@@ -43,6 +61,15 @@ const buildCategoryTree = (categories: CategoryC[]) => {
 };
 
 const getCategories = async () => {
+
+    //check on redis cache first
+    const cacheKey = await redisKeys.categoriesKey();
+    const cachedCategories = await redisPub.get(cacheKey);
+
+    if (cachedCategories) {
+        return JSON.parse(cachedCategories);
+    }
+
     const categories = await prisma.$queryRaw<{ id: string; name: string; parentId: string | null }[]>`
   WITH RECURSIVE category_tree AS (
       SELECT id, name, "parentId"
@@ -58,7 +85,12 @@ const getCategories = async () => {
   SELECT * FROM category_tree;
   `;
 
-    return buildCategoryTree(categories);
+    const res = buildCategoryTree(categories);
+
+    //cache the categories in redis for 1 hour
+    await redisPub.setEx(cacheKey, 3600, JSON.stringify(res));
+
+    return res;
 }
 
 const getParentChain = async (query: Record<string, unknown>): Promise<Category[]> => {
@@ -68,6 +100,15 @@ const getParentChain = async (query: Record<string, unknown>): Promise<Category[
     if (!categoryId) {
         return []
     }
+
+    //check on cache first
+    const cacheKey = await redisKeys.categoryParentsKey({ categoryId: categoryId as string });
+    const cachedParentChain = await redisPub.get(cacheKey);
+
+    if (cachedParentChain) {
+        return JSON.parse(cachedParentChain);
+    }
+
     const result = await prisma.$queryRaw<Category[]>`
         WITH RECURSIVE parent_chain AS (
             SELECT *, 1 AS level
@@ -84,6 +125,9 @@ const getParentChain = async (query: Record<string, unknown>): Promise<Category[
         FROM parent_chain
         ORDER BY level DESC;
     `;
+
+    //cache the parent chain in redis for 1 hour
+    await redisPub.setEx(cacheKey, 3600, JSON.stringify(result));
 
     return result;
 };
@@ -112,6 +156,14 @@ const buildChildCategoryTree = (categories: CategoryC[]) => {
 };
 
 const getChildChain = async (categoryId: string): Promise<{ id: string; name: string; parentId: string | null }[]> => {
+    //check on cache first
+    const cacheKey = await redisKeys.categoryChildrensKey({ categoryId });
+    const cachedChildChain = await redisPub.get(cacheKey);
+    if (cachedChildChain) {
+        return JSON.parse(cachedChildChain);
+    }
+
+    //if not in cache, query the database
     const categories = await prisma.$queryRaw<{ id: string; name: string; parentId: string | null }[]>`
   WITH RECURSIVE category_tree AS (
       SELECT id, name, "parentId"
@@ -126,6 +178,9 @@ const getChildChain = async (categoryId: string): Promise<{ id: string; name: st
   )
   SELECT * FROM category_tree;
   `;
+
+    //cache the child chain in redis for 1 hour
+    await redisPub.setEx(cacheKey, 3600, JSON.stringify(categories));
 
     return categories
 }

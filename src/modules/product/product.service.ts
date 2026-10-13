@@ -14,6 +14,7 @@ import { SendMessageHandle, UpdateMessageHandle } from "../../socket/handlers/Me
 import moment from "moment";
 import { notificationQueue, priceDropNotificationQueue } from "../../queues/notificaion.queue";
 import { redisKeys } from '../../redis/keys';
+import { offerService } from '../offer/offer.service';
 
 type ProductOtherPayload = {
     images: { key: string, url: string }[],
@@ -556,13 +557,24 @@ const productsByUserName = async (query: Record<string, unknown>, options: TPagi
 
 const similarProductsFromSeller = async (productId: string, currentUser?: string) => {
 
+    //check on cache
+    const cacheKey = await redisKeys.smilarProductsOnSellerKey({ productId, userId: currentUser });
+    const cachedData = await redisPub.get(cacheKey);
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
+
     const product = await prisma.product.findFirst({
         where: { id: productId },
         select: { userId: true, user: { select: { userName: true } }, categoryId: true, brandId: true }
     });
 
     if (!product) {
-        throw new AppError(httpStatus.NOT_FOUND, "Product not found");
+        return {
+            isOwner: false,
+            sellerUserName: null,
+            products: []
+        };
     }
 
     const similarProducts = await prisma.product.findMany({
@@ -622,14 +634,27 @@ const similarProductsFromSeller = async (productId: string, currentUser?: string
 
     const isOwner = currentUser === product.userId;
 
-    return {
+    const result = {
         isOwner,
         sellerUserName: product?.user?.userName,
         products: similarProducts
-    };
+    }
+
+    //set on redis cache
+    await redisPub.setEx(cacheKey, 60 * 5, JSON.stringify(result)); //5 minutes cache
+
+    return result
 }
 
 const sameCategoryProducts = async (productId: string, currentUser?: string) => {
+
+    //check on cache
+    const cacheKey = await redisKeys.similarCategoryProductsKey({ productId, userId: currentUser });
+
+    const cachedData = await redisPub.get(cacheKey);
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
 
     const product = await prisma.product.findFirst({
         where: { id: productId },
@@ -637,7 +662,12 @@ const sameCategoryProducts = async (productId: string, currentUser?: string) => 
     });
 
     if (!product) {
-        throw new AppError(httpStatus.NOT_FOUND, "Product doesn't exist");
+        return {
+            isOwner: false,
+            categoryId: null,
+            categoryName: null,
+            products: []
+        }
     }
 
     const similarProducts = await prisma.product.findMany({
@@ -694,15 +724,27 @@ const sameCategoryProducts = async (productId: string, currentUser?: string) => 
 
     const isOwner = currentUser === product.userId;
 
-    return {
+    const result = {
         isOwner,
         categoryId: product?.categoryId,
         categoryName: product?.category?.name,
         products: similarProducts
     };
+
+    //set on redis cache
+    await redisPub.setEx(cacheKey, 60 * 5, JSON.stringify(result)); //5 minutes cache
+
+    return result;
 }
 
 const sameColorProducts = async (productId: string, currentUser?: string) => {
+
+    //check on cache
+    const cacheKey = await redisKeys.similarColorProductsKey({ productId, userId: currentUser });
+    const cachedData = await redisPub.get(cacheKey);
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
 
     const product = await prisma.product.findFirst({
         where: { id: productId },
@@ -710,7 +752,11 @@ const sameColorProducts = async (productId: string, currentUser?: string) => {
     });
 
     if (!product) {
-        throw new AppError(httpStatus.NOT_FOUND, "Product doesn't exist");
+        return {
+            isOwner: false,
+            color: null,
+            products: []
+        };
     }
 
     const similarProducts = await prisma.product.findMany({
@@ -767,11 +813,16 @@ const sameColorProducts = async (productId: string, currentUser?: string) => {
 
     const isOwner = currentUser === product.userId;
 
-    return {
+    const result = {
         isOwner,
         color: product?.color,
         products: similarProducts
     };
+
+    //set on redis cache
+    await redisPub.setEx(cacheKey, 60 * 5, JSON.stringify(result)); //5 minutes cache
+
+    return result;
 }
 
 const newArrivalProducts = async () => {
@@ -811,6 +862,13 @@ async function getViewKey(req: Request, productId?: string) {
 }
 
 const productDetails = async (productId: string, req: Request, userId?: string) => {
+
+    //check cache first
+    const cacheKey = await redisKeys.productDetailKey({ productId, userId });
+    const cachedData = await redisPub.get(cacheKey);
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
 
     const details = await prisma.product.findFirst({
         where: {
@@ -916,7 +974,11 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
                 productId,
                 userId
             }
-        })
+        });
+
+        //delete recent view cache for this user
+        const recentViewCacheKey = await redisKeys.recentViewedProductsKey({ viewKey: userkey, userId });
+        await redisPub.del(recentViewCacheKey);
     }
 
     const sizechart = await prisma.size.findMany({
@@ -929,11 +991,26 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
         }
     })
 
-    return { ...details, sizechart, isMyProduct: userId === details?.userId };
+    const result = {
+        ...details,
+        sizechart,
+        isMyProduct: userId === details?.userId
+    }
+
+    //set on redis cache
+    await redisPub.setEx(cacheKey, 60 * 5, JSON.stringify(result)); //5 minutes cache
+
+    return result;
     // return details;
 }
 
 const productStats = async (productId: string, currentUserId?: string) => {
+    //check cache first
+    const cacheKey = await redisKeys.productStatsKey({ productId, userId: currentUserId });
+    const cachedData = await redisPub.get(cacheKey);
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
 
     const stats = await prisma.product.findFirst({
         where: { id: productId, },
@@ -962,12 +1039,22 @@ const productStats = async (productId: string, currentUserId?: string) => {
                 }
             }
         }
-    })
+    });
+
+    //set on redis cache
+    await redisPub.setEx(cacheKey, 60 * 5, JSON.stringify(stats)); //5 minutes cache
 
     return stats;
 }
 
 const recentViewProducts = async (viewKey: string, currentUserId?: string) => {
+    //check cache first
+    const cacheKey = await redisKeys.recentViewedProductsKey({ viewKey, userId: currentUserId });
+    const cachedData = await redisPub.get(cacheKey);
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
+
     const products = await prisma.productView.findMany({
         where: {
             userkey: viewKey,
@@ -1008,10 +1095,19 @@ const recentViewProducts = async (viewKey: string, currentUserId?: string) => {
         }
     })
 
+    //set on redis cache
+    await redisPub.setEx(cacheKey, 60 * 10, JSON.stringify(products)); //10 minutes cache
+
     return products;
 }
 
 const trendingProducts = async (userId?: string) => {
+    const cacheKey = await redisKeys.trendingProductsKey({ userId });
+    const cachedData = await redisPub.get(cacheKey);
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
+
     const since = moment().subtract(7, 'days').toDate(); // last 7 days
 
     const [views, orders, wishlists, offers] = await Promise.all([
@@ -1119,6 +1215,9 @@ const trendingProducts = async (userId?: string) => {
     const sorted = trendingIds
         .map(id => trendingProducts.find(p => p.id === id))
         .filter((p): p is (typeof trendingProducts)[number] => p !== undefined)
+
+    //set on redis cache
+    await redisPub.setEx(cacheKey, 60 * 10, JSON.stringify(sorted)); //10 minutes cache
 
     return sorted;
 }
@@ -1287,6 +1386,15 @@ const authenticateProducts = async (options: TPaginationOptions, userId?: string
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
+    const cacheQuery: { [key: string]: unknown } = { limit, skip, sortBy, sortOrder, page };
+
+    //check cache first
+    const cacheKey = await redisKeys.authenticProductsKey({ query: cacheQuery, userId });
+    const cachedData = await redisPub.get(cacheKey);
+
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
 
     const result = await prisma.product.findMany({
         where: {
@@ -1347,13 +1455,25 @@ const authenticateProducts = async (options: TPaginationOptions, userId?: string
         },
     });
 
-    return {
+    const res = {
         meta: paginationHelper.generatePaginationMeta({ total, page, limit }),
         data: result,
     };
+
+    //set on redis cache
+    await redisPub.setEx(cacheKey, 60 * 10, JSON.stringify(res)); //10 minutes cache
+
+    return res;
 }
 
 const donationSupportByProduct = async (productId: string) => {
+
+    //check cache first
+    const cacheKey = await redisKeys.productCharitiesKey({ productId });
+    const cachedData = await redisPub.get(cacheKey);
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
 
     const donations = await prisma.product.findFirst({
         where: {
@@ -1383,11 +1503,16 @@ const donationSupportByProduct = async (productId: string) => {
         }
     })
 
-    return {
+    const result = {
         charities: donations?.charities || [],
         donation_percent: donations?.donation_percent || 0,
         donation_amount: donations?.finalPrice ? (donations.finalPrice * (donations.donation_percent / 100)) : 0
     };
+
+    //set on redis cache
+    await redisPub.setEx(cacheKey, 60 * 10, JSON.stringify(result)); //10 minutes cache
+
+    return result;
 
 }
 
@@ -1439,6 +1564,9 @@ const dropPriceForAProduct = async (payload: { productId: string, newPrice: numb
         productId: updatedProduct.id,
         sellerId: updatedProduct.userId,
     });
+
+    //increment redis product version for cache invalidation
+    await redisKeys.incrementProductsVersion();
 
     return null;
 
@@ -1604,33 +1732,7 @@ const acceptOfferAsSeller = async (offerId: string, currentUser: { id: string, u
 
     const { id: currentUserId, userName: currentUserName } = currentUser;
 
-    const offer = await prisma.offer.findFirst({
-        where: {
-            id: offerId,
-        },
-        include: {
-            offerItems: {
-                select: {
-                    productId: true,
-                    product: {
-                        select: {
-                            images: {
-                                take: 1,
-                                select: {
-                                    url: true
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            buyer: {
-                select: {
-                    fcmToken: true
-                }
-            }
-        }
-    });
+    const offer = await offerService.offerDetils(offerId);
 
     if (!offer) {
         throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
@@ -1751,7 +1853,11 @@ const acceptOfferAsSeller = async (offerId: string, currentUser: { id: string, u
             fcmToken: offer?.buyer?.fcmToken,
             groupKeyId: offer?.id,
         }
-    })
+    });
+
+    //dlt the offer cache
+    const offerCacheKey = await redisKeys.offerItemsKey({ offerId: updatedOffer?.id });
+    await redisPub.del(offerCacheKey);
 
     return;
 
@@ -1762,37 +1868,7 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
     const { offerId, offerPrice } = payload;
     const { id: currentUserId, userName: currentUserName } = currentUser;
 
-    const offer = await prisma.offer.findFirst({
-        where: {
-            id: offerId,
-        },
-        select: {
-            id: true,
-            buyerId: true,
-            sellerId: true,
-            offerItems: {
-                select: {
-                    product: {
-                        select: {
-                            finalPrice: true,
-                            id: true,
-                            images: {
-                                take: 1,
-                                select: {
-                                    url: true
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            buyer: {
-                select: {
-                    fcmToken: true
-                }
-            }
-        }
-    });
+    const offer = await offerService.offerDetils(offerId);
 
     if (!offer) {
         throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
@@ -2015,6 +2091,10 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
         }
     })
 
+    //dlt the offer cache
+    const offerCacheKey = await redisKeys.offerItemsKey({ offerId: result?.newOffer?.id });
+    await redisPub.del(offerCacheKey);
+
     return;
 }
 
@@ -2044,6 +2124,9 @@ const dltAProduct = async (productId: string, currentUser: { id: string, userNam
             isDeleted: true
         }
     });
+
+    //increment redis product version for cache invalidation
+    await redisKeys.incrementProductsVersion();
 }
 
 export const productService = {

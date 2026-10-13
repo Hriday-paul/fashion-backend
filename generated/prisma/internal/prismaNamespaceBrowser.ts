@@ -56,6 +56,8 @@ export const ModelName = {
   Category: 'Category',
   BrandByCategory: 'BrandByCategory',
   Brand: 'Brand',
+  materialByCategory: 'materialByCategory',
+  Material: 'Material',
   SizeCategoryHierarchyGroup: 'SizeCategoryHierarchyGroup',
   Size: 'Size',
   Keyword: 'Keyword',
@@ -71,6 +73,7 @@ export const ModelName = {
   Payment: 'Payment',
   Refund: 'Refund',
   Product: 'Product',
+  ProductMaterial: 'ProductMaterial',
   ProductPicture: 'ProductPicture',
   ProductCharity: 'ProductCharity',
   Favourite: 'Favourite',
@@ -229,6 +232,28 @@ export const BrandScalarFieldEnum = {
 } as const
 
 export type BrandScalarFieldEnum = (typeof BrandScalarFieldEnum)[keyof typeof BrandScalarFieldEnum]
+
+
+export const MaterialByCategoryScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  materialId: 'materialId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MaterialByCategoryScalarFieldEnum = (typeof MaterialByCategoryScalarFieldEnum)[keyof typeof MaterialByCategoryScalarFieldEnum]
+
+
+export const MaterialScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
 
 
 export const SizeCategoryHierarchyGroupScalarFieldEnum = {
@@ -511,6 +536,17 @@ export const ProductScalarFieldEnum = {
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
 
 
+export const ProductMaterialScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  materialId: 'materialId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductMaterialScalarFieldEnum = (typeof ProductMaterialScalarFieldEnum)[keyof typeof ProductMaterialScalarFieldEnum]
+
+
 export const ProductPictureScalarFieldEnum = {
   id: 'id',
   url: 'url',
@@ -722,6 +758,7 @@ export const AuthScalarFieldEnum = {
   isSocialLogin: 'isSocialLogin',
   isDeleted: 'isDeleted',
   isverified: 'isverified',
+  isPhoneVerified: 'isPhoneVerified',
   otp: 'otp',
   otp_status: 'otp_status',
   expiredAt: 'expiredAt',

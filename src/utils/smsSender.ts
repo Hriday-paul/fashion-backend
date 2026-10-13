@@ -14,7 +14,7 @@ export const sendSMS = async (phoneNumber: string, message: string) => {
     });
     return response;
   } catch (error) {
-    console.error("Error sending message:", error);
+    // console.error("Error sending message:", error);
     throw new AppError(httpStatus.FORBIDDEN, "Sms Sender forbiden")
   }
 };
