@@ -107,6 +107,11 @@ export type Size = Prisma.SizeModel
  */
 export type Keyword = Prisma.KeywordModel
 /**
+ * Model ParcelSuggestion
+ * 
+ */
+export type ParcelSuggestion = Prisma.ParcelSuggestionModel
+/**
  * Model DirectDonation
  * 
  */
@@ -291,6 +296,11 @@ export type Notification = Prisma.NotificationModel
  * 
  */
 export type Setting = Prisma.SettingModel
+/**
+ * Model SellCountries
+ * 
+ */
+export type SellCountries = Prisma.SellCountriesModel
 /**
  * Model Shipment
  * 

@@ -16,12 +16,15 @@ import { cartRouts } from './modules/cart/cart.rout';
 import { returnRoutes } from './modules/return/return.rout';
 import { reviewRouts } from './modules/review/review.rout';
 import { brandRouter } from './modules/brand/brand.rout';
+import { materialRouter } from './modules/material/material.rout';
 import { sizeRouter } from './modules/size/size.rout';
 import { assistentSellRouts } from './modules/assistentSell/assistentSell.rout';
 import { accountRouts } from './modules/ConnectAccount/account.rout';
 import { keywordRoutes } from './modules/keyword/keyword.rout';
 import { shipmentRouter } from './modules/shipment/shipment.rout';
 import { dashboardRouts } from './modules/dashboard/dashboard.rout';
+import { parcelSuggestionRouter } from './modules/parcelSuggestion/parcelSuggestion.rout';
+import { sellCountriesRouter } from './modules/sellCountries/sellCountries.rout';
 
 const router = express.Router();
 
@@ -99,6 +102,10 @@ const moduleRoutes = [
         route: brandRouter,
     },
     {
+        path: '/materials',
+        route: materialRouter,
+    },
+    {
         path: '/sizes',
         route: sizeRouter,
     },
@@ -117,6 +124,14 @@ const moduleRoutes = [
     {
         path: '/dashboard',
         route: dashboardRouts,
+    },
+    {
+        path: '/parcel-suggestions',
+        route: parcelSuggestionRouter,
+    },
+    {
+        path: '/sell-countries',
+        route: sellCountriesRouter,
     }
 ];
 

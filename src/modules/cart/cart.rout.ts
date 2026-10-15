@@ -40,6 +40,8 @@ router.get("/checkout/offer/:offerId/summary", auth(...(allRoles.filter(role => 
 
 router.get("/checkout/offer/:offerId/shipping-rates", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.offerAvailableRates);
 
+router.get("/checkout/product/:productId/shipping-rates", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.productAvailableRates);
+
 router.get("/offer/:offerId", auth(...allRoles), cartControler.offerItems);
 
 router.get("/:cartGroupId", auth(...allRoles), cartControler.checkoutItem);

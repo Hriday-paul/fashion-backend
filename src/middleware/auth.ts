@@ -49,7 +49,7 @@ const auth = (...userRoles: Role[]) => {
 
         const role = isUserExist?.auth?.role;
 
-        req.user = { id: userId, role, userName: isUserExist?.userName };
+        req.user = { id: userId, role, userName: isUserExist?.userName, email : isUserExist?.email };
 
         next();
     });
@@ -91,7 +91,7 @@ export const PublicAuth = () => {
             return next(); // invalid user, but still public — just skip setting req.user
         }
 
-        req.user = { id: userId, role, userName: isUserExist?.userName };
+        req.user = { id: userId, role, userName: isUserExist?.userName, email : isUserExist?.email };
 
         return next();
     });

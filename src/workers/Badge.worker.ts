@@ -111,6 +111,10 @@ const badgeWorker = new Worker("badge", async (job: Job<{ type: BadgeType, userI
             }
         })
 
+
+        const badgesCacheKey = await redisKeys.badgesUserKey({ userId });
+        await redisPub.del(badgesCacheKey);
+
         //check & add new fashion activist badge for 10+ badges
         BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "FASHION_ACTIVIST", userId, increment: 1 });
     }

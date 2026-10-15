@@ -15,6 +15,8 @@ import moment from "moment";
 import { notificationQueue, priceDropNotificationQueue } from "../../queues/notificaion.queue";
 import { redisKeys } from '../../redis/keys';
 import { offerService } from '../offer/offer.service';
+import { userService } from '../user/user.service';
+import { sellCountriesService } from '../sellCountries/sellCountries.service';
 
 type ProductOtherPayload = {
     images: { key: string, url: string }[],
@@ -84,17 +86,17 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
     const lastPrice = price - (price * (discountPct / 100));
 
     // const checking shipment from is exist or not the seller
-    const seller = await prisma.user.findFirst({
-        where: {
-            id: userId,
-        },
-        select: {
-            sellerAddress: true
-        }
-    });
+    const address = await userService.addressesByUser(userId);
 
-    if (!seller?.sellerAddress) {
+    if (!address?.sellingAddress) {
         throw new AppError(httpStatus.BAD_REQUEST, "Please, add your shipment address first")
+    }
+
+    //check the shipment country is available or not for selling
+    const country = await sellCountriesService.getCountryByCode(address?.sellingAddress?.countryCode);
+
+    if (!country) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Selling is not available in your country, will be available soon.");
     }
 
     const res = await prisma.product.create({
@@ -997,8 +999,10 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
         isMyProduct: userId === details?.userId
     }
 
-    //set on redis cache
-    await redisPub.setEx(cacheKey, 60 * 5, JSON.stringify(result)); //5 minutes cache
+    if (details) {
+        //set on redis cache
+        await redisPub.setEx(cacheKey, 60 * 5, JSON.stringify(result)); //5 minutes cache
+    }
 
     return result;
     // return details;
@@ -1041,8 +1045,10 @@ const productStats = async (productId: string, currentUserId?: string) => {
         }
     });
 
-    //set on redis cache
-    await redisPub.setEx(cacheKey, 60 * 5, JSON.stringify(stats)); //5 minutes cache
+    if (stats) {
+        //set on redis cache
+        await redisPub.setEx(cacheKey, 60 * 5, JSON.stringify(stats)); //5 minutes cache
+    }
 
     return stats;
 }
@@ -1509,8 +1515,10 @@ const donationSupportByProduct = async (productId: string) => {
         donation_amount: donations?.finalPrice ? (donations.finalPrice * (donations.donation_percent / 100)) : 0
     };
 
-    //set on redis cache
-    await redisPub.setEx(cacheKey, 60 * 10, JSON.stringify(result)); //10 minutes cache
+    if (donations) {
+        //set on redis cache
+        await redisPub.setEx(cacheKey, 60 * 10, JSON.stringify(result)); //10 minutes cache
+    }
 
     return result;
 

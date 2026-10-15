@@ -7,6 +7,9 @@ import { redisPub } from "../../redis";
 import { redisKeys } from "../../redis/keys";
 import { BillingDetails, CartGroup, Offer, Prisma, Size, User } from "../../../generated/prisma/client";
 import { offerService } from "../offer/offer.service";
+import { productService } from "../product/product.service";
+import { Request } from "express";
+import { userService } from "../user/user.service";
 
 const cartsByUser = async (userId: string) => {
 
@@ -367,7 +370,7 @@ const deleteCartItem = async (productId: string, userId: string) => {
     return;
 }
 
-const truncate = (value: string | null, max = 32) => {
+const truncate = (value?: string | null, max = 32) => {
     return value?.trim().slice(0, max) || "";
 };
 
@@ -606,7 +609,7 @@ const offerCheckoutItem = async (offerId: string, userId: string) => {
         throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
     }
 
-    if( offer.buyerId !== userId) {
+    if (offer.buyerId !== userId) {
         throw new AppError(httpStatus.UNAUTHORIZED, "You are not the owner of this offer");
     }
 
@@ -762,6 +765,116 @@ const offerCheckoutSummary = async (offerId: string, userId: string) => {
     };
 }
 
+const productAvailableRates = async (productId: string, userId: string) => {
+
+    const product = await productService.productDetails(productId, {} as Request, userId);
+
+    if (!product) {
+        return;
+    }
+
+    const userAddress = await userService.addressesByUser(userId);
+
+    const sellerAddress = await userService.addressesByUser(product?.userId);
+
+    const billing_details = userAddress?.buyingAddress;
+
+    if (!sellerAddress?.sellingAddress) {
+        return;
+    }
+    if (!userAddress?.buyingAddress) {
+        return;
+    }
+
+    const sellingAddress = sellerAddress?.sellingAddress;
+
+    const shipPayload = {
+        "origin_address": {
+            "line_1": truncate(sellingAddress?.address1),
+            "line_2": truncate(sellingAddress?.address2),
+            "city": truncate(sellingAddress?.city, 20),
+            "state": truncate(sellingAddress?.state, 20),
+            "postal_code": truncate(sellingAddress?.zip_code, 10),
+            "country_alpha2": sellingAddress?.countryCode
+        },
+        "destination_address": {
+            "line_1": truncate(billing_details?.address1),
+            "line_2": truncate(billing_details?.address2),
+            "city": truncate(billing_details?.city, 20),
+            "state": truncate(billing_details?.state, 20),
+            "postal_code": truncate(billing_details?.zip_code, 10),
+            "country_alpha2": billing_details?.countryCode,
+            "contact_name": billing_details?.full_name,
+            "contact_email": billing_details?.email,
+            "contact_phone": billing_details?.contact
+        },
+        "incoterms": "DDP",
+        "courier_settings": {
+            "show_courier_logo_url": true
+        },
+        "shipping_settings": {
+            "units": {
+                "weight": "kg",
+                "dimensions": "cm"
+            },
+            "output_currency": "USD"
+        },
+        "parcels": [
+            {
+                "items": [
+                    {
+                        "category": "fashion",
+                        "quantity": 1,
+                        "actual_weight": product?.weight_kg,
+                        "dimensions": {
+                            "height": product?.hight_cm,
+                            "width": product?.width_cm,
+                            "length": product?.length_cm
+                        },
+                        "declared_currency": "USD",
+                        "declared_customs_value": product?.finalPrice || 0
+                    }
+                ]
+            }
+        ],
+        "calculate_tax_and_duties": true
+    }
+
+    const cacheKey = buildRatesCacheKey(shipPayload);
+
+    const cached = await redisPub.get(cacheKey);
+    if (cached) {
+        return JSON.parse(cached);
+    }
+
+    const rateRes = await fetch(`${config.easyship.easyship_base_url}/rates`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shipPayload)
+    });
+
+    if (!rateRes.ok) {
+        const errorData = await rateRes.json().catch(() => null);
+        console.log(errorData);
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            errorData?.error?.message || 'Failed to fetch shipping rates',
+        );
+    }
+
+    const rateData = await rateRes.json();
+
+    // Cache the result for future use
+    await redisPub.set(cacheKey, JSON.stringify(rateData), {
+        EX: 3600, // expire after 1 hour
+    });
+
+    return rateData;
+}
+
 export const cartService = {
     cartsByUser,
     checkoutItem,
@@ -772,5 +885,7 @@ export const cartService = {
     deleteCartItem,
     offerCheckoutItem,
     offerCheckoutSummary,
-    cartsByUserSeller
+    cartsByUserSeller,
+
+    productAvailableRates
 }

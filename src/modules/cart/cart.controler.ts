@@ -115,6 +115,18 @@ const offerAvailableRates = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const productAvailableRates = catchAsync(async (req: Request, res: Response) => {
+    const productId = req.params.productId;
+    const result = await cartService.productAvailableRates(productId, req.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Available rates retrieved successfully',
+        data: result
+    });
+});
+
 export const cartControler = {
     cartsByUser,
     addToCart,
@@ -126,5 +138,7 @@ export const cartControler = {
 
     offerItems,
     offerCheckoutSummary,
-    offerAvailableRates
+    offerAvailableRates,
+
+    productAvailableRates
 }

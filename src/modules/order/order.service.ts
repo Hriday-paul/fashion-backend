@@ -1,5 +1,5 @@
 import { CancelledBy, CurrentShipTo, OrderAuthStatus, PaymentStatus, Role } from "../../../generated/prisma/browser";
-import { CancelReason, OrderAuthResult, OrderItem, OrderStatus, Prisma, Product, SellDonation } from "../../../generated/prisma/client";
+import { CancelReason, OrderAuthResult, OrderItem, OrderStatus, Prisma, Product, ProductCharity, ProductPicture, SellDonation, User } from "../../../generated/prisma/client";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import { DistributePaymentQueue } from "../../queues/payment.queue";
@@ -14,6 +14,9 @@ import { jobs } from "../../queues/jobs.name";
 import { BadgeGenerateQueue } from "../../queues/badge.queue";
 import crypto from "crypto";
 import { notificationQueue } from "../../queues/notificaion.queue";
+import { productService } from "../product/product.service";
+import { Request } from "express";
+import { userService } from "../user/user.service";
 
 const truncate = (value: string | null, max = 32) => {
     return value?.trim().slice(0, max) || "";
@@ -997,6 +1000,418 @@ const addNewOfferOrder = async (
     });
 
     return checkoutSession?.url
+
+}
+
+type ProductWithCharities = Product & {
+    charities: ProductCharity[];
+    images: ProductPicture[];
+};
+
+const addNewSingleOrder = async (payload: {
+    productId: string,
+    shipmentServiceId: string,
+    allowedAuthentication: boolean,
+    treeGiftCount: number
+}, user: { userId: string, email: string }) => {
+
+    const { productId, shipmentServiceId, allowedAuthentication, treeGiftCount } = payload;
+
+    const { userId, email } = user;
+
+    //check product is available and not deleted
+    const product = await productService.productDetails(productId, {} as Request, userId) as ProductWithCharities;
+
+    if (!product) {
+        throw new AppError(httpStatus.NOT_FOUND, "Product does not exist")
+    }
+    if (product.isDeleted) {
+        throw new AppError(httpStatus.NOT_FOUND, "Product does not exist")
+    }
+
+    if (product.stock < 1) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Product is out of stock")
+    }
+
+    const userAddress = await userService.addressesByUser(userId);
+    const billing_details = userAddress?.buyingAddress;
+
+    if (!billing_details) {
+        throw new AppError(httpStatus.NOT_FOUND, "Shipping address is required")
+    }
+
+    const sellerAddress = await userService.addressesByUser(product.userId);
+    const sellerDetails = sellerAddress?.sellingAddress;
+
+    if (!sellerDetails) {
+        throw new AppError(httpStatus.NOT_FOUND, "Seller address is required")
+    }
+
+    let authAddress: string | null = null;
+
+    //authentication center address is required to place order if authentication is allowed
+    if (allowedAuthentication) {
+        const admin = await prisma.user.findFirst({
+            where: {
+                auth: {
+                    role: "ADMIN"
+                }
+            },
+            include: {
+                sellerAddress: true
+            }
+        });
+
+        if (!admin || !admin?.sellerAddress) {
+            throw new AppError(httpStatus.NOT_FOUND, "Unable to place order, authentication center address is not available");
+        }
+        authAddress = admin?.sellerAddress?.id;
+    }
+
+    const serviceFeeCost = 2.30; // fixed service fee cost
+    const authenTicationRate = 15; // fixed authentication cost per item
+    const treeGiftRate = 4; // fixed tree gift cost per item
+
+    const orderItems = [{
+        product,
+        quantity: 1,
+        extraDonation: 0,
+        charities: product?.charities,
+    }].map((item) => {
+        const p = item?.product;
+        const donation_percent = p.donation_percent || 0;
+        const extra_donation = item.extraDonation || 0;
+
+        const unit_price = p?.finalPrice;
+        const allocateUnitPrice = p?.finalPrice;
+
+        const quantity = item.quantity || 1;
+
+        const assisted_sell_commision = item?.product?.assistentSellId ? (allocateUnitPrice * 0.3) : 0; // 30% commission for assisted sell products
+
+        const sellerGrossShareUnit = allocateUnitPrice - assisted_sell_commision;
+
+        const donation_amount = (sellerGrossShareUnit * (donation_percent / 100));
+
+        const sellerUnitPrice = sellerGrossShareUnit - donation_amount;
+
+        const unitAuthFee = allowedAuthentication ? authenTicationRate : 0; // fixed authentication cost per item
+
+        return {
+            product: p,
+            productId: p.id,
+            sellerId: p.userId,
+            unitPrice: unit_price,
+            assisted_sell_commision,
+            unitAllocatedPrice: allocateUnitPrice,
+            sellerFinalUnitPrice: sellerUnitPrice,
+            unitAuthFee,
+            totalPrice: allocateUnitPrice + extra_donation,
+            quantity,
+            extra_donation,
+            donation_percent, // how much percent of the product price will be donated to charity from seller
+            donation_amount, // how much amount of the product price will be donated to charity from seller
+            charities: item?.charities ?? [],
+        };
+    });
+
+    const totalAuthenticationCost = orderItems.reduce((acc, item) => acc + item.unitAuthFee, 0);
+
+    const treeGiftCost = payload?.treeGiftCount * treeGiftRate; // fixed tree gift cost per item
+
+    const discountedItemTotal = orderItems.reduce((acc, item) => acc + item.unitAllocatedPrice, 0);
+    const otherTotal = serviceFeeCost + treeGiftCost + totalAuthenticationCost;
+
+    const totalExtraDonation = 0;
+
+    const sellerTotal = orderItems.reduce((acc, item) => acc + item?.sellerFinalUnitPrice, 0);
+
+    const totalAssitedSellCommission = orderItems.reduce((acc, item) => acc + item?.assisted_sell_commision, 0);
+
+    const shipPayload = {
+        "origin_address": {
+            "line_1": truncate(sellerDetails?.address1),
+            "line_2": truncate(sellerDetails?.address2),
+            "city": truncate(sellerDetails?.city, 20),
+            "state": truncate(sellerDetails?.state, 20),
+            "postal_code": truncate(sellerDetails?.zip_code, 10),
+            "country_alpha2": sellerDetails?.countryCode,
+            "company_name": "FASHION",
+            "contact_name": sellerDetails?.full_name,
+            "contact_phone": sellerDetails?.contact,
+            "contact_email": sellerDetails?.email
+        },
+        "destination_address": {
+            "line_1": truncate(billing_details?.address1),
+            "line_2": truncate(billing_details?.address2),
+            "city": truncate(billing_details?.city, 20),
+            "state": truncate(billing_details?.state, 20),
+            "postal_code": truncate(billing_details?.zip_code, 10),
+            "country_alpha2": billing_details?.countryCode,
+            "contact_name": billing_details?.full_name,
+            "contact_phone": billing_details?.contact,
+            "contact_email": billing_details?.email
+        },
+        "return": false,
+        "incoterms": "DDP",
+        "order_data": {
+            "platform_name": "FASHION",
+        },
+        "courier_settings": {
+            "courier_service_id": payload?.shipmentServiceId
+        },
+        "shipping_settings": {
+            "units": {
+                "weight": "kg",
+                "dimensions": "cm"
+            },
+            "output_currency": "USD"
+        },
+        "parcels": [
+            {
+                "items": orderItems?.map((item) => {
+                    return {
+                        "description": truncate(item?.product?.title, 64) || "Fashion Product",
+                        "category": "fashion",
+                        "origin_country_alpha2": sellerDetails?.countryCode,
+                        "quantity": 1,
+                        "dimensions": {
+                            "height": item?.product?.hight_cm,
+                            "width": item?.product?.width_cm,
+                            "length": item?.product?.length_cm
+                        },
+                        "actual_weight": item?.product?.weight_kg,
+                        "declared_currency": "USD",
+                        "declared_customs_value": item?.unitPrice || 0,
+                    }
+
+                }),
+            }
+        ]
+    }
+
+    const shipmentRes = await fetch(`${config.easyship.easyship_base_url}/shipments`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shipPayload)
+    });
+
+    if (!shipmentRes.ok) {
+        const errorData = await shipmentRes.json().catch(() => null);
+
+        console.log(errorData)
+
+        throw new AppError(httpStatus.BAD_REQUEST, errorData?.error?.message || "Shipment creation failed");
+    }
+
+    const shipmentData = await shipmentRes.json() as IShipment;
+
+    const shippingRate = shipmentData?.shipment?.rates.find(rate => rate?.courier_service?.id === payload?.shipmentServiceId)?.total_charge;
+
+    if (!shippingRate) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Shipping rate not available for the selected courier service");
+    }
+
+    const total = discountedItemTotal + otherTotal + totalExtraDonation + shippingRate;
+
+    const parcelId = shipmentData?.shipment?.parcels[0]?.id;
+
+    const shipmentItems = shipmentData?.shipment?.parcels[0]?.items || [];
+
+    const treeCredit = treeGiftCost;
+
+    const tranId = generateRandomString(10);
+
+    const result = await prisma.$transaction(async (transactionClient) => {
+
+        const shipment = await transactionClient.shipment.create({
+            data: {
+                courier_service_id: shipmentServiceId,
+                shippingId: shipmentData?.shipment?.easyship_shipment_id,
+                parcelId: parcelId,
+                trackingUrl: shipmentData?.shipment?.tracking_page_url,
+                deliveryCharge: shippingRate,
+                originId: sellerDetails?.id,
+                destinationId: (allowedAuthentication && authAddress) ? authAddress : billing_details?.id
+            }
+        });
+
+        //create new order for this cart group
+        const order = await transactionClient.order.create({
+            data: {
+                orderNumber: generateOrderNumber(),
+                totalPrice: total,
+                itemsTotal: discountedItemTotal,
+                treeCredit: treeCredit ?? 0,
+                buyerId: userId,
+                billingId: billing_details?.id,
+                sellerId: orderItems[0]?.sellerId,
+                sellerItemsTotal: discountedItemTotal,
+                sellerTotal: sellerTotal,
+                bundleDiscountPercent: 0,
+
+                assistedSellCommission: totalAssitedSellCommission,
+
+                authenticationFee: totalAuthenticationCost,
+
+                allowedAuthentication: payload?.allowedAuthentication,
+
+                extraDonation: totalExtraDonation,
+
+                serviceFee: serviceFeeCost,
+
+                originDetailsId: sellerDetails?.id,
+
+                pricingSource: "BUNDLE",
+
+                shipmentId: shipment?.id,
+
+                currentShipTo: payload?.allowedAuthentication ? "AUTHENTICATION_CENTER" : "BUYER",
+
+                totalDelivery: shippingRate,
+                items: {
+                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, assisted_sell_commision, unitAuthFee, ...item }) => {
+                        const charityCount = charities.length;
+                        const splitAmount = charityCount > 0 ? (donation_amount / charityCount) : 0;
+                        const splitExtra = charityCount > 0 ? (item.extra_donation / charityCount) : 0;
+
+                        const dbProduct = product;
+
+                        const splitPercent = charityCount > 0 ? 100 / charityCount : 0;
+
+                        const parcelItemId = shipmentItems.find(parcelItem => parcelItem?.description === product?.title && parcelItem?.declared_customs_value === product?.finalPrice)?.id;
+
+                        return {
+                            ...item,
+                            parcelItemId,
+                            assistedSellCommission: assisted_sell_commision,
+                            unitAuthFee,
+                            sell_donation: donation_amount,
+                            ...(charityCount > 0 && {
+                                donations: {
+                                    create: charities.map((charity) => {
+
+                                        const productCharity = dbProduct.charities.find(
+                                            (c) => c.charityId === charity?.charityId
+                                        )!;
+
+                                        return {
+                                            charityId: charity?.charityId,
+                                            amount: splitAmount,
+                                            percent: splitPercent,
+                                            extra_money: splitExtra,
+                                            total_amount: splitAmount + splitExtra,
+                                            status: 'PENDING',
+                                            isAnonymous: productCharity?.isAnonymous,
+                                        };
+                                    }),
+                                },
+                            }),
+
+                        };
+                    })
+                },
+            },
+        });
+
+        //create new payment for this cart group
+        const createdPayment = await transactionClient.payment.create({
+            data: {
+                userId,
+                total_amount: total,
+                paid_amount: 0,
+                seller_required_amount: sellerTotal,
+                seller_received_amount: 0,
+                status: "PENDING",
+                stripe_status: "PENDING",
+                orderId: order?.id,
+                transactionId: tranId,
+            },
+            include: {
+                user: true
+            }
+        })
+
+        return createdPayment;
+
+    });
+
+    const total_extra_donation = 0;
+
+    const checkOutSessionItems = [
+        ...orderItems.map((item) => {
+            const p = item?.product;
+            return {
+                amount: item?.unitAllocatedPrice,
+                images: p.images.map((image) => encodeURI(image?.url)),
+                name: p?.title,
+                quantity: 1,
+            };
+        })
+    ];
+
+    if (total_extra_donation > 0) {
+        checkOutSessionItems.push({
+            amount: total_extra_donation,
+            images: [],
+            name: "Extra Donation",
+            quantity: 1,
+        })
+    }
+
+    if (treeGiftCost > 0) {
+        checkOutSessionItems.push({
+            amount: treeGiftCost,
+            images: [],
+            name: "Tree plantation cost",
+            quantity: 1,
+        })
+    }
+
+    if (totalAuthenticationCost > 0) {
+        checkOutSessionItems.push({
+            amount: totalAuthenticationCost,
+            images: [],
+            name: "Authentication & Quality Control",
+            quantity: 1,
+        })
+    }
+
+    checkOutSessionItems.push(
+        {
+            amount: 2.30,
+            images: [],
+            name: "Service Fee",
+            quantity: 1,
+        }
+    );
+
+    // build delivery charge line item
+    const totalDeliveryCharge = shippingRate;
+
+    if (totalDeliveryCharge > 0) {
+
+        checkOutSessionItems.push({
+            amount: totalDeliveryCharge,
+            images: [],
+            name: "Delivery Charge",
+            quantity: 1,
+        });
+    }
+
+    // generate payment link
+    const checkoutSession = await createCheckoutSession({
+        // customerId: customer.id,
+        products: checkOutSessionItems,
+        user: { userId, email } as unknown as User,
+        paymentId: result?.id
+    });
+
+    return checkoutSession?.url
+
 
 }
 
@@ -3888,6 +4303,8 @@ export const orderService = {
     markOrderAuthInProgress,
     getAuthShippingLebel,
     orderDetails,
+
+    addNewSingleOrder,
 
     orderStats
 }

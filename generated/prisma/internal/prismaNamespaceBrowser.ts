@@ -61,6 +61,7 @@ export const ModelName = {
   SizeCategoryHierarchyGroup: 'SizeCategoryHierarchyGroup',
   Size: 'Size',
   Keyword: 'Keyword',
+  ParcelSuggestion: 'ParcelSuggestion',
   DirectDonation: 'DirectDonation',
   Follow: 'Follow',
   Chat: 'Chat',
@@ -98,6 +99,7 @@ export const ModelName = {
   BillingDetails: 'BillingDetails',
   Notification: 'Notification',
   Setting: 'Setting',
+  SellCountries: 'SellCountries',
   Shipment: 'Shipment',
   ShipmentEvent: 'ShipmentEvent',
   Wallet: 'Wallet',
@@ -290,6 +292,20 @@ export const KeywordScalarFieldEnum = {
 } as const
 
 export type KeywordScalarFieldEnum = (typeof KeywordScalarFieldEnum)[keyof typeof KeywordScalarFieldEnum]
+
+
+export const ParcelSuggestionScalarFieldEnum = {
+  id: 'id',
+  weight_kg: 'weight_kg',
+  height_cm: 'height_cm',
+  width_cm: 'width_cm',
+  length_cm: 'length_cm',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ParcelSuggestionScalarFieldEnum = (typeof ParcelSuggestionScalarFieldEnum)[keyof typeof ParcelSuggestionScalarFieldEnum]
 
 
 export const DirectDonationScalarFieldEnum = {
@@ -890,6 +906,17 @@ export const SettingScalarFieldEnum = {
 } as const
 
 export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
+
+
+export const SellCountriesScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SellCountriesScalarFieldEnum = (typeof SellCountriesScalarFieldEnum)[keyof typeof SellCountriesScalarFieldEnum]
 
 
 export const ShipmentScalarFieldEnum = {

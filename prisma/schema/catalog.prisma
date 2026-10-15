@@ -13,6 +13,8 @@ model Category {
     materials materialByCategory[]
     sizeCategoryHierarchyGroups SizeCategoryHierarchyGroup[]
 
+    suggestion ParcelSuggestion?
+
     sizeGuide String?
 
     createdAt DateTime @default(now())
@@ -138,4 +140,21 @@ model Keyword {
 
     @@map("keywords")
     @@index([name])
+}
+
+model ParcelSuggestion {
+    id   String @id @default(uuid())
+    weight_kg Float // in kg, for shipping cost calculation
+    height_cm  Float // in cm, for shipping cost calculation
+    width_cm  Float // in cm, for shipping cost calculation
+    length_cm Float // in cm, for shipping cost calculation
+
+    categoryId String @unique
+    category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("parcel_suggestions")
+    @@index([categoryId])
 }

@@ -7,6 +7,7 @@ import { redisPub } from "../../redis";
 import { redisKeys } from "../../redis/keys";
 import prisma from "../../shared/prisma";
 import httpStatus from 'http-status'
+import { sellCountriesService } from "../sellCountries/sellCountries.service";
 
 // update user profile
 const updateProfile = async (payload: User & { charityImgs: { url: string, key: string }[], dltGalleries: string[] }, userId: string, image?: { url: string, key: string }) => {
@@ -206,7 +207,14 @@ const getUserById = async (id: string) => {
             }
         }
     });
-    return result;
+
+    let countryAvaialblity = null;
+
+    if (result?.country) {
+        countryAvaialblity = await sellCountriesService.getCountryByCode(result?.country);
+    }
+
+    return { ...result, countryAvaialblity };
 };
 
 //user status update
@@ -260,6 +268,17 @@ const userDetails = async (userName: string, currentUserId?: string) => {
         },
     });
 
+    if (!res) {
+        return {
+            user: null,
+            review: null,
+            isfolowing: false,
+            totalDonation: 0,
+            isCurrentUser: false,
+            badges: [],
+        }
+    }
+
     const ratingAvg = await prisma.rating.aggregate({
         where: { toUserId: res?.id },
         _avg: { rating: true },
@@ -303,17 +322,36 @@ const userDetails = async (userName: string, currentUserId?: string) => {
 
     const isCurrentUser = currentUserId === res?.id;
 
-    const badges = await prisma.userBadge.findMany({
+    const badges = await userBadges(res?.id);
+
+    let countryAvaialblity = null;
+
+    if (res?.country) {
+        countryAvaialblity = await sellCountriesService.getCountryByCode(res?.country);
+    }
+
+    return { user: res, review: ratingAvg, isfolowing: isfolowing ? true : false, totalDonation, isCurrentUser, badges, countryAvaialblity };
+}
+
+const userBadges = async (userId: string) => {
+    //check on redis
+    const cacheKey = await redisKeys.badgesUserKey({ userId });
+    const cachedData = await redisPub.get(cacheKey);
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
+
+    await prisma.userBadge.findMany({
         where: {
-            userId: res?.id,
+            userId: userId,
             isCompleted: true
         },
         include: {
             badge: true
         }
     });
-
-    return { user: res, review: ratingAvg, isfolowing: isfolowing ? true : false, totalDonation, isCurrentUser, badges, };
+    //set data on redis cache for future requests
+    await redisPub.setEx(cacheKey, 3600, JSON.stringify(cachedData)); // cache for 1 hour
 }
 
 const userDetailsWithbalanceAdmin = async (userName: string) => {
@@ -743,7 +781,7 @@ const addOrUpdateBillingDetails = async (payload: BillingDetails, userId: string
     return;
 }
 
-const addressesByUser = async (userId: string) => {
+const addressesByUser = async (userId: string): Promise<{ buyingAddress: BillingDetails | null; sellingAddress: BillingDetails | null }> => {
 
     //lookup on cache
     const cacheKey = redisKeys.userAddressKey({ userId });
@@ -772,11 +810,11 @@ const addOrUpdateSellerAddress = async (payload: BillingDetails, sellerId: strin
 
     const countryCode = payload?.countryCode?.toUpperCase();
 
-    if (countryCode !== "UK") {
-        throw new AppError(
-            httpStatus.BAD_REQUEST,
-            'Only UK address is allowed for sell listings',
-        );
+    //check the shipment country is available or not for selling
+    const country = await sellCountriesService.getCountryByCode(countryCode);
+
+    if (!country) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Selling is not available in your country, will be available soon.");
     }
 
     const shipPayload = {

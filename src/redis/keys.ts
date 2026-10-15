@@ -12,22 +12,18 @@ export const redisKeys = {
 
     productVersionKey: VERSION_KEY,
     productsVersion: async () => {
-        const version = (await redisPub.get(VERSION_KEY)) ?? "1";
+        // Initialize only if the key does not exist.
+        await redisPub.set(VERSION_KEY, "1", { NX: true });
 
-        if (!version) {
-            await redisPub.set(VERSION_KEY, "1");
-        }
-
-        return version;
+        return (await redisPub.get(VERSION_KEY))!;
     },
     userVersion: async ({ userId }: { userId: string }) => {
-        const version = (await redisPub.get(`buyer-products:${userId}:version`)) ?? "1";
+        const key = `buyer-products:${userId}:version`;
 
-        if (!version) {
-            await redisPub.setEx(`buyer-products:${userId}:version`, 3600, "1");
-        }
+        // Initialize only if the key does not exist.
+        await redisPub.set(key, "1", { NX: true, EX: 3600 });
 
-        return version;
+        return (await redisPub.get(key))!;
     },
     incrementProductsVersion: async () => {
         const version = await redisPub.incr(VERSION_KEY);
@@ -57,13 +53,12 @@ export const redisKeys = {
     },
 
     userCartVersion: async ({ userId }: { userId: string }) => {
-        const version = (await redisPub.get(`user-cart:${userId}:version`)) ?? "1";
+        const key = `user-cart:${userId}:version`;
 
-        if (!version) {
-            await redisPub.setEx(`user-cart:${userId}:version`, 3600, "1");
-        }
+        // Initialize only if the key does not exist.
+        await redisPub.set(key, "1", { NX: true, EX: 3600 });
 
-        return version;
+        return (await redisPub.get(key))!;
     },
     userCartKey: async ({ userId }: { userId: string }) => {
         const productVersion = await redisKeys.productsVersion();
@@ -191,13 +186,12 @@ export const redisKeys = {
 
     // ==================USER=====================
     notificationVersionKey: async ({ userId }: { userId: string }) => {
-        const version = (await redisPub.get(`notification:${userId}:version`)) ?? "1";
+        const key = `notification:${userId}:version`;
 
-        if (!version) {
-            await redisPub.setEx(`notification:${userId}:version`, 3600, "1");
-        }
+        // Initialize only if the key does not exist.
+        await redisPub.set(key, "1", { NX: true, EX: 3600 });
 
-        return version;
+        return (await redisPub.get(key))!;
     },
     incrementNotificationVersion: async ({ userId }: { userId: string }) => {
         const version = await redisPub.incr(`notification:${userId}:version`);
@@ -225,6 +219,9 @@ export const redisKeys = {
     badgesStatsUserKey: async ({ userId }: { userId: string }) => {
         return `badge-stats:${userId}`;
     },
+    badgesUserKey: async ({ userId }: { userId: string }) => {
+        return `badges:${userId}`;
+    },
 
 
     // ==========================Attributes=========================
@@ -232,12 +229,12 @@ export const redisKeys = {
         return `categories:all`;
     },
     categoriesVersionKey: async () => {
-        const version = (await redisPub.get(`categories:version`)) ?? "1";
+        const key = "categories:version";
 
-        if (!version) {
-            await redisPub.setEx(`categories:version`, 3600, "1");
-        }
-        return version;
+        // Initialize only if the key does not exist.
+        await redisPub.set(key, "1", { NX: true });
+
+        return (await redisPub.get(key))!;
     },
     incrementCategoriesVersion: async () => {
         const version = await redisPub.incr(`categories:version`);
@@ -250,5 +247,28 @@ export const redisKeys = {
     categoryChildrensKey: async ({ categoryId }: { categoryId: string }) => {
         const version = await redisKeys.categoriesVersionKey();
         return `category-children:${categoryId}:v${version}`;
+    },
+
+
+    sellCountriesVersionKey: async () => {
+        const key = "sell-countries:version";
+
+        // Initialize only if the key does not exist.
+        await redisPub.set(key, "1", { NX: true });
+
+        return (await redisPub.get(key))!;
+    },
+    incrementSellCountriesVersion: async () => {
+        const version = await redisPub.incr(`sell-countries:version`);
+        return version;
+    },
+    sellCountriesKey: async () => {
+        const version = await redisKeys.sellCountriesVersionKey();
+        return `sell-countries:v${version}`;
+    },
+    sellCountryByCodeKey: async ({ code }: { code: string }) => {
+        const version = await redisKeys.sellCountriesVersionKey();
+        return `sell-country:${code}:v${version}`;
     }
+
 };

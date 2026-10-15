@@ -344,3 +344,15 @@ enum SettingKey {
   privacy
   about
 }
+
+model SellCountries {
+  id      String @id @default(uuid())
+  name    String
+  code    String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("sell_countries")
+  @@index([code], name: "idx_code")
+}

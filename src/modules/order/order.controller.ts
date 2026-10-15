@@ -21,6 +21,18 @@ const addNewOrder = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const addNewSingleOrder = catchAsync(async (req: Request, res: Response) => {
+    // add order
+    const result = await orderService.addNewSingleOrder(req.body, { email: req.user?.email, userId: req.user?.id });
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Order created successfully, Pay now',
+        data: result,
+    });
+});
+
 const addNewOfferOrder = catchAsync(async (req: Request, res: Response) => {
     // add order
     const result = await orderService.addNewOfferOrder(req.body, req.user?.id);
@@ -331,6 +343,7 @@ const orderStats = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const orderControler = {
+    addNewSingleOrder,
     addNewOrder,
     addNewOfferOrder,
     authenticationOrders,

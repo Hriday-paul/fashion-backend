@@ -402,6 +402,7 @@ export const ModelName = {
   SizeCategoryHierarchyGroup: 'SizeCategoryHierarchyGroup',
   Size: 'Size',
   Keyword: 'Keyword',
+  ParcelSuggestion: 'ParcelSuggestion',
   DirectDonation: 'DirectDonation',
   Follow: 'Follow',
   Chat: 'Chat',
@@ -439,6 +440,7 @@ export const ModelName = {
   BillingDetails: 'BillingDetails',
   Notification: 'Notification',
   Setting: 'Setting',
+  SellCountries: 'SellCountries',
   Shipment: 'Shipment',
   ShipmentEvent: 'ShipmentEvent',
   Wallet: 'Wallet',
@@ -459,7 +461,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "directDonation" | "follow" | "chat" | "message" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction" | "walletPayout"
+    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "parcelSuggestion" | "directDonation" | "follow" | "chat" | "message" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "sellCountries" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction" | "walletPayout"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1422,6 +1424,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.KeywordCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.KeywordCountAggregateOutputType> | number
+        }
+      }
+    }
+    ParcelSuggestion: {
+      payload: Prisma.$ParcelSuggestionPayload<ExtArgs>
+      fields: Prisma.ParcelSuggestionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ParcelSuggestionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParcelSuggestionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ParcelSuggestionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParcelSuggestionPayload>
+        }
+        findFirst: {
+          args: Prisma.ParcelSuggestionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParcelSuggestionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ParcelSuggestionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParcelSuggestionPayload>
+        }
+        findMany: {
+          args: Prisma.ParcelSuggestionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParcelSuggestionPayload>[]
+        }
+        create: {
+          args: Prisma.ParcelSuggestionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParcelSuggestionPayload>
+        }
+        createMany: {
+          args: Prisma.ParcelSuggestionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ParcelSuggestionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParcelSuggestionPayload>[]
+        }
+        delete: {
+          args: Prisma.ParcelSuggestionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParcelSuggestionPayload>
+        }
+        update: {
+          args: Prisma.ParcelSuggestionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParcelSuggestionPayload>
+        }
+        deleteMany: {
+          args: Prisma.ParcelSuggestionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ParcelSuggestionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ParcelSuggestionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParcelSuggestionPayload>[]
+        }
+        upsert: {
+          args: Prisma.ParcelSuggestionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParcelSuggestionPayload>
+        }
+        aggregate: {
+          args: Prisma.ParcelSuggestionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateParcelSuggestion>
+        }
+        groupBy: {
+          args: Prisma.ParcelSuggestionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ParcelSuggestionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ParcelSuggestionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ParcelSuggestionCountAggregateOutputType> | number
         }
       }
     }
@@ -4163,6 +4239,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SellCountries: {
+      payload: Prisma.$SellCountriesPayload<ExtArgs>
+      fields: Prisma.SellCountriesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SellCountriesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellCountriesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SellCountriesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellCountriesPayload>
+        }
+        findFirst: {
+          args: Prisma.SellCountriesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellCountriesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SellCountriesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellCountriesPayload>
+        }
+        findMany: {
+          args: Prisma.SellCountriesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellCountriesPayload>[]
+        }
+        create: {
+          args: Prisma.SellCountriesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellCountriesPayload>
+        }
+        createMany: {
+          args: Prisma.SellCountriesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SellCountriesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellCountriesPayload>[]
+        }
+        delete: {
+          args: Prisma.SellCountriesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellCountriesPayload>
+        }
+        update: {
+          args: Prisma.SellCountriesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellCountriesPayload>
+        }
+        deleteMany: {
+          args: Prisma.SellCountriesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SellCountriesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SellCountriesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellCountriesPayload>[]
+        }
+        upsert: {
+          args: Prisma.SellCountriesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellCountriesPayload>
+        }
+        aggregate: {
+          args: Prisma.SellCountriesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSellCountries>
+        }
+        groupBy: {
+          args: Prisma.SellCountriesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SellCountriesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SellCountriesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SellCountriesCountAggregateOutputType> | number
+        }
+      }
+    }
     Shipment: {
       payload: Prisma.$ShipmentPayload<ExtArgs>
       fields: Prisma.ShipmentFieldRefs
@@ -4741,6 +4891,20 @@ export const KeywordScalarFieldEnum = {
 } as const
 
 export type KeywordScalarFieldEnum = (typeof KeywordScalarFieldEnum)[keyof typeof KeywordScalarFieldEnum]
+
+
+export const ParcelSuggestionScalarFieldEnum = {
+  id: 'id',
+  weight_kg: 'weight_kg',
+  height_cm: 'height_cm',
+  width_cm: 'width_cm',
+  length_cm: 'length_cm',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ParcelSuggestionScalarFieldEnum = (typeof ParcelSuggestionScalarFieldEnum)[keyof typeof ParcelSuggestionScalarFieldEnum]
 
 
 export const DirectDonationScalarFieldEnum = {
@@ -5341,6 +5505,17 @@ export const SettingScalarFieldEnum = {
 } as const
 
 export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
+
+
+export const SellCountriesScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SellCountriesScalarFieldEnum = (typeof SellCountriesScalarFieldEnum)[keyof typeof SellCountriesScalarFieldEnum]
 
 
 export const ShipmentScalarFieldEnum = {
@@ -6102,6 +6277,7 @@ export type GlobalOmitConfig = {
   sizeCategoryHierarchyGroup?: Prisma.SizeCategoryHierarchyGroupOmit
   size?: Prisma.SizeOmit
   keyword?: Prisma.KeywordOmit
+  parcelSuggestion?: Prisma.ParcelSuggestionOmit
   directDonation?: Prisma.DirectDonationOmit
   follow?: Prisma.FollowOmit
   chat?: Prisma.ChatOmit
@@ -6139,6 +6315,7 @@ export type GlobalOmitConfig = {
   billingDetails?: Prisma.BillingDetailsOmit
   notification?: Prisma.NotificationOmit
   setting?: Prisma.SettingOmit
+  sellCountries?: Prisma.SellCountriesOmit
   shipment?: Prisma.ShipmentOmit
   shipmentEvent?: Prisma.ShipmentEventOmit
   wallet?: Prisma.WalletOmit
