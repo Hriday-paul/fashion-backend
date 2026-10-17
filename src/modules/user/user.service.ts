@@ -199,46 +199,32 @@ const approveOrDeclineUser = async (payload: { approval_status: Approval_Status,
 
     const isApproved = payload?.approval_status === Approval_Status.Approved;
 
+    const viewDir = path.join(process.cwd(), 'public', 'view');
+
+    const loadTemplate = (fileName: string): string =>
+        fs.readFileSync(path.join(viewDir, fileName), 'utf8');
+
+    const isCharity = auth?.role === Role.CHARITABLE_ORGANIZATION;
+    const userName = auth?.user?.userName || '';
+
     if (isApproved) {
-        if (auth?.role === Role.CHARITABLE_ORGANIZATION) {
-            await emailQueue.add(jobs.email, {
-                to: auth?.email,
-                subject: 'FASH-ON - Account Approved',
-                html: fs
-                    .readFileSync("charity_approved.html", 'utf8')
-                    .replace('{{userName}}', auth?.user?.userName || '')
-                    .replace('{{accountUrl}}', `${config.client_Url}/member/${auth?.user?.userName}`),
-            });
-        } else {
-            await emailQueue.add(jobs.email, {
-                to: auth?.email,
-                subject: 'FASH-ON - Account Approved',
-                html: fs
-                    .readFileSync("account-approve.html", 'utf8')
-                    .replace('{{userName}}', auth?.user?.userName || '')
-                    .replace('{{accountUrl}}', `${config.client_Url}/member/${auth?.user?.userName}`),
+        const fileName = isCharity ? 'charity_approved.html' : 'account-approve.html';
 
-            });
-        }
+        await emailQueue.add(jobs.email, {
+            to: auth?.email,
+            subject: 'FASH-ON - Account Approved',
+            html: loadTemplate(fileName)
+                .replace('{{userName}}', userName)
+                .replace('{{accountUrl}}', `${config.client_Url}/member/${userName}`),
+        });
     } else {
-        if (auth?.role === Role.CHARITABLE_ORGANIZATION) {
-            await emailQueue.add(jobs.email, {
-                to: auth?.email,
-                subject: 'FASH-ON - Account Declined',
-                html: fs
-                    .readFileSync("charity-decline.html", 'utf8')
-                    .replace('{{userName}}', auth?.user?.userName || '')
-            });
-        } else {
-            await emailQueue.add(jobs.email, {
-                to: auth?.email,
-                subject: 'FASH-ON - Account Declined',
-                html: fs
-                    .readFileSync("account-decline.html", 'utf8')
-                    .replace('{{userName}}', auth?.user?.userName || '')
+        const fileName = isCharity ? 'charity-decline.html' : 'account-decline.html';
 
-            });
-        }
+        await emailQueue.add(jobs.email, {
+            to: auth?.email,
+            subject: 'FASH-ON - Account Declined',
+            html: loadTemplate(fileName).replace('{{userName}}', userName),
+        });
     }
 
     return result;
