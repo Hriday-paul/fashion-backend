@@ -1,33 +1,43 @@
-import { Request } from "express"
-import { UAParser } from 'ua-parser-js';
-import crypto from 'crypto';
+
+import type { Request } from "express";
+import { UAParser } from "ua-parser-js";
+import crypto from "crypto";
 
 export const BuildFingerPrint = (req: Request): string => {
-    const userAgent = req.headers['user-agent'] || '';
+    if (!req?.headers) {
+        throw new Error(
+            "BuildFingerPrint: Request or headers are undefined"
+        );
+    }
+
+    const userAgent = req.headers["user-agent"] ?? "";
     const { device, os, browser } = UAParser(userAgent);
 
-    const ip =
-        req.headers['x-forwarded-for']?.toString().split(',')[0].trim() ||
-        req.socket.remoteAddress ||
-        'unknown';
+    const forwardedFor = req.headers["x-forwarded-for"];
 
-    // Build a consistent string from all signals
+    const forwardedIp =
+        typeof forwardedFor === "string"
+            ? forwardedFor.split(",")[0]?.trim()
+            : undefined;
+
+    const ip =
+        forwardedIp ||
+        req.socket?.remoteAddress ||
+        "unknown";
+
     const raw = [
         ip,
-        browser.name || '',
-        browser.version || '',
-        os.name || '',
-        os.version || '',
-        device.type || 'desktop',  // mobile | tablet | desktop
-        device.vendor || '',
-        device.model || '',
-    ].join(':');
+        browser.name || "",
+        browser.version || "",
+        os.name || "",
+        os.version || "",
+        device.type || "desktop",
+        device.vendor || "",
+        device.model || "",
+    ].join(":");
 
-    // Hash it — don't expose raw IP/device in Redis key
-    const fingerprint = crypto
-        .createHash('sha256')
+    return crypto
+        .createHash("sha256")
         .update(raw)
-        .digest('hex');
-
-    return fingerprint;
-}
+        .digest("hex");
+};

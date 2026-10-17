@@ -1,4 +1,5 @@
 export const jobs = {
+    email: 'email',
     distributePayment: 'distributePayment',
     markPaymentAsCompleted: 'markPaymentAsCompleted',
     makeOrder : 'makeOrder',

@@ -1005,7 +1005,6 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
     }
 
     return result;
-    // return details;
 }
 
 const productStats = async (productId: string, currentUserId?: string) => {

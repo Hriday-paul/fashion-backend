@@ -13,6 +13,8 @@ import path from "path"
 import { sendEmail } from "../../utils/mailSender"
 import { firebaseAdmin } from "../notification/notification.utils"
 import generateRandomString from "../../utils/generateRandomString"
+import { emailQueue } from "../../queues/email.queue"
+import { jobs } from "../../queues/jobs.name"
 
 type TUserMore = {
     password: string
@@ -587,14 +589,14 @@ const forgotPassword = async (email: string) => {
         'forgot_pass_mail.html'
     );
 
-    await sendEmail(
-        user?.email,
-        'Your reset password OTP is',
-        fs
+    await emailQueue.add(jobs.email, {
+        to: user?.email,
+        subject: 'FASH-ON - Reset Password OTP',
+        html: fs
             .readFileSync(otpEmailPath, 'utf8')
             .replace('{{otp}}', otp)
             .replace('{{email}}', user?.email),
-    );
+    });
 
     return { email, token };
 };

@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>We’re Unable to Approve Your Charity Account</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1ef;
+            font-family: Helvetica, Arial, sans-serif;
+            color: #2b2b2b;
+        }
+
+        .container {
+            width: 100%;
+            padding: 24px 0;
+            background-color: #f1f1ef;
+        }
+
+        .email-body {
+            width: 100%;
+            max-width: 520px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #e6e5e1;
+            border-radius: 12px;
+            box-sizing: border-box;
+            padding-bottom: 28px;
+        }
+
+        .brand {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #111111;
+            text-align: center;
+            padding: 28px 20px 16px;
+            margin: 0 32px;
+            border-bottom: 1px solid #e6e5e1;
+        }
+
+        .brand .dot {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #111111;
+            margin: 0 1px 0 0;
+            vertical-align: -1px;
+        }
+
+        .badge {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: #fbdcdc;
+            color: #e0221f;
+            font-size: 30px;
+            font-weight: bold;
+            line-height: 64px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 30px;
+            line-height: 1.2;
+            font-weight: bold;
+            color: #111111;
+            text-align: center;
+            margin: 0;
+            padding: 22px 24px 26px;
+        }
+
+        .content {
+            padding: 0 44px;
+        }
+
+        .content p {
+            font-size: 15px;
+            line-height: 1.55;
+            color: #333333;
+            margin: 0 0 14px;
+        }
+
+        .content a {
+            color: #111111;
+            text-decoration: underline;
+        }
+
+        .btn-wrap {
+            text-align: center;
+            padding: 14px 0 28px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #111111;
+            color: #ffffff !important;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 15px 44px;
+            border-radius: 30px;
+        }
+
+        /* Need help box */
+        .box {
+            margin: 0 28px;
+            background-color: #f8f7f4;
+            border-radius: 12px;
+            padding: 18px 20px;
+        }
+
+        .box-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #111111;
+            margin: 0 0 12px;
+        }
+
+        .box-text {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #555555;
+            margin: 0;
+        }
+
+        /* Document icon */
+        .ic-doc {
+            width: 18px;
+            height: 22px;
+            padding-top: 5px;
+            border: 2px solid #111111;
+            border-radius: 4px;
+            box-sizing: content-box;
+        }
+
+        .ic-doc i {
+            display: block;
+            width: 10px;
+            height: 2px;
+            margin: 0 auto 3px;
+            background-color: #111111;
+        }
+
+        .divider {
+            height: 1px;
+            margin: 24px 44px 20px;
+            background-color: #e6e5e1;
+            font-size: 0;
+            line-height: 0;
+        }
+
+        .signoff {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #333333;
+            margin: 0;
+        }
+
+        /* Social icons */
+        .social {
+            padding-top: 24px;
+        }
+
+        .soc {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            margin: 0 14px;
+            vertical-align: middle;
+            text-decoration: none;
+        }
+
+        .soc-ig {
+            box-sizing: border-box;
+            border: 2px solid #111111;
+            border-radius: 7px;
+            padding-top: 3px;
+        }
+
+        .soc-ig i {
+            display: block;
+            box-sizing: border-box;
+            width: 11px;
+            height: 11px;
+            margin: 0 auto;
+            border: 2px solid #111111;
+            border-radius: 50%;
+        }
+
+        .soc-tt {
+            color: #111111;
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 24px;
+            text-align: center;
+        }
+
+        .soc-fb {
+            background-color: #111111;
+            color: #ffffff;
+            border-radius: 50%;
+            font-size: 17px;
+            font-weight: bold;
+            line-height: 28px;
+            text-align: center;
+        }
+
+        .soc-yt {
+            width: 26px;
+            height: 18px;
+            background-color: #111111;
+            border-radius: 5px;
+            margin-top: 3px;
+        }
+
+        .soc-yt i {
+            display: block;
+            width: 0;
+            height: 0;
+            margin: 4px 0 0 10px;
+            border-left: 7px solid #ffffff;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .logo img {
+            width: 120px;
+        }
+
+        @media only screen and (max-width: 480px) {
+            .title {
+                font-size: 25px;
+            }
+
+            .content {
+                padding: 0 24px;
+            }
+
+            .divider {
+                margin-left: 24px;
+                margin-right: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="email-body">
+
+            <div class="logo">
+                <img src="https://api.fashi-on.com/logo.png" alt="app Logo" />
+            </div>
+
+            <!-- Cross badge -->
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"
+                style="margin-top: 24px;">
+                <tr>
+                    <td class="badge">&#10005;</td>
+                </tr>
+            </table>
+
+            <h1 class="title">We’re Unable to Approve<br />Your Charity Account</h1>
+
+            <div class="content">
+                <p>Hi {{userName}},</p>
+                <p>Thank you for registering with FASHI-ON and for your interest in joining our community.</p>
+                <p>
+                    After reviewing your application, we’re unfortunately unable to approve your charity account at this
+                    time. This may be due to incomplete information or documents that don’t meet our requirements.
+                </p>
+                <p>
+                    If you believe this is a mistake or would like to provide additional information, please contact our
+                    team at
+                    <a href="mailto:support@fashi-on.co.uk">support@fashi-on.co.uk</a>.
+                </p>
+            </div>
+
+            <div class="btn-wrap">
+                <a href="mailto:support@fashi-on.co.uk" class="btn">Contact Support &nbsp;&rarr;</a>
+            </div>
+
+            <!-- Need help -->
+            <div class="box">
+                <p class="box-title">Need help?</p>
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="padding: 0 16px 0 0; width: 22px; vertical-align: middle;">
+                            <div class="ic-doc"><i></i><i></i><i></i></div>
+                        </td>
+                        <td style="padding: 0; vertical-align: middle;">
+                            <p class="box-text">
+                                You can reply to this email with any supporting documents or questions, and we’ll be
+                                happy to review
+                                your application again.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="divider">&nbsp;</div>
+
+            <div class="content">
+                <p class="signoff">
+                    Thank you,<br />
+                    <strong>The FASHI-ON Team</strong>
+                </p>
+            </div>
+
+            <!-- Social icons -->
+            <div class="social" style="text-align: center;">
+                <a href="#" class="soc soc-ig" aria-label="Instagram"><i></i></a>
+                <a href="#" class="soc soc-tt" aria-label="TikTok">&#9834;</a>
+                <a href="#" class="soc soc-fb" aria-label="Facebook">f</a>
+                <a href="#" class="soc soc-yt" aria-label="YouTube"><i></i></a>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

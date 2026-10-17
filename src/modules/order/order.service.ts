@@ -1013,14 +1013,14 @@ const addNewSingleOrder = async (payload: {
     shipmentServiceId: string,
     allowedAuthentication: boolean,
     treeGiftCount: number
-}, user: { userId: string, email: string }) => {
+}, user: { userId: string, email: string }, req: Request) => {
 
     const { productId, shipmentServiceId, allowedAuthentication, treeGiftCount } = payload;
 
     const { userId, email } = user;
 
     //check product is available and not deleted
-    const product = await productService.productDetails(productId, {} as Request, userId) as ProductWithCharities;
+    const product = await productService.productDetails(productId, req, userId) as ProductWithCharities;
 
     if (!product) {
         throw new AppError(httpStatus.NOT_FOUND, "Product does not exist")

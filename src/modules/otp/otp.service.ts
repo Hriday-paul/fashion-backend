@@ -14,6 +14,7 @@ import { redisKeys } from '../../redis/keys';
 import { redisPub } from '../../redis';
 import { sendSMS } from '../../utils/smsSender';
 import bcrypt from 'bcrypt'
+import { emailQueue } from '../../queues/email.queue';
 
 const verifyOtp = async (token: string, otp: string) => {
 
@@ -162,14 +163,14 @@ const resendOtp = async (email: string) => {
   );
 
   if (user) {
-    await sendEmail(
-      user?.email,
-      'Your One Time OTP',
-      fs
+    await emailQueue.add(jobs.email, {
+      to: user?.email,
+      subject: 'FASH-ON - One Time OTP',
+      html: fs
         .readFileSync(otpEmailPath, 'utf8')
         .replace('{{otp}}', otp)
         .replace('{{email}}', user?.email),
-    );
+    });
   }
 
   return token;

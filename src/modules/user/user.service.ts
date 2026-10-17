@@ -8,6 +8,10 @@ import { redisKeys } from "../../redis/keys";
 import prisma from "../../shared/prisma";
 import httpStatus from 'http-status'
 import { sellCountriesService } from "../sellCountries/sellCountries.service";
+import fs from 'fs';
+import path from 'path';
+import { emailQueue } from "../../queues/email.queue";
+import { jobs } from "../../queues/jobs.name";
 
 // update user profile
 const updateProfile = async (payload: User & { charityImgs: { url: string, key: string }[], dltGalleries: string[] }, userId: string, image?: { url: string, key: string }) => {
@@ -170,7 +174,7 @@ const allUsers = async (query: Record<string, unknown>, options: TPaginationOpti
 
 const approveOrDeclineUser = async (payload: { approval_status: Approval_Status, userId: string }) => {
 
-    const auth = await prisma.auth.findFirst({ where: { userId: payload.userId } });
+    const auth = await prisma.auth.findFirst({ where: { userId: payload.userId }, include: { user: true } });
 
     if (!auth) {
         throw new AppError(
@@ -191,9 +195,53 @@ const approveOrDeclineUser = async (payload: { approval_status: Approval_Status,
         data: {
             approval_status: payload?.approval_status
         }
-    })
+    });
 
-    return result
+    const isApproved = payload?.approval_status === Approval_Status.Approved;
+
+    if (isApproved) {
+        if (auth?.role === Role.CHARITABLE_ORGANIZATION) {
+            await emailQueue.add(jobs.email, {
+                to: auth?.email,
+                subject: 'FASH-ON - Account Approved',
+                html: fs
+                    .readFileSync("charity_approved.html", 'utf8')
+                    .replace('{{userName}}', auth?.user?.userName || '')
+                    .replace('{{accountUrl}}', `${config.client_Url}/member/${auth?.user?.userName}`),
+            });
+        } else {
+            await emailQueue.add(jobs.email, {
+                to: auth?.email,
+                subject: 'FASH-ON - Account Approved',
+                html: fs
+                    .readFileSync("account-approve.html", 'utf8')
+                    .replace('{{userName}}', auth?.user?.userName || '')
+                    .replace('{{accountUrl}}', `${config.client_Url}/member/${auth?.user?.userName}`),
+
+            });
+        }
+    } else {
+        if (auth?.role === Role.CHARITABLE_ORGANIZATION) {
+            await emailQueue.add(jobs.email, {
+                to: auth?.email,
+                subject: 'FASH-ON - Account Declined',
+                html: fs
+                    .readFileSync("charity-decline.html", 'utf8')
+                    .replace('{{userName}}', auth?.user?.userName || '')
+            });
+        } else {
+            await emailQueue.add(jobs.email, {
+                to: auth?.email,
+                subject: 'FASH-ON - Account Declined',
+                html: fs
+                    .readFileSync("account-decline.html", 'utf8')
+                    .replace('{{userName}}', auth?.user?.userName || '')
+
+            });
+        }
+    }
+
+    return result;
 }
 
 const getUserById = async (id: string) => {

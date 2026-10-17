@@ -765,9 +765,9 @@ const offerCheckoutSummary = async (offerId: string, userId: string) => {
     };
 }
 
-const productAvailableRates = async (productId: string, userId: string) => {
+const productAvailableRates = async (productId: string, userId: string, req : Request) => {
 
-    const product = await productService.productDetails(productId, {} as Request, userId);
+    const product = await productService.productDetails(productId, req, userId);
 
     if (!product) {
         return;

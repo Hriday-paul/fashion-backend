@@ -117,7 +117,7 @@ const offerAvailableRates = catchAsync(async (req: Request, res: Response) => {
 
 const productAvailableRates = catchAsync(async (req: Request, res: Response) => {
     const productId = req.params.productId;
-    const result = await cartService.productAvailableRates(productId, req.user?.id);
+    const result = await cartService.productAvailableRates(productId, req.user?.id, req);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,

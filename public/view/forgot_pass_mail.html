@@ -1,98 +1,188 @@
 <!doctype html>
-<html>
-  <head>
-    <style>
-      /* Global Styles */
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-        margin: 0;
-        padding: 0;
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reset your password</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #36344d;
+    }
+
+    .container {
+      width: 100%;
+      background-color: #ffffff;
+      padding: 32px 0 40px;
+    }
+
+    .email-body {
+      width: 100%;
+      max-width: 552px;
+      margin: 0 auto;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 3px;
+      color: #1d1e20;
+      margin: 0 0 40px;
+    }
+
+    .title {
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: bold;
+      color: #1d1e20;
+      margin: 0 0 20px;
+    }
+
+    .text {
+      font-size: 16px;
+      line-height: 1.55;
+      color: #36344d;
+      margin: 0 0 24px;
+    }
+
+    .code-box {
+      border: 1px solid #e3e5e8;
+      border-radius: 16px;
+      padding: 24px 25px;
+      margin: 0 0 32px;
+    }
+
+    .code {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.2;
+      font-weight: bold;
+      letter-spacing: 8px;
+      color: #000000;
+    }
+
+    .note {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #6d7081;
+      margin: 0 0 36px;
+    }
+
+    .note strong {
+      color: #6d7081;
+    }
+
+    .alert {
+      width: 100%;
+      border-collapse: separate;
+      background-color: #f2f3f6;
+      border-radius: 16px;
+    }
+
+    .alert td {
+      padding: 26px 24px;
+      vertical-align: middle;
+    }
+
+    .alert-text {
+      font-size: 15px;
+      line-height: 1.55;
+      color: #36344d;
+    }
+
+    /* Lock icon built with CSS */
+    .lk-shackle {
+      width: 8px;
+      height: 7px;
+      margin: 0 auto;
+      border: 3px solid #000000;
+      border-bottom: 0;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .lk-body {
+      width: 16px;
+      height: 11px;
+      margin: 0 auto;
+      background-color: #000000;
+      border-radius: 3px;
+    }
+
+    .thanks {
+      font-size: 15px;
+      line-height: 1.5;
+      color: #36344d;
+      margin: 40px 0 0;
+    }
+
+    .logo {
+      /* text-align: center; */
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 120px;
+    }
+
+    @media only screen and (max-width: 480px) {
+      .title {
+        font-size: 26px;
       }
-      .container {
-        width: 100%;
-        padding: 20px;
-        background-color: #ffffff;
+
+      .code {
+        font-size: 32px;
+        letter-spacing: 5px;
       }
-      .email-body {
-        max-width: 600px;
-        margin: 0 auto;
-        background-color: #ffffff;
-        border: 1px solid #e5e5e5;
-        padding: 30px;
-        border-radius: 8px;
-      }
-      .logo {
-        text-align: center;
-        margin-bottom: 20px;
-      }
-      .logo img {
-        width: 120px;
-      }
-      .otp-message {
-        font-size: 18px;
-        color: #333333;
-        margin-bottom: 20px;
-        text-align: center;
-      }
-      .otp-code {
-        display: inline-block;
-        font-size: 24px;
-        font-weight: bold;
-        color: #ffffff;
-        background-color: #000000;
-        padding: 10px 20px;
-        border-radius: 5px;
-      }
-      .cta {
-        text-align: center;
-        margin-top: 30px;
-      }
-      .footer {
-        font-size: 12px;
-        color: #999999;
-        text-align: center;
-        margin-top: 30px;
-      }
-      .footer a {
-        color: #2563eb;
-        text-decoration: none;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="email-body">
-        <div class="logo">
-          <img
-            src="http://10.10.10.9:4600/logo.png"
-            alt="app Logo"
-          />
-        </div>
-        <div class="otp-message">
-          <p>Hello {{email}},</p>
-          <p>
-            We received a request to reset the password for your account. Your One-Time Password (OTP) to reset your password is:
-          </p>
-          <p class="otp-code">{{otp}}</p>
-          <p>
-            This code is valid for 3 minutes. Please do not share this code with anyone.
-          </p>
-        </div>
-        <div class="cta">
-          <p>If you didn't request a password reset, please ignore this email.</p>
-          <p>Thank you for using our app.</p>
-          <p>
-            <a href="#" style="color: #2563eb">Give review on Play store</a>
-          </p>
-        </div>
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="email-body">
+
+      <div class="logo">
+        <img src="https://api.fashi-on.com/logo.png" alt="app Logo" />
       </div>
-      <!-- <div class="footer">
-        <p>
-          If you need further assistance, please
-          <a href="mailto:support.Forager@gmail.com">contact support</a>.
-        </p>
-      </div> -->
+
+      <h1 class="title">Reset your password</h1>
+
+      <p class="text">
+        Hello {{email}},<br /><br />
+        We received a request to reset the password for your account. Use the code below to continue:
+      </p>
+
+      <div class="code-box">
+        <p class="code">{{otp}}</p>
+      </div>
+
+      <p class="text" style="margin-bottom: 22px;">Please make sure you never share this code with anyone.</p>
+
+      <p class="note"><strong>Note:</strong> The code will expire in 3 minutes.</p>
+
+      <table role="presentation" class="alert" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="20" style="padding-right: 0;">
+            <div class="lk-shackle"></div>
+            <div class="lk-body"></div>
+          </td>
+          <td class="alert-text" style="padding-left: 18px;">
+            <strong>Didn’t request a password reset?</strong> Please ignore this email. Your password will stay the
+            same.
+          </td>
+        </tr>
+      </table>
+
+      <p class="thanks">Thank you for choosing Fa-shion.</p>
+
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
