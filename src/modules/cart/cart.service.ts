@@ -535,10 +535,9 @@ const availableRates = async (cartGroupId: string, userId: string) => {
     if (!rateRes.ok) {
         const errorData = await rateRes.json().catch(() => null);
         console.log(errorData);
-        throw new AppError(
-            httpStatus.BAD_REQUEST,
-            errorData?.error?.message || 'Failed to fetch shipping rates',
-        );
+        return {
+            rates: [],
+        }
     }
 
     const rateData = await rateRes.json();
@@ -721,10 +720,9 @@ const offerAvailableRates = async (offerId: string, userId: string) => {
     if (!rateRes.ok) {
         const errorData = await rateRes.json().catch(() => null);
         console.log(errorData);
-        throw new AppError(
-            httpStatus.BAD_REQUEST,
-            errorData?.error?.message || 'Failed to fetch shipping rates',
-        );
+        return {
+            rates: [],
+        }
     }
 
     const rateData = await rateRes.json();
@@ -765,7 +763,7 @@ const offerCheckoutSummary = async (offerId: string, userId: string) => {
     };
 }
 
-const productAvailableRates = async (productId: string, userId: string, req : Request) => {
+const productAvailableRates = async (productId: string, userId: string, req: Request) => {
 
     const product = await productService.productDetails(productId, req, userId);
 
@@ -859,10 +857,9 @@ const productAvailableRates = async (productId: string, userId: string, req : Re
     if (!rateRes.ok) {
         const errorData = await rateRes.json().catch(() => null);
         console.log(errorData);
-        throw new AppError(
-            httpStatus.BAD_REQUEST,
-            errorData?.error?.message || 'Failed to fetch shipping rates',
-        );
+        return {
+            rates: [],
+        }
     }
 
     const rateData = await rateRes.json();
