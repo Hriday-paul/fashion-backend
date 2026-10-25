@@ -279,12 +279,22 @@ const checkoutSummary = async (cartGroupId: string, userId: string) => {
     };
 }
 
-const addToCart = async (payload: { productId: string, quantity: number, extraDonation: number, extraDonationAnonymous: boolean, charities: { charityId: string }[] }, userId: string) => {
+const addToCart = async (payload: { productId: string, quantity: number, extraDonation: number, extraDonationAnonymous: boolean }, userId: string) => {
 
-    const { productId, quantity, extraDonation, extraDonationAnonymous, charities } = payload;
+    const { productId, quantity, extraDonation, extraDonationAnonymous } = payload;
 
     //check product exist
-    const product = await prisma.product.findFirst({ where: { id: productId } });
+    const product = await prisma.product.findFirst({
+        where: { id: productId },
+        select: {
+            userId: true, id: true,
+            charities: {
+                select: {
+                    charityId: true
+                }
+            }
+        }
+    });
     if (!product) {
         throw new AppError(httpStatus.NOT_FOUND, "Product does not exist");
     }
@@ -301,6 +311,10 @@ const addToCart = async (payload: { productId: string, quantity: number, extraDo
     }
 
     const sellerId = product?.userId;
+
+    const charities = product?.charities?.map(charity => ({
+        charityId: charity?.charityId,
+    }));
 
     const cartGroup = await prisma.cartGroup.upsert({
         where: {

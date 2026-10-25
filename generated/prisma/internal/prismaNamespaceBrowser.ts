@@ -95,6 +95,7 @@ export const ModelName = {
   User: 'User',
   CharityGallery: 'CharityGallery',
   ProfilePicture: 'ProfilePicture',
+  CharityThumbnail: 'CharityThumbnail',
   AccountDocument: 'AccountDocument',
   BillingDetails: 'BillingDetails',
   Notification: 'Notification',
@@ -846,6 +847,16 @@ export const ProfilePictureScalarFieldEnum = {
 } as const
 
 export type ProfilePictureScalarFieldEnum = (typeof ProfilePictureScalarFieldEnum)[keyof typeof ProfilePictureScalarFieldEnum]
+
+
+export const CharityThumbnailScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  key: 'key',
+  userId: 'userId'
+} as const
+
+export type CharityThumbnailScalarFieldEnum = (typeof CharityThumbnailScalarFieldEnum)[keyof typeof CharityThumbnailScalarFieldEnum]
 
 
 export const AccountDocumentScalarFieldEnum = {

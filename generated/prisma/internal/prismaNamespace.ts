@@ -436,6 +436,7 @@ export const ModelName = {
   User: 'User',
   CharityGallery: 'CharityGallery',
   ProfilePicture: 'ProfilePicture',
+  CharityThumbnail: 'CharityThumbnail',
   AccountDocument: 'AccountDocument',
   BillingDetails: 'BillingDetails',
   Notification: 'Notification',
@@ -461,7 +462,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "parcelSuggestion" | "directDonation" | "follow" | "chat" | "message" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "accountDocument" | "billingDetails" | "notification" | "setting" | "sellCountries" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction" | "walletPayout"
+    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "parcelSuggestion" | "directDonation" | "follow" | "chat" | "message" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "charityThumbnail" | "accountDocument" | "billingDetails" | "notification" | "setting" | "sellCountries" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction" | "walletPayout"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3943,6 +3944,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CharityThumbnail: {
+      payload: Prisma.$CharityThumbnailPayload<ExtArgs>
+      fields: Prisma.CharityThumbnailFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CharityThumbnailFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityThumbnailPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CharityThumbnailFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityThumbnailPayload>
+        }
+        findFirst: {
+          args: Prisma.CharityThumbnailFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityThumbnailPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CharityThumbnailFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityThumbnailPayload>
+        }
+        findMany: {
+          args: Prisma.CharityThumbnailFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityThumbnailPayload>[]
+        }
+        create: {
+          args: Prisma.CharityThumbnailCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityThumbnailPayload>
+        }
+        createMany: {
+          args: Prisma.CharityThumbnailCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CharityThumbnailCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityThumbnailPayload>[]
+        }
+        delete: {
+          args: Prisma.CharityThumbnailDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityThumbnailPayload>
+        }
+        update: {
+          args: Prisma.CharityThumbnailUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityThumbnailPayload>
+        }
+        deleteMany: {
+          args: Prisma.CharityThumbnailDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CharityThumbnailUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CharityThumbnailUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityThumbnailPayload>[]
+        }
+        upsert: {
+          args: Prisma.CharityThumbnailUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityThumbnailPayload>
+        }
+        aggregate: {
+          args: Prisma.CharityThumbnailAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCharityThumbnail>
+        }
+        groupBy: {
+          args: Prisma.CharityThumbnailGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharityThumbnailGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CharityThumbnailCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharityThumbnailCountAggregateOutputType> | number
+        }
+      }
+    }
     AccountDocument: {
       payload: Prisma.$AccountDocumentPayload<ExtArgs>
       fields: Prisma.AccountDocumentFieldRefs
@@ -5447,6 +5522,16 @@ export const ProfilePictureScalarFieldEnum = {
 export type ProfilePictureScalarFieldEnum = (typeof ProfilePictureScalarFieldEnum)[keyof typeof ProfilePictureScalarFieldEnum]
 
 
+export const CharityThumbnailScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  key: 'key',
+  userId: 'userId'
+} as const
+
+export type CharityThumbnailScalarFieldEnum = (typeof CharityThumbnailScalarFieldEnum)[keyof typeof CharityThumbnailScalarFieldEnum]
+
+
 export const AccountDocumentScalarFieldEnum = {
   id: 'id',
   url: 'url',
@@ -6311,6 +6396,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   charityGallery?: Prisma.CharityGalleryOmit
   profilePicture?: Prisma.ProfilePictureOmit
+  charityThumbnail?: Prisma.CharityThumbnailOmit
   accountDocument?: Prisma.AccountDocumentOmit
   billingDetails?: Prisma.BillingDetailsOmit
   notification?: Prisma.NotificationOmit

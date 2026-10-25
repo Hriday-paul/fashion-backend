@@ -273,65 +273,70 @@ const sellerCharitySupportStats = async (userName: string) => {
         },
     });
 
-    const charities = await prisma.sellDonation.groupBy({
-        by: ["charityId"],
-        where: {
-            orderItem: {
-                product: {
-                    userId: user?.id
-                }
-            },
-            status: "PAID"
-        },
-    });
-
-    const totalCharitiesToSupport = charities.length;
-
-
-    const donationsByCharity = await prisma.$queryRaw<
+    const charitiesSupport = await prisma.$queryRaw<
         {
             charityId: string;
+            fname: string;
+            lname: string | null;
+            userName: string;
             charityName: string;
+            charityBio: string | null;
             charityImage: string | null;
             totalDonation: number;
+            productsSupported: number;
         }[]
     >`
     SELECT
-        sd."charityId" AS "charityId",
+        u."fname" AS "fname",
+        u."lname" AS "lname",
         u."userName" AS "charityName",
-        pp."url" AS "charityImage",
-        COALESCE(SUM(sd."total_amount"), 0) AS "totalDonation"
-    FROM "sellItemMoneyDonations" sd
+        pp.url AS "charityImage",
+        u."id" AS "charityId",
+        u.bio AS "charityBio",
+        u."userName" AS "userName",
+        COALESCE(
+            SUM(
+                CASE
+                    WHEN sd."status" = 'PAID'
+                    THEN sd."amount"
+                    ELSE 0
+                END
+            ),
+            0
+        ) AS "totalDonation",
+        COUNT(DISTINCT pd."id")::int AS "productsSupported"
+    from "productCharities" pc
 
-    INNER JOIN "users" u
-        ON u."id" = sd."charityId"
+        INNER JOIN "products" pd
+            ON pd."id" = pc."productId"
 
-    LEFT JOIN "profile_pictures" pp
-        ON pp."userId" = u."id"
+        INNER JOIN "users" u
+        ON u."id" = pc."charityId"
 
-    INNER JOIN "OrderItem" oi
-        ON oi."id" = sd."orderItemId"
+        LEFT JOIN "charity_thumbnails" pp
+            ON pp."userId" = u."id"
 
-    INNER JOIN "products" p
-        ON p."id" = oi."productId"
+        LEFT JOIN "OrderItem" oi
+            ON oi."productId" = pd."id"
+        
+        LEFT JOIN "sellItemMoneyDonations" sd
+            ON sd."orderItemId" = oi."id"
 
-    WHERE p."userId" = ${user.id}
-      AND sd."status" = 'PAID'
+        WHERE pd."userId" = ${user.id}
+            AND pd."isDeleted" = false
 
-    GROUP BY
-        sd."charityId",
-        u."userName",
-        pp."url"
+        GROUP BY
+            u."id",
+            pp."id"
 
-    ORDER BY "totalDonation" DESC
-`;
-
+        ORDER BY "totalDonation" DESC
+    `
 
     return {
         sellDonatedAmount: sellDonations._sum.amount || 0,
         avgSellDonationPercentage: avgSellDonationPercentage._avg.donation_percent || 0,
-        totalCharitiesToSupport,
-        donationsByCharity
+        totalCharitiesToSupport: charitiesSupport.length,
+        donationsByCharity: charitiesSupport
     }
 
 }

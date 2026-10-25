@@ -22,7 +22,11 @@ router.patch(
     '/update-my-profile',
     rateLimiter(),
     auth(...allRoles),
-    image_Upload.fields([{ name: "picture", maxCount: 1 }, { name: "charityImgs", maxCount: 8 }]),
+    image_Upload.fields([
+        { name: "picture", maxCount: 1 },
+        { name: "charityThumbnail", maxCount: 1 },
+        { name: "charityImgs", maxCount: 8 }
+    ]),
     parseData(),
     userController.updateProfile,
 );

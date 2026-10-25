@@ -277,6 +277,11 @@ export type CharityGallery = Prisma.CharityGalleryModel
  */
 export type ProfilePicture = Prisma.ProfilePictureModel
 /**
+ * Model CharityThumbnail
+ * 
+ */
+export type CharityThumbnail = Prisma.CharityThumbnailModel
+/**
  * Model AccountDocument
  * 
  */

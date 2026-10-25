@@ -7,7 +7,6 @@ import { generateOtp } from '../../utils/otpGenerator';
 import prisma from '../../shared/prisma';
 import fs from 'fs';
 import path from 'path';
-import { sendEmail } from '../../utils/mailSender';
 import { notificationQueue } from '../../queues/notificaion.queue';
 import { jobs } from '../../queues/jobs.name';
 import { redisKeys } from '../../redis/keys';

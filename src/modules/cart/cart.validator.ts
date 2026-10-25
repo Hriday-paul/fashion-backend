@@ -19,13 +19,6 @@ export const validateCartAdd = [
     .optional()
     .isBoolean().withMessage('extraDonationAnonymous must be a boolean')
     .toBoolean(),
-
-  body('charities')
-    .isArray().withMessage('charities must be an array'),
-
-  body('charities.*.charityId')
-    .exists({ checkFalsy: true }).withMessage('charityId is required')
-    .isUUID().withMessage('charityId must be a UUID'),
 ];
 
 export const validateCartCheckoutTreeGift = [

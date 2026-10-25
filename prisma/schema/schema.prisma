@@ -152,6 +152,8 @@ model User {
 
   bundleDiscount    BundleDiscount?
 
+  charityThumbnail           CharityThumbnail?
+
   @@map("users")
 }
 
@@ -178,6 +180,16 @@ model ProfilePicture {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("profile_pictures")
+}
+
+model CharityThumbnail {
+  id     String @id @default(uuid())
+  url    String
+  key    String
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("charity_thumbnails")
 }
 
 model AccountDocument {

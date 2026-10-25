@@ -33,18 +33,27 @@ const approveOrDeclineUser = catchAsync(async (req: Request, res: Response) => {
 
 const updateProfile = catchAsync(async (req: Request, res: Response) => {
 
-    let image: { key: string, url: string } | undefined;
-
     const files = req.files as {
         picture?: Express.Multer.File[];
+        charityThumbnail?: Express.Multer.File[];
         charityImgs?: Express.Multer.File[];
     };
 
     if (files?.picture && files?.picture.length > 0) {
-        image = await uploadToS3({
+        const image = await uploadToS3({
             file: files.picture[0],
             fileName: `images/user/`,
         });
+
+        req.body.image = image;
+    }
+    if (files?.charityThumbnail && files?.charityThumbnail.length > 0) {
+        const image = await uploadToS3({
+            file: files.charityThumbnail[0],
+            fileName: `images/user/`,
+        });
+
+        req.body.charityThumbnail = image;
     }
 
 
@@ -68,7 +77,7 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
     }
 
 
-    const result = await userService.updateProfile(req.body, req.user.id, image ? image : undefined)
+    const result = await userService.updateProfile(req.body, { userId: req.user.id, role: req.user.role })
 
     sendResponse(res, {
         statusCode: httpStatus.OK,

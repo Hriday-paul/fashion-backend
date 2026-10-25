@@ -13,10 +13,19 @@ import path from 'path';
 import { emailQueue } from "../../queues/email.queue";
 import { jobs } from "../../queues/jobs.name";
 
-// update user profile
-const updateProfile = async (payload: User & { charityImgs: { url: string, key: string }[], dltGalleries: string[] }, userId: string, image?: { url: string, key: string }) => {
+interface UserPayload extends User {
+    charityImgs: { url: string, key: string }[],
+    charityThumbnail?: { url: string, key: string },
+    dltGalleries: string[],
+    image?: { url: string, key: string }
+}
 
-    const { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode, support_email, dltGalleries = [], charityImgs = [] } = payload
+// update user profile
+const updateProfile = async (payload: UserPayload, user: { userId: string, role: string }) => {
+
+    const { userId } = user;
+
+    const { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode, support_email, dltGalleries = [], charityImgs = [], charityThumbnail, image } = payload;
 
     const updateFields: Partial<User> = { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode, support_email };
 
@@ -28,7 +37,7 @@ const updateProfile = async (payload: User & { charityImgs: { url: string, key: 
     });
 
     // check updated field found or not
-    if (Object.keys(updateFields).length === 0 && !image) {
+    if (Object.keys(updateFields).length === 0 && !image && !charityThumbnail && dltGalleries.length === 0 && charityImgs.length === 0) {
         throw new AppError(
             httpStatus.NOT_FOUND,
             'No valid field found',
@@ -44,6 +53,15 @@ const updateProfile = async (payload: User & { charityImgs: { url: string, key: 
             upsert: {
                 update: image,   // update existing picture
                 create: image    // create new picture if not exists
+            }
+        };
+    }
+
+    if (charityThumbnail && charityThumbnail?.url && charityThumbnail?.key) {
+        data.charityThumbnail = {
+            upsert: {
+                update: charityThumbnail,   // update existing thumbnail
+                create: charityThumbnail    // create new thumbnail if not exists
             }
         };
     }
@@ -233,7 +251,10 @@ const approveOrDeclineUser = async (payload: { approval_status: Approval_Status,
 const getUserById = async (id: string) => {
     const result = await prisma.user.findFirst({
         where: { id }, include: {
-            picture: true, charityGalleries: true, auth: {
+            picture: true,
+            charityGalleries: true,
+            charityThumbnail: true,
+            auth: {
                 select: {
                     role: true,
                     isPhoneVerified: true,
@@ -627,7 +648,13 @@ const allCharies = async () => {
             email: true,
             phone: true,
             id: true,
-            picture: true
+            picture: true,
+            charityThumbnail: true,
+            auth : {
+                select : {
+                    role: true
+                }
+            }
         }
 
     })

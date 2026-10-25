@@ -328,7 +328,7 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, showItemInCart, stock, authenticate, ...moreFields } = query;
+    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, showItemInCart, stock, authenticate, allowDonation, ...moreFields } = query;
 
     const cacheQuery: { [key: string]: unknown } = { limit, skip, sortBy, sortOrder, page };
 
@@ -439,6 +439,15 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
         cacheQuery.authenticate = "true";
         AndConditions.push({
             assistentSell: {}
+        })
+    }
+
+    if (allowDonation && allowDonation == "true") {
+        cacheQuery.allowDonation = "true";
+        AndConditions.push({
+            donation_percent: {
+                gt: 0
+            }
         })
     }
 
@@ -889,9 +898,15 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
                             fname: true,
                             lname: true,
                             userName: true,
-                            picture: {
+                            bio: true,
+                            charityThumbnail: {
                                 select: {
                                     url: true
+                                }
+                            },
+                            auth: {
+                                select: {
+                                    role: true
                                 }
                             }
                         }
@@ -952,6 +967,17 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
                     },
                 }
                 : false,
+
+            cartItems: userId ? {
+                where: {
+                    group: {
+                        userId: userId
+                    }
+                },
+                select: {
+                    id: true,
+                },
+            } : false
         }
     });
 
@@ -1492,7 +1518,7 @@ const donationSupportByProduct = async (productId: string) => {
                             fname: true,
                             lname: true,
                             userName: true,
-                            picture: {
+                            charityThumbnail: {
                                 select: {
                                     url: true
                                 }
