@@ -27,6 +27,13 @@ const donationCheckout = async (
 ) => {
   const { donatedAt, currency, updatedAt, ...body } = payload;
 
+  if (userId == body?.charityId) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "You cannot donate to your own charity"
+    );
+  }
+
   const result = await prisma.$transaction(async (transactionClient) => {
 
     const tranId = generateRandomString(10);

@@ -310,7 +310,7 @@ const deletemyAccount = async (userId: string) => {
 const userDetails = async (userName: string, currentUserId?: string) => {
 
     const res = await prisma.user.findFirst({
-        where: { userName: userName },
+        where: { userName: userName, auth: { approval_status: "Approved" } },
         include: {
             picture: true,
             auth: { select: { role: true, isverified: true, isPhoneVerified: true } },
@@ -319,7 +319,8 @@ const userDetails = async (userName: string, currentUserId?: string) => {
                     followers: true,
                     following: true,
                 }
-            }
+            },
+            charityGalleries: true,
         },
     });
 
@@ -333,6 +334,16 @@ const userDetails = async (userName: string, currentUserId?: string) => {
             badges: [],
         }
     }
+
+    const totalSells = await prisma.orderItem.count({
+        where: {
+            order: {
+                sellerId: res?.id,
+                status: "COMPLETED",
+            },
+            isCancelled: false
+        }
+    });
 
     const ratingAvg = await prisma.rating.aggregate({
         where: { toUserId: res?.id },
@@ -375,6 +386,31 @@ const userDetails = async (userName: string, currentUserId?: string) => {
 
     const totalDonation = totalSellDonationAmount + totalTreeDonationAmount + totalDirectDonationAmount;
 
+    let totalRaisedDonation = 0;
+    if (res?.auth?.role === Role.CHARITABLE_ORGANIZATION || res?.auth?.role === Role.CHARITY_SHOP) {
+
+        const totalSellDonation = await prisma.sellDonation.aggregate({
+            where: {
+                status: "PAID",
+                charityId: res?.id
+            }, _sum: { total_amount: true }
+        });
+
+        const directMoneyDonation = await prisma.directDonation.aggregate({
+            where: {
+                payment: {
+                    status: "SUCCESSED"
+                },
+                charityId: res?.id
+            }, _sum: { amount: true }
+        });
+
+        const raisedSellDonationAmount = totalSellDonation?._sum?.total_amount || 0;
+        const raisedDirectDonationAmount = directMoneyDonation?._sum?.amount || 0;
+
+        totalRaisedDonation = raisedSellDonationAmount + raisedDirectDonationAmount;
+    }
+
     const isCurrentUser = currentUserId === res?.id;
 
     const badges = await userBadges(res?.id);
@@ -385,7 +421,7 @@ const userDetails = async (userName: string, currentUserId?: string) => {
         countryAvaialblity = await sellCountriesService.getCountryByCode(res?.country);
     }
 
-    return { user: res, review: ratingAvg, isfolowing: isfolowing ? true : false, totalDonation, isCurrentUser, badges, countryAvaialblity };
+    return { user: res, review: ratingAvg, isfolowing: isfolowing ? true : false, totalDonation, isCurrentUser, badges, countryAvaialblity, totalSells, totalRaisedDonation };
 }
 
 const userBadges = async (userId: string) => {
@@ -650,8 +686,8 @@ const allCharies = async () => {
             id: true,
             picture: true,
             charityThumbnail: true,
-            auth : {
-                select : {
+            auth: {
+                select: {
                     role: true
                 }
             }
