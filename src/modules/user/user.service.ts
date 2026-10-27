@@ -640,6 +640,7 @@ const charityAbout = async (userName: string) => {
     const res = await prisma.user.findFirst({
         where: { userName: userName },
         select: {
+            id : true,
             description: true,
             charityGalleries: true,
             website: true,

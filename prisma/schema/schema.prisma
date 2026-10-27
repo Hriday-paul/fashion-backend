@@ -129,6 +129,9 @@ model User {
   offersAsBuyer  Offer[] @relation("OffersForBuyer")
   offersAsSeller Offer[] @relation("OffersForSeller")
 
+  clothDonateDonor ClothDonation[] @relation("clothDonateDonor")
+  clothDonateCharity ClothDonation[] @relation("clothDonateCharity")
+
   wallet Wallet?
 
   avgRating Float @default(0)

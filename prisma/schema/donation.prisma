@@ -25,3 +25,64 @@ model DirectDonation {
   @@index([charityId])
   @@index([donorId])
 }
+
+enum WashedType {
+  RECENT_WASHED
+  WASHED
+  UNWASHED
+}
+
+enum DonationType {
+  SINGLE
+  MULTIPLE
+}
+
+model ClothDonation {
+  id            String                @id @default(uuid())
+  photos        ClothDonationPhoto[]
+  donorId       String
+  donor         User                  @relation("clothDonateDonor", fields: [donorId], references: [id], onDelete: Cascade)
+
+  charityId     String
+  charity       User                  @relation("clothDonateCharity", fields: [charityId], references: [id], onDelete: Cascade)
+
+  donationType  DonationType
+
+  itemsCount String?
+
+  itemTypes  String[]
+  personTypes    String[]
+  brands        String[]
+  condition     String
+  washedType    WashedType
+  description   String?
+
+  status        ClothDonationStatus @default(PENDING)
+
+  shipment Shipment?
+
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt @default(now())
+
+  @@index([donorId])
+  @@index([charityId])
+}
+
+enum ClothDonationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  COMPLETED
+}
+
+model ClothDonationPhoto{
+  id            String                @id @default(uuid())
+  donationId    String
+  donation      ClothDonation @relation(fields: [donationId], references: [id], onDelete: Cascade)
+  url      String
+  key      String
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+
+  @@index([donationId])
+}

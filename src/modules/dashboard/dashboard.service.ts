@@ -1,6 +1,7 @@
 import prisma from "../../shared/prisma";
 import { Role } from "../../../generated/prisma/enums";
 import moment from "moment";
+import { accountService } from "../ConnectAccount/account.service";
 
 
 const userChart = async (query: Record<string, unknown>) => {
@@ -278,7 +279,7 @@ const bestSellsUserByMonth = async (query: Record<string, unknown>) => {
         monthEnd = moment(`${year}-${month}-01`).endOf('month').toDate();
     }
 
-   const ranked = await prisma.order.groupBy({
+    const ranked = await prisma.order.groupBy({
         by: ["sellerId"],
         where: {
             status: "COMPLETED", // only count finished sales
@@ -307,11 +308,272 @@ const bestSellsUserByMonth = async (query: Record<string, unknown>) => {
 
 }
 
+const charityStats = async (charityId: string) => {
+    const totalSellDonationReceived = await prisma.sellDonation.aggregate({
+        where: {
+            status: "PAID",
+            charityId,
+        }, _sum: { amount: true }
+    });
+
+    const directMoneyDonationReceived = await prisma.directDonation.aggregate({
+        where: {
+            payment: {
+                status: "SUCCESSED"
+            },
+            charityId
+        }, _sum: { amount: true }
+    });
+
+    const totalSellDonationAmount = totalSellDonationReceived?._sum?.amount || 0;
+    const totalDirectDonationAmount = directMoneyDonationReceived?._sum?.amount || 0;
+
+    const totalRaised = totalSellDonationAmount + totalDirectDonationAmount;
+
+    const totalDonor = await prisma.user.count({
+        where: {
+            sellOrders: {
+                some: {
+                    sellerId: charityId,
+                    items: {
+                        some: {
+                            donations: {
+                                some: {
+                                    charityId: charityId
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            donations: {
+                some: {
+                    charityId: charityId
+                }
+            }
+        }
+    });
+
+    const { balance = 0 } = await accountService.accountBalance(charityId);
+
+    return {
+        totalRaised: totalRaised.toFixed(2),
+        totalDonor,
+        balance: balance
+    }
+
+}
+
+const charityDonationChart = async (charityId: string, query: Record<string, unknown>) => {
+    const year = query.JoinYear ? Number(query.JoinYear) : new Date().getFullYear();
+
+    const sellDonations = await prisma.sellDonation.findMany({
+        where: {
+            charityId,
+            status: "PAID",
+            donatedAt: {
+                gte: new Date(`${year}-01-01T00:00:00.000Z`),
+                lt: new Date(`${year + 1}-01-01T00:00:00.000Z`),
+            },
+        },
+        select: {
+            total_amount: true,
+            donatedAt: true,
+        },
+    });
+
+    const directDonations = await prisma.directDonation.findMany({
+        where: {
+            charityId,
+            payment: {
+                status: "SUCCESSED",
+            },
+            donatedAt: {
+                gte: new Date(`${year}-01-01T00:00:00.000Z`),
+                lt: new Date(`${year + 1}-01-01T00:00:00.000Z`),
+            },
+        },
+        select: {
+            amount: true,
+            donatedAt: true,
+        },
+    });
+
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December",
+    ];
+
+    const monthsDonationCount = monthNames.map((month) => ({
+        month,
+        sellDonationAmount: 0,
+        directDonationAmount: 0
+    }));
+
+    for (const donation of sellDonations) {
+        const monthIndx = donation.donatedAt ? donation.donatedAt.getMonth() : null;
+        if (monthIndx === null) continue; // Skip if donatedAt is null
+        const month = monthNames[monthIndx];
+        const monthEntry = monthsDonationCount.find((m) => m.month === month);
+        if (monthEntry) {
+            monthEntry.sellDonationAmount += donation.total_amount;
+        }
+    }
+
+    directDonations.forEach((donation) => {
+        const monthIndx = donation.donatedAt ? donation.donatedAt.getMonth() : null;
+        if (monthIndx === null) return;
+        const month = monthNames[monthIndx];
+        const monthEntry = monthsDonationCount.find((m) => m.month === month);
+
+        if (monthEntry) {
+            monthEntry.directDonationAmount += donation.amount;
+        }
+    });
+
+    return monthsDonationCount;
+}
+
+const sellsStat = async (sellerId: string) => {
+    const totalOrderAmount = await prisma.order.aggregate({
+        where: {
+            sellerId,
+            status: "COMPLETED",
+            payment: {
+                status: {
+                    in: ["SUCCESSED", "REFUNDED"]
+                }
+            }
+        },
+        _sum: { sellerTotal: true }
+    });
+    return totalOrderAmount?._sum?.sellerTotal || 0;
+}
+
+const clothDonationRaised = async (charityId: string) => {
+    const totalClothDonationRaised = await prisma.clothDonation.count({
+        where: {
+            charityId,
+            status: "ACCEPTED"
+        }
+    });
+    return totalClothDonationRaised || 0;
+}
+
+const charityShopStats = async (charityId: string) => {
+    const charityStat = await charityStats(charityId);
+    const totalSellsAmount = await sellsStat(charityId);
+    const totalClothDonationRaised = await clothDonationRaised(charityId);
+    return {
+        ...charityStat,
+        totalSellsAmount,
+        totalClothDonationRaised
+    };
+}
+
+const charityShopChart = async (charityId: string, query: Record<string, unknown>) => {
+    const charityDonationChartData = await charityDonationChart(charityId, query);
+
+    const year = query.JoinYear ? Number(query.JoinYear) : new Date().getFullYear();
+
+    const clothDonationsReceived = await prisma.clothDonation.findMany({
+        where: {
+            charityId,
+            status: "ACCEPTED",
+            createdAt: {
+                gte: new Date(`${year}-01-01T00:00:00.000Z`),
+                lt: new Date(`${year + 1}-01-01T00:00:00.000Z`),
+            },
+        },
+        select: {
+            createdAt: true,
+        },
+    });
+
+    const clothCounts = new Array<number>(12).fill(0);
+    for (const d of clothDonationsReceived) {
+        if (!d.createdAt) continue;
+        clothCounts[d.createdAt.getUTCMonth()] += 1;
+    }
+
+    return charityDonationChartData.map((entry, i) => ({
+        ...entry,
+        clothDonationCount: clothCounts[i],
+    }));
+
+}
+
+const sellsChart = async (sellerId: string, query: Record<string, unknown>) => {
+    let year = new Date().getFullYear();
+    if (query.JoinYear) {
+        year = Number(query.JoinYear);
+    }
+
+    const sells = await prisma.order.findMany({
+        where: {
+            sellerId,
+            status: "COMPLETED",
+            payment: {
+                status: {
+                    in: ["SUCCESSED", "REFUNDED"]
+                }
+            },
+            completedAt: {
+                gte: new Date(`${year}-01-01T00:00:00.000Z`),
+                lt: new Date(`${year + 1}-01-01T00:00:00.000Z`),
+            },
+        },
+        select: {
+            completedAt: true,
+            sellerTotal: true,
+        },
+    });
+
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December",
+    ];
+
+    const monthsSellsCount = monthNames.map((month) => ({
+        month,
+        totalSellsAmount: 0,
+    }));
+
+    for (const sell of sells) {
+        const monthIndx = sell.completedAt ? sell.completedAt.getMonth() : null;
+        if (monthIndx === null) continue;
+        const month = monthNames[monthIndx];
+        const monthEntry = monthsSellsCount.find((m) => m.month === month);
+        if (monthEntry) {
+            monthEntry.totalSellsAmount += sell.sellerTotal;
+        }
+    }
+
+    return monthsSellsCount;
+}
+
+const sellerStats = async (sellerId: string) => {
+    const totalSellsAmount = await sellsStat(sellerId);
+    const balance = await accountService.accountBalance(sellerId);
+
+    return {
+        totalSellsAmount,
+        balance: balance.balance || 0
+    }
+}
+
 export const dashboardService = {
     userChart,
     countData,
     productCountByParentCategory,
     ordersOverviewChart,
     orderStatusChart,
-    bestSellsUserByMonth
+    charityStats,
+    charityDonationChart,
+    charityShopStats,
+    charityShopChart,
+    bestSellsUserByMonth,
+    sellsChart,
+
+    sellerStats
 }

@@ -404,6 +404,8 @@ export const ModelName = {
   Keyword: 'Keyword',
   ParcelSuggestion: 'ParcelSuggestion',
   DirectDonation: 'DirectDonation',
+  ClothDonation: 'ClothDonation',
+  ClothDonationPhoto: 'ClothDonationPhoto',
   Follow: 'Follow',
   Chat: 'Chat',
   Message: 'Message',
@@ -462,7 +464,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "parcelSuggestion" | "directDonation" | "follow" | "chat" | "message" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "charityThumbnail" | "accountDocument" | "billingDetails" | "notification" | "setting" | "sellCountries" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction" | "walletPayout"
+    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "parcelSuggestion" | "directDonation" | "clothDonation" | "clothDonationPhoto" | "follow" | "chat" | "message" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "charityThumbnail" | "accountDocument" | "billingDetails" | "notification" | "setting" | "sellCountries" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction" | "walletPayout"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1573,6 +1575,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.DirectDonationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.DirectDonationCountAggregateOutputType> | number
+        }
+      }
+    }
+    ClothDonation: {
+      payload: Prisma.$ClothDonationPayload<ExtArgs>
+      fields: Prisma.ClothDonationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ClothDonationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ClothDonationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPayload>
+        }
+        findFirst: {
+          args: Prisma.ClothDonationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ClothDonationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPayload>
+        }
+        findMany: {
+          args: Prisma.ClothDonationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPayload>[]
+        }
+        create: {
+          args: Prisma.ClothDonationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPayload>
+        }
+        createMany: {
+          args: Prisma.ClothDonationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ClothDonationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPayload>[]
+        }
+        delete: {
+          args: Prisma.ClothDonationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPayload>
+        }
+        update: {
+          args: Prisma.ClothDonationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPayload>
+        }
+        deleteMany: {
+          args: Prisma.ClothDonationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ClothDonationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ClothDonationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPayload>[]
+        }
+        upsert: {
+          args: Prisma.ClothDonationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPayload>
+        }
+        aggregate: {
+          args: Prisma.ClothDonationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClothDonation>
+        }
+        groupBy: {
+          args: Prisma.ClothDonationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClothDonationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ClothDonationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClothDonationCountAggregateOutputType> | number
+        }
+      }
+    }
+    ClothDonationPhoto: {
+      payload: Prisma.$ClothDonationPhotoPayload<ExtArgs>
+      fields: Prisma.ClothDonationPhotoFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ClothDonationPhotoFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPhotoPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ClothDonationPhotoFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPhotoPayload>
+        }
+        findFirst: {
+          args: Prisma.ClothDonationPhotoFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPhotoPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ClothDonationPhotoFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPhotoPayload>
+        }
+        findMany: {
+          args: Prisma.ClothDonationPhotoFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPhotoPayload>[]
+        }
+        create: {
+          args: Prisma.ClothDonationPhotoCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPhotoPayload>
+        }
+        createMany: {
+          args: Prisma.ClothDonationPhotoCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ClothDonationPhotoCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPhotoPayload>[]
+        }
+        delete: {
+          args: Prisma.ClothDonationPhotoDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPhotoPayload>
+        }
+        update: {
+          args: Prisma.ClothDonationPhotoUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPhotoPayload>
+        }
+        deleteMany: {
+          args: Prisma.ClothDonationPhotoDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ClothDonationPhotoUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ClothDonationPhotoUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPhotoPayload>[]
+        }
+        upsert: {
+          args: Prisma.ClothDonationPhotoUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClothDonationPhotoPayload>
+        }
+        aggregate: {
+          args: Prisma.ClothDonationPhotoAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClothDonationPhoto>
+        }
+        groupBy: {
+          args: Prisma.ClothDonationPhotoGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClothDonationPhotoGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ClothDonationPhotoCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClothDonationPhotoCountAggregateOutputType> | number
         }
       }
     }
@@ -4998,6 +5148,38 @@ export const DirectDonationScalarFieldEnum = {
 export type DirectDonationScalarFieldEnum = (typeof DirectDonationScalarFieldEnum)[keyof typeof DirectDonationScalarFieldEnum]
 
 
+export const ClothDonationScalarFieldEnum = {
+  id: 'id',
+  donorId: 'donorId',
+  charityId: 'charityId',
+  donationType: 'donationType',
+  itemsCount: 'itemsCount',
+  itemTypes: 'itemTypes',
+  personTypes: 'personTypes',
+  brands: 'brands',
+  condition: 'condition',
+  washedType: 'washedType',
+  description: 'description',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClothDonationScalarFieldEnum = (typeof ClothDonationScalarFieldEnum)[keyof typeof ClothDonationScalarFieldEnum]
+
+
+export const ClothDonationPhotoScalarFieldEnum = {
+  id: 'id',
+  donationId: 'donationId',
+  url: 'url',
+  key: 'key',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClothDonationPhotoScalarFieldEnum = (typeof ClothDonationPhotoScalarFieldEnum)[keyof typeof ClothDonationPhotoScalarFieldEnum]
+
+
 export const FollowScalarFieldEnum = {
   id: 'id',
   followerId: 'followerId',
@@ -5607,6 +5789,7 @@ export const ShipmentScalarFieldEnum = {
   id: 'id',
   assitentSellId: 'assitentSellId',
   returnId: 'returnId',
+  clothDonationId: 'clothDonationId',
   courier_service_id: 'courier_service_id',
   shippingId: 'shippingId',
   isLebelGenerated: 'isLebelGenerated',
@@ -5854,6 +6037,48 @@ export type EnumBadgeRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
  * Reference to a field of type 'BadgeRole[]'
  */
 export type ListEnumBadgeRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BadgeRole[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DonationType'
+ */
+export type EnumDonationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationType'>
+    
+
+
+/**
+ * Reference to a field of type 'DonationType[]'
+ */
+export type ListEnumDonationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'WashedType'
+ */
+export type EnumWashedTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WashedType'>
+    
+
+
+/**
+ * Reference to a field of type 'WashedType[]'
+ */
+export type ListEnumWashedTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WashedType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ClothDonationStatus'
+ */
+export type EnumClothDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClothDonationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ClothDonationStatus[]'
+ */
+export type ListEnumClothDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClothDonationStatus[]'>
     
 
 
@@ -6364,6 +6589,8 @@ export type GlobalOmitConfig = {
   keyword?: Prisma.KeywordOmit
   parcelSuggestion?: Prisma.ParcelSuggestionOmit
   directDonation?: Prisma.DirectDonationOmit
+  clothDonation?: Prisma.ClothDonationOmit
+  clothDonationPhoto?: Prisma.ClothDonationPhotoOmit
   follow?: Prisma.FollowOmit
   chat?: Prisma.ChatOmit
   message?: Prisma.MessageOmit

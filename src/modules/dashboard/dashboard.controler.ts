@@ -64,11 +64,81 @@ const bestSellsUserByMonth = catchAsync(async (req: Request, res: Response) => {
     });
 })
 
+const charityStats = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await dashboardService.charityStats(req.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'charity stats data retrive successfully',
+        data: result,
+    });
+})
+
+const charityDonationChart = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await dashboardService.charityDonationChart(req.user?.id, req.query);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'charity donation chart data retrive successfully',
+        data: result,
+    });
+})
+
+const charityShopStats = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await dashboardService.charityShopStats(req.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'charity shop stats data retrive successfully',
+        data: result,
+    });
+})
+const charityShopChart = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await dashboardService.charityShopChart(req.user?.id, req.query);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'charity shop chart data retrive successfully',
+        data: result,
+    });
+})
+const sellsChart = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await dashboardService.sellsChart(req.user?.id, req.query);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'sells chart data retrive successfully',
+        data: result,
+    });
+})
+const sellerStats = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await dashboardService.sellerStats(req.user?.id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'seller stats data retrive successfully',
+        data: result,
+    });
+})
+
 export const dashboardControler = {
     userChart,
     countData,
     productCountByParentCategory,
     ordersOverviewChart,
     orderStatusChart,
-    bestSellsUserByMonth
+    bestSellsUserByMonth,
+    charityStats,
+    charityDonationChart,
+
+    charityShopStats,
+    charityShopChart,
+    sellerStats,
+    sellsChart
 }

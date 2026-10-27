@@ -128,7 +128,14 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
 
 // refresh token
 const refreshToken = catchAsync(async (req: Request, res: Response) => {
-    const { refreshToken } = req.body;
+    // const { refreshToken } = req.body;
+
+    //access token from cookie
+    const refreshToken = req.cookies["refreshToken"] || req.body?.refreshToken;
+
+    if(!refreshToken){
+        throw new AppError(httpStatus.BAD_REQUEST, "Refresh token is required");
+    }
 
     const result = await authService.refreshToken(refreshToken);
 

@@ -37,6 +37,7 @@ export type ShipmentMinAggregateOutputType = {
   id: string | null
   assitentSellId: string | null
   returnId: string | null
+  clothDonationId: string | null
   courier_service_id: string | null
   shippingId: string | null
   isLebelGenerated: boolean | null
@@ -56,6 +57,7 @@ export type ShipmentMaxAggregateOutputType = {
   id: string | null
   assitentSellId: string | null
   returnId: string | null
+  clothDonationId: string | null
   courier_service_id: string | null
   shippingId: string | null
   isLebelGenerated: boolean | null
@@ -75,6 +77,7 @@ export type ShipmentCountAggregateOutputType = {
   id: number
   assitentSellId: number
   returnId: number
+  clothDonationId: number
   courier_service_id: number
   shippingId: number
   isLebelGenerated: number
@@ -104,6 +107,7 @@ export type ShipmentMinAggregateInputType = {
   id?: true
   assitentSellId?: true
   returnId?: true
+  clothDonationId?: true
   courier_service_id?: true
   shippingId?: true
   isLebelGenerated?: true
@@ -123,6 +127,7 @@ export type ShipmentMaxAggregateInputType = {
   id?: true
   assitentSellId?: true
   returnId?: true
+  clothDonationId?: true
   courier_service_id?: true
   shippingId?: true
   isLebelGenerated?: true
@@ -142,6 +147,7 @@ export type ShipmentCountAggregateInputType = {
   id?: true
   assitentSellId?: true
   returnId?: true
+  clothDonationId?: true
   courier_service_id?: true
   shippingId?: true
   isLebelGenerated?: true
@@ -248,6 +254,7 @@ export type ShipmentGroupByOutputType = {
   id: string
   assitentSellId: string | null
   returnId: string | null
+  clothDonationId: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated: boolean
@@ -290,6 +297,7 @@ export type ShipmentWhereInput = {
   id?: Prisma.StringFilter<"Shipment"> | string
   assitentSellId?: Prisma.StringNullableFilter<"Shipment"> | string | null
   returnId?: Prisma.StringNullableFilter<"Shipment"> | string | null
+  clothDonationId?: Prisma.StringNullableFilter<"Shipment"> | string | null
   courier_service_id?: Prisma.StringFilter<"Shipment"> | string
   shippingId?: Prisma.StringFilter<"Shipment"> | string
   isLebelGenerated?: Prisma.BoolFilter<"Shipment"> | boolean
@@ -307,6 +315,7 @@ export type ShipmentWhereInput = {
   authOrder?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
   assitentSell?: Prisma.XOR<Prisma.AssistentSellNullableScalarRelationFilter, Prisma.AssistentSellWhereInput> | null
   return?: Prisma.XOR<Prisma.ReturnNullableScalarRelationFilter, Prisma.ReturnWhereInput> | null
+  clothDonation?: Prisma.XOR<Prisma.ClothDonationNullableScalarRelationFilter, Prisma.ClothDonationWhereInput> | null
   origin?: Prisma.XOR<Prisma.BillingDetailsScalarRelationFilter, Prisma.BillingDetailsWhereInput>
   destination?: Prisma.XOR<Prisma.BillingDetailsScalarRelationFilter, Prisma.BillingDetailsWhereInput>
   events?: Prisma.ShipmentEventListRelationFilter
@@ -316,6 +325,7 @@ export type ShipmentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   assitentSellId?: Prisma.SortOrderInput | Prisma.SortOrder
   returnId?: Prisma.SortOrderInput | Prisma.SortOrder
+  clothDonationId?: Prisma.SortOrderInput | Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
@@ -333,6 +343,7 @@ export type ShipmentOrderByWithRelationInput = {
   authOrder?: Prisma.OrderOrderByWithRelationInput
   assitentSell?: Prisma.AssistentSellOrderByWithRelationInput
   return?: Prisma.ReturnOrderByWithRelationInput
+  clothDonation?: Prisma.ClothDonationOrderByWithRelationInput
   origin?: Prisma.BillingDetailsOrderByWithRelationInput
   destination?: Prisma.BillingDetailsOrderByWithRelationInput
   events?: Prisma.ShipmentEventOrderByRelationAggregateInput
@@ -342,6 +353,7 @@ export type ShipmentWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   assitentSellId?: string
   returnId?: string
+  clothDonationId?: string
   AND?: Prisma.ShipmentWhereInput | Prisma.ShipmentWhereInput[]
   OR?: Prisma.ShipmentWhereInput[]
   NOT?: Prisma.ShipmentWhereInput | Prisma.ShipmentWhereInput[]
@@ -362,15 +374,17 @@ export type ShipmentWhereUniqueInput = Prisma.AtLeast<{
   authOrder?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
   assitentSell?: Prisma.XOR<Prisma.AssistentSellNullableScalarRelationFilter, Prisma.AssistentSellWhereInput> | null
   return?: Prisma.XOR<Prisma.ReturnNullableScalarRelationFilter, Prisma.ReturnWhereInput> | null
+  clothDonation?: Prisma.XOR<Prisma.ClothDonationNullableScalarRelationFilter, Prisma.ClothDonationWhereInput> | null
   origin?: Prisma.XOR<Prisma.BillingDetailsScalarRelationFilter, Prisma.BillingDetailsWhereInput>
   destination?: Prisma.XOR<Prisma.BillingDetailsScalarRelationFilter, Prisma.BillingDetailsWhereInput>
   events?: Prisma.ShipmentEventListRelationFilter
-}, "id" | "assitentSellId" | "returnId">
+}, "id" | "assitentSellId" | "returnId" | "clothDonationId">
 
 export type ShipmentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   assitentSellId?: Prisma.SortOrderInput | Prisma.SortOrder
   returnId?: Prisma.SortOrderInput | Prisma.SortOrder
+  clothDonationId?: Prisma.SortOrderInput | Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
@@ -398,6 +412,7 @@ export type ShipmentScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Shipment"> | string
   assitentSellId?: Prisma.StringNullableWithAggregatesFilter<"Shipment"> | string | null
   returnId?: Prisma.StringNullableWithAggregatesFilter<"Shipment"> | string | null
+  clothDonationId?: Prisma.StringNullableWithAggregatesFilter<"Shipment"> | string | null
   courier_service_id?: Prisma.StringWithAggregatesFilter<"Shipment"> | string
   shippingId?: Prisma.StringWithAggregatesFilter<"Shipment"> | string
   isLebelGenerated?: Prisma.BoolWithAggregatesFilter<"Shipment"> | boolean
@@ -430,6 +445,7 @@ export type ShipmentCreateInput = {
   authOrder?: Prisma.OrderCreateNestedOneWithoutAuthShipmentInput
   assitentSell?: Prisma.AssistentSellCreateNestedOneWithoutShipmentInput
   return?: Prisma.ReturnCreateNestedOneWithoutShipmentInput
+  clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
@@ -439,6 +455,7 @@ export type ShipmentUncheckedCreateInput = {
   id?: string
   assitentSellId?: string | null
   returnId?: string | null
+  clothDonationId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -474,6 +491,7 @@ export type ShipmentUpdateInput = {
   authOrder?: Prisma.OrderUpdateOneWithoutAuthShipmentNestedInput
   assitentSell?: Prisma.AssistentSellUpdateOneWithoutShipmentNestedInput
   return?: Prisma.ReturnUpdateOneWithoutShipmentNestedInput
+  clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
@@ -483,6 +501,7 @@ export type ShipmentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clothDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -505,6 +524,7 @@ export type ShipmentCreateManyInput = {
   id?: string
   assitentSellId?: string | null
   returnId?: string | null
+  clothDonationId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -539,6 +559,7 @@ export type ShipmentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clothDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -578,6 +599,7 @@ export type ShipmentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assitentSellId?: Prisma.SortOrder
   returnId?: Prisma.SortOrder
+  clothDonationId?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
@@ -601,6 +623,7 @@ export type ShipmentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assitentSellId?: Prisma.SortOrder
   returnId?: Prisma.SortOrder
+  clothDonationId?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
@@ -620,6 +643,7 @@ export type ShipmentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assitentSellId?: Prisma.SortOrder
   returnId?: Prisma.SortOrder
+  clothDonationId?: Prisma.SortOrder
   courier_service_id?: Prisma.SortOrder
   shippingId?: Prisma.SortOrder
   isLebelGenerated?: Prisma.SortOrder
@@ -669,6 +693,38 @@ export type ShipmentUncheckedUpdateOneWithoutAssitentSellNestedInput = {
   delete?: Prisma.ShipmentWhereInput | boolean
   connect?: Prisma.ShipmentWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ShipmentUpdateToOneWithWhereWithoutAssitentSellInput, Prisma.ShipmentUpdateWithoutAssitentSellInput>, Prisma.ShipmentUncheckedUpdateWithoutAssitentSellInput>
+}
+
+export type ShipmentCreateNestedOneWithoutClothDonationInput = {
+  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutClothDonationInput, Prisma.ShipmentUncheckedCreateWithoutClothDonationInput>
+  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutClothDonationInput
+  connect?: Prisma.ShipmentWhereUniqueInput
+}
+
+export type ShipmentUncheckedCreateNestedOneWithoutClothDonationInput = {
+  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutClothDonationInput, Prisma.ShipmentUncheckedCreateWithoutClothDonationInput>
+  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutClothDonationInput
+  connect?: Prisma.ShipmentWhereUniqueInput
+}
+
+export type ShipmentUpdateOneWithoutClothDonationNestedInput = {
+  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutClothDonationInput, Prisma.ShipmentUncheckedCreateWithoutClothDonationInput>
+  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutClothDonationInput
+  upsert?: Prisma.ShipmentUpsertWithoutClothDonationInput
+  disconnect?: Prisma.ShipmentWhereInput | boolean
+  delete?: Prisma.ShipmentWhereInput | boolean
+  connect?: Prisma.ShipmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ShipmentUpdateToOneWithWhereWithoutClothDonationInput, Prisma.ShipmentUpdateWithoutClothDonationInput>, Prisma.ShipmentUncheckedUpdateWithoutClothDonationInput>
+}
+
+export type ShipmentUncheckedUpdateOneWithoutClothDonationNestedInput = {
+  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutClothDonationInput, Prisma.ShipmentUncheckedCreateWithoutClothDonationInput>
+  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutClothDonationInput
+  upsert?: Prisma.ShipmentUpsertWithoutClothDonationInput
+  disconnect?: Prisma.ShipmentWhereInput | boolean
+  delete?: Prisma.ShipmentWhereInput | boolean
+  connect?: Prisma.ShipmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ShipmentUpdateToOneWithWhereWithoutClothDonationInput, Prisma.ShipmentUpdateWithoutClothDonationInput>, Prisma.ShipmentUncheckedUpdateWithoutClothDonationInput>
 }
 
 export type ShipmentCreateNestedOneWithoutOrderInput = {
@@ -851,6 +907,7 @@ export type ShipmentCreateWithoutAssitentSellInput = {
   order?: Prisma.OrderCreateNestedOneWithoutShipmentInput
   authOrder?: Prisma.OrderCreateNestedOneWithoutAuthShipmentInput
   return?: Prisma.ReturnCreateNestedOneWithoutShipmentInput
+  clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
@@ -859,6 +916,7 @@ export type ShipmentCreateWithoutAssitentSellInput = {
 export type ShipmentUncheckedCreateWithoutAssitentSellInput = {
   id?: string
   returnId?: string | null
+  clothDonationId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -909,6 +967,7 @@ export type ShipmentUpdateWithoutAssitentSellInput = {
   order?: Prisma.OrderUpdateOneWithoutShipmentNestedInput
   authOrder?: Prisma.OrderUpdateOneWithoutAuthShipmentNestedInput
   return?: Prisma.ReturnUpdateOneWithoutShipmentNestedInput
+  clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
@@ -916,6 +975,111 @@ export type ShipmentUpdateWithoutAssitentSellInput = {
 
 export type ShipmentUncheckedUpdateWithoutAssitentSellInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clothDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
+  originId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.OrderUncheckedUpdateOneWithoutShipmentNestedInput
+  authOrder?: Prisma.OrderUncheckedUpdateOneWithoutAuthShipmentNestedInput
+  events?: Prisma.ShipmentEventUncheckedUpdateManyWithoutShipmentNestedInput
+}
+
+export type ShipmentCreateWithoutClothDonationInput = {
+  id?: string
+  courier_service_id: string
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
+  trackingNumber?: string | null
+  trackingUrl?: string | null
+  deliveryCharge?: number
+  status?: $Enums.ShipmentStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  order?: Prisma.OrderCreateNestedOneWithoutShipmentInput
+  authOrder?: Prisma.OrderCreateNestedOneWithoutAuthShipmentInput
+  assitentSell?: Prisma.AssistentSellCreateNestedOneWithoutShipmentInput
+  return?: Prisma.ReturnCreateNestedOneWithoutShipmentInput
+  origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
+  destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
+  events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
+}
+
+export type ShipmentUncheckedCreateWithoutClothDonationInput = {
+  id?: string
+  assitentSellId?: string | null
+  returnId?: string | null
+  courier_service_id: string
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
+  trackingNumber?: string | null
+  trackingUrl?: string | null
+  deliveryCharge?: number
+  originId: string
+  destinationId: string
+  status?: $Enums.ShipmentStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  order?: Prisma.OrderUncheckedCreateNestedOneWithoutShipmentInput
+  authOrder?: Prisma.OrderUncheckedCreateNestedOneWithoutAuthShipmentInput
+  events?: Prisma.ShipmentEventUncheckedCreateNestedManyWithoutShipmentInput
+}
+
+export type ShipmentCreateOrConnectWithoutClothDonationInput = {
+  where: Prisma.ShipmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.ShipmentCreateWithoutClothDonationInput, Prisma.ShipmentUncheckedCreateWithoutClothDonationInput>
+}
+
+export type ShipmentUpsertWithoutClothDonationInput = {
+  update: Prisma.XOR<Prisma.ShipmentUpdateWithoutClothDonationInput, Prisma.ShipmentUncheckedUpdateWithoutClothDonationInput>
+  create: Prisma.XOR<Prisma.ShipmentCreateWithoutClothDonationInput, Prisma.ShipmentUncheckedCreateWithoutClothDonationInput>
+  where?: Prisma.ShipmentWhereInput
+}
+
+export type ShipmentUpdateToOneWithWhereWithoutClothDonationInput = {
+  where?: Prisma.ShipmentWhereInput
+  data: Prisma.XOR<Prisma.ShipmentUpdateWithoutClothDonationInput, Prisma.ShipmentUncheckedUpdateWithoutClothDonationInput>
+}
+
+export type ShipmentUpdateWithoutClothDonationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.OrderUpdateOneWithoutShipmentNestedInput
+  authOrder?: Prisma.OrderUpdateOneWithoutAuthShipmentNestedInput
+  assitentSell?: Prisma.AssistentSellUpdateOneWithoutShipmentNestedInput
+  return?: Prisma.ReturnUpdateOneWithoutShipmentNestedInput
+  origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
+  destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
+  events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
+}
+
+export type ShipmentUncheckedUpdateWithoutClothDonationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -951,6 +1115,7 @@ export type ShipmentCreateWithoutOrderInput = {
   authOrder?: Prisma.OrderCreateNestedOneWithoutAuthShipmentInput
   assitentSell?: Prisma.AssistentSellCreateNestedOneWithoutShipmentInput
   return?: Prisma.ReturnCreateNestedOneWithoutShipmentInput
+  clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
@@ -960,6 +1125,7 @@ export type ShipmentUncheckedCreateWithoutOrderInput = {
   id?: string
   assitentSellId?: string | null
   returnId?: string | null
+  clothDonationId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -998,6 +1164,7 @@ export type ShipmentCreateWithoutAuthOrderInput = {
   order?: Prisma.OrderCreateNestedOneWithoutShipmentInput
   assitentSell?: Prisma.AssistentSellCreateNestedOneWithoutShipmentInput
   return?: Prisma.ReturnCreateNestedOneWithoutShipmentInput
+  clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
@@ -1007,6 +1174,7 @@ export type ShipmentUncheckedCreateWithoutAuthOrderInput = {
   id?: string
   assitentSellId?: string | null
   returnId?: string | null
+  clothDonationId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -1056,6 +1224,7 @@ export type ShipmentUpdateWithoutOrderInput = {
   authOrder?: Prisma.OrderUpdateOneWithoutAuthShipmentNestedInput
   assitentSell?: Prisma.AssistentSellUpdateOneWithoutShipmentNestedInput
   return?: Prisma.ReturnUpdateOneWithoutShipmentNestedInput
+  clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
@@ -1065,6 +1234,7 @@ export type ShipmentUncheckedUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clothDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1109,6 +1279,7 @@ export type ShipmentUpdateWithoutAuthOrderInput = {
   order?: Prisma.OrderUpdateOneWithoutShipmentNestedInput
   assitentSell?: Prisma.AssistentSellUpdateOneWithoutShipmentNestedInput
   return?: Prisma.ReturnUpdateOneWithoutShipmentNestedInput
+  clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
@@ -1118,6 +1289,7 @@ export type ShipmentUncheckedUpdateWithoutAuthOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clothDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1151,6 +1323,7 @@ export type ShipmentCreateWithoutReturnInput = {
   order?: Prisma.OrderCreateNestedOneWithoutShipmentInput
   authOrder?: Prisma.OrderCreateNestedOneWithoutAuthShipmentInput
   assitentSell?: Prisma.AssistentSellCreateNestedOneWithoutShipmentInput
+  clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
@@ -1159,6 +1332,7 @@ export type ShipmentCreateWithoutReturnInput = {
 export type ShipmentUncheckedCreateWithoutReturnInput = {
   id?: string
   assitentSellId?: string | null
+  clothDonationId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -1209,6 +1383,7 @@ export type ShipmentUpdateWithoutReturnInput = {
   order?: Prisma.OrderUpdateOneWithoutShipmentNestedInput
   authOrder?: Prisma.OrderUpdateOneWithoutAuthShipmentNestedInput
   assitentSell?: Prisma.AssistentSellUpdateOneWithoutShipmentNestedInput
+  clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
@@ -1217,6 +1392,7 @@ export type ShipmentUpdateWithoutReturnInput = {
 export type ShipmentUncheckedUpdateWithoutReturnInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clothDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1252,6 +1428,7 @@ export type ShipmentCreateWithoutOriginInput = {
   authOrder?: Prisma.OrderCreateNestedOneWithoutAuthShipmentInput
   assitentSell?: Prisma.AssistentSellCreateNestedOneWithoutShipmentInput
   return?: Prisma.ReturnCreateNestedOneWithoutShipmentInput
+  clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
 }
@@ -1260,6 +1437,7 @@ export type ShipmentUncheckedCreateWithoutOriginInput = {
   id?: string
   assitentSellId?: string | null
   returnId?: string | null
+  clothDonationId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -1304,6 +1482,7 @@ export type ShipmentCreateWithoutDestinationInput = {
   authOrder?: Prisma.OrderCreateNestedOneWithoutAuthShipmentInput
   assitentSell?: Prisma.AssistentSellCreateNestedOneWithoutShipmentInput
   return?: Prisma.ReturnCreateNestedOneWithoutShipmentInput
+  clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
 }
@@ -1312,6 +1491,7 @@ export type ShipmentUncheckedCreateWithoutDestinationInput = {
   id?: string
   assitentSellId?: string | null
   returnId?: string | null
+  clothDonationId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -1362,6 +1542,7 @@ export type ShipmentScalarWhereInput = {
   id?: Prisma.StringFilter<"Shipment"> | string
   assitentSellId?: Prisma.StringNullableFilter<"Shipment"> | string | null
   returnId?: Prisma.StringNullableFilter<"Shipment"> | string | null
+  clothDonationId?: Prisma.StringNullableFilter<"Shipment"> | string | null
   courier_service_id?: Prisma.StringFilter<"Shipment"> | string
   shippingId?: Prisma.StringFilter<"Shipment"> | string
   isLebelGenerated?: Prisma.BoolFilter<"Shipment"> | boolean
@@ -1410,6 +1591,7 @@ export type ShipmentCreateWithoutEventsInput = {
   authOrder?: Prisma.OrderCreateNestedOneWithoutAuthShipmentInput
   assitentSell?: Prisma.AssistentSellCreateNestedOneWithoutShipmentInput
   return?: Prisma.ReturnCreateNestedOneWithoutShipmentInput
+  clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
 }
@@ -1418,6 +1600,7 @@ export type ShipmentUncheckedCreateWithoutEventsInput = {
   id?: string
   assitentSellId?: string | null
   returnId?: string | null
+  clothDonationId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -1468,6 +1651,7 @@ export type ShipmentUpdateWithoutEventsInput = {
   authOrder?: Prisma.OrderUpdateOneWithoutAuthShipmentNestedInput
   assitentSell?: Prisma.AssistentSellUpdateOneWithoutShipmentNestedInput
   return?: Prisma.ReturnUpdateOneWithoutShipmentNestedInput
+  clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
 }
@@ -1476,6 +1660,7 @@ export type ShipmentUncheckedUpdateWithoutEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clothDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1497,6 +1682,7 @@ export type ShipmentCreateManyOriginInput = {
   id?: string
   assitentSellId?: string | null
   returnId?: string | null
+  clothDonationId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -1515,6 +1701,7 @@ export type ShipmentCreateManyDestinationInput = {
   id?: string
   assitentSellId?: string | null
   returnId?: string | null
+  clothDonationId?: string | null
   courier_service_id: string
   shippingId: string
   isLebelGenerated?: boolean
@@ -1546,6 +1733,7 @@ export type ShipmentUpdateWithoutOriginInput = {
   authOrder?: Prisma.OrderUpdateOneWithoutAuthShipmentNestedInput
   assitentSell?: Prisma.AssistentSellUpdateOneWithoutShipmentNestedInput
   return?: Prisma.ReturnUpdateOneWithoutShipmentNestedInput
+  clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
 }
@@ -1554,6 +1742,7 @@ export type ShipmentUncheckedUpdateWithoutOriginInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clothDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1575,6 +1764,7 @@ export type ShipmentUncheckedUpdateManyWithoutOriginInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clothDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1606,6 +1796,7 @@ export type ShipmentUpdateWithoutDestinationInput = {
   authOrder?: Prisma.OrderUpdateOneWithoutAuthShipmentNestedInput
   assitentSell?: Prisma.AssistentSellUpdateOneWithoutShipmentNestedInput
   return?: Prisma.ReturnUpdateOneWithoutShipmentNestedInput
+  clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
 }
@@ -1614,6 +1805,7 @@ export type ShipmentUncheckedUpdateWithoutDestinationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clothDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1635,6 +1827,7 @@ export type ShipmentUncheckedUpdateManyWithoutDestinationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clothDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   shippingId?: Prisma.StringFieldUpdateOperationsInput | string
   isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1684,6 +1877,7 @@ export type ShipmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   assitentSellId?: boolean
   returnId?: boolean
+  clothDonationId?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
   isLebelGenerated?: boolean
@@ -1701,6 +1895,7 @@ export type ShipmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   authOrder?: boolean | Prisma.Shipment$authOrderArgs<ExtArgs>
   assitentSell?: boolean | Prisma.Shipment$assitentSellArgs<ExtArgs>
   return?: boolean | Prisma.Shipment$returnArgs<ExtArgs>
+  clothDonation?: boolean | Prisma.Shipment$clothDonationArgs<ExtArgs>
   origin?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   events?: boolean | Prisma.Shipment$eventsArgs<ExtArgs>
@@ -1711,6 +1906,7 @@ export type ShipmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   assitentSellId?: boolean
   returnId?: boolean
+  clothDonationId?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
   isLebelGenerated?: boolean
@@ -1726,6 +1922,7 @@ export type ShipmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   updatedAt?: boolean
   assitentSell?: boolean | Prisma.Shipment$assitentSellArgs<ExtArgs>
   return?: boolean | Prisma.Shipment$returnArgs<ExtArgs>
+  clothDonation?: boolean | Prisma.Shipment$clothDonationArgs<ExtArgs>
   origin?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["shipment"]>
@@ -1734,6 +1931,7 @@ export type ShipmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   assitentSellId?: boolean
   returnId?: boolean
+  clothDonationId?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
   isLebelGenerated?: boolean
@@ -1749,6 +1947,7 @@ export type ShipmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   updatedAt?: boolean
   assitentSell?: boolean | Prisma.Shipment$assitentSellArgs<ExtArgs>
   return?: boolean | Prisma.Shipment$returnArgs<ExtArgs>
+  clothDonation?: boolean | Prisma.Shipment$clothDonationArgs<ExtArgs>
   origin?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["shipment"]>
@@ -1757,6 +1956,7 @@ export type ShipmentSelectScalar = {
   id?: boolean
   assitentSellId?: boolean
   returnId?: boolean
+  clothDonationId?: boolean
   courier_service_id?: boolean
   shippingId?: boolean
   isLebelGenerated?: boolean
@@ -1772,12 +1972,13 @@ export type ShipmentSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ShipmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assitentSellId" | "returnId" | "courier_service_id" | "shippingId" | "isLebelGenerated" | "lebelUrl" | "parcelId" | "trackingNumber" | "trackingUrl" | "deliveryCharge" | "originId" | "destinationId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["shipment"]>
+export type ShipmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assitentSellId" | "returnId" | "clothDonationId" | "courier_service_id" | "shippingId" | "isLebelGenerated" | "lebelUrl" | "parcelId" | "trackingNumber" | "trackingUrl" | "deliveryCharge" | "originId" | "destinationId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["shipment"]>
 export type ShipmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.Shipment$orderArgs<ExtArgs>
   authOrder?: boolean | Prisma.Shipment$authOrderArgs<ExtArgs>
   assitentSell?: boolean | Prisma.Shipment$assitentSellArgs<ExtArgs>
   return?: boolean | Prisma.Shipment$returnArgs<ExtArgs>
+  clothDonation?: boolean | Prisma.Shipment$clothDonationArgs<ExtArgs>
   origin?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   events?: boolean | Prisma.Shipment$eventsArgs<ExtArgs>
@@ -1786,12 +1987,14 @@ export type ShipmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type ShipmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   assitentSell?: boolean | Prisma.Shipment$assitentSellArgs<ExtArgs>
   return?: boolean | Prisma.Shipment$returnArgs<ExtArgs>
+  clothDonation?: boolean | Prisma.Shipment$clothDonationArgs<ExtArgs>
   origin?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
 }
 export type ShipmentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   assitentSell?: boolean | Prisma.Shipment$assitentSellArgs<ExtArgs>
   return?: boolean | Prisma.Shipment$returnArgs<ExtArgs>
+  clothDonation?: boolean | Prisma.Shipment$clothDonationArgs<ExtArgs>
   origin?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
 }
@@ -1803,6 +2006,7 @@ export type $ShipmentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     authOrder: Prisma.$OrderPayload<ExtArgs> | null
     assitentSell: Prisma.$AssistentSellPayload<ExtArgs> | null
     return: Prisma.$ReturnPayload<ExtArgs> | null
+    clothDonation: Prisma.$ClothDonationPayload<ExtArgs> | null
     origin: Prisma.$BillingDetailsPayload<ExtArgs>
     destination: Prisma.$BillingDetailsPayload<ExtArgs>
     events: Prisma.$ShipmentEventPayload<ExtArgs>[]
@@ -1811,6 +2015,7 @@ export type $ShipmentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: string
     assitentSellId: string | null
     returnId: string | null
+    clothDonationId: string | null
     courier_service_id: string
     shippingId: string
     isLebelGenerated: boolean
@@ -2222,6 +2427,7 @@ export interface Prisma__ShipmentClient<T, Null = never, ExtArgs extends runtime
   authOrder<T extends Prisma.Shipment$authOrderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shipment$authOrderArgs<ExtArgs>>): Prisma.Prisma__OrderClient<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   assitentSell<T extends Prisma.Shipment$assitentSellArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shipment$assitentSellArgs<ExtArgs>>): Prisma.Prisma__AssistentSellClient<runtime.Types.Result.GetResult<Prisma.$AssistentSellPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   return<T extends Prisma.Shipment$returnArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shipment$returnArgs<ExtArgs>>): Prisma.Prisma__ReturnClient<runtime.Types.Result.GetResult<Prisma.$ReturnPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  clothDonation<T extends Prisma.Shipment$clothDonationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shipment$clothDonationArgs<ExtArgs>>): Prisma.Prisma__ClothDonationClient<runtime.Types.Result.GetResult<Prisma.$ClothDonationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   origin<T extends Prisma.BillingDetailsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillingDetailsDefaultArgs<ExtArgs>>): Prisma.Prisma__BillingDetailsClient<runtime.Types.Result.GetResult<Prisma.$BillingDetailsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   destination<T extends Prisma.BillingDetailsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillingDetailsDefaultArgs<ExtArgs>>): Prisma.Prisma__BillingDetailsClient<runtime.Types.Result.GetResult<Prisma.$BillingDetailsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   events<T extends Prisma.Shipment$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shipment$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShipmentEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2257,6 +2463,7 @@ export interface ShipmentFieldRefs {
   readonly id: Prisma.FieldRef<"Shipment", 'String'>
   readonly assitentSellId: Prisma.FieldRef<"Shipment", 'String'>
   readonly returnId: Prisma.FieldRef<"Shipment", 'String'>
+  readonly clothDonationId: Prisma.FieldRef<"Shipment", 'String'>
   readonly courier_service_id: Prisma.FieldRef<"Shipment", 'String'>
   readonly shippingId: Prisma.FieldRef<"Shipment", 'String'>
   readonly isLebelGenerated: Prisma.FieldRef<"Shipment", 'Boolean'>
@@ -2739,6 +2946,25 @@ export type Shipment$returnArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   include?: Prisma.ReturnInclude<ExtArgs> | null
   where?: Prisma.ReturnWhereInput
+}
+
+/**
+ * Shipment.clothDonation
+ */
+export type Shipment$clothDonationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClothDonation
+   */
+  select?: Prisma.ClothDonationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClothDonation
+   */
+  omit?: Prisma.ClothDonationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClothDonationInclude<ExtArgs> | null
+  where?: Prisma.ClothDonationWhereInput
 }
 
 /**

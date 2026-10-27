@@ -92,6 +92,16 @@ export type ParcelSuggestion = Prisma.ParcelSuggestionModel
  */
 export type DirectDonation = Prisma.DirectDonationModel
 /**
+ * Model ClothDonation
+ * 
+ */
+export type ClothDonation = Prisma.ClothDonationModel
+/**
+ * Model ClothDonationPhoto
+ * 
+ */
+export type ClothDonationPhoto = Prisma.ClothDonationPhotoModel
+/**
  * Model Follow
  * 
  */

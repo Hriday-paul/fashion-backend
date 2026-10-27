@@ -25,6 +25,7 @@ import { shipmentRouter } from './modules/shipment/shipment.rout';
 import { dashboardRouts } from './modules/dashboard/dashboard.rout';
 import { parcelSuggestionRouter } from './modules/parcelSuggestion/parcelSuggestion.rout';
 import { sellCountriesRouter } from './modules/sellCountries/sellCountries.rout';
+import { clothDonationRouts } from './modules/clothDonation/clothDonation.rout';
 
 const router = express.Router();
 
@@ -132,7 +133,11 @@ const moduleRoutes = [
     {
         path: '/sell-countries',
         route: sellCountriesRouter,
-    }
+    },
+    {
+        path: '/cloth-donations',
+        route: clothDonationRouts,
+    },
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.route));

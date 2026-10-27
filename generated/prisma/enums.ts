@@ -64,6 +64,33 @@ export const BadgeType = {
 export type BadgeType = (typeof BadgeType)[keyof typeof BadgeType]
 
 
+export const WashedType = {
+  RECENT_WASHED: 'RECENT_WASHED',
+  WASHED: 'WASHED',
+  UNWASHED: 'UNWASHED'
+} as const
+
+export type WashedType = (typeof WashedType)[keyof typeof WashedType]
+
+
+export const DonationType = {
+  SINGLE: 'SINGLE',
+  MULTIPLE: 'MULTIPLE'
+} as const
+
+export type DonationType = (typeof DonationType)[keyof typeof DonationType]
+
+
+export const ClothDonationStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type ClothDonationStatus = (typeof ClothDonationStatus)[keyof typeof ClothDonationStatus]
+
+
 export const FileMessageType = {
   IMAGE: 'IMAGE',
   DOCUMENT: 'DOCUMENT'

@@ -63,6 +63,8 @@ export const ModelName = {
   Keyword: 'Keyword',
   ParcelSuggestion: 'ParcelSuggestion',
   DirectDonation: 'DirectDonation',
+  ClothDonation: 'ClothDonation',
+  ClothDonationPhoto: 'ClothDonationPhoto',
   Follow: 'Follow',
   Chat: 'Chat',
   Message: 'Message',
@@ -323,6 +325,38 @@ export const DirectDonationScalarFieldEnum = {
 } as const
 
 export type DirectDonationScalarFieldEnum = (typeof DirectDonationScalarFieldEnum)[keyof typeof DirectDonationScalarFieldEnum]
+
+
+export const ClothDonationScalarFieldEnum = {
+  id: 'id',
+  donorId: 'donorId',
+  charityId: 'charityId',
+  donationType: 'donationType',
+  itemsCount: 'itemsCount',
+  itemTypes: 'itemTypes',
+  personTypes: 'personTypes',
+  brands: 'brands',
+  condition: 'condition',
+  washedType: 'washedType',
+  description: 'description',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClothDonationScalarFieldEnum = (typeof ClothDonationScalarFieldEnum)[keyof typeof ClothDonationScalarFieldEnum]
+
+
+export const ClothDonationPhotoScalarFieldEnum = {
+  id: 'id',
+  donationId: 'donationId',
+  url: 'url',
+  key: 'key',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClothDonationPhotoScalarFieldEnum = (typeof ClothDonationPhotoScalarFieldEnum)[keyof typeof ClothDonationPhotoScalarFieldEnum]
 
 
 export const FollowScalarFieldEnum = {
@@ -934,6 +968,7 @@ export const ShipmentScalarFieldEnum = {
   id: 'id',
   assitentSellId: 'assitentSellId',
   returnId: 'returnId',
+  clothDonationId: 'clothDonationId',
   courier_service_id: 'courier_service_id',
   shippingId: 'shippingId',
   isLebelGenerated: 'isLebelGenerated',

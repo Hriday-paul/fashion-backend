@@ -296,6 +296,57 @@ export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
 }
 
+export type EnumDonationTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DonationType | Prisma.EnumDonationTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DonationType[] | Prisma.ListEnumDonationTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DonationType[] | Prisma.ListEnumDonationTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDonationTypeFilter<$PrismaModel> | $Enums.DonationType
+}
+
+export type EnumWashedTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.WashedType | Prisma.EnumWashedTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.WashedType[] | Prisma.ListEnumWashedTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WashedType[] | Prisma.ListEnumWashedTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWashedTypeFilter<$PrismaModel> | $Enums.WashedType
+}
+
+export type EnumClothDonationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ClothDonationStatus | Prisma.EnumClothDonationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ClothDonationStatus[] | Prisma.ListEnumClothDonationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ClothDonationStatus[] | Prisma.ListEnumClothDonationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumClothDonationStatusFilter<$PrismaModel> | $Enums.ClothDonationStatus
+}
+
+export type EnumDonationTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DonationType | Prisma.EnumDonationTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DonationType[] | Prisma.ListEnumDonationTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DonationType[] | Prisma.ListEnumDonationTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDonationTypeWithAggregatesFilter<$PrismaModel> | $Enums.DonationType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDonationTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDonationTypeFilter<$PrismaModel>
+}
+
+export type EnumWashedTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WashedType | Prisma.EnumWashedTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.WashedType[] | Prisma.ListEnumWashedTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WashedType[] | Prisma.ListEnumWashedTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWashedTypeWithAggregatesFilter<$PrismaModel> | $Enums.WashedType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWashedTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWashedTypeFilter<$PrismaModel>
+}
+
+export type EnumClothDonationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ClothDonationStatus | Prisma.EnumClothDonationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ClothDonationStatus[] | Prisma.ListEnumClothDonationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ClothDonationStatus[] | Prisma.ListEnumClothDonationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumClothDonationStatusWithAggregatesFilter<$PrismaModel> | $Enums.ClothDonationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumClothDonationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumClothDonationStatusFilter<$PrismaModel>
+}
+
 export type EnumFileMessageTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.FileMessageType | Prisma.EnumFileMessageTypeFieldRefInput<$PrismaModel>
   in?: $Enums.FileMessageType[] | Prisma.ListEnumFileMessageTypeFieldRefInput<$PrismaModel>
@@ -1106,6 +1157,57 @@ export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumDonationTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DonationType | Prisma.EnumDonationTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DonationType[] | Prisma.ListEnumDonationTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DonationType[] | Prisma.ListEnumDonationTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDonationTypeFilter<$PrismaModel> | $Enums.DonationType
+}
+
+export type NestedEnumWashedTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.WashedType | Prisma.EnumWashedTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.WashedType[] | Prisma.ListEnumWashedTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WashedType[] | Prisma.ListEnumWashedTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWashedTypeFilter<$PrismaModel> | $Enums.WashedType
+}
+
+export type NestedEnumClothDonationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ClothDonationStatus | Prisma.EnumClothDonationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ClothDonationStatus[] | Prisma.ListEnumClothDonationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ClothDonationStatus[] | Prisma.ListEnumClothDonationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumClothDonationStatusFilter<$PrismaModel> | $Enums.ClothDonationStatus
+}
+
+export type NestedEnumDonationTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DonationType | Prisma.EnumDonationTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DonationType[] | Prisma.ListEnumDonationTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DonationType[] | Prisma.ListEnumDonationTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDonationTypeWithAggregatesFilter<$PrismaModel> | $Enums.DonationType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDonationTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDonationTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumWashedTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WashedType | Prisma.EnumWashedTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.WashedType[] | Prisma.ListEnumWashedTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WashedType[] | Prisma.ListEnumWashedTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWashedTypeWithAggregatesFilter<$PrismaModel> | $Enums.WashedType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWashedTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWashedTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumClothDonationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ClothDonationStatus | Prisma.EnumClothDonationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ClothDonationStatus[] | Prisma.ListEnumClothDonationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ClothDonationStatus[] | Prisma.ListEnumClothDonationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumClothDonationStatusWithAggregatesFilter<$PrismaModel> | $Enums.ClothDonationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumClothDonationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumClothDonationStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumFileMessageTypeFilter<$PrismaModel = never> = {

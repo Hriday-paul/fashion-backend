@@ -55,8 +55,8 @@ router.patch(
 );
 
 router.post('/refresh',
-    refreshTokenValidator,
-    req_validator(),
+    // refreshTokenValidator,
+    // req_validator(),
     authController.refreshToken
 )
 

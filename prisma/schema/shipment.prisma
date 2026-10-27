@@ -10,6 +10,9 @@ model Shipment {
     returnId String? @unique
     return   Return? @relation(fields: [returnId], references: [id], onDelete: Cascade)
 
+    clothDonationId String? @unique
+    clothDonation   ClothDonation? @relation(fields: [clothDonationId], references: [id], onDelete: Cascade)
+
     courier_service_id String
     shippingId String
     isLebelGenerated Boolean @default(false)
