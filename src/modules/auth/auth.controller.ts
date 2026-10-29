@@ -6,6 +6,7 @@ import { otpServices } from "../otp/otp.service";
 import catchAsync from "../../utils/catchAsync";
 import prisma from "../../shared/prisma";
 import AppError from "../../error/AppError";
+import { uploadManyToS3 } from "../../utils/s3";
 
 //create user
 const createUser = catchAsync(async (req: Request, res: Response) => {
@@ -133,7 +134,7 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
     //access token from cookie
     const refreshToken = req.cookies["refreshToken"] || req.body?.refreshToken;
 
-    if(!refreshToken){
+    if (!refreshToken) {
         throw new AppError(httpStatus.BAD_REQUEST, "Refresh token is required");
     }
 
@@ -161,6 +162,29 @@ const usernameChacker = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const authFinish = catchAsync(async (req: Request, res: Response) => {
+
+    const files = req.files as Express.Multer.File[];
+
+    const FileAry = files?.map(image => {
+        return {
+            file: image,
+            path: `documents/auth`,
+        };
+    });
+
+    const urls = await uploadManyToS3(FileAry);
+
+    const result = await authService.authFinish({ userId: req?.user?.id, role: req?.user?.role }, req.body, urls);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Authentication finished successfully',
+        data: result,
+    });
+});
+
 export const authController = {
     createUser,
     loginUser,
@@ -171,5 +195,6 @@ export const authController = {
     forgotPassword,
     refreshToken,
     socialLogin,
-    usernameChacker
+    usernameChacker,
+    authFinish,
 }

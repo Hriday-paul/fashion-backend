@@ -714,9 +714,94 @@ const usernameChacker = async (username: string) => {
     return { message: 'Username is available' };
 }
 
+const authFinish = async (user: { userId: string, role: string }, payload: any, documents: { url: string, key: string }[]) => {
+
+    const { userId, role } = user;
+
+    const data = payload;
+
+    const {
+        registrationCountry,
+        officialWebsite
+    } = data;
+
+    switch (role) {
+        case Role.CHARITABLE_ORGANIZATION:
+            await prisma.charitableOrganization.upsert({
+                where: { userId },
+                create: { ...data, userId },
+                update: data,
+            });
+            break;
+
+        case Role.CHARITY_SHOP:
+            await prisma.charityShop.upsert({
+                where: { userId },
+                create: { ...data, userId },
+                update: data,
+            });
+            break;
+
+        case Role.ECO_FRIENDLY_STORE:
+            await prisma.ecoFriendlyStore.upsert({
+                where: { userId },
+                create: { ...data, userId },
+                update: data,
+            });
+            break;
+
+        case Role.CELEBRITY:
+            await prisma.celebrity.upsert({
+                where: { userId },
+                create: { ...data, userId },
+                update: data,
+            });
+            break;
+
+        case Role.AMBASSADOR:
+            await prisma.ambassador.upsert({
+                where: { userId },
+                create: { ...data, userId },
+                update: data,
+            });
+            break;
+
+        case Role.PROFESSIONAL_SELLER:
+            await prisma.professionalSeller.upsert({
+                where: { userId },
+                create: { ...data, userId },
+                update: data,
+            });
+            break;
+
+        default:
+            throw new AppError(httpStatus.BAD_REQUEST, 'Invalid role');
+    }
+
+    if ((documents && documents.length > 0) || registrationCountry || officialWebsite) {
+        await prisma.user.update({
+            where: { id: userId },
+            data: {
+                country: registrationCountry,
+                website: officialWebsite,
+                account_documents: {
+                    deleteMany: {},
+                    createMany: {
+                        data: documents.map((doc) => ({
+                            url: doc.url,
+                            key: doc.key,
+                        }))
+                    }
+                }
+            }
+        });
+    }
+}
+
 
 export const authService = {
     createUser,
+    authFinish,
     loginUser,
     socialSignUp,
     forgotPassword,

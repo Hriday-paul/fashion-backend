@@ -196,6 +196,8 @@ model SellDonation {
     charityId String
     charity   User   @relation(fields: [charityId], references: [id], onDelete: Restrict)
 
+    thanksMessage DonationThanksMSg?
+
     donatedAt DateTime?
 
     @@map("sellItemMoneyDonations")

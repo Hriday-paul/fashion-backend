@@ -257,6 +257,7 @@ export type DirectDonationWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"DirectDonation"> | Date | string
   donor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   charity?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  thanksMsg?: Prisma.XOR<Prisma.DonationThanksMSgNullableScalarRelationFilter, Prisma.DonationThanksMSgWhereInput> | null
   payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
 }
 
@@ -273,6 +274,7 @@ export type DirectDonationOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   donor?: Prisma.UserOrderByWithRelationInput
   charity?: Prisma.UserOrderByWithRelationInput
+  thanksMsg?: Prisma.DonationThanksMSgOrderByWithRelationInput
   payment?: Prisma.PaymentOrderByWithRelationInput
 }
 
@@ -292,6 +294,7 @@ export type DirectDonationWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"DirectDonation"> | Date | string
   donor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   charity?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  thanksMsg?: Prisma.XOR<Prisma.DonationThanksMSgNullableScalarRelationFilter, Prisma.DonationThanksMSgWhereInput> | null
   payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
 }, "id">
 
@@ -340,6 +343,7 @@ export type DirectDonationCreateInput = {
   updatedAt?: Date | string
   donor: Prisma.UserCreateNestedOneWithoutDonationsInput
   charity: Prisma.UserCreateNestedOneWithoutDonationsReceivedInput
+  thanksMsg?: Prisma.DonationThanksMSgCreateNestedOneWithoutDirectDonationInput
   payment?: Prisma.PaymentCreateNestedOneWithoutDonationInput
 }
 
@@ -354,6 +358,7 @@ export type DirectDonationUncheckedCreateInput = {
   donatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedCreateNestedOneWithoutDirectDonationInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutDonationInput
 }
 
@@ -368,6 +373,7 @@ export type DirectDonationUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donor?: Prisma.UserUpdateOneRequiredWithoutDonationsNestedInput
   charity?: Prisma.UserUpdateOneRequiredWithoutDonationsReceivedNestedInput
+  thanksMsg?: Prisma.DonationThanksMSgUpdateOneWithoutDirectDonationNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutDonationNestedInput
 }
 
@@ -382,6 +388,7 @@ export type DirectDonationUncheckedUpdateInput = {
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedUpdateOneWithoutDirectDonationNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutDonationNestedInput
 }
 
@@ -484,6 +491,22 @@ export type DirectDonationOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type DirectDonationCreateNestedOneWithoutThanksMsgInput = {
+  create?: Prisma.XOR<Prisma.DirectDonationCreateWithoutThanksMsgInput, Prisma.DirectDonationUncheckedCreateWithoutThanksMsgInput>
+  connectOrCreate?: Prisma.DirectDonationCreateOrConnectWithoutThanksMsgInput
+  connect?: Prisma.DirectDonationWhereUniqueInput
+}
+
+export type DirectDonationUpdateOneWithoutThanksMsgNestedInput = {
+  create?: Prisma.XOR<Prisma.DirectDonationCreateWithoutThanksMsgInput, Prisma.DirectDonationUncheckedCreateWithoutThanksMsgInput>
+  connectOrCreate?: Prisma.DirectDonationCreateOrConnectWithoutThanksMsgInput
+  upsert?: Prisma.DirectDonationUpsertWithoutThanksMsgInput
+  disconnect?: Prisma.DirectDonationWhereInput | boolean
+  delete?: Prisma.DirectDonationWhereInput | boolean
+  connect?: Prisma.DirectDonationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DirectDonationUpdateToOneWithWhereWithoutThanksMsgInput, Prisma.DirectDonationUpdateWithoutThanksMsgInput>, Prisma.DirectDonationUncheckedUpdateWithoutThanksMsgInput>
+}
+
 export type DirectDonationCreateNestedOneWithoutPaymentInput = {
   create?: Prisma.XOR<Prisma.DirectDonationCreateWithoutPaymentInput, Prisma.DirectDonationUncheckedCreateWithoutPaymentInput>
   connectOrCreate?: Prisma.DirectDonationCreateOrConnectWithoutPaymentInput
@@ -584,6 +607,78 @@ export type DirectDonationUncheckedUpdateManyWithoutCharityNestedInput = {
   deleteMany?: Prisma.DirectDonationScalarWhereInput | Prisma.DirectDonationScalarWhereInput[]
 }
 
+export type DirectDonationCreateWithoutThanksMsgInput = {
+  id?: string
+  amount?: number
+  currency?: string
+  isAnonymous?: boolean
+  message?: string | null
+  donatedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  donor: Prisma.UserCreateNestedOneWithoutDonationsInput
+  charity: Prisma.UserCreateNestedOneWithoutDonationsReceivedInput
+  payment?: Prisma.PaymentCreateNestedOneWithoutDonationInput
+}
+
+export type DirectDonationUncheckedCreateWithoutThanksMsgInput = {
+  id?: string
+  donorId: string
+  charityId: string
+  amount?: number
+  currency?: string
+  isAnonymous?: boolean
+  message?: string | null
+  donatedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutDonationInput
+}
+
+export type DirectDonationCreateOrConnectWithoutThanksMsgInput = {
+  where: Prisma.DirectDonationWhereUniqueInput
+  create: Prisma.XOR<Prisma.DirectDonationCreateWithoutThanksMsgInput, Prisma.DirectDonationUncheckedCreateWithoutThanksMsgInput>
+}
+
+export type DirectDonationUpsertWithoutThanksMsgInput = {
+  update: Prisma.XOR<Prisma.DirectDonationUpdateWithoutThanksMsgInput, Prisma.DirectDonationUncheckedUpdateWithoutThanksMsgInput>
+  create: Prisma.XOR<Prisma.DirectDonationCreateWithoutThanksMsgInput, Prisma.DirectDonationUncheckedCreateWithoutThanksMsgInput>
+  where?: Prisma.DirectDonationWhereInput
+}
+
+export type DirectDonationUpdateToOneWithWhereWithoutThanksMsgInput = {
+  where?: Prisma.DirectDonationWhereInput
+  data: Prisma.XOR<Prisma.DirectDonationUpdateWithoutThanksMsgInput, Prisma.DirectDonationUncheckedUpdateWithoutThanksMsgInput>
+}
+
+export type DirectDonationUpdateWithoutThanksMsgInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donor?: Prisma.UserUpdateOneRequiredWithoutDonationsNestedInput
+  charity?: Prisma.UserUpdateOneRequiredWithoutDonationsReceivedNestedInput
+  payment?: Prisma.PaymentUpdateOneWithoutDonationNestedInput
+}
+
+export type DirectDonationUncheckedUpdateWithoutThanksMsgInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  donorId?: Prisma.StringFieldUpdateOperationsInput | string
+  charityId?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.PaymentUncheckedUpdateOneWithoutDonationNestedInput
+}
+
 export type DirectDonationCreateWithoutPaymentInput = {
   id?: string
   amount?: number
@@ -595,6 +690,7 @@ export type DirectDonationCreateWithoutPaymentInput = {
   updatedAt?: Date | string
   donor: Prisma.UserCreateNestedOneWithoutDonationsInput
   charity: Prisma.UserCreateNestedOneWithoutDonationsReceivedInput
+  thanksMsg?: Prisma.DonationThanksMSgCreateNestedOneWithoutDirectDonationInput
 }
 
 export type DirectDonationUncheckedCreateWithoutPaymentInput = {
@@ -608,6 +704,7 @@ export type DirectDonationUncheckedCreateWithoutPaymentInput = {
   donatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedCreateNestedOneWithoutDirectDonationInput
 }
 
 export type DirectDonationCreateOrConnectWithoutPaymentInput = {
@@ -637,6 +734,7 @@ export type DirectDonationUpdateWithoutPaymentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donor?: Prisma.UserUpdateOneRequiredWithoutDonationsNestedInput
   charity?: Prisma.UserUpdateOneRequiredWithoutDonationsReceivedNestedInput
+  thanksMsg?: Prisma.DonationThanksMSgUpdateOneWithoutDirectDonationNestedInput
 }
 
 export type DirectDonationUncheckedUpdateWithoutPaymentInput = {
@@ -650,6 +748,7 @@ export type DirectDonationUncheckedUpdateWithoutPaymentInput = {
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedUpdateOneWithoutDirectDonationNestedInput
 }
 
 export type DirectDonationCreateWithoutDonorInput = {
@@ -662,6 +761,7 @@ export type DirectDonationCreateWithoutDonorInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   charity: Prisma.UserCreateNestedOneWithoutDonationsReceivedInput
+  thanksMsg?: Prisma.DonationThanksMSgCreateNestedOneWithoutDirectDonationInput
   payment?: Prisma.PaymentCreateNestedOneWithoutDonationInput
 }
 
@@ -675,6 +775,7 @@ export type DirectDonationUncheckedCreateWithoutDonorInput = {
   donatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedCreateNestedOneWithoutDirectDonationInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutDonationInput
 }
 
@@ -698,6 +799,7 @@ export type DirectDonationCreateWithoutCharityInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   donor: Prisma.UserCreateNestedOneWithoutDonationsInput
+  thanksMsg?: Prisma.DonationThanksMSgCreateNestedOneWithoutDirectDonationInput
   payment?: Prisma.PaymentCreateNestedOneWithoutDonationInput
 }
 
@@ -711,6 +813,7 @@ export type DirectDonationUncheckedCreateWithoutCharityInput = {
   donatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedCreateNestedOneWithoutDirectDonationInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutDonationInput
 }
 
@@ -806,6 +909,7 @@ export type DirectDonationUpdateWithoutDonorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charity?: Prisma.UserUpdateOneRequiredWithoutDonationsReceivedNestedInput
+  thanksMsg?: Prisma.DonationThanksMSgUpdateOneWithoutDirectDonationNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutDonationNestedInput
 }
 
@@ -819,6 +923,7 @@ export type DirectDonationUncheckedUpdateWithoutDonorInput = {
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedUpdateOneWithoutDirectDonationNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutDonationNestedInput
 }
 
@@ -844,6 +949,7 @@ export type DirectDonationUpdateWithoutCharityInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donor?: Prisma.UserUpdateOneRequiredWithoutDonationsNestedInput
+  thanksMsg?: Prisma.DonationThanksMSgUpdateOneWithoutDirectDonationNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutDonationNestedInput
 }
 
@@ -857,6 +963,7 @@ export type DirectDonationUncheckedUpdateWithoutCharityInput = {
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedUpdateOneWithoutDirectDonationNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutDonationNestedInput
 }
 
@@ -887,6 +994,7 @@ export type DirectDonationSelect<ExtArgs extends runtime.Types.Extensions.Intern
   updatedAt?: boolean
   donor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  thanksMsg?: boolean | Prisma.DirectDonation$thanksMsgArgs<ExtArgs>
   payment?: boolean | Prisma.DirectDonation$paymentArgs<ExtArgs>
 }, ExtArgs["result"]["directDonation"]>
 
@@ -937,6 +1045,7 @@ export type DirectDonationOmit<ExtArgs extends runtime.Types.Extensions.Internal
 export type DirectDonationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   donor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  thanksMsg?: boolean | Prisma.DirectDonation$thanksMsgArgs<ExtArgs>
   payment?: boolean | Prisma.DirectDonation$paymentArgs<ExtArgs>
 }
 export type DirectDonationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -953,6 +1062,7 @@ export type $DirectDonationPayload<ExtArgs extends runtime.Types.Extensions.Inte
   objects: {
     donor: Prisma.$UserPayload<ExtArgs>
     charity: Prisma.$UserPayload<ExtArgs>
+    thanksMsg: Prisma.$DonationThanksMSgPayload<ExtArgs> | null
     payment: Prisma.$PaymentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1362,6 +1472,7 @@ export interface Prisma__DirectDonationClient<T, Null = never, ExtArgs extends r
   readonly [Symbol.toStringTag]: "PrismaPromise"
   donor<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   charity<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  thanksMsg<T extends Prisma.DirectDonation$thanksMsgArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DirectDonation$thanksMsgArgs<ExtArgs>>): Prisma.Prisma__DonationThanksMSgClient<runtime.Types.Result.GetResult<Prisma.$DonationThanksMSgPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payment<T extends Prisma.DirectDonation$paymentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DirectDonation$paymentArgs<ExtArgs>>): Prisma.Prisma__PaymentClient<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1795,6 +1906,25 @@ export type DirectDonationDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many DirectDonations to delete.
    */
   limit?: number
+}
+
+/**
+ * DirectDonation.thanksMsg
+ */
+export type DirectDonation$thanksMsgArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DonationThanksMSg
+   */
+  select?: Prisma.DonationThanksMSgSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DonationThanksMSg
+   */
+  omit?: Prisma.DonationThanksMSgOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DonationThanksMSgInclude<ExtArgs> | null
+  where?: Prisma.DonationThanksMSgWhereInput
 }
 
 /**

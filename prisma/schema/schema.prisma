@@ -157,6 +157,15 @@ model User {
 
   charityThumbnail           CharityThumbnail?
 
+  donationThanksMsgs DonationThanksMSg[]
+
+  charitableOrganization CharitableOrganization?
+  charityShop            CharityShop?
+  ecoFriendlyStore       EcoFriendlyStore?
+  celebrity              Celebrity?
+  ambassador             Ambassador?
+  professionalSeller     ProfessionalSeller?
+
   @@map("users")
 }
 

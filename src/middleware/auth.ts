@@ -1,5 +1,5 @@
 import httpStatus from 'http-status';
-import jwt from 'jsonwebtoken';
+import jwt, { Secret } from 'jsonwebtoken';
 import { JwtPayload } from 'jsonwebtoken';
 import catchAsync from '../utils/catchAsync';
 import AppError from '../error/AppError';
@@ -42,6 +42,9 @@ const auth = (...userRoles: Role[]) => {
         if (!isUserExist?.auth?.status) {
             throw new AppError(httpStatus.FORBIDDEN, 'Your account is blocked');
         }
+        if (isUserExist?.auth?.approval_status !== "Approved") {
+            throw new AppError(httpStatus.FORBIDDEN, 'Your account is not approved yet');
+        }
 
         if (userRoles && !userRoles.includes(isUserExist?.auth?.role)) {
             throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized');
@@ -49,7 +52,7 @@ const auth = (...userRoles: Role[]) => {
 
         const role = isUserExist?.auth?.role;
 
-        req.user = { id: userId, role, userName: isUserExist?.userName, email : isUserExist?.email };
+        req.user = { id: userId, role, userName: isUserExist?.userName, email: isUserExist?.email };
 
         next();
     });
@@ -91,8 +94,61 @@ export const PublicAuth = () => {
             return next(); // invalid user, but still public — just skip setting req.user
         }
 
-        req.user = { id: userId, role, userName: isUserExist?.userName, email : isUserExist?.email };
+        req.user = { id: userId, role, userName: isUserExist?.userName, email: isUserExist?.email };
 
         return next();
+    });
+};
+
+export const FinishAuth = () => {
+    return catchAsync(async (req, res, next) => {
+        const token = req?.headers?.token?.toString();
+
+        if (!token) {
+            throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+        }
+        let decode;
+
+        try {
+            decode = jwt.verify(
+                token,
+                config.jwt_access_secret as Secret,
+            ) as JwtPayload;
+        } catch (err) {
+            throw new AppError(
+                httpStatus.FORBIDDEN,
+                'Session has expired',
+            );
+        }
+
+        const { userId } = decode;
+
+        if (!userId) {
+            throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+        }
+
+        const isUserExist = await prisma.user.findFirst({ where: { id: userId }, include: { auth: true } });
+
+        if (!isUserExist) {
+            throw new AppError(httpStatus.NOT_FOUND, 'Account does not exist');
+        }
+
+        if (!isUserExist?.auth?.isverified) {
+            throw new AppError(httpStatus.UNAUTHORIZED, 'You are not verifiend');
+        }
+
+        if (isUserExist?.auth?.isDeleted) {
+            throw new AppError(httpStatus.FORBIDDEN, 'Your account is deleted');
+        }
+
+        if (!isUserExist?.auth?.status) {
+            throw new AppError(httpStatus.FORBIDDEN, 'Your account is blocked');
+        }
+
+        const role = isUserExist?.auth?.role;
+
+        req.user = { id: userId, role, userName: isUserExist?.userName, email: isUserExist?.email };
+
+        next();
     });
 };

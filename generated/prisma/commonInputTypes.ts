@@ -347,6 +347,23 @@ export type EnumClothDonationStatusWithAggregatesFilter<$PrismaModel = never> = 
   _max?: Prisma.NestedEnumClothDonationStatusFilter<$PrismaModel>
 }
 
+export type EnumThanksMessageTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ThanksMessageType | Prisma.EnumThanksMessageTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ThanksMessageType[] | Prisma.ListEnumThanksMessageTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ThanksMessageType[] | Prisma.ListEnumThanksMessageTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumThanksMessageTypeFilter<$PrismaModel> | $Enums.ThanksMessageType
+}
+
+export type EnumThanksMessageTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ThanksMessageType | Prisma.EnumThanksMessageTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ThanksMessageType[] | Prisma.ListEnumThanksMessageTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ThanksMessageType[] | Prisma.ListEnumThanksMessageTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumThanksMessageTypeWithAggregatesFilter<$PrismaModel> | $Enums.ThanksMessageType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumThanksMessageTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumThanksMessageTypeFilter<$PrismaModel>
+}
+
 export type EnumFileMessageTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.FileMessageType | Prisma.EnumFileMessageTypeFieldRefInput<$PrismaModel>
   in?: $Enums.FileMessageType[] | Prisma.ListEnumFileMessageTypeFieldRefInput<$PrismaModel>
@@ -1208,6 +1225,23 @@ export type NestedEnumClothDonationStatusWithAggregatesFilter<$PrismaModel = nev
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumClothDonationStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumClothDonationStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumThanksMessageTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ThanksMessageType | Prisma.EnumThanksMessageTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ThanksMessageType[] | Prisma.ListEnumThanksMessageTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ThanksMessageType[] | Prisma.ListEnumThanksMessageTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumThanksMessageTypeFilter<$PrismaModel> | $Enums.ThanksMessageType
+}
+
+export type NestedEnumThanksMessageTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ThanksMessageType | Prisma.EnumThanksMessageTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ThanksMessageType[] | Prisma.ListEnumThanksMessageTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ThanksMessageType[] | Prisma.ListEnumThanksMessageTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumThanksMessageTypeWithAggregatesFilter<$PrismaModel> | $Enums.ThanksMessageType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumThanksMessageTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumThanksMessageTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumFileMessageTypeFilter<$PrismaModel = never> = {

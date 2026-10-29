@@ -244,6 +244,7 @@ export type ClothDonationWhereInput = {
   photos?: Prisma.ClothDonationPhotoListRelationFilter
   donor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   charity?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  thanksMsg?: Prisma.XOR<Prisma.DonationThanksMSgNullableScalarRelationFilter, Prisma.DonationThanksMSgWhereInput> | null
   shipment?: Prisma.XOR<Prisma.ShipmentNullableScalarRelationFilter, Prisma.ShipmentWhereInput> | null
 }
 
@@ -265,6 +266,7 @@ export type ClothDonationOrderByWithRelationInput = {
   photos?: Prisma.ClothDonationPhotoOrderByRelationAggregateInput
   donor?: Prisma.UserOrderByWithRelationInput
   charity?: Prisma.UserOrderByWithRelationInput
+  thanksMsg?: Prisma.DonationThanksMSgOrderByWithRelationInput
   shipment?: Prisma.ShipmentOrderByWithRelationInput
 }
 
@@ -289,6 +291,7 @@ export type ClothDonationWhereUniqueInput = Prisma.AtLeast<{
   photos?: Prisma.ClothDonationPhotoListRelationFilter
   donor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   charity?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  thanksMsg?: Prisma.XOR<Prisma.DonationThanksMSgNullableScalarRelationFilter, Prisma.DonationThanksMSgWhereInput> | null
   shipment?: Prisma.XOR<Prisma.ShipmentNullableScalarRelationFilter, Prisma.ShipmentWhereInput> | null
 }, "id">
 
@@ -348,6 +351,7 @@ export type ClothDonationCreateInput = {
   photos?: Prisma.ClothDonationPhotoCreateNestedManyWithoutDonationInput
   donor: Prisma.UserCreateNestedOneWithoutClothDonateDonorInput
   charity: Prisma.UserCreateNestedOneWithoutClothDonateCharityInput
+  thanksMsg?: Prisma.DonationThanksMSgCreateNestedOneWithoutClothDonationInput
   shipment?: Prisma.ShipmentCreateNestedOneWithoutClothDonationInput
 }
 
@@ -367,6 +371,7 @@ export type ClothDonationUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   photos?: Prisma.ClothDonationPhotoUncheckedCreateNestedManyWithoutDonationInput
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedCreateNestedOneWithoutClothDonationInput
   shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutClothDonationInput
 }
 
@@ -386,6 +391,7 @@ export type ClothDonationUpdateInput = {
   photos?: Prisma.ClothDonationPhotoUpdateManyWithoutDonationNestedInput
   donor?: Prisma.UserUpdateOneRequiredWithoutClothDonateDonorNestedInput
   charity?: Prisma.UserUpdateOneRequiredWithoutClothDonateCharityNestedInput
+  thanksMsg?: Prisma.DonationThanksMSgUpdateOneWithoutClothDonationNestedInput
   shipment?: Prisma.ShipmentUpdateOneWithoutClothDonationNestedInput
 }
 
@@ -405,6 +411,7 @@ export type ClothDonationUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   photos?: Prisma.ClothDonationPhotoUncheckedUpdateManyWithoutDonationNestedInput
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedUpdateOneWithoutClothDonationNestedInput
   shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutClothDonationNestedInput
 }
 
@@ -515,6 +522,11 @@ export type ClothDonationScalarRelationFilter = {
   isNot?: Prisma.ClothDonationWhereInput
 }
 
+export type ClothDonationNullableScalarRelationFilter = {
+  is?: Prisma.ClothDonationWhereInput | null
+  isNot?: Prisma.ClothDonationWhereInput | null
+}
+
 export type ClothDonationListRelationFilter = {
   every?: Prisma.ClothDonationWhereInput
   some?: Prisma.ClothDonationWhereInput
@@ -523,11 +535,6 @@ export type ClothDonationListRelationFilter = {
 
 export type ClothDonationOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type ClothDonationNullableScalarRelationFilter = {
-  is?: Prisma.ClothDonationWhereInput | null
-  isNot?: Prisma.ClothDonationWhereInput | null
 }
 
 export type ClothDonationCreateitemTypesInput = {
@@ -581,6 +588,22 @@ export type ClothDonationUpdateOneRequiredWithoutPhotosNestedInput = {
   upsert?: Prisma.ClothDonationUpsertWithoutPhotosInput
   connect?: Prisma.ClothDonationWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ClothDonationUpdateToOneWithWhereWithoutPhotosInput, Prisma.ClothDonationUpdateWithoutPhotosInput>, Prisma.ClothDonationUncheckedUpdateWithoutPhotosInput>
+}
+
+export type ClothDonationCreateNestedOneWithoutThanksMsgInput = {
+  create?: Prisma.XOR<Prisma.ClothDonationCreateWithoutThanksMsgInput, Prisma.ClothDonationUncheckedCreateWithoutThanksMsgInput>
+  connectOrCreate?: Prisma.ClothDonationCreateOrConnectWithoutThanksMsgInput
+  connect?: Prisma.ClothDonationWhereUniqueInput
+}
+
+export type ClothDonationUpdateOneWithoutThanksMsgNestedInput = {
+  create?: Prisma.XOR<Prisma.ClothDonationCreateWithoutThanksMsgInput, Prisma.ClothDonationUncheckedCreateWithoutThanksMsgInput>
+  connectOrCreate?: Prisma.ClothDonationCreateOrConnectWithoutThanksMsgInput
+  upsert?: Prisma.ClothDonationUpsertWithoutThanksMsgInput
+  disconnect?: Prisma.ClothDonationWhereInput | boolean
+  delete?: Prisma.ClothDonationWhereInput | boolean
+  connect?: Prisma.ClothDonationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClothDonationUpdateToOneWithWhereWithoutThanksMsgInput, Prisma.ClothDonationUpdateWithoutThanksMsgInput>, Prisma.ClothDonationUncheckedUpdateWithoutThanksMsgInput>
 }
 
 export type ClothDonationCreateNestedManyWithoutDonorInput = {
@@ -698,6 +721,7 @@ export type ClothDonationCreateWithoutPhotosInput = {
   updatedAt?: Date | string
   donor: Prisma.UserCreateNestedOneWithoutClothDonateDonorInput
   charity: Prisma.UserCreateNestedOneWithoutClothDonateCharityInput
+  thanksMsg?: Prisma.DonationThanksMSgCreateNestedOneWithoutClothDonationInput
   shipment?: Prisma.ShipmentCreateNestedOneWithoutClothDonationInput
 }
 
@@ -716,6 +740,7 @@ export type ClothDonationUncheckedCreateWithoutPhotosInput = {
   status?: $Enums.ClothDonationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedCreateNestedOneWithoutClothDonationInput
   shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutClothDonationInput
 }
 
@@ -750,6 +775,7 @@ export type ClothDonationUpdateWithoutPhotosInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donor?: Prisma.UserUpdateOneRequiredWithoutClothDonateDonorNestedInput
   charity?: Prisma.UserUpdateOneRequiredWithoutClothDonateCharityNestedInput
+  thanksMsg?: Prisma.DonationThanksMSgUpdateOneWithoutClothDonationNestedInput
   shipment?: Prisma.ShipmentUpdateOneWithoutClothDonationNestedInput
 }
 
@@ -768,6 +794,99 @@ export type ClothDonationUncheckedUpdateWithoutPhotosInput = {
   status?: Prisma.EnumClothDonationStatusFieldUpdateOperationsInput | $Enums.ClothDonationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedUpdateOneWithoutClothDonationNestedInput
+  shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutClothDonationNestedInput
+}
+
+export type ClothDonationCreateWithoutThanksMsgInput = {
+  id?: string
+  donationType: $Enums.DonationType
+  itemsCount?: string | null
+  itemTypes?: Prisma.ClothDonationCreateitemTypesInput | string[]
+  personTypes?: Prisma.ClothDonationCreatepersonTypesInput | string[]
+  brands?: Prisma.ClothDonationCreatebrandsInput | string[]
+  condition: string
+  washedType: $Enums.WashedType
+  description?: string | null
+  status?: $Enums.ClothDonationStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  photos?: Prisma.ClothDonationPhotoCreateNestedManyWithoutDonationInput
+  donor: Prisma.UserCreateNestedOneWithoutClothDonateDonorInput
+  charity: Prisma.UserCreateNestedOneWithoutClothDonateCharityInput
+  shipment?: Prisma.ShipmentCreateNestedOneWithoutClothDonationInput
+}
+
+export type ClothDonationUncheckedCreateWithoutThanksMsgInput = {
+  id?: string
+  donorId: string
+  charityId: string
+  donationType: $Enums.DonationType
+  itemsCount?: string | null
+  itemTypes?: Prisma.ClothDonationCreateitemTypesInput | string[]
+  personTypes?: Prisma.ClothDonationCreatepersonTypesInput | string[]
+  brands?: Prisma.ClothDonationCreatebrandsInput | string[]
+  condition: string
+  washedType: $Enums.WashedType
+  description?: string | null
+  status?: $Enums.ClothDonationStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  photos?: Prisma.ClothDonationPhotoUncheckedCreateNestedManyWithoutDonationInput
+  shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutClothDonationInput
+}
+
+export type ClothDonationCreateOrConnectWithoutThanksMsgInput = {
+  where: Prisma.ClothDonationWhereUniqueInput
+  create: Prisma.XOR<Prisma.ClothDonationCreateWithoutThanksMsgInput, Prisma.ClothDonationUncheckedCreateWithoutThanksMsgInput>
+}
+
+export type ClothDonationUpsertWithoutThanksMsgInput = {
+  update: Prisma.XOR<Prisma.ClothDonationUpdateWithoutThanksMsgInput, Prisma.ClothDonationUncheckedUpdateWithoutThanksMsgInput>
+  create: Prisma.XOR<Prisma.ClothDonationCreateWithoutThanksMsgInput, Prisma.ClothDonationUncheckedCreateWithoutThanksMsgInput>
+  where?: Prisma.ClothDonationWhereInput
+}
+
+export type ClothDonationUpdateToOneWithWhereWithoutThanksMsgInput = {
+  where?: Prisma.ClothDonationWhereInput
+  data: Prisma.XOR<Prisma.ClothDonationUpdateWithoutThanksMsgInput, Prisma.ClothDonationUncheckedUpdateWithoutThanksMsgInput>
+}
+
+export type ClothDonationUpdateWithoutThanksMsgInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  donationType?: Prisma.EnumDonationTypeFieldUpdateOperationsInput | $Enums.DonationType
+  itemsCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemTypes?: Prisma.ClothDonationUpdateitemTypesInput | string[]
+  personTypes?: Prisma.ClothDonationUpdatepersonTypesInput | string[]
+  brands?: Prisma.ClothDonationUpdatebrandsInput | string[]
+  condition?: Prisma.StringFieldUpdateOperationsInput | string
+  washedType?: Prisma.EnumWashedTypeFieldUpdateOperationsInput | $Enums.WashedType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumClothDonationStatusFieldUpdateOperationsInput | $Enums.ClothDonationStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  photos?: Prisma.ClothDonationPhotoUpdateManyWithoutDonationNestedInput
+  donor?: Prisma.UserUpdateOneRequiredWithoutClothDonateDonorNestedInput
+  charity?: Prisma.UserUpdateOneRequiredWithoutClothDonateCharityNestedInput
+  shipment?: Prisma.ShipmentUpdateOneWithoutClothDonationNestedInput
+}
+
+export type ClothDonationUncheckedUpdateWithoutThanksMsgInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  donorId?: Prisma.StringFieldUpdateOperationsInput | string
+  charityId?: Prisma.StringFieldUpdateOperationsInput | string
+  donationType?: Prisma.EnumDonationTypeFieldUpdateOperationsInput | $Enums.DonationType
+  itemsCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemTypes?: Prisma.ClothDonationUpdateitemTypesInput | string[]
+  personTypes?: Prisma.ClothDonationUpdatepersonTypesInput | string[]
+  brands?: Prisma.ClothDonationUpdatebrandsInput | string[]
+  condition?: Prisma.StringFieldUpdateOperationsInput | string
+  washedType?: Prisma.EnumWashedTypeFieldUpdateOperationsInput | $Enums.WashedType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumClothDonationStatusFieldUpdateOperationsInput | $Enums.ClothDonationStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  photos?: Prisma.ClothDonationPhotoUncheckedUpdateManyWithoutDonationNestedInput
   shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutClothDonationNestedInput
 }
 
@@ -786,6 +905,7 @@ export type ClothDonationCreateWithoutDonorInput = {
   updatedAt?: Date | string
   photos?: Prisma.ClothDonationPhotoCreateNestedManyWithoutDonationInput
   charity: Prisma.UserCreateNestedOneWithoutClothDonateCharityInput
+  thanksMsg?: Prisma.DonationThanksMSgCreateNestedOneWithoutClothDonationInput
   shipment?: Prisma.ShipmentCreateNestedOneWithoutClothDonationInput
 }
 
@@ -804,6 +924,7 @@ export type ClothDonationUncheckedCreateWithoutDonorInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   photos?: Prisma.ClothDonationPhotoUncheckedCreateNestedManyWithoutDonationInput
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedCreateNestedOneWithoutClothDonationInput
   shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutClothDonationInput
 }
 
@@ -832,6 +953,7 @@ export type ClothDonationCreateWithoutCharityInput = {
   updatedAt?: Date | string
   photos?: Prisma.ClothDonationPhotoCreateNestedManyWithoutDonationInput
   donor: Prisma.UserCreateNestedOneWithoutClothDonateDonorInput
+  thanksMsg?: Prisma.DonationThanksMSgCreateNestedOneWithoutClothDonationInput
   shipment?: Prisma.ShipmentCreateNestedOneWithoutClothDonationInput
 }
 
@@ -850,6 +972,7 @@ export type ClothDonationUncheckedCreateWithoutCharityInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   photos?: Prisma.ClothDonationPhotoUncheckedCreateNestedManyWithoutDonationInput
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedCreateNestedOneWithoutClothDonationInput
   shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutClothDonationInput
 }
 
@@ -931,6 +1054,7 @@ export type ClothDonationCreateWithoutShipmentInput = {
   photos?: Prisma.ClothDonationPhotoCreateNestedManyWithoutDonationInput
   donor: Prisma.UserCreateNestedOneWithoutClothDonateDonorInput
   charity: Prisma.UserCreateNestedOneWithoutClothDonateCharityInput
+  thanksMsg?: Prisma.DonationThanksMSgCreateNestedOneWithoutClothDonationInput
 }
 
 export type ClothDonationUncheckedCreateWithoutShipmentInput = {
@@ -949,6 +1073,7 @@ export type ClothDonationUncheckedCreateWithoutShipmentInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   photos?: Prisma.ClothDonationPhotoUncheckedCreateNestedManyWithoutDonationInput
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedCreateNestedOneWithoutClothDonationInput
 }
 
 export type ClothDonationCreateOrConnectWithoutShipmentInput = {
@@ -983,6 +1108,7 @@ export type ClothDonationUpdateWithoutShipmentInput = {
   photos?: Prisma.ClothDonationPhotoUpdateManyWithoutDonationNestedInput
   donor?: Prisma.UserUpdateOneRequiredWithoutClothDonateDonorNestedInput
   charity?: Prisma.UserUpdateOneRequiredWithoutClothDonateCharityNestedInput
+  thanksMsg?: Prisma.DonationThanksMSgUpdateOneWithoutClothDonationNestedInput
 }
 
 export type ClothDonationUncheckedUpdateWithoutShipmentInput = {
@@ -1001,6 +1127,7 @@ export type ClothDonationUncheckedUpdateWithoutShipmentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   photos?: Prisma.ClothDonationPhotoUncheckedUpdateManyWithoutDonationNestedInput
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedUpdateOneWithoutClothDonationNestedInput
 }
 
 export type ClothDonationCreateManyDonorInput = {
@@ -1050,6 +1177,7 @@ export type ClothDonationUpdateWithoutDonorInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   photos?: Prisma.ClothDonationPhotoUpdateManyWithoutDonationNestedInput
   charity?: Prisma.UserUpdateOneRequiredWithoutClothDonateCharityNestedInput
+  thanksMsg?: Prisma.DonationThanksMSgUpdateOneWithoutClothDonationNestedInput
   shipment?: Prisma.ShipmentUpdateOneWithoutClothDonationNestedInput
 }
 
@@ -1068,6 +1196,7 @@ export type ClothDonationUncheckedUpdateWithoutDonorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   photos?: Prisma.ClothDonationPhotoUncheckedUpdateManyWithoutDonationNestedInput
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedUpdateOneWithoutClothDonationNestedInput
   shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutClothDonationNestedInput
 }
 
@@ -1102,6 +1231,7 @@ export type ClothDonationUpdateWithoutCharityInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   photos?: Prisma.ClothDonationPhotoUpdateManyWithoutDonationNestedInput
   donor?: Prisma.UserUpdateOneRequiredWithoutClothDonateDonorNestedInput
+  thanksMsg?: Prisma.DonationThanksMSgUpdateOneWithoutClothDonationNestedInput
   shipment?: Prisma.ShipmentUpdateOneWithoutClothDonationNestedInput
 }
 
@@ -1120,6 +1250,7 @@ export type ClothDonationUncheckedUpdateWithoutCharityInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   photos?: Prisma.ClothDonationPhotoUncheckedUpdateManyWithoutDonationNestedInput
+  thanksMsg?: Prisma.DonationThanksMSgUncheckedUpdateOneWithoutClothDonationNestedInput
   shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutClothDonationNestedInput
 }
 
@@ -1188,6 +1319,7 @@ export type ClothDonationSelect<ExtArgs extends runtime.Types.Extensions.Interna
   photos?: boolean | Prisma.ClothDonation$photosArgs<ExtArgs>
   donor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  thanksMsg?: boolean | Prisma.ClothDonation$thanksMsgArgs<ExtArgs>
   shipment?: boolean | Prisma.ClothDonation$shipmentArgs<ExtArgs>
   _count?: boolean | Prisma.ClothDonationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["clothDonation"]>
@@ -1252,6 +1384,7 @@ export type ClothDonationInclude<ExtArgs extends runtime.Types.Extensions.Intern
   photos?: boolean | Prisma.ClothDonation$photosArgs<ExtArgs>
   donor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  thanksMsg?: boolean | Prisma.ClothDonation$thanksMsgArgs<ExtArgs>
   shipment?: boolean | Prisma.ClothDonation$shipmentArgs<ExtArgs>
   _count?: boolean | Prisma.ClothDonationCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1270,6 +1403,7 @@ export type $ClothDonationPayload<ExtArgs extends runtime.Types.Extensions.Inter
     photos: Prisma.$ClothDonationPhotoPayload<ExtArgs>[]
     donor: Prisma.$UserPayload<ExtArgs>
     charity: Prisma.$UserPayload<ExtArgs>
+    thanksMsg: Prisma.$DonationThanksMSgPayload<ExtArgs> | null
     shipment: Prisma.$ShipmentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1684,6 +1818,7 @@ export interface Prisma__ClothDonationClient<T, Null = never, ExtArgs extends ru
   photos<T extends Prisma.ClothDonation$photosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClothDonation$photosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClothDonationPhotoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   donor<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   charity<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  thanksMsg<T extends Prisma.ClothDonation$thanksMsgArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClothDonation$thanksMsgArgs<ExtArgs>>): Prisma.Prisma__DonationThanksMSgClient<runtime.Types.Result.GetResult<Prisma.$DonationThanksMSgPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   shipment<T extends Prisma.ClothDonation$shipmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClothDonation$shipmentArgs<ExtArgs>>): Prisma.Prisma__ShipmentClient<runtime.Types.Result.GetResult<Prisma.$ShipmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2145,6 +2280,25 @@ export type ClothDonation$photosArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.ClothDonationPhotoScalarFieldEnum | Prisma.ClothDonationPhotoScalarFieldEnum[]
+}
+
+/**
+ * ClothDonation.thanksMsg
+ */
+export type ClothDonation$thanksMsgArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DonationThanksMSg
+   */
+  select?: Prisma.DonationThanksMSgSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DonationThanksMSg
+   */
+  omit?: Prisma.DonationThanksMSgOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DonationThanksMSgInclude<ExtArgs> | null
+  where?: Prisma.DonationThanksMSgWhereInput
 }
 
 /**

@@ -1,5 +1,7 @@
-import { body } from 'express-validator';
+import { body, type Meta } from "express-validator";
 import { parsePhoneNumberFromString } from 'libphonenumber-js'
+import { Role } from '../../../generated/prisma/enums';
+import { allRoles } from "../user/user.rout";
 
 export const createAccountValidator = [
     body('fname').trim().not().isEmpty().withMessage('First name is required').isString().withMessage('First name should be string').isLength({ min: 1 }).withMessage('First name min length is 1'),
@@ -80,3 +82,109 @@ export const changePasswordValidator = [
 export const userNameCheckerValidator = [
     body('userName').trim().not().isEmpty().withMessage('Username is required').isString().withMessage('Username should be string').isLength({ min: 1 }).withMessage('Username min length is 1'),
 ]
+
+const forRole = (role: Role) =>(_value: unknown, { req }: Meta) =>
+    req.user?.role === role;
+
+const requiredString = (field: string, role: Role) =>
+  body(`${field}`)
+    .if(forRole(role))
+    .isString()
+    .withMessage(`${field} must be a string`)
+    .bail()
+    .trim()
+    .notEmpty()
+    .withMessage(`${field} is required`)
+    .bail()
+    .isLength({ max: 255 })
+    .withMessage(`${field} must not exceed 255 characters`);
+
+const optionalString = (field: string, role: Role) =>
+  body(`${field}`)
+    .if(forRole(role))
+    .optional({ values: "null" })
+    .isString()
+    .withMessage(`${field} must be a string`)
+    .bail()
+    .trim()
+    .isLength({ max: 255 })
+    .withMessage(`${field} must not exceed 255 characters`);
+
+export const roleVerificationValidator = [
+
+  // INDIVIDUAL_USER
+  optionalString("dateOfBirth", Role.INDIVIDUAL_USER),
+  optionalString("identityType", Role.INDIVIDUAL_USER),
+  optionalString("identityCountry", Role.INDIVIDUAL_USER),
+  optionalString("identityNumber", Role.INDIVIDUAL_USER),
+  optionalString("identityDocumentKey", Role.INDIVIDUAL_USER),
+  optionalString("identityBackKey", Role.INDIVIDUAL_USER),
+
+  // CHARITABLE_ORGANIZATION
+  requiredString("legalName", Role.CHARITABLE_ORGANIZATION),
+  requiredString("registrationCountry", Role.CHARITABLE_ORGANIZATION),
+  requiredString("authorizedPersonName", Role.CHARITABLE_ORGANIZATION),
+  requiredString("authorizedPersonRole", Role.CHARITABLE_ORGANIZATION),
+  optionalString("registrationNumber", Role.CHARITABLE_ORGANIZATION),
+  optionalString("registeredAddress", Role.CHARITABLE_ORGANIZATION),
+  optionalString("registrationDocumentKey", Role.CHARITABLE_ORGANIZATION),
+  optionalString("authorizationDocumentKey", Role.CHARITABLE_ORGANIZATION),
+
+  // CHARITY_SHOP
+  requiredString("shopName", Role.CHARITY_SHOP),
+  requiredString("operatorType", Role.CHARITY_SHOP),
+  optionalString("legalBusinessName", Role.CHARITY_SHOP),
+  optionalString("businessRegistrationNumber", Role.CHARITY_SHOP),
+  optionalString("registrationCountry", Role.CHARITY_SHOP),
+  optionalString("charityRegistrationNumber", Role.CHARITY_SHOP),
+  optionalString("charityRelationship", Role.CHARITY_SHOP),
+  optionalString("authorizationDocumentKey", Role.CHARITY_SHOP),
+  optionalString("registrationDocumentKey", Role.CHARITY_SHOP),
+
+  // ECO_FRIENDLY_STORE
+  requiredString("storeName", Role.ECO_FRIENDLY_STORE),
+  requiredString("sustainabilityDescription", Role.ECO_FRIENDLY_STORE),
+  optionalString("legalBusinessName", Role.ECO_FRIENDLY_STORE),
+  optionalString("businessRegistrationNumber", Role.ECO_FRIENDLY_STORE),
+  optionalString("registrationCountry", Role.ECO_FRIENDLY_STORE),
+  optionalString("certificationName", Role.ECO_FRIENDLY_STORE),
+  optionalString("certificationIssuer", Role.ECO_FRIENDLY_STORE),
+  optionalString("certificationNumber", Role.ECO_FRIENDLY_STORE),
+  optionalString("certificationDocumentKey", Role.ECO_FRIENDLY_STORE),
+
+  // CELEBRITY
+  requiredString("legalName", Role.CELEBRITY),
+  requiredString("publicName", Role.CELEBRITY),
+  optionalString("profession", Role.CELEBRITY),
+  optionalString("officialWebsite", Role.CELEBRITY),
+  optionalString("identityDocumentKey", Role.CELEBRITY),
+  optionalString("publicIdentityEvidenceKey", Role.CELEBRITY),
+
+  body("officialProfileUrls")
+    .if(forRole(Role.CELEBRITY))
+    .optional()
+    .isArray({ max: 10 })
+    .withMessage("officialProfileUrls must be an array of up to 10 URLs"),
+
+  body("officialProfileUrls.*")
+    .if(forRole(Role.CELEBRITY))
+    .isURL({ require_protocol: true })
+    .withMessage("Each profile URL must be a valid URL"),
+
+  // AMBASSADOR
+  requiredString("ambassadorType", Role.AMBASSADOR),
+  optionalString("representedBrand", Role.AMBASSADOR),
+  optionalString("representedOrganization", Role.AMBASSADOR),
+  optionalString("authorizationDocumentKey", Role.AMBASSADOR),
+  optionalString("agreementVersion", Role.AMBASSADOR),
+
+  // PROFESSIONAL_SELLER
+  requiredString("legalBusinessName", Role.PROFESSIONAL_SELLER),
+  requiredString("businessType", Role.PROFESSIONAL_SELLER),
+  requiredString("registrationCountry", Role.PROFESSIONAL_SELLER),
+  optionalString("tradingName", Role.PROFESSIONAL_SELLER),
+  optionalString("businessRegistrationNumber", Role.PROFESSIONAL_SELLER),
+  optionalString("registeredAddress", Role.PROFESSIONAL_SELLER),
+  optionalString("registrationDocumentKey", Role.PROFESSIONAL_SELLER),
+  optionalString("taxIdentificationNumber", Role.PROFESSIONAL_SELLER),
+];

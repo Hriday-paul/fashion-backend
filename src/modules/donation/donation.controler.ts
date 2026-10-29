@@ -20,6 +20,8 @@ const memberDonationStats = catchAsync(async (req: Request, res: Response) => {
         data: result,
     });
 });
+
+//sell donation by userName
 const selldonations = catchAsync(async (req: Request, res: Response) => {
 
     const result = await donationService.selldonations(req.params.username);
@@ -32,6 +34,25 @@ const selldonations = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+//sell donation by user id
+const sellDonationContributed = catchAsync(async (req: Request, res: Response) => {
+
+    const user = await userService.getUserById(req.user?.id);
+
+    if (!user.userName) {
+        throw new AppError(httpStatus.NOT_FOUND, "User Does not exist");
+    }
+
+    const result = await donationService.selldonations(user?.userName);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Sell Donations retrived successfully',
+        data: result,
+    });
+})
+
 const directMoneyDonations = catchAsync(async (req: Request, res: Response) => {
 
     const result = await donationService.directMoneyDonations(req.params.username);
@@ -43,6 +64,38 @@ const directMoneyDonations = catchAsync(async (req: Request, res: Response) => {
         data: result,
     });
 });
+
+//sell donation by user id
+const directDonationContributed = catchAsync(async (req: Request, res: Response) => {
+
+    const user = await userService.getUserById(req.user?.id);
+
+    if (!user.userName) {
+        throw new AppError(httpStatus.NOT_FOUND, "User Does not exist");
+    }
+
+    const result = await donationService.directMoneyDonations(user?.userName);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Direct Donations retrived successfully',
+        data: result,
+    });
+})
+
+
+const contributionStats = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await donationService.contributionStats(req?.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Contribution Stats retrived successfully',
+        data: result,
+    });
+})
 
 const purchaseDonationsContribute = catchAsync(async (req: Request, res: Response) => {
 
@@ -115,6 +168,20 @@ const sellDonationsRaised = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const mySellDonationsRaised = catchAsync(async (req: Request, res: Response) => {
+
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await paymentsService.donationRaisedFromSell(options, req?.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Sell Donations Raised retrived successfully',
+        data: result,
+    });
+});
+
 const directDonationRaised = catchAsync(async (req: Request, res: Response) => {
 
     const user = await userService.getuserIdByUserName(req.params.userName);
@@ -138,6 +205,20 @@ const directDonationRaised = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const mydirectDonationRaised = catchAsync(async (req: Request, res: Response) => {
+
+    const options = pick(req.query, PaginateOptions);
+
+    const result = await paymentsService.directDonationRaised(options, req?.user?.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Direct Donations Raised retrived successfully',
+        data: result,
+    });
+});
+
 const extraDonationsRaised = catchAsync(async (req: Request, res: Response) => {
 
     const options = pick(req.query, PaginateOptions);
@@ -151,9 +232,47 @@ const extraDonationsRaised = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const myExtraDonationsRaised = catchAsync(async (req: Request, res: Response) => {
+
+    const user = await userService.getUserById(req.user?.id);
+
+    if (!user.userName) {
+        throw new AppError(httpStatus.NOT_FOUND, "User Does not exist");
+    }
+
+    const options = pick(req.query, PaginateOptions);
+    const result = await donationService.extraDonationsRaised(options, user?.userName);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Extra Donations Raised retrived successfully',
+        data: result,
+    });
+});
+
+const sendThanksMessage = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await donationService.sendThanksMessage(req.user?.id, req.body);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Thanks message sent successfully',
+        data: result,
+    });
+});
+
 export const donationControler = {
+    myExtraDonationsRaised,
+    mydirectDonationRaised,
+    mySellDonationsRaised,
+
+    contributionStats,
     memberDonationStats,
     selldonations,
+    sellDonationContributed,
+    directDonationContributed,
     directMoneyDonations,
     purchaseDonationsContribute,
     treeDonations,
@@ -161,5 +280,6 @@ export const donationControler = {
     charityStats,
     sellDonationsRaised,
     directDonationRaised,
-    extraDonationsRaised
+    extraDonationsRaised,
+    sendThanksMessage
 }

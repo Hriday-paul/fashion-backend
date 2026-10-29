@@ -65,6 +65,7 @@ export const ModelName = {
   DirectDonation: 'DirectDonation',
   ClothDonation: 'ClothDonation',
   ClothDonationPhoto: 'ClothDonationPhoto',
+  DonationThanksMSg: 'DonationThanksMSg',
   Follow: 'Follow',
   Chat: 'Chat',
   Message: 'Message',
@@ -93,6 +94,12 @@ export const ModelName = {
   ReturnItem: 'ReturnItem',
   ReturnEvidence: 'ReturnEvidence',
   Rating: 'Rating',
+  CharitableOrganization: 'CharitableOrganization',
+  CharityShop: 'CharityShop',
+  EcoFriendlyStore: 'EcoFriendlyStore',
+  Celebrity: 'Celebrity',
+  Ambassador: 'Ambassador',
+  ProfessionalSeller: 'ProfessionalSeller',
   Auth: 'Auth',
   User: 'User',
   CharityGallery: 'CharityGallery',
@@ -357,6 +364,21 @@ export const ClothDonationPhotoScalarFieldEnum = {
 } as const
 
 export type ClothDonationPhotoScalarFieldEnum = (typeof ClothDonationPhotoScalarFieldEnum)[keyof typeof ClothDonationPhotoScalarFieldEnum]
+
+
+export const DonationThanksMSgScalarFieldEnum = {
+  id: 'id',
+  donorId: 'donorId',
+  sellDonationId: 'sellDonationId',
+  directDonationId: 'directDonationId',
+  clothDonationId: 'clothDonationId',
+  message: 'message',
+  msgType: 'msgType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DonationThanksMSgScalarFieldEnum = (typeof DonationThanksMSgScalarFieldEnum)[keyof typeof DonationThanksMSgScalarFieldEnum]
 
 
 export const FollowScalarFieldEnum = {
@@ -798,6 +820,101 @@ export const RatingScalarFieldEnum = {
 } as const
 
 export type RatingScalarFieldEnum = (typeof RatingScalarFieldEnum)[keyof typeof RatingScalarFieldEnum]
+
+
+export const CharitableOrganizationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  legalName: 'legalName',
+  registrationNumber: 'registrationNumber',
+  registrationCountry: 'registrationCountry',
+  registeredAddress: 'registeredAddress',
+  authorizedPersonName: 'authorizedPersonName',
+  authorizedPersonRole: 'authorizedPersonRole',
+  registrationDocumentKey: 'registrationDocumentKey',
+  authorizationDocumentKey: 'authorizationDocumentKey'
+} as const
+
+export type CharitableOrganizationScalarFieldEnum = (typeof CharitableOrganizationScalarFieldEnum)[keyof typeof CharitableOrganizationScalarFieldEnum]
+
+
+export const CharityShopScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  shopName: 'shopName',
+  operatorType: 'operatorType',
+  legalBusinessName: 'legalBusinessName',
+  businessRegistrationNumber: 'businessRegistrationNumber',
+  registrationCountry: 'registrationCountry',
+  charityRegistrationNumber: 'charityRegistrationNumber',
+  charityRelationship: 'charityRelationship',
+  authorizationDocumentKey: 'authorizationDocumentKey',
+  registrationDocumentKey: 'registrationDocumentKey'
+} as const
+
+export type CharityShopScalarFieldEnum = (typeof CharityShopScalarFieldEnum)[keyof typeof CharityShopScalarFieldEnum]
+
+
+export const EcoFriendlyStoreScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  storeName: 'storeName',
+  legalBusinessName: 'legalBusinessName',
+  businessRegistrationNumber: 'businessRegistrationNumber',
+  registrationCountry: 'registrationCountry',
+  sustainabilityDescription: 'sustainabilityDescription',
+  certificationName: 'certificationName',
+  certificationIssuer: 'certificationIssuer',
+  certificationNumber: 'certificationNumber',
+  certificationDocumentKey: 'certificationDocumentKey'
+} as const
+
+export type EcoFriendlyStoreScalarFieldEnum = (typeof EcoFriendlyStoreScalarFieldEnum)[keyof typeof EcoFriendlyStoreScalarFieldEnum]
+
+
+export const CelebrityScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  legalName: 'legalName',
+  publicName: 'publicName',
+  profession: 'profession',
+  officialWebsite: 'officialWebsite',
+  officialProfileUrls: 'officialProfileUrls',
+  identityDocumentKey: 'identityDocumentKey',
+  publicIdentityEvidenceKey: 'publicIdentityEvidenceKey'
+} as const
+
+export type CelebrityScalarFieldEnum = (typeof CelebrityScalarFieldEnum)[keyof typeof CelebrityScalarFieldEnum]
+
+
+export const AmbassadorScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  ambassadorType: 'ambassadorType',
+  representedBrand: 'representedBrand',
+  representedOrganization: 'representedOrganization',
+  authorizationDocumentKey: 'authorizationDocumentKey',
+  agreementVersion: 'agreementVersion',
+  agreementAcceptedAt: 'agreementAcceptedAt'
+} as const
+
+export type AmbassadorScalarFieldEnum = (typeof AmbassadorScalarFieldEnum)[keyof typeof AmbassadorScalarFieldEnum]
+
+
+export const ProfessionalSellerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  legalBusinessName: 'legalBusinessName',
+  tradingName: 'tradingName',
+  businessType: 'businessType',
+  businessRegistrationNumber: 'businessRegistrationNumber',
+  registrationCountry: 'registrationCountry',
+  registeredAddress: 'registeredAddress',
+  registrationDocumentKey: 'registrationDocumentKey',
+  taxIdentificationNumber: 'taxIdentificationNumber'
+} as const
+
+export type ProfessionalSellerScalarFieldEnum = (typeof ProfessionalSellerScalarFieldEnum)[keyof typeof ProfessionalSellerScalarFieldEnum]
 
 
 export const AuthScalarFieldEnum = {

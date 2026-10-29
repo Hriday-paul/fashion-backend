@@ -10,6 +10,8 @@ model DirectDonation {
   amount   Float @default(0)
   currency String  @default("USD")
 
+  thanksMsg DonationThanksMSg?
+
   payment Payment?
 
   // anonymous donation
@@ -59,6 +61,8 @@ model ClothDonation {
 
   status        ClothDonationStatus @default(PENDING)
 
+  thanksMsg DonationThanksMSg?
+
   shipment Shipment?
 
   createdAt     DateTime              @default(now())
@@ -85,4 +89,37 @@ model ClothDonationPhoto{
   updatedAt     DateTime              @updatedAt
 
   @@index([donationId])
+}
+
+enum ThanksMessageType {
+  SELL
+  DIRECT
+  CLOTH
+}
+
+model DonationThanksMSg{
+  id            String                @id @default(uuid())
+  donorId       String
+  donor         User                  @relation(fields: [donorId], references: [id], onDelete: Cascade)
+
+  sellDonationId String? @unique
+  sellDonation   SellDonation? @relation(fields: [sellDonationId], references: [id], onDelete: Cascade)
+
+  directDonationId String? @unique
+  directDonation   DirectDonation? @relation(fields: [directDonationId], references: [id], onDelete: Cascade)
+
+  clothDonationId String? @unique
+  clothDonation   ClothDonation? @relation(fields: [clothDonationId], references: [id], onDelete: Cascade)
+
+  message   String
+
+  msgType ThanksMessageType
+
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt @default(now())
+
+  @@index([donorId])
+  @@index([sellDonationId])
+  @@index([directDonationId])
+  @@index([clothDonationId])
 }

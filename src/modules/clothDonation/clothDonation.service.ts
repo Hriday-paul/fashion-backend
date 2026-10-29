@@ -38,6 +38,7 @@ const donorCharitySelect = {
             picture: true,
         }
     },
+    thanksMsg : true,
     shipment: true
 };
 
@@ -242,9 +243,6 @@ const getDonationsAsCharity = async (
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const validSortFields = ["id", "condition", "status", "donationType", "washedType"];
-    const resolvedSortBy = validSortFields.includes(sortBy) ? sortBy : "id";
-
     const whereConditions: Prisma.ClothDonationWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
 
     const [result, total] = await Promise.all([
@@ -253,7 +251,7 @@ const getDonationsAsCharity = async (
             skip,
             take: limit,
             orderBy: {
-                [resolvedSortBy]: sortOrder,
+                [sortBy]: sortOrder,
             },
             include: donorCharitySelect
         }),

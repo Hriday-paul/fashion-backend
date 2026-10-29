@@ -1,3 +1,4 @@
+import { ThanksMessageType } from "../../../generated/prisma/enums";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import prisma from "../../shared/prisma"
@@ -18,7 +19,8 @@ const directMoneyDonations = async (userName: string) => {
             donatedAt: "desc"
         },
         include: {
-            charity: { include: { picture: true } }
+            charity: { include: { picture: true, charityThumbnail: true } },
+            thanksMsg: true
         }
     });
 
@@ -122,7 +124,8 @@ const selldonations = async (userName: string) => {
             donatedAt: "desc"
         },
         include: {
-            charity: { include: { picture: true } },
+            charity: { include: { picture: true, charityThumbnail: true } },
+            thanksMessage: true,
             orderItem: {
                 include: {
                     product: {
@@ -153,6 +156,35 @@ const selldonations = async (userName: string) => {
     return sellDonations;
 }
 
+const contributionStats = async (userId: string) => {
+
+    const totalSellDonation = await prisma.sellDonation.aggregate({
+        where: {
+            status: "PAID",
+            orderItem: {
+                order: {
+                    buyerId: userId
+                }
+            }
+        }, _sum: { amount: true }
+    });
+
+    const totalDirectDonation = await prisma.directDonation.aggregate({
+        where: {
+            payment: {
+                status: "SUCCESSED"
+            },
+            donorId: userId
+        }, _sum: { amount: true }
+    });
+
+    return {
+        totalSellDonationAmount: totalSellDonation?._sum?.amount || 0,
+        totalDirectDonationAmount: totalDirectDonation?._sum?.amount || 0,
+    }
+
+}
+
 const purchaseDonationsContribute = async (userName: string) => {
 
     const user = await prisma.user.findFirst({ where: { userName } });
@@ -181,6 +213,7 @@ const purchaseDonationsContribute = async (userName: string) => {
         },
         include: {
             charity: { include: { picture: true } },
+            thanksMessage: true,
             orderItem: {
                 include: {
                     product: {
@@ -425,6 +458,9 @@ const extraDonationsRaised = async (options: TPaginationOptions, userName: strin
         orderBy: {
             [sortBy]: sortOrder,
         },
+        include: {
+            thanksMessage: true,
+        }
     });
 
     const total = await prisma.sellDonation.count({
@@ -446,13 +482,45 @@ const extraDonationsRaised = async (options: TPaginationOptions, userName: strin
     };
 }
 
+const sendThanksMessage = async (userId: string, payload: { message: string, referenceId: string, msgType: ThanksMessageType }) => {
+
+    const { msgType, referenceId, message } = payload;
+
+    const refId = msgType === ThanksMessageType.SELL ? { sellDonationId: referenceId } : msgType === ThanksMessageType.DIRECT ? { directDonationId: referenceId } : msgType === ThanksMessageType.CLOTH ? { clothDonationId: referenceId } : {};
+
+    //check existing thanks message for the same referenceId and msgType
+    const existingThanksMessage = await prisma.donationThanksMSg.findFirst({
+        where: {
+            ...refId,
+            msgType: msgType,
+        }
+    });
+
+    if (existingThanksMessage) {
+        throw new AppError(httpstatus.BAD_REQUEST, "Msg already sent for this donation");
+    }
+
+    const thanksMessage = await prisma.donationThanksMSg.create({
+        data: {
+            donorId: userId,
+            message: message,
+            ...refId,
+            msgType: msgType,
+        }
+    });
+
+    return thanksMessage;
+}
+
 export const donationService = {
     memberDonationStats,
+    contributionStats,
     selldonations,
     purchaseDonationsContribute,
     treeDonations,
     directMoneyDonations,
     sellerCharitySupportStats,
     charityStats,
-    extraDonationsRaised
+    extraDonationsRaised,
+    sendThanksMessage
 }

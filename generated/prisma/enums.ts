@@ -91,6 +91,15 @@ export const ClothDonationStatus = {
 export type ClothDonationStatus = (typeof ClothDonationStatus)[keyof typeof ClothDonationStatus]
 
 
+export const ThanksMessageType = {
+  SELL: 'SELL',
+  DIRECT: 'DIRECT',
+  CLOTH: 'CLOTH'
+} as const
+
+export type ThanksMessageType = (typeof ThanksMessageType)[keyof typeof ThanksMessageType]
+
+
 export const FileMessageType = {
   IMAGE: 'IMAGE',
   DOCUMENT: 'DOCUMENT'

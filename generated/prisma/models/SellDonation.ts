@@ -277,6 +277,7 @@ export type SellDonationWhereInput = {
   donatedAt?: Prisma.DateTimeNullableFilter<"SellDonation"> | Date | string | null
   orderItem?: Prisma.XOR<Prisma.OrderItemScalarRelationFilter, Prisma.OrderItemWhereInput>
   charity?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  thanksMessage?: Prisma.XOR<Prisma.DonationThanksMSgNullableScalarRelationFilter, Prisma.DonationThanksMSgWhereInput> | null
 }
 
 export type SellDonationOrderByWithRelationInput = {
@@ -293,6 +294,7 @@ export type SellDonationOrderByWithRelationInput = {
   donatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   orderItem?: Prisma.OrderItemOrderByWithRelationInput
   charity?: Prisma.UserOrderByWithRelationInput
+  thanksMessage?: Prisma.DonationThanksMSgOrderByWithRelationInput
 }
 
 export type SellDonationWhereUniqueInput = Prisma.AtLeast<{
@@ -312,6 +314,7 @@ export type SellDonationWhereUniqueInput = Prisma.AtLeast<{
   donatedAt?: Prisma.DateTimeNullableFilter<"SellDonation"> | Date | string | null
   orderItem?: Prisma.XOR<Prisma.OrderItemScalarRelationFilter, Prisma.OrderItemWhereInput>
   charity?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  thanksMessage?: Prisma.XOR<Prisma.DonationThanksMSgNullableScalarRelationFilter, Prisma.DonationThanksMSgWhereInput> | null
 }, "id">
 
 export type SellDonationOrderByWithAggregationInput = {
@@ -362,6 +365,7 @@ export type SellDonationCreateInput = {
   donatedAt?: Date | string | null
   orderItem: Prisma.OrderItemCreateNestedOneWithoutDonationsInput
   charity: Prisma.UserCreateNestedOneWithoutSellDonationsInput
+  thanksMessage?: Prisma.DonationThanksMSgCreateNestedOneWithoutSellDonationInput
 }
 
 export type SellDonationUncheckedCreateInput = {
@@ -376,6 +380,7 @@ export type SellDonationUncheckedCreateInput = {
   orderItemId: string
   charityId: string
   donatedAt?: Date | string | null
+  thanksMessage?: Prisma.DonationThanksMSgUncheckedCreateNestedOneWithoutSellDonationInput
 }
 
 export type SellDonationUpdateInput = {
@@ -390,6 +395,7 @@ export type SellDonationUpdateInput = {
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderItem?: Prisma.OrderItemUpdateOneRequiredWithoutDonationsNestedInput
   charity?: Prisma.UserUpdateOneRequiredWithoutSellDonationsNestedInput
+  thanksMessage?: Prisma.DonationThanksMSgUpdateOneWithoutSellDonationNestedInput
 }
 
 export type SellDonationUncheckedUpdateInput = {
@@ -404,6 +410,7 @@ export type SellDonationUncheckedUpdateInput = {
   orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  thanksMessage?: Prisma.DonationThanksMSgUncheckedUpdateOneWithoutSellDonationNestedInput
 }
 
 export type SellDonationCreateManyInput = {
@@ -444,6 +451,11 @@ export type SellDonationUncheckedUpdateManyInput = {
   orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type SellDonationNullableScalarRelationFilter = {
+  is?: Prisma.SellDonationWhereInput | null
+  isNot?: Prisma.SellDonationWhereInput | null
 }
 
 export type SellDonationListRelationFilter = {
@@ -510,6 +522,22 @@ export type SellDonationSumOrderByAggregateInput = {
   percent?: Prisma.SortOrder
   extra_money?: Prisma.SortOrder
   total_amount?: Prisma.SortOrder
+}
+
+export type SellDonationCreateNestedOneWithoutThanksMessageInput = {
+  create?: Prisma.XOR<Prisma.SellDonationCreateWithoutThanksMessageInput, Prisma.SellDonationUncheckedCreateWithoutThanksMessageInput>
+  connectOrCreate?: Prisma.SellDonationCreateOrConnectWithoutThanksMessageInput
+  connect?: Prisma.SellDonationWhereUniqueInput
+}
+
+export type SellDonationUpdateOneWithoutThanksMessageNestedInput = {
+  create?: Prisma.XOR<Prisma.SellDonationCreateWithoutThanksMessageInput, Prisma.SellDonationUncheckedCreateWithoutThanksMessageInput>
+  connectOrCreate?: Prisma.SellDonationCreateOrConnectWithoutThanksMessageInput
+  upsert?: Prisma.SellDonationUpsertWithoutThanksMessageInput
+  disconnect?: Prisma.SellDonationWhereInput | boolean
+  delete?: Prisma.SellDonationWhereInput | boolean
+  connect?: Prisma.SellDonationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SellDonationUpdateToOneWithWhereWithoutThanksMessageInput, Prisma.SellDonationUpdateWithoutThanksMessageInput>, Prisma.SellDonationUncheckedUpdateWithoutThanksMessageInput>
 }
 
 export type SellDonationCreateNestedManyWithoutOrderItemInput = {
@@ -600,6 +628,78 @@ export type SellDonationUncheckedUpdateManyWithoutCharityNestedInput = {
   deleteMany?: Prisma.SellDonationScalarWhereInput | Prisma.SellDonationScalarWhereInput[]
 }
 
+export type SellDonationCreateWithoutThanksMessageInput = {
+  id?: string
+  amount?: number
+  percent?: number
+  extra_money?: number
+  isAnonymous?: boolean
+  total_amount?: number
+  status?: $Enums.DonationStatus
+  createdAt?: Date | string
+  donatedAt?: Date | string | null
+  orderItem: Prisma.OrderItemCreateNestedOneWithoutDonationsInput
+  charity: Prisma.UserCreateNestedOneWithoutSellDonationsInput
+}
+
+export type SellDonationUncheckedCreateWithoutThanksMessageInput = {
+  id?: string
+  amount?: number
+  percent?: number
+  extra_money?: number
+  isAnonymous?: boolean
+  total_amount?: number
+  status?: $Enums.DonationStatus
+  createdAt?: Date | string
+  orderItemId: string
+  charityId: string
+  donatedAt?: Date | string | null
+}
+
+export type SellDonationCreateOrConnectWithoutThanksMessageInput = {
+  where: Prisma.SellDonationWhereUniqueInput
+  create: Prisma.XOR<Prisma.SellDonationCreateWithoutThanksMessageInput, Prisma.SellDonationUncheckedCreateWithoutThanksMessageInput>
+}
+
+export type SellDonationUpsertWithoutThanksMessageInput = {
+  update: Prisma.XOR<Prisma.SellDonationUpdateWithoutThanksMessageInput, Prisma.SellDonationUncheckedUpdateWithoutThanksMessageInput>
+  create: Prisma.XOR<Prisma.SellDonationCreateWithoutThanksMessageInput, Prisma.SellDonationUncheckedCreateWithoutThanksMessageInput>
+  where?: Prisma.SellDonationWhereInput
+}
+
+export type SellDonationUpdateToOneWithWhereWithoutThanksMessageInput = {
+  where?: Prisma.SellDonationWhereInput
+  data: Prisma.XOR<Prisma.SellDonationUpdateWithoutThanksMessageInput, Prisma.SellDonationUncheckedUpdateWithoutThanksMessageInput>
+}
+
+export type SellDonationUpdateWithoutThanksMessageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
+  isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderItem?: Prisma.OrderItemUpdateOneRequiredWithoutDonationsNestedInput
+  charity?: Prisma.UserUpdateOneRequiredWithoutSellDonationsNestedInput
+}
+
+export type SellDonationUncheckedUpdateWithoutThanksMessageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  extra_money?: Prisma.FloatFieldUpdateOperationsInput | number
+  isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  total_amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  charityId?: Prisma.StringFieldUpdateOperationsInput | string
+  donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
 export type SellDonationCreateWithoutOrderItemInput = {
   id?: string
   amount?: number
@@ -611,6 +711,7 @@ export type SellDonationCreateWithoutOrderItemInput = {
   createdAt?: Date | string
   donatedAt?: Date | string | null
   charity: Prisma.UserCreateNestedOneWithoutSellDonationsInput
+  thanksMessage?: Prisma.DonationThanksMSgCreateNestedOneWithoutSellDonationInput
 }
 
 export type SellDonationUncheckedCreateWithoutOrderItemInput = {
@@ -624,6 +725,7 @@ export type SellDonationUncheckedCreateWithoutOrderItemInput = {
   createdAt?: Date | string
   charityId: string
   donatedAt?: Date | string | null
+  thanksMessage?: Prisma.DonationThanksMSgUncheckedCreateNestedOneWithoutSellDonationInput
 }
 
 export type SellDonationCreateOrConnectWithoutOrderItemInput = {
@@ -680,6 +782,7 @@ export type SellDonationCreateWithoutCharityInput = {
   createdAt?: Date | string
   donatedAt?: Date | string | null
   orderItem: Prisma.OrderItemCreateNestedOneWithoutDonationsInput
+  thanksMessage?: Prisma.DonationThanksMSgCreateNestedOneWithoutSellDonationInput
 }
 
 export type SellDonationUncheckedCreateWithoutCharityInput = {
@@ -693,6 +796,7 @@ export type SellDonationUncheckedCreateWithoutCharityInput = {
   createdAt?: Date | string
   orderItemId: string
   donatedAt?: Date | string | null
+  thanksMessage?: Prisma.DonationThanksMSgUncheckedCreateNestedOneWithoutSellDonationInput
 }
 
 export type SellDonationCreateOrConnectWithoutCharityInput = {
@@ -745,6 +849,7 @@ export type SellDonationUpdateWithoutOrderItemInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   charity?: Prisma.UserUpdateOneRequiredWithoutSellDonationsNestedInput
+  thanksMessage?: Prisma.DonationThanksMSgUpdateOneWithoutSellDonationNestedInput
 }
 
 export type SellDonationUncheckedUpdateWithoutOrderItemInput = {
@@ -758,6 +863,7 @@ export type SellDonationUncheckedUpdateWithoutOrderItemInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charityId?: Prisma.StringFieldUpdateOperationsInput | string
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  thanksMessage?: Prisma.DonationThanksMSgUncheckedUpdateOneWithoutSellDonationNestedInput
 }
 
 export type SellDonationUncheckedUpdateManyWithoutOrderItemInput = {
@@ -797,6 +903,7 @@ export type SellDonationUpdateWithoutCharityInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderItem?: Prisma.OrderItemUpdateOneRequiredWithoutDonationsNestedInput
+  thanksMessage?: Prisma.DonationThanksMSgUpdateOneWithoutSellDonationNestedInput
 }
 
 export type SellDonationUncheckedUpdateWithoutCharityInput = {
@@ -810,6 +917,7 @@ export type SellDonationUncheckedUpdateWithoutCharityInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderItemId?: Prisma.StringFieldUpdateOperationsInput | string
   donatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  thanksMessage?: Prisma.DonationThanksMSgUncheckedUpdateOneWithoutSellDonationNestedInput
 }
 
 export type SellDonationUncheckedUpdateManyWithoutCharityInput = {
@@ -841,6 +949,7 @@ export type SellDonationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   donatedAt?: boolean
   orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  thanksMessage?: boolean | Prisma.SellDonation$thanksMessageArgs<ExtArgs>
 }, ExtArgs["result"]["sellDonation"]>
 
 export type SellDonationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -893,6 +1002,7 @@ export type SellDonationOmit<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type SellDonationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
   charity?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  thanksMessage?: boolean | Prisma.SellDonation$thanksMessageArgs<ExtArgs>
 }
 export type SellDonationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderItem?: boolean | Prisma.OrderItemDefaultArgs<ExtArgs>
@@ -908,6 +1018,7 @@ export type $SellDonationPayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     orderItem: Prisma.$OrderItemPayload<ExtArgs>
     charity: Prisma.$UserPayload<ExtArgs>
+    thanksMessage: Prisma.$DonationThanksMSgPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1317,6 +1428,7 @@ export interface Prisma__SellDonationClient<T, Null = never, ExtArgs extends run
   readonly [Symbol.toStringTag]: "PrismaPromise"
   orderItem<T extends Prisma.OrderItemDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderItemDefaultArgs<ExtArgs>>): Prisma.Prisma__OrderItemClient<runtime.Types.Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   charity<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  thanksMessage<T extends Prisma.SellDonation$thanksMessageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SellDonation$thanksMessageArgs<ExtArgs>>): Prisma.Prisma__DonationThanksMSgClient<runtime.Types.Result.GetResult<Prisma.$DonationThanksMSgPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1750,6 +1862,25 @@ export type SellDonationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many SellDonations to delete.
    */
   limit?: number
+}
+
+/**
+ * SellDonation.thanksMessage
+ */
+export type SellDonation$thanksMessageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DonationThanksMSg
+   */
+  select?: Prisma.DonationThanksMSgSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DonationThanksMSg
+   */
+  omit?: Prisma.DonationThanksMSgOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DonationThanksMSgInclude<ExtArgs> | null
+  where?: Prisma.DonationThanksMSgWhereInput
 }
 
 /**

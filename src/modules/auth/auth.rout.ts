@@ -1,13 +1,15 @@
 import { Router } from "express";
 import { authController } from "./auth.controller";
-import { changePasswordValidator, createAccountValidator, forgotPasswordValidator, loginAccountValidator, refreshTokenValidator, resetPasswordValidator, socialSignInValidator, socialSignupValidator, userNameCheckerValidator } from "./auth.validator";
+import { changePasswordValidator, createAccountValidator, forgotPasswordValidator, loginAccountValidator, refreshTokenValidator, resetPasswordValidator, roleVerificationValidator, socialSignInValidator, socialSignupValidator, userNameCheckerValidator } from "./auth.validator";
 import req_validator from "../../middleware/req_validation";
 import { otpPhoneResendValidator, otpResendValidator, otpVerifyValidator } from "../otp/otp.validation";
 import { otpControllers } from "../otp/otp.controller";
-import auth from "../../middleware/auth";
+import auth, { FinishAuth } from "../../middleware/auth";
 import { Role } from "../../../generated/prisma/enums";
 import { rateLimiter } from "../../middleware/RateLimiter";
 import { allRoles } from "../user/user.rout";
+import { document_Upload } from "../../utils/s3";
+import parseData from "../../middleware/parseData";
 
 const router = Router();
 
@@ -17,6 +19,15 @@ router.post('/create',
     req_validator(),
     authController.createUser
 )
+
+router.post("/finish",
+    rateLimiter(),
+    FinishAuth(),
+    document_Upload.array('documents'),
+    parseData(),
+    roleVerificationValidator,
+    req_validator(),
+    authController.authFinish);
 
 router.post('/social-signup',
     rateLimiter(),

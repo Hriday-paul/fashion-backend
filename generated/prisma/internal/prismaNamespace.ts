@@ -406,6 +406,7 @@ export const ModelName = {
   DirectDonation: 'DirectDonation',
   ClothDonation: 'ClothDonation',
   ClothDonationPhoto: 'ClothDonationPhoto',
+  DonationThanksMSg: 'DonationThanksMSg',
   Follow: 'Follow',
   Chat: 'Chat',
   Message: 'Message',
@@ -434,6 +435,12 @@ export const ModelName = {
   ReturnItem: 'ReturnItem',
   ReturnEvidence: 'ReturnEvidence',
   Rating: 'Rating',
+  CharitableOrganization: 'CharitableOrganization',
+  CharityShop: 'CharityShop',
+  EcoFriendlyStore: 'EcoFriendlyStore',
+  Celebrity: 'Celebrity',
+  Ambassador: 'Ambassador',
+  ProfessionalSeller: 'ProfessionalSeller',
   Auth: 'Auth',
   User: 'User',
   CharityGallery: 'CharityGallery',
@@ -464,7 +471,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "parcelSuggestion" | "directDonation" | "clothDonation" | "clothDonationPhoto" | "follow" | "chat" | "message" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "auth" | "user" | "charityGallery" | "profilePicture" | "charityThumbnail" | "accountDocument" | "billingDetails" | "notification" | "setting" | "sellCountries" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction" | "walletPayout"
+    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "parcelSuggestion" | "directDonation" | "clothDonation" | "clothDonationPhoto" | "donationThanksMSg" | "follow" | "chat" | "message" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "charitableOrganization" | "charityShop" | "ecoFriendlyStore" | "celebrity" | "ambassador" | "professionalSeller" | "auth" | "user" | "charityGallery" | "profilePicture" | "charityThumbnail" | "accountDocument" | "billingDetails" | "notification" | "setting" | "sellCountries" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction" | "walletPayout"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1723,6 +1730,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ClothDonationPhotoCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ClothDonationPhotoCountAggregateOutputType> | number
+        }
+      }
+    }
+    DonationThanksMSg: {
+      payload: Prisma.$DonationThanksMSgPayload<ExtArgs>
+      fields: Prisma.DonationThanksMSgFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DonationThanksMSgFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationThanksMSgPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DonationThanksMSgFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationThanksMSgPayload>
+        }
+        findFirst: {
+          args: Prisma.DonationThanksMSgFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationThanksMSgPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DonationThanksMSgFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationThanksMSgPayload>
+        }
+        findMany: {
+          args: Prisma.DonationThanksMSgFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationThanksMSgPayload>[]
+        }
+        create: {
+          args: Prisma.DonationThanksMSgCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationThanksMSgPayload>
+        }
+        createMany: {
+          args: Prisma.DonationThanksMSgCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DonationThanksMSgCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationThanksMSgPayload>[]
+        }
+        delete: {
+          args: Prisma.DonationThanksMSgDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationThanksMSgPayload>
+        }
+        update: {
+          args: Prisma.DonationThanksMSgUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationThanksMSgPayload>
+        }
+        deleteMany: {
+          args: Prisma.DonationThanksMSgDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DonationThanksMSgUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DonationThanksMSgUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationThanksMSgPayload>[]
+        }
+        upsert: {
+          args: Prisma.DonationThanksMSgUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationThanksMSgPayload>
+        }
+        aggregate: {
+          args: Prisma.DonationThanksMSgAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDonationThanksMSg>
+        }
+        groupBy: {
+          args: Prisma.DonationThanksMSgGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DonationThanksMSgGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DonationThanksMSgCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DonationThanksMSgCountAggregateOutputType> | number
         }
       }
     }
@@ -3798,6 +3879,450 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CharitableOrganization: {
+      payload: Prisma.$CharitableOrganizationPayload<ExtArgs>
+      fields: Prisma.CharitableOrganizationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CharitableOrganizationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharitableOrganizationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CharitableOrganizationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharitableOrganizationPayload>
+        }
+        findFirst: {
+          args: Prisma.CharitableOrganizationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharitableOrganizationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CharitableOrganizationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharitableOrganizationPayload>
+        }
+        findMany: {
+          args: Prisma.CharitableOrganizationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharitableOrganizationPayload>[]
+        }
+        create: {
+          args: Prisma.CharitableOrganizationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharitableOrganizationPayload>
+        }
+        createMany: {
+          args: Prisma.CharitableOrganizationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CharitableOrganizationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharitableOrganizationPayload>[]
+        }
+        delete: {
+          args: Prisma.CharitableOrganizationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharitableOrganizationPayload>
+        }
+        update: {
+          args: Prisma.CharitableOrganizationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharitableOrganizationPayload>
+        }
+        deleteMany: {
+          args: Prisma.CharitableOrganizationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CharitableOrganizationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CharitableOrganizationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharitableOrganizationPayload>[]
+        }
+        upsert: {
+          args: Prisma.CharitableOrganizationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharitableOrganizationPayload>
+        }
+        aggregate: {
+          args: Prisma.CharitableOrganizationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCharitableOrganization>
+        }
+        groupBy: {
+          args: Prisma.CharitableOrganizationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharitableOrganizationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CharitableOrganizationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharitableOrganizationCountAggregateOutputType> | number
+        }
+      }
+    }
+    CharityShop: {
+      payload: Prisma.$CharityShopPayload<ExtArgs>
+      fields: Prisma.CharityShopFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CharityShopFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityShopPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CharityShopFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityShopPayload>
+        }
+        findFirst: {
+          args: Prisma.CharityShopFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityShopPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CharityShopFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityShopPayload>
+        }
+        findMany: {
+          args: Prisma.CharityShopFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityShopPayload>[]
+        }
+        create: {
+          args: Prisma.CharityShopCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityShopPayload>
+        }
+        createMany: {
+          args: Prisma.CharityShopCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CharityShopCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityShopPayload>[]
+        }
+        delete: {
+          args: Prisma.CharityShopDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityShopPayload>
+        }
+        update: {
+          args: Prisma.CharityShopUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityShopPayload>
+        }
+        deleteMany: {
+          args: Prisma.CharityShopDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CharityShopUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CharityShopUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityShopPayload>[]
+        }
+        upsert: {
+          args: Prisma.CharityShopUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharityShopPayload>
+        }
+        aggregate: {
+          args: Prisma.CharityShopAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCharityShop>
+        }
+        groupBy: {
+          args: Prisma.CharityShopGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharityShopGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CharityShopCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharityShopCountAggregateOutputType> | number
+        }
+      }
+    }
+    EcoFriendlyStore: {
+      payload: Prisma.$EcoFriendlyStorePayload<ExtArgs>
+      fields: Prisma.EcoFriendlyStoreFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EcoFriendlyStoreFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EcoFriendlyStorePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EcoFriendlyStoreFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EcoFriendlyStorePayload>
+        }
+        findFirst: {
+          args: Prisma.EcoFriendlyStoreFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EcoFriendlyStorePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EcoFriendlyStoreFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EcoFriendlyStorePayload>
+        }
+        findMany: {
+          args: Prisma.EcoFriendlyStoreFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EcoFriendlyStorePayload>[]
+        }
+        create: {
+          args: Prisma.EcoFriendlyStoreCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EcoFriendlyStorePayload>
+        }
+        createMany: {
+          args: Prisma.EcoFriendlyStoreCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EcoFriendlyStoreCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EcoFriendlyStorePayload>[]
+        }
+        delete: {
+          args: Prisma.EcoFriendlyStoreDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EcoFriendlyStorePayload>
+        }
+        update: {
+          args: Prisma.EcoFriendlyStoreUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EcoFriendlyStorePayload>
+        }
+        deleteMany: {
+          args: Prisma.EcoFriendlyStoreDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EcoFriendlyStoreUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EcoFriendlyStoreUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EcoFriendlyStorePayload>[]
+        }
+        upsert: {
+          args: Prisma.EcoFriendlyStoreUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EcoFriendlyStorePayload>
+        }
+        aggregate: {
+          args: Prisma.EcoFriendlyStoreAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEcoFriendlyStore>
+        }
+        groupBy: {
+          args: Prisma.EcoFriendlyStoreGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EcoFriendlyStoreGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EcoFriendlyStoreCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EcoFriendlyStoreCountAggregateOutputType> | number
+        }
+      }
+    }
+    Celebrity: {
+      payload: Prisma.$CelebrityPayload<ExtArgs>
+      fields: Prisma.CelebrityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CelebrityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CelebrityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrityPayload>
+        }
+        findFirst: {
+          args: Prisma.CelebrityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CelebrityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrityPayload>
+        }
+        findMany: {
+          args: Prisma.CelebrityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrityPayload>[]
+        }
+        create: {
+          args: Prisma.CelebrityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrityPayload>
+        }
+        createMany: {
+          args: Prisma.CelebrityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CelebrityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrityPayload>[]
+        }
+        delete: {
+          args: Prisma.CelebrityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrityPayload>
+        }
+        update: {
+          args: Prisma.CelebrityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrityPayload>
+        }
+        deleteMany: {
+          args: Prisma.CelebrityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CelebrityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CelebrityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrityPayload>[]
+        }
+        upsert: {
+          args: Prisma.CelebrityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CelebrityPayload>
+        }
+        aggregate: {
+          args: Prisma.CelebrityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCelebrity>
+        }
+        groupBy: {
+          args: Prisma.CelebrityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CelebrityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CelebrityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CelebrityCountAggregateOutputType> | number
+        }
+      }
+    }
+    Ambassador: {
+      payload: Prisma.$AmbassadorPayload<ExtArgs>
+      fields: Prisma.AmbassadorFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AmbassadorFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AmbassadorPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AmbassadorFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AmbassadorPayload>
+        }
+        findFirst: {
+          args: Prisma.AmbassadorFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AmbassadorPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AmbassadorFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AmbassadorPayload>
+        }
+        findMany: {
+          args: Prisma.AmbassadorFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AmbassadorPayload>[]
+        }
+        create: {
+          args: Prisma.AmbassadorCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AmbassadorPayload>
+        }
+        createMany: {
+          args: Prisma.AmbassadorCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AmbassadorCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AmbassadorPayload>[]
+        }
+        delete: {
+          args: Prisma.AmbassadorDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AmbassadorPayload>
+        }
+        update: {
+          args: Prisma.AmbassadorUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AmbassadorPayload>
+        }
+        deleteMany: {
+          args: Prisma.AmbassadorDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AmbassadorUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AmbassadorUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AmbassadorPayload>[]
+        }
+        upsert: {
+          args: Prisma.AmbassadorUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AmbassadorPayload>
+        }
+        aggregate: {
+          args: Prisma.AmbassadorAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAmbassador>
+        }
+        groupBy: {
+          args: Prisma.AmbassadorGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AmbassadorGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AmbassadorCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AmbassadorCountAggregateOutputType> | number
+        }
+      }
+    }
+    ProfessionalSeller: {
+      payload: Prisma.$ProfessionalSellerPayload<ExtArgs>
+      fields: Prisma.ProfessionalSellerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProfessionalSellerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfessionalSellerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProfessionalSellerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfessionalSellerPayload>
+        }
+        findFirst: {
+          args: Prisma.ProfessionalSellerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfessionalSellerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProfessionalSellerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfessionalSellerPayload>
+        }
+        findMany: {
+          args: Prisma.ProfessionalSellerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfessionalSellerPayload>[]
+        }
+        create: {
+          args: Prisma.ProfessionalSellerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfessionalSellerPayload>
+        }
+        createMany: {
+          args: Prisma.ProfessionalSellerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProfessionalSellerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfessionalSellerPayload>[]
+        }
+        delete: {
+          args: Prisma.ProfessionalSellerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfessionalSellerPayload>
+        }
+        update: {
+          args: Prisma.ProfessionalSellerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfessionalSellerPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProfessionalSellerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProfessionalSellerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProfessionalSellerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfessionalSellerPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProfessionalSellerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfessionalSellerPayload>
+        }
+        aggregate: {
+          args: Prisma.ProfessionalSellerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProfessionalSeller>
+        }
+        groupBy: {
+          args: Prisma.ProfessionalSellerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProfessionalSellerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProfessionalSellerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProfessionalSellerCountAggregateOutputType> | number
+        }
+      }
+    }
     Auth: {
       payload: Prisma.$AuthPayload<ExtArgs>
       fields: Prisma.AuthFieldRefs
@@ -5180,6 +5705,21 @@ export const ClothDonationPhotoScalarFieldEnum = {
 export type ClothDonationPhotoScalarFieldEnum = (typeof ClothDonationPhotoScalarFieldEnum)[keyof typeof ClothDonationPhotoScalarFieldEnum]
 
 
+export const DonationThanksMSgScalarFieldEnum = {
+  id: 'id',
+  donorId: 'donorId',
+  sellDonationId: 'sellDonationId',
+  directDonationId: 'directDonationId',
+  clothDonationId: 'clothDonationId',
+  message: 'message',
+  msgType: 'msgType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DonationThanksMSgScalarFieldEnum = (typeof DonationThanksMSgScalarFieldEnum)[keyof typeof DonationThanksMSgScalarFieldEnum]
+
+
 export const FollowScalarFieldEnum = {
   id: 'id',
   followerId: 'followerId',
@@ -5619,6 +6159,101 @@ export const RatingScalarFieldEnum = {
 } as const
 
 export type RatingScalarFieldEnum = (typeof RatingScalarFieldEnum)[keyof typeof RatingScalarFieldEnum]
+
+
+export const CharitableOrganizationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  legalName: 'legalName',
+  registrationNumber: 'registrationNumber',
+  registrationCountry: 'registrationCountry',
+  registeredAddress: 'registeredAddress',
+  authorizedPersonName: 'authorizedPersonName',
+  authorizedPersonRole: 'authorizedPersonRole',
+  registrationDocumentKey: 'registrationDocumentKey',
+  authorizationDocumentKey: 'authorizationDocumentKey'
+} as const
+
+export type CharitableOrganizationScalarFieldEnum = (typeof CharitableOrganizationScalarFieldEnum)[keyof typeof CharitableOrganizationScalarFieldEnum]
+
+
+export const CharityShopScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  shopName: 'shopName',
+  operatorType: 'operatorType',
+  legalBusinessName: 'legalBusinessName',
+  businessRegistrationNumber: 'businessRegistrationNumber',
+  registrationCountry: 'registrationCountry',
+  charityRegistrationNumber: 'charityRegistrationNumber',
+  charityRelationship: 'charityRelationship',
+  authorizationDocumentKey: 'authorizationDocumentKey',
+  registrationDocumentKey: 'registrationDocumentKey'
+} as const
+
+export type CharityShopScalarFieldEnum = (typeof CharityShopScalarFieldEnum)[keyof typeof CharityShopScalarFieldEnum]
+
+
+export const EcoFriendlyStoreScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  storeName: 'storeName',
+  legalBusinessName: 'legalBusinessName',
+  businessRegistrationNumber: 'businessRegistrationNumber',
+  registrationCountry: 'registrationCountry',
+  sustainabilityDescription: 'sustainabilityDescription',
+  certificationName: 'certificationName',
+  certificationIssuer: 'certificationIssuer',
+  certificationNumber: 'certificationNumber',
+  certificationDocumentKey: 'certificationDocumentKey'
+} as const
+
+export type EcoFriendlyStoreScalarFieldEnum = (typeof EcoFriendlyStoreScalarFieldEnum)[keyof typeof EcoFriendlyStoreScalarFieldEnum]
+
+
+export const CelebrityScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  legalName: 'legalName',
+  publicName: 'publicName',
+  profession: 'profession',
+  officialWebsite: 'officialWebsite',
+  officialProfileUrls: 'officialProfileUrls',
+  identityDocumentKey: 'identityDocumentKey',
+  publicIdentityEvidenceKey: 'publicIdentityEvidenceKey'
+} as const
+
+export type CelebrityScalarFieldEnum = (typeof CelebrityScalarFieldEnum)[keyof typeof CelebrityScalarFieldEnum]
+
+
+export const AmbassadorScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  ambassadorType: 'ambassadorType',
+  representedBrand: 'representedBrand',
+  representedOrganization: 'representedOrganization',
+  authorizationDocumentKey: 'authorizationDocumentKey',
+  agreementVersion: 'agreementVersion',
+  agreementAcceptedAt: 'agreementAcceptedAt'
+} as const
+
+export type AmbassadorScalarFieldEnum = (typeof AmbassadorScalarFieldEnum)[keyof typeof AmbassadorScalarFieldEnum]
+
+
+export const ProfessionalSellerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  legalBusinessName: 'legalBusinessName',
+  tradingName: 'tradingName',
+  businessType: 'businessType',
+  businessRegistrationNumber: 'businessRegistrationNumber',
+  registrationCountry: 'registrationCountry',
+  registeredAddress: 'registeredAddress',
+  registrationDocumentKey: 'registrationDocumentKey',
+  taxIdentificationNumber: 'taxIdentificationNumber'
+} as const
+
+export type ProfessionalSellerScalarFieldEnum = (typeof ProfessionalSellerScalarFieldEnum)[keyof typeof ProfessionalSellerScalarFieldEnum]
 
 
 export const AuthScalarFieldEnum = {
@@ -6079,6 +6714,20 @@ export type EnumClothDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputTy
  * Reference to a field of type 'ClothDonationStatus[]'
  */
 export type ListEnumClothDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClothDonationStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ThanksMessageType'
+ */
+export type EnumThanksMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ThanksMessageType'>
+    
+
+
+/**
+ * Reference to a field of type 'ThanksMessageType[]'
+ */
+export type ListEnumThanksMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ThanksMessageType[]'>
     
 
 
@@ -6591,6 +7240,7 @@ export type GlobalOmitConfig = {
   directDonation?: Prisma.DirectDonationOmit
   clothDonation?: Prisma.ClothDonationOmit
   clothDonationPhoto?: Prisma.ClothDonationPhotoOmit
+  donationThanksMSg?: Prisma.DonationThanksMSgOmit
   follow?: Prisma.FollowOmit
   chat?: Prisma.ChatOmit
   message?: Prisma.MessageOmit
@@ -6619,6 +7269,12 @@ export type GlobalOmitConfig = {
   returnItem?: Prisma.ReturnItemOmit
   returnEvidence?: Prisma.ReturnEvidenceOmit
   rating?: Prisma.RatingOmit
+  charitableOrganization?: Prisma.CharitableOrganizationOmit
+  charityShop?: Prisma.CharityShopOmit
+  ecoFriendlyStore?: Prisma.EcoFriendlyStoreOmit
+  celebrity?: Prisma.CelebrityOmit
+  ambassador?: Prisma.AmbassadorOmit
+  professionalSeller?: Prisma.ProfessionalSellerOmit
   auth?: Prisma.AuthOmit
   user?: Prisma.UserOmit
   charityGallery?: Prisma.CharityGalleryOmit

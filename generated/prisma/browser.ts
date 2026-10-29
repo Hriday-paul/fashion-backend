@@ -102,6 +102,11 @@ export type ClothDonation = Prisma.ClothDonationModel
  */
 export type ClothDonationPhoto = Prisma.ClothDonationPhotoModel
 /**
+ * Model DonationThanksMSg
+ * 
+ */
+export type DonationThanksMSg = Prisma.DonationThanksMSgModel
+/**
  * Model Follow
  * 
  */
@@ -241,6 +246,36 @@ export type ReturnEvidence = Prisma.ReturnEvidenceModel
  * 
  */
 export type Rating = Prisma.RatingModel
+/**
+ * Model CharitableOrganization
+ * 
+ */
+export type CharitableOrganization = Prisma.CharitableOrganizationModel
+/**
+ * Model CharityShop
+ * 
+ */
+export type CharityShop = Prisma.CharityShopModel
+/**
+ * Model EcoFriendlyStore
+ * 
+ */
+export type EcoFriendlyStore = Prisma.EcoFriendlyStoreModel
+/**
+ * Model Celebrity
+ * 
+ */
+export type Celebrity = Prisma.CelebrityModel
+/**
+ * Model Ambassador
+ * 
+ */
+export type Ambassador = Prisma.AmbassadorModel
+/**
+ * Model ProfessionalSeller
+ * 
+ */
+export type ProfessionalSeller = Prisma.ProfessionalSellerModel
 /**
  * Model Auth
  * 

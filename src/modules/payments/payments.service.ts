@@ -633,6 +633,7 @@ const donationRaisedFromSell = async (options: TPaginationOptions, charityId: st
     },
 
     include: {
+      thanksMessage: true,
       orderItem: {
         select: {
           productId: true,
@@ -693,6 +694,7 @@ const directDonationRaised = async (options: TPaginationOptions, charityId: stri
       [sortBy]: sortOrder,
     },
     include: {
+      thanksMsg: true,
       donor: {
         select: {
           userName: true,
