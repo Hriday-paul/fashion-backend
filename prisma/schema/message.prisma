@@ -11,6 +11,8 @@ model Chat {
     updatedAt DateTime  @updatedAt
     messages  Message[]
 
+    items ChatItem[]
+
     @@unique([user1Id, user2Id])
     @@index([user1Id, user2Id])
     @@index([user2Id, user1Id])
@@ -44,6 +46,25 @@ model Message {
     @@index([offerId])
     @@index([senderId])
     @@map("messages")
+}
+
+model ChatItem {
+    id String @id @default(uuid())
+
+    chatId String
+    chat   Chat  @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+    productId String
+    product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+    quantity Int @default(1)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([chatId, productId])
+    @@index([productId, chatId])
+    @@map("chat_items")
 }
 
 model FileMessage {

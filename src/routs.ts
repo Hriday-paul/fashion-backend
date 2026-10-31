@@ -26,6 +26,7 @@ import { dashboardRouts } from './modules/dashboard/dashboard.rout';
 import { parcelSuggestionRouter } from './modules/parcelSuggestion/parcelSuggestion.rout';
 import { sellCountriesRouter } from './modules/sellCountries/sellCountries.rout';
 import { clothDonationRouts } from './modules/clothDonation/clothDonation.rout';
+import { chatRoutes } from './modules/chat/chat.route';
 
 const router = express.Router();
 
@@ -41,6 +42,10 @@ const moduleRoutes = [
     {
         path: '/account',
         route: accountRouts,
+    },
+    {
+        path: '/chats',
+        route: chatRoutes,
     },
     {
         path: '/messages',

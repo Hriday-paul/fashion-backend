@@ -8,24 +8,32 @@ import { SendMessageHandle } from '../../socket/handlers/MessageHandler';
 
 type TFile = {
   files?: { key: string; url: string, title: string, type: FileMessageType }[];
-  receiverUserName: string;
+  chatId: string;
 }
 
 const createMessages = async (payload: Message & TFile) => {
 
-  const { isSeen, chatId, createdAt, receiverUserName, offerId, ...morePayload } = payload;
+  const { isSeen, chatId, createdAt, offerId, ...morePayload } = payload;
 
   const files = payload?.files || []
 
-  const receiver = await prisma.user.findFirst({ where: { userName: payload?.receiverUserName, auth: { isverified: true, status: true } } });
+  const chat = await prisma.chat.findFirst({
+    where: {
+      id: chatId,
+      OR: [
+        { user1Id: morePayload.senderId },
+        { user2Id: morePayload.senderId }
+      ]
+    }
+  });
 
-  if (!receiver) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Receiver not found');
+  if (!chat) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Chat does not exist');
   }
 
-  morePayload.receiverId = receiver?.id;
+  const receiverId = chat?.user1Id === morePayload?.senderId ? chat?.user2Id : chat?.user1Id;
 
-  const chat = await chatService.createChat({ currentUserId: payload.senderId, user2Id: receiver?.id });
+  morePayload.receiverId = receiverId;
 
   const result = await prisma.message.create({
     data: {
@@ -60,27 +68,17 @@ const createMessages = async (payload: Message & TFile) => {
 };
 
 // Get all previous messages
-const getAllPreMessages = async (friendUserName: string, currentUserId: string, options: TPaginationOptions) => {
+const getAllPreMessages = async (chatId: string, currentUserId: string, options: TPaginationOptions) => {
 
   const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-  const friend = await prisma.user.findFirst({ where: { userName: friendUserName, auth: { isverified: true, status: true } } });
-
-  if (!friend) {
-    return {
-      meta: paginationHelper.generatePaginationMeta({ page, limit, total: 0 }),
-      data: [],
-    };
-  }
-
-  const friendId = friend?.id;
-
   const chat = await prisma.chat.findFirst({
     where: {
+      id: chatId,
       OR: [
-        { user1Id: currentUserId, user2Id: friendId },
-        { user1Id: friendId, user2Id: currentUserId },
-      ],
+        { user1Id: currentUserId },
+        { user2Id: currentUserId }
+      ]
     },
   });
 
@@ -132,8 +130,8 @@ const getAllPreMessages = async (friendUserName: string, currentUserId: string, 
                   stock: true,
                   images: {
                     take: 1,
-                    orderBy : {
-                      order : 'asc'
+                    orderBy: {
+                      order: 'asc'
                     },
                     select: {
                       id: true,

@@ -69,6 +69,7 @@ export const ModelName = {
   Follow: 'Follow',
   Chat: 'Chat',
   Message: 'Message',
+  ChatItem: 'ChatItem',
   FileMessage: 'FileMessage',
   Order: 'Order',
   OrderItem: 'OrderItem',
@@ -415,6 +416,18 @@ export const MessageScalarFieldEnum = {
 } as const
 
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+export const ChatItemScalarFieldEnum = {
+  id: 'id',
+  chatId: 'chatId',
+  productId: 'productId',
+  quantity: 'quantity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChatItemScalarFieldEnum = (typeof ChatItemScalarFieldEnum)[keyof typeof ChatItemScalarFieldEnum]
 
 
 export const FileMessageScalarFieldEnum = {

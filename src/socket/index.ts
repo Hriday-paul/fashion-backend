@@ -1,7 +1,7 @@
 import { Server as HttpServer } from 'http';
 import { Server } from 'socket.io';
 import { getChatList } from './handlers/ChatHandler';
-import { MessageHandler, MsgSeenHandle, MsgStopTyping, MsgTyping, SendMessageHandle } from './handlers/MessageHandler';
+import { JoinChatRoom, MessageHandler, MsgSeenHandle, MsgStopTyping, MsgTyping, SendMessageHandle } from './handlers/MessageHandler';
 import { socketAuthMiddleware } from './middleware/auth.socket';
 import { handleUserOffline, handleUserOnline } from './handlers/StatusHandler';
 
@@ -38,6 +38,12 @@ const initializeSocketIO = (server: HttpServer) => {
     // socket.on('chat-list-search', async (data, callback) => {
     //   getChatList(userId, io, socket, callback, data)
     // });
+
+    //---------------------join chat room------------------
+    socket.on('join-chat', async (payload, callback) => {
+      JoinChatRoom({ chatId: payload?.chatId, socket, callback })
+    });
+
 
     //----------------------seen message-----------------------//
     socket.on('seen', async (payload, callback) => {

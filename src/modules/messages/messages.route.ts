@@ -59,7 +59,7 @@ router.get(
 // );
 
 router.get(
-  '/pre-messages/:friendUserName',
+  '/pre-messages/:chatId',
   auth(...allRoles),
   messagesController.getAllPreMessages,
 );

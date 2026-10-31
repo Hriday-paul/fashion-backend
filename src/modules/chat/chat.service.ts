@@ -6,12 +6,13 @@ import prisma from '../../shared/prisma';
 type TPerticipents = {
   currentUserId: string;
   user2Id: string;
+  products: string[];
 }
 
 // Create chat
 const createChat = async (payload: TPerticipents) => {
 
-  const { currentUserId, user2Id } = payload;
+  const { currentUserId, user2Id, products } = payload;
 
   if (currentUserId === user2Id) {
     throw new AppError(httpStatus.BAD_REQUEST, 'You cannot create chat with yourself');
@@ -23,6 +24,7 @@ const createChat = async (payload: TPerticipents) => {
     throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid user');
   }
 
+  //existing empty msg check
   const existingChat = await prisma.chat.findFirst({
     where: {
       OR: [
@@ -39,10 +41,18 @@ const createChat = async (payload: TPerticipents) => {
           ]
         },
       ],
+      items: {
+        some: {
+          productId: { in: products }
+        }
+      },
+    },
+    include: {
+      items: true
     }
   });
 
-  if (existingChat) {
+  if (existingChat && existingChat.items.length === products.length) {
     return existingChat;
   }
 
@@ -51,6 +61,11 @@ const createChat = async (payload: TPerticipents) => {
     data: {
       user1Id: currentUserId,
       user2Id,
+      items: {
+        createMany: {
+          data: products.map((productId) => ({ productId }))
+        }
+      }
     }
   })
 
@@ -128,6 +143,25 @@ const getMyChatList = async (userId: string, query?: Record<string, unknown>) =>
           }
         }
       },
+      items: {
+        select: {
+          id: true,
+          product: {
+            select: {
+              images: {
+                take: 1,
+                orderBy: {
+                  order: 'asc'
+                },
+                select: {
+                  url: true,
+                  id: true
+                }
+              }
+            }
+          }
+        }
+      },
       messages: {
         orderBy: { createdAt: "desc" },
         take: 1,
@@ -143,26 +177,7 @@ const getMyChatList = async (userId: string, query?: Record<string, unknown>) =>
             select: {
               status: true,
               sellerId: true,
-              buyerId: true,
-              offerItems : {
-                select : {
-                  id: true,
-                  product : {
-                    select : {
-                      images : {
-                        take : 1,
-                        orderBy : {
-                          order : 'asc'
-                        },
-                        select : {
-                          url: true,
-                          id: true
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+              buyerId: true
             }
           }
         }
@@ -190,38 +205,78 @@ const getMyChatList = async (userId: string, query?: Record<string, unknown>) =>
 };
 
 // Get chat by ID
-const getChatById = async (chatId: string) => {
+const getChatById = async (chatId: string, userId: string) => {
 
-  const result = await prisma.chat.findFirst({
-    where: { id: chatId },
+  const chat = await prisma.chat.findFirst({
+    where: {
+      id: chatId,
+      OR: [
+        { user1Id: userId },
+        { user2Id: userId }
+      ]
+    },
     include: {
-      user1: {
-        select: {
-          userName: true,
-          picture: {
+      items: {
+        include: {
+          product: {
             select: {
-              url: true
-            }
-          }
-        }
-      },
-      user2: {
-        select: {
-          userName: true,
-          picture: {
-            select: {
-              url: true
+              id: true,
+              title: true,
+              finalPrice: true,
+              stock: true,
+              isDeleted: true,
+              images: {
+                take: 1,
+                orderBy: {
+                  order: 'asc'
+                },
+                select: {
+                  id: true,
+                  url: true
+                }
+              }
             }
           }
         }
       }
-    }
-  })
 
-  if (!result) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Chat not found');
+    }
+  });
+
+  if (!chat) {
+    return null;
   }
-  return result;
+
+  const fuserId = chat?.user1Id === userId ? chat?.user2Id : chat?.user1Id;
+
+  const itemsPrice = chat?.items.reduce((acc, item) => acc + item.product.finalPrice, 0);
+
+  const isUnavailable = chat?.items.some(item => item.product.stock === 0 || item.product?.isDeleted);
+
+  const user = await prisma.user.findFirst({
+    where: {
+      id: fuserId
+    },
+    select: {
+      id: true,
+      picture: {
+        select: {
+          url: true
+        }
+      },
+      userName: true,
+    }
+  });
+
+  return {
+    id: chat.id,
+    user,
+    items: chat.items,
+    itemsPrice,
+    isUnavailable
+  };
+
+
 };
 
 // Update chat list
@@ -249,10 +304,75 @@ const deleteChatList = async (id: string) => {
   return result;
 };
 
+const createOfferByChatForBuy = async (payload: { sellerId: string, chatId: string }, currentUserId: string) => {
+
+  const { sellerId, chatId } = payload;
+
+  const productsOnChat = await prisma.chatItem.findMany({
+    where: {
+      chatId
+    },
+    select: {
+      productId: true,
+      product: {
+        select: {
+          id: true,
+          finalPrice: true,
+          isDeleted: true,
+          stock: true
+        }
+      }
+    }
+  });
+
+  const haveStockOutOrDlt = productsOnChat.some(p => p.product.isDeleted || p.product.stock === 0);
+
+  if (haveStockOutOrDlt) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Some items are no longer available.');
+  }
+
+  const actualPrice = productsOnChat.reduce((sum, p) => sum + p.product.finalPrice, 0);
+
+  //check existing offer avaialble
+  // const existingOffer = await prisma.offer.findFirst({
+  //   where: {
+  //     buyerId: currentUserId,
+  //     sellerId,
+  //     status: 'ACCEPTED',
+  //     offerItems: {
+  //       some: {
+  //         productId: { in: productsOnChat.map(p => p.productId) }
+  //       }
+  //     }
+  //   }
+  // });
+
+  const offer = await prisma.offer.create({
+    data: {
+      buyerId: currentUserId,
+      sellerId,
+      offeredPrice: actualPrice,
+      actualPrice: actualPrice,
+      offerItems: {
+        create: productsOnChat.map(p => ({
+          productId: p?.productId,
+          quantity: 1
+        }))
+      },
+      sendByBuyer: true,
+      status: "ACCEPTED"
+    }
+  });
+
+  return offer;
+
+}
+
 export const chatService = {
   createChat,
   getMyChatList,
   getChatById,
   updateChatList,
-  deleteChatList
+  deleteChatList,
+  createOfferByChatForBuy
 };

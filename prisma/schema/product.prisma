@@ -52,6 +52,8 @@ model Product {
 
     cartItems CartItem[]
 
+    chatItems ChatItem[]
+
     assistentSellId String?
     assistentSell   AssistentSell? @relation(fields: [assistentSellId], references: [id], onDelete: SetNull)
 

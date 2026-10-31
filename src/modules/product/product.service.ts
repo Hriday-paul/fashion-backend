@@ -1644,7 +1644,7 @@ const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: n
         throw new AppError(httpStatus.NOT_FOUND, "Seller Does not exist");
     }
 
-    const chat = await chatService.createChat({ currentUserId: currentUserId, user2Id: sellerId });
+    const chat = await chatService.createChat({ currentUserId: currentUserId, user2Id: sellerId, products: productIds });
 
     const result = await prisma.$transaction(async (tx) => {
 
@@ -1927,7 +1927,9 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
         throw new AppError(httpStatus.BAD_REQUEST, "Some items are no longer available");
     }
 
-    const chat = await chatService.createChat({ currentUserId: offer?.sellerId, user2Id: offer?.buyerId });
+    const productIds = items.map(p => p?.id);
+
+    const chat = await chatService.createChat({ currentUserId: offer?.sellerId, user2Id: offer?.buyerId, products: productIds });
 
     const result = await prisma.$transaction(async (tx) => {
 

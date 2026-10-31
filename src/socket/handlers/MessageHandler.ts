@@ -71,6 +71,41 @@ export const MessageHandler = async (
     // }
 }
 
+export const JoinChatRoom = async ({ socket, chatId, callback }: { socket: Socket, chatId: string, callback: (arg: any) => void }) => {
+
+    try {
+
+        if (!chatId) {
+            callbackFn(callback, {
+                success: false,
+                message: 'chatId is required',
+            });
+            socket.emit('io-error', {
+                success: false,
+                message: 'chatId is required',
+            });
+            return;
+        }
+
+        // Leave all previous chat rooms
+        for (const room of socket.rooms) {
+            if (room.startsWith('chat::')) {
+                await socket.leave(room);
+            }
+        }
+
+        socket.join(`chat::${chatId}`);
+
+        callbackFn(callback, { success: true });
+
+    } catch (error: any) {
+        callbackFn(callback, {
+            success: false,
+            message: error.message,
+        });
+    }
+}
+
 export const SendMessageHandle = async (
     io: Server,
     payload: Message & { sender: { userName: string } },
@@ -78,11 +113,11 @@ export const SendMessageHandle = async (
 ) => {
     try {
 
-        const reciverRoom = `user::${payload?.receiverId}`;
-        const senderRoom = `user::${payload?.senderId}`;
+        const chatId = payload?.chatId;
 
-        io.to(senderRoom).emit(`new-message::${payload?.senderId}`, payload);
-        io.to(reciverRoom).emit(`new-message::${payload?.sender?.userName}`, payload);
+        const chatRoom = `chat::${chatId}`;
+
+        io.to(chatRoom).emit(`new-message`, payload);
 
         //---------------hit on chatlist for see last sent message with the chatList------------------//
         getChatList(payload?.senderId, io, callback)
@@ -112,17 +147,15 @@ export const UpdateMessageHandle = async (
 ) => {
     try {
 
-        const reciverRoom = `user::${payload?.receiverId}`;
-        const senderRoom = `user::${payload?.senderId}`;
+        const chatRoom = `chat::${payload?.chatId}`;
 
-        io.to(senderRoom).emit(`update-message::${payload?.senderId}`, payload);
-        io.to(reciverRoom).emit(`update-message::${payload?.sender?.userName}`, payload);
+        io.to(chatRoom).emit(`update-message`, payload);
 
         //---------------hit on chatlist for see last sent message with the chatList------------------//
         getChatList(payload?.senderId, io, callback)
         getChatList(payload?.receiverId, io, callback)
 
-        
+
         callbackFn(callback, {
             statusCode: httpStatus.OK,
             success: true,

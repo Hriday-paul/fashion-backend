@@ -446,6 +446,7 @@ export type ProductWhereInput = {
   viewers?: Prisma.ProductViewListRelationFilter
   questions?: Prisma.QuestionListRelationFilter
   cartItems?: Prisma.CartItemListRelationFilter
+  chatItems?: Prisma.ChatItemListRelationFilter
   assistentSell?: Prisma.XOR<Prisma.AssistentSellNullableScalarRelationFilter, Prisma.AssistentSellWhereInput> | null
   offerItems?: Prisma.OfferItemListRelationFilter
   materials?: Prisma.ProductMaterialListRelationFilter
@@ -493,6 +494,7 @@ export type ProductOrderByWithRelationInput = {
   viewers?: Prisma.ProductViewOrderByRelationAggregateInput
   questions?: Prisma.QuestionOrderByRelationAggregateInput
   cartItems?: Prisma.CartItemOrderByRelationAggregateInput
+  chatItems?: Prisma.ChatItemOrderByRelationAggregateInput
   assistentSell?: Prisma.AssistentSellOrderByWithRelationInput
   offerItems?: Prisma.OfferItemOrderByRelationAggregateInput
   materials?: Prisma.ProductMaterialOrderByRelationAggregateInput
@@ -543,6 +545,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   viewers?: Prisma.ProductViewListRelationFilter
   questions?: Prisma.QuestionListRelationFilter
   cartItems?: Prisma.CartItemListRelationFilter
+  chatItems?: Prisma.ChatItemListRelationFilter
   assistentSell?: Prisma.XOR<Prisma.AssistentSellNullableScalarRelationFilter, Prisma.AssistentSellWhereInput> | null
   offerItems?: Prisma.OfferItemListRelationFilter
   materials?: Prisma.ProductMaterialListRelationFilter
@@ -659,6 +662,7 @@ export type ProductCreateInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
@@ -702,6 +706,7 @@ export type ProductUncheckedCreateInput = {
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
@@ -743,6 +748,7 @@ export type ProductUpdateInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
@@ -786,6 +792,7 @@ export type ProductUncheckedUpdateInput = {
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -1184,6 +1191,20 @@ export type ProductUncheckedUpdateManyWithoutSizeNestedInput = {
   deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
 }
 
+export type ProductCreateNestedOneWithoutChatItemsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutChatItemsInput, Prisma.ProductUncheckedCreateWithoutChatItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutChatItemsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutChatItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutChatItemsInput, Prisma.ProductUncheckedCreateWithoutChatItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutChatItemsInput
+  upsert?: Prisma.ProductUpsertWithoutChatItemsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutChatItemsInput, Prisma.ProductUpdateWithoutChatItemsInput>, Prisma.ProductUncheckedUpdateWithoutChatItemsInput>
+}
+
 export type ProductCreateNestedOneWithoutOrderItemsInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutOrderItemsInput, Prisma.ProductUncheckedCreateWithoutOrderItemsInput>
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutOrderItemsInput
@@ -1425,6 +1446,7 @@ export type ProductCreateWithoutAssistentSellInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
 }
@@ -1466,6 +1488,7 @@ export type ProductUncheckedCreateWithoutAssistentSellInput = {
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
@@ -1568,6 +1591,7 @@ export type ProductCreateWithoutCategoryInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
@@ -1610,6 +1634,7 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
@@ -1676,6 +1701,7 @@ export type ProductCreateWithoutBrandInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
@@ -1718,6 +1744,7 @@ export type ProductUncheckedCreateWithoutBrandInput = {
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
@@ -1784,6 +1811,7 @@ export type ProductCreateWithoutSizeInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
@@ -1826,6 +1854,7 @@ export type ProductUncheckedCreateWithoutSizeInput = {
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
@@ -1854,6 +1883,190 @@ export type ProductUpdateWithWhereUniqueWithoutSizeInput = {
 export type ProductUpdateManyWithWhereWithoutSizeInput = {
   where: Prisma.ProductScalarWhereInput
   data: Prisma.XOR<Prisma.ProductUpdateManyMutationInput, Prisma.ProductUncheckedUpdateManyWithoutSizeInput>
+}
+
+export type ProductCreateWithoutChatItemsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  price?: number
+  discountPct?: number
+  finalPrice?: number
+  currency?: string
+  catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
+  condition: string
+  tags?: Prisma.ProductCreatetagsInput | string[]
+  meterials?: Prisma.ProductCreatemeterialsInput | string[]
+  color: string
+  care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
+  allow_offer?: boolean
+  return_window?: number
+  donation_percent?: number
+  donationAnonymous?: boolean
+  isDeleted?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
+  images?: Prisma.ProductPictureCreateNestedManyWithoutProductInput
+  brand: Prisma.BrandCreateNestedOneWithoutProductsInput
+  size: Prisma.SizeCreateNestedOneWithoutProductsInput
+  category: Prisma.CategoryCreateNestedOneWithoutProductsInput
+  charities?: Prisma.ProductCharityCreateNestedManyWithoutProductInput
+  user: Prisma.UserCreateNestedOneWithoutProductsInput
+  favourites?: Prisma.FavouriteCreateNestedManyWithoutProductInput
+  orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
+  viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
+  questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
+  cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
+  offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
+  materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutChatItemsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  price?: number
+  discountPct?: number
+  finalPrice?: number
+  currency?: string
+  brandId: string
+  sizeId: string
+  categoryId: string
+  catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
+  condition: string
+  tags?: Prisma.ProductCreatetagsInput | string[]
+  meterials?: Prisma.ProductCreatemeterialsInput | string[]
+  color: string
+  care_instructions?: Prisma.ProductCreatecare_instructionsInput | string[]
+  stock?: number
+  allow_offer?: boolean
+  return_window?: number
+  donation_percent?: number
+  donationAnonymous?: boolean
+  isDeleted?: boolean
+  userId: string
+  assistentSellId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  weight_kg: number
+  hight_cm: number
+  width_cm: number
+  length_cm: number
+  images?: Prisma.ProductPictureUncheckedCreateNestedManyWithoutProductInput
+  charities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutProductInput
+  favourites?: Prisma.FavouriteUncheckedCreateNestedManyWithoutProductInput
+  orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
+  viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
+  questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
+  cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
+  materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutChatItemsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutChatItemsInput, Prisma.ProductUncheckedCreateWithoutChatItemsInput>
+}
+
+export type ProductUpsertWithoutChatItemsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutChatItemsInput, Prisma.ProductUncheckedUpdateWithoutChatItemsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutChatItemsInput, Prisma.ProductUncheckedCreateWithoutChatItemsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutChatItemsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutChatItemsInput, Prisma.ProductUncheckedUpdateWithoutChatItemsInput>
+}
+
+export type ProductUpdateWithoutChatItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.FloatFieldUpdateOperationsInput | number
+  discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
+  condition?: Prisma.StringFieldUpdateOperationsInput | string
+  tags?: Prisma.ProductUpdatetagsInput | string[]
+  meterials?: Prisma.ProductUpdatemeterialsInput | string[]
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  images?: Prisma.ProductPictureUpdateManyWithoutProductNestedInput
+  brand?: Prisma.BrandUpdateOneRequiredWithoutProductsNestedInput
+  size?: Prisma.SizeUpdateOneRequiredWithoutProductsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
+  charities?: Prisma.ProductCharityUpdateManyWithoutProductNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutProductsNestedInput
+  favourites?: Prisma.FavouriteUpdateManyWithoutProductNestedInput
+  orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
+  viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
+  questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
+  cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
+  offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
+  materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutChatItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.FloatFieldUpdateOperationsInput | number
+  discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  brandId?: Prisma.StringFieldUpdateOperationsInput | string
+  sizeId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
+  condition?: Prisma.StringFieldUpdateOperationsInput | string
+  tags?: Prisma.ProductUpdatetagsInput | string[]
+  meterials?: Prisma.ProductUpdatemeterialsInput | string[]
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  care_instructions?: Prisma.ProductUpdatecare_instructionsInput | string[]
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  allow_offer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  return_window?: Prisma.IntFieldUpdateOperationsInput | number
+  donation_percent?: Prisma.FloatFieldUpdateOperationsInput | number
+  donationAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assistentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight_kg?: Prisma.FloatFieldUpdateOperationsInput | number
+  hight_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  width_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  length_cm?: Prisma.FloatFieldUpdateOperationsInput | number
+  images?: Prisma.ProductPictureUncheckedUpdateManyWithoutProductNestedInput
+  charities?: Prisma.ProductCharityUncheckedUpdateManyWithoutProductNestedInput
+  favourites?: Prisma.FavouriteUncheckedUpdateManyWithoutProductNestedInput
+  orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
+  viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
+  questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
+  cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
+  materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutOrderItemsInput = {
@@ -1892,6 +2105,7 @@ export type ProductCreateWithoutOrderItemsInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
@@ -1934,6 +2148,7 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
@@ -1990,6 +2205,7 @@ export type ProductUpdateWithoutOrderItemsInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
@@ -2032,6 +2248,7 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -2073,6 +2290,7 @@ export type ProductCreateWithoutMaterialsInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
 }
@@ -2115,6 +2333,7 @@ export type ProductUncheckedCreateWithoutMaterialsInput = {
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
 }
 
@@ -2171,6 +2390,7 @@ export type ProductUpdateWithoutMaterialsInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
 }
@@ -2213,6 +2433,7 @@ export type ProductUncheckedUpdateWithoutMaterialsInput = {
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
@@ -2252,6 +2473,7 @@ export type ProductCreateWithoutImagesInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
@@ -2294,6 +2516,7 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
@@ -2350,6 +2573,7 @@ export type ProductUpdateWithoutImagesInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
@@ -2392,6 +2616,7 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -2432,6 +2657,7 @@ export type ProductCreateWithoutCharitiesInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
@@ -2474,6 +2700,7 @@ export type ProductUncheckedCreateWithoutCharitiesInput = {
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
@@ -2530,6 +2757,7 @@ export type ProductUpdateWithoutCharitiesInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
@@ -2572,6 +2800,7 @@ export type ProductUncheckedUpdateWithoutCharitiesInput = {
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -2612,6 +2841,7 @@ export type ProductCreateWithoutFavouritesInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
@@ -2654,6 +2884,7 @@ export type ProductUncheckedCreateWithoutFavouritesInput = {
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
@@ -2710,6 +2941,7 @@ export type ProductUpdateWithoutFavouritesInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
@@ -2752,6 +2984,7 @@ export type ProductUncheckedUpdateWithoutFavouritesInput = {
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -2792,6 +3025,7 @@ export type ProductCreateWithoutCartItemsInput = {
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
@@ -2834,6 +3068,7 @@ export type ProductUncheckedCreateWithoutCartItemsInput = {
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
@@ -2890,6 +3125,7 @@ export type ProductUpdateWithoutCartItemsInput = {
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
@@ -2932,6 +3168,7 @@ export type ProductUncheckedUpdateWithoutCartItemsInput = {
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -2973,6 +3210,7 @@ export type ProductCreateWithoutOfferItemsInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
 }
@@ -3015,6 +3253,7 @@ export type ProductUncheckedCreateWithoutOfferItemsInput = {
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
 
@@ -3071,6 +3310,7 @@ export type ProductUpdateWithoutOfferItemsInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
 }
@@ -3113,6 +3353,7 @@ export type ProductUncheckedUpdateWithoutOfferItemsInput = {
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
 
@@ -3152,6 +3393,7 @@ export type ProductCreateWithoutViewersInput = {
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
@@ -3194,6 +3436,7 @@ export type ProductUncheckedCreateWithoutViewersInput = {
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
@@ -3250,6 +3493,7 @@ export type ProductUpdateWithoutViewersInput = {
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
@@ -3292,6 +3536,7 @@ export type ProductUncheckedUpdateWithoutViewersInput = {
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -3332,6 +3577,7 @@ export type ProductCreateWithoutQuestionsInput = {
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
@@ -3374,6 +3620,7 @@ export type ProductUncheckedCreateWithoutQuestionsInput = {
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
@@ -3430,6 +3677,7 @@ export type ProductUpdateWithoutQuestionsInput = {
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
@@ -3472,6 +3720,7 @@ export type ProductUncheckedUpdateWithoutQuestionsInput = {
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -3512,6 +3761,7 @@ export type ProductCreateWithoutUserInput = {
   viewers?: Prisma.ProductViewCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemCreateNestedManyWithoutProductInput
   assistentSell?: Prisma.AssistentSellCreateNestedOneWithoutListingsInput
   offerItems?: Prisma.OfferItemCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialCreateNestedManyWithoutProductInput
@@ -3554,6 +3804,7 @@ export type ProductUncheckedCreateWithoutUserInput = {
   viewers?: Prisma.ProductViewUncheckedCreateNestedManyWithoutProductInput
   questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutProductInput
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutProductInput
+  chatItems?: Prisma.ChatItemUncheckedCreateNestedManyWithoutProductInput
   offerItems?: Prisma.OfferItemUncheckedCreateNestedManyWithoutProductInput
   materials?: Prisma.ProductMaterialUncheckedCreateNestedManyWithoutProductInput
 }
@@ -3653,6 +3904,7 @@ export type ProductUpdateWithoutAssistentSellInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
 }
@@ -3694,6 +3946,7 @@ export type ProductUncheckedUpdateWithoutAssistentSellInput = {
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -3798,6 +4051,7 @@ export type ProductUpdateWithoutCategoryInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
@@ -3840,6 +4094,7 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -3944,6 +4199,7 @@ export type ProductUpdateWithoutBrandInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
@@ -3986,6 +4242,7 @@ export type ProductUncheckedUpdateWithoutBrandInput = {
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -4090,6 +4347,7 @@ export type ProductUpdateWithoutSizeInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
@@ -4132,6 +4390,7 @@ export type ProductUncheckedUpdateWithoutSizeInput = {
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -4236,6 +4495,7 @@ export type ProductUpdateWithoutUserInput = {
   viewers?: Prisma.ProductViewUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUpdateManyWithoutProductNestedInput
   assistentSell?: Prisma.AssistentSellUpdateOneWithoutListingsNestedInput
   offerItems?: Prisma.OfferItemUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUpdateManyWithoutProductNestedInput
@@ -4278,6 +4538,7 @@ export type ProductUncheckedUpdateWithoutUserInput = {
   viewers?: Prisma.ProductViewUncheckedUpdateManyWithoutProductNestedInput
   questions?: Prisma.QuestionUncheckedUpdateManyWithoutProductNestedInput
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutProductNestedInput
+  chatItems?: Prisma.ChatItemUncheckedUpdateManyWithoutProductNestedInput
   offerItems?: Prisma.OfferItemUncheckedUpdateManyWithoutProductNestedInput
   materials?: Prisma.ProductMaterialUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -4327,6 +4588,7 @@ export type ProductCountOutputType = {
   viewers: number
   questions: number
   cartItems: number
+  chatItems: number
   offerItems: number
   materials: number
 }
@@ -4339,6 +4601,7 @@ export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   viewers?: boolean | ProductCountOutputTypeCountViewersArgs
   questions?: boolean | ProductCountOutputTypeCountQuestionsArgs
   cartItems?: boolean | ProductCountOutputTypeCountCartItemsArgs
+  chatItems?: boolean | ProductCountOutputTypeCountChatItemsArgs
   offerItems?: boolean | ProductCountOutputTypeCountOfferItemsArgs
   materials?: boolean | ProductCountOutputTypeCountMaterialsArgs
 }
@@ -4405,6 +4668,13 @@ export type ProductCountOutputTypeCountCartItemsArgs<ExtArgs extends runtime.Typ
 /**
  * ProductCountOutputType without action
  */
+export type ProductCountOutputTypeCountChatItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChatItemWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
 export type ProductCountOutputTypeCountOfferItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.OfferItemWhereInput
 }
@@ -4459,6 +4729,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   viewers?: boolean | Prisma.Product$viewersArgs<ExtArgs>
   questions?: boolean | Prisma.Product$questionsArgs<ExtArgs>
   cartItems?: boolean | Prisma.Product$cartItemsArgs<ExtArgs>
+  chatItems?: boolean | Prisma.Product$chatItemsArgs<ExtArgs>
   assistentSell?: boolean | Prisma.Product$assistentSellArgs<ExtArgs>
   offerItems?: boolean | Prisma.Product$offerItemsArgs<ExtArgs>
   materials?: boolean | Prisma.Product$materialsArgs<ExtArgs>
@@ -4587,6 +4858,7 @@ export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   viewers?: boolean | Prisma.Product$viewersArgs<ExtArgs>
   questions?: boolean | Prisma.Product$questionsArgs<ExtArgs>
   cartItems?: boolean | Prisma.Product$cartItemsArgs<ExtArgs>
+  chatItems?: boolean | Prisma.Product$chatItemsArgs<ExtArgs>
   assistentSell?: boolean | Prisma.Product$assistentSellArgs<ExtArgs>
   offerItems?: boolean | Prisma.Product$offerItemsArgs<ExtArgs>
   materials?: boolean | Prisma.Product$materialsArgs<ExtArgs>
@@ -4621,6 +4893,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     viewers: Prisma.$ProductViewPayload<ExtArgs>[]
     questions: Prisma.$QuestionPayload<ExtArgs>[]
     cartItems: Prisma.$CartItemPayload<ExtArgs>[]
+    chatItems: Prisma.$ChatItemPayload<ExtArgs>[]
     assistentSell: Prisma.$AssistentSellPayload<ExtArgs> | null
     offerItems: Prisma.$OfferItemPayload<ExtArgs>[]
     materials: Prisma.$ProductMaterialPayload<ExtArgs>[]
@@ -5061,6 +5334,7 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   viewers<T extends Prisma.Product$viewersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$viewersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   questions<T extends Prisma.Product$questionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cartItems<T extends Prisma.Product$cartItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$cartItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CartItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  chatItems<T extends Prisma.Product$chatItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$chatItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assistentSell<T extends Prisma.Product$assistentSellArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$assistentSellArgs<ExtArgs>>): Prisma.Prisma__AssistentSellClient<runtime.Types.Result.GetResult<Prisma.$AssistentSellPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   offerItems<T extends Prisma.Product$offerItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$offerItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   materials<T extends Prisma.Product$materialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$materialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductMaterialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5684,6 +5958,30 @@ export type Product$cartItemsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.CartItemScalarFieldEnum | Prisma.CartItemScalarFieldEnum[]
+}
+
+/**
+ * Product.chatItems
+ */
+export type Product$chatItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChatItem
+   */
+  select?: Prisma.ChatItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChatItem
+   */
+  omit?: Prisma.ChatItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChatItemInclude<ExtArgs> | null
+  where?: Prisma.ChatItemWhereInput
+  orderBy?: Prisma.ChatItemOrderByWithRelationInput | Prisma.ChatItemOrderByWithRelationInput[]
+  cursor?: Prisma.ChatItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChatItemScalarFieldEnum | Prisma.ChatItemScalarFieldEnum[]
 }
 
 /**

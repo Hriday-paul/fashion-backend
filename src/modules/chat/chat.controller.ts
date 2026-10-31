@@ -25,7 +25,7 @@ const getMyChatList = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getChatById = catchAsync(async (req: Request, res: Response) => {
-  const result = await chatService.getChatById(req.params.id);
+  const result = await chatService.getChatById(req.params.id, req.user.id);
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -54,10 +54,21 @@ const deleteChat = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const createOfferByChatForBuy = catchAsync(async (req: Request, res: Response) => {
+  const result = await chatService.createOfferByChatForBuy(req.body, req.user.id);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Offer created successfully',
+    data: result,
+  });
+});
+
 export const chatController = {
   createChat,
   getMyChatList,
   getChatById,
   updateChat,
   deleteChat,
+  createOfferByChatForBuy
 };

@@ -410,6 +410,7 @@ export const ModelName = {
   Follow: 'Follow',
   Chat: 'Chat',
   Message: 'Message',
+  ChatItem: 'ChatItem',
   FileMessage: 'FileMessage',
   Order: 'Order',
   OrderItem: 'OrderItem',
@@ -471,7 +472,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "parcelSuggestion" | "directDonation" | "clothDonation" | "clothDonationPhoto" | "donationThanksMSg" | "follow" | "chat" | "message" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "charitableOrganization" | "charityShop" | "ecoFriendlyStore" | "celebrity" | "ambassador" | "professionalSeller" | "auth" | "user" | "charityGallery" | "profilePicture" | "charityThumbnail" | "accountDocument" | "billingDetails" | "notification" | "setting" | "sellCountries" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction" | "walletPayout"
+    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "parcelSuggestion" | "directDonation" | "clothDonation" | "clothDonationPhoto" | "donationThanksMSg" | "follow" | "chat" | "message" | "chatItem" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "charitableOrganization" | "charityShop" | "ecoFriendlyStore" | "celebrity" | "ambassador" | "professionalSeller" | "auth" | "user" | "charityGallery" | "profilePicture" | "charityThumbnail" | "accountDocument" | "billingDetails" | "notification" | "setting" | "sellCountries" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction" | "walletPayout"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2026,6 +2027,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MessageCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MessageCountAggregateOutputType> | number
+        }
+      }
+    }
+    ChatItem: {
+      payload: Prisma.$ChatItemPayload<ExtArgs>
+      fields: Prisma.ChatItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ChatItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ChatItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatItemPayload>
+        }
+        findFirst: {
+          args: Prisma.ChatItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ChatItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatItemPayload>
+        }
+        findMany: {
+          args: Prisma.ChatItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatItemPayload>[]
+        }
+        create: {
+          args: Prisma.ChatItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatItemPayload>
+        }
+        createMany: {
+          args: Prisma.ChatItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ChatItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatItemPayload>[]
+        }
+        delete: {
+          args: Prisma.ChatItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatItemPayload>
+        }
+        update: {
+          args: Prisma.ChatItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.ChatItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ChatItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ChatItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.ChatItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatItemPayload>
+        }
+        aggregate: {
+          args: Prisma.ChatItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChatItem>
+        }
+        groupBy: {
+          args: Prisma.ChatItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChatItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ChatItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChatItemCountAggregateOutputType> | number
         }
       }
     }
@@ -5756,6 +5831,18 @@ export const MessageScalarFieldEnum = {
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
 
 
+export const ChatItemScalarFieldEnum = {
+  id: 'id',
+  chatId: 'chatId',
+  productId: 'productId',
+  quantity: 'quantity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChatItemScalarFieldEnum = (typeof ChatItemScalarFieldEnum)[keyof typeof ChatItemScalarFieldEnum]
+
+
 export const FileMessageScalarFieldEnum = {
   id: 'id',
   key: 'key',
@@ -7244,6 +7331,7 @@ export type GlobalOmitConfig = {
   follow?: Prisma.FollowOmit
   chat?: Prisma.ChatOmit
   message?: Prisma.MessageOmit
+  chatItem?: Prisma.ChatItemOmit
   fileMessage?: Prisma.FileMessageOmit
   order?: Prisma.OrderOmit
   orderItem?: Prisma.OrderItemOmit

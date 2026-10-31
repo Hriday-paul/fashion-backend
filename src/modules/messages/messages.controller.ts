@@ -44,7 +44,7 @@ const createMessages = catchAsync(async (req: Request, res: Response) => {
 const getAllPreMessages = catchAsync(async (req: Request, res: Response) => {
   const options = pick(req.query, PaginateOptions);
 
-  const result = await messagesService.getAllPreMessages(req?.params?.friendUserName, req?.user?.id, options);
+  const result = await messagesService.getAllPreMessages(req?.params?.chatId, req?.user?.id, options);
   sendResponse(res, {
     statusCode: 200,
     success: true,
