@@ -29,9 +29,9 @@ model Product {
 
     stock Int @default(0)
 
-    allow_offer Boolean @default(false)
+    allow_offer Boolean @default(true)
 
-    return_window Int @default(0)
+    return_window Int @default(7)
 
     charities        ProductCharity[]
     donation_percent Float            @default(0)

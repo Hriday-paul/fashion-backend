@@ -119,12 +119,14 @@ export const redisKeys = {
         const userVersion = cUserId ? await redisKeys.userVersion({ userId: cUserId }) : "public";
         const productVersion = await redisKeys.productsVersion();
 
+        const userCartVersion = cUserId ? await redisKeys.userCartVersion({ userId: cUserId }) : "public";
+
         const hash = createHash("sha1")
             .update(JSON.stringify(query))
             .digest("hex")
             .slice(0, 24);
 
-        return `seller-products:${sellerId}:pv${productVersion}:uv${userVersion}:${hash}`;
+        return `seller-products:${sellerId}:pv${productVersion}:uv${userVersion}:cv${userCartVersion}:${hash}`;
     },
 
     smilarProductsOnSellerKey: async ({ productId, userId }: { productId: string; userId?: string }) => {

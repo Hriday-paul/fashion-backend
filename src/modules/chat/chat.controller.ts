@@ -5,6 +5,7 @@ import { chatService } from './chat.service';
 import { Role } from '../../../generated/prisma/enums';
 
 const createChat = catchAsync(async (req: Request, res: Response) => {
+  req.body.currentUserId = req.user.id;
   const chat = await chatService.createChat(req.body);
   sendResponse(res, {
     statusCode: 200,

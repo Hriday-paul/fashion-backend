@@ -1,13 +1,17 @@
 import { check } from "express-validator";
 
 export const createChatValidation = [
-  check("participants")
-    .isArray({ min: 2, max: 2 })
-    .withMessage("participants must be an array with exactly 2 user IDs"),
+  check("products")
+    .isArray({ min: 1 })
+    .withMessage("products must be an array with at least 1 product ID"),
 
-  check("participants.*")
+  check("products.*")
     .notEmpty()
-    .withMessage("participant ID cannot be empty")
+    .withMessage("product ID cannot be empty"),
+
+  check("user2Id")
+    .isString()
+    .withMessage("seller ID must be a string"),
 ];
 
 export const createChatBuyValidation = [

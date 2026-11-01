@@ -26,7 +26,7 @@ type ProductOtherPayload = {
 
 const addNewProduct = async (payload: Product & ProductOtherPayload, role: string, userId: string) => {
 
-    const { images, charities, donationPrivacy, createdAt, updatedAt, catagory_hierarchy, finalPrice, discountPct, price, ...morePayload } = payload;
+    const { images, charities, donationPrivacy, createdAt, updatedAt, catagory_hierarchy, finalPrice, discountPct, price, meterials, ...morePayload } = payload;
 
     //charity required for all roles, without eco friendly store and charity shop and charitable organization
 
@@ -110,7 +110,12 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
             finalPrice: lastPrice,
             stock: 1,
             catagory_hierarchy: hierarchy,
-            userId
+            userId,
+            materials: {
+                createMany: {
+                    data: meterials?.map(m => ({ materialId: m }))
+                }
+            }
         }
     });
 
@@ -324,6 +329,7 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
 }
 
 const productsByUserId = async (query: Record<string, unknown>, options: TPaginationOptions, userId: string, currentUser?: string) => {
+
     const AndConditions: Prisma.ProductWhereInput[] = [{ isDeleted: false }, { userId }];
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
@@ -890,6 +896,11 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
             brand: true,
             size: true,
             images: true,
+            materials: {
+                include: {
+                    material: true
+                }
+            },
             charities: {
                 include: {
                     charity: {
@@ -915,6 +926,7 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
             },
             user: {
                 select: {
+                    id: true,
                     auth: {
                         select: {
                             role: true
@@ -1605,22 +1617,57 @@ const dropPriceForAProduct = async (payload: { productId: string, newPrice: numb
 
 }
 
-const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: number, sellerId: string }, currentUser: { id: string, userName: string }) => {
-
+const makeAnOfferAsBuyer = async (
+    payload: {
+        productIds: string[];
+        offerPrice: number;
+        sellerId: string;
+    },
+    currentUser: {
+        id: string;
+        userName: string;
+    }
+) => {
     const { id: currentUserId, userName: currentUserName } = currentUser;
 
-    const { productIds, offerPrice, sellerId } = payload;
+    const {
+        productIds,
+        offerPrice,
+        sellerId: user2Id
+    } = payload;
 
+    // Basic validation
+    if (!productIds?.length || !user2Id || offerPrice <= 0) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            "Invalid offer information"
+        );
+    }
+
+    if (currentUserId === user2Id) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            "You cannot send an offer to yourself"
+        );
+    }
+
+    if (new Set(productIds).size !== productIds.length) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            "Duplicate products are not allowed"
+        );
+    }
+
+    // Fetch products without restricting ownership
     const products = await prisma.product.findMany({
         where: {
             id: { in: productIds },
             isDeleted: false,
-            stock: { gt: 0 },
-            userId: { not: currentUserId, equals: sellerId }
+            stock: { gt: 0 }
         },
         select: {
-            finalPrice: true,
             id: true,
+            finalPrice: true,
             userId: true,
             images: {
                 orderBy: {
@@ -1635,42 +1682,119 @@ const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: n
     });
 
     if (products.length !== productIds.length) {
-        throw new AppError(httpStatus.NOT_FOUND, "Some items doesn't exist");
+        throw new AppError(
+            httpStatus.NOT_FOUND,
+            "Some items don't exist or are unavailable"
+        );
     }
 
-    const receiver = await prisma.user.findFirst({ where: { id: sellerId, auth: { isverified: true, status: true } }, select: { userName: true, fcmToken: true, id: true } });
+    // Ensure all products belong to the same seller
+    const productOwnerIds = [
+        ...new Set(products.map(product => product.userId))
+    ];
+
+    if (productOwnerIds.length !== 1) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            "All products must belong to the same seller"
+        );
+    }
+
+    const productOwnerId = productOwnerIds[0];
+
+    // Automatically identify buyer and seller
+    const sendByBuyer = productOwnerId !== currentUserId;
+
+    const buyerId = sendByBuyer
+        ? currentUserId
+        : user2Id;
+
+    const actualSellerId = sendByBuyer
+        ? productOwnerId
+        : currentUserId;
+
+    // Validate receiver
+    if (sendByBuyer && productOwnerId !== user2Id) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            "Invalid seller"
+        );
+    }
+
+    if (!sendByBuyer && user2Id !== buyerId) {
+        throw new AppError(
+            httpStatus.BAD_REQUEST,
+            "Invalid buyer"
+        );
+    }
+
+    // Get receiver information
+    const receiver = await prisma.user.findFirst({
+        where: {
+            id: user2Id,
+            auth: {
+                isverified: true,
+                status: true
+            }
+        },
+        select: {
+            userName: true,
+            fcmToken: true,
+            id: true
+        }
+    });
 
     if (!receiver) {
-        throw new AppError(httpStatus.NOT_FOUND, "Seller Does not exist");
+        throw new AppError(
+            httpStatus.NOT_FOUND,
+            "Receiver does not exist"
+        );
     }
 
-    const chat = await chatService.createChat({ currentUserId: currentUserId, user2Id: sellerId, products: productIds });
+    // Create or retrieve chat
+    const chat = await chatService.createChat({
+        currentUserId,
+        user2Id,
+        products: productIds
+    });
 
+    // Create offer and message
     const result = await prisma.$transaction(async (tx) => {
 
         const offer = await tx.offer.create({
             data: {
-                buyerId: currentUserId,
-                sellerId,
+                buyerId,
+                sellerId: actualSellerId,
                 offeredPrice: offerPrice,
-                actualPrice: products.reduce((sum, p) => sum + p.finalPrice, 0),
+
+                actualPrice: products.reduce(
+                    (sum, product) => sum + product.finalPrice,
+                    0
+                ),
+
                 offerItems: {
-                    create: products.map(p => ({
-                        productId: p?.id,
+                    create: products.map(product => ({
+                        productId: product.id,
                         quantity: 1
                     }))
                 },
-                sendByBuyer: true,
-                status: "PENDING"
+
+                expiredAt: sendByBuyer ? null : moment().add(24, 'hours').toDate(),
+
+                sendByBuyer,
+                // Buyer sends → PENDING
+                // Seller sends → ACCEPTED
+                status: sendByBuyer ? "PENDING" : "ACCEPTED"
+
             }
         });
 
         const msg = await tx.message.create({
             data: {
-                receiverId: sellerId,
+                receiverId: user2Id,
                 senderId: currentUserId,
-                offerId: offer?.id,
-                chatId: chat?.id
+                offerId: offer.id,
+                chatId: chat.id
             },
             include: {
                 files: true,
@@ -1709,6 +1833,9 @@ const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: n
                                         title: true,
                                         images: {
                                             take: 1,
+                                            orderBy: {
+                                                order: "asc"
+                                            },
                                             select: {
                                                 id: true,
                                                 url: true
@@ -1731,35 +1858,47 @@ const makeAnOfferAsBuyer = async (payload: { productIds: string[], offerPrice: n
                     }
                 }
             }
-        })
+        });
 
         return { msg, offer };
-    })
+    });
 
-    //send a message about the offer
-    SendMessageHandle((global as any).socketio, result?.msg, () => { });
+    // Send realtime message
+    SendMessageHandle(
+        (global as any).socketio,
+        result.msg,
+        () => { }
+    );
 
-    const isbundle = products.length > 1;
+    // Notification
+    const isBundle = products.length > 1;
 
-    //send notification to the seller about the offer
+    const notificationTitle = sendByBuyer
+        ? `**${currentUserName}** sent you ${isBundle ? "a bundle" : "an"} offer`
+        : `**${currentUserName}** sent you ${isBundle ? "a bundle" : "an"} offer`;
+
+    const notificationMessage = sendByBuyer
+        ? `**${currentUserName}** sent you ${isBundle ? "a bundle" : "an"} offer to purchase your items.`
+        : `**${currentUserName}** sent you ${isBundle ? "a bundle" : "an"} offer to purchase`;
+
     await notificationQueue.add(jobs.notification, {
         allowPushNotification: true,
         payload: {
-            title: `**${currentUserName}** sent you ${isbundle ? 'a bundle' : 'an'} offer`,
-            message: `**${currentUserName}** sent you ${isbundle ? 'a bundle' : 'an'} offer to purchase your items.`,
+            title: notificationTitle,
+            message: notificationMessage,
             actorId: currentUserId,
-            receiverId: receiver?.id,
-            entityId: currentUserName,
+            receiverId: receiver.id,
+            entityId: chat?.id,
             entityType: "OFFER",
-            entityImgs: products?.map(p => p?.images[0]?.url),
-            type: "OFFER_RECEIVED",
-            fcmToken: receiver?.fcmToken,
-            groupKeyId: result?.offer?.id,
+            entityImgs: products.map(product => product.images[0]?.url),
+            type: sendByBuyer ? "OFFER_RECEIVED" : "OFFER_ACCEPTED",
+            fcmToken: receiver.fcmToken,
+            groupKeyId: result.offer.id
         }
-    })
+    });
 
-    return;
-}
+    return result;
+};
 
 const acceptOfferAsSeller = async (offerId: string, currentUser: { id: string, userName: string }) => {
 
@@ -1879,7 +2018,7 @@ const acceptOfferAsSeller = async (offerId: string, currentUser: { id: string, u
             message: `Your placed offer has been accepted! Complete the purchase within 24 hours, as the accepted offer will expire after 24 hours.`,
             actorId: currentUserId,
             receiverId: offer?.buyerId,
-            entityId: currentUserName,
+            entityId: msg?.chatId || msg?.id || currentUserName,
             entityType: "OFFER",
             entityImgs: offer?.offerItems?.map(i => i?.product?.images[0]?.url),
             type: "OFFER_ACCEPTED",
@@ -2117,7 +2256,7 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
             message: `**${currentUserName}** sent you a counter offer after reviewing your offer.`,
             actorId: currentUserId,
             receiverId: offer?.buyerId,
-            entityId: currentUserName,
+            entityId: chat?.id,
             entityType: "OFFER",
             entityImgs: offer?.offerItems?.map(i => i?.product?.images[0]?.url),
             type: "OFFER_RECEIVED",

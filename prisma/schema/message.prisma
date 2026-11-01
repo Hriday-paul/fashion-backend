@@ -13,7 +13,6 @@ model Chat {
 
     items ChatItem[]
 
-    @@unique([user1Id, user2Id])
     @@index([user1Id, user2Id])
     @@index([user2Id, user1Id])
     @@map("chatGroups")

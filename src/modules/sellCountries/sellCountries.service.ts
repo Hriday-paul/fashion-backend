@@ -69,7 +69,7 @@ const getCountryByCode = async (code: string) => {
     const cacheKey = await redisKeys.sellCountryByCodeKey({ code });
     const cachedData = await redisPub.get(cacheKey);
     if (cachedData) {
-        
+
         return JSON.parse(cachedData);
     }
 
@@ -77,10 +77,9 @@ const getCountryByCode = async (code: string) => {
         where: { code }
     });
 
-    if (result) {
-        //set data on redis cache for future requests
-        await redisPub.setEx(cacheKey, 3600, JSON.stringify(result)); // cache for 1 hour
-    }
+
+    //set data on redis cache for future requests
+    await redisPub.setEx(cacheKey, 3600, JSON.stringify(result)); // cache for 1 hour
 
     return result;
 };

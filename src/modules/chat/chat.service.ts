@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import AppError from '../../error/AppError';
 import { Chat, Prisma } from '../../../generated/prisma/client';
 import prisma from '../../shared/prisma';
+import moment from 'moment';
 
 type TPerticipents = {
   currentUserId: string;
@@ -11,69 +12,93 @@ type TPerticipents = {
 
 // Create chat
 const createChat = async (payload: TPerticipents) => {
+  const { currentUserId, user2Id } = payload;
 
-  const { currentUserId, user2Id, products } = payload;
+  // Remove duplicate product IDs
+  const products = [...new Set(payload.products)];
 
   if (currentUserId === user2Id) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'You cannot create chat with yourself');
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'You cannot create chat with yourself'
+    );
   }
 
-  const friend = await prisma.user.findFirst({ where: { id: user2Id, auth: { isverified: true, status: true } } });
+  if (!products.length) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'At least one product is required'
+    );
+  }
+
+  const friend = await prisma.user.findFirst({
+    where: {
+      id: user2Id,
+      auth: {
+        isverified: true,
+        status: true,
+        approval_status: 'Approved'
+      }
+    }
+  });
 
   if (!friend) {
     throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid user');
   }
 
-  //existing empty msg check
-  const existingChat = await prisma.chat.findFirst({
+  // Find existing chats between these users
+  const existingChats = await prisma.chat.findMany({
     where: {
       OR: [
-        {
-          AND: [
-            { user1Id: currentUserId },
-            { user2Id: user2Id }
-          ]
-        },
-        {
-          AND: [
-            { user1Id: user2Id },
-            { user2Id: currentUserId }
-          ]
-        },
+        { user1Id: currentUserId, user2Id },
+        { user1Id: user2Id, user2Id: currentUserId }
       ],
       items: {
         some: {
           productId: { in: products }
         }
-      },
+      }
     },
     include: {
       items: true
     }
   });
 
-  if (existingChat && existingChat.items.length === products.length) {
+  // Check exact product matching
+  const existingChat = existingChats.find(chat => {
+    const existingProducts = chat.items
+      .map(item => item.productId)
+      .sort();
+
+    const requestedProducts = [...products].sort();
+
+    return (
+      existingProducts.length === requestedProducts.length &&
+      existingProducts.every(
+        (id, index) => id === requestedProducts[index]
+      )
+    );
+  });
+
+  if (existingChat) {
     return existingChat;
   }
 
-  // create chat if not exist
-  const result = await prisma.chat.create({
+  // Create new chat
+  return prisma.chat.create({
     data: {
       user1Id: currentUserId,
       user2Id,
       items: {
         createMany: {
-          data: products.map((productId) => ({ productId }))
+          data: products.map(productId => ({ productId }))
         }
       }
+    },
+    include: {
+      items: true
     }
-  })
-
-  if (!result) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Chat creation failed');
-  }
-
-  return result;
+  });
 };
 
 // Get my chat list
@@ -90,6 +115,11 @@ const getMyChatList = async (userId: string, query?: Record<string, unknown>) =>
           user2Id: userId
         }
       ]
+    },
+    {
+      messages: {
+        some: {}
+      }
     }
   ];
 
@@ -220,6 +250,7 @@ const getChatById = async (chatId: string, userId: string) => {
         include: {
           product: {
             select: {
+              userId: true,
               id: true,
               title: true,
               finalPrice: true,
@@ -268,12 +299,15 @@ const getChatById = async (chatId: string, userId: string) => {
     }
   });
 
+  const isImSeller = chat?.items.some(item => item.product.userId === userId);
+
   return {
     id: chat.id,
     user,
     items: chat.items,
     itemsPrice,
-    isUnavailable
+    isUnavailable,
+    isImSeller
   };
 
 
@@ -359,6 +393,7 @@ const createOfferByChatForBuy = async (payload: { sellerId: string, chatId: stri
           quantity: 1
         }))
       },
+      expiredAt: moment().add(3, 'days').toDate(),
       sendByBuyer: true,
       status: "ACCEPTED"
     }

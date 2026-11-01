@@ -108,7 +108,7 @@ export const JoinChatRoom = async ({ socket, chatId, callback }: { socket: Socke
 
 export const SendMessageHandle = async (
     io: Server,
-    payload: Message & { sender: { userName: string } },
+    payload: Message,
     callback: (arg: any) => void
 ) => {
     try {
@@ -142,7 +142,7 @@ export const SendMessageHandle = async (
 
 export const UpdateMessageHandle = async (
     io: Server,
-    payload: Message & { sender: { userName: string } },
+    payload: Message,
     callback: (arg: any) => void
 ) => {
     try {
@@ -211,12 +211,14 @@ export const MsgSeenHandle = async (
         //--------update message seen---------
         await messagesService.seenMessage(userId, chatId)
 
-        const user1Id = chat.user1Id
+        const user1Id = chat.user1Id;
         const user2Id = chat.user2Id;
 
         //---------------hit on chatlist for see unread message count with the chatList------------------//
         getChatList(user1Id, io, callback)
         getChatList(user2Id, io, callback)
+
+        io.to(`chat::${chatId}`).emit(`seen-message`, { chatId, userId });
 
         // const getPreMessage = await prisma.message.findMany({
         //     where: {

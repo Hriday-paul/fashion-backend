@@ -456,7 +456,17 @@ const userDetailsWithbalanceAdmin = async (userName: string) => {
                 select: {
                     balance: true
                 }
-            }
+            },
+
+            account_documents : true,
+
+            //roles
+            charitableOrganization: true,
+            charityShop: true,
+            ecoFriendlyStore: true,
+            celebrity: true,
+            ambassador: true,
+            professionalSeller: true,
         },
     });
 
