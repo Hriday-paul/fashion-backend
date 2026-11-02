@@ -13,8 +13,6 @@ async function main() {
     // await KeywordSeed(prisma);
 
     // await UserSeed(prisma);
-
-    await prisma.chat.deleteMany({ where: {} });
     
 }
 
