@@ -1109,6 +1109,7 @@ export const ShipmentScalarFieldEnum = {
   deliveryCharge: 'deliveryCharge',
   originId: 'originId',
   destinationId: 'destinationId',
+  userId: 'userId',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

@@ -30,6 +30,9 @@ model Shipment {
     destinationId String
     destination   BillingDetails @relation("DestinationAddress", fields: [destinationId], references: [id], onDelete: Cascade)
 
+    userId String?
+    user   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
     status ShipmentStatus @default(PENDING)
 
     events ShipmentEvent[]

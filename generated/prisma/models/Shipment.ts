@@ -48,6 +48,7 @@ export type ShipmentMinAggregateOutputType = {
   deliveryCharge: number | null
   originId: string | null
   destinationId: string | null
+  userId: string | null
   status: $Enums.ShipmentStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -68,6 +69,7 @@ export type ShipmentMaxAggregateOutputType = {
   deliveryCharge: number | null
   originId: string | null
   destinationId: string | null
+  userId: string | null
   status: $Enums.ShipmentStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -88,6 +90,7 @@ export type ShipmentCountAggregateOutputType = {
   deliveryCharge: number
   originId: number
   destinationId: number
+  userId: number
   status: number
   createdAt: number
   updatedAt: number
@@ -118,6 +121,7 @@ export type ShipmentMinAggregateInputType = {
   deliveryCharge?: true
   originId?: true
   destinationId?: true
+  userId?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -138,6 +142,7 @@ export type ShipmentMaxAggregateInputType = {
   deliveryCharge?: true
   originId?: true
   destinationId?: true
+  userId?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -158,6 +163,7 @@ export type ShipmentCountAggregateInputType = {
   deliveryCharge?: true
   originId?: true
   destinationId?: true
+  userId?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -265,6 +271,7 @@ export type ShipmentGroupByOutputType = {
   deliveryCharge: number
   originId: string
   destinationId: string
+  userId: string
   status: $Enums.ShipmentStatus
   createdAt: Date
   updatedAt: Date
@@ -308,6 +315,7 @@ export type ShipmentWhereInput = {
   deliveryCharge?: Prisma.FloatFilter<"Shipment"> | number
   originId?: Prisma.StringFilter<"Shipment"> | string
   destinationId?: Prisma.StringFilter<"Shipment"> | string
+  userId?: Prisma.StringFilter<"Shipment"> | string
   status?: Prisma.EnumShipmentStatusFilter<"Shipment"> | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
@@ -318,6 +326,7 @@ export type ShipmentWhereInput = {
   clothDonation?: Prisma.XOR<Prisma.ClothDonationNullableScalarRelationFilter, Prisma.ClothDonationWhereInput> | null
   origin?: Prisma.XOR<Prisma.BillingDetailsScalarRelationFilter, Prisma.BillingDetailsWhereInput>
   destination?: Prisma.XOR<Prisma.BillingDetailsScalarRelationFilter, Prisma.BillingDetailsWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   events?: Prisma.ShipmentEventListRelationFilter
 }
 
@@ -336,6 +345,7 @@ export type ShipmentOrderByWithRelationInput = {
   deliveryCharge?: Prisma.SortOrder
   originId?: Prisma.SortOrder
   destinationId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -346,6 +356,7 @@ export type ShipmentOrderByWithRelationInput = {
   clothDonation?: Prisma.ClothDonationOrderByWithRelationInput
   origin?: Prisma.BillingDetailsOrderByWithRelationInput
   destination?: Prisma.BillingDetailsOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
   events?: Prisma.ShipmentEventOrderByRelationAggregateInput
 }
 
@@ -367,6 +378,7 @@ export type ShipmentWhereUniqueInput = Prisma.AtLeast<{
   deliveryCharge?: Prisma.FloatFilter<"Shipment"> | number
   originId?: Prisma.StringFilter<"Shipment"> | string
   destinationId?: Prisma.StringFilter<"Shipment"> | string
+  userId?: Prisma.StringFilter<"Shipment"> | string
   status?: Prisma.EnumShipmentStatusFilter<"Shipment"> | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
@@ -377,6 +389,7 @@ export type ShipmentWhereUniqueInput = Prisma.AtLeast<{
   clothDonation?: Prisma.XOR<Prisma.ClothDonationNullableScalarRelationFilter, Prisma.ClothDonationWhereInput> | null
   origin?: Prisma.XOR<Prisma.BillingDetailsScalarRelationFilter, Prisma.BillingDetailsWhereInput>
   destination?: Prisma.XOR<Prisma.BillingDetailsScalarRelationFilter, Prisma.BillingDetailsWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   events?: Prisma.ShipmentEventListRelationFilter
 }, "id" | "assitentSellId" | "returnId" | "clothDonationId">
 
@@ -395,6 +408,7 @@ export type ShipmentOrderByWithAggregationInput = {
   deliveryCharge?: Prisma.SortOrder
   originId?: Prisma.SortOrder
   destinationId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -423,6 +437,7 @@ export type ShipmentScalarWhereWithAggregatesInput = {
   deliveryCharge?: Prisma.FloatWithAggregatesFilter<"Shipment"> | number
   originId?: Prisma.StringWithAggregatesFilter<"Shipment"> | string
   destinationId?: Prisma.StringWithAggregatesFilter<"Shipment"> | string
+  userId?: Prisma.StringWithAggregatesFilter<"Shipment"> | string
   status?: Prisma.EnumShipmentStatusWithAggregatesFilter<"Shipment"> | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Shipment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Shipment"> | Date | string
@@ -448,6 +463,7 @@ export type ShipmentCreateInput = {
   clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
+  user: Prisma.UserCreateNestedOneWithoutShipmentsInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
 }
 
@@ -466,6 +482,7 @@ export type ShipmentUncheckedCreateInput = {
   deliveryCharge?: number
   originId: string
   destinationId: string
+  userId: string
   status?: $Enums.ShipmentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -494,6 +511,7 @@ export type ShipmentUpdateInput = {
   clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutShipmentsNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
 }
 
@@ -512,6 +530,7 @@ export type ShipmentUncheckedUpdateInput = {
   deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
   originId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -535,6 +554,7 @@ export type ShipmentCreateManyInput = {
   deliveryCharge?: number
   originId: string
   destinationId: string
+  userId: string
   status?: $Enums.ShipmentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -570,6 +590,7 @@ export type ShipmentUncheckedUpdateManyInput = {
   deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
   originId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -610,6 +631,7 @@ export type ShipmentCountOrderByAggregateInput = {
   deliveryCharge?: Prisma.SortOrder
   originId?: Prisma.SortOrder
   destinationId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -634,6 +656,7 @@ export type ShipmentMaxOrderByAggregateInput = {
   deliveryCharge?: Prisma.SortOrder
   originId?: Prisma.SortOrder
   destinationId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -654,6 +677,7 @@ export type ShipmentMinOrderByAggregateInput = {
   deliveryCharge?: Prisma.SortOrder
   originId?: Prisma.SortOrder
   destinationId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -789,6 +813,48 @@ export type ShipmentUncheckedUpdateOneWithoutReturnNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ShipmentUpdateToOneWithWhereWithoutReturnInput, Prisma.ShipmentUpdateWithoutReturnInput>, Prisma.ShipmentUncheckedUpdateWithoutReturnInput>
 }
 
+export type ShipmentCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutUserInput, Prisma.ShipmentUncheckedCreateWithoutUserInput> | Prisma.ShipmentCreateWithoutUserInput[] | Prisma.ShipmentUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutUserInput | Prisma.ShipmentCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ShipmentCreateManyUserInputEnvelope
+  connect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
+}
+
+export type ShipmentUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutUserInput, Prisma.ShipmentUncheckedCreateWithoutUserInput> | Prisma.ShipmentCreateWithoutUserInput[] | Prisma.ShipmentUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutUserInput | Prisma.ShipmentCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ShipmentCreateManyUserInputEnvelope
+  connect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
+}
+
+export type ShipmentUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutUserInput, Prisma.ShipmentUncheckedCreateWithoutUserInput> | Prisma.ShipmentCreateWithoutUserInput[] | Prisma.ShipmentUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutUserInput | Prisma.ShipmentCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ShipmentUpsertWithWhereUniqueWithoutUserInput | Prisma.ShipmentUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ShipmentCreateManyUserInputEnvelope
+  set?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
+  disconnect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
+  delete?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
+  connect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
+  update?: Prisma.ShipmentUpdateWithWhereUniqueWithoutUserInput | Prisma.ShipmentUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ShipmentUpdateManyWithWhereWithoutUserInput | Prisma.ShipmentUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ShipmentScalarWhereInput | Prisma.ShipmentScalarWhereInput[]
+}
+
+export type ShipmentUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutUserInput, Prisma.ShipmentUncheckedCreateWithoutUserInput> | Prisma.ShipmentCreateWithoutUserInput[] | Prisma.ShipmentUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutUserInput | Prisma.ShipmentCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ShipmentUpsertWithWhereUniqueWithoutUserInput | Prisma.ShipmentUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ShipmentCreateManyUserInputEnvelope
+  set?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
+  disconnect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
+  delete?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
+  connect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
+  update?: Prisma.ShipmentUpdateWithWhereUniqueWithoutUserInput | Prisma.ShipmentUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ShipmentUpdateManyWithWhereWithoutUserInput | Prisma.ShipmentUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ShipmentScalarWhereInput | Prisma.ShipmentScalarWhereInput[]
+}
+
 export type ShipmentCreateNestedManyWithoutOriginInput = {
   create?: Prisma.XOR<Prisma.ShipmentCreateWithoutOriginInput, Prisma.ShipmentUncheckedCreateWithoutOriginInput> | Prisma.ShipmentCreateWithoutOriginInput[] | Prisma.ShipmentUncheckedCreateWithoutOriginInput[]
   connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutOriginInput | Prisma.ShipmentCreateOrConnectWithoutOriginInput[]
@@ -910,6 +976,7 @@ export type ShipmentCreateWithoutAssitentSellInput = {
   clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
+  user: Prisma.UserCreateNestedOneWithoutShipmentsInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
 }
 
@@ -927,6 +994,7 @@ export type ShipmentUncheckedCreateWithoutAssitentSellInput = {
   deliveryCharge?: number
   originId: string
   destinationId: string
+  userId: string
   status?: $Enums.ShipmentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -970,6 +1038,7 @@ export type ShipmentUpdateWithoutAssitentSellInput = {
   clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutShipmentsNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
 }
 
@@ -987,6 +1056,7 @@ export type ShipmentUncheckedUpdateWithoutAssitentSellInput = {
   deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
   originId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1014,6 +1084,7 @@ export type ShipmentCreateWithoutClothDonationInput = {
   return?: Prisma.ReturnCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
+  user: Prisma.UserCreateNestedOneWithoutShipmentsInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
 }
 
@@ -1031,6 +1102,7 @@ export type ShipmentUncheckedCreateWithoutClothDonationInput = {
   deliveryCharge?: number
   originId: string
   destinationId: string
+  userId: string
   status?: $Enums.ShipmentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1074,6 +1146,7 @@ export type ShipmentUpdateWithoutClothDonationInput = {
   return?: Prisma.ReturnUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutShipmentsNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
 }
 
@@ -1091,6 +1164,7 @@ export type ShipmentUncheckedUpdateWithoutClothDonationInput = {
   deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
   originId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1118,6 +1192,7 @@ export type ShipmentCreateWithoutOrderInput = {
   clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
+  user: Prisma.UserCreateNestedOneWithoutShipmentsInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
 }
 
@@ -1136,6 +1211,7 @@ export type ShipmentUncheckedCreateWithoutOrderInput = {
   deliveryCharge?: number
   originId: string
   destinationId: string
+  userId: string
   status?: $Enums.ShipmentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1167,6 +1243,7 @@ export type ShipmentCreateWithoutAuthOrderInput = {
   clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
+  user: Prisma.UserCreateNestedOneWithoutShipmentsInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
 }
 
@@ -1185,6 +1262,7 @@ export type ShipmentUncheckedCreateWithoutAuthOrderInput = {
   deliveryCharge?: number
   originId: string
   destinationId: string
+  userId: string
   status?: $Enums.ShipmentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1227,6 +1305,7 @@ export type ShipmentUpdateWithoutOrderInput = {
   clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutShipmentsNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
 }
 
@@ -1245,6 +1324,7 @@ export type ShipmentUncheckedUpdateWithoutOrderInput = {
   deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
   originId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1282,6 +1362,7 @@ export type ShipmentUpdateWithoutAuthOrderInput = {
   clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutShipmentsNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
 }
 
@@ -1300,6 +1381,7 @@ export type ShipmentUncheckedUpdateWithoutAuthOrderInput = {
   deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
   originId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1326,6 +1408,7 @@ export type ShipmentCreateWithoutReturnInput = {
   clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
+  user: Prisma.UserCreateNestedOneWithoutShipmentsInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
 }
 
@@ -1343,6 +1426,7 @@ export type ShipmentUncheckedCreateWithoutReturnInput = {
   deliveryCharge?: number
   originId: string
   destinationId: string
+  userId: string
   status?: $Enums.ShipmentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1386,6 +1470,7 @@ export type ShipmentUpdateWithoutReturnInput = {
   clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutShipmentsNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
 }
 
@@ -1403,12 +1488,109 @@ export type ShipmentUncheckedUpdateWithoutReturnInput = {
   deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
   originId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.OrderUncheckedUpdateOneWithoutShipmentNestedInput
   authOrder?: Prisma.OrderUncheckedUpdateOneWithoutAuthShipmentNestedInput
   events?: Prisma.ShipmentEventUncheckedUpdateManyWithoutShipmentNestedInput
+}
+
+export type ShipmentCreateWithoutUserInput = {
+  id?: string
+  courier_service_id: string
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
+  trackingNumber?: string | null
+  trackingUrl?: string | null
+  deliveryCharge?: number
+  status?: $Enums.ShipmentStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  order?: Prisma.OrderCreateNestedOneWithoutShipmentInput
+  authOrder?: Prisma.OrderCreateNestedOneWithoutAuthShipmentInput
+  assitentSell?: Prisma.AssistentSellCreateNestedOneWithoutShipmentInput
+  return?: Prisma.ReturnCreateNestedOneWithoutShipmentInput
+  clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
+  origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
+  destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
+  events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
+}
+
+export type ShipmentUncheckedCreateWithoutUserInput = {
+  id?: string
+  assitentSellId?: string | null
+  returnId?: string | null
+  clothDonationId?: string | null
+  courier_service_id: string
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
+  trackingNumber?: string | null
+  trackingUrl?: string | null
+  deliveryCharge?: number
+  originId: string
+  destinationId: string
+  status?: $Enums.ShipmentStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  order?: Prisma.OrderUncheckedCreateNestedOneWithoutShipmentInput
+  authOrder?: Prisma.OrderUncheckedCreateNestedOneWithoutAuthShipmentInput
+  events?: Prisma.ShipmentEventUncheckedCreateNestedManyWithoutShipmentInput
+}
+
+export type ShipmentCreateOrConnectWithoutUserInput = {
+  where: Prisma.ShipmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.ShipmentCreateWithoutUserInput, Prisma.ShipmentUncheckedCreateWithoutUserInput>
+}
+
+export type ShipmentCreateManyUserInputEnvelope = {
+  data: Prisma.ShipmentCreateManyUserInput | Prisma.ShipmentCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type ShipmentUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ShipmentWhereUniqueInput
+  update: Prisma.XOR<Prisma.ShipmentUpdateWithoutUserInput, Prisma.ShipmentUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.ShipmentCreateWithoutUserInput, Prisma.ShipmentUncheckedCreateWithoutUserInput>
+}
+
+export type ShipmentUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ShipmentWhereUniqueInput
+  data: Prisma.XOR<Prisma.ShipmentUpdateWithoutUserInput, Prisma.ShipmentUncheckedUpdateWithoutUserInput>
+}
+
+export type ShipmentUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.ShipmentScalarWhereInput
+  data: Prisma.XOR<Prisma.ShipmentUpdateManyMutationInput, Prisma.ShipmentUncheckedUpdateManyWithoutUserInput>
+}
+
+export type ShipmentScalarWhereInput = {
+  AND?: Prisma.ShipmentScalarWhereInput | Prisma.ShipmentScalarWhereInput[]
+  OR?: Prisma.ShipmentScalarWhereInput[]
+  NOT?: Prisma.ShipmentScalarWhereInput | Prisma.ShipmentScalarWhereInput[]
+  id?: Prisma.StringFilter<"Shipment"> | string
+  assitentSellId?: Prisma.StringNullableFilter<"Shipment"> | string | null
+  returnId?: Prisma.StringNullableFilter<"Shipment"> | string | null
+  clothDonationId?: Prisma.StringNullableFilter<"Shipment"> | string | null
+  courier_service_id?: Prisma.StringFilter<"Shipment"> | string
+  shippingId?: Prisma.StringFilter<"Shipment"> | string
+  isLebelGenerated?: Prisma.BoolFilter<"Shipment"> | boolean
+  lebelUrl?: Prisma.StringNullableFilter<"Shipment"> | string | null
+  parcelId?: Prisma.StringNullableFilter<"Shipment"> | string | null
+  trackingNumber?: Prisma.StringNullableFilter<"Shipment"> | string | null
+  trackingUrl?: Prisma.StringNullableFilter<"Shipment"> | string | null
+  deliveryCharge?: Prisma.FloatFilter<"Shipment"> | number
+  originId?: Prisma.StringFilter<"Shipment"> | string
+  destinationId?: Prisma.StringFilter<"Shipment"> | string
+  userId?: Prisma.StringFilter<"Shipment"> | string
+  status?: Prisma.EnumShipmentStatusFilter<"Shipment"> | $Enums.ShipmentStatus
+  createdAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
 }
 
 export type ShipmentCreateWithoutOriginInput = {
@@ -1430,6 +1612,7 @@ export type ShipmentCreateWithoutOriginInput = {
   return?: Prisma.ReturnCreateNestedOneWithoutShipmentInput
   clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
+  user: Prisma.UserCreateNestedOneWithoutShipmentsInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
 }
 
@@ -1447,6 +1630,7 @@ export type ShipmentUncheckedCreateWithoutOriginInput = {
   trackingUrl?: string | null
   deliveryCharge?: number
   destinationId: string
+  userId: string
   status?: $Enums.ShipmentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1484,6 +1668,7 @@ export type ShipmentCreateWithoutDestinationInput = {
   return?: Prisma.ReturnCreateNestedOneWithoutShipmentInput
   clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
+  user: Prisma.UserCreateNestedOneWithoutShipmentsInput
   events?: Prisma.ShipmentEventCreateNestedManyWithoutShipmentInput
 }
 
@@ -1501,6 +1686,7 @@ export type ShipmentUncheckedCreateWithoutDestinationInput = {
   trackingUrl?: string | null
   deliveryCharge?: number
   originId: string
+  userId: string
   status?: $Enums.ShipmentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1533,29 +1719,6 @@ export type ShipmentUpdateWithWhereUniqueWithoutOriginInput = {
 export type ShipmentUpdateManyWithWhereWithoutOriginInput = {
   where: Prisma.ShipmentScalarWhereInput
   data: Prisma.XOR<Prisma.ShipmentUpdateManyMutationInput, Prisma.ShipmentUncheckedUpdateManyWithoutOriginInput>
-}
-
-export type ShipmentScalarWhereInput = {
-  AND?: Prisma.ShipmentScalarWhereInput | Prisma.ShipmentScalarWhereInput[]
-  OR?: Prisma.ShipmentScalarWhereInput[]
-  NOT?: Prisma.ShipmentScalarWhereInput | Prisma.ShipmentScalarWhereInput[]
-  id?: Prisma.StringFilter<"Shipment"> | string
-  assitentSellId?: Prisma.StringNullableFilter<"Shipment"> | string | null
-  returnId?: Prisma.StringNullableFilter<"Shipment"> | string | null
-  clothDonationId?: Prisma.StringNullableFilter<"Shipment"> | string | null
-  courier_service_id?: Prisma.StringFilter<"Shipment"> | string
-  shippingId?: Prisma.StringFilter<"Shipment"> | string
-  isLebelGenerated?: Prisma.BoolFilter<"Shipment"> | boolean
-  lebelUrl?: Prisma.StringNullableFilter<"Shipment"> | string | null
-  parcelId?: Prisma.StringNullableFilter<"Shipment"> | string | null
-  trackingNumber?: Prisma.StringNullableFilter<"Shipment"> | string | null
-  trackingUrl?: Prisma.StringNullableFilter<"Shipment"> | string | null
-  deliveryCharge?: Prisma.FloatFilter<"Shipment"> | number
-  originId?: Prisma.StringFilter<"Shipment"> | string
-  destinationId?: Prisma.StringFilter<"Shipment"> | string
-  status?: Prisma.EnumShipmentStatusFilter<"Shipment"> | $Enums.ShipmentStatus
-  createdAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
 }
 
 export type ShipmentUpsertWithWhereUniqueWithoutDestinationInput = {
@@ -1594,6 +1757,7 @@ export type ShipmentCreateWithoutEventsInput = {
   clothDonation?: Prisma.ClothDonationCreateNestedOneWithoutShipmentInput
   origin: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsOriginInput
   destination: Prisma.BillingDetailsCreateNestedOneWithoutShipmentsAsDestinationInput
+  user: Prisma.UserCreateNestedOneWithoutShipmentsInput
 }
 
 export type ShipmentUncheckedCreateWithoutEventsInput = {
@@ -1611,6 +1775,7 @@ export type ShipmentUncheckedCreateWithoutEventsInput = {
   deliveryCharge?: number
   originId: string
   destinationId: string
+  userId: string
   status?: $Enums.ShipmentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1654,9 +1819,76 @@ export type ShipmentUpdateWithoutEventsInput = {
   clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutShipmentsNestedInput
 }
 
 export type ShipmentUncheckedUpdateWithoutEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clothDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
+  originId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.OrderUncheckedUpdateOneWithoutShipmentNestedInput
+  authOrder?: Prisma.OrderUncheckedUpdateOneWithoutAuthShipmentNestedInput
+}
+
+export type ShipmentCreateManyUserInput = {
+  id?: string
+  assitentSellId?: string | null
+  returnId?: string | null
+  clothDonationId?: string | null
+  courier_service_id: string
+  shippingId: string
+  isLebelGenerated?: boolean
+  lebelUrl?: string | null
+  parcelId?: string | null
+  trackingNumber?: string | null
+  trackingUrl?: string | null
+  deliveryCharge?: number
+  originId: string
+  destinationId: string
+  status?: $Enums.ShipmentStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ShipmentUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.OrderUpdateOneWithoutShipmentNestedInput
+  authOrder?: Prisma.OrderUpdateOneWithoutAuthShipmentNestedInput
+  assitentSell?: Prisma.AssistentSellUpdateOneWithoutShipmentNestedInput
+  return?: Prisma.ReturnUpdateOneWithoutShipmentNestedInput
+  clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
+  origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
+  destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
+  events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
+}
+
+export type ShipmentUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1676,6 +1908,27 @@ export type ShipmentUncheckedUpdateWithoutEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.OrderUncheckedUpdateOneWithoutShipmentNestedInput
   authOrder?: Prisma.OrderUncheckedUpdateOneWithoutAuthShipmentNestedInput
+  events?: Prisma.ShipmentEventUncheckedUpdateManyWithoutShipmentNestedInput
+}
+
+export type ShipmentUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  assitentSellId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  returnId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clothDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courier_service_id?: Prisma.StringFieldUpdateOperationsInput | string
+  shippingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isLebelGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lebelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parcelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
+  originId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ShipmentCreateManyOriginInput = {
@@ -1692,6 +1945,7 @@ export type ShipmentCreateManyOriginInput = {
   trackingUrl?: string | null
   deliveryCharge?: number
   destinationId: string
+  userId: string
   status?: $Enums.ShipmentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1711,6 +1965,7 @@ export type ShipmentCreateManyDestinationInput = {
   trackingUrl?: string | null
   deliveryCharge?: number
   originId: string
+  userId: string
   status?: $Enums.ShipmentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1735,6 +1990,7 @@ export type ShipmentUpdateWithoutOriginInput = {
   return?: Prisma.ReturnUpdateOneWithoutShipmentNestedInput
   clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   destination?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsDestinationNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutShipmentsNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
 }
 
@@ -1752,6 +2008,7 @@ export type ShipmentUncheckedUpdateWithoutOriginInput = {
   trackingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
   destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1774,6 +2031,7 @@ export type ShipmentUncheckedUpdateManyWithoutOriginInput = {
   trackingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
   destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1798,6 +2056,7 @@ export type ShipmentUpdateWithoutDestinationInput = {
   return?: Prisma.ReturnUpdateOneWithoutShipmentNestedInput
   clothDonation?: Prisma.ClothDonationUpdateOneWithoutShipmentNestedInput
   origin?: Prisma.BillingDetailsUpdateOneRequiredWithoutShipmentsAsOriginNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutShipmentsNestedInput
   events?: Prisma.ShipmentEventUpdateManyWithoutShipmentNestedInput
 }
 
@@ -1815,6 +2074,7 @@ export type ShipmentUncheckedUpdateWithoutDestinationInput = {
   trackingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
   originId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1837,6 +2097,7 @@ export type ShipmentUncheckedUpdateManyWithoutDestinationInput = {
   trackingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryCharge?: Prisma.FloatFieldUpdateOperationsInput | number
   originId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1888,6 +2149,7 @@ export type ShipmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   deliveryCharge?: boolean
   originId?: boolean
   destinationId?: boolean
+  userId?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1898,6 +2160,7 @@ export type ShipmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   clothDonation?: boolean | Prisma.Shipment$clothDonationArgs<ExtArgs>
   origin?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   events?: boolean | Prisma.Shipment$eventsArgs<ExtArgs>
   _count?: boolean | Prisma.ShipmentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["shipment"]>
@@ -1917,6 +2180,7 @@ export type ShipmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   deliveryCharge?: boolean
   originId?: boolean
   destinationId?: boolean
+  userId?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1925,6 +2189,7 @@ export type ShipmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   clothDonation?: boolean | Prisma.Shipment$clothDonationArgs<ExtArgs>
   origin?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["shipment"]>
 
 export type ShipmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1942,6 +2207,7 @@ export type ShipmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   deliveryCharge?: boolean
   originId?: boolean
   destinationId?: boolean
+  userId?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1950,6 +2216,7 @@ export type ShipmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   clothDonation?: boolean | Prisma.Shipment$clothDonationArgs<ExtArgs>
   origin?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["shipment"]>
 
 export type ShipmentSelectScalar = {
@@ -1967,12 +2234,13 @@ export type ShipmentSelectScalar = {
   deliveryCharge?: boolean
   originId?: boolean
   destinationId?: boolean
+  userId?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ShipmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assitentSellId" | "returnId" | "clothDonationId" | "courier_service_id" | "shippingId" | "isLebelGenerated" | "lebelUrl" | "parcelId" | "trackingNumber" | "trackingUrl" | "deliveryCharge" | "originId" | "destinationId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["shipment"]>
+export type ShipmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assitentSellId" | "returnId" | "clothDonationId" | "courier_service_id" | "shippingId" | "isLebelGenerated" | "lebelUrl" | "parcelId" | "trackingNumber" | "trackingUrl" | "deliveryCharge" | "originId" | "destinationId" | "userId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["shipment"]>
 export type ShipmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.Shipment$orderArgs<ExtArgs>
   authOrder?: boolean | Prisma.Shipment$authOrderArgs<ExtArgs>
@@ -1981,6 +2249,7 @@ export type ShipmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   clothDonation?: boolean | Prisma.Shipment$clothDonationArgs<ExtArgs>
   origin?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   events?: boolean | Prisma.Shipment$eventsArgs<ExtArgs>
   _count?: boolean | Prisma.ShipmentCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1990,6 +2259,7 @@ export type ShipmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   clothDonation?: boolean | Prisma.Shipment$clothDonationArgs<ExtArgs>
   origin?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ShipmentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   assitentSell?: boolean | Prisma.Shipment$assitentSellArgs<ExtArgs>
@@ -1997,6 +2267,7 @@ export type ShipmentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   clothDonation?: boolean | Prisma.Shipment$clothDonationArgs<ExtArgs>
   origin?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.BillingDetailsDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $ShipmentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2009,6 +2280,7 @@ export type $ShipmentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     clothDonation: Prisma.$ClothDonationPayload<ExtArgs> | null
     origin: Prisma.$BillingDetailsPayload<ExtArgs>
     destination: Prisma.$BillingDetailsPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs>
     events: Prisma.$ShipmentEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -2026,6 +2298,7 @@ export type $ShipmentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     deliveryCharge: number
     originId: string
     destinationId: string
+    userId: string
     status: $Enums.ShipmentStatus
     createdAt: Date
     updatedAt: Date
@@ -2430,6 +2703,7 @@ export interface Prisma__ShipmentClient<T, Null = never, ExtArgs extends runtime
   clothDonation<T extends Prisma.Shipment$clothDonationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shipment$clothDonationArgs<ExtArgs>>): Prisma.Prisma__ClothDonationClient<runtime.Types.Result.GetResult<Prisma.$ClothDonationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   origin<T extends Prisma.BillingDetailsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillingDetailsDefaultArgs<ExtArgs>>): Prisma.Prisma__BillingDetailsClient<runtime.Types.Result.GetResult<Prisma.$BillingDetailsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   destination<T extends Prisma.BillingDetailsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillingDetailsDefaultArgs<ExtArgs>>): Prisma.Prisma__BillingDetailsClient<runtime.Types.Result.GetResult<Prisma.$BillingDetailsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   events<T extends Prisma.Shipment$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shipment$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShipmentEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2474,6 +2748,7 @@ export interface ShipmentFieldRefs {
   readonly deliveryCharge: Prisma.FieldRef<"Shipment", 'Float'>
   readonly originId: Prisma.FieldRef<"Shipment", 'String'>
   readonly destinationId: Prisma.FieldRef<"Shipment", 'String'>
+  readonly userId: Prisma.FieldRef<"Shipment", 'String'>
   readonly status: Prisma.FieldRef<"Shipment", 'ShipmentStatus'>
   readonly createdAt: Prisma.FieldRef<"Shipment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Shipment", 'DateTime'>

@@ -31,6 +31,34 @@ const notificationWorker = new Worker("notification", async (job: Job<{ allowPus
 
 }, { connection: connectionInfo });
 
+const multiNotificationWorker = new Worker("multi-notification", async (job: Job<{
+    payload: Notification[],
+    title: string,
+    message: string
+}
+>) => {
+
+    const { payload, title, message } = job.data;
+
+    const tokens = payload.map(notification => notification.fcmToken).filter(token => token !== null)
+
+    //send push notification to the receiver
+    pushNotificationQueue.add(jobs.sendPushNotification, { tokens: tokens, payload: { title: title, message: message } });
+
+    //save notification to the database
+    await prisma.notification.createMany({
+        data: payload
+    });
+
+    for (const notification of payload) {
+        if (notification?.receiverId) {
+            //increment redis notification version for cache invalidation
+            await redisKeys.incrementNotificationVersion({ userId: notification.receiverId });
+        }
+    }
+
+}, { connection: connectionInfo });
+
 
 const pushnotificationWorker = new Worker("push-notification", async (job: Job<{ tokens: string[], payload: { title: string, message: string } }>) => {
 

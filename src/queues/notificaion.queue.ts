@@ -21,6 +21,24 @@ export const notificationQueue = new Queue<{ allowPushNotification: boolean, pay
     },
 );
 
+export const multiNotificationQueue = new Queue<{
+    payload: Notification[],
+    title: string,
+    message: string
+}>(
+    "multi-notification",
+    {
+        connection: connectionInfo,
+        defaultJobOptions: {
+            attempts: 3,
+            backoff: { type: "exponential", delay: 2000 },
+            removeOnComplete: true,
+            removeOnFail: 100
+        }
+
+    },
+);
+
 export const pushNotificationQueue = new Queue<{ tokens: string[], payload: { title: string, message: string } }>(
     "push-notification",
     {
@@ -36,7 +54,7 @@ export const pushNotificationQueue = new Queue<{ tokens: string[], payload: { ti
 );
 
 
-export const priceDropNotificationQueue = new Queue<{ productId : string, sellerId : string }>(
+export const priceDropNotificationQueue = new Queue<{ productId: string, sellerId: string }>(
     "price-drop-notification",
     {
         connection: connectionInfo,

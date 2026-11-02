@@ -852,6 +852,8 @@ const productAvailableRates = async (productId: string, userId: string, req: Req
         "calculate_tax_and_duties": true
     }
 
+    console.log(shipPayload);
+
     const cacheKey = buildRatesCacheKey(shipPayload);
 
     const cached = await redisPub.get(cacheKey);

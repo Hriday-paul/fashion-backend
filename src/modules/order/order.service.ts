@@ -358,7 +358,8 @@ const addNewOrder = async (
                 trackingUrl: shipmentData?.shipment?.tracking_page_url,
                 deliveryCharge: shippingRate,
                 originId: sellerDetails?.id,
-                destinationId: (payload?.allowedAuthentication && authAddress) ? authAddress : billing_details?.id
+                destinationId: (payload?.allowedAuthentication && authAddress) ? authAddress : billing_details?.id,
+                userId: userId,
             }
         });
 
@@ -839,7 +840,8 @@ const addNewOfferOrder = async (
                 trackingUrl: shipmentData?.shipment?.tracking_page_url,
                 deliveryCharge: shippingRate,
                 originId: sellerDetails?.id,
-                destinationId: (payload?.allowedAuthentication && authAddress) ? authAddress : billing_details?.id
+                destinationId: (payload?.allowedAuthentication && authAddress) ? authAddress : billing_details?.id,
+                userId: userId,
             }
         });
 
@@ -1235,7 +1237,8 @@ const addNewSingleOrder = async (payload: {
                 trackingUrl: shipmentData?.shipment?.tracking_page_url,
                 deliveryCharge: shippingRate,
                 originId: sellerDetails?.id,
-                destinationId: (allowedAuthentication && authAddress) ? authAddress : billing_details?.id
+                destinationId: (allowedAuthentication && authAddress) ? authAddress : billing_details?.id,
+                userId: userId,
             }
         });
 
@@ -4036,6 +4039,7 @@ const generateOrderAuthShipment = async (adminId: string, orderId: string) => {
                 deliveryCharge: shippingRate,
                 originId: authCenterlocation?.id,
                 destinationId: billing_details?.id,
+                userId: order?.buyerId,
             }
         });
 

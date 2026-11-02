@@ -159,6 +159,8 @@ model User {
 
   donationThanksMsgs DonationThanksMSg[]
 
+  shipments Shipment[]
+
   charitableOrganization CharitableOrganization?
   charityShop            CharityShop?
   ecoFriendlyStore       EcoFriendlyStore?
