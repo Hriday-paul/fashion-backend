@@ -2004,10 +2004,12 @@ export type UserCreateNestedOneWithoutShipmentsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutShipmentsNestedInput = {
+export type UserUpdateOneWithoutShipmentsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutShipmentsInput, Prisma.UserUncheckedCreateWithoutShipmentsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutShipmentsInput
   upsert?: Prisma.UserUpsertWithoutShipmentsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutShipmentsInput, Prisma.UserUpdateWithoutShipmentsInput>, Prisma.UserUncheckedUpdateWithoutShipmentsInput>
 }
