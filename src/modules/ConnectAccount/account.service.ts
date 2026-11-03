@@ -165,7 +165,7 @@ const requestToWithdraw = async (userId: string, amount: number) => {
         throw new AppError(httpStatus.NOT_FOUND, "Insufficient balance");
     }
 
-    if (wallet.balance < amount) {
+    if (wallet.balance.lessThan(amount)) {
         throw new AppError(httpStatus.BAD_REQUEST, "Insufficient balance");
     }
 
@@ -173,34 +173,11 @@ const requestToWithdraw = async (userId: string, amount: number) => {
         throw new AppError(httpStatus.BAD_REQUEST, "Payout account not connected");
     }
 
-    //check if there is already a pending withdraw request
-    let withDrawRequest = await prisma.walletPayout.findFirst({
-        where: {
-            walletId: wallet.id,
-            status: "PENDING",
-            userId: userId,
-            amount: amount
-        }
-    });
-
-    //create a withdraw request
-    withDrawRequest = await prisma.walletPayout.create({
-        data: {
-            amount: amount,
-            connectAccountId: wallet?.seller?.stripeAccountId,
-            walletId: wallet.id,
-            userId: userId,
-            status: "PENDING"
-        }
-    });
-
     //add job to withdraw queue
     await WithdrawQueue.add(jobs.withDrawBalance, {
-        withdrawId: withDrawRequest.id,
-        walletId: wallet.id,
         connectAccountId: wallet?.seller?.stripeAccountId,
-    }, {
-        jobId: `withdraw_${withDrawRequest.id}`,
+        userId,
+        amount
     });
 
     return;
@@ -211,7 +188,7 @@ const payoutHistory = async (userId: string, options: TPaginationOptions) => {
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const payouts = await prisma.walletPayout.findMany({
+    const payouts = await prisma.walletTransaction.findMany({
         where: {
             userId: userId
         },
@@ -222,7 +199,7 @@ const payoutHistory = async (userId: string, options: TPaginationOptions) => {
         },
     });
 
-    const total = await prisma.walletPayout.count({
+    const total = await prisma.walletTransaction.count({
         where: {
             userId: userId
         }

@@ -151,8 +151,6 @@ model User {
 
   badges UserBadge[]
 
-  payoutRequests WalletPayout[]
-
   bundleDiscount    BundleDiscount?
 
   charityThumbnail           CharityThumbnail?
@@ -160,6 +158,8 @@ model User {
   donationThanksMsgs DonationThanksMSg[]
 
   shipments Shipment[]
+
+  trnsactions WalletTransaction[]
 
   charitableOrganization CharitableOrganization?
   charityShop            CharityShop?
@@ -300,6 +300,7 @@ enum NotificationEntityType {
   BADGE
   WITHDRAWAL
   ASSISTED_SELL
+  PAYMENT
   OTHER
 }
 
@@ -350,6 +351,9 @@ enum NotificationType {
   //assisted sell
   ASSISTED_SELL_REQUEESTED
   ASSISTED_SELL_STATUS_UPDATED
+
+  REFUND
+  EARNING
 
   OTHER
 }

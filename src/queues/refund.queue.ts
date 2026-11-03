@@ -3,11 +3,12 @@ import { connectionInfo } from "../redis";
 
 export const RefundQueue = new Queue<{
         paymentId: string;
-        paymentIntentId: string;
         reason: string;
-        triggeredBy: string;
         markPaymentRefunded?: boolean;
-        amount?: number;
+        amount: number;
+        transactionMsg: string;
+        notificationMsg: string;
+        userId: string;
     }>("payment-refund", {
     connection: connectionInfo,
     defaultJobOptions: {

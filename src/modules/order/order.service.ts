@@ -1578,7 +1578,7 @@ const approveCancelOrderItemBySeller = async (orderItemId: string, current_selle
         );
     }
 
-    if (!order?.payment || !order?.payment?.paymentIntentId) {
+    if (!order?.payment) {
         throw new AppError(httpStatus.BAD_REQUEST, "Payment not found for this order")
     }
 
@@ -1682,15 +1682,17 @@ const approveCancelOrderItemBySeller = async (orderItemId: string, current_selle
     }
 
     const paymentId = order?.payment?.id;
-    const paymentIntentId = order?.payment?.paymentIntentId;
 
     await RefundQueue.add(jobs.refund, {
         paymentId,
-        paymentIntentId,
         reason: "Order item canceled for requested from buyer",
-        triggeredBy: "Seller",
+        notificationMsg: `Your purchase cancellation request has been approved. **$${refundAmount}** has been refunded to your FASHI-ON wallet.`,
+        transactionMsg: `Purchase Cancellation Refund`,
+        userId: order?.buyerId,
         markPaymentRefunded: false,
         amount: refundAmount
+    }, {
+        jobId: `refund-${paymentId}-${orderItemId}`,
     });
 
     return;
@@ -3216,7 +3218,7 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
 
     const sellerRefundItemsTotal = orderItems.reduce((acc, item) => acc + (item?.sellerFinalUnitPrice || 0), 0)
 
-    if (!order?.payment || !order?.payment?.paymentIntentId) {
+    if (!order?.payment) {
         throw new AppError(httpStatus.BAD_REQUEST, "Payment not found for this order, contact support")
     }
 
@@ -3332,15 +3334,17 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
     }
 
     const paymentId = order?.payment?.id;
-    const paymentIntentId = order?.payment?.paymentIntentId;
+
+    const totalRefundAmount = refundAmount + authenticationFee;
 
     await RefundQueue.add(jobs.refund, {
         paymentId,
-        paymentIntentId,
         reason: "Order item(s) cancelled by seller",
-        triggeredBy: "Seller",
+        notificationMsg: `Your purchase items has been cancelled by seller. **$${totalRefundAmount}** has been refunded to your FASHI-ON wallet.`,
+        transactionMsg: `Purchase Cancellation Refund`,
+        userId: order?.buyerId,
         markPaymentRefunded: allowCancelFullOrder ? true : false,
-        amount: refundAmount + authenticationFee
+        amount: totalRefundAmount,
     });
 
     return;
@@ -3837,14 +3841,17 @@ const addAuthResultToOrder = async (payload: { orderId: string; items: { itemId:
     const refundAmount = failedItems.reduce((acc, item) => acc + (item?.unitAllocatedPrice || 0), 0);
 
     if (refundAmount > 0) {
+
         await RefundQueue.add(jobs.refund, {
             paymentId: order?.payment?.id,
-            paymentIntentId: order?.payment?.paymentIntentId,
             reason: "Order item(s) failed authentication",
-            triggeredBy: "Authentication Center",
+            notificationMsg: `Your purchase items failed authentication. **$${refundAmount}** has been refunded to your FASHI-ON wallet.`,
+            transactionMsg: `Purchase Cancellation Refund`,
+            userId: order?.buyerId,
             markPaymentRefunded: false,
             amount: refundAmount
         });
+
     }
 
 

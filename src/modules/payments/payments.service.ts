@@ -11,9 +11,10 @@ import config from '../../config';
 import moment from 'moment';
 import { jobs } from '../../queues/jobs.name';
 import { BadgeGenerateQueue } from '../../queues/badge.queue';
-import { RefundQueue } from '../../queues/refund.queue';
 import { notificationQueue } from '../../queues/notificaion.queue';
 import { StockUpdateQueue } from '../../queues/stockUpdate.queue';
+import { RefundQueue } from '../../queues/refund.queue';
+import { UpdatebalanceQueue } from '../../queues/balance.queue';
 
 const stripe = new Stripe(config.stripe?.stripe_api_secret as string, {
   apiVersion: "2025-03-31.basil", // Valid API version
@@ -171,6 +172,9 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
           charity: {
             select: {
               id: true,
+              userName: true,
+              fname: true,
+              lname: true,
               fcmToken: true,
             }
           },
@@ -200,11 +204,24 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
     return { url: `${config.BASE_URL}${config.cancel_url}`, message: "Payment failed, please try again" };
   }
 
+  const isOrderpayment = payment?.paymentType === "ORDER" && payment?.order;
+
   try {
 
-    const isOrderpayment = payment?.paymentType === "ORDER" && payment?.order;
-
     await prisma.$transaction(async (transactionClient) => {
+
+
+      if (!payment?.userId) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Payment userId is missing");
+      }
+
+      const wallet = await transactionClient.wallet.findFirst({
+        where: { sellerId: payment?.userId }
+      });
+
+      if (!wallet) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Wallet not found for the user");
+      }
 
       //mark payment as complete
       await transactionClient.payment.update({
@@ -218,23 +235,27 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
         }
       });
 
-      //if donation payment, add balance to charity wallet
-      if (payment?.paymentType === "DONATION" && payment?.donation) {
+      const txType = isOrderpayment ? "PURCHASE" : "DONATION_SENT";
 
-        await transactionClient.wallet.upsert({
-          where: { sellerId: payment?.donation?.charityId },
-          create: {
-            balance: payment?.total_amount,
-            sellerId: payment?.donation?.charityId,
-          },
-          update: {
-            balance: {
-              increment: payment?.total_amount
-            }
-          }
-        });
+      const balanceBefore = Number(wallet?.balance ?? 0);
+      const amount = Number(payment?.total_amount ?? 0);
 
-      }
+      //create a wallet transaction for the payment by payer
+      await transactionClient.walletTransaction.create({
+        data: {
+          amount: payment?.total_amount,
+          direction: "OUT",
+          txType: txType,
+          balanceBefore,
+          balanceAfter: amount,
+          walletId: wallet?.id,
+          userId: payment?.userId,
+          stripeBalanceTransactionId: paymentIntentId,
+          refId: isOrderpayment ? payment?.orderId : payment?.donationId,
+          description: isOrderpayment ? `Purchase of Products` : `Donation to charity`,
+          createdAt: new Date(),
+        }
+      });
 
     })
 
@@ -292,6 +313,18 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
         BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "MONEY_DONOR", userId: payment?.donation?.donorId });
       }
 
+      const amount = PaymentSession.amount_total ? PaymentSession.amount_total / 100 : 0;
+
+      //create a wallet transaction for the charity with update balance
+      await UpdatebalanceQueue.add(jobs.updateBalance, {
+        userId: payment?.donation?.charityId,
+        amount: amount,
+        direction: "IN",
+        refId: paymentId,
+        type: "DONATION_RECEIVED",
+        description: `Donation Received`
+      });
+
       //send notification to the charity about donation received
       await notificationQueue.add(jobs.notification, {
         allowPushNotification: true,
@@ -318,12 +351,22 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
 
   } catch (error: any) {
 
+    const notiMsg = isOrderpayment ? `Your purchase payment has been failed. **$${payment?.total_amount}** has been refunded to your FASHI-ON wallet.` : `Your donation payment has been failed. **$${payment?.total_amount}** has been refunded to your FASHI-ON wallet.`;
+
+    const tranMsg = isOrderpayment ? `Purchase Payment Refund` : `Donation Payment Refund`;
+
+    const amount = PaymentSession.amount_total ? PaymentSession.amount_total / 100 : 0;
+
     await RefundQueue.add(jobs.refund, {
       paymentId,
-      paymentIntentId,
       reason: error?.message ?? "System error",
-      triggeredBy: "System",
+      notificationMsg: notiMsg,
+      transactionMsg: tranMsg,
+      userId: payment?.userId,
       markPaymentRefunded: true,
+      amount: amount
+    }, {
+      jobId: `refund-${paymentId}`,
     });
 
     return { url: `${config.BASE_URL}${config.cancel_url}`, message: "Payment failed, please try again" };

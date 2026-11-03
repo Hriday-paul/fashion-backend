@@ -376,8 +376,3 @@ export type Wallet = Prisma.WalletModel
  * 
  */
 export type WalletTransaction = Prisma.WalletTransactionModel
-/**
- * Model WalletPayout
- * 
- */
-export type WalletPayout = Prisma.WalletPayoutModel

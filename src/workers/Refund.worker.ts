@@ -1,58 +1,47 @@
 import { Job, UnrecoverableError, Worker } from "bullmq";
 import { connectionInfo } from "../redis";
 import prisma from "../shared/prisma";
-import { stripe } from "../modules/payments/payments.utils";
+import { UpdatebalanceQueue } from "../queues/balance.queue";
+import { jobs } from "../queues/jobs.name";
+import { notificationQueue } from "../queues/notificaion.queue";
 
 // workers/refund.worker.ts
 export const refundWorker = new Worker(
     "payment-refund",
     async (job: Job<{
         paymentId: string;
-        paymentIntentId: string;
         reason: string;
-        triggeredBy: string;
         markPaymentRefunded?: boolean;
-        amount?: number;
+        amount: number;
+        transactionMsg: string;
+        notificationMsg: string;
+        userId: string;
     }>) => {
-        const { paymentId, paymentIntentId, reason, triggeredBy, amount } = job.data;
 
-        const payment = await prisma.payment.findFirst({
-            where: { id: paymentId },
-        });
-
-        if (!payment) {
-            throw new UnrecoverableError("Payment does not exist");
-        }
-
-        const intentId = paymentIntentId
-        if (!intentId) throw new UnrecoverableError("No Stripe intent ID — cannot refund");
-
-
-        const refund = await stripe.refunds.create({
-            payment_intent: intentId,
-            // reverse_transfer: true,
-            // refund_application_fee: true,
-            amount: amount ? amount * 100 : undefined,
-            metadata: {
-                paymentId,
-                triggeredBy,
-                internalReason: reason,
-            }
-        });
+        const { paymentId, userId, reason, amount, transactionMsg } = job.data;
 
         //make a record of the refund in the database
         await prisma.refund.create({
             data: {
                 paymentId,
-                stripeRefundId: refund?.id,
-                amount: refund?.amount ? refund.amount / 100 : undefined,
+                amount,
                 reason,
                 refundedAt: new Date(),
-                status: "SUCCESSED"
+                status: "SUCCESSED",
             }
         });
 
-        return refund;
+        //update the balance of the user
+        await UpdatebalanceQueue.add(jobs.updateBalance, {
+            userId,
+            amount,
+            direction: "IN",
+            refId: paymentId,
+            type: "REFUND",
+            description: transactionMsg
+        });
+
+        return;
 
     },
     { connection: connectionInfo }
@@ -69,7 +58,7 @@ refundWorker.on("failed", async (job, err) => {
 
     if (!isExhausted && !isUnrecoverable) return;
 
-    const { paymentId, paymentIntentId, amount, reason } = job.data;
+    const { paymentId, userId, amount, reason } = job.data;
 
     try {
 
@@ -102,7 +91,7 @@ refundWorker.on("failed", async (job, err) => {
 refundWorker.on("completed", async (job, err) => {
     if (!job) return;
 
-    const { paymentId, paymentIntentId, markPaymentRefunded = true, reason, amount } = job.data;
+    const { paymentId, userId, markPaymentRefunded = true, reason, amount, notificationMsg } = job.data;
 
     try {
 
@@ -116,6 +105,30 @@ refundWorker.on("completed", async (job, err) => {
                 }
             });
         }
+
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            select: { fcmToken: true, id: true }
+        });
+
+        if (!user) return;
+
+        // Notify the seller
+        await notificationQueue.add(jobs.notification, {
+            allowPushNotification: true,
+            payload: {
+                title: "Refund Processed",
+                message: notificationMsg || `$${amount} has been refunded to your account.`,
+                actorId: user?.id,
+                receiverId: user?.id,
+                fcmToken: user?.fcmToken,
+                entityImgs: [],
+                entityId: paymentId,
+                entityType: "PAYMENT",
+                type: "REFUND",
+                groupKeyId: null,
+            }
+        });
 
 
     } catch (err) {

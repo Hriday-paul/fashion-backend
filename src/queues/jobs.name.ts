@@ -11,4 +11,5 @@ export const jobs = {
     badgeGenerate : "badgeGenerate",
     stockUpdate: "stockUpdate",
     withDrawBalance: "withDrawBalance",
+    updateBalance: "updateBalance",
 }

@@ -114,8 +114,7 @@ export const ModelName = {
   Shipment: 'Shipment',
   ShipmentEvent: 'ShipmentEvent',
   Wallet: 'Wallet',
-  WalletTransaction: 'WalletTransaction',
-  WalletPayout: 'WalletPayout'
+  WalletTransaction: 'WalletTransaction'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1149,39 +1148,20 @@ export type WalletScalarFieldEnum = (typeof WalletScalarFieldEnum)[keyof typeof 
 export const WalletTransactionScalarFieldEnum = {
   id: 'id',
   walletId: 'walletId',
-  creditType: 'creditType',
+  userId: 'userId',
   txType: 'txType',
+  direction: 'direction',
   amount: 'amount',
+  description: 'description',
+  stripeBalanceTransactionId: 'stripeBalanceTransactionId',
   balanceBefore: 'balanceBefore',
   balanceAfter: 'balanceAfter',
-  pendingBefore: 'pendingBefore',
-  pendingAfter: 'pendingAfter',
-  description: 'description',
-  orderId: 'orderId',
-  stripePayoutId: 'stripePayoutId',
-  idempotencyKey: 'idempotencyKey',
+  metadata: 'metadata',
+  refId: 'refId',
   createdAt: 'createdAt'
 } as const
 
 export type WalletTransactionScalarFieldEnum = (typeof WalletTransactionScalarFieldEnum)[keyof typeof WalletTransactionScalarFieldEnum]
-
-
-export const WalletPayoutScalarFieldEnum = {
-  id: 'id',
-  walletId: 'walletId',
-  amount: 'amount',
-  stripePayoutId: 'stripePayoutId',
-  status: 'status',
-  paidAt: 'paidAt',
-  connectAccountId: 'connectAccountId',
-  stripeBalanceTransactionId: 'stripeBalanceTransactionId',
-  payoutData: 'payoutData',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type WalletPayoutScalarFieldEnum = (typeof WalletPayoutScalarFieldEnum)[keyof typeof WalletPayoutScalarFieldEnum]
 
 
 export const SortOrder = {

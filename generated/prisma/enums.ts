@@ -334,6 +334,7 @@ export const NotificationEntityType = {
   BADGE: 'BADGE',
   WITHDRAWAL: 'WITHDRAWAL',
   ASSISTED_SELL: 'ASSISTED_SELL',
+  PAYMENT: 'PAYMENT',
   OTHER: 'OTHER'
 } as const
 
@@ -368,6 +369,8 @@ export const NotificationType = {
   WITHDRAWAL_RECEIVED: 'WITHDRAWAL_RECEIVED',
   ASSISTED_SELL_REQUEESTED: 'ASSISTED_SELL_REQUEESTED',
   ASSISTED_SELL_STATUS_UPDATED: 'ASSISTED_SELL_STATUS_UPDATED',
+  REFUND: 'REFUND',
+  EARNING: 'EARNING',
   OTHER: 'OTHER'
 } as const
 
@@ -395,28 +398,23 @@ export const ShipmentStatus = {
 export type ShipmentStatus = (typeof ShipmentStatus)[keyof typeof ShipmentStatus]
 
 
-export const CreaditType = {
-  PENDING: 'PENDING',
-  RELEASED: 'RELEASED',
-  REFUNDED: 'REFUNDED',
-  CANCELLED: 'CANCELLED'
+export const WalletTransactionType = {
+  EARNING: 'EARNING',
+  DONATION_RECEIVED: 'DONATION_RECEIVED',
+  PURCHASE: 'PURCHASE',
+  DONATION_SENT: 'DONATION_SENT',
+  REFUND: 'REFUND',
+  WITHDRAWAL: 'WITHDRAWAL',
+  SHIPPING: 'SHIPPING',
+  ADJUSTMENT: 'ADJUSTMENT'
 } as const
 
-export type CreaditType = (typeof CreaditType)[keyof typeof CreaditType]
+export type WalletTransactionType = (typeof WalletTransactionType)[keyof typeof WalletTransactionType]
 
 
-export const TxType = {
-  DEBIT: 'DEBIT',
-  CREDIT: 'CREDIT'
+export const TransactionDirection = {
+  IN: 'IN',
+  OUT: 'OUT'
 } as const
 
-export type TxType = (typeof TxType)[keyof typeof TxType]
-
-
-export const PayoutStatus = {
-  PENDING: 'PENDING',
-  PAID: 'PAID',
-  FAILED: 'FAILED'
-} as const
-
-export type PayoutStatus = (typeof PayoutStatus)[keyof typeof PayoutStatus]
+export type TransactionDirection = (typeof TransactionDirection)[keyof typeof TransactionDirection]
