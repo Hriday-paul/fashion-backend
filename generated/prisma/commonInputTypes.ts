@@ -364,6 +364,23 @@ export type EnumThanksMessageTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumThanksMessageTypeFilter<$PrismaModel>
 }
 
+export type EnumMsgTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.MsgType | Prisma.EnumMsgTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.MsgType[] | Prisma.ListEnumMsgTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MsgType[] | Prisma.ListEnumMsgTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMsgTypeFilter<$PrismaModel> | $Enums.MsgType
+}
+
+export type EnumMsgTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MsgType | Prisma.EnumMsgTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.MsgType[] | Prisma.ListEnumMsgTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MsgType[] | Prisma.ListEnumMsgTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMsgTypeWithAggregatesFilter<$PrismaModel> | $Enums.MsgType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMsgTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMsgTypeFilter<$PrismaModel>
+}
+
 export type EnumFileMessageTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.FileMessageType | Prisma.EnumFileMessageTypeFieldRefInput<$PrismaModel>
   in?: $Enums.FileMessageType[] | Prisma.ListEnumFileMessageTypeFieldRefInput<$PrismaModel>
@@ -1252,6 +1269,23 @@ export type NestedEnumThanksMessageTypeWithAggregatesFilter<$PrismaModel = never
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumThanksMessageTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumThanksMessageTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumMsgTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.MsgType | Prisma.EnumMsgTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.MsgType[] | Prisma.ListEnumMsgTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MsgType[] | Prisma.ListEnumMsgTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMsgTypeFilter<$PrismaModel> | $Enums.MsgType
+}
+
+export type NestedEnumMsgTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MsgType | Prisma.EnumMsgTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.MsgType[] | Prisma.ListEnumMsgTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MsgType[] | Prisma.ListEnumMsgTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMsgTypeWithAggregatesFilter<$PrismaModel> | $Enums.MsgType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMsgTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMsgTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumFileMessageTypeFilter<$PrismaModel = never> = {

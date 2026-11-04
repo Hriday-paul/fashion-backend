@@ -209,7 +209,8 @@ const getMyChatList = async (userId: string, query?: Record<string, unknown>) =>
               sellerId: true,
               buyerId: true
             }
-          }
+          },
+          SystemMessage: true,
         }
       },
       _count: {

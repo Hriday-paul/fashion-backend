@@ -1,7 +1,7 @@
 import { Server as HttpServer } from 'http';
 import { Server } from 'socket.io';
 import { getChatList } from './handlers/ChatHandler';
-import { JoinChatRoom, MessageHandler, MsgSeenHandle, MsgStopTyping, MsgTyping, SendMessageHandle } from './handlers/MessageHandler';
+import { JoinChatRoom, MessageHandler, MsgSeenHandle, MsgStopTyping, MsgTyping } from './handlers/MessageHandler';
 import { socketAuthMiddleware } from './middleware/auth.socket';
 import { handleUserOffline, handleUserOnline } from './handlers/StatusHandler';
 

@@ -184,7 +184,7 @@ const requestToWithdraw = async (userId: string, amount: number) => {
 
 }
 
-const payoutHistory = async (userId: string, options: TPaginationOptions) => {
+const transactionHistory = async (userId: string, options: TPaginationOptions) => {
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
@@ -218,6 +218,6 @@ export const accountService = {
     refresh,
     returnUrl,
     getConnectedAccountData,
-    payoutHistory,
+    transactionHistory,
     requestToWithdraw
 };

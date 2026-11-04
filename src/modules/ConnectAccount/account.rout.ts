@@ -18,8 +18,7 @@ router.get("/connect/refresh/:id", accountControler.refresh);
 
 router.get("/balance", auth(...allRoles), accountControler.accountBalance);
 
-
-router.get("/payouts", auth(...allRoles), accountControler.payoutHistory);
+router.get("/transactions", auth(...allRoles), accountControler.transactionHistory);
 
 router.post("/payouts", rateLimiter(), payoutValidator, req_validator(), auth(...allRoles), accountControler.requestToWithdraw);
 

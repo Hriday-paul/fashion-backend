@@ -13,6 +13,8 @@ model Chat {
 
     items ChatItem[]
 
+    order Order[]
+
     @@index([user1Id, user2Id])
     @@index([user2Id, user1Id])
     @@map("chatGroups")
@@ -22,11 +24,11 @@ model Message {
     id       String  @id @default(uuid())
     text     String?
     isSeen   Boolean @default(false)
-    senderId String
-    sender   User    @relation("sentMsgs", fields: [senderId], references: [id], onDelete: Cascade)
+    senderId String?
+    sender   User?    @relation("sentMsgs", fields: [senderId], references: [id], onDelete: Cascade)
 
-    receiverId String
-    receiver   User   @relation("receiveMsgs", fields: [receiverId], references: [id], onDelete: Cascade)
+    receiverId String?
+    receiver   User?   @relation("receiveMsgs", fields: [receiverId], references: [id], onDelete: Cascade)
 
     chatId String
     chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
@@ -39,12 +41,41 @@ model Message {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
+    SystemMessage SystemMessage?
+
+    type MsgType @default(DIRECT)
+
     @@index([chatId, isSeen])
     @@index([chatId, receiverId, isSeen])
     @@index([receiverId, isSeen])
     @@index([offerId])
     @@index([senderId])
     @@map("messages")
+}
+
+enum MsgType{
+    SYSTEM
+    OFFER
+    DIRECT
+}
+
+model SystemMessage {
+    id String @id @default(uuid())
+
+    title String
+    text String
+
+    msgForUserId String
+    msgForUser User @relation(fields: [msgForUserId], references: [id], onDelete: Cascade)
+
+    msgId String @unique
+    msg Message @relation(fields: [msgId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("system_messages")
+    @@index([msgForUserId])
 }
 
 model ChatItem {

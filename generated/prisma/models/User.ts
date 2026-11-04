@@ -472,6 +472,7 @@ export type UserWhereInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgListRelationFilter
   shipments?: Prisma.ShipmentListRelationFilter
   trnsactions?: Prisma.WalletTransactionListRelationFilter
+  systemMsgs?: Prisma.SystemMessageListRelationFilter
   charitableOrganization?: Prisma.XOR<Prisma.CharitableOrganizationNullableScalarRelationFilter, Prisma.CharitableOrganizationWhereInput> | null
   charityShop?: Prisma.XOR<Prisma.CharityShopNullableScalarRelationFilter, Prisma.CharityShopWhereInput> | null
   ecoFriendlyStore?: Prisma.XOR<Prisma.EcoFriendlyStoreNullableScalarRelationFilter, Prisma.EcoFriendlyStoreWhereInput> | null
@@ -558,6 +559,7 @@ export type UserOrderByWithRelationInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgOrderByRelationAggregateInput
   shipments?: Prisma.ShipmentOrderByRelationAggregateInput
   trnsactions?: Prisma.WalletTransactionOrderByRelationAggregateInput
+  systemMsgs?: Prisma.SystemMessageOrderByRelationAggregateInput
   charitableOrganization?: Prisma.CharitableOrganizationOrderByWithRelationInput
   charityShop?: Prisma.CharityShopOrderByWithRelationInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreOrderByWithRelationInput
@@ -647,6 +649,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   donationThanksMsgs?: Prisma.DonationThanksMSgListRelationFilter
   shipments?: Prisma.ShipmentListRelationFilter
   trnsactions?: Prisma.WalletTransactionListRelationFilter
+  systemMsgs?: Prisma.SystemMessageListRelationFilter
   charitableOrganization?: Prisma.XOR<Prisma.CharitableOrganizationNullableScalarRelationFilter, Prisma.CharitableOrganizationWhereInput> | null
   charityShop?: Prisma.XOR<Prisma.CharityShopNullableScalarRelationFilter, Prisma.CharityShopWhereInput> | null
   ecoFriendlyStore?: Prisma.XOR<Prisma.EcoFriendlyStoreNullableScalarRelationFilter, Prisma.EcoFriendlyStoreWhereInput> | null
@@ -811,6 +814,7 @@ export type UserCreateInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -897,6 +901,7 @@ export type UserUncheckedCreateInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -983,6 +988,7 @@ export type UserUpdateInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -1069,6 +1075,7 @@ export type UserUncheckedUpdateInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -1483,20 +1490,38 @@ export type UserCreateNestedOneWithoutReceiveMessagesInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutSentMessagesNestedInput = {
+export type UserUpdateOneWithoutSentMessagesNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentMessagesInput
   upsert?: Prisma.UserUpsertWithoutSentMessagesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentMessagesInput, Prisma.UserUpdateWithoutSentMessagesInput>, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>
 }
 
-export type UserUpdateOneRequiredWithoutReceiveMessagesNestedInput = {
+export type UserUpdateOneWithoutReceiveMessagesNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutReceiveMessagesInput, Prisma.UserUncheckedCreateWithoutReceiveMessagesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceiveMessagesInput
   upsert?: Prisma.UserUpsertWithoutReceiveMessagesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReceiveMessagesInput, Prisma.UserUpdateWithoutReceiveMessagesInput>, Prisma.UserUncheckedUpdateWithoutReceiveMessagesInput>
+}
+
+export type UserCreateNestedOneWithoutSystemMsgsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSystemMsgsInput, Prisma.UserUncheckedCreateWithoutSystemMsgsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSystemMsgsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSystemMsgsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSystemMsgsInput, Prisma.UserUncheckedCreateWithoutSystemMsgsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSystemMsgsInput
+  upsert?: Prisma.UserUpsertWithoutSystemMsgsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSystemMsgsInput, Prisma.UserUpdateWithoutSystemMsgsInput>, Prisma.UserUncheckedUpdateWithoutSystemMsgsInput>
 }
 
 export type UserCreateNestedOneWithoutBuyOrdersInput = {
@@ -2117,6 +2142,7 @@ export type UserCreateWithoutAssistentSellsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -2202,6 +2228,7 @@ export type UserUncheckedCreateWithoutAssistentSellsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -2303,6 +2330,7 @@ export type UserUpdateWithoutAssistentSellsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -2388,6 +2416,7 @@ export type UserUncheckedUpdateWithoutAssistentSellsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -2473,6 +2502,7 @@ export type UserCreateWithoutAssistentSellCharitiesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -2558,6 +2588,7 @@ export type UserUncheckedCreateWithoutAssistentSellCharitiesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -2659,6 +2690,7 @@ export type UserUpdateWithoutAssistentSellCharitiesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -2744,6 +2776,7 @@ export type UserUncheckedUpdateWithoutAssistentSellCharitiesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -2829,6 +2862,7 @@ export type UserCreateWithoutBadgesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -2914,6 +2948,7 @@ export type UserUncheckedCreateWithoutBadgesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -3015,6 +3050,7 @@ export type UserUpdateWithoutBadgesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -3100,6 +3136,7 @@ export type UserUncheckedUpdateWithoutBadgesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -3185,6 +3222,7 @@ export type UserCreateWithoutDonationsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -3270,6 +3308,7 @@ export type UserUncheckedCreateWithoutDonationsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -3360,6 +3399,7 @@ export type UserCreateWithoutDonationsReceivedInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -3445,6 +3485,7 @@ export type UserUncheckedCreateWithoutDonationsReceivedInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -3546,6 +3587,7 @@ export type UserUpdateWithoutDonationsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -3631,6 +3673,7 @@ export type UserUncheckedUpdateWithoutDonationsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -3727,6 +3770,7 @@ export type UserUpdateWithoutDonationsReceivedInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -3812,6 +3856,7 @@ export type UserUncheckedUpdateWithoutDonationsReceivedInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -3897,6 +3942,7 @@ export type UserCreateWithoutClothDonateDonorInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -3982,6 +4028,7 @@ export type UserUncheckedCreateWithoutClothDonateDonorInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -4072,6 +4119,7 @@ export type UserCreateWithoutClothDonateCharityInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -4157,6 +4205,7 @@ export type UserUncheckedCreateWithoutClothDonateCharityInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -4258,6 +4307,7 @@ export type UserUpdateWithoutClothDonateDonorInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -4343,6 +4393,7 @@ export type UserUncheckedUpdateWithoutClothDonateDonorInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -4439,6 +4490,7 @@ export type UserUpdateWithoutClothDonateCharityInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -4524,6 +4576,7 @@ export type UserUncheckedUpdateWithoutClothDonateCharityInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -4609,6 +4662,7 @@ export type UserCreateWithoutDonationThanksMsgsInput = {
   charityThumbnail?: Prisma.CharityThumbnailCreateNestedOneWithoutUserInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -4694,6 +4748,7 @@ export type UserUncheckedCreateWithoutDonationThanksMsgsInput = {
   charityThumbnail?: Prisma.CharityThumbnailUncheckedCreateNestedOneWithoutUserInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -4795,6 +4850,7 @@ export type UserUpdateWithoutDonationThanksMsgsInput = {
   charityThumbnail?: Prisma.CharityThumbnailUpdateOneWithoutUserNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -4880,6 +4936,7 @@ export type UserUncheckedUpdateWithoutDonationThanksMsgsInput = {
   charityThumbnail?: Prisma.CharityThumbnailUncheckedUpdateOneWithoutUserNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -4965,6 +5022,7 @@ export type UserCreateWithoutFollowingInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -5050,6 +5108,7 @@ export type UserUncheckedCreateWithoutFollowingInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -5140,6 +5199,7 @@ export type UserCreateWithoutFollowersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -5225,6 +5285,7 @@ export type UserUncheckedCreateWithoutFollowersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -5326,6 +5387,7 @@ export type UserUpdateWithoutFollowingInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -5411,6 +5473,7 @@ export type UserUncheckedUpdateWithoutFollowingInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -5507,6 +5570,7 @@ export type UserUpdateWithoutFollowersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -5592,6 +5656,7 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -5677,6 +5742,7 @@ export type UserCreateWithoutUser1ChatsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -5762,6 +5828,7 @@ export type UserUncheckedCreateWithoutUser1ChatsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -5852,6 +5919,7 @@ export type UserCreateWithoutUser2ChatsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -5937,6 +6005,7 @@ export type UserUncheckedCreateWithoutUser2ChatsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -6038,6 +6107,7 @@ export type UserUpdateWithoutUser1ChatsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -6123,6 +6193,7 @@ export type UserUncheckedUpdateWithoutUser1ChatsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -6219,6 +6290,7 @@ export type UserUpdateWithoutUser2ChatsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -6304,6 +6376,7 @@ export type UserUncheckedUpdateWithoutUser2ChatsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -6389,6 +6462,7 @@ export type UserCreateWithoutSentMessagesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -6474,6 +6548,7 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -6564,6 +6639,7 @@ export type UserCreateWithoutReceiveMessagesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -6649,6 +6725,7 @@ export type UserUncheckedCreateWithoutReceiveMessagesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -6750,6 +6827,7 @@ export type UserUpdateWithoutSentMessagesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -6835,6 +6913,7 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -6931,6 +7010,7 @@ export type UserUpdateWithoutReceiveMessagesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -6978,6 +7058,367 @@ export type UserUncheckedUpdateWithoutReceiveMessagesInput = {
   notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
   notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
+  user2Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser2NestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutUserNestedInput
+  sellDonations?: Prisma.SellDonationUncheckedUpdateManyWithoutCharityNestedInput
+  productCharities?: Prisma.ProductCharityUncheckedUpdateManyWithoutCharityNestedInput
+  assistentSellCharities?: Prisma.AssistentSellCharityUncheckedUpdateManyWithoutCharityNestedInput
+  favouriteProducts?: Prisma.FavouriteUncheckedUpdateManyWithoutUserNestedInput
+  ratingsGiven?: Prisma.RatingUncheckedUpdateManyWithoutFromUserNestedInput
+  ratingsReceived?: Prisma.RatingUncheckedUpdateManyWithoutToUserNestedInput
+  returnsAsBuyer?: Prisma.ReturnUncheckedUpdateManyWithoutBuyerNestedInput
+  returnsAsSeller?: Prisma.ReturnUncheckedUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
+  donations?: Prisma.DirectDonationUncheckedUpdateManyWithoutDonorNestedInput
+  donationsReceived?: Prisma.DirectDonationUncheckedUpdateManyWithoutCharityNestedInput
+  buyOrders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
+  sellOrders?: Prisma.OrderUncheckedUpdateManyWithoutSellerNestedInput
+  productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
+  prodQuestions?: Prisma.QuestionUncheckedUpdateManyWithoutQuestionerNestedInput
+  billingAddress?: Prisma.BillingDetailsUncheckedUpdateOneWithoutUserNestedInput
+  sellerAddress?: Prisma.BillingDetailsUncheckedUpdateOneWithoutSellerNestedInput
+  offersAsBuyer?: Prisma.OfferUncheckedUpdateManyWithoutBuyerNestedInput
+  offersAsSeller?: Prisma.OfferUncheckedUpdateManyWithoutSellerNestedInput
+  clothDonateDonor?: Prisma.ClothDonationUncheckedUpdateManyWithoutDonorNestedInput
+  clothDonateCharity?: Prisma.ClothDonationUncheckedUpdateManyWithoutCharityNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutSellerNestedInput
+  charityGalleries?: Prisma.CharityGalleryUncheckedUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartGroupUncheckedUpdateManyWithoutUserNestedInput
+  sellerGroupCarts?: Prisma.CartGroupUncheckedUpdateManyWithoutSellerNestedInput
+  assistentSells?: Prisma.AssistentSellUncheckedUpdateManyWithoutSellerNestedInput
+  cartDonationCharities?: Prisma.CartDonationCharatiesUncheckedUpdateManyWithoutCharityNestedInput
+  badges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+  bundleDiscount?: Prisma.BundleDiscountUncheckedUpdateOneWithoutSellerNestedInput
+  charityThumbnail?: Prisma.CharityThumbnailUncheckedUpdateOneWithoutUserNestedInput
+  donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
+  shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
+  trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
+  charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
+  charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
+  ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
+  celebrity?: Prisma.CelebrityUncheckedUpdateOneWithoutUserNestedInput
+  ambassador?: Prisma.AmbassadorUncheckedUpdateOneWithoutUserNestedInput
+  professionalSeller?: Prisma.ProfessionalSellerUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSystemMsgsInput = {
+  id?: string
+  fname: string
+  lname?: string | null
+  email: string
+  userName?: string
+  phone?: string | null
+  bio?: string | null
+  description?: string | null
+  country?: string | null
+  state?: string | null
+  city?: string | null
+  address?: string | null
+  zip_code?: string | null
+  instagram?: string | null
+  facebook?: string | null
+  twitter?: string | null
+  tiktok?: string | null
+  website?: string | null
+  support_email?: string | null
+  notification?: boolean
+  fcmToken?: string | null
+  mission?: string | null
+  business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
+  isOnline?: boolean
+  lastOnlineAt?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  avgRating?: number
+  vacationMode?: boolean
+  stripeAccountId?: string | null
+  stripeCustomerId?: string | null
+  auth?: Prisma.AuthCreateNestedOneWithoutUserInput
+  picture?: Prisma.ProfilePictureCreateNestedOneWithoutUserInput
+  account_documents?: Prisma.AccountDocumentCreateNestedManyWithoutUserInput
+  notificationReceivers?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  notificationSenders?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receiveMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
+  user1Chats?: Prisma.ChatCreateNestedManyWithoutUser1Input
+  user2Chats?: Prisma.ChatCreateNestedManyWithoutUser2Input
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  products?: Prisma.ProductCreateNestedManyWithoutUserInput
+  sellDonations?: Prisma.SellDonationCreateNestedManyWithoutCharityInput
+  productCharities?: Prisma.ProductCharityCreateNestedManyWithoutCharityInput
+  assistentSellCharities?: Prisma.AssistentSellCharityCreateNestedManyWithoutCharityInput
+  favouriteProducts?: Prisma.FavouriteCreateNestedManyWithoutUserInput
+  ratingsGiven?: Prisma.RatingCreateNestedManyWithoutFromUserInput
+  ratingsReceived?: Prisma.RatingCreateNestedManyWithoutToUserInput
+  returnsAsBuyer?: Prisma.ReturnCreateNestedManyWithoutBuyerInput
+  returnsAsSeller?: Prisma.ReturnCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
+  donations?: Prisma.DirectDonationCreateNestedManyWithoutDonorInput
+  donationsReceived?: Prisma.DirectDonationCreateNestedManyWithoutCharityInput
+  buyOrders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
+  sellOrders?: Prisma.OrderCreateNestedManyWithoutSellerInput
+  productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
+  prodQuestions?: Prisma.QuestionCreateNestedManyWithoutQuestionerInput
+  billingAddress?: Prisma.BillingDetailsCreateNestedOneWithoutUserInput
+  sellerAddress?: Prisma.BillingDetailsCreateNestedOneWithoutSellerInput
+  offersAsBuyer?: Prisma.OfferCreateNestedManyWithoutBuyerInput
+  offersAsSeller?: Prisma.OfferCreateNestedManyWithoutSellerInput
+  clothDonateDonor?: Prisma.ClothDonationCreateNestedManyWithoutDonorInput
+  clothDonateCharity?: Prisma.ClothDonationCreateNestedManyWithoutCharityInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutSellerInput
+  charityGalleries?: Prisma.CharityGalleryCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartGroupCreateNestedManyWithoutUserInput
+  sellerGroupCarts?: Prisma.CartGroupCreateNestedManyWithoutSellerInput
+  assistentSells?: Prisma.AssistentSellCreateNestedManyWithoutSellerInput
+  cartDonationCharities?: Prisma.CartDonationCharatiesCreateNestedManyWithoutCharityInput
+  badges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
+  bundleDiscount?: Prisma.BundleDiscountCreateNestedOneWithoutSellerInput
+  charityThumbnail?: Prisma.CharityThumbnailCreateNestedOneWithoutUserInput
+  donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
+  shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
+  trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
+  charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
+  ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
+  celebrity?: Prisma.CelebrityCreateNestedOneWithoutUserInput
+  ambassador?: Prisma.AmbassadorCreateNestedOneWithoutUserInput
+  professionalSeller?: Prisma.ProfessionalSellerCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSystemMsgsInput = {
+  id?: string
+  fname: string
+  lname?: string | null
+  email: string
+  userName?: string
+  phone?: string | null
+  bio?: string | null
+  description?: string | null
+  country?: string | null
+  state?: string | null
+  city?: string | null
+  address?: string | null
+  zip_code?: string | null
+  instagram?: string | null
+  facebook?: string | null
+  twitter?: string | null
+  tiktok?: string | null
+  website?: string | null
+  support_email?: string | null
+  notification?: boolean
+  fcmToken?: string | null
+  mission?: string | null
+  business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
+  isOnline?: boolean
+  lastOnlineAt?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  avgRating?: number
+  vacationMode?: boolean
+  stripeAccountId?: string | null
+  stripeCustomerId?: string | null
+  auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput
+  picture?: Prisma.ProfilePictureUncheckedCreateNestedOneWithoutUserInput
+  account_documents?: Prisma.AccountDocumentUncheckedCreateNestedManyWithoutUserInput
+  notificationReceivers?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  notificationSenders?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receiveMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
+  user1Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser1Input
+  user2Chats?: Prisma.ChatUncheckedCreateNestedManyWithoutUser2Input
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutUserInput
+  sellDonations?: Prisma.SellDonationUncheckedCreateNestedManyWithoutCharityInput
+  productCharities?: Prisma.ProductCharityUncheckedCreateNestedManyWithoutCharityInput
+  assistentSellCharities?: Prisma.AssistentSellCharityUncheckedCreateNestedManyWithoutCharityInput
+  favouriteProducts?: Prisma.FavouriteUncheckedCreateNestedManyWithoutUserInput
+  ratingsGiven?: Prisma.RatingUncheckedCreateNestedManyWithoutFromUserInput
+  ratingsReceived?: Prisma.RatingUncheckedCreateNestedManyWithoutToUserInput
+  returnsAsBuyer?: Prisma.ReturnUncheckedCreateNestedManyWithoutBuyerInput
+  returnsAsSeller?: Prisma.ReturnUncheckedCreateNestedManyWithoutSellerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
+  donations?: Prisma.DirectDonationUncheckedCreateNestedManyWithoutDonorInput
+  donationsReceived?: Prisma.DirectDonationUncheckedCreateNestedManyWithoutCharityInput
+  buyOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
+  sellOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutSellerInput
+  productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
+  prodQuestions?: Prisma.QuestionUncheckedCreateNestedManyWithoutQuestionerInput
+  billingAddress?: Prisma.BillingDetailsUncheckedCreateNestedOneWithoutUserInput
+  sellerAddress?: Prisma.BillingDetailsUncheckedCreateNestedOneWithoutSellerInput
+  offersAsBuyer?: Prisma.OfferUncheckedCreateNestedManyWithoutBuyerInput
+  offersAsSeller?: Prisma.OfferUncheckedCreateNestedManyWithoutSellerInput
+  clothDonateDonor?: Prisma.ClothDonationUncheckedCreateNestedManyWithoutDonorInput
+  clothDonateCharity?: Prisma.ClothDonationUncheckedCreateNestedManyWithoutCharityInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutSellerInput
+  charityGalleries?: Prisma.CharityGalleryUncheckedCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartGroupUncheckedCreateNestedManyWithoutUserInput
+  sellerGroupCarts?: Prisma.CartGroupUncheckedCreateNestedManyWithoutSellerInput
+  assistentSells?: Prisma.AssistentSellUncheckedCreateNestedManyWithoutSellerInput
+  cartDonationCharities?: Prisma.CartDonationCharatiesUncheckedCreateNestedManyWithoutCharityInput
+  badges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
+  bundleDiscount?: Prisma.BundleDiscountUncheckedCreateNestedOneWithoutSellerInput
+  charityThumbnail?: Prisma.CharityThumbnailUncheckedCreateNestedOneWithoutUserInput
+  donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
+  shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
+  trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
+  charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
+  ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
+  celebrity?: Prisma.CelebrityUncheckedCreateNestedOneWithoutUserInput
+  ambassador?: Prisma.AmbassadorUncheckedCreateNestedOneWithoutUserInput
+  professionalSeller?: Prisma.ProfessionalSellerUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSystemMsgsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSystemMsgsInput, Prisma.UserUncheckedCreateWithoutSystemMsgsInput>
+}
+
+export type UserUpsertWithoutSystemMsgsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSystemMsgsInput, Prisma.UserUncheckedUpdateWithoutSystemMsgsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSystemMsgsInput, Prisma.UserUncheckedCreateWithoutSystemMsgsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSystemMsgsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSystemMsgsInput, Prisma.UserUncheckedUpdateWithoutSystemMsgsInput>
+}
+
+export type UserUpdateWithoutSystemMsgsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fname?: Prisma.StringFieldUpdateOperationsInput | string
+  lname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  vacationMode?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth?: Prisma.AuthUpdateOneWithoutUserNestedInput
+  picture?: Prisma.ProfilePictureUpdateOneWithoutUserNestedInput
+  account_documents?: Prisma.AccountDocumentUpdateManyWithoutUserNestedInput
+  notificationReceivers?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  notificationSenders?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receiveMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
+  user1Chats?: Prisma.ChatUpdateManyWithoutUser1NestedInput
+  user2Chats?: Prisma.ChatUpdateManyWithoutUser2NestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  products?: Prisma.ProductUpdateManyWithoutUserNestedInput
+  sellDonations?: Prisma.SellDonationUpdateManyWithoutCharityNestedInput
+  productCharities?: Prisma.ProductCharityUpdateManyWithoutCharityNestedInput
+  assistentSellCharities?: Prisma.AssistentSellCharityUpdateManyWithoutCharityNestedInput
+  favouriteProducts?: Prisma.FavouriteUpdateManyWithoutUserNestedInput
+  ratingsGiven?: Prisma.RatingUpdateManyWithoutFromUserNestedInput
+  ratingsReceived?: Prisma.RatingUpdateManyWithoutToUserNestedInput
+  returnsAsBuyer?: Prisma.ReturnUpdateManyWithoutBuyerNestedInput
+  returnsAsSeller?: Prisma.ReturnUpdateManyWithoutSellerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
+  donations?: Prisma.DirectDonationUpdateManyWithoutDonorNestedInput
+  donationsReceived?: Prisma.DirectDonationUpdateManyWithoutCharityNestedInput
+  buyOrders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
+  sellOrders?: Prisma.OrderUpdateManyWithoutSellerNestedInput
+  productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
+  prodQuestions?: Prisma.QuestionUpdateManyWithoutQuestionerNestedInput
+  billingAddress?: Prisma.BillingDetailsUpdateOneWithoutUserNestedInput
+  sellerAddress?: Prisma.BillingDetailsUpdateOneWithoutSellerNestedInput
+  offersAsBuyer?: Prisma.OfferUpdateManyWithoutBuyerNestedInput
+  offersAsSeller?: Prisma.OfferUpdateManyWithoutSellerNestedInput
+  clothDonateDonor?: Prisma.ClothDonationUpdateManyWithoutDonorNestedInput
+  clothDonateCharity?: Prisma.ClothDonationUpdateManyWithoutCharityNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutSellerNestedInput
+  charityGalleries?: Prisma.CharityGalleryUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartGroupUpdateManyWithoutUserNestedInput
+  sellerGroupCarts?: Prisma.CartGroupUpdateManyWithoutSellerNestedInput
+  assistentSells?: Prisma.AssistentSellUpdateManyWithoutSellerNestedInput
+  cartDonationCharities?: Prisma.CartDonationCharatiesUpdateManyWithoutCharityNestedInput
+  badges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
+  bundleDiscount?: Prisma.BundleDiscountUpdateOneWithoutSellerNestedInput
+  charityThumbnail?: Prisma.CharityThumbnailUpdateOneWithoutUserNestedInput
+  donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
+  shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
+  trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
+  charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
+  ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
+  celebrity?: Prisma.CelebrityUpdateOneWithoutUserNestedInput
+  ambassador?: Prisma.AmbassadorUpdateOneWithoutUserNestedInput
+  professionalSeller?: Prisma.ProfessionalSellerUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSystemMsgsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fname?: Prisma.StringFieldUpdateOperationsInput | string
+  lname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktok?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastOnlineAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  vacationMode?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput
+  picture?: Prisma.ProfilePictureUncheckedUpdateOneWithoutUserNestedInput
+  account_documents?: Prisma.AccountDocumentUncheckedUpdateManyWithoutUserNestedInput
+  notificationReceivers?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  notificationSenders?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receiveMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
   user1Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser1NestedInput
   user2Chats?: Prisma.ChatUncheckedUpdateManyWithoutUser2NestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -7101,6 +7542,7 @@ export type UserCreateWithoutBuyOrdersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -7186,6 +7628,7 @@ export type UserUncheckedCreateWithoutBuyOrdersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -7276,6 +7719,7 @@ export type UserCreateWithoutSellOrdersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -7361,6 +7805,7 @@ export type UserUncheckedCreateWithoutSellOrdersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -7462,6 +7907,7 @@ export type UserUpdateWithoutBuyOrdersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -7547,6 +7993,7 @@ export type UserUncheckedUpdateWithoutBuyOrdersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -7643,6 +8090,7 @@ export type UserUpdateWithoutSellOrdersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -7728,6 +8176,7 @@ export type UserUncheckedUpdateWithoutSellOrdersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -7813,6 +8262,7 @@ export type UserCreateWithoutSellDonationsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -7898,6 +8348,7 @@ export type UserUncheckedCreateWithoutSellDonationsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -7999,6 +8450,7 @@ export type UserUpdateWithoutSellDonationsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -8084,6 +8536,7 @@ export type UserUncheckedUpdateWithoutSellDonationsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -8169,6 +8622,7 @@ export type UserCreateWithoutPaymentsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -8254,6 +8708,7 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -8355,6 +8810,7 @@ export type UserUpdateWithoutPaymentsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -8440,6 +8896,7 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -8525,6 +8982,7 @@ export type UserCreateWithoutProductsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -8610,6 +9068,7 @@ export type UserUncheckedCreateWithoutProductsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -8711,6 +9170,7 @@ export type UserUpdateWithoutProductsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -8796,6 +9256,7 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -8881,6 +9342,7 @@ export type UserCreateWithoutProductCharitiesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -8966,6 +9428,7 @@ export type UserUncheckedCreateWithoutProductCharitiesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -9067,6 +9530,7 @@ export type UserUpdateWithoutProductCharitiesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -9152,6 +9616,7 @@ export type UserUncheckedUpdateWithoutProductCharitiesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -9237,6 +9702,7 @@ export type UserCreateWithoutFavouriteProductsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -9322,6 +9788,7 @@ export type UserUncheckedCreateWithoutFavouriteProductsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -9423,6 +9890,7 @@ export type UserUpdateWithoutFavouriteProductsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -9508,6 +9976,7 @@ export type UserUncheckedUpdateWithoutFavouriteProductsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -9593,6 +10062,7 @@ export type UserCreateWithoutSellerGroupCartsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -9678,6 +10148,7 @@ export type UserUncheckedCreateWithoutSellerGroupCartsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -9768,6 +10239,7 @@ export type UserCreateWithoutCartsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -9853,6 +10325,7 @@ export type UserUncheckedCreateWithoutCartsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -9954,6 +10427,7 @@ export type UserUpdateWithoutSellerGroupCartsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -10039,6 +10513,7 @@ export type UserUncheckedUpdateWithoutSellerGroupCartsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -10135,6 +10610,7 @@ export type UserUpdateWithoutCartsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -10220,6 +10696,7 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -10305,6 +10782,7 @@ export type UserCreateWithoutCartDonationCharitiesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -10390,6 +10868,7 @@ export type UserUncheckedCreateWithoutCartDonationCharitiesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -10491,6 +10970,7 @@ export type UserUpdateWithoutCartDonationCharitiesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -10576,6 +11056,7 @@ export type UserUncheckedUpdateWithoutCartDonationCharitiesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -10661,6 +11142,7 @@ export type UserCreateWithoutOffersAsSellerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -10746,6 +11228,7 @@ export type UserUncheckedCreateWithoutOffersAsSellerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -10836,6 +11319,7 @@ export type UserCreateWithoutOffersAsBuyerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -10921,6 +11405,7 @@ export type UserUncheckedCreateWithoutOffersAsBuyerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -11022,6 +11507,7 @@ export type UserUpdateWithoutOffersAsSellerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -11107,6 +11593,7 @@ export type UserUncheckedUpdateWithoutOffersAsSellerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -11203,6 +11690,7 @@ export type UserUpdateWithoutOffersAsBuyerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -11288,6 +11776,7 @@ export type UserUncheckedUpdateWithoutOffersAsBuyerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -11373,6 +11862,7 @@ export type UserCreateWithoutProductViewsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -11458,6 +11948,7 @@ export type UserUncheckedCreateWithoutProductViewsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -11559,6 +12050,7 @@ export type UserUpdateWithoutProductViewsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -11644,6 +12136,7 @@ export type UserUncheckedUpdateWithoutProductViewsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -11729,6 +12222,7 @@ export type UserCreateWithoutProdQuestionsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -11814,6 +12308,7 @@ export type UserUncheckedCreateWithoutProdQuestionsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -11915,6 +12410,7 @@ export type UserUpdateWithoutProdQuestionsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -12000,6 +12496,7 @@ export type UserUncheckedUpdateWithoutProdQuestionsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -12085,6 +12582,7 @@ export type UserCreateWithoutBundleDiscountInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -12170,6 +12668,7 @@ export type UserUncheckedCreateWithoutBundleDiscountInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -12271,6 +12770,7 @@ export type UserUpdateWithoutBundleDiscountInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -12356,6 +12856,7 @@ export type UserUncheckedUpdateWithoutBundleDiscountInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -12441,6 +12942,7 @@ export type UserCreateWithoutReturnsAsBuyerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -12526,6 +13028,7 @@ export type UserUncheckedCreateWithoutReturnsAsBuyerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -12616,6 +13119,7 @@ export type UserCreateWithoutReturnsAsSellerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -12701,6 +13205,7 @@ export type UserUncheckedCreateWithoutReturnsAsSellerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -12802,6 +13307,7 @@ export type UserUpdateWithoutReturnsAsBuyerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -12887,6 +13393,7 @@ export type UserUncheckedUpdateWithoutReturnsAsBuyerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -12983,6 +13490,7 @@ export type UserUpdateWithoutReturnsAsSellerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -13068,6 +13576,7 @@ export type UserUncheckedUpdateWithoutReturnsAsSellerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -13153,6 +13662,7 @@ export type UserCreateWithoutRatingsGivenInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -13238,6 +13748,7 @@ export type UserUncheckedCreateWithoutRatingsGivenInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -13328,6 +13839,7 @@ export type UserCreateWithoutRatingsReceivedInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -13413,6 +13925,7 @@ export type UserUncheckedCreateWithoutRatingsReceivedInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -13514,6 +14027,7 @@ export type UserUpdateWithoutRatingsGivenInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -13599,6 +14113,7 @@ export type UserUncheckedUpdateWithoutRatingsGivenInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -13695,6 +14210,7 @@ export type UserUpdateWithoutRatingsReceivedInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -13780,6 +14296,7 @@ export type UserUncheckedUpdateWithoutRatingsReceivedInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -13866,6 +14383,7 @@ export type UserCreateWithoutCharitableOrganizationInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
   celebrity?: Prisma.CelebrityCreateNestedOneWithoutUserInput
@@ -13951,6 +14469,7 @@ export type UserUncheckedCreateWithoutCharitableOrganizationInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
   celebrity?: Prisma.CelebrityUncheckedCreateNestedOneWithoutUserInput
@@ -14052,6 +14571,7 @@ export type UserUpdateWithoutCharitableOrganizationInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
   celebrity?: Prisma.CelebrityUpdateOneWithoutUserNestedInput
@@ -14137,6 +14657,7 @@ export type UserUncheckedUpdateWithoutCharitableOrganizationInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
   celebrity?: Prisma.CelebrityUncheckedUpdateOneWithoutUserNestedInput
@@ -14222,6 +14743,7 @@ export type UserCreateWithoutCharityShopInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
   celebrity?: Prisma.CelebrityCreateNestedOneWithoutUserInput
@@ -14307,6 +14829,7 @@ export type UserUncheckedCreateWithoutCharityShopInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
   celebrity?: Prisma.CelebrityUncheckedCreateNestedOneWithoutUserInput
@@ -14408,6 +14931,7 @@ export type UserUpdateWithoutCharityShopInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
   celebrity?: Prisma.CelebrityUpdateOneWithoutUserNestedInput
@@ -14493,6 +15017,7 @@ export type UserUncheckedUpdateWithoutCharityShopInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
   celebrity?: Prisma.CelebrityUncheckedUpdateOneWithoutUserNestedInput
@@ -14578,6 +15103,7 @@ export type UserCreateWithoutEcoFriendlyStoreInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   celebrity?: Prisma.CelebrityCreateNestedOneWithoutUserInput
@@ -14663,6 +15189,7 @@ export type UserUncheckedCreateWithoutEcoFriendlyStoreInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   celebrity?: Prisma.CelebrityUncheckedCreateNestedOneWithoutUserInput
@@ -14764,6 +15291,7 @@ export type UserUpdateWithoutEcoFriendlyStoreInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   celebrity?: Prisma.CelebrityUpdateOneWithoutUserNestedInput
@@ -14849,6 +15377,7 @@ export type UserUncheckedUpdateWithoutEcoFriendlyStoreInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   celebrity?: Prisma.CelebrityUncheckedUpdateOneWithoutUserNestedInput
@@ -14934,6 +15463,7 @@ export type UserCreateWithoutCelebrityInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -15019,6 +15549,7 @@ export type UserUncheckedCreateWithoutCelebrityInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -15120,6 +15651,7 @@ export type UserUpdateWithoutCelebrityInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -15205,6 +15737,7 @@ export type UserUncheckedUpdateWithoutCelebrityInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -15290,6 +15823,7 @@ export type UserCreateWithoutAmbassadorInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -15375,6 +15909,7 @@ export type UserUncheckedCreateWithoutAmbassadorInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -15476,6 +16011,7 @@ export type UserUpdateWithoutAmbassadorInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -15561,6 +16097,7 @@ export type UserUncheckedUpdateWithoutAmbassadorInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -15646,6 +16183,7 @@ export type UserCreateWithoutProfessionalSellerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -15731,6 +16269,7 @@ export type UserUncheckedCreateWithoutProfessionalSellerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -15832,6 +16371,7 @@ export type UserUpdateWithoutProfessionalSellerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -15917,6 +16457,7 @@ export type UserUncheckedUpdateWithoutProfessionalSellerInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -16001,6 +16542,7 @@ export type UserCreateWithoutAuthInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -16086,6 +16628,7 @@ export type UserUncheckedCreateWithoutAuthInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -16187,6 +16730,7 @@ export type UserUpdateWithoutAuthInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -16272,6 +16816,7 @@ export type UserUncheckedUpdateWithoutAuthInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -16357,6 +16902,7 @@ export type UserCreateWithoutCharityGalleriesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -16442,6 +16988,7 @@ export type UserUncheckedCreateWithoutCharityGalleriesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -16543,6 +17090,7 @@ export type UserUpdateWithoutCharityGalleriesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -16628,6 +17176,7 @@ export type UserUncheckedUpdateWithoutCharityGalleriesInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -16713,6 +17262,7 @@ export type UserCreateWithoutPictureInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -16798,6 +17348,7 @@ export type UserUncheckedCreateWithoutPictureInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -16899,6 +17450,7 @@ export type UserUpdateWithoutPictureInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -16984,6 +17536,7 @@ export type UserUncheckedUpdateWithoutPictureInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -17069,6 +17622,7 @@ export type UserCreateWithoutCharityThumbnailInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -17154,6 +17708,7 @@ export type UserUncheckedCreateWithoutCharityThumbnailInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -17255,6 +17810,7 @@ export type UserUpdateWithoutCharityThumbnailInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -17340,6 +17896,7 @@ export type UserUncheckedUpdateWithoutCharityThumbnailInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -17425,6 +17982,7 @@ export type UserCreateWithoutAccount_documentsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -17510,6 +18068,7 @@ export type UserUncheckedCreateWithoutAccount_documentsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -17611,6 +18170,7 @@ export type UserUpdateWithoutAccount_documentsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -17696,6 +18256,7 @@ export type UserUncheckedUpdateWithoutAccount_documentsInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -17781,6 +18342,7 @@ export type UserCreateWithoutBillingAddressInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -17866,6 +18428,7 @@ export type UserUncheckedCreateWithoutBillingAddressInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -17956,6 +18519,7 @@ export type UserCreateWithoutSellerAddressInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -18041,6 +18605,7 @@ export type UserUncheckedCreateWithoutSellerAddressInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -18142,6 +18707,7 @@ export type UserUpdateWithoutBillingAddressInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -18227,6 +18793,7 @@ export type UserUncheckedUpdateWithoutBillingAddressInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -18323,6 +18890,7 @@ export type UserUpdateWithoutSellerAddressInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -18408,6 +18976,7 @@ export type UserUncheckedUpdateWithoutSellerAddressInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -18493,6 +19062,7 @@ export type UserCreateWithoutNotificationSendersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -18578,6 +19148,7 @@ export type UserUncheckedCreateWithoutNotificationSendersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -18668,6 +19239,7 @@ export type UserCreateWithoutNotificationReceiversInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -18753,6 +19325,7 @@ export type UserUncheckedCreateWithoutNotificationReceiversInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -18854,6 +19427,7 @@ export type UserUpdateWithoutNotificationSendersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -18939,6 +19513,7 @@ export type UserUncheckedUpdateWithoutNotificationSendersInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -19035,6 +19610,7 @@ export type UserUpdateWithoutNotificationReceiversInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -19120,6 +19696,7 @@ export type UserUncheckedUpdateWithoutNotificationReceiversInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -19205,6 +19782,7 @@ export type UserCreateWithoutShipmentsInput = {
   charityThumbnail?: Prisma.CharityThumbnailCreateNestedOneWithoutUserInput
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -19290,6 +19868,7 @@ export type UserUncheckedCreateWithoutShipmentsInput = {
   charityThumbnail?: Prisma.CharityThumbnailUncheckedCreateNestedOneWithoutUserInput
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -19391,6 +19970,7 @@ export type UserUpdateWithoutShipmentsInput = {
   charityThumbnail?: Prisma.CharityThumbnailUpdateOneWithoutUserNestedInput
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -19476,6 +20056,7 @@ export type UserUncheckedUpdateWithoutShipmentsInput = {
   charityThumbnail?: Prisma.CharityThumbnailUncheckedUpdateOneWithoutUserNestedInput
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -19561,6 +20142,7 @@ export type UserCreateWithoutWalletInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -19646,6 +20228,7 @@ export type UserUncheckedCreateWithoutWalletInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
   trnsactions?: Prisma.WalletTransactionUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -19747,6 +20330,7 @@ export type UserUpdateWithoutWalletInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -19832,6 +20416,7 @@ export type UserUncheckedUpdateWithoutWalletInput = {
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
   trnsactions?: Prisma.WalletTransactionUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -19917,6 +20502,7 @@ export type UserCreateWithoutTrnsactionsInput = {
   charityThumbnail?: Prisma.CharityThumbnailCreateNestedOneWithoutUserInput
   donationThanksMsgs?: Prisma.DonationThanksMSgCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreCreateNestedOneWithoutUserInput
@@ -20002,6 +20588,7 @@ export type UserUncheckedCreateWithoutTrnsactionsInput = {
   charityThumbnail?: Prisma.CharityThumbnailUncheckedCreateNestedOneWithoutUserInput
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedCreateNestedManyWithoutDonorInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUserInput
+  systemMsgs?: Prisma.SystemMessageUncheckedCreateNestedManyWithoutMsgForUserInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedCreateNestedOneWithoutUserInput
   charityShop?: Prisma.CharityShopUncheckedCreateNestedOneWithoutUserInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedCreateNestedOneWithoutUserInput
@@ -20103,6 +20690,7 @@ export type UserUpdateWithoutTrnsactionsInput = {
   charityThumbnail?: Prisma.CharityThumbnailUpdateOneWithoutUserNestedInput
   donationThanksMsgs?: Prisma.DonationThanksMSgUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUpdateOneWithoutUserNestedInput
@@ -20188,6 +20776,7 @@ export type UserUncheckedUpdateWithoutTrnsactionsInput = {
   charityThumbnail?: Prisma.CharityThumbnailUncheckedUpdateOneWithoutUserNestedInput
   donationThanksMsgs?: Prisma.DonationThanksMSgUncheckedUpdateManyWithoutDonorNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUserNestedInput
+  systemMsgs?: Prisma.SystemMessageUncheckedUpdateManyWithoutMsgForUserNestedInput
   charitableOrganization?: Prisma.CharitableOrganizationUncheckedUpdateOneWithoutUserNestedInput
   charityShop?: Prisma.CharityShopUncheckedUpdateOneWithoutUserNestedInput
   ecoFriendlyStore?: Prisma.EcoFriendlyStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -20240,6 +20829,7 @@ export type UserCountOutputType = {
   donationThanksMsgs: number
   shipments: number
   trnsactions: number
+  systemMsgs: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -20281,6 +20871,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   donationThanksMsgs?: boolean | UserCountOutputTypeCountDonationThanksMsgsArgs
   shipments?: boolean | UserCountOutputTypeCountShipmentsArgs
   trnsactions?: boolean | UserCountOutputTypeCountTrnsactionsArgs
+  systemMsgs?: boolean | UserCountOutputTypeCountSystemMsgsArgs
 }
 
 /**
@@ -20559,6 +21150,13 @@ export type UserCountOutputTypeCountTrnsactionsArgs<ExtArgs extends runtime.Type
   where?: Prisma.WalletTransactionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSystemMsgsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SystemMessageWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -20638,6 +21236,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   donationThanksMsgs?: boolean | Prisma.User$donationThanksMsgsArgs<ExtArgs>
   shipments?: boolean | Prisma.User$shipmentsArgs<ExtArgs>
   trnsactions?: boolean | Prisma.User$trnsactionsArgs<ExtArgs>
+  systemMsgs?: boolean | Prisma.User$systemMsgsArgs<ExtArgs>
   charitableOrganization?: boolean | Prisma.User$charitableOrganizationArgs<ExtArgs>
   charityShop?: boolean | Prisma.User$charityShopArgs<ExtArgs>
   ecoFriendlyStore?: boolean | Prisma.User$ecoFriendlyStoreArgs<ExtArgs>
@@ -20799,6 +21398,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   donationThanksMsgs?: boolean | Prisma.User$donationThanksMsgsArgs<ExtArgs>
   shipments?: boolean | Prisma.User$shipmentsArgs<ExtArgs>
   trnsactions?: boolean | Prisma.User$trnsactionsArgs<ExtArgs>
+  systemMsgs?: boolean | Prisma.User$systemMsgsArgs<ExtArgs>
   charitableOrganization?: boolean | Prisma.User$charitableOrganizationArgs<ExtArgs>
   charityShop?: boolean | Prisma.User$charityShopArgs<ExtArgs>
   ecoFriendlyStore?: boolean | Prisma.User$ecoFriendlyStoreArgs<ExtArgs>
@@ -20858,6 +21458,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     donationThanksMsgs: Prisma.$DonationThanksMSgPayload<ExtArgs>[]
     shipments: Prisma.$ShipmentPayload<ExtArgs>[]
     trnsactions: Prisma.$WalletTransactionPayload<ExtArgs>[]
+    systemMsgs: Prisma.$SystemMessagePayload<ExtArgs>[]
     charitableOrganization: Prisma.$CharitableOrganizationPayload<ExtArgs> | null
     charityShop: Prisma.$CharityShopPayload<ExtArgs> | null
     ecoFriendlyStore: Prisma.$EcoFriendlyStorePayload<ExtArgs> | null
@@ -21337,6 +21938,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   donationThanksMsgs<T extends Prisma.User$donationThanksMsgsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$donationThanksMsgsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DonationThanksMSgPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   shipments<T extends Prisma.User$shipmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$shipmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShipmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   trnsactions<T extends Prisma.User$trnsactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$trnsactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  systemMsgs<T extends Prisma.User$systemMsgsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$systemMsgsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SystemMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   charitableOrganization<T extends Prisma.User$charitableOrganizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$charitableOrganizationArgs<ExtArgs>>): Prisma.Prisma__CharitableOrganizationClient<runtime.Types.Result.GetResult<Prisma.$CharitableOrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   charityShop<T extends Prisma.User$charityShopArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$charityShopArgs<ExtArgs>>): Prisma.Prisma__CharityShopClient<runtime.Types.Result.GetResult<Prisma.$CharityShopPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   ecoFriendlyStore<T extends Prisma.User$ecoFriendlyStoreArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ecoFriendlyStoreArgs<ExtArgs>>): Prisma.Prisma__EcoFriendlyStoreClient<runtime.Types.Result.GetResult<Prisma.$EcoFriendlyStorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -22834,6 +23436,30 @@ export type User$trnsactionsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.WalletTransactionScalarFieldEnum | Prisma.WalletTransactionScalarFieldEnum[]
+}
+
+/**
+ * User.systemMsgs
+ */
+export type User$systemMsgsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SystemMessage
+   */
+  select?: Prisma.SystemMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SystemMessage
+   */
+  omit?: Prisma.SystemMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SystemMessageInclude<ExtArgs> | null
+  where?: Prisma.SystemMessageWhereInput
+  orderBy?: Prisma.SystemMessageOrderByWithRelationInput | Prisma.SystemMessageOrderByWithRelationInput[]
+  cursor?: Prisma.SystemMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SystemMessageScalarFieldEnum | Prisma.SystemMessageScalarFieldEnum[]
 }
 
 /**

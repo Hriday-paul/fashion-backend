@@ -69,6 +69,7 @@ export const ModelName = {
   Follow: 'Follow',
   Chat: 'Chat',
   Message: 'Message',
+  SystemMessage: 'SystemMessage',
   ChatItem: 'ChatItem',
   FileMessage: 'FileMessage',
   Order: 'Order',
@@ -411,10 +412,24 @@ export const MessageScalarFieldEnum = {
   chatId: 'chatId',
   offerId: 'offerId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  type: 'type'
 } as const
 
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+export const SystemMessageScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  text: 'text',
+  msgForUserId: 'msgForUserId',
+  msgId: 'msgId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SystemMessageScalarFieldEnum = (typeof SystemMessageScalarFieldEnum)[keyof typeof SystemMessageScalarFieldEnum]
 
 
 export const ChatItemScalarFieldEnum = {
@@ -467,6 +482,7 @@ export const OrderScalarFieldEnum = {
   allowedAuthentication: 'allowedAuthentication',
   shipmentId: 'shipmentId',
   authShipmentId: 'authShipmentId',
+  chatId: 'chatId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   completedAt: 'completedAt',

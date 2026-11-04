@@ -49,6 +49,9 @@ export const updateBalanceWorker = new Worker(
             });
         })
 
+    },
+    {
+        connection: connectionInfo,
     }
 );
 

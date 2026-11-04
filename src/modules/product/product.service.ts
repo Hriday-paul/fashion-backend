@@ -1794,7 +1794,8 @@ const makeAnOfferAsBuyer = async (
                 receiverId: user2Id,
                 senderId: currentUserId,
                 offerId: offer.id,
-                chatId: chat.id
+                chatId: chat.id,
+                type: "OFFER",
             },
             include: {
                 files: true,
@@ -1866,7 +1867,7 @@ const makeAnOfferAsBuyer = async (
     // Send realtime message
     SendMessageHandle(
         (global as any).socketio,
-        result.msg,
+        { ...result.msg, user1Id: chat?.user1Id, user2Id: chat?.user2Id },
         () => { }
     );
 
@@ -2002,12 +2003,13 @@ const acceptOfferAsSeller = async (offerId: string, currentUser: { id: string, u
                         }
                     }
                 }
-            }
+            },
+            chat: true
         }
     })
 
     if (msg) {
-        UpdateMessageHandle((global as any).socketio, msg, () => { })
+        UpdateMessageHandle((global as any).socketio, { ...msg, user1Id: msg?.chat?.user1Id, user2Id: msg?.chat?.user2Id }, () => { })
     }
 
     //send notification to the buyer about the offer
@@ -2107,7 +2109,8 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
                 receiverId: offer?.buyerId,
                 senderId: offer?.sellerId,
                 offerId: newOffer?.id,
-                chatId: chat?.id
+                chatId: chat?.id,
+                type: "OFFER"
             },
             include: {
                 files: true,
@@ -2237,16 +2240,17 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
                             }
                         }
                     }
-                }
+                },
+                chat: true
             }
         })
         if (oldMsg) {
-            UpdateMessageHandle((global as any).socketio, oldMsg, () => { })
+            UpdateMessageHandle((global as any).socketio, { ...oldMsg, user1Id: oldMsg?.chat?.user1Id, user2Id: oldMsg?.chat?.user2Id }, () => { })
         }
     }
 
     //sending socket message to buyer about new offer
-    SendMessageHandle((global as any).socketio, result?.newMsg, () => { })
+    SendMessageHandle((global as any).socketio, { ...result?.newMsg, user1Id: chat?.user1Id, user2Id: chat?.user2Id }, () => { })
 
     //send notification to the buyer about the offer
     await notificationQueue.add(jobs.notification, {

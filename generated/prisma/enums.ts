@@ -100,6 +100,15 @@ export const ThanksMessageType = {
 export type ThanksMessageType = (typeof ThanksMessageType)[keyof typeof ThanksMessageType]
 
 
+export const MsgType = {
+  SYSTEM: 'SYSTEM',
+  OFFER: 'OFFER',
+  DIRECT: 'DIRECT'
+} as const
+
+export type MsgType = (typeof MsgType)[keyof typeof MsgType]
+
+
 export const FileMessageType = {
   IMAGE: 'IMAGE',
   DOCUMENT: 'DOCUMENT'

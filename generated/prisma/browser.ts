@@ -122,6 +122,11 @@ export type Chat = Prisma.ChatModel
  */
 export type Message = Prisma.MessageModel
 /**
+ * Model SystemMessage
+ * 
+ */
+export type SystemMessage = Prisma.SystemMessageModel
+/**
  * Model ChatItem
  * 
  */

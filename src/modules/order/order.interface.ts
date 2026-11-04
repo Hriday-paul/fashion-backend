@@ -107,93 +107,7 @@ export interface IShipment {
             }
         ],
         "pickup_state": "not_requested",
-        "rates": [
-            {
-                "additional_services_surcharge": 0,
-                "available_handover_options": [
-                    "dropoff",
-                    "free_pickup"
-                ],
-                "cost_rank": 2,
-                "courier_remarks": null,
-                "courier_service": {
-                    "courier_id": "01563646-58c1-4607-8fe0-cae3e33c0001",
-                    "easyship_courier_service": true,
-                    "id": "01563646-58c1-4607-8fe0-cae3e33c0001",
-                    "logo": null,
-                    "name": "Courier 1",
-                    "umbrella_name": "DHL"
-                },
-                "currency": "USD",
-                "ddp_handling_fee": 0,
-                "delivery_time_rank": 4,
-                "description": "description",
-                "discount": null,
-                "easyship_rating": 2,
-                "estimated_import_duty": 0,
-                "estimated_import_tax": 65.96,
-                "fuel_surcharge": 10,
-                "full_description": "full description",
-                "import_duty_charge": 0,
-                "import_duty_details": null,
-                "import_tax_charge": 0,
-                "import_tax_non_chargeable": 0,
-                "incoterms": "DDU",
-                "insurance_fee": 0,
-                "is_above_duty_threshold": null,
-                "is_above_threshold": true,
-                "max_delivery_time": 39,
-                "min_delivery_time": 19,
-                "minimum_pickup_fee": 0,
-                "other_surcharges": {
-                    "details": [
-                        {
-                            "fee": 0,
-                            "name": "Peak Surcharge",
-                            "origin_fee": 0
-                        }
-                    ],
-                    "total_fee": 0
-                },
-                "oversized_surcharge": 0,
-                "payment_recipient": "Easyship",
-                "provincial_sales_tax": 0,
-                "rates_in_origin_currency": {
-                    "additional_services_surcharge": 0,
-                    "currency": "HKD",
-                    "ddp_handling_fee": 0,
-                    "estimated_import_duty": 0,
-                    "estimated_import_tax": 65.96,
-                    "fuel_surcharge": 1400,
-                    "import_duty_charge": 0,
-                    "import_tax_charge": 0,
-                    "import_tax_non_chargeable": 0,
-                    "insurance_fee": 0,
-                    "minimum_pickup_fee": 0,
-                    "oversized_surcharge": 0,
-                    "provincial_sales_tax": 0,
-                    "remote_area_surcharge": 0,
-                    "residential_discounted_fee": 0,
-                    "residential_full_fee": 0,
-                    "sales_tax": 0,
-                    "shipment_charge": 140,
-                    "shipment_charge_total": 1540,
-                    "total_charge": 1540,
-                    "warehouse_handling_fee": 0
-                },
-                "remote_area_surcharge": 0,
-                "remote_area_surcharges": null,
-                "residential_discounted_fee": 0,
-                "residential_full_fee": 0,
-                "sales_tax": 0,
-                "shipment_charge": 100,
-                "shipment_charge_total": 110,
-                "total_charge": 110,
-                "tracking_rating": 2,
-                "value_for_money_rank": 4,
-                "warehouse_handling_fee": 0
-            }
-        ],
+        "rates": IRate[],
         "regulatory_identifiers": {
             "eori": null,
             "ioss": null,
@@ -446,3 +360,90 @@ export interface ILabel {
         "unavailable_couriers": []
     }
 }
+
+export interface IRate {
+    "additional_services_surcharge": 0,
+    "available_handover_options": [
+        "dropoff",
+        "free_pickup"
+    ],
+    "cost_rank": 2,
+    "courier_remarks": null,
+    "courier_service": {
+        "courier_id": "01563646-58c1-4607-8fe0-cae3e33c0001",
+        "easyship_courier_service": true,
+        "id": "01563646-58c1-4607-8fe0-cae3e33c0001",
+        "logo": null,
+        "name": "Courier 1",
+        "umbrella_name": "DHL"
+    },
+    "currency": "USD",
+    "ddp_handling_fee": 0,
+    "delivery_time_rank": 4,
+    "description": "description",
+    "discount": null,
+    "easyship_rating": 2,
+    "estimated_import_duty": 0,
+    "estimated_import_tax": 65.96,
+    "fuel_surcharge": 10,
+    "full_description": "full description",
+    "import_duty_charge": 0,
+    "import_duty_details": null,
+    "import_tax_charge": 0,
+    "import_tax_non_chargeable": 0,
+    "incoterms": "DDU",
+    "insurance_fee": 0,
+    "is_above_duty_threshold": null,
+    "is_above_threshold": true,
+    "max_delivery_time": 39,
+    "min_delivery_time": 19,
+    "minimum_pickup_fee": 0,
+    "other_surcharges": {
+        "details": [
+            {
+                "fee": 0,
+                "name": "Peak Surcharge",
+                "origin_fee": 0
+            }
+        ],
+        "total_fee": 0
+    },
+    "oversized_surcharge": 0,
+    "payment_recipient": "Easyship",
+    "provincial_sales_tax": 0,
+    "rates_in_origin_currency": {
+        "additional_services_surcharge": 0,
+        "currency": "HKD",
+        "ddp_handling_fee": 0,
+        "estimated_import_duty": 0,
+        "estimated_import_tax": 65.96,
+        "fuel_surcharge": 1400,
+        "import_duty_charge": 0,
+        "import_tax_charge": 0,
+        "import_tax_non_chargeable": 0,
+        "insurance_fee": 0,
+        "minimum_pickup_fee": 0,
+        "oversized_surcharge": 0,
+        "provincial_sales_tax": 0,
+        "remote_area_surcharge": 0,
+        "residential_discounted_fee": 0,
+        "residential_full_fee": 0,
+        "sales_tax": 0,
+        "shipment_charge": 140,
+        "shipment_charge_total": 1540,
+        "total_charge": 1540,
+        "warehouse_handling_fee": 0
+    },
+    "remote_area_surcharge": 0,
+    "remote_area_surcharges": null,
+    "residential_discounted_fee": 0,
+    "residential_full_fee": 0,
+    "sales_tax": 0,
+    "shipment_charge": 100,
+    "shipment_charge_total": 110,
+    "total_charge": 110,
+    "tracking_rating": 2,
+    "value_for_money_rank": 4,
+    "warehouse_handling_fee": 0
+}
+

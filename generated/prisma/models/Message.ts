@@ -33,6 +33,7 @@ export type MessageMinAggregateOutputType = {
   offerId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  type: $Enums.MsgType | null
 }
 
 export type MessageMaxAggregateOutputType = {
@@ -45,6 +46,7 @@ export type MessageMaxAggregateOutputType = {
   offerId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  type: $Enums.MsgType | null
 }
 
 export type MessageCountAggregateOutputType = {
@@ -57,6 +59,7 @@ export type MessageCountAggregateOutputType = {
   offerId: number
   createdAt: number
   updatedAt: number
+  type: number
   _all: number
 }
 
@@ -71,6 +74,7 @@ export type MessageMinAggregateInputType = {
   offerId?: true
   createdAt?: true
   updatedAt?: true
+  type?: true
 }
 
 export type MessageMaxAggregateInputType = {
@@ -83,6 +87,7 @@ export type MessageMaxAggregateInputType = {
   offerId?: true
   createdAt?: true
   updatedAt?: true
+  type?: true
 }
 
 export type MessageCountAggregateInputType = {
@@ -95,6 +100,7 @@ export type MessageCountAggregateInputType = {
   offerId?: true
   createdAt?: true
   updatedAt?: true
+  type?: true
   _all?: true
 }
 
@@ -174,12 +180,13 @@ export type MessageGroupByOutputType = {
   id: string
   text: string | null
   isSeen: boolean
-  senderId: string
-  receiverId: string
+  senderId: string | null
+  receiverId: string | null
   chatId: string
   offerId: string | null
   createdAt: Date
   updatedAt: Date
+  type: $Enums.MsgType
   _count: MessageCountAggregateOutputType | null
   _min: MessageMinAggregateOutputType | null
   _max: MessageMaxAggregateOutputType | null
@@ -207,34 +214,38 @@ export type MessageWhereInput = {
   id?: Prisma.StringFilter<"Message"> | string
   text?: Prisma.StringNullableFilter<"Message"> | string | null
   isSeen?: Prisma.BoolFilter<"Message"> | boolean
-  senderId?: Prisma.StringFilter<"Message"> | string
-  receiverId?: Prisma.StringFilter<"Message"> | string
+  senderId?: Prisma.StringNullableFilter<"Message"> | string | null
+  receiverId?: Prisma.StringNullableFilter<"Message"> | string | null
   chatId?: Prisma.StringFilter<"Message"> | string
   offerId?: Prisma.StringNullableFilter<"Message"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Message"> | Date | string
-  sender?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  receiver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  type?: Prisma.EnumMsgTypeFilter<"Message"> | $Enums.MsgType
+  sender?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  receiver?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   chat?: Prisma.XOR<Prisma.ChatScalarRelationFilter, Prisma.ChatWhereInput>
   files?: Prisma.FileMessageListRelationFilter
   offer?: Prisma.XOR<Prisma.OfferNullableScalarRelationFilter, Prisma.OfferWhereInput> | null
+  SystemMessage?: Prisma.XOR<Prisma.SystemMessageNullableScalarRelationFilter, Prisma.SystemMessageWhereInput> | null
 }
 
 export type MessageOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   text?: Prisma.SortOrderInput | Prisma.SortOrder
   isSeen?: Prisma.SortOrder
-  senderId?: Prisma.SortOrder
-  receiverId?: Prisma.SortOrder
+  senderId?: Prisma.SortOrderInput | Prisma.SortOrder
+  receiverId?: Prisma.SortOrderInput | Prisma.SortOrder
   chatId?: Prisma.SortOrder
   offerId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   sender?: Prisma.UserOrderByWithRelationInput
   receiver?: Prisma.UserOrderByWithRelationInput
   chat?: Prisma.ChatOrderByWithRelationInput
   files?: Prisma.FileMessageOrderByRelationAggregateInput
   offer?: Prisma.OfferOrderByWithRelationInput
+  SystemMessage?: Prisma.SystemMessageOrderByWithRelationInput
 }
 
 export type MessageWhereUniqueInput = Prisma.AtLeast<{
@@ -245,28 +256,31 @@ export type MessageWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.MessageWhereInput | Prisma.MessageWhereInput[]
   text?: Prisma.StringNullableFilter<"Message"> | string | null
   isSeen?: Prisma.BoolFilter<"Message"> | boolean
-  senderId?: Prisma.StringFilter<"Message"> | string
-  receiverId?: Prisma.StringFilter<"Message"> | string
+  senderId?: Prisma.StringNullableFilter<"Message"> | string | null
+  receiverId?: Prisma.StringNullableFilter<"Message"> | string | null
   chatId?: Prisma.StringFilter<"Message"> | string
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Message"> | Date | string
-  sender?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  receiver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  type?: Prisma.EnumMsgTypeFilter<"Message"> | $Enums.MsgType
+  sender?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  receiver?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   chat?: Prisma.XOR<Prisma.ChatScalarRelationFilter, Prisma.ChatWhereInput>
   files?: Prisma.FileMessageListRelationFilter
   offer?: Prisma.XOR<Prisma.OfferNullableScalarRelationFilter, Prisma.OfferWhereInput> | null
+  SystemMessage?: Prisma.XOR<Prisma.SystemMessageNullableScalarRelationFilter, Prisma.SystemMessageWhereInput> | null
 }, "id" | "offerId">
 
 export type MessageOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   text?: Prisma.SortOrderInput | Prisma.SortOrder
   isSeen?: Prisma.SortOrder
-  senderId?: Prisma.SortOrder
-  receiverId?: Prisma.SortOrder
+  senderId?: Prisma.SortOrderInput | Prisma.SortOrder
+  receiverId?: Prisma.SortOrderInput | Prisma.SortOrder
   chatId?: Prisma.SortOrder
   offerId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   _count?: Prisma.MessageCountOrderByAggregateInput
   _max?: Prisma.MessageMaxOrderByAggregateInput
   _min?: Prisma.MessageMinOrderByAggregateInput
@@ -279,12 +293,13 @@ export type MessageScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Message"> | string
   text?: Prisma.StringNullableWithAggregatesFilter<"Message"> | string | null
   isSeen?: Prisma.BoolWithAggregatesFilter<"Message"> | boolean
-  senderId?: Prisma.StringWithAggregatesFilter<"Message"> | string
-  receiverId?: Prisma.StringWithAggregatesFilter<"Message"> | string
+  senderId?: Prisma.StringNullableWithAggregatesFilter<"Message"> | string | null
+  receiverId?: Prisma.StringNullableWithAggregatesFilter<"Message"> | string | null
   chatId?: Prisma.StringWithAggregatesFilter<"Message"> | string
   offerId?: Prisma.StringNullableWithAggregatesFilter<"Message"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Message"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Message"> | Date | string
+  type?: Prisma.EnumMsgTypeWithAggregatesFilter<"Message"> | $Enums.MsgType
 }
 
 export type MessageCreateInput = {
@@ -293,24 +308,28 @@ export type MessageCreateInput = {
   isSeen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  sender: Prisma.UserCreateNestedOneWithoutSentMessagesInput
-  receiver: Prisma.UserCreateNestedOneWithoutReceiveMessagesInput
+  type?: $Enums.MsgType
+  sender?: Prisma.UserCreateNestedOneWithoutSentMessagesInput
+  receiver?: Prisma.UserCreateNestedOneWithoutReceiveMessagesInput
   chat: Prisma.ChatCreateNestedOneWithoutMessagesInput
   files?: Prisma.FileMessageCreateNestedManyWithoutMessageInput
   offer?: Prisma.OfferCreateNestedOneWithoutMessageInput
+  SystemMessage?: Prisma.SystemMessageCreateNestedOneWithoutMsgInput
 }
 
 export type MessageUncheckedCreateInput = {
   id?: string
   text?: string | null
   isSeen?: boolean
-  senderId: string
-  receiverId: string
+  senderId?: string | null
+  receiverId?: string | null
   chatId: string
   offerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  type?: $Enums.MsgType
   files?: Prisma.FileMessageUncheckedCreateNestedManyWithoutMessageInput
+  SystemMessage?: Prisma.SystemMessageUncheckedCreateNestedOneWithoutMsgInput
 }
 
 export type MessageUpdateInput = {
@@ -319,36 +338,41 @@ export type MessageUpdateInput = {
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sender?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
-  receiver?: Prisma.UserUpdateOneRequiredWithoutReceiveMessagesNestedInput
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
+  sender?: Prisma.UserUpdateOneWithoutSentMessagesNestedInput
+  receiver?: Prisma.UserUpdateOneWithoutReceiveMessagesNestedInput
   chat?: Prisma.ChatUpdateOneRequiredWithoutMessagesNestedInput
   files?: Prisma.FileMessageUpdateManyWithoutMessageNestedInput
   offer?: Prisma.OfferUpdateOneWithoutMessageNestedInput
+  SystemMessage?: Prisma.SystemMessageUpdateOneWithoutMsgNestedInput
 }
 
 export type MessageUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  senderId?: Prisma.StringFieldUpdateOperationsInput | string
-  receiverId?: Prisma.StringFieldUpdateOperationsInput | string
+  senderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chatId?: Prisma.StringFieldUpdateOperationsInput | string
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
   files?: Prisma.FileMessageUncheckedUpdateManyWithoutMessageNestedInput
+  SystemMessage?: Prisma.SystemMessageUncheckedUpdateOneWithoutMsgNestedInput
 }
 
 export type MessageCreateManyInput = {
   id?: string
   text?: string | null
   isSeen?: boolean
-  senderId: string
-  receiverId: string
+  senderId?: string | null
+  receiverId?: string | null
   chatId: string
   offerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  type?: $Enums.MsgType
 }
 
 export type MessageUpdateManyMutationInput = {
@@ -357,18 +381,20 @@ export type MessageUpdateManyMutationInput = {
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
 }
 
 export type MessageUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  senderId?: Prisma.StringFieldUpdateOperationsInput | string
-  receiverId?: Prisma.StringFieldUpdateOperationsInput | string
+  senderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chatId?: Prisma.StringFieldUpdateOperationsInput | string
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
 }
 
 export type MessageListRelationFilter = {
@@ -391,6 +417,7 @@ export type MessageCountOrderByAggregateInput = {
   offerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
 export type MessageMaxOrderByAggregateInput = {
@@ -403,6 +430,7 @@ export type MessageMaxOrderByAggregateInput = {
   offerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
 export type MessageMinOrderByAggregateInput = {
@@ -415,6 +443,7 @@ export type MessageMinOrderByAggregateInput = {
   offerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
 export type MessageScalarRelationFilter = {
@@ -467,6 +496,24 @@ export type MessageUncheckedUpdateManyWithoutChatNestedInput = {
   update?: Prisma.MessageUpdateWithWhereUniqueWithoutChatInput | Prisma.MessageUpdateWithWhereUniqueWithoutChatInput[]
   updateMany?: Prisma.MessageUpdateManyWithWhereWithoutChatInput | Prisma.MessageUpdateManyWithWhereWithoutChatInput[]
   deleteMany?: Prisma.MessageScalarWhereInput | Prisma.MessageScalarWhereInput[]
+}
+
+export type EnumMsgTypeFieldUpdateOperationsInput = {
+  set?: $Enums.MsgType
+}
+
+export type MessageCreateNestedOneWithoutSystemMessageInput = {
+  create?: Prisma.XOR<Prisma.MessageCreateWithoutSystemMessageInput, Prisma.MessageUncheckedCreateWithoutSystemMessageInput>
+  connectOrCreate?: Prisma.MessageCreateOrConnectWithoutSystemMessageInput
+  connect?: Prisma.MessageWhereUniqueInput
+}
+
+export type MessageUpdateOneRequiredWithoutSystemMessageNestedInput = {
+  create?: Prisma.XOR<Prisma.MessageCreateWithoutSystemMessageInput, Prisma.MessageUncheckedCreateWithoutSystemMessageInput>
+  connectOrCreate?: Prisma.MessageCreateOrConnectWithoutSystemMessageInput
+  upsert?: Prisma.MessageUpsertWithoutSystemMessageInput
+  connect?: Prisma.MessageWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MessageUpdateToOneWithWhereWithoutSystemMessageInput, Prisma.MessageUpdateWithoutSystemMessageInput>, Prisma.MessageUncheckedUpdateWithoutSystemMessageInput>
 }
 
 export type MessageCreateNestedOneWithoutFilesInput = {
@@ -605,22 +652,26 @@ export type MessageCreateWithoutChatInput = {
   isSeen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  sender: Prisma.UserCreateNestedOneWithoutSentMessagesInput
-  receiver: Prisma.UserCreateNestedOneWithoutReceiveMessagesInput
+  type?: $Enums.MsgType
+  sender?: Prisma.UserCreateNestedOneWithoutSentMessagesInput
+  receiver?: Prisma.UserCreateNestedOneWithoutReceiveMessagesInput
   files?: Prisma.FileMessageCreateNestedManyWithoutMessageInput
   offer?: Prisma.OfferCreateNestedOneWithoutMessageInput
+  SystemMessage?: Prisma.SystemMessageCreateNestedOneWithoutMsgInput
 }
 
 export type MessageUncheckedCreateWithoutChatInput = {
   id?: string
   text?: string | null
   isSeen?: boolean
-  senderId: string
-  receiverId: string
+  senderId?: string | null
+  receiverId?: string | null
   offerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  type?: $Enums.MsgType
   files?: Prisma.FileMessageUncheckedCreateNestedManyWithoutMessageInput
+  SystemMessage?: Prisma.SystemMessageUncheckedCreateNestedOneWithoutMsgInput
 }
 
 export type MessageCreateOrConnectWithoutChatInput = {
@@ -656,12 +707,85 @@ export type MessageScalarWhereInput = {
   id?: Prisma.StringFilter<"Message"> | string
   text?: Prisma.StringNullableFilter<"Message"> | string | null
   isSeen?: Prisma.BoolFilter<"Message"> | boolean
-  senderId?: Prisma.StringFilter<"Message"> | string
-  receiverId?: Prisma.StringFilter<"Message"> | string
+  senderId?: Prisma.StringNullableFilter<"Message"> | string | null
+  receiverId?: Prisma.StringNullableFilter<"Message"> | string | null
   chatId?: Prisma.StringFilter<"Message"> | string
   offerId?: Prisma.StringNullableFilter<"Message"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Message"> | Date | string
+  type?: Prisma.EnumMsgTypeFilter<"Message"> | $Enums.MsgType
+}
+
+export type MessageCreateWithoutSystemMessageInput = {
+  id?: string
+  text?: string | null
+  isSeen?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  type?: $Enums.MsgType
+  sender?: Prisma.UserCreateNestedOneWithoutSentMessagesInput
+  receiver?: Prisma.UserCreateNestedOneWithoutReceiveMessagesInput
+  chat: Prisma.ChatCreateNestedOneWithoutMessagesInput
+  files?: Prisma.FileMessageCreateNestedManyWithoutMessageInput
+  offer?: Prisma.OfferCreateNestedOneWithoutMessageInput
+}
+
+export type MessageUncheckedCreateWithoutSystemMessageInput = {
+  id?: string
+  text?: string | null
+  isSeen?: boolean
+  senderId?: string | null
+  receiverId?: string | null
+  chatId: string
+  offerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  type?: $Enums.MsgType
+  files?: Prisma.FileMessageUncheckedCreateNestedManyWithoutMessageInput
+}
+
+export type MessageCreateOrConnectWithoutSystemMessageInput = {
+  where: Prisma.MessageWhereUniqueInput
+  create: Prisma.XOR<Prisma.MessageCreateWithoutSystemMessageInput, Prisma.MessageUncheckedCreateWithoutSystemMessageInput>
+}
+
+export type MessageUpsertWithoutSystemMessageInput = {
+  update: Prisma.XOR<Prisma.MessageUpdateWithoutSystemMessageInput, Prisma.MessageUncheckedUpdateWithoutSystemMessageInput>
+  create: Prisma.XOR<Prisma.MessageCreateWithoutSystemMessageInput, Prisma.MessageUncheckedCreateWithoutSystemMessageInput>
+  where?: Prisma.MessageWhereInput
+}
+
+export type MessageUpdateToOneWithWhereWithoutSystemMessageInput = {
+  where?: Prisma.MessageWhereInput
+  data: Prisma.XOR<Prisma.MessageUpdateWithoutSystemMessageInput, Prisma.MessageUncheckedUpdateWithoutSystemMessageInput>
+}
+
+export type MessageUpdateWithoutSystemMessageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
+  sender?: Prisma.UserUpdateOneWithoutSentMessagesNestedInput
+  receiver?: Prisma.UserUpdateOneWithoutReceiveMessagesNestedInput
+  chat?: Prisma.ChatUpdateOneRequiredWithoutMessagesNestedInput
+  files?: Prisma.FileMessageUpdateManyWithoutMessageNestedInput
+  offer?: Prisma.OfferUpdateOneWithoutMessageNestedInput
+}
+
+export type MessageUncheckedUpdateWithoutSystemMessageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  senderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatId?: Prisma.StringFieldUpdateOperationsInput | string
+  offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
+  files?: Prisma.FileMessageUncheckedUpdateManyWithoutMessageNestedInput
 }
 
 export type MessageCreateWithoutFilesInput = {
@@ -670,22 +794,26 @@ export type MessageCreateWithoutFilesInput = {
   isSeen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  sender: Prisma.UserCreateNestedOneWithoutSentMessagesInput
-  receiver: Prisma.UserCreateNestedOneWithoutReceiveMessagesInput
+  type?: $Enums.MsgType
+  sender?: Prisma.UserCreateNestedOneWithoutSentMessagesInput
+  receiver?: Prisma.UserCreateNestedOneWithoutReceiveMessagesInput
   chat: Prisma.ChatCreateNestedOneWithoutMessagesInput
   offer?: Prisma.OfferCreateNestedOneWithoutMessageInput
+  SystemMessage?: Prisma.SystemMessageCreateNestedOneWithoutMsgInput
 }
 
 export type MessageUncheckedCreateWithoutFilesInput = {
   id?: string
   text?: string | null
   isSeen?: boolean
-  senderId: string
-  receiverId: string
+  senderId?: string | null
+  receiverId?: string | null
   chatId: string
   offerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  type?: $Enums.MsgType
+  SystemMessage?: Prisma.SystemMessageUncheckedCreateNestedOneWithoutMsgInput
 }
 
 export type MessageCreateOrConnectWithoutFilesInput = {
@@ -710,22 +838,26 @@ export type MessageUpdateWithoutFilesInput = {
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sender?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
-  receiver?: Prisma.UserUpdateOneRequiredWithoutReceiveMessagesNestedInput
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
+  sender?: Prisma.UserUpdateOneWithoutSentMessagesNestedInput
+  receiver?: Prisma.UserUpdateOneWithoutReceiveMessagesNestedInput
   chat?: Prisma.ChatUpdateOneRequiredWithoutMessagesNestedInput
   offer?: Prisma.OfferUpdateOneWithoutMessageNestedInput
+  SystemMessage?: Prisma.SystemMessageUpdateOneWithoutMsgNestedInput
 }
 
 export type MessageUncheckedUpdateWithoutFilesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  senderId?: Prisma.StringFieldUpdateOperationsInput | string
-  receiverId?: Prisma.StringFieldUpdateOperationsInput | string
+  senderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chatId?: Prisma.StringFieldUpdateOperationsInput | string
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
+  SystemMessage?: Prisma.SystemMessageUncheckedUpdateOneWithoutMsgNestedInput
 }
 
 export type MessageCreateWithoutOfferInput = {
@@ -734,22 +866,26 @@ export type MessageCreateWithoutOfferInput = {
   isSeen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  sender: Prisma.UserCreateNestedOneWithoutSentMessagesInput
-  receiver: Prisma.UserCreateNestedOneWithoutReceiveMessagesInput
+  type?: $Enums.MsgType
+  sender?: Prisma.UserCreateNestedOneWithoutSentMessagesInput
+  receiver?: Prisma.UserCreateNestedOneWithoutReceiveMessagesInput
   chat: Prisma.ChatCreateNestedOneWithoutMessagesInput
   files?: Prisma.FileMessageCreateNestedManyWithoutMessageInput
+  SystemMessage?: Prisma.SystemMessageCreateNestedOneWithoutMsgInput
 }
 
 export type MessageUncheckedCreateWithoutOfferInput = {
   id?: string
   text?: string | null
   isSeen?: boolean
-  senderId: string
-  receiverId: string
+  senderId?: string | null
+  receiverId?: string | null
   chatId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  type?: $Enums.MsgType
   files?: Prisma.FileMessageUncheckedCreateNestedManyWithoutMessageInput
+  SystemMessage?: Prisma.SystemMessageUncheckedCreateNestedOneWithoutMsgInput
 }
 
 export type MessageCreateOrConnectWithoutOfferInput = {
@@ -774,22 +910,26 @@ export type MessageUpdateWithoutOfferInput = {
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sender?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
-  receiver?: Prisma.UserUpdateOneRequiredWithoutReceiveMessagesNestedInput
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
+  sender?: Prisma.UserUpdateOneWithoutSentMessagesNestedInput
+  receiver?: Prisma.UserUpdateOneWithoutReceiveMessagesNestedInput
   chat?: Prisma.ChatUpdateOneRequiredWithoutMessagesNestedInput
   files?: Prisma.FileMessageUpdateManyWithoutMessageNestedInput
+  SystemMessage?: Prisma.SystemMessageUpdateOneWithoutMsgNestedInput
 }
 
 export type MessageUncheckedUpdateWithoutOfferInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  senderId?: Prisma.StringFieldUpdateOperationsInput | string
-  receiverId?: Prisma.StringFieldUpdateOperationsInput | string
+  senderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chatId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
   files?: Prisma.FileMessageUncheckedUpdateManyWithoutMessageNestedInput
+  SystemMessage?: Prisma.SystemMessageUncheckedUpdateOneWithoutMsgNestedInput
 }
 
 export type MessageCreateWithoutSenderInput = {
@@ -798,22 +938,26 @@ export type MessageCreateWithoutSenderInput = {
   isSeen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  receiver: Prisma.UserCreateNestedOneWithoutReceiveMessagesInput
+  type?: $Enums.MsgType
+  receiver?: Prisma.UserCreateNestedOneWithoutReceiveMessagesInput
   chat: Prisma.ChatCreateNestedOneWithoutMessagesInput
   files?: Prisma.FileMessageCreateNestedManyWithoutMessageInput
   offer?: Prisma.OfferCreateNestedOneWithoutMessageInput
+  SystemMessage?: Prisma.SystemMessageCreateNestedOneWithoutMsgInput
 }
 
 export type MessageUncheckedCreateWithoutSenderInput = {
   id?: string
   text?: string | null
   isSeen?: boolean
-  receiverId: string
+  receiverId?: string | null
   chatId: string
   offerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  type?: $Enums.MsgType
   files?: Prisma.FileMessageUncheckedCreateNestedManyWithoutMessageInput
+  SystemMessage?: Prisma.SystemMessageUncheckedCreateNestedOneWithoutMsgInput
 }
 
 export type MessageCreateOrConnectWithoutSenderInput = {
@@ -832,22 +976,26 @@ export type MessageCreateWithoutReceiverInput = {
   isSeen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  sender: Prisma.UserCreateNestedOneWithoutSentMessagesInput
+  type?: $Enums.MsgType
+  sender?: Prisma.UserCreateNestedOneWithoutSentMessagesInput
   chat: Prisma.ChatCreateNestedOneWithoutMessagesInput
   files?: Prisma.FileMessageCreateNestedManyWithoutMessageInput
   offer?: Prisma.OfferCreateNestedOneWithoutMessageInput
+  SystemMessage?: Prisma.SystemMessageCreateNestedOneWithoutMsgInput
 }
 
 export type MessageUncheckedCreateWithoutReceiverInput = {
   id?: string
   text?: string | null
   isSeen?: boolean
-  senderId: string
+  senderId?: string | null
   chatId: string
   offerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  type?: $Enums.MsgType
   files?: Prisma.FileMessageUncheckedCreateNestedManyWithoutMessageInput
+  SystemMessage?: Prisma.SystemMessageUncheckedCreateNestedOneWithoutMsgInput
 }
 
 export type MessageCreateOrConnectWithoutReceiverInput = {
@@ -896,11 +1044,12 @@ export type MessageCreateManyChatInput = {
   id?: string
   text?: string | null
   isSeen?: boolean
-  senderId: string
-  receiverId: string
+  senderId?: string | null
+  receiverId?: string | null
   offerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  type?: $Enums.MsgType
 }
 
 export type MessageUpdateWithoutChatInput = {
@@ -909,55 +1058,62 @@ export type MessageUpdateWithoutChatInput = {
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sender?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
-  receiver?: Prisma.UserUpdateOneRequiredWithoutReceiveMessagesNestedInput
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
+  sender?: Prisma.UserUpdateOneWithoutSentMessagesNestedInput
+  receiver?: Prisma.UserUpdateOneWithoutReceiveMessagesNestedInput
   files?: Prisma.FileMessageUpdateManyWithoutMessageNestedInput
   offer?: Prisma.OfferUpdateOneWithoutMessageNestedInput
+  SystemMessage?: Prisma.SystemMessageUpdateOneWithoutMsgNestedInput
 }
 
 export type MessageUncheckedUpdateWithoutChatInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  senderId?: Prisma.StringFieldUpdateOperationsInput | string
-  receiverId?: Prisma.StringFieldUpdateOperationsInput | string
+  senderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
   files?: Prisma.FileMessageUncheckedUpdateManyWithoutMessageNestedInput
+  SystemMessage?: Prisma.SystemMessageUncheckedUpdateOneWithoutMsgNestedInput
 }
 
 export type MessageUncheckedUpdateManyWithoutChatInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  senderId?: Prisma.StringFieldUpdateOperationsInput | string
-  receiverId?: Prisma.StringFieldUpdateOperationsInput | string
+  senderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
 }
 
 export type MessageCreateManySenderInput = {
   id?: string
   text?: string | null
   isSeen?: boolean
-  receiverId: string
+  receiverId?: string | null
   chatId: string
   offerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  type?: $Enums.MsgType
 }
 
 export type MessageCreateManyReceiverInput = {
   id?: string
   text?: string | null
   isSeen?: boolean
-  senderId: string
+  senderId?: string | null
   chatId: string
   offerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  type?: $Enums.MsgType
 }
 
 export type MessageUpdateWithoutSenderInput = {
@@ -966,33 +1122,38 @@ export type MessageUpdateWithoutSenderInput = {
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiver?: Prisma.UserUpdateOneRequiredWithoutReceiveMessagesNestedInput
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
+  receiver?: Prisma.UserUpdateOneWithoutReceiveMessagesNestedInput
   chat?: Prisma.ChatUpdateOneRequiredWithoutMessagesNestedInput
   files?: Prisma.FileMessageUpdateManyWithoutMessageNestedInput
   offer?: Prisma.OfferUpdateOneWithoutMessageNestedInput
+  SystemMessage?: Prisma.SystemMessageUpdateOneWithoutMsgNestedInput
 }
 
 export type MessageUncheckedUpdateWithoutSenderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receiverId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chatId?: Prisma.StringFieldUpdateOperationsInput | string
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
   files?: Prisma.FileMessageUncheckedUpdateManyWithoutMessageNestedInput
+  SystemMessage?: Prisma.SystemMessageUncheckedUpdateOneWithoutMsgNestedInput
 }
 
 export type MessageUncheckedUpdateManyWithoutSenderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receiverId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chatId?: Prisma.StringFieldUpdateOperationsInput | string
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
 }
 
 export type MessageUpdateWithoutReceiverInput = {
@@ -1001,33 +1162,38 @@ export type MessageUpdateWithoutReceiverInput = {
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sender?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
+  sender?: Prisma.UserUpdateOneWithoutSentMessagesNestedInput
   chat?: Prisma.ChatUpdateOneRequiredWithoutMessagesNestedInput
   files?: Prisma.FileMessageUpdateManyWithoutMessageNestedInput
   offer?: Prisma.OfferUpdateOneWithoutMessageNestedInput
+  SystemMessage?: Prisma.SystemMessageUpdateOneWithoutMsgNestedInput
 }
 
 export type MessageUncheckedUpdateWithoutReceiverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  senderId?: Prisma.StringFieldUpdateOperationsInput | string
+  senderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chatId?: Prisma.StringFieldUpdateOperationsInput | string
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
   files?: Prisma.FileMessageUncheckedUpdateManyWithoutMessageNestedInput
+  SystemMessage?: Prisma.SystemMessageUncheckedUpdateOneWithoutMsgNestedInput
 }
 
 export type MessageUncheckedUpdateManyWithoutReceiverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isSeen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  senderId?: Prisma.StringFieldUpdateOperationsInput | string
+  senderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chatId?: Prisma.StringFieldUpdateOperationsInput | string
   offerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumMsgTypeFieldUpdateOperationsInput | $Enums.MsgType
 }
 
 
@@ -1071,11 +1237,13 @@ export type MessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   offerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  type?: boolean
+  sender?: boolean | Prisma.Message$senderArgs<ExtArgs>
+  receiver?: boolean | Prisma.Message$receiverArgs<ExtArgs>
   chat?: boolean | Prisma.ChatDefaultArgs<ExtArgs>
   files?: boolean | Prisma.Message$filesArgs<ExtArgs>
   offer?: boolean | Prisma.Message$offerArgs<ExtArgs>
+  SystemMessage?: boolean | Prisma.Message$SystemMessageArgs<ExtArgs>
   _count?: boolean | Prisma.MessageCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["message"]>
 
@@ -1089,8 +1257,9 @@ export type MessageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   offerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  type?: boolean
+  sender?: boolean | Prisma.Message$senderArgs<ExtArgs>
+  receiver?: boolean | Prisma.Message$receiverArgs<ExtArgs>
   chat?: boolean | Prisma.ChatDefaultArgs<ExtArgs>
   offer?: boolean | Prisma.Message$offerArgs<ExtArgs>
 }, ExtArgs["result"]["message"]>
@@ -1105,8 +1274,9 @@ export type MessageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   offerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  type?: boolean
+  sender?: boolean | Prisma.Message$senderArgs<ExtArgs>
+  receiver?: boolean | Prisma.Message$receiverArgs<ExtArgs>
   chat?: boolean | Prisma.ChatDefaultArgs<ExtArgs>
   offer?: boolean | Prisma.Message$offerArgs<ExtArgs>
 }, ExtArgs["result"]["message"]>
@@ -1121,26 +1291,28 @@ export type MessageSelectScalar = {
   offerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  type?: boolean
 }
 
-export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "text" | "isSeen" | "senderId" | "receiverId" | "chatId" | "offerId" | "createdAt" | "updatedAt", ExtArgs["result"]["message"]>
+export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "text" | "isSeen" | "senderId" | "receiverId" | "chatId" | "offerId" | "createdAt" | "updatedAt" | "type", ExtArgs["result"]["message"]>
 export type MessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sender?: boolean | Prisma.Message$senderArgs<ExtArgs>
+  receiver?: boolean | Prisma.Message$receiverArgs<ExtArgs>
   chat?: boolean | Prisma.ChatDefaultArgs<ExtArgs>
   files?: boolean | Prisma.Message$filesArgs<ExtArgs>
   offer?: boolean | Prisma.Message$offerArgs<ExtArgs>
+  SystemMessage?: boolean | Prisma.Message$SystemMessageArgs<ExtArgs>
   _count?: boolean | Prisma.MessageCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MessageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sender?: boolean | Prisma.Message$senderArgs<ExtArgs>
+  receiver?: boolean | Prisma.Message$receiverArgs<ExtArgs>
   chat?: boolean | Prisma.ChatDefaultArgs<ExtArgs>
   offer?: boolean | Prisma.Message$offerArgs<ExtArgs>
 }
 export type MessageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sender?: boolean | Prisma.Message$senderArgs<ExtArgs>
+  receiver?: boolean | Prisma.Message$receiverArgs<ExtArgs>
   chat?: boolean | Prisma.ChatDefaultArgs<ExtArgs>
   offer?: boolean | Prisma.Message$offerArgs<ExtArgs>
 }
@@ -1148,22 +1320,24 @@ export type MessageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $MessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Message"
   objects: {
-    sender: Prisma.$UserPayload<ExtArgs>
-    receiver: Prisma.$UserPayload<ExtArgs>
+    sender: Prisma.$UserPayload<ExtArgs> | null
+    receiver: Prisma.$UserPayload<ExtArgs> | null
     chat: Prisma.$ChatPayload<ExtArgs>
     files: Prisma.$FileMessagePayload<ExtArgs>[]
     offer: Prisma.$OfferPayload<ExtArgs> | null
+    SystemMessage: Prisma.$SystemMessagePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     text: string | null
     isSeen: boolean
-    senderId: string
-    receiverId: string
+    senderId: string | null
+    receiverId: string | null
     chatId: string
     offerId: string | null
     createdAt: Date
     updatedAt: Date
+    type: $Enums.MsgType
   }, ExtArgs["result"]["message"]>
   composites: {}
 }
@@ -1558,11 +1732,12 @@ readonly fields: MessageFieldRefs;
  */
 export interface Prisma__MessageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  sender<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  receiver<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  sender<T extends Prisma.Message$senderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Message$senderArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  receiver<T extends Prisma.Message$receiverArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Message$receiverArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   chat<T extends Prisma.ChatDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChatDefaultArgs<ExtArgs>>): Prisma.Prisma__ChatClient<runtime.Types.Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   files<T extends Prisma.Message$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Message$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FileMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   offer<T extends Prisma.Message$offerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Message$offerArgs<ExtArgs>>): Prisma.Prisma__OfferClient<runtime.Types.Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  SystemMessage<T extends Prisma.Message$SystemMessageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Message$SystemMessageArgs<ExtArgs>>): Prisma.Prisma__SystemMessageClient<runtime.Types.Result.GetResult<Prisma.$SystemMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1601,6 +1776,7 @@ export interface MessageFieldRefs {
   readonly offerId: Prisma.FieldRef<"Message", 'String'>
   readonly createdAt: Prisma.FieldRef<"Message", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Message", 'DateTime'>
+  readonly type: Prisma.FieldRef<"Message", 'MsgType'>
 }
     
 
@@ -1997,6 +2173,44 @@ export type MessageDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Message.sender
+ */
+export type Message$senderArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * Message.receiver
+ */
+export type Message$receiverArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
  * Message.files
  */
 export type Message$filesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2037,6 +2251,25 @@ export type Message$offerArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   include?: Prisma.OfferInclude<ExtArgs> | null
   where?: Prisma.OfferWhereInput
+}
+
+/**
+ * Message.SystemMessage
+ */
+export type Message$SystemMessageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SystemMessage
+   */
+  select?: Prisma.SystemMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SystemMessage
+   */
+  omit?: Prisma.SystemMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SystemMessageInclude<ExtArgs> | null
+  where?: Prisma.SystemMessageWhereInput
 }
 
 /**

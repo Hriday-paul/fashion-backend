@@ -15,6 +15,7 @@ import { notificationQueue } from '../../queues/notificaion.queue';
 import { StockUpdateQueue } from '../../queues/stockUpdate.queue';
 import { RefundQueue } from '../../queues/refund.queue';
 import { UpdatebalanceQueue } from '../../queues/balance.queue';
+import { SendMessageHandle } from '../../socket/handlers/MessageHandler';
 
 const stripe = new Stripe(config.stripe?.stripe_api_secret as string, {
   apiVersion: "2025-03-31.basil", // Valid API version
@@ -165,6 +166,7 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
               fcmToken: true
             }
           },
+          chatId: true,
         }
       },
       donation: {
@@ -215,12 +217,17 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
         throw new AppError(httpStatus.BAD_REQUEST, "Payment userId is missing");
       }
 
-      const wallet = await transactionClient.wallet.findFirst({
+      let wallet = await transactionClient.wallet.findFirst({
         where: { sellerId: payment?.userId }
       });
 
       if (!wallet) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Wallet not found for the user");
+        //create a new wallet for the user if not exist
+        wallet = await transactionClient.wallet.create({
+          data: {
+            sellerId: payment?.userId,
+          }
+        });
       }
 
       //mark payment as complete
@@ -256,6 +263,97 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
           createdAt: new Date(),
         }
       });
+
+      //if payment is order reated, crate a system message
+      if (isOrderpayment && payment?.order && payment?.order?.chatId) {
+
+        //for buyer
+        const msg_buyer = await transactionClient.message.create({
+          data: {
+            chatId: payment?.order?.chatId,
+            SystemMessage: {
+              create: {
+                title: `Purchase successful`,
+                text: `${payment?.order?.seller?.userName} will ship your items soon. We'll keep you updated on the progress.`,
+                msgForUserId: payment?.order?.buyerId,
+              }
+            },
+            type: "SYSTEM",
+          },
+          include: {
+            sender: {
+              select: {
+                id: true,
+                picture: {
+                  select: {
+                    url: true
+                  }
+                },
+                userName: true
+              }
+            },
+            receiver: {
+              select: {
+                id: true,
+                picture: {
+                  select: {
+                    url: true
+                  }
+                },
+                userName: true
+              }
+            },
+            SystemMessage: true
+          }
+        })
+
+        //for seller
+        const msgSeller = await transactionClient.message.create({
+          data: {
+            chatId: payment?.order?.chatId,
+            SystemMessage: {
+              create: {
+                title: `Order placed successfully`,
+                text: `${payment?.order?.buyer?.userName} has placed an order. Please, ship the items soon. We'll keep you updated on the progress.`,
+                msgForUserId: payment?.order?.sellerId,
+              }
+            },
+            type: "SYSTEM",
+          },
+          include: {
+            sender: {
+              select: {
+                id: true,
+                picture: {
+                  select: {
+                    url: true
+                  }
+                },
+                userName: true
+              }
+            },
+            receiver: {
+              select: {
+                id: true,
+                picture: {
+                  select: {
+                    url: true
+                  }
+                },
+                userName: true
+              }
+            },
+            SystemMessage: true
+          }
+        })
+
+        const user1Id = payment?.order?.buyer?.id;
+        const user2Id = payment?.order?.seller?.id;
+
+        SendMessageHandle((global as any).socketio, { ...msg_buyer, user1Id, user2Id }, () => { })
+        SendMessageHandle((global as any).socketio, { ...msgSeller, user1Id, user2Id }, () => { })
+
+      }
 
     })
 
@@ -351,7 +449,9 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
 
   } catch (error: any) {
 
-    const notiMsg = isOrderpayment ? `Your purchase payment has been failed. **$${payment?.total_amount}** has been refunded to your FASHI-ON wallet.` : `Your donation payment has been failed. **$${payment?.total_amount}** has been refunded to your FASHI-ON wallet.`;
+    const totalAmount = payment?.total_amount.toFixed(2) || 0;
+
+    const notiMsg = isOrderpayment ? `Your purchase payment has been failed. **$${totalAmount}** has been refunded to your FASHI-ON wallet.` : `Your donation payment has been failed. **$${totalAmount}** has been refunded to your FASHI-ON wallet.`;
 
     const tranMsg = isOrderpayment ? `Purchase Payment Refund` : `Donation Payment Refund`;
 

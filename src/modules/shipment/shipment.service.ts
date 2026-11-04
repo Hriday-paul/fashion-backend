@@ -1,10 +1,10 @@
-import { ShipmentStatus } from "../../../generated/prisma/enums";
-
+import { CurrentShipTo, ShipmentStatus } from "../../../generated/prisma/enums";
 import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
 import config from "../../config";
 import AppError from "../../error/AppError";
 import httpStatus from "http-status";
 import prisma from "../../shared/prisma";
+import { SendMessageHandle } from "../../socket/handlers/MessageHandler";
 
 const mapEasyshipStatus = (
     status?: string
@@ -70,6 +70,71 @@ type EventPayload = {
     }
 }
 
+const destinationLabel: Record<CurrentShipTo, { buyer: string; seller: string; short: string }> = {
+    [CurrentShipTo.AUTHENTICATION_CENTER]: {
+        buyer: "the authentication center",
+        seller: "the authentication center",
+        short: "to Authentication Center",
+    },
+    [CurrentShipTo.BUYER]: {
+        buyer: "you",
+        seller: "the buyer",
+        short: "to Buyer",
+    },
+};
+
+type StatusCopy = {
+    title: string;
+    buyerMsg: (dest: string) => string;
+    sellerMsg: (dest: string) => string;
+};
+
+const statusCopy: Record<ShipmentStatus, StatusCopy> = {
+    [ShipmentStatus.PENDING]: {
+        title: "Shipment Pending",
+        buyerMsg: (d) => `Your shipment to ${d} is pending. We will notify you once it is processed.`,
+        sellerMsg: (d) => `Your shipment to ${d} is pending. Please wait for further updates.`,
+    },
+    [ShipmentStatus.PICKED_UP]: {
+        title: "Shipment Picked Up",
+        buyerMsg: (d) => `Your shipment has been picked up and is on its way to ${d}.`,
+        sellerMsg: (d) => `Your shipment has been picked up and is on its way to ${d}.`,
+    },
+    [ShipmentStatus.IN_TRANSIT]: {
+        title: "Shipment In Transit",
+        buyerMsg: (d) => `Your shipment is in transit to ${d}. You can track its progress.`,
+        sellerMsg: (d) => `Your shipment is in transit to ${d}. You can track its progress.`,
+    },
+    [ShipmentStatus.OUT_FOR_DELIVERY]: {
+        title: "Shipment Out for Delivery",
+        buyerMsg: (d) => `Your shipment is out for delivery to ${d}. It will arrive soon.`,
+        sellerMsg: (d) => `Your shipment is out for delivery to ${d}. It will arrive soon.`,
+    },
+    [ShipmentStatus.DELIVERED]: {
+        title: "Shipment Delivered",
+        buyerMsg: (d) => `Your shipment has been delivered to ${d}.`,
+        sellerMsg: (d) => `Your shipment has been delivered to ${d}.`,
+    },
+    [ShipmentStatus.CANCELLED]: {
+        title: "Shipment Cancelled",
+        buyerMsg: () => "Your shipment has been cancelled. Please contact support for more information.",
+        sellerMsg: () => "Your shipment has been cancelled. Please contact support for more information.",
+    },
+};
+
+
+export const shipmentStatusMap = (status: ShipmentStatus, currentShipTo: CurrentShipTo) => {
+    const copy = statusCopy[status];
+    const dest = destinationLabel[currentShipTo];
+
+    return {
+        title: `${copy.title} (${dest.short})`,
+        buyerMsg: copy.buyerMsg(dest.buyer),
+        sellerMsg: copy.sellerMsg(dest.seller),
+    };
+};
+
+
 export const webhookShipmet = async (signature: string, body: EventPayload) => {
 
     await verifySingnature(signature);
@@ -112,6 +177,25 @@ export const webhookShipmet = async (signature: string, body: EventPayload) => {
                         fcmToken: true,
                         id: true
                     }
+                },
+                order: {
+                    select: {
+                        buyer: {
+                            select: {
+                                id: true,
+                                userName: true,
+                            }
+                        },
+                        seller: {
+                            select: {
+                                id: true,
+                                userName: true,
+                            }
+                        },
+                        chatId: true,
+                        allowedAuthentication: true,
+                        currentShipTo: true,
+                    }
                 }
             },
         });
@@ -140,6 +224,111 @@ export const webhookShipmet = async (signature: string, body: EventPayload) => {
         return shipments;
 
     })
+
+
+    //create a system message for send msg to chat
+    for (const shipment of shipments) {
+
+        const shipmentOrder = shipment?.order;
+
+        if (shipmentOrder && shipmentOrder?.chatId) {
+
+            const shipingTo = shipmentOrder?.currentShipTo;
+
+            const statusmap = shipmentStatusMap(status, shipingTo)
+
+
+            //for buyer
+            const msg_buyer = await prisma.message.create({
+                data: {
+                    chatId: shipmentOrder?.chatId,
+                    SystemMessage: {
+                        create: {
+                            title: statusmap.title,
+                            text: statusmap.buyerMsg,
+                            msgForUserId: shipmentOrder?.buyer?.id,
+                        }
+                    },
+                    type: "SYSTEM",
+                },
+                include: {
+                    sender: {
+                        select: {
+                            id: true,
+                            picture: {
+                                select: {
+                                    url: true
+                                }
+                            },
+                            userName: true
+                        }
+                    },
+                    receiver: {
+                        select: {
+                            id: true,
+                            picture: {
+                                select: {
+                                    url: true
+                                }
+                            },
+                            userName: true
+                        }
+                    },
+                    SystemMessage: true
+                }
+            })
+
+            //for seller
+            const msg_seller = await prisma.message.create({
+                data: {
+                    chatId: shipmentOrder?.chatId,
+                    SystemMessage: {
+                        create: {
+                            title: statusmap?.title,
+                            text: statusmap?.sellerMsg,
+                            msgForUserId: shipmentOrder?.seller?.id,
+                        }
+                    },
+                    type: "SYSTEM",
+                },
+                include: {
+                    sender: {
+                        select: {
+                            id: true,
+                            picture: {
+                                select: {
+                                    url: true
+                                }
+                            },
+                            userName: true
+                        }
+                    },
+                    receiver: {
+                        select: {
+                            id: true,
+                            picture: {
+                                select: {
+                                    url: true
+                                }
+                            },
+                            userName: true
+                        }
+                    },
+                    SystemMessage: true
+                }
+            })
+
+            const user1Id = shipmentOrder?.buyer?.id;
+            const user2Id = shipmentOrder?.seller?.id;
+
+            SendMessageHandle((global as any).socketio, { ...msg_buyer, user1Id, user2Id }, () => { })
+
+            SendMessageHandle((global as any).socketio, { ...msg_seller, user1Id, user2Id }, () => { })
+
+        }
+
+    }
+
 
     // const fcmTokens = shipments.map(shipment => shipment.user.fcmToken).filter(token => token !== null);
 

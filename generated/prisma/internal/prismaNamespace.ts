@@ -410,6 +410,7 @@ export const ModelName = {
   Follow: 'Follow',
   Chat: 'Chat',
   Message: 'Message',
+  SystemMessage: 'SystemMessage',
   ChatItem: 'ChatItem',
   FileMessage: 'FileMessage',
   Order: 'Order',
@@ -471,7 +472,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "parcelSuggestion" | "directDonation" | "clothDonation" | "clothDonationPhoto" | "donationThanksMSg" | "follow" | "chat" | "message" | "chatItem" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "charitableOrganization" | "charityShop" | "ecoFriendlyStore" | "celebrity" | "ambassador" | "professionalSeller" | "auth" | "user" | "charityGallery" | "profilePicture" | "charityThumbnail" | "accountDocument" | "billingDetails" | "notification" | "setting" | "sellCountries" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction"
+    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "parcelSuggestion" | "directDonation" | "clothDonation" | "clothDonationPhoto" | "donationThanksMSg" | "follow" | "chat" | "message" | "systemMessage" | "chatItem" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "charitableOrganization" | "charityShop" | "ecoFriendlyStore" | "celebrity" | "ambassador" | "professionalSeller" | "auth" | "user" | "charityGallery" | "profilePicture" | "charityThumbnail" | "accountDocument" | "billingDetails" | "notification" | "setting" | "sellCountries" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2026,6 +2027,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MessageCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MessageCountAggregateOutputType> | number
+        }
+      }
+    }
+    SystemMessage: {
+      payload: Prisma.$SystemMessagePayload<ExtArgs>
+      fields: Prisma.SystemMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SystemMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SystemMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SystemMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SystemMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.SystemMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SystemMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SystemMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SystemMessagePayload>
+        }
+        findMany: {
+          args: Prisma.SystemMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SystemMessagePayload>[]
+        }
+        create: {
+          args: Prisma.SystemMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SystemMessagePayload>
+        }
+        createMany: {
+          args: Prisma.SystemMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SystemMessageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SystemMessagePayload>[]
+        }
+        delete: {
+          args: Prisma.SystemMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SystemMessagePayload>
+        }
+        update: {
+          args: Prisma.SystemMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SystemMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.SystemMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SystemMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SystemMessageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SystemMessagePayload>[]
+        }
+        upsert: {
+          args: Prisma.SystemMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SystemMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.SystemMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSystemMessage>
+        }
+        groupBy: {
+          args: Prisma.SystemMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SystemMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SystemMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SystemMessageCountAggregateOutputType> | number
         }
       }
     }
@@ -5750,10 +5825,24 @@ export const MessageScalarFieldEnum = {
   chatId: 'chatId',
   offerId: 'offerId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  type: 'type'
 } as const
 
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+export const SystemMessageScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  text: 'text',
+  msgForUserId: 'msgForUserId',
+  msgId: 'msgId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SystemMessageScalarFieldEnum = (typeof SystemMessageScalarFieldEnum)[keyof typeof SystemMessageScalarFieldEnum]
 
 
 export const ChatItemScalarFieldEnum = {
@@ -5806,6 +5895,7 @@ export const OrderScalarFieldEnum = {
   allowedAuthentication: 'allowedAuthentication',
   shipmentId: 'shipmentId',
   authShipmentId: 'authShipmentId',
+  chatId: 'chatId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   completedAt: 'completedAt',
@@ -6726,6 +6816,20 @@ export type ListEnumThanksMessageTypeFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'MsgType'
+ */
+export type EnumMsgTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MsgType'>
+    
+
+
+/**
+ * Reference to a field of type 'MsgType[]'
+ */
+export type ListEnumMsgTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MsgType[]'>
+    
+
+
+/**
  * Reference to a field of type 'FileMessageType'
  */
 export type EnumFileMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileMessageType'>
@@ -7238,6 +7342,7 @@ export type GlobalOmitConfig = {
   follow?: Prisma.FollowOmit
   chat?: Prisma.ChatOmit
   message?: Prisma.MessageOmit
+  systemMessage?: Prisma.SystemMessageOmit
   chatItem?: Prisma.ChatItemOmit
   fileMessage?: Prisma.FileMessageOmit
   order?: Prisma.OrderOmit

@@ -161,6 +161,8 @@ model User {
 
   trnsactions WalletTransaction[]
 
+  systemMsgs SystemMessage[]
+
   charitableOrganization CharitableOrganization?
   charityShop            CharityShop?
   ecoFriendlyStore       EcoFriendlyStore?

@@ -108,7 +108,7 @@ export const JoinChatRoom = async ({ socket, chatId, callback }: { socket: Socke
 
 export const SendMessageHandle = async (
     io: Server,
-    payload: Message,
+    payload: Message & { user2Id: string, user1Id: string },
     callback: (arg: any) => void
 ) => {
     try {
@@ -120,8 +120,8 @@ export const SendMessageHandle = async (
         io.to(chatRoom).emit(`new-message`, payload);
 
         //---------------hit on chatlist for see last sent message with the chatList------------------//
-        getChatList(payload?.senderId, io, callback)
-        getChatList(payload?.receiverId, io, callback)
+        getChatList(payload?.user1Id, io, callback)
+        getChatList(payload?.user2Id, io, callback)
 
         //end Notification//
         callbackFn(callback, {
@@ -142,7 +142,7 @@ export const SendMessageHandle = async (
 
 export const UpdateMessageHandle = async (
     io: Server,
-    payload: Message,
+    payload: Message & { user2Id: string, user1Id: string },
     callback: (arg: any) => void
 ) => {
     try {
@@ -152,8 +152,8 @@ export const UpdateMessageHandle = async (
         io.to(chatRoom).emit(`update-message`, payload);
 
         //---------------hit on chatlist for see last sent message with the chatList------------------//
-        getChatList(payload?.senderId, io, callback)
-        getChatList(payload?.receiverId, io, callback)
+        getChatList(payload?.user1Id, io, callback)
+        getChatList(payload?.user2Id, io, callback)
 
 
         callbackFn(callback, {

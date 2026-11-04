@@ -65,6 +65,9 @@ model Order {
     authShipmentId String? @unique
     authShipment   Shipment? @relation("AuthOrderShipments", fields: [authShipmentId], references: [id], onDelete: Cascade)
 
+    chatId String?
+    chat   Chat? @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 

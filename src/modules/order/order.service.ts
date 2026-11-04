@@ -1,5 +1,5 @@
 import { CancelledBy, CurrentShipTo, OrderAuthStatus, PaymentStatus, Role } from "../../../generated/prisma/browser";
-import { CancelReason, OrderAuthResult, OrderItem, OrderStatus, Prisma, Product, ProductCharity, ProductPicture, SellDonation, User } from "../../../generated/prisma/client";
+import { BillingDetails, CancelReason, OrderAuthResult, OrderItem, OrderStatus, Prisma, Product, ProductCharity, ProductPicture, SellDonation, User } from "../../../generated/prisma/client";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import { DistributePaymentQueue } from "../../queues/payment.queue";
@@ -17,6 +17,18 @@ import { notificationQueue } from "../../queues/notificaion.queue";
 import { productService } from "../product/product.service";
 import { Request } from "express";
 import { userService } from "../user/user.service";
+import { cartService } from "../cart/cart.service";
+import { chatService } from "../chat/chat.service";
+import { SendMessageHandle } from "../../socket/handlers/MessageHandler";
+
+export type RateItem = {
+    title: string;
+    weight_kg: number;
+    hight_cm: number;
+    width_cm: number;
+    length_cm: number;
+    finalPrice: number;
+}
 
 const truncate = (value: string | null, max = 32) => {
     return value?.trim().slice(0, max) || "";
@@ -29,6 +41,92 @@ const generateOrderNumber = () => {
     return `#${timestamp}-${random}`;
 };
 
+const placeOrderShipment = async ({ origin, destination, items, courierServiceId }: { origin: BillingDetails, destination: BillingDetails, items: RateItem[], courierServiceId: string }): Promise<IShipment> => {
+
+    const shipPayload = {
+        "origin_address": {
+            "line_1": truncate(origin?.address1),
+            "line_2": truncate(origin?.address2),
+            "city": truncate(origin?.city, 20),
+            "state": truncate(origin?.state, 20),
+            "postal_code": truncate(origin?.zip_code, 10),
+            "country_alpha2": origin?.countryCode,
+            "company_name": "FASHION",
+            "contact_name": origin?.full_name,
+            "contact_phone": origin?.contact,
+            "contact_email": origin?.email
+        },
+        "destination_address": {
+            "line_1": truncate(destination?.address1),
+            "line_2": truncate(destination?.address2),
+            "city": truncate(destination?.city, 20),
+            "state": truncate(destination?.state, 20),
+            "postal_code": truncate(destination?.zip_code, 10),
+            "country_alpha2": destination?.countryCode,
+            "contact_name": destination?.full_name,
+            "contact_phone": destination?.contact,
+            "contact_email": destination?.email
+        },
+        "return": false,
+        "incoterms": "DDP",
+        "order_data": {
+            "platform_name": "FASHION",
+        },
+        "courier_settings": {
+            "courier_service_id": courierServiceId
+        },
+        "shipping_settings": {
+            "units": {
+                "weight": "kg",
+                "dimensions": "cm"
+            },
+            "output_currency": "USD"
+        },
+        "parcels": [
+            {
+                "items": items?.map((item) => {
+                    return {
+                        "description": truncate(item?.title, 64) || "Fashion Product",
+                        "category": "fashion",
+                        "origin_country_alpha2": origin?.countryCode,
+                        "quantity": 1,
+                        "dimensions": {
+                            "height": item?.hight_cm,
+                            "width": item?.width_cm,
+                            "length": item?.length_cm
+                        },
+                        "actual_weight": item?.weight_kg,
+                        "declared_currency": "USD",
+                        "declared_customs_value": item?.finalPrice || 0,
+                    }
+                }),
+            }
+        ]
+    }
+
+    const shipmentRes = await fetch(`${config.easyship.easyship_base_url}/shipments`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shipPayload)
+    });
+
+    if (!shipmentRes.ok) {
+        const errorData = await shipmentRes.json().catch(() => null);
+
+        console.log(errorData)
+
+        throw new AppError(httpStatus.BAD_REQUEST, errorData?.error?.message || "Shipment creation failed");
+    }
+
+    const shipmentData = await shipmentRes.json() as IShipment;
+
+    return shipmentData
+}
+
+//cart order
 const addNewOrder = async (
     // payload: Order & { products: PayloadItem[] },
     payload: {
@@ -107,9 +205,9 @@ const addNewOrder = async (
     }
 
     //buyer billing details is required to place order
-    const billing_details = await prisma.billingDetails.findFirst({ where: { userId } });
+    const buyer_address = await prisma.billingDetails.findFirst({ where: { userId } });
 
-    if (!billing_details) {
+    if (!buyer_address) {
         throw new AppError(httpStatus.NOT_FOUND, "Shiping details is required")
     }
 
@@ -120,7 +218,7 @@ const addNewOrder = async (
         throw new AppError(httpStatus.NOT_FOUND, "Seller location does not exist for place shipment");
     }
 
-    let authAddress: string | null = null;
+    let authAddress: BillingDetails | null = null;
 
     //authentication center address is required to place order if authentication is allowed
     if (payload?.allowedAuthentication) {
@@ -138,7 +236,7 @@ const addNewOrder = async (
         if (!admin || !admin?.sellerAddress) {
             throw new AppError(httpStatus.NOT_FOUND, "Unable to place order, authentication center address is not available");
         }
-        authAddress = admin?.sellerAddress?.id;
+        authAddress = admin?.sellerAddress;
     }
 
 
@@ -193,7 +291,6 @@ const addNewOrder = async (
         .sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0))[0] ?? null;
 
     const bundleDiscountPercent = nearestTier ? nearestTier.discountPercent : 0;
-
 
     const serviceFeeCost = 2.30; // fixed service fee cost
     const authenTicationRate = 15; // fixed authentication cost per item
@@ -251,92 +348,47 @@ const addNewOrder = async (
 
     const totalAssitedSellCommission = orderItems.reduce((acc, item) => acc + item?.assisted_sell_commision, 0);
 
-    const shipPayload = {
-        "origin_address": {
-            "line_1": truncate(sellerDetails?.address1),
-            "line_2": truncate(sellerDetails?.address2),
-            "city": truncate(sellerDetails?.city, 20),
-            "state": truncate(sellerDetails?.state, 20),
-            "postal_code": truncate(sellerDetails?.zip_code, 10),
-            "country_alpha2": sellerDetails?.countryCode,
-            "company_name": "FASHION",
-            "contact_name": sellerDetails?.full_name,
-            "contact_phone": sellerDetails?.contact,
-            "contact_email": sellerDetails?.email
-        },
-        "destination_address": {
-            "line_1": truncate(billing_details?.address1),
-            "line_2": truncate(billing_details?.address2),
-            "city": truncate(billing_details?.city, 20),
-            "state": truncate(billing_details?.state, 20),
-            "postal_code": truncate(billing_details?.zip_code, 10),
-            "country_alpha2": billing_details?.countryCode,
-            "contact_name": billing_details?.full_name,
-            "contact_phone": billing_details?.contact,
-            "contact_email": billing_details?.email
-        },
-        "return": false,
-        "incoterms": "DDP",
-        "order_data": {
-            "platform_name": "FASHION",
-        },
-        "courier_settings": {
-            "courier_service_id": payload?.shipmentServiceId
-        },
-        "shipping_settings": {
-            "units": {
-                "weight": "kg",
-                "dimensions": "cm"
-            },
-            "output_currency": "USD"
-        },
-        "parcels": [
-            {
-                "items": orderItems?.map((item) => {
-                    return {
-                        "description": truncate(item?.product?.title, 64) || "Fashion Product",
-                        "category": "fashion",
-                        "origin_country_alpha2": sellerDetails?.countryCode,
-                        "quantity": 1,
-                        "dimensions": {
-                            "height": item?.product?.hight_cm,
-                            "width": item?.product?.width_cm,
-                            "length": item?.product?.length_cm
-                        },
-                        "actual_weight": item?.product?.weight_kg,
-                        "declared_currency": "USD",
-                        "declared_customs_value": item?.unitPrice || 0,
-                    }
+    const billing_details = authAddress ?? buyer_address;
 
-                }),
-            }
-        ]
-    }
+    const rates = await cartService.getRates({
+        origin: sellerDetails,
+        destination: buyer_address,
+        items: orderItems.map(item => ({
+            finalPrice: item.unitPrice,
+            hight_cm: item.product.hight_cm,
+            length_cm: item.product.length_cm,
+            weight_kg: item.product.weight_kg,
+            width_cm: item.product.width_cm,
+        }))
+    })
 
-    const shipmentRes = await fetch(`${config.easyship.easyship_base_url}/shipments`, {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(shipPayload)
-    });
-
-    if (!shipmentRes.ok) {
-        const errorData = await shipmentRes.json().catch(() => null);
-
-        console.log(errorData)
-
-        throw new AppError(httpStatus.BAD_REQUEST, errorData?.error?.message || "Shipment creation failed");
-    }
-
-    const shipmentData = await shipmentRes.json() as IShipment;
-
-    const shippingRate = shipmentData?.shipment?.rates.find(rate => rate?.courier_service?.id === payload?.shipmentServiceId)?.total_charge;
+    const shippingRate = rates?.rates?.find(rate => rate?.courier_service?.id === payload?.shipmentServiceId)?.total_charge;
 
     if (!shippingRate) {
         throw new AppError(httpStatus.BAD_REQUEST, "Shipping rate not available for the selected courier service");
     }
+
+    const chat = await chatService.createChat({
+        currentUserId: userId,
+        products: orderItems.map(item => (item?.productId)),
+        user2Id: cartgroup?.sellerId,
+    });
+
+    const shipmentData = await placeOrderShipment({
+        courierServiceId: payload?.shipmentServiceId,
+        origin: sellerDetails,
+        destination: billing_details,
+        items: orderItems.map((item) => {
+            return {
+                weight_kg: item?.product?.weight_kg,
+                hight_cm: item?.product?.hight_cm,
+                width_cm: item?.product?.width_cm,
+                length_cm: item?.product?.length_cm,
+                finalPrice: item?.unitPrice || 0,
+                title: truncate(item?.product?.title, 64) || "Fashion Product"
+            }
+        })
+    });
 
     const total = discountedItemTotal + otherTotal + totalExtraDonation + shippingRate;
 
@@ -358,7 +410,7 @@ const addNewOrder = async (
                 trackingUrl: shipmentData?.shipment?.tracking_page_url,
                 deliveryCharge: shippingRate,
                 originId: sellerDetails?.id,
-                destinationId: (payload?.allowedAuthentication && authAddress) ? authAddress : billing_details?.id,
+                destinationId: (payload?.allowedAuthentication && authAddress) ? authAddress?.id : billing_details?.id,
                 userId: userId,
             }
         });
@@ -371,11 +423,13 @@ const addNewOrder = async (
                 itemsTotal: discountedItemTotal,
                 treeCredit: treeCredit ?? 0,
                 buyerId: userId,
-                billingId: billing_details?.id,
+                billingId: buyer_address?.id,
                 sellerId: orderItems[0]?.sellerId,
                 sellerItemsTotal: discountedItemTotal,
                 sellerTotal: sellerTotal,
                 bundleDiscountPercent,
+
+                chatId: chat?.id,
 
                 assistedSellCommission: totalAssitedSellCommission,
 
@@ -619,9 +673,9 @@ const addNewOfferOrder = async (
     }
 
     //buyer billing details is required to place order
-    const billing_details = await prisma.billingDetails.findFirst({ where: { userId } });
+    const buyer_address = await prisma.billingDetails.findFirst({ where: { userId } });
 
-    if (!billing_details) {
+    if (!buyer_address) {
         throw new AppError(httpStatus.NOT_FOUND, "Shiping details is required")
     }
 
@@ -632,7 +686,7 @@ const addNewOfferOrder = async (
         throw new AppError(httpStatus.NOT_FOUND, "Seller location does not exist for place shipment");
     }
 
-    let authAddress: string | null = null;
+    let authAddress: BillingDetails | null = null;
 
     const serviceFeeCost = 2.30; // fixed service fee cost
     const authenTicationRate = 15; // fixed authentication cost per item
@@ -654,7 +708,7 @@ const addNewOfferOrder = async (
         if (!admin || !admin?.sellerAddress) {
             throw new AppError(httpStatus.NOT_FOUND, "Unable to place order, authentication center address is not available");
         }
-        authAddress = admin?.sellerAddress?.id;
+        authAddress = admin?.sellerAddress;
     }
 
     //Validate products stock and availability'
@@ -733,92 +787,47 @@ const addNewOfferOrder = async (
 
     const totalAssitedSellCommission = orderItems.reduce((acc, item) => acc + item?.assisted_sell_commision, 0);
 
-    const shipPayload = {
-        "origin_address": {
-            "line_1": truncate(sellerDetails?.address1),
-            "line_2": truncate(sellerDetails?.address2),
-            "city": truncate(sellerDetails?.city, 20),
-            "state": truncate(sellerDetails?.state, 20),
-            "postal_code": truncate(sellerDetails?.zip_code, 10),
-            "country_alpha2": sellerDetails?.countryCode,
-            "company_name": "FASHION",
-            "contact_name": sellerDetails?.full_name,
-            "contact_phone": sellerDetails?.contact,
-            "contact_email": sellerDetails?.email
-        },
-        "destination_address": {
-            "line_1": truncate(billing_details?.address1),
-            "line_2": truncate(billing_details?.address2),
-            "city": truncate(billing_details?.city, 20),
-            "state": truncate(billing_details?.state, 20),
-            "postal_code": truncate(billing_details?.zip_code, 10),
-            "country_alpha2": billing_details?.countryCode,
-            "contact_name": billing_details?.full_name,
-            "contact_phone": billing_details?.contact,
-            "contact_email": billing_details?.email
-        },
-        "return": false,
-        "incoterms": "DDP",
-        "order_data": {
-            "platform_name": "FASHION",
-        },
-        "courier_settings": {
-            "courier_service_id": payload?.shipmentServiceId
-        },
-        "shipping_settings": {
-            "units": {
-                "weight": "kg",
-                "dimensions": "cm"
-            },
-            "output_currency": "USD"
-        },
-        "parcels": [
-            {
-                "items": orderItems?.map((item) => {
-                    return {
-                        "description": truncate(item?.product?.title, 64) || "Fashion Product",
-                        "category": "fashion",
-                        "origin_country_alpha2": sellerDetails?.countryCode,
-                        "quantity": 1,
-                        "dimensions": {
-                            "height": item?.product?.hight_cm,
-                            "width": item?.product?.width_cm,
-                            "length": item?.product?.length_cm
-                        },
-                        "actual_weight": item?.product?.weight_kg,
-                        "declared_currency": "USD",
-                        "declared_customs_value": item?.unitPrice || 0,
-                    }
+    const billing_details = authAddress ?? buyer_address;
 
-                }),
-            }
-        ]
-    }
-
-    const shipmentRes = await fetch(`${config.easyship.easyship_base_url}/shipments`, {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(shipPayload)
+    const rates = await cartService.getRates({
+        origin: sellerDetails,
+        destination: buyer_address,
+        items: orderItems.map(item => ({
+            finalPrice: item.unitPrice,
+            hight_cm: item.product.hight_cm,
+            length_cm: item.product.length_cm,
+            weight_kg: item.product.weight_kg,
+            width_cm: item.product.width_cm,
+        }))
     });
 
-    if (!shipmentRes.ok) {
-        const errorData = await shipmentRes.json().catch(() => null);
-
-        console.log(errorData)
-
-        throw new AppError(httpStatus.BAD_REQUEST, errorData?.error?.message || "Shipment creation failed");
-    }
-
-    const shipmentData = await shipmentRes.json() as IShipment;
-
-    const shippingRate = shipmentData?.shipment?.rates.find(rate => rate?.courier_service?.id === payload?.shipmentServiceId)?.total_charge;
+    const shippingRate = rates?.rates?.find(rate => rate?.courier_service?.id === payload?.shipmentServiceId)?.total_charge;
 
     if (!shippingRate) {
         throw new AppError(httpStatus.BAD_REQUEST, "Shipping rate not available for the selected courier service");
     }
+
+    const chat = await chatService.createChat({
+        currentUserId: userId,
+        products: orderItems.map(item => (item?.productId)),
+        user2Id: offer?.sellerId,
+    });
+
+    const shipmentData = await placeOrderShipment({
+        courierServiceId: payload?.shipmentServiceId,
+        origin: sellerDetails,
+        destination: billing_details,
+        items: orderItems.map((item) => {
+            return {
+                weight_kg: item?.product?.weight_kg,
+                hight_cm: item?.product?.hight_cm,
+                width_cm: item?.product?.width_cm,
+                length_cm: item?.product?.length_cm,
+                finalPrice: item?.unitPrice || 0,
+                title: truncate(item?.product?.title, 64) || "Fashion Product"
+            }
+        })
+    });
 
     const total = offer?.offeredPrice + otherTotal + totalExtraDonation + shippingRate;
 
@@ -840,7 +849,7 @@ const addNewOfferOrder = async (
                 trackingUrl: shipmentData?.shipment?.tracking_page_url,
                 deliveryCharge: shippingRate,
                 originId: sellerDetails?.id,
-                destinationId: (payload?.allowedAuthentication && authAddress) ? authAddress : billing_details?.id,
+                destinationId: (payload?.allowedAuthentication && authAddress) ? authAddress?.id : billing_details?.id,
                 userId: userId,
             }
         });
@@ -854,13 +863,15 @@ const addNewOfferOrder = async (
                 treeCredit: treeCredit ?? 0,
                 buyerId: userId,
                 assistedSellCommission: totalAssitedSellCommission,
-                billingId: billing_details?.id,
+                billingId: buyer_address?.id,
                 sellerId: orderItems[0]?.sellerId,
                 sellerItemsTotal: offer?.offeredPrice,
                 sellerTotal,
                 bundleDiscountPercent: 0,
                 authenticationFee: totalAuthenticationCost,
                 serviceFee: serviceFeeCost,
+
+                chatId: chat?.id,
 
                 allowedAuthentication: payload?.allowedAuthentication,
 
@@ -1036,9 +1047,9 @@ const addNewSingleOrder = async (payload: {
     }
 
     const userAddress = await userService.addressesByUser(userId);
-    const billing_details = userAddress?.buyingAddress;
+    const buyer_address = userAddress?.buyingAddress;
 
-    if (!billing_details) {
+    if (!buyer_address) {
         throw new AppError(httpStatus.NOT_FOUND, "Shipping address is required")
     }
 
@@ -1049,7 +1060,7 @@ const addNewSingleOrder = async (payload: {
         throw new AppError(httpStatus.NOT_FOUND, "Seller address is required")
     }
 
-    let authAddress: string | null = null;
+    let authAddress: BillingDetails | null = null;
 
     //authentication center address is required to place order if authentication is allowed
     if (allowedAuthentication) {
@@ -1067,7 +1078,7 @@ const addNewSingleOrder = async (payload: {
         if (!admin || !admin?.sellerAddress) {
             throw new AppError(httpStatus.NOT_FOUND, "Unable to place order, authentication center address is not available");
         }
-        authAddress = admin?.sellerAddress?.id;
+        authAddress = admin?.sellerAddress;
     }
 
     const serviceFeeCost = 2.30; // fixed service fee cost
@@ -1130,92 +1141,47 @@ const addNewSingleOrder = async (payload: {
 
     const totalAssitedSellCommission = orderItems.reduce((acc, item) => acc + item?.assisted_sell_commision, 0);
 
-    const shipPayload = {
-        "origin_address": {
-            "line_1": truncate(sellerDetails?.address1),
-            "line_2": truncate(sellerDetails?.address2),
-            "city": truncate(sellerDetails?.city, 20),
-            "state": truncate(sellerDetails?.state, 20),
-            "postal_code": truncate(sellerDetails?.zip_code, 10),
-            "country_alpha2": sellerDetails?.countryCode,
-            "company_name": "FASHION",
-            "contact_name": sellerDetails?.full_name,
-            "contact_phone": sellerDetails?.contact,
-            "contact_email": sellerDetails?.email
-        },
-        "destination_address": {
-            "line_1": truncate(billing_details?.address1),
-            "line_2": truncate(billing_details?.address2),
-            "city": truncate(billing_details?.city, 20),
-            "state": truncate(billing_details?.state, 20),
-            "postal_code": truncate(billing_details?.zip_code, 10),
-            "country_alpha2": billing_details?.countryCode,
-            "contact_name": billing_details?.full_name,
-            "contact_phone": billing_details?.contact,
-            "contact_email": billing_details?.email
-        },
-        "return": false,
-        "incoterms": "DDP",
-        "order_data": {
-            "platform_name": "FASHION",
-        },
-        "courier_settings": {
-            "courier_service_id": payload?.shipmentServiceId
-        },
-        "shipping_settings": {
-            "units": {
-                "weight": "kg",
-                "dimensions": "cm"
-            },
-            "output_currency": "USD"
-        },
-        "parcels": [
-            {
-                "items": orderItems?.map((item) => {
-                    return {
-                        "description": truncate(item?.product?.title, 64) || "Fashion Product",
-                        "category": "fashion",
-                        "origin_country_alpha2": sellerDetails?.countryCode,
-                        "quantity": 1,
-                        "dimensions": {
-                            "height": item?.product?.hight_cm,
-                            "width": item?.product?.width_cm,
-                            "length": item?.product?.length_cm
-                        },
-                        "actual_weight": item?.product?.weight_kg,
-                        "declared_currency": "USD",
-                        "declared_customs_value": item?.unitPrice || 0,
-                    }
+    const billing_details = authAddress ?? buyer_address;
 
-                }),
-            }
-        ]
-    }
+    const rates = await cartService.getRates({
+        origin: sellerDetails,
+        destination: buyer_address,
+        items: orderItems.map(item => ({
+            finalPrice: item.unitPrice,
+            hight_cm: item.product.hight_cm,
+            length_cm: item.product.length_cm,
+            weight_kg: item.product.weight_kg,
+            width_cm: item.product.width_cm,
+        }))
+    })
 
-    const shipmentRes = await fetch(`${config.easyship.easyship_base_url}/shipments`, {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${config.easyship.easyship_api_key}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(shipPayload)
-    });
-
-    if (!shipmentRes.ok) {
-        const errorData = await shipmentRes.json().catch(() => null);
-
-        console.log(errorData)
-
-        throw new AppError(httpStatus.BAD_REQUEST, errorData?.error?.message || "Shipment creation failed");
-    }
-
-    const shipmentData = await shipmentRes.json() as IShipment;
-
-    const shippingRate = shipmentData?.shipment?.rates.find(rate => rate?.courier_service?.id === payload?.shipmentServiceId)?.total_charge;
+    const shippingRate = rates?.rates?.find(rate => rate?.courier_service?.id === payload?.shipmentServiceId)?.total_charge;
 
     if (!shippingRate) {
         throw new AppError(httpStatus.BAD_REQUEST, "Shipping rate not available for the selected courier service");
     }
+
+    const chat = await chatService.createChat({
+        currentUserId: userId,
+        products: orderItems.map(item => (item?.productId)),
+        user2Id: product?.userId,
+    });
+
+    const shipmentData = await placeOrderShipment({
+        courierServiceId: payload?.shipmentServiceId,
+        origin: sellerDetails,
+        destination: billing_details,
+        items: orderItems.map((item) => {
+            return {
+                weight_kg: item?.product?.weight_kg,
+                hight_cm: item?.product?.hight_cm,
+                width_cm: item?.product?.width_cm,
+                length_cm: item?.product?.length_cm,
+                finalPrice: item?.unitPrice || 0,
+                title: truncate(item?.product?.title, 64) || "Fashion Product"
+            }
+        })
+    });
 
     const total = discountedItemTotal + otherTotal + totalExtraDonation + shippingRate;
 
@@ -1237,7 +1203,7 @@ const addNewSingleOrder = async (payload: {
                 trackingUrl: shipmentData?.shipment?.tracking_page_url,
                 deliveryCharge: shippingRate,
                 originId: sellerDetails?.id,
-                destinationId: (allowedAuthentication && authAddress) ? authAddress : billing_details?.id,
+                destinationId: (allowedAuthentication && authAddress) ? authAddress?.id : billing_details?.id,
                 userId: userId,
             }
         });
@@ -1250,11 +1216,13 @@ const addNewSingleOrder = async (payload: {
                 itemsTotal: discountedItemTotal,
                 treeCredit: treeCredit ?? 0,
                 buyerId: userId,
-                billingId: billing_details?.id,
+                billingId: buyer_address?.id,
                 sellerId: orderItems[0]?.sellerId,
                 sellerItemsTotal: discountedItemTotal,
                 sellerTotal: sellerTotal,
                 bundleDiscountPercent: 0,
+
+                chatId: chat?.id,
 
                 assistedSellCommission: totalAssitedSellCommission,
 
@@ -1520,6 +1488,70 @@ const requestCancelOrderItem = async (payload: { orderId: string, itemIds: strin
 
     })
 
+    const systemMsg = [
+        {
+            title: "Order item cancellation request",
+            message: `You have requested to cancel the order items, please wait for the seller to approve or reject your request`,
+            userId: order?.buyerId,
+            chatId: order?.chatId
+        },
+        {
+            title: "Items cancellation request",
+            message: `Buyer has requested to cancel some items from the order, please review and approve or reject the request.`,
+            userId: order?.sellerId,
+            chatId: order?.chatId
+        }
+    ];
+
+    //send system message to both buyer and seller
+    for (const msg of systemMsg) {
+        if (!msg?.chatId) return;
+
+        const chat_msg = await prisma.message.create({
+            data: {
+                chatId: msg?.chatId,
+                SystemMessage: {
+                    create: {
+                        title: msg?.title,
+                        text: msg?.message,
+                        msgForUserId: msg?.userId,
+                    }
+                },
+                type: "SYSTEM",
+            },
+            include: {
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                SystemMessage: true
+            }
+        })
+
+        const user1Id = order?.buyerId;
+        const user2Id = order?.sellerId;
+
+        SendMessageHandle((global as any).socketio, { ...chat_msg, user1Id, user2Id }, () => { })
+    }
+
 }
 
 const approveCancelOrderItemBySeller = async (orderItemId: string, current_sellerId: string) => {
@@ -1695,6 +1727,70 @@ const approveCancelOrderItemBySeller = async (orderItemId: string, current_selle
         jobId: `refund-${paymentId}-${orderItemId}`,
     });
 
+    const systemMsg = [
+        {
+            title: "Order item cancellation request approved",
+            message: `Your request to cancel the order items has been approved. Refund will be processed to your FASHI-ON wallet`,
+            userId: order?.buyerId,
+            chatId: order?.chatId
+        },
+        {
+            title: "Items cancellation request approved",
+            message: `You have approved the buyer's request to cancel some items from the order. Refund will be processed to the buyer's FASHI-ON wallet`,
+            userId: order?.sellerId,
+            chatId: order?.chatId
+        }
+    ];
+
+    //send system message to both buyer and seller
+    for (const msg of systemMsg) {
+        if (!msg?.chatId) return;
+
+        const chat_msg = await prisma.message.create({
+            data: {
+                chatId: msg?.chatId,
+                SystemMessage: {
+                    create: {
+                        title: msg?.title,
+                        text: msg?.message,
+                        msgForUserId: msg?.userId,
+                    }
+                },
+                type: "SYSTEM",
+            },
+            include: {
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                SystemMessage: true
+            }
+        })
+
+        const user1Id = order?.buyerId;
+        const user2Id = order?.sellerId;
+
+        SendMessageHandle((global as any).socketio, { ...chat_msg, user1Id, user2Id }, () => { })
+    }
+
     return;
 }
 
@@ -1739,7 +1835,73 @@ const declineCancelOrderItemBySeller = async (orderItemId: string, current_selle
         data: {
             buyerRequestCancel: "REJECTED"
         }
-    })
+    });
+
+    const order = orderItem?.order;
+
+    const systemMsg = [
+        {
+            title: "Order item cancellation request declined",
+            message: `Your request to cancel the order items has been declined. You can contact the seller for more information.`,
+            userId: order?.buyerId,
+            chatId: order?.chatId
+        },
+        {
+            title: "Items cancellation request declined",
+            message: `You have declined the buyer's request to cancel some items from the order. You can contact the buyer for more information.`,
+            userId: order?.sellerId,
+            chatId: order?.chatId
+        }
+    ];
+
+    //send system message to both buyer and seller
+    for (const msg of systemMsg) {
+        if (!msg?.chatId) return;
+
+        const chat_msg = await prisma.message.create({
+            data: {
+                chatId: msg?.chatId,
+                SystemMessage: {
+                    create: {
+                        title: msg?.title,
+                        text: msg?.message,
+                        msgForUserId: msg?.userId,
+                    }
+                },
+                type: "SYSTEM",
+            },
+            include: {
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                SystemMessage: true
+            }
+        })
+
+        const user1Id = order?.buyerId;
+        const user2Id = order?.sellerId;
+
+        SendMessageHandle((global as any).socketio, { ...chat_msg, user1Id, user2Id }, () => { })
+    }
 
     return;
 }
@@ -1793,6 +1955,70 @@ const confirmOrderReceived = async (orderId: string, userId: string) => {
     //         removeOnComplete: true,
     //     }
     // );
+
+    const systemMsg = [
+        {
+            title: "Order marked as received",
+            message: `Your order has been marked as received. Thank you for choosing FASHI-ON!`,
+            userId: order?.buyerId,
+            chatId: order?.chatId
+        },
+        {
+            title: "Order marked as received",
+            message: `The buyer has confirmed that the order has been received. Payment will be distributed to your wallet soon.`,
+            userId: order?.sellerId,
+            chatId: order?.chatId
+        }
+    ];
+
+    //send system message to both buyer and seller
+    for (const msg of systemMsg) {
+        if (!msg?.chatId) return;
+
+        const chat_msg = await prisma.message.create({
+            data: {
+                chatId: msg?.chatId,
+                SystemMessage: {
+                    create: {
+                        title: msg?.title,
+                        text: msg?.message,
+                        msgForUserId: msg?.userId,
+                    }
+                },
+                type: "SYSTEM",
+            },
+            include: {
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                SystemMessage: true
+            }
+        })
+
+        const user1Id = order?.buyerId;
+        const user2Id = order?.sellerId;
+
+        SendMessageHandle((global as any).socketio, { ...chat_msg, user1Id, user2Id }, () => { })
+    }
 
 }
 
@@ -2905,10 +3131,10 @@ const cancelFullOrderShipment = async ({ shipment_id, orderId, items, cancelReas
 
     // const data = await rateRes.json();
 
-    await prisma.$transaction(async (transactionClient) => {
+    const order = await prisma.$transaction(async (transactionClient) => {
 
         //mark order as cancelled to the database
-        await transactionClient.order.update({
+        const order = await transactionClient.order.update({
             where: {
                 id: orderId
             },
@@ -2979,8 +3205,74 @@ const cancelFullOrderShipment = async ({ shipment_id, orderId, items, cancelReas
             });
         }
 
+        return order;
+
 
     })
+
+    const systemMsg = [
+        {
+            title: "Order Cancelled",
+            message: `Your order has been cancelled. Refund will be processed to your FASHI-ON wallet.`,
+            userId: order?.buyerId,
+            chatId: order?.chatId
+        },
+        {
+            title: "Order Cancelled",
+            message: `The order has been cancelled.`,
+            userId: order?.sellerId,
+            chatId: order?.chatId
+        }
+    ];
+
+    //send system message to both buyer and seller
+    for (const msg of systemMsg) {
+        if (!msg?.chatId) return;
+
+        const chat_msg = await prisma.message.create({
+            data: {
+                chatId: msg?.chatId,
+                SystemMessage: {
+                    create: {
+                        title: msg?.title,
+                        text: msg?.message,
+                        msgForUserId: msg?.userId,
+                    }
+                },
+                type: "SYSTEM",
+            },
+            include: {
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                SystemMessage: true
+            }
+        })
+
+        const user1Id = order?.buyerId;
+        const user2Id = order?.sellerId;
+
+        SendMessageHandle((global as any).socketio, { ...chat_msg, user1Id, user2Id }, () => { })
+    }
 
 }
 
@@ -3006,10 +3298,10 @@ const dltOrderShipment = async ({ orderId, shipment_id, items, cancelReason, can
     // const data = await rateRes.json();
 
     //mark order as cancelled to the database
-    await prisma.$transaction(async (transactionClient) => {
+    const order = await prisma.$transaction(async (transactionClient) => {
 
         //mark order as cancelled to the database
-        await transactionClient.order.update({
+        const order = await transactionClient.order.update({
             where: {
                 id: orderId
             },
@@ -3081,7 +3373,73 @@ const dltOrderShipment = async ({ orderId, shipment_id, items, cancelReason, can
             });
         }
 
+        return order;
+
     })
+
+    const systemMsg = [
+        {
+            title: "Order Cancelled",
+            message: `Your order has been cancelled. Refund will be processed to your FASHI-ON wallet.`,
+            userId: order?.buyerId,
+            chatId: order?.chatId
+        },
+        {
+            title: "Order Cancelled",
+            message: `The order has been cancelled.`,
+            userId: order?.sellerId,
+            chatId: order?.chatId
+        }
+    ];
+
+    //send system message to both buyer and seller
+    for (const msg of systemMsg) {
+        if (!msg?.chatId) return;
+
+        const chat_msg = await prisma.message.create({
+            data: {
+                chatId: msg?.chatId,
+                SystemMessage: {
+                    create: {
+                        title: msg?.title,
+                        text: msg?.message,
+                        msgForUserId: msg?.userId,
+                    }
+                },
+                type: "SYSTEM",
+            },
+            include: {
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                SystemMessage: true
+            }
+        })
+
+        const user1Id = order?.buyerId;
+        const user2Id = order?.sellerId;
+
+        SendMessageHandle((global as any).socketio, { ...chat_msg, user1Id, user2Id }, () => { })
+    }
 
 }
 
@@ -3357,6 +3715,7 @@ const markAsCompletedOrder = async (orderId: string, current_buyerId: string) =>
             id: orderId,
         },
         select: {
+            chatId: true,
             buyerId: true,
             sellerId: true,
             status: true,
@@ -3446,6 +3805,71 @@ const markAsCompletedOrder = async (orderId: string, current_buyerId: string) =>
     //top charity fundraiser badge
     BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TOP_CHARITY_FUNDRAISER", userId: order?.sellerId, increment: Math.ceil(sellerDonationTotal) });
 
+
+    const systemMsg = [
+        {
+            title: "Order marked as received",
+            message: `Your order has been marked as received. Thank you for choosing FASHI-ON!`,
+            userId: order?.buyerId,
+            chatId: order?.chatId
+        },
+        {
+            title: "Order marked as received",
+            message: `The buyer has confirmed that the order has been received. Payment will be distributed to your wallet soon.`,
+            userId: order?.sellerId,
+            chatId: order?.chatId
+        }
+    ];
+
+    //send system message to both buyer and seller
+    for (const msg of systemMsg) {
+        if (!msg?.chatId) return;
+
+        const chat_msg = await prisma.message.create({
+            data: {
+                chatId: msg?.chatId,
+                SystemMessage: {
+                    create: {
+                        title: msg?.title,
+                        text: msg?.message,
+                        msgForUserId: msg?.userId,
+                    }
+                },
+                type: "SYSTEM",
+            },
+            include: {
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                SystemMessage: true
+            }
+        })
+
+        const user1Id = order?.buyerId;
+        const user2Id = order?.sellerId;
+
+        SendMessageHandle((global as any).socketio, { ...chat_msg, user1Id, user2Id }, () => { })
+    }
+
 }
 
 const markOrderReceivedFromAuthCenter = async (orderId: string) => {
@@ -3454,6 +3878,7 @@ const markOrderReceivedFromAuthCenter = async (orderId: string) => {
             id: orderId,
         },
         select: {
+            chatId: true,
             status: true,
             currentShipTo: true,
             orderNumber: true,
@@ -3562,6 +3987,71 @@ const markOrderReceivedFromAuthCenter = async (orderId: string) => {
             groupKeyId: null,
         }
     });
+
+    // Create system messages
+    const systemMsg = [
+        {
+            title: "Authentication Center Order Received",
+            message: `Authentication center has marked your order as received for verification. Will notify you once the verification is completed.`,
+            userId: order?.buyerId,
+            chatId: order?.chatId
+        },
+        {
+            title: "Authentication Center Order Received",
+            message: `Authentication center has marked the order as received for verification. Will notify you once the verification is completed.`,
+            userId: order?.sellerId,
+            chatId: order?.chatId
+        }
+    ];
+
+    //send system message to both buyer and seller
+    for (const msg of systemMsg) {
+        if (!msg?.chatId) return;
+
+        const chat_msg = await prisma.message.create({
+            data: {
+                chatId: msg?.chatId,
+                SystemMessage: {
+                    create: {
+                        title: msg?.title,
+                        text: msg?.message,
+                        msgForUserId: msg?.userId,
+                    }
+                },
+                type: "SYSTEM",
+            },
+            include: {
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                SystemMessage: true
+            }
+        })
+
+        const user1Id = order?.buyerId;
+        const user2Id = order?.sellerId;
+
+        SendMessageHandle((global as any).socketio, { ...chat_msg, user1Id, user2Id }, () => { })
+    }
 }
 
 const markOrderAuthInProgress = async (orderId: string) => {
@@ -3570,6 +4060,7 @@ const markOrderAuthInProgress = async (orderId: string) => {
             id: orderId,
         },
         select: {
+            chatId: true,
             status: true,
             currentShipTo: true,
             orderNumber: true,
@@ -3682,6 +4173,70 @@ const markOrderAuthInProgress = async (orderId: string) => {
             groupKeyId: null,
         }
     });
+
+    const systemMsg = [
+        {
+            title: "Authentication In Progress",
+            message: `Authentication center has marked your order verification as in progress. Will notify you once the verification is completed.`,
+            userId: order?.buyerId,
+            chatId: order?.chatId
+        },
+        {
+            title: "Authentication In Progress",
+            message: `Authentication center has marked the order verification as in progress. Will notify you once the verification is completed.`,
+            userId: order?.sellerId,
+            chatId: order?.chatId
+        }
+    ];
+
+    //send system message to both buyer and seller
+    for (const msg of systemMsg) {
+        if (!msg?.chatId) return;
+
+        const chat_msg = await prisma.message.create({
+            data: {
+                chatId: msg?.chatId,
+                SystemMessage: {
+                    create: {
+                        title: msg?.title,
+                        text: msg?.message,
+                        msgForUserId: msg?.userId,
+                    }
+                },
+                type: "SYSTEM",
+            },
+            include: {
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                SystemMessage: true
+            }
+        })
+
+        const user1Id = order?.buyerId;
+        const user2Id = order?.sellerId;
+
+        SendMessageHandle((global as any).socketio, { ...chat_msg, user1Id, user2Id }, () => { })
+    }
 }
 
 const addAuthResultToOrder = async (payload: { orderId: string; items: { itemId: string; result: OrderAuthResult }[] }) => {
@@ -3692,6 +4247,7 @@ const addAuthResultToOrder = async (payload: { orderId: string; items: { itemId:
             id: orderId,
         },
         select: {
+            chatId: true,
             status: true,
             currentShipTo: true,
             orderNumber: true,
@@ -3852,6 +4408,70 @@ const addAuthResultToOrder = async (payload: { orderId: string; items: { itemId:
             amount: refundAmount
         });
 
+    }
+
+    const systemMsg = [
+        {
+            title: "Authentication Completed",
+            message: `Authentication center has completed the verification for your order. Please check the orders page for the authentication result. Failed items will be refunded to your FASHI-ON wallet.`,
+            userId: order?.buyerId,
+            chatId: order?.chatId
+        },
+        {
+            title: "Authentication Completed",
+            message: `Authentication center has completed the verification for the order. Please check the orders page for the authentication result. Failed items will be return to you soon.`,
+            userId: order?.sellerId,
+            chatId: order?.chatId
+        }
+    ];
+
+    //send system message to both buyer and seller
+    for (const msg of systemMsg) {
+        if (!msg?.chatId) return;
+
+        const chat_msg = await prisma.message.create({
+            data: {
+                chatId: msg?.chatId,
+                SystemMessage: {
+                    create: {
+                        title: msg?.title,
+                        text: msg?.message,
+                        msgForUserId: msg?.userId,
+                    }
+                },
+                type: "SYSTEM",
+            },
+            include: {
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                SystemMessage: true
+            }
+        })
+
+        const user1Id = order?.buyerId;
+        const user2Id = order?.sellerId;
+
+        SendMessageHandle((global as any).socketio, { ...chat_msg, user1Id, user2Id }, () => { })
     }
 
 

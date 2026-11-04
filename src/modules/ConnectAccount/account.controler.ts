@@ -71,13 +71,13 @@ const requestToWithdraw = catchAsync(async (req, res) => {
     });
 });
 
-const payoutHistory = catchAsync(async (req, res) => {
+const transactionHistory = catchAsync(async (req, res) => {
     const options = pick(req.query, PaginateOptions);
-    const result = await accountService.payoutHistory(req?.user?.id, options);
+    const result = await accountService.transactionHistory(req?.user?.id, options);
     sendResponse(res, {
         success: true,
         statusCode: httpStatus.OK,
-        message: 'Payout history retrived successfully',
+        message: 'Transaction history retrived successfully',
         data: result,
     });
 });
@@ -88,6 +88,6 @@ export const accountControler = {
     returnUrl,
     getConnectedAccountData,
     requestToWithdraw,
-    payoutHistory,
+    transactionHistory,
     accountBalance
 }
