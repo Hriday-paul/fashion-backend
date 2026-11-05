@@ -6,6 +6,9 @@ import { paginationHelper, TPaginationOptions } from "../../helper/pagination.he
 import prisma from "../../shared/prisma";
 import { notificationQueue } from "../../queues/notificaion.queue";
 import { jobs } from "../../queues/jobs.name";
+import { cartService } from "../cart/cart.service";
+import { createCheckoutSession } from "../payments/payments.utils";
+import generateRandomString from "../../utils/generateRandomString";
 
 export interface ICreateClothDonationPayload {
     charityId: string;
@@ -38,7 +41,7 @@ const donorCharitySelect = {
             picture: true,
         }
     },
-    thanksMsg : true,
+    thanksMsg: true,
     shipment: true
 };
 
@@ -83,7 +86,7 @@ const createClothDonation = async (payload: ICreateClothDonationPayload, donorId
             washedType: payload.washedType,
             description: payload.description,
             status: ClothDonationStatus.PENDING,
-            itemsCount : payload.itemsCount,
+            itemsCount: payload.itemsCount,
             photos: payload.photos && payload.photos.length > 0 ? {
                 create: payload.photos.map(p => ({
                     url: p.url,
@@ -337,9 +340,115 @@ const updateStatusAsCharity = async (
     return updated;
 };
 
+const payShipingCost = async (payload: { donationReqId: string, shipmentServiceId: string }) => {
+
+    const { donationReqId, shipmentServiceId } = payload;
+
+    const donation = await prisma.clothDonation.findUnique({
+        where: { id: donationReqId },
+        include: {
+            donor: {
+                select: {
+                    id: true,
+                    userName: true,
+                    fcmToken: true
+                }
+            },
+            charity: {
+                select: {
+                    id: true,
+                    userName: true
+                }
+            },
+            photos: true
+        }
+    });
+
+    if (!donation) {
+        throw new AppError(httpStatus.NOT_FOUND, "Cloth donation not found");
+    }
+
+    //check if donation is approved
+    if (donation.status !== ClothDonationStatus.ACCEPTED) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Request is not approved yet");
+    }
+
+    const donor_address = await prisma.billingDetails.findFirst({
+        where: {
+            sellerId: donation?.donorId
+        }
+    })
+
+    const charity_address = await prisma.billingDetails.findFirst({
+        where: {
+            userId: donation?.charityId
+        }
+    })
+
+    if (!donor_address || !charity_address) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Address does not exist");
+    }
+
+    //get shipment cost
+    const rates = await cartService.getRates({
+        origin: donor_address,
+        destination: charity_address,
+        items: [
+            {
+                finalPrice: 0,
+                hight_cm: donation?.,
+                length_cm: item.product.length_cm,
+                weight_kg: item.product.weight_kg,
+                width_cm: item.product.width_cm,
+            }
+        ]
+    })
+
+    const shippingRate = rates?.rates?.find(rate => rate?.courier_service?.id === payload?.shipmentServiceId)?.total_charge;
+
+    if (!shippingRate) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Shipping rate not available for the selected courier service");
+    }
+
+    const checkout_item = {
+        amount: shippingRate,
+        images: [],
+        name: `Cloth Donation Shipping Cost`,
+        quantity: 1,
+    };
+
+    const tranId = generateRandomString(10);
+
+    //create new payment for this cart group
+    const createdPayment = await prisma.payment.create({
+        data: {
+            userId: donation?.donorId,
+            total_amount: shippingRate,
+            paid_amount: 0,
+            seller_required_amount: 0,
+            seller_received_amount: 0,
+            status: "PENDING",
+            stripe_status: "PENDING",
+            transactionId: tranId,
+            paymentType: "SHIPMENT"
+        },
+        include: {
+            user: true
+        }
+    })
+
+    const checkoutSession = await createCheckoutSession({
+        products: [checkout_item],
+        user: donation?.donor,
+        paymentId: createdPayment?.id
+    });
+
+}
+
 export const clothDonationService = {
     createClothDonation,
     getDonationsAsDonor,
     getDonationsAsCharity,
     updateStatusAsCharity,
+    payShipingCost
 };

@@ -53,6 +53,7 @@ enum PaymentType {
   ORDER
   DONATION
   SUBSCRIPTION
+  SHIPMENT
 }
 
 enum PaymentStatus {

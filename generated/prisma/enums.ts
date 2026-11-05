@@ -221,7 +221,8 @@ export type BuyerRequestCancelStatus = (typeof BuyerRequestCancelStatus)[keyof t
 export const PaymentType = {
   ORDER: 'ORDER',
   DONATION: 'DONATION',
-  SUBSCRIPTION: 'SUBSCRIPTION'
+  SUBSCRIPTION: 'SUBSCRIPTION',
+  SHIPMENT: 'SHIPMENT'
 } as const
 
 export type PaymentType = (typeof PaymentType)[keyof typeof PaymentType]
