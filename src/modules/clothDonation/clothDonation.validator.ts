@@ -60,3 +60,15 @@ export const getClothDonationsQueryValidator: ValidationChain[] = [
     query("status").optional().isString(),
 ];
 
+export const getLabelValidator: ValidationChain[] = [
+    body("donationReqId")
+        .notEmpty().withMessage("donationReqId is required")
+]
+
+export const payShipingCostValidator: ValidationChain[] = [
+    body("donationReqId")
+        .notEmpty().withMessage("donationReqId is required"),
+
+    body("shipmentServiceId")
+        .notEmpty().withMessage("shipmentServiceId is required"),
+]

@@ -65,6 +65,11 @@ model ClothDonation {
 
   shipment Shipment?
 
+  hight_cm  Float @default(0)
+  width_cm  Float @default(0)
+  length_cm Float @default(0)
+  weight_kg Float @default(0)
+
   createdAt     DateTime              @default(now())
   updatedAt     DateTime              @updatedAt @default(now())
 

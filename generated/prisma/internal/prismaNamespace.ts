@@ -5761,6 +5761,10 @@ export const ClothDonationScalarFieldEnum = {
   washedType: 'washedType',
   description: 'description',
   status: 'status',
+  hight_cm: 'hight_cm',
+  width_cm: 'width_cm',
+  length_cm: 'length_cm',
+  weight_kg: 'weight_kg',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -5975,6 +5979,7 @@ export const PaymentScalarFieldEnum = {
   stripe_status: 'stripe_status',
   orderId: 'orderId',
   donationId: 'donationId',
+  shipmentId: 'shipmentId',
   paymentType: 'paymentType',
   transactionId: 'transactionId',
   paymentIntentId: 'paymentIntentId',
@@ -6539,6 +6544,7 @@ export const ShipmentScalarFieldEnum = {
   destinationId: 'destinationId',
   userId: 'userId',
   status: 'status',
+  isPaid: 'isPaid',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

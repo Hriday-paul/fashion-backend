@@ -41,7 +41,7 @@ const generateOrderNumber = () => {
     return `#${timestamp}-${random}`;
 };
 
-const placeOrderShipment = async ({ origin, destination, items, courierServiceId }: { origin: BillingDetails, destination: BillingDetails, items: RateItem[], courierServiceId: string }): Promise<IShipment> => {
+export const placeOrderShipment = async ({ origin, destination, items, courierServiceId }: { origin: BillingDetails, destination: BillingDetails, items: RateItem[], courierServiceId: string }): Promise<IShipment> => {
 
     const shipPayload = {
         "origin_address": {
@@ -4917,6 +4917,7 @@ const orderStats = async () => {
 
 export const orderService = {
     orders,
+    placeOrderShipment,
     addNewOrder,
     addNewOfferOrder,
     ordersAsASeller,
@@ -4926,6 +4927,7 @@ export const orderService = {
     approveCancelOrderItemBySeller,
     declineCancelOrderItemBySeller,
     confirmOrderReceived,
+    createLebelForOrder,
     getShipingLebel,
     markAsCompletedOrder,
     authenticationOrders,

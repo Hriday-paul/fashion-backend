@@ -1,6 +1,6 @@
 import httpStatus from "http-status";
 import { ClothDonationStatus, DonationType, Role, WashedType } from "../../../generated/prisma/enums";
-import { Prisma } from "../../../generated/prisma/client";
+import { Prisma, User } from "../../../generated/prisma/client";
 import AppError from "../../error/AppError";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
 import prisma from "../../shared/prisma";
@@ -9,6 +9,7 @@ import { jobs } from "../../queues/jobs.name";
 import { cartService } from "../cart/cart.service";
 import { createCheckoutSession } from "../payments/payments.utils";
 import generateRandomString from "../../utils/generateRandomString";
+import { orderService } from "../order/order.service";
 
 export interface ICreateClothDonationPayload {
     charityId: string;
@@ -340,16 +341,15 @@ const updateStatusAsCharity = async (
     return updated;
 };
 
-const payShipingCost = async (payload: { donationReqId: string, shipmentServiceId: string }) => {
-
-    const { donationReqId, shipmentServiceId } = payload;
+const getRates = async (donationReqId: string, cUserId: string) => {
 
     const donation = await prisma.clothDonation.findUnique({
-        where: { id: donationReqId },
+        where: { id: donationReqId, donorId: cUserId },
         include: {
             donor: {
                 select: {
                     id: true,
+                    email: true,
                     userName: true,
                     fcmToken: true
                 }
@@ -359,13 +359,12 @@ const payShipingCost = async (payload: { donationReqId: string, shipmentServiceI
                     id: true,
                     userName: true
                 }
-            },
-            photos: true
+            }
         }
     });
 
     if (!donation) {
-        throw new AppError(httpStatus.NOT_FOUND, "Cloth donation not found");
+        throw new AppError(httpStatus.NOT_FOUND, "Request not found");
     }
 
     //check if donation is approved
@@ -396,19 +395,119 @@ const payShipingCost = async (payload: { donationReqId: string, shipmentServiceI
         items: [
             {
                 finalPrice: 0,
-                hight_cm: donation?.,
-                length_cm: item.product.length_cm,
-                weight_kg: item.product.weight_kg,
-                width_cm: item.product.width_cm,
+                hight_cm: donation?.hight_cm,
+                length_cm: donation?.length_cm,
+                weight_kg: donation?.weight_kg,
+                width_cm: donation?.width_cm,
             }
         ]
     })
 
-    const shippingRate = rates?.rates?.find(rate => rate?.courier_service?.id === payload?.shipmentServiceId)?.total_charge;
+    return rates;
+
+}
+
+const payShipingCost = async (payload: { donationReqId: string, shipmentServiceId: string }, cUserId: string) => {
+
+    const { donationReqId, shipmentServiceId } = payload;
+
+    const donation = await prisma.clothDonation.findUnique({
+        where: { id: donationReqId, donorId: cUserId },
+        include: {
+            donor: {
+                select: {
+                    id: true,
+                    email: true,
+                    userName: true,
+                    fcmToken: true
+                }
+            },
+            charity: {
+                select: {
+                    id: true,
+                    userName: true
+                }
+            },
+        }
+    });
+
+    if (!donation) {
+        throw new AppError(httpStatus.NOT_FOUND, "Cloth donation not found");
+    }
+
+    //check if donation is approved
+    if (donation.status !== ClothDonationStatus.ACCEPTED) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Request is not approved yet");
+    }
+
+    //check have already a shipment & get paid
+    const existingShipment = await prisma.shipment.findFirst({
+        where: {
+            clothDonationId: donation?.id,
+            userId: cUserId
+        }
+    });
+
+    if (existingShipment && existingShipment?.isPaid) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Shipping cost already paid");
+    }
+
+    const donor_address = await prisma.billingDetails.findFirst({
+        where: {
+            sellerId: donation?.donorId
+        }
+    })
+
+    const charity_address = await prisma.billingDetails.findFirst({
+        where: {
+            userId: donation?.charityId
+        }
+    })
+
+    if (!donor_address || !charity_address) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Address does not exist");
+    }
+
+    //get shipment cost
+    const rates = await cartService.getRates({
+        origin: donor_address,
+        destination: charity_address,
+        items: [
+            {
+                finalPrice: 0,
+                hight_cm: donation?.hight_cm,
+                length_cm: donation?.length_cm,
+                weight_kg: donation?.weight_kg,
+                width_cm: donation?.width_cm,
+            }
+        ]
+    })
+
+    const shippingRate = rates?.rates?.find(rate => rate?.courier_service?.id === shipmentServiceId)?.total_charge;
 
     if (!shippingRate) {
         throw new AppError(httpStatus.BAD_REQUEST, "Shipping rate not available for the selected courier service");
     }
+
+    const shipmentData = await orderService.placeOrderShipment({
+        courierServiceId: payload?.shipmentServiceId,
+        origin: donor_address,
+        destination: charity_address,
+        items: [
+            {
+                weight_kg: donation?.weight_kg,
+                hight_cm: donation?.hight_cm,
+                width_cm: donation?.width_cm,
+                length_cm: donation?.length_cm,
+                finalPrice: 0,
+                title: "Fashi-on Cloth Donation"
+            }
+        ]
+    });
+
+    const parcelId = shipmentData?.shipment?.parcels[0]?.id;
+
+    const shipmentItems = shipmentData?.shipment?.parcels[0]?.items || [];
 
     const checkout_item = {
         amount: shippingRate,
@@ -419,30 +518,107 @@ const payShipingCost = async (payload: { donationReqId: string, shipmentServiceI
 
     const tranId = generateRandomString(10);
 
-    //create new payment for this cart group
-    const createdPayment = await prisma.payment.create({
-        data: {
-            userId: donation?.donorId,
-            total_amount: shippingRate,
-            paid_amount: 0,
-            seller_required_amount: 0,
-            seller_received_amount: 0,
-            status: "PENDING",
-            stripe_status: "PENDING",
-            transactionId: tranId,
-            paymentType: "SHIPMENT"
-        },
-        include: {
-            user: true
-        }
+    const transactionResult = await prisma.$transaction(async (tx) => {
+        const shipment = await tx.shipment.upsert({
+            where: {
+                clothDonationId: donation?.id
+            },
+            create: {
+                courier_service_id: shipmentServiceId,
+                shippingId: shipmentData?.shipment?.easyship_shipment_id,
+                parcelId: parcelId,
+                trackingUrl: shipmentData?.shipment?.tracking_page_url,
+                deliveryCharge: shippingRate,
+                originId: donor_address?.id,
+                destinationId: charity_address?.id,
+                userId: cUserId,
+            },
+            update: {
+                courier_service_id: shipmentServiceId,
+                shippingId: shipmentData?.shipment?.easyship_shipment_id,
+                parcelId: parcelId,
+                trackingUrl: shipmentData?.shipment?.tracking_page_url,
+                deliveryCharge: shippingRate,
+                originId: donor_address?.id,
+                destinationId: charity_address?.id,
+                userId: cUserId,
+            }
+        });
+
+        //create new payment for this cart group
+        const createdPayment = await tx.payment.upsert({
+            where: {
+                shipmentId: shipment?.id
+            },
+            create: {
+                userId: donation?.donorId,
+                total_amount: shippingRate,
+                paid_amount: 0,
+                seller_required_amount: 0,
+                seller_received_amount: 0,
+                status: "PENDING",
+                stripe_status: "PENDING",
+                transactionId: tranId,
+                paymentType: "SHIPMENT",
+                shipmentId: shipment?.id,
+            },
+            update: {
+                total_amount: shippingRate,
+                shipmentId: shipment?.id,
+            },
+            include: {
+                user: true
+            }
+        })
+
+        return { shipment, createdPayment };
     })
 
     const checkoutSession = await createCheckoutSession({
         products: [checkout_item],
-        user: donation?.donor,
-        paymentId: createdPayment?.id
+        user: donation?.donor as User,
+        paymentId: transactionResult?.createdPayment?.id
     });
 
+    return checkoutSession?.url;
+
+}
+
+const getShippinglabel = async (donationReqId: string, cUserId: string) => {
+    const donation = await prisma.clothDonation.findUnique({
+        where: { id: donationReqId, donorId: cUserId },
+        include: {
+            shipment: true
+        }
+    });
+
+    if (!donation) {
+        throw new AppError(httpStatus.NOT_FOUND, "Donation request does not exist");
+    }
+
+    if (!donation?.shipment) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Shipment does not exist for this donation request");
+    }
+
+    if (!donation?.shipment?.isPaid) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Shipment cost is not paid yet");
+    }
+
+    if (donation?.shipment?.lebelUrl) {
+        return donation?.shipment?.lebelUrl;
+    }
+
+    else if (donation?.shipment?.isLebelGenerated) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Label already generated but not available, please contact support")
+    }
+
+    const labelUrl = await orderService.createLebelForOrder({ shipment_id: donation?.shipment?.shippingId, dbShipmentId: donation?.shipment?.id });
+
+    if (!labelUrl) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Label generation failed, please contact support")
+    }
+
+    return labelUrl;
 }
 
 export const clothDonationService = {
@@ -450,5 +626,7 @@ export const clothDonationService = {
     getDonationsAsDonor,
     getDonationsAsCharity,
     updateStatusAsCharity,
-    payShipingCost
+    payShipingCost,
+    getRates,
+    getShippinglabel
 };

@@ -19,6 +19,9 @@ model Payment {
   donationId String? @unique
   donation   DirectDonation? @relation(fields: [donationId], references: [id], onDelete: SetNull)
 
+  shipmentId String? @unique
+  shipment   Shipment? @relation(fields: [shipmentId], references: [id], onDelete: SetNull)
+
   paymentType PaymentType @default(ORDER)
 
   transactionId          String

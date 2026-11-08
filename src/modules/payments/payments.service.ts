@@ -208,6 +208,9 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
 
   const isOrderpayment = payment?.paymentType === "ORDER" && payment?.order;
 
+  const isDonationPayment = payment?.paymentType === "DONATION" && payment?.donation;
+  const isShipmentPayment = payment?.paymentType === "SHIPMENT" && payment?.shipmentId;
+
   try {
 
     await prisma.$transaction(async (transactionClient) => {
@@ -264,7 +267,7 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
         }
       });
 
-      //if payment is order reated, crate a system message
+      //if payment is order created, crate a system message
       if (isOrderpayment && payment?.order && payment?.order?.chatId) {
 
         //for buyer
@@ -355,6 +358,17 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
 
       }
 
+      //if payment is shipment payment, update shipment payment status to paid
+      else if (isShipmentPayment && payment?.shipmentId) {
+
+        //update shipment payment status to paid
+        await transactionClient.shipment.update({
+          where: { id: payment?.shipmentId },
+          data: { isPaid: true }
+        });
+
+      }
+
     })
 
     if (isOrderpayment && payment?.order) {
@@ -404,7 +418,7 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
 
     }
 
-    if (payment?.paymentType === "DONATION" && payment?.donation) {
+    else if (isDonationPayment && payment?.donation) {
 
       if (payment?.donation?.donorId) {
         //generate badge for donor
