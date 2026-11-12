@@ -92,6 +92,7 @@ model User {
   products Product[]
 
   sellDonations    SellDonation[]
+  extraDonations    ExtraDonation[]
   productCharities ProductCharity[]
 
   assistentSellCharities AssistentSellCharity[]

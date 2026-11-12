@@ -1,7 +1,6 @@
 import { Job, UnrecoverableError, Worker } from "bullmq";
 import { connectionInfo } from "../redis";
 import prisma from "../shared/prisma";
-import { RefundQueue } from "../queues/refund.queue";
 import { jobs } from "../queues/jobs.name";
 import config from "../config";
 import { IShipment } from "../modules/order/order.interface";

@@ -25,7 +25,9 @@ export const withDrawWorker = new Worker("withdraw-balance", async (job: Job<{ u
         direction: "OUT",
         type: "WITHDRAWAL",
         description: `Withdrawal Balance`
-    });
+    },
+        { jobId: `withdraw-${transfer?.id}` }
+    );
 
 
 }, { connection: connectionInfo });

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import auth from "../../middleware/auth";
+import auth, { PublicAuth } from "../../middleware/auth";
 import { allRoles } from "../user/user.rout";
 import req_validator from "../../middleware/req_validation";
 import { donationControler } from "./donation.controler";
@@ -46,15 +46,15 @@ router.get("/charity-stats/:userName",
     donationControler.charityStats);
 
 router.get("/sell-raised/:userName",
-    auth(Role.ADMIN),
+    PublicAuth(),
     donationControler.sellDonationsRaised);
 
 router.get("/direct-raised/:userName",
-    auth(Role.ADMIN),
+    PublicAuth(),
     donationControler.directDonationRaised);
 
 router.get("/extra-raised/:userName",
-    auth(Role.ADMIN),
+    PublicAuth(),
     donationControler.extraDonationsRaised);
 
 router.get("/sell-raised-list",

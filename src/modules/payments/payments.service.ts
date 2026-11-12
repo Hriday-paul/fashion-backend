@@ -16,6 +16,7 @@ import { StockUpdateQueue } from '../../queues/stockUpdate.queue';
 import { RefundQueue } from '../../queues/refund.queue';
 import { UpdatebalanceQueue } from '../../queues/balance.queue';
 import { SendMessageHandle } from '../../socket/handlers/MessageHandler';
+import { ExtraDonationQueue } from '../../queues/donation.queue';
 
 const stripe = new Stripe(config.stripe?.stripe_api_secret as string, {
   apiVersion: "2025-03-31.basil", // Valid API version
@@ -373,13 +374,23 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
 
     if (isOrderpayment && payment?.order) {
 
-      await StockUpdateQueue.add(jobs.stockUpdate, { orderId: payment?.order?.id });
+      //distrubute extra donations
+      await ExtraDonationQueue.add(jobs.extraDonatinDistribute, {
+        orderId: payment?.order?.id
+      }, {
+        jobId: `distribute-extra-donation-${payment?.order?.id}`,
+      });
+
+      await StockUpdateQueue.add(jobs.stockUpdate, { orderId: payment?.order?.id }, {
+        jobId: `stock-update-${payment?.order?.id}`
+      });
 
       const treeCredit = payment?.order?.treeCredit || 0;
 
       const tree_count = Math.floor(treeCredit / 4); // 1 tree for every $4 spent
+
       // generate badge for buyer, tree gift badge
-      await BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TREE_PLANTER", userId: payment?.order?.buyerId, increment: tree_count });
+      await BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TREE_PLANTER", userId: payment?.order?.buyerId, increment: tree_count }, { jobId: `badge-generate-${payment?.order?.id}` });
 
 
       //send notification to the seller about order creation success
@@ -415,7 +426,6 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
           groupKeyId: null,
         }
       })
-
     }
 
     else if (isDonationPayment && payment?.donation) {
@@ -435,7 +445,8 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
         refId: paymentId,
         type: "DONATION_RECEIVED",
         description: `Donation Received`
-      });
+      },
+        { jobId: `direct-donation-${payment?.donation?.id}` });
 
       //send notification to the charity about donation received
       await notificationQueue.add(jobs.notification, {
@@ -804,6 +815,11 @@ const donationRaisedFromSell = async (options: TPaginationOptions, charityId: st
                 },
                 select: {
                   url: true
+                }
+              },
+              user: {
+                select: {
+                  picture: true
                 }
               }
             }

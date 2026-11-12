@@ -417,6 +417,7 @@ export const ModelName = {
   OrderItem: 'OrderItem',
   CancelOrderEvidence: 'CancelOrderEvidence',
   SellDonation: 'SellDonation',
+  ExtraDonation: 'ExtraDonation',
   Payment: 'Payment',
   Refund: 'Refund',
   Product: 'Product',
@@ -472,7 +473,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "parcelSuggestion" | "directDonation" | "clothDonation" | "clothDonationPhoto" | "donationThanksMSg" | "follow" | "chat" | "message" | "systemMessage" | "chatItem" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "charitableOrganization" | "charityShop" | "ecoFriendlyStore" | "celebrity" | "ambassador" | "professionalSeller" | "auth" | "user" | "charityGallery" | "profilePicture" | "charityThumbnail" | "accountDocument" | "billingDetails" | "notification" | "setting" | "sellCountries" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction"
+    modelProps: "assistentSell" | "bundlePicture" | "assistentSellCharity" | "badge" | "userBadge" | "category" | "brandByCategory" | "brand" | "materialByCategory" | "material" | "sizeCategoryHierarchyGroup" | "size" | "keyword" | "parcelSuggestion" | "directDonation" | "clothDonation" | "clothDonationPhoto" | "donationThanksMSg" | "follow" | "chat" | "message" | "systemMessage" | "chatItem" | "fileMessage" | "order" | "orderItem" | "cancelOrderEvidence" | "sellDonation" | "extraDonation" | "payment" | "refund" | "product" | "productMaterial" | "productPicture" | "productCharity" | "favourite" | "cartGroup" | "cartItem" | "cartDonationCharaties" | "offer" | "offerItem" | "productView" | "question" | "bundleDiscount" | "bundleDiscountTier" | "return" | "returnItem" | "returnEvidence" | "rating" | "charitableOrganization" | "charityShop" | "ecoFriendlyStore" | "celebrity" | "ambassador" | "professionalSeller" | "auth" | "user" | "charityGallery" | "profilePicture" | "charityThumbnail" | "accountDocument" | "billingDetails" | "notification" | "setting" | "sellCountries" | "shipment" | "shipmentEvent" | "wallet" | "walletTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2545,6 +2546,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SellDonationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SellDonationCountAggregateOutputType> | number
+        }
+      }
+    }
+    ExtraDonation: {
+      payload: Prisma.$ExtraDonationPayload<ExtArgs>
+      fields: Prisma.ExtraDonationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ExtraDonationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtraDonationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ExtraDonationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtraDonationPayload>
+        }
+        findFirst: {
+          args: Prisma.ExtraDonationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtraDonationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ExtraDonationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtraDonationPayload>
+        }
+        findMany: {
+          args: Prisma.ExtraDonationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtraDonationPayload>[]
+        }
+        create: {
+          args: Prisma.ExtraDonationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtraDonationPayload>
+        }
+        createMany: {
+          args: Prisma.ExtraDonationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ExtraDonationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtraDonationPayload>[]
+        }
+        delete: {
+          args: Prisma.ExtraDonationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtraDonationPayload>
+        }
+        update: {
+          args: Prisma.ExtraDonationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtraDonationPayload>
+        }
+        deleteMany: {
+          args: Prisma.ExtraDonationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ExtraDonationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ExtraDonationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtraDonationPayload>[]
+        }
+        upsert: {
+          args: Prisma.ExtraDonationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtraDonationPayload>
+        }
+        aggregate: {
+          args: Prisma.ExtraDonationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateExtraDonation>
+        }
+        groupBy: {
+          args: Prisma.ExtraDonationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExtraDonationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ExtraDonationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExtraDonationCountAggregateOutputType> | number
         }
       }
     }
@@ -5790,6 +5865,7 @@ export const DonationThanksMSgScalarFieldEnum = {
   sellDonationId: 'sellDonationId',
   directDonationId: 'directDonationId',
   clothDonationId: 'clothDonationId',
+  extraDonationId: 'extraDonationId',
   message: 'message',
   msgType: 'msgType',
   createdAt: 'createdAt',
@@ -5966,6 +6042,22 @@ export const SellDonationScalarFieldEnum = {
 } as const
 
 export type SellDonationScalarFieldEnum = (typeof SellDonationScalarFieldEnum)[keyof typeof SellDonationScalarFieldEnum]
+
+
+export const ExtraDonationScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  percent: 'percent',
+  isAnonymous: 'isAnonymous',
+  status: 'status',
+  orderItemId: 'orderItemId',
+  charityId: 'charityId',
+  donatedAt: 'donatedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExtraDonationScalarFieldEnum = (typeof ExtraDonationScalarFieldEnum)[keyof typeof ExtraDonationScalarFieldEnum]
 
 
 export const PaymentScalarFieldEnum = {
@@ -7355,6 +7447,7 @@ export type GlobalOmitConfig = {
   orderItem?: Prisma.OrderItemOmit
   cancelOrderEvidence?: Prisma.CancelOrderEvidenceOmit
   sellDonation?: Prisma.SellDonationOmit
+  extraDonation?: Prisma.ExtraDonationOmit
   payment?: Prisma.PaymentOmit
   refund?: Prisma.RefundOmit
   product?: Prisma.ProductOmit

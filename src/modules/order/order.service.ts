@@ -317,6 +317,20 @@ const addNewOrder = async (
 
         const unitAuthFee = payload?.allowedAuthentication ? authenTicationRate : 0; // fixed authentication cost per item
 
+        const extraCharaties = item?.charities.map(i => {
+            return {
+                id: i?.charityId,
+                isAnonymous: item?.extraDonationAnonymous
+            }
+        })
+
+        const sellCharaties = p?.charities.map(i => {
+            return {
+                id: i?.charityId,
+                isAnonymous: i?.isAnonymous
+            }
+        })
+
         return {
             product: p,
             productId: p.id,
@@ -331,7 +345,8 @@ const addNewOrder = async (
             extra_donation,
             donation_percent, // how much percent of the product price will be donated to charity from seller
             donation_amount, // how much amount of the product price will be donated to charity from seller
-            charities: item?.charities ?? [],
+            extraCharities: extraCharaties ?? [],
+            sellCharities: sellCharaties ?? [],
         };
     });
 
@@ -400,6 +415,8 @@ const addNewOrder = async (
 
     const tranId = generateRandomString(10);
 
+    const total_extra_donation = cartgroup.items.reduce((itemSum, item) => itemSum + (item?.extraDonation ?? 0), 0);
+
     const result = await prisma.$transaction(async (transactionClient) => {
 
         const shipment = await transactionClient.shipment.create({
@@ -451,16 +468,19 @@ const addNewOrder = async (
 
                 totalDelivery: shippingRate,
                 items: {
-                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, assisted_sell_commision, unitAuthFee, ...item }) => {
+                    create: orderItems.map(({ sellCharities: charities, extraCharities, sellerId, donation_amount, donation_percent, product, assisted_sell_commision, unitAuthFee, ...item }) => {
                         const charityCount = charities.length;
                         const splitAmount = charityCount > 0 ? (donation_amount / charityCount) : 0;
-                        const splitExtra = charityCount > 0 ? (item.extra_donation / charityCount) : 0;
-
-                        const dbProduct = product;
 
                         const splitPercent = charityCount > 0 ? 100 / charityCount : 0;
 
                         const parcelItemId = shipmentItems.find(parcelItem => parcelItem?.description === product?.title && parcelItem?.declared_customs_value === product?.finalPrice)?.id;
+
+                        const extraCharityCount = extraCharities.length;
+
+                        const splitExtraDonatePercent = extraCharityCount > 0 ? 100 / extraCharityCount : 0;
+
+                        const splitExtra = extraCharityCount > 0 ? (item.extra_donation / extraCharityCount) : 0;
 
                         return {
                             ...item,
@@ -472,23 +492,32 @@ const addNewOrder = async (
                                 donations: {
                                     create: charities.map((charity) => {
 
-                                        const productCharity = dbProduct.charities.find(
-                                            (c) => c.charityId === charity?.charityId
-                                        )!;
-
                                         return {
-                                            charityId: charity?.charityId,
+                                            charityId: charity?.id,
                                             amount: splitAmount,
                                             percent: splitPercent,
                                             extra_money: splitExtra,
                                             total_amount: splitAmount + splitExtra,
                                             status: 'PENDING',
-                                            isAnonymous: productCharity?.isAnonymous,
+                                            isAnonymous: charity?.isAnonymous,
                                         };
                                     }),
                                 },
-                            }),
 
+                                extraDonations: {
+                                    create: extraCharities.map((charity) => {
+
+                                        return {
+                                            charityId: charity?.id,
+                                            amount: splitExtra,
+                                            percent: splitExtraDonatePercent,
+                                            isAnonymous: charity?.isAnonymous,
+                                            status: 'PENDING',
+                                        }
+                                    })
+                                }
+
+                            }),
                         };
                     })
                 },
@@ -523,8 +552,6 @@ const addNewOrder = async (
         return createdPayment;
 
     });
-
-    const total_extra_donation = cartgroup.items.reduce((itemSum, item) => itemSum + (item?.extraDonation ?? 0), 0);
 
     const checkOutSessionItems = [
         ...orderItems.map((item) => {
@@ -756,6 +783,20 @@ const addNewOfferOrder = async (
 
         const unitAuthFee = payload?.allowedAuthentication ? authenTicationRate : 0; // fixed authentication cost per item
 
+        // const offerExtraCharaties = item?.charities.map(i => {
+        //     return {
+        //         id: i?.charityId,
+        //         isAnonymous: item?.extraDonationAnonymous
+        //     }
+        // })
+
+        const sellCharaties = p?.charities.map(i => {
+            return {
+                id: i?.charityId,
+                isAnonymous: i?.isAnonymous
+            }
+        })
+
         return {
             product: p,
             productId: p.id,
@@ -770,7 +811,8 @@ const addNewOfferOrder = async (
             donation_percent, // how much percent of the product price will be donated to charity from seller
             donation_amount, // how much amount of the product price will be donated to charity from seller
             unitAuthFee,
-            charities: p?.charities,
+            extraCharities: [] as { id: string, isAnonymous: boolean }[],
+            sellCharities: sellCharaties ?? [],
         };
     });
 
@@ -886,16 +928,19 @@ const addNewOfferOrder = async (
 
                 totalDelivery: shippingRate,
                 items: {
-                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, assisted_sell_commision, unitAuthFee, ...item }) => {
+                    create: orderItems.map(({ sellCharities: charities, extraCharities, sellerId, donation_amount, donation_percent, product, assisted_sell_commision, unitAuthFee, ...item }) => {
                         const charityCount = charities.length;
                         const splitAmount = charityCount > 0 ? (donation_amount / charityCount) : 0;
-                        const splitExtra = charityCount > 0 ? (item.extra_donation / charityCount) : 0;
-
-                        const dbProduct = product;
 
                         const splitPercent = charityCount > 0 ? 100 / charityCount : 0;
 
                         const parcelItemId = shipmentItems.find(parcelItem => parcelItem?.description === product?.title && parcelItem?.declared_customs_value === product?.finalPrice)?.id;
+
+                        const extraCharityCount = extraCharities.length;
+
+                        const splitExtraDonatePercent = extraCharityCount > 0 ? 100 / extraCharityCount : 0;
+
+                        const splitExtra = extraCharityCount > 0 ? (item.extra_donation / extraCharityCount) : 0;
 
                         return {
                             ...item,
@@ -907,21 +952,31 @@ const addNewOfferOrder = async (
                                 donations: {
                                     create: charities.map((charity) => {
 
-                                        const productCharity = dbProduct.charities.find(
-                                            (c) => c.charityId === charity?.charityId
-                                        )!;
-
                                         return {
-                                            charityId: charity?.charityId,
+                                            charityId: charity?.id,
                                             amount: splitAmount,
                                             percent: splitPercent,
                                             extra_money: splitExtra,
                                             total_amount: splitAmount + splitExtra,
                                             status: 'PENDING',
-                                            isAnonymous: productCharity?.isAnonymous,
+                                            isAnonymous: charity?.isAnonymous,
                                         };
                                     }),
                                 },
+
+                                extraDonations: {
+                                    create: extraCharities.map((charity) => {
+
+                                        return {
+                                            charityId: charity?.id,
+                                            amount: splitExtra,
+                                            percent: splitExtraDonatePercent,
+                                            isAnonymous: charity?.isAnonymous,
+                                            status: 'PENDING',
+                                        }
+                                    })
+                                }
+
                             }),
 
                         };
@@ -1110,6 +1165,20 @@ const addNewSingleOrder = async (payload: {
 
         const unitAuthFee = allowedAuthentication ? authenTicationRate : 0; // fixed authentication cost per item
 
+        // const extraCharaties = item?.charities.map(i => {
+        //     return {
+        //         id: i?.charityId,
+        //         isAnonymous: item?.extraDonationAnonymous
+        //     }
+        // })
+
+        const sellCharaties = p?.charities.map(i => {
+            return {
+                id: i?.charityId,
+                isAnonymous: i?.isAnonymous
+            }
+        })
+
         return {
             product: p,
             productId: p.id,
@@ -1124,7 +1193,8 @@ const addNewSingleOrder = async (payload: {
             extra_donation,
             donation_percent, // how much percent of the product price will be donated to charity from seller
             donation_amount, // how much amount of the product price will be donated to charity from seller
-            charities: item?.charities ?? [],
+            extraCharities: [] as { id: string, isAnonymous: boolean }[],
+            sellCharities: sellCharaties ?? [],
         };
     });
 
@@ -1244,16 +1314,19 @@ const addNewSingleOrder = async (payload: {
 
                 totalDelivery: shippingRate,
                 items: {
-                    create: orderItems.map(({ charities, sellerId, donation_amount, donation_percent, product, assisted_sell_commision, unitAuthFee, ...item }) => {
+                    create: orderItems.map(({ sellCharities: charities, extraCharities, sellerId, donation_amount, donation_percent, product, assisted_sell_commision, unitAuthFee, ...item }) => {
                         const charityCount = charities.length;
                         const splitAmount = charityCount > 0 ? (donation_amount / charityCount) : 0;
-                        const splitExtra = charityCount > 0 ? (item.extra_donation / charityCount) : 0;
-
-                        const dbProduct = product;
 
                         const splitPercent = charityCount > 0 ? 100 / charityCount : 0;
 
                         const parcelItemId = shipmentItems.find(parcelItem => parcelItem?.description === product?.title && parcelItem?.declared_customs_value === product?.finalPrice)?.id;
+
+                        const extraCharityCount = extraCharities.length;
+
+                        const splitExtraDonatePercent = extraCharityCount > 0 ? 100 / extraCharityCount : 0;
+
+                        const splitExtra = extraCharityCount > 0 ? (item.extra_donation / extraCharityCount) : 0;
 
                         return {
                             ...item,
@@ -1264,22 +1337,31 @@ const addNewSingleOrder = async (payload: {
                             ...(charityCount > 0 && {
                                 donations: {
                                     create: charities.map((charity) => {
-
-                                        const productCharity = dbProduct.charities.find(
-                                            (c) => c.charityId === charity?.charityId
-                                        )!;
-
                                         return {
-                                            charityId: charity?.charityId,
+                                            charityId: charity?.id,
                                             amount: splitAmount,
                                             percent: splitPercent,
                                             extra_money: splitExtra,
                                             total_amount: splitAmount + splitExtra,
                                             status: 'PENDING',
-                                            isAnonymous: productCharity?.isAnonymous,
+                                            isAnonymous: charity?.isAnonymous,
                                         };
                                     }),
                                 },
+
+                                extraDonations: {
+                                    create: extraCharities.map((charity) => {
+
+                                        return {
+                                            charityId: charity?.id,
+                                            amount: splitExtra,
+                                            percent: splitExtraDonatePercent,
+                                            isAnonymous: charity?.isAnonymous,
+                                            status: 'PENDING',
+                                        }
+                                    })
+                                }
+
                             }),
 
                         };
@@ -3703,7 +3785,10 @@ const cancelOrderItemBySeller = async (payload: { orderId: string, itemIds: stri
         userId: order?.buyerId,
         markPaymentRefunded: allowCancelFullOrder ? true : false,
         amount: totalRefundAmount,
-    });
+    },
+        {
+            jobId: `refund-${paymentId}-${itemIds.join(",")}`,
+        });
 
     return;
 
@@ -4406,7 +4491,11 @@ const addAuthResultToOrder = async (payload: { orderId: string; items: { itemId:
             userId: order?.buyerId,
             markPaymentRefunded: false,
             amount: refundAmount
-        });
+        },
+            {
+                jobId: `refund-${failedItems.join(",")}`,
+            }
+        );
 
     }
 

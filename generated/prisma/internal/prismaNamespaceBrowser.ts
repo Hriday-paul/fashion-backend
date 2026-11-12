@@ -76,6 +76,7 @@ export const ModelName = {
   OrderItem: 'OrderItem',
   CancelOrderEvidence: 'CancelOrderEvidence',
   SellDonation: 'SellDonation',
+  ExtraDonation: 'ExtraDonation',
   Payment: 'Payment',
   Refund: 'Refund',
   Product: 'Product',
@@ -377,6 +378,7 @@ export const DonationThanksMSgScalarFieldEnum = {
   sellDonationId: 'sellDonationId',
   directDonationId: 'directDonationId',
   clothDonationId: 'clothDonationId',
+  extraDonationId: 'extraDonationId',
   message: 'message',
   msgType: 'msgType',
   createdAt: 'createdAt',
@@ -553,6 +555,22 @@ export const SellDonationScalarFieldEnum = {
 } as const
 
 export type SellDonationScalarFieldEnum = (typeof SellDonationScalarFieldEnum)[keyof typeof SellDonationScalarFieldEnum]
+
+
+export const ExtraDonationScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  percent: 'percent',
+  isAnonymous: 'isAnonymous',
+  status: 'status',
+  orderItemId: 'orderItemId',
+  charityId: 'charityId',
+  donatedAt: 'donatedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExtraDonationScalarFieldEnum = (typeof ExtraDonationScalarFieldEnum)[keyof typeof ExtraDonationScalarFieldEnum]
 
 
 export const PaymentScalarFieldEnum = {

@@ -157,6 +157,11 @@ export type CancelOrderEvidence = Prisma.CancelOrderEvidenceModel
  */
 export type SellDonation = Prisma.SellDonationModel
 /**
+ * Model ExtraDonation
+ * 
+ */
+export type ExtraDonation = Prisma.ExtraDonationModel
+/**
  * Model Payment
  * 
  */

@@ -21,7 +21,7 @@ export const refundWorker = new Worker(
         const { paymentId, userId, reason, amount, transactionMsg } = job.data;
 
         //make a record of the refund in the database
-        await prisma.refund.create({
+        const refund = await prisma.refund.create({
             data: {
                 paymentId,
                 amount,
@@ -39,6 +39,8 @@ export const refundWorker = new Worker(
             refId: paymentId,
             type: "REFUND",
             description: transactionMsg
+        }, {
+            jobId: `refund-${refund?.id}`
         });
 
         return;

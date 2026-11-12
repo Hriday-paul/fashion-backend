@@ -138,6 +138,7 @@ model OrderItem {
     extra_donation   Float          @default(0)
     sell_donation Float          @default(0)
     donations        SellDonation[]
+    extraDonations        ExtraDonation[]
 
     cancelledBy         CancelledBy?
     cancelReason        CancelReason?
@@ -204,6 +205,32 @@ model SellDonation {
     donatedAt DateTime?
 
     @@map("sellItemMoneyDonations")
+}
+
+model ExtraDonation {
+    id String @id @default(uuid())
+
+    amount  Float @default(0) //only item donation amount
+    percent Float @default(0) //what actual percent received, split by other charaties
+    isAnonymous Boolean @default(false)
+
+    status DonationStatus @default(PENDING)
+
+    orderItemId String
+    orderItem   OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+
+    charityId String
+    charity   User   @relation(fields: [charityId], references: [id], onDelete: Restrict)
+
+    thanksMessage DonationThanksMSg?
+
+    donatedAt DateTime?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("extraItemMoneyDonations")
+    @@index([charityId])
 }
 
 enum DonationStatus {

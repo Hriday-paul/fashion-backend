@@ -94,6 +94,7 @@ export type ClothDonationStatus = (typeof ClothDonationStatus)[keyof typeof Clot
 export const ThanksMessageType = {
   SELL: 'SELL',
   DIRECT: 'DIRECT',
+  EXTRA: 'EXTRA',
   CLOTH: 'CLOTH'
 } as const
 

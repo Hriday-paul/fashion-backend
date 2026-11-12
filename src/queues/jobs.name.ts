@@ -12,4 +12,6 @@ export const jobs = {
     stockUpdate: "stockUpdate",
     withDrawBalance: "withDrawBalance",
     updateBalance: "updateBalance",
+    extraDonatinDistribute : "extraDonatinDistribute",
+    sellDonatinDistribute : "sellDonatinDistribute"
 }

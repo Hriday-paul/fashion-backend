@@ -99,6 +99,7 @@ model ClothDonationPhoto{
 enum ThanksMessageType {
   SELL
   DIRECT
+  EXTRA
   CLOTH
 }
 
@@ -115,6 +116,9 @@ model DonationThanksMSg{
 
   clothDonationId String? @unique
   clothDonation   ClothDonation? @relation(fields: [clothDonationId], references: [id], onDelete: Cascade)
+
+  extraDonationId String? @unique
+  extraDonation   ExtraDonation? @relation(fields: [extraDonationId], references: [id], onDelete: Cascade)
 
   message   String
 
