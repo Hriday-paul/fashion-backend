@@ -15,6 +15,7 @@ model Auth {
   role              Role     @default(INDIVIDUAL_USER)
   status            Boolean  @default(true)
   isSocialLogin     Boolean  @default(false)
+  logedIn Boolean @default(false)
   isDeleted         Boolean  @default(false)
   isverified        Boolean  @default(false)
   isPhoneVerified     Boolean  @default(false)
@@ -66,6 +67,10 @@ model User {
   fcmToken String?
 
   picture           ProfilePicture?
+
+  bannerUrl String?
+  bannerKey String?
+
   account_documents AccountDocument[]
   mission           String?
   business_tags     String[]
@@ -308,6 +313,7 @@ enum NotificationEntityType {
 }
 
 enum NotificationType {
+  WELLCOME
   //for product
   PRODUCT_LIKE
   PRICE_DROP

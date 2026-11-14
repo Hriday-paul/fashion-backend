@@ -353,6 +353,7 @@ export type NotificationEntityType = (typeof NotificationEntityType)[keyof typeo
 
 
 export const NotificationType = {
+  WELLCOME: 'WELLCOME',
   PRODUCT_LIKE: 'PRODUCT_LIKE',
   PRICE_DROP: 'PRICE_DROP',
   SOLD_OUT: 'SOLD_OUT',

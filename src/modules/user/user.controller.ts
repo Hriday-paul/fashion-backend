@@ -35,6 +35,7 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
 
     const files = req.files as {
         picture?: Express.Multer.File[];
+        banner?: Express.Multer.File[];
         charityThumbnail?: Express.Multer.File[];
         charityImgs?: Express.Multer.File[];
     };
@@ -46,6 +47,15 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
         });
 
         req.body.image = image;
+    }
+    if (files?.banner && files?.banner.length > 0) {
+        const image = await uploadToS3({
+            file: files.banner[0],
+            fileName: `images/user/`,
+        });
+
+        req.body.bannerUrl = image?.url;
+        req.body.bannerKey = image?.key;
     }
     if (files?.charityThumbnail && files?.charityThumbnail.length > 0) {
         const image = await uploadToS3({

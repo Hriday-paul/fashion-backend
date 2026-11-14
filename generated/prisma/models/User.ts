@@ -55,6 +55,8 @@ export type UserMinAggregateOutputType = {
   support_email: string | null
   notification: boolean | null
   fcmToken: string | null
+  bannerUrl: string | null
+  bannerKey: string | null
   mission: string | null
   isOnline: boolean | null
   lastOnlineAt: Date | null
@@ -89,6 +91,8 @@ export type UserMaxAggregateOutputType = {
   support_email: string | null
   notification: boolean | null
   fcmToken: string | null
+  bannerUrl: string | null
+  bannerKey: string | null
   mission: string | null
   isOnline: boolean | null
   lastOnlineAt: Date | null
@@ -123,6 +127,8 @@ export type UserCountAggregateOutputType = {
   support_email: number
   notification: number
   fcmToken: number
+  bannerUrl: number
+  bannerKey: number
   mission: number
   business_tags: number
   isOnline: number
@@ -168,6 +174,8 @@ export type UserMinAggregateInputType = {
   support_email?: true
   notification?: true
   fcmToken?: true
+  bannerUrl?: true
+  bannerKey?: true
   mission?: true
   isOnline?: true
   lastOnlineAt?: true
@@ -202,6 +210,8 @@ export type UserMaxAggregateInputType = {
   support_email?: true
   notification?: true
   fcmToken?: true
+  bannerUrl?: true
+  bannerKey?: true
   mission?: true
   isOnline?: true
   lastOnlineAt?: true
@@ -236,6 +246,8 @@ export type UserCountAggregateInputType = {
   support_email?: true
   notification?: true
   fcmToken?: true
+  bannerUrl?: true
+  bannerKey?: true
   mission?: true
   business_tags?: true
   isOnline?: true
@@ -358,6 +370,8 @@ export type UserGroupByOutputType = {
   support_email: string | null
   notification: boolean
   fcmToken: string | null
+  bannerUrl: string | null
+  bannerKey: string | null
   mission: string | null
   business_tags: string[]
   isOnline: boolean
@@ -416,6 +430,8 @@ export type UserWhereInput = {
   support_email?: Prisma.StringNullableFilter<"User"> | string | null
   notification?: Prisma.BoolFilter<"User"> | boolean
   fcmToken?: Prisma.StringNullableFilter<"User"> | string | null
+  bannerUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  bannerKey?: Prisma.StringNullableFilter<"User"> | string | null
   mission?: Prisma.StringNullableFilter<"User"> | string | null
   business_tags?: Prisma.StringNullableListFilter<"User">
   isOnline?: Prisma.BoolFilter<"User"> | boolean
@@ -504,6 +520,8 @@ export type UserOrderByWithRelationInput = {
   support_email?: Prisma.SortOrderInput | Prisma.SortOrder
   notification?: Prisma.SortOrder
   fcmToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannerKey?: Prisma.SortOrderInput | Prisma.SortOrder
   mission?: Prisma.SortOrderInput | Prisma.SortOrder
   business_tags?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
@@ -595,6 +613,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   support_email?: Prisma.StringNullableFilter<"User"> | string | null
   notification?: Prisma.BoolFilter<"User"> | boolean
   fcmToken?: Prisma.StringNullableFilter<"User"> | string | null
+  bannerUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  bannerKey?: Prisma.StringNullableFilter<"User"> | string | null
   mission?: Prisma.StringNullableFilter<"User"> | string | null
   business_tags?: Prisma.StringNullableListFilter<"User">
   isOnline?: Prisma.BoolFilter<"User"> | boolean
@@ -683,6 +703,8 @@ export type UserOrderByWithAggregationInput = {
   support_email?: Prisma.SortOrderInput | Prisma.SortOrder
   notification?: Prisma.SortOrder
   fcmToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannerKey?: Prisma.SortOrderInput | Prisma.SortOrder
   mission?: Prisma.SortOrderInput | Prisma.SortOrder
   business_tags?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
@@ -726,6 +748,8 @@ export type UserScalarWhereWithAggregatesInput = {
   support_email?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   notification?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   fcmToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  bannerUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  bannerKey?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   mission?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   business_tags?: Prisma.StringNullableListFilter<"User">
   isOnline?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
@@ -761,6 +785,8 @@ export type UserCreateInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -849,6 +875,8 @@ export type UserUncheckedCreateInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -937,6 +965,8 @@ export type UserUpdateInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1025,6 +1055,8 @@ export type UserUncheckedUpdateInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1113,6 +1145,8 @@ export type UserCreateManyInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -1148,6 +1182,8 @@ export type UserUpdateManyMutationInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1183,6 +1219,8 @@ export type UserUncheckedUpdateManyInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1228,6 +1266,8 @@ export type UserCountOrderByAggregateInput = {
   support_email?: Prisma.SortOrder
   notification?: Prisma.SortOrder
   fcmToken?: Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrder
+  bannerKey?: Prisma.SortOrder
   mission?: Prisma.SortOrder
   business_tags?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
@@ -1267,6 +1307,8 @@ export type UserMaxOrderByAggregateInput = {
   support_email?: Prisma.SortOrder
   notification?: Prisma.SortOrder
   fcmToken?: Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrder
+  bannerKey?: Prisma.SortOrder
   mission?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
   lastOnlineAt?: Prisma.SortOrder
@@ -1301,6 +1343,8 @@ export type UserMinOrderByAggregateInput = {
   support_email?: Prisma.SortOrder
   notification?: Prisma.SortOrder
   fcmToken?: Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrder
+  bannerKey?: Prisma.SortOrder
   mission?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
   lastOnlineAt?: Prisma.SortOrder
@@ -2108,6 +2152,8 @@ export type UserCreateWithoutAssistentSellsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -2195,6 +2241,8 @@ export type UserUncheckedCreateWithoutAssistentSellsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -2298,6 +2346,8 @@ export type UserUpdateWithoutAssistentSellsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2385,6 +2435,8 @@ export type UserUncheckedUpdateWithoutAssistentSellsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2472,6 +2524,8 @@ export type UserCreateWithoutAssistentSellCharitiesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -2559,6 +2613,8 @@ export type UserUncheckedCreateWithoutAssistentSellCharitiesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -2662,6 +2718,8 @@ export type UserUpdateWithoutAssistentSellCharitiesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2749,6 +2807,8 @@ export type UserUncheckedUpdateWithoutAssistentSellCharitiesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2836,6 +2896,8 @@ export type UserCreateWithoutBadgesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -2923,6 +2985,8 @@ export type UserUncheckedCreateWithoutBadgesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -3026,6 +3090,8 @@ export type UserUpdateWithoutBadgesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3113,6 +3179,8 @@ export type UserUncheckedUpdateWithoutBadgesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3200,6 +3268,8 @@ export type UserCreateWithoutDonationsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -3287,6 +3357,8 @@ export type UserUncheckedCreateWithoutDonationsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -3379,6 +3451,8 @@ export type UserCreateWithoutDonationsReceivedInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -3466,6 +3540,8 @@ export type UserUncheckedCreateWithoutDonationsReceivedInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -3569,6 +3645,8 @@ export type UserUpdateWithoutDonationsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3656,6 +3734,8 @@ export type UserUncheckedUpdateWithoutDonationsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3754,6 +3834,8 @@ export type UserUpdateWithoutDonationsReceivedInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3841,6 +3923,8 @@ export type UserUncheckedUpdateWithoutDonationsReceivedInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3928,6 +4012,8 @@ export type UserCreateWithoutClothDonateDonorInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -4015,6 +4101,8 @@ export type UserUncheckedCreateWithoutClothDonateDonorInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -4107,6 +4195,8 @@ export type UserCreateWithoutClothDonateCharityInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -4194,6 +4284,8 @@ export type UserUncheckedCreateWithoutClothDonateCharityInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -4297,6 +4389,8 @@ export type UserUpdateWithoutClothDonateDonorInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4384,6 +4478,8 @@ export type UserUncheckedUpdateWithoutClothDonateDonorInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4482,6 +4578,8 @@ export type UserUpdateWithoutClothDonateCharityInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4569,6 +4667,8 @@ export type UserUncheckedUpdateWithoutClothDonateCharityInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4656,6 +4756,8 @@ export type UserCreateWithoutDonationThanksMsgsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -4743,6 +4845,8 @@ export type UserUncheckedCreateWithoutDonationThanksMsgsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -4846,6 +4950,8 @@ export type UserUpdateWithoutDonationThanksMsgsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4933,6 +5039,8 @@ export type UserUncheckedUpdateWithoutDonationThanksMsgsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5020,6 +5128,8 @@ export type UserCreateWithoutFollowingInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -5107,6 +5217,8 @@ export type UserUncheckedCreateWithoutFollowingInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -5199,6 +5311,8 @@ export type UserCreateWithoutFollowersInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -5286,6 +5400,8 @@ export type UserUncheckedCreateWithoutFollowersInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -5389,6 +5505,8 @@ export type UserUpdateWithoutFollowingInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5476,6 +5594,8 @@ export type UserUncheckedUpdateWithoutFollowingInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5574,6 +5694,8 @@ export type UserUpdateWithoutFollowersInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5661,6 +5783,8 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5748,6 +5872,8 @@ export type UserCreateWithoutUser1ChatsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -5835,6 +5961,8 @@ export type UserUncheckedCreateWithoutUser1ChatsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -5927,6 +6055,8 @@ export type UserCreateWithoutUser2ChatsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -6014,6 +6144,8 @@ export type UserUncheckedCreateWithoutUser2ChatsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -6117,6 +6249,8 @@ export type UserUpdateWithoutUser1ChatsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6204,6 +6338,8 @@ export type UserUncheckedUpdateWithoutUser1ChatsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6302,6 +6438,8 @@ export type UserUpdateWithoutUser2ChatsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6389,6 +6527,8 @@ export type UserUncheckedUpdateWithoutUser2ChatsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6476,6 +6616,8 @@ export type UserCreateWithoutSentMessagesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -6563,6 +6705,8 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -6655,6 +6799,8 @@ export type UserCreateWithoutReceiveMessagesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -6742,6 +6888,8 @@ export type UserUncheckedCreateWithoutReceiveMessagesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -6845,6 +6993,8 @@ export type UserUpdateWithoutSentMessagesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6932,6 +7082,8 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7030,6 +7182,8 @@ export type UserUpdateWithoutReceiveMessagesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7117,6 +7271,8 @@ export type UserUncheckedUpdateWithoutReceiveMessagesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7204,6 +7360,8 @@ export type UserCreateWithoutSystemMsgsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -7291,6 +7449,8 @@ export type UserUncheckedCreateWithoutSystemMsgsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -7394,6 +7554,8 @@ export type UserUpdateWithoutSystemMsgsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7481,6 +7643,8 @@ export type UserUncheckedUpdateWithoutSystemMsgsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7568,6 +7732,8 @@ export type UserCreateWithoutBuyOrdersInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -7655,6 +7821,8 @@ export type UserUncheckedCreateWithoutBuyOrdersInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -7747,6 +7915,8 @@ export type UserCreateWithoutSellOrdersInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -7834,6 +8004,8 @@ export type UserUncheckedCreateWithoutSellOrdersInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -7937,6 +8109,8 @@ export type UserUpdateWithoutBuyOrdersInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8024,6 +8198,8 @@ export type UserUncheckedUpdateWithoutBuyOrdersInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8122,6 +8298,8 @@ export type UserUpdateWithoutSellOrdersInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8209,6 +8387,8 @@ export type UserUncheckedUpdateWithoutSellOrdersInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8296,6 +8476,8 @@ export type UserCreateWithoutSellDonationsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -8383,6 +8565,8 @@ export type UserUncheckedCreateWithoutSellDonationsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -8486,6 +8670,8 @@ export type UserUpdateWithoutSellDonationsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8573,6 +8759,8 @@ export type UserUncheckedUpdateWithoutSellDonationsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8660,6 +8848,8 @@ export type UserCreateWithoutExtraDonationsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -8747,6 +8937,8 @@ export type UserUncheckedCreateWithoutExtraDonationsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -8850,6 +9042,8 @@ export type UserUpdateWithoutExtraDonationsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8937,6 +9131,8 @@ export type UserUncheckedUpdateWithoutExtraDonationsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9024,6 +9220,8 @@ export type UserCreateWithoutPaymentsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -9111,6 +9309,8 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -9214,6 +9414,8 @@ export type UserUpdateWithoutPaymentsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9301,6 +9503,8 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9388,6 +9592,8 @@ export type UserCreateWithoutProductsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -9475,6 +9681,8 @@ export type UserUncheckedCreateWithoutProductsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -9578,6 +9786,8 @@ export type UserUpdateWithoutProductsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9665,6 +9875,8 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9752,6 +9964,8 @@ export type UserCreateWithoutProductCharitiesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -9839,6 +10053,8 @@ export type UserUncheckedCreateWithoutProductCharitiesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -9942,6 +10158,8 @@ export type UserUpdateWithoutProductCharitiesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10029,6 +10247,8 @@ export type UserUncheckedUpdateWithoutProductCharitiesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10116,6 +10336,8 @@ export type UserCreateWithoutFavouriteProductsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -10203,6 +10425,8 @@ export type UserUncheckedCreateWithoutFavouriteProductsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -10306,6 +10530,8 @@ export type UserUpdateWithoutFavouriteProductsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10393,6 +10619,8 @@ export type UserUncheckedUpdateWithoutFavouriteProductsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10480,6 +10708,8 @@ export type UserCreateWithoutSellerGroupCartsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -10567,6 +10797,8 @@ export type UserUncheckedCreateWithoutSellerGroupCartsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -10659,6 +10891,8 @@ export type UserCreateWithoutCartsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -10746,6 +10980,8 @@ export type UserUncheckedCreateWithoutCartsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -10849,6 +11085,8 @@ export type UserUpdateWithoutSellerGroupCartsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10936,6 +11174,8 @@ export type UserUncheckedUpdateWithoutSellerGroupCartsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11034,6 +11274,8 @@ export type UserUpdateWithoutCartsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11121,6 +11363,8 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11208,6 +11452,8 @@ export type UserCreateWithoutCartDonationCharitiesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -11295,6 +11541,8 @@ export type UserUncheckedCreateWithoutCartDonationCharitiesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -11398,6 +11646,8 @@ export type UserUpdateWithoutCartDonationCharitiesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11485,6 +11735,8 @@ export type UserUncheckedUpdateWithoutCartDonationCharitiesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11572,6 +11824,8 @@ export type UserCreateWithoutOffersAsSellerInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -11659,6 +11913,8 @@ export type UserUncheckedCreateWithoutOffersAsSellerInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -11751,6 +12007,8 @@ export type UserCreateWithoutOffersAsBuyerInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -11838,6 +12096,8 @@ export type UserUncheckedCreateWithoutOffersAsBuyerInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -11941,6 +12201,8 @@ export type UserUpdateWithoutOffersAsSellerInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12028,6 +12290,8 @@ export type UserUncheckedUpdateWithoutOffersAsSellerInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12126,6 +12390,8 @@ export type UserUpdateWithoutOffersAsBuyerInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12213,6 +12479,8 @@ export type UserUncheckedUpdateWithoutOffersAsBuyerInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12300,6 +12568,8 @@ export type UserCreateWithoutProductViewsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -12387,6 +12657,8 @@ export type UserUncheckedCreateWithoutProductViewsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -12490,6 +12762,8 @@ export type UserUpdateWithoutProductViewsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12577,6 +12851,8 @@ export type UserUncheckedUpdateWithoutProductViewsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12664,6 +12940,8 @@ export type UserCreateWithoutProdQuestionsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -12751,6 +13029,8 @@ export type UserUncheckedCreateWithoutProdQuestionsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -12854,6 +13134,8 @@ export type UserUpdateWithoutProdQuestionsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12941,6 +13223,8 @@ export type UserUncheckedUpdateWithoutProdQuestionsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13028,6 +13312,8 @@ export type UserCreateWithoutBundleDiscountInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -13115,6 +13401,8 @@ export type UserUncheckedCreateWithoutBundleDiscountInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -13218,6 +13506,8 @@ export type UserUpdateWithoutBundleDiscountInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13305,6 +13595,8 @@ export type UserUncheckedUpdateWithoutBundleDiscountInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13392,6 +13684,8 @@ export type UserCreateWithoutReturnsAsBuyerInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -13479,6 +13773,8 @@ export type UserUncheckedCreateWithoutReturnsAsBuyerInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -13571,6 +13867,8 @@ export type UserCreateWithoutReturnsAsSellerInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -13658,6 +13956,8 @@ export type UserUncheckedCreateWithoutReturnsAsSellerInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -13761,6 +14061,8 @@ export type UserUpdateWithoutReturnsAsBuyerInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13848,6 +14150,8 @@ export type UserUncheckedUpdateWithoutReturnsAsBuyerInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13946,6 +14250,8 @@ export type UserUpdateWithoutReturnsAsSellerInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14033,6 +14339,8 @@ export type UserUncheckedUpdateWithoutReturnsAsSellerInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14120,6 +14428,8 @@ export type UserCreateWithoutRatingsGivenInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -14207,6 +14517,8 @@ export type UserUncheckedCreateWithoutRatingsGivenInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -14299,6 +14611,8 @@ export type UserCreateWithoutRatingsReceivedInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -14386,6 +14700,8 @@ export type UserUncheckedCreateWithoutRatingsReceivedInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -14489,6 +14805,8 @@ export type UserUpdateWithoutRatingsGivenInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14576,6 +14894,8 @@ export type UserUncheckedUpdateWithoutRatingsGivenInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14674,6 +14994,8 @@ export type UserUpdateWithoutRatingsReceivedInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14761,6 +15083,8 @@ export type UserUncheckedUpdateWithoutRatingsReceivedInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14848,6 +15172,8 @@ export type UserCreateWithoutCharitableOrganizationInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -14935,6 +15261,8 @@ export type UserUncheckedCreateWithoutCharitableOrganizationInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -15038,6 +15366,8 @@ export type UserUpdateWithoutCharitableOrganizationInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15125,6 +15455,8 @@ export type UserUncheckedUpdateWithoutCharitableOrganizationInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15212,6 +15544,8 @@ export type UserCreateWithoutCharityShopInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -15299,6 +15633,8 @@ export type UserUncheckedCreateWithoutCharityShopInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -15402,6 +15738,8 @@ export type UserUpdateWithoutCharityShopInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15489,6 +15827,8 @@ export type UserUncheckedUpdateWithoutCharityShopInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15576,6 +15916,8 @@ export type UserCreateWithoutEcoFriendlyStoreInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -15663,6 +16005,8 @@ export type UserUncheckedCreateWithoutEcoFriendlyStoreInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -15766,6 +16110,8 @@ export type UserUpdateWithoutEcoFriendlyStoreInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15853,6 +16199,8 @@ export type UserUncheckedUpdateWithoutEcoFriendlyStoreInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15940,6 +16288,8 @@ export type UserCreateWithoutCelebrityInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -16027,6 +16377,8 @@ export type UserUncheckedCreateWithoutCelebrityInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -16130,6 +16482,8 @@ export type UserUpdateWithoutCelebrityInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16217,6 +16571,8 @@ export type UserUncheckedUpdateWithoutCelebrityInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16304,6 +16660,8 @@ export type UserCreateWithoutAmbassadorInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -16391,6 +16749,8 @@ export type UserUncheckedCreateWithoutAmbassadorInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -16494,6 +16854,8 @@ export type UserUpdateWithoutAmbassadorInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16581,6 +16943,8 @@ export type UserUncheckedUpdateWithoutAmbassadorInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16668,6 +17032,8 @@ export type UserCreateWithoutProfessionalSellerInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -16755,6 +17121,8 @@ export type UserUncheckedCreateWithoutProfessionalSellerInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -16858,6 +17226,8 @@ export type UserUpdateWithoutProfessionalSellerInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16945,6 +17315,8 @@ export type UserUncheckedUpdateWithoutProfessionalSellerInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17032,6 +17404,8 @@ export type UserCreateWithoutAuthInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -17119,6 +17493,8 @@ export type UserUncheckedCreateWithoutAuthInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -17222,6 +17598,8 @@ export type UserUpdateWithoutAuthInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17309,6 +17687,8 @@ export type UserUncheckedUpdateWithoutAuthInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17396,6 +17776,8 @@ export type UserCreateWithoutCharityGalleriesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -17483,6 +17865,8 @@ export type UserUncheckedCreateWithoutCharityGalleriesInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -17586,6 +17970,8 @@ export type UserUpdateWithoutCharityGalleriesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17673,6 +18059,8 @@ export type UserUncheckedUpdateWithoutCharityGalleriesInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17760,6 +18148,8 @@ export type UserCreateWithoutPictureInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -17847,6 +18237,8 @@ export type UserUncheckedCreateWithoutPictureInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -17950,6 +18342,8 @@ export type UserUpdateWithoutPictureInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -18037,6 +18431,8 @@ export type UserUncheckedUpdateWithoutPictureInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -18124,6 +18520,8 @@ export type UserCreateWithoutCharityThumbnailInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -18211,6 +18609,8 @@ export type UserUncheckedCreateWithoutCharityThumbnailInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -18314,6 +18714,8 @@ export type UserUpdateWithoutCharityThumbnailInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -18401,6 +18803,8 @@ export type UserUncheckedUpdateWithoutCharityThumbnailInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -18488,6 +18892,8 @@ export type UserCreateWithoutAccount_documentsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -18575,6 +18981,8 @@ export type UserUncheckedCreateWithoutAccount_documentsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -18678,6 +19086,8 @@ export type UserUpdateWithoutAccount_documentsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -18765,6 +19175,8 @@ export type UserUncheckedUpdateWithoutAccount_documentsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -18852,6 +19264,8 @@ export type UserCreateWithoutBillingAddressInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -18939,6 +19353,8 @@ export type UserUncheckedCreateWithoutBillingAddressInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -19031,6 +19447,8 @@ export type UserCreateWithoutSellerAddressInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -19118,6 +19536,8 @@ export type UserUncheckedCreateWithoutSellerAddressInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -19221,6 +19641,8 @@ export type UserUpdateWithoutBillingAddressInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -19308,6 +19730,8 @@ export type UserUncheckedUpdateWithoutBillingAddressInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -19406,6 +19830,8 @@ export type UserUpdateWithoutSellerAddressInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -19493,6 +19919,8 @@ export type UserUncheckedUpdateWithoutSellerAddressInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -19580,6 +20008,8 @@ export type UserCreateWithoutNotificationSendersInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -19667,6 +20097,8 @@ export type UserUncheckedCreateWithoutNotificationSendersInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -19759,6 +20191,8 @@ export type UserCreateWithoutNotificationReceiversInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -19846,6 +20280,8 @@ export type UserUncheckedCreateWithoutNotificationReceiversInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -19949,6 +20385,8 @@ export type UserUpdateWithoutNotificationSendersInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -20036,6 +20474,8 @@ export type UserUncheckedUpdateWithoutNotificationSendersInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -20134,6 +20574,8 @@ export type UserUpdateWithoutNotificationReceiversInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -20221,6 +20663,8 @@ export type UserUncheckedUpdateWithoutNotificationReceiversInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -20308,6 +20752,8 @@ export type UserCreateWithoutShipmentsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -20395,6 +20841,8 @@ export type UserUncheckedCreateWithoutShipmentsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -20498,6 +20946,8 @@ export type UserUpdateWithoutShipmentsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -20585,6 +21035,8 @@ export type UserUncheckedUpdateWithoutShipmentsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -20672,6 +21124,8 @@ export type UserCreateWithoutWalletInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -20759,6 +21213,8 @@ export type UserUncheckedCreateWithoutWalletInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -20862,6 +21318,8 @@ export type UserUpdateWithoutWalletInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -20949,6 +21407,8 @@ export type UserUncheckedUpdateWithoutWalletInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -21036,6 +21496,8 @@ export type UserCreateWithoutTrnsactionsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -21123,6 +21585,8 @@ export type UserUncheckedCreateWithoutTrnsactionsInput = {
   support_email?: string | null
   notification?: boolean
   fcmToken?: string | null
+  bannerUrl?: string | null
+  bannerKey?: string | null
   mission?: string | null
   business_tags?: Prisma.UserCreatebusiness_tagsInput | string[]
   isOnline?: boolean
@@ -21226,6 +21690,8 @@ export type UserUpdateWithoutTrnsactionsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -21313,6 +21779,8 @@ export type UserUncheckedUpdateWithoutTrnsactionsInput = {
   support_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   business_tags?: Prisma.UserUpdatebusiness_tagsInput | string[]
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -21782,6 +22250,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   support_email?: boolean
   notification?: boolean
   fcmToken?: boolean
+  bannerUrl?: boolean
+  bannerKey?: boolean
   mission?: boolean
   business_tags?: boolean
   isOnline?: boolean
@@ -21871,6 +22341,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   support_email?: boolean
   notification?: boolean
   fcmToken?: boolean
+  bannerUrl?: boolean
+  bannerKey?: boolean
   mission?: boolean
   business_tags?: boolean
   isOnline?: boolean
@@ -21906,6 +22378,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   support_email?: boolean
   notification?: boolean
   fcmToken?: boolean
+  bannerUrl?: boolean
+  bannerKey?: boolean
   mission?: boolean
   business_tags?: boolean
   isOnline?: boolean
@@ -21941,6 +22415,8 @@ export type UserSelectScalar = {
   support_email?: boolean
   notification?: boolean
   fcmToken?: boolean
+  bannerUrl?: boolean
+  bannerKey?: boolean
   mission?: boolean
   business_tags?: boolean
   isOnline?: boolean
@@ -21954,7 +22430,7 @@ export type UserSelectScalar = {
   stripeCustomerId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fname" | "lname" | "email" | "userName" | "phone" | "bio" | "description" | "country" | "state" | "city" | "address" | "zip_code" | "instagram" | "facebook" | "twitter" | "tiktok" | "website" | "support_email" | "notification" | "fcmToken" | "mission" | "business_tags" | "isOnline" | "lastOnlineAt" | "createdAt" | "updatedAt" | "isDeleted" | "avgRating" | "vacationMode" | "stripeAccountId" | "stripeCustomerId", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fname" | "lname" | "email" | "userName" | "phone" | "bio" | "description" | "country" | "state" | "city" | "address" | "zip_code" | "instagram" | "facebook" | "twitter" | "tiktok" | "website" | "support_email" | "notification" | "fcmToken" | "bannerUrl" | "bannerKey" | "mission" | "business_tags" | "isOnline" | "lastOnlineAt" | "createdAt" | "updatedAt" | "isDeleted" | "avgRating" | "vacationMode" | "stripeAccountId" | "stripeCustomerId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   auth?: boolean | Prisma.User$authArgs<ExtArgs>
   picture?: boolean | Prisma.User$pictureArgs<ExtArgs>
@@ -22093,6 +22569,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     support_email: string | null
     notification: boolean
     fcmToken: string | null
+    bannerUrl: string | null
+    bannerKey: string | null
     mission: string | null
     business_tags: string[]
     isOnline: boolean
@@ -22601,6 +23079,8 @@ export interface UserFieldRefs {
   readonly support_email: Prisma.FieldRef<"User", 'String'>
   readonly notification: Prisma.FieldRef<"User", 'Boolean'>
   readonly fcmToken: Prisma.FieldRef<"User", 'String'>
+  readonly bannerUrl: Prisma.FieldRef<"User", 'String'>
+  readonly bannerKey: Prisma.FieldRef<"User", 'String'>
   readonly mission: Prisma.FieldRef<"User", 'String'>
   readonly business_tags: Prisma.FieldRef<"User", 'String[]'>
   readonly isOnline: Prisma.FieldRef<"User", 'Boolean'>

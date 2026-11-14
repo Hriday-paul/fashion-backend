@@ -463,9 +463,7 @@ const extraDonationsRaised = async (options: TPaginationOptions, userName: strin
                                 }
                             }
                         }
-                    }
-                },
-                include: {
+                    },
                     product: {
                         select: {
                             id: true,
@@ -482,7 +480,7 @@ const extraDonationsRaised = async (options: TPaginationOptions, userName: strin
                             }
                         }
                     }
-                }
+                },
             }
         }
     });

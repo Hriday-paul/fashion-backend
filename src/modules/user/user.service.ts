@@ -12,6 +12,7 @@ import fs from 'fs';
 import path from 'path';
 import { emailQueue } from "../../queues/email.queue";
 import { jobs } from "../../queues/jobs.name";
+import { donationService } from "../donation/donation.service";
 
 interface UserPayload extends User {
     charityImgs: { url: string, key: string }[],
@@ -25,9 +26,9 @@ const updateProfile = async (payload: UserPayload, user: { userId: string, role:
 
     const { userId } = user;
 
-    const { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode, support_email, dltGalleries = [], charityImgs = [], charityThumbnail, image } = payload;
+    const { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode, support_email, dltGalleries = [], charityImgs = [], charityThumbnail, image, bannerUrl, bannerKey } = payload;
 
-    const updateFields: Partial<User> = { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode, support_email };
+    const updateFields: Partial<User> = { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode, support_email, bannerUrl, bannerKey };
 
     // Remove undefined or null fields to prevent overwriting existing values with null
     Object.keys(updateFields).forEach((key) => {
@@ -389,26 +390,9 @@ const userDetails = async (userName: string, currentUserId?: string) => {
     let totalRaisedDonation = 0;
     if (res?.auth?.role === Role.CHARITABLE_ORGANIZATION || res?.auth?.role === Role.CHARITY_SHOP) {
 
-        const totalSellDonation = await prisma.sellDonation.aggregate({
-            where: {
-                status: "PAID",
-                charityId: res?.id
-            }, _sum: { total_amount: true }
-        });
+        const donationRaised = await donationService.charityStats(userName);
 
-        const directMoneyDonation = await prisma.directDonation.aggregate({
-            where: {
-                payment: {
-                    status: "SUCCESSED"
-                },
-                charityId: res?.id
-            }, _sum: { amount: true }
-        });
-
-        const raisedSellDonationAmount = totalSellDonation?._sum?.total_amount || 0;
-        const raisedDirectDonationAmount = directMoneyDonation?._sum?.amount || 0;
-
-        totalRaisedDonation = raisedSellDonationAmount + raisedDirectDonationAmount;
+        totalRaisedDonation = donationRaised?.totalRaised || 0;
     }
 
     const isCurrentUser = currentUserId === res?.id;
@@ -458,7 +442,7 @@ const userDetailsWithbalanceAdmin = async (userName: string) => {
                 }
             },
 
-            account_documents : true,
+            account_documents: true,
 
             //roles
             charitableOrganization: true,
@@ -1005,7 +989,7 @@ const bundleDiscount = async (userId: string) => {
 
     const res = await prisma.bundleDiscount.findFirst({ where: { sellerId: userId }, include: { tiers: true } });
 
-    const result = res || { enabled: false, tiers: [] };
+    const result = res ?? { enabled: false, tiers: [] };
 
     //set cache for 1 hour
     await redisPub.setEx(cacheKey, 3600, JSON.stringify(result));

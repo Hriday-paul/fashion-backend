@@ -42,7 +42,7 @@ router.get("/seller-charity-support/:username",
     donationControler.sellerCharitySupportStats);
 
 router.get("/charity-stats/:userName",
-    auth(Role.ADMIN),
+    PublicAuth(),
     donationControler.charityStats);
 
 router.get("/sell-raised/:userName",
