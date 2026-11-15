@@ -1832,6 +1832,7 @@ const makeAnOfferAsBuyer = async (
                                         stock: true,
                                         id: true,
                                         title: true,
+                                        donation_percent: true,
                                         images: {
                                             take: 1,
                                             orderBy: {
@@ -1898,7 +1899,7 @@ const makeAnOfferAsBuyer = async (
         }
     });
 
-    return result;
+    return chat;
 };
 
 const acceptOfferAsSeller = async (offerId: string, currentUser: { id: string, userName: string }) => {
@@ -1981,6 +1982,7 @@ const acceptOfferAsSeller = async (offerId: string, currentUser: { id: string, u
                                     stock: true,
                                     id: true,
                                     title: true,
+                                    donation_percent: true,
                                     images: {
                                         take: 1,
                                         select: {
@@ -2037,9 +2039,9 @@ const acceptOfferAsSeller = async (offerId: string, currentUser: { id: string, u
 
 }
 
-const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPrice: number }, currentUser: { id: string, userName: string }) => {
+const declineOfferAsSeller = async (payload: { offerId: string }, currentUser: { id: string, userName: string }) => {
 
-    const { offerId, offerPrice } = payload;
+    const { offerId } = payload;
     const { id: currentUserId, userName: currentUserName } = currentUser;
 
     const offer = await offerService.offerDetils(offerId);
@@ -2083,6 +2085,223 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
                 status: "REJECTED"
             }
         });
+
+        // Create a message to notify the buyer about the counter offer
+        const msg = await tx.message.findFirst({
+            where: {
+                receiverId: offer?.buyerId,
+                senderId: offer?.sellerId,
+                offerId: rejectedOffer?.id,
+                chatId: chat?.id,
+                type: "OFFER"
+            },
+            include: {
+                files: true,
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                offer: {
+                    include: {
+                        offerItems: {
+                            select: {
+                                id: true,
+                                product: {
+                                    select: {
+                                        finalPrice: true,
+                                        stock: true,
+                                        id: true,
+                                        title: true,
+                                        donation_percent: true,
+                                        images: {
+                                            take: 1,
+                                            select: {
+                                                id: true,
+                                                url: true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        seller: {
+                            select: {
+                                userName: true,
+                                picture: {
+                                    select: {
+                                        url: true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+
+        return { newMsg: msg, rejectedOffer };
+
+    })
+
+    //sending socket message to buyer about old offer rejection
+    if (result?.rejectedOffer) {
+        const oldMsg = await prisma.message.findFirst({
+            where: {
+                offerId: result?.rejectedOffer.id
+            },
+            include: {
+                files: true,
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                offer: {
+                    include: {
+                        offerItems: {
+                            select: {
+                                id: true,
+                                product: {
+                                    select: {
+                                        finalPrice: true,
+                                        stock: true,
+                                        id: true,
+                                        title: true,
+                                        donation_percent: true,
+                                        images: {
+                                            take: 1,
+                                            select: {
+                                                id: true,
+                                                url: true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        seller: {
+                            select: {
+                                id: true,
+                                userName: true,
+                                picture: {
+                                    select: {
+                                        url: true
+                                    }
+                                }
+                            }
+                        },
+                        buyer: {
+                            select: {
+                                fcmToken: true
+                            }
+                        }
+                    }
+                },
+                chat: true
+            }
+        })
+        if (oldMsg) {
+            UpdateMessageHandle((global as any).socketio, { ...oldMsg, user1Id: oldMsg?.chat?.user1Id, user2Id: oldMsg?.chat?.user2Id }, () => { })
+        }
+
+        const sellerUserName = oldMsg?.offer?.seller?.userName;
+
+        //send notification to the buyer about the offer
+        await notificationQueue.add(jobs.notification, {
+            allowPushNotification: true,
+            payload: {
+                title: `**${sellerUserName}** declined your offer`,
+                message: `**${sellerUserName}** declined your offer after reviewing request.`,
+                actorId: currentUserId,
+                receiverId: offer?.buyerId,
+                entityId: chat?.id,
+                entityType: "OFFER",
+                entityImgs: offer?.offerItems?.map(i => i?.product?.images[0]?.url),
+                type: "OFFER_REJECTED",
+                fcmToken: offer?.buyer?.fcmToken,
+                groupKeyId: offer?.id
+            }
+        })
+    }
+
+    //dlt the offer cache
+    const offerCacheKey = await redisKeys.offerItemsKey({ offerId: result?.rejectedOffer?.id });
+    await redisPub.del(offerCacheKey);
+
+    return;
+}
+
+const counterOfferAsSeller = async (payload: { offerId: string, offerPrice: number }, currentUser: { id: string, userName: string }) => {
+
+    const { offerId, offerPrice } = payload;
+    const { id: currentUserId, userName: currentUserName } = currentUser;
+
+    const offer = await offerService.offerDetils(offerId);
+
+    if (!offer) {
+        throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
+    }
+
+    if (offer.sellerId !== currentUserId) {
+        throw new AppError(httpStatus.FORBIDDEN, "You are not authorized to accept this offer");
+    }
+
+    const items = await prisma.product.findMany({
+        where: {
+            id: { in: offer?.offerItems?.map(item => item.product.id) },
+            isDeleted: false,
+            stock: { gt: 0 }
+        },
+        select: {
+            id: true,
+            finalPrice: true
+        }
+    });
+
+    if (items.length !== offer?.offerItems?.length) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Some items are no longer available");
+    }
+
+    const productIds = items.map(p => p?.id);
+
+    const chat = await chatService.createChat({ currentUserId: offer?.sellerId, user2Id: offer?.buyerId, products: productIds });
+
+    const result = await prisma.$transaction(async (tx) => {
 
         // Create a new offer with the counter offer price
         const newOffer = await tx.offer.create({
@@ -2147,6 +2366,7 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
                                         stock: true,
                                         id: true,
                                         title: true,
+                                        donation_percent: true,
                                         images: {
                                             take: 1,
                                             select: {
@@ -2173,84 +2393,12 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
             }
         })
 
-        return { newMsg: msg, rejectedOffer, newOffer };
+        return { newMsg: msg, newOffer };
 
     })
 
-    //sending socket message to buyer about old offer rejection
-    if (result?.rejectedOffer) {
-        const oldMsg = await prisma.message.findFirst({
-            where: {
-                offerId: result?.rejectedOffer.id
-            },
-            include: {
-                files: true,
-                sender: {
-                    select: {
-                        id: true,
-                        picture: {
-                            select: {
-                                url: true
-                            }
-                        },
-                        userName: true
-                    }
-                },
-                receiver: {
-                    select: {
-                        id: true,
-                        picture: {
-                            select: {
-                                url: true
-                            }
-                        },
-                        userName: true
-                    }
-                },
-                offer: {
-                    include: {
-                        offerItems: {
-                            select: {
-                                id: true,
-                                product: {
-                                    select: {
-                                        finalPrice: true,
-                                        stock: true,
-                                        id: true,
-                                        title: true,
-                                        images: {
-                                            take: 1,
-                                            select: {
-                                                id: true,
-                                                url: true
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        seller: {
-                            select: {
-                                userName: true,
-                                picture: {
-                                    select: {
-                                        url: true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                chat: true
-            }
-        })
-        if (oldMsg) {
-            UpdateMessageHandle((global as any).socketio, { ...oldMsg, user1Id: oldMsg?.chat?.user1Id, user2Id: oldMsg?.chat?.user2Id }, () => { })
-        }
-    }
-
     //sending socket message to buyer about new offer
-    SendMessageHandle((global as any).socketio, { ...result?.newMsg, user1Id: chat?.user1Id, user2Id: chat?.user2Id }, () => { })
+    SendMessageHandle((global as any).socketio, { ...result?.newMsg, user1Id: chat?.user1Id, user2Id: chat?.user2Id }, () => { });
 
     //send notification to the buyer about the offer
     await notificationQueue.add(jobs.notification, {
@@ -2334,5 +2482,6 @@ export const productService = {
 
     makeAnOfferAsBuyer,
     acceptOfferAsSeller,
-    declineCounterOfferAsSeller
+    counterOfferAsSeller,
+    declineOfferAsSeller
 }

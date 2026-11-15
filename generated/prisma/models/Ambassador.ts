@@ -30,6 +30,9 @@ export type AmbassadorMinAggregateOutputType = {
   representedBrand: string | null
   representedOrganization: string | null
   authorizationDocumentKey: string | null
+  instagramUsername: string | null
+  tiktokUsername: string | null
+  about: string | null
   agreementVersion: string | null
   agreementAcceptedAt: Date | null
 }
@@ -41,6 +44,9 @@ export type AmbassadorMaxAggregateOutputType = {
   representedBrand: string | null
   representedOrganization: string | null
   authorizationDocumentKey: string | null
+  instagramUsername: string | null
+  tiktokUsername: string | null
+  about: string | null
   agreementVersion: string | null
   agreementAcceptedAt: Date | null
 }
@@ -52,6 +58,9 @@ export type AmbassadorCountAggregateOutputType = {
   representedBrand: number
   representedOrganization: number
   authorizationDocumentKey: number
+  instagramUsername: number
+  tiktokUsername: number
+  about: number
   agreementVersion: number
   agreementAcceptedAt: number
   _all: number
@@ -65,6 +74,9 @@ export type AmbassadorMinAggregateInputType = {
   representedBrand?: true
   representedOrganization?: true
   authorizationDocumentKey?: true
+  instagramUsername?: true
+  tiktokUsername?: true
+  about?: true
   agreementVersion?: true
   agreementAcceptedAt?: true
 }
@@ -76,6 +88,9 @@ export type AmbassadorMaxAggregateInputType = {
   representedBrand?: true
   representedOrganization?: true
   authorizationDocumentKey?: true
+  instagramUsername?: true
+  tiktokUsername?: true
+  about?: true
   agreementVersion?: true
   agreementAcceptedAt?: true
 }
@@ -87,6 +102,9 @@ export type AmbassadorCountAggregateInputType = {
   representedBrand?: true
   representedOrganization?: true
   authorizationDocumentKey?: true
+  instagramUsername?: true
+  tiktokUsername?: true
+  about?: true
   agreementVersion?: true
   agreementAcceptedAt?: true
   _all?: true
@@ -171,6 +189,9 @@ export type AmbassadorGroupByOutputType = {
   representedBrand: string | null
   representedOrganization: string | null
   authorizationDocumentKey: string | null
+  instagramUsername: string | null
+  tiktokUsername: string | null
+  about: string | null
   agreementVersion: string | null
   agreementAcceptedAt: Date | null
   _count: AmbassadorCountAggregateOutputType | null
@@ -203,6 +224,9 @@ export type AmbassadorWhereInput = {
   representedBrand?: Prisma.StringNullableFilter<"Ambassador"> | string | null
   representedOrganization?: Prisma.StringNullableFilter<"Ambassador"> | string | null
   authorizationDocumentKey?: Prisma.StringNullableFilter<"Ambassador"> | string | null
+  instagramUsername?: Prisma.StringNullableFilter<"Ambassador"> | string | null
+  tiktokUsername?: Prisma.StringNullableFilter<"Ambassador"> | string | null
+  about?: Prisma.StringNullableFilter<"Ambassador"> | string | null
   agreementVersion?: Prisma.StringNullableFilter<"Ambassador"> | string | null
   agreementAcceptedAt?: Prisma.DateTimeNullableFilter<"Ambassador"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -215,6 +239,9 @@ export type AmbassadorOrderByWithRelationInput = {
   representedBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   representedOrganization?: Prisma.SortOrderInput | Prisma.SortOrder
   authorizationDocumentKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  instagramUsername?: Prisma.SortOrderInput | Prisma.SortOrder
+  tiktokUsername?: Prisma.SortOrderInput | Prisma.SortOrder
+  about?: Prisma.SortOrderInput | Prisma.SortOrder
   agreementVersion?: Prisma.SortOrderInput | Prisma.SortOrder
   agreementAcceptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -230,6 +257,9 @@ export type AmbassadorWhereUniqueInput = Prisma.AtLeast<{
   representedBrand?: Prisma.StringNullableFilter<"Ambassador"> | string | null
   representedOrganization?: Prisma.StringNullableFilter<"Ambassador"> | string | null
   authorizationDocumentKey?: Prisma.StringNullableFilter<"Ambassador"> | string | null
+  instagramUsername?: Prisma.StringNullableFilter<"Ambassador"> | string | null
+  tiktokUsername?: Prisma.StringNullableFilter<"Ambassador"> | string | null
+  about?: Prisma.StringNullableFilter<"Ambassador"> | string | null
   agreementVersion?: Prisma.StringNullableFilter<"Ambassador"> | string | null
   agreementAcceptedAt?: Prisma.DateTimeNullableFilter<"Ambassador"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -242,6 +272,9 @@ export type AmbassadorOrderByWithAggregationInput = {
   representedBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   representedOrganization?: Prisma.SortOrderInput | Prisma.SortOrder
   authorizationDocumentKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  instagramUsername?: Prisma.SortOrderInput | Prisma.SortOrder
+  tiktokUsername?: Prisma.SortOrderInput | Prisma.SortOrder
+  about?: Prisma.SortOrderInput | Prisma.SortOrder
   agreementVersion?: Prisma.SortOrderInput | Prisma.SortOrder
   agreementAcceptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AmbassadorCountOrderByAggregateInput
@@ -259,6 +292,9 @@ export type AmbassadorScalarWhereWithAggregatesInput = {
   representedBrand?: Prisma.StringNullableWithAggregatesFilter<"Ambassador"> | string | null
   representedOrganization?: Prisma.StringNullableWithAggregatesFilter<"Ambassador"> | string | null
   authorizationDocumentKey?: Prisma.StringNullableWithAggregatesFilter<"Ambassador"> | string | null
+  instagramUsername?: Prisma.StringNullableWithAggregatesFilter<"Ambassador"> | string | null
+  tiktokUsername?: Prisma.StringNullableWithAggregatesFilter<"Ambassador"> | string | null
+  about?: Prisma.StringNullableWithAggregatesFilter<"Ambassador"> | string | null
   agreementVersion?: Prisma.StringNullableWithAggregatesFilter<"Ambassador"> | string | null
   agreementAcceptedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Ambassador"> | Date | string | null
 }
@@ -269,6 +305,9 @@ export type AmbassadorCreateInput = {
   representedBrand?: string | null
   representedOrganization?: string | null
   authorizationDocumentKey?: string | null
+  instagramUsername?: string | null
+  tiktokUsername?: string | null
+  about?: string | null
   agreementVersion?: string | null
   agreementAcceptedAt?: Date | string | null
   user: Prisma.UserCreateNestedOneWithoutAmbassadorInput
@@ -281,6 +320,9 @@ export type AmbassadorUncheckedCreateInput = {
   representedBrand?: string | null
   representedOrganization?: string | null
   authorizationDocumentKey?: string | null
+  instagramUsername?: string | null
+  tiktokUsername?: string | null
+  about?: string | null
   agreementVersion?: string | null
   agreementAcceptedAt?: Date | string | null
 }
@@ -291,6 +333,9 @@ export type AmbassadorUpdateInput = {
   representedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   representedOrganization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   authorizationDocumentKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktokUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   agreementVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   agreementAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutAmbassadorNestedInput
@@ -303,6 +348,9 @@ export type AmbassadorUncheckedUpdateInput = {
   representedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   representedOrganization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   authorizationDocumentKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktokUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   agreementVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   agreementAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -314,6 +362,9 @@ export type AmbassadorCreateManyInput = {
   representedBrand?: string | null
   representedOrganization?: string | null
   authorizationDocumentKey?: string | null
+  instagramUsername?: string | null
+  tiktokUsername?: string | null
+  about?: string | null
   agreementVersion?: string | null
   agreementAcceptedAt?: Date | string | null
 }
@@ -324,6 +375,9 @@ export type AmbassadorUpdateManyMutationInput = {
   representedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   representedOrganization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   authorizationDocumentKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktokUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   agreementVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   agreementAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -335,6 +389,9 @@ export type AmbassadorUncheckedUpdateManyInput = {
   representedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   representedOrganization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   authorizationDocumentKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktokUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   agreementVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   agreementAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -346,6 +403,9 @@ export type AmbassadorCountOrderByAggregateInput = {
   representedBrand?: Prisma.SortOrder
   representedOrganization?: Prisma.SortOrder
   authorizationDocumentKey?: Prisma.SortOrder
+  instagramUsername?: Prisma.SortOrder
+  tiktokUsername?: Prisma.SortOrder
+  about?: Prisma.SortOrder
   agreementVersion?: Prisma.SortOrder
   agreementAcceptedAt?: Prisma.SortOrder
 }
@@ -357,6 +417,9 @@ export type AmbassadorMaxOrderByAggregateInput = {
   representedBrand?: Prisma.SortOrder
   representedOrganization?: Prisma.SortOrder
   authorizationDocumentKey?: Prisma.SortOrder
+  instagramUsername?: Prisma.SortOrder
+  tiktokUsername?: Prisma.SortOrder
+  about?: Prisma.SortOrder
   agreementVersion?: Prisma.SortOrder
   agreementAcceptedAt?: Prisma.SortOrder
 }
@@ -368,6 +431,9 @@ export type AmbassadorMinOrderByAggregateInput = {
   representedBrand?: Prisma.SortOrder
   representedOrganization?: Prisma.SortOrder
   authorizationDocumentKey?: Prisma.SortOrder
+  instagramUsername?: Prisma.SortOrder
+  tiktokUsername?: Prisma.SortOrder
+  about?: Prisma.SortOrder
   agreementVersion?: Prisma.SortOrder
   agreementAcceptedAt?: Prisma.SortOrder
 }
@@ -415,6 +481,9 @@ export type AmbassadorCreateWithoutUserInput = {
   representedBrand?: string | null
   representedOrganization?: string | null
   authorizationDocumentKey?: string | null
+  instagramUsername?: string | null
+  tiktokUsername?: string | null
+  about?: string | null
   agreementVersion?: string | null
   agreementAcceptedAt?: Date | string | null
 }
@@ -425,6 +494,9 @@ export type AmbassadorUncheckedCreateWithoutUserInput = {
   representedBrand?: string | null
   representedOrganization?: string | null
   authorizationDocumentKey?: string | null
+  instagramUsername?: string | null
+  tiktokUsername?: string | null
+  about?: string | null
   agreementVersion?: string | null
   agreementAcceptedAt?: Date | string | null
 }
@@ -451,6 +523,9 @@ export type AmbassadorUpdateWithoutUserInput = {
   representedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   representedOrganization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   authorizationDocumentKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktokUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   agreementVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   agreementAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -461,6 +536,9 @@ export type AmbassadorUncheckedUpdateWithoutUserInput = {
   representedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   representedOrganization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   authorizationDocumentKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tiktokUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   agreementVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   agreementAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -474,6 +552,9 @@ export type AmbassadorSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   representedBrand?: boolean
   representedOrganization?: boolean
   authorizationDocumentKey?: boolean
+  instagramUsername?: boolean
+  tiktokUsername?: boolean
+  about?: boolean
   agreementVersion?: boolean
   agreementAcceptedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -486,6 +567,9 @@ export type AmbassadorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   representedBrand?: boolean
   representedOrganization?: boolean
   authorizationDocumentKey?: boolean
+  instagramUsername?: boolean
+  tiktokUsername?: boolean
+  about?: boolean
   agreementVersion?: boolean
   agreementAcceptedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -498,6 +582,9 @@ export type AmbassadorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   representedBrand?: boolean
   representedOrganization?: boolean
   authorizationDocumentKey?: boolean
+  instagramUsername?: boolean
+  tiktokUsername?: boolean
+  about?: boolean
   agreementVersion?: boolean
   agreementAcceptedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -510,11 +597,14 @@ export type AmbassadorSelectScalar = {
   representedBrand?: boolean
   representedOrganization?: boolean
   authorizationDocumentKey?: boolean
+  instagramUsername?: boolean
+  tiktokUsername?: boolean
+  about?: boolean
   agreementVersion?: boolean
   agreementAcceptedAt?: boolean
 }
 
-export type AmbassadorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "ambassadorType" | "representedBrand" | "representedOrganization" | "authorizationDocumentKey" | "agreementVersion" | "agreementAcceptedAt", ExtArgs["result"]["ambassador"]>
+export type AmbassadorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "ambassadorType" | "representedBrand" | "representedOrganization" | "authorizationDocumentKey" | "instagramUsername" | "tiktokUsername" | "about" | "agreementVersion" | "agreementAcceptedAt", ExtArgs["result"]["ambassador"]>
 export type AmbassadorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -537,6 +627,9 @@ export type $AmbassadorPayload<ExtArgs extends runtime.Types.Extensions.Internal
     representedBrand: string | null
     representedOrganization: string | null
     authorizationDocumentKey: string | null
+    instagramUsername: string | null
+    tiktokUsername: string | null
+    about: string | null
     agreementVersion: string | null
     agreementAcceptedAt: Date | null
   }, ExtArgs["result"]["ambassador"]>
@@ -969,6 +1062,9 @@ export interface AmbassadorFieldRefs {
   readonly representedBrand: Prisma.FieldRef<"Ambassador", 'String'>
   readonly representedOrganization: Prisma.FieldRef<"Ambassador", 'String'>
   readonly authorizationDocumentKey: Prisma.FieldRef<"Ambassador", 'String'>
+  readonly instagramUsername: Prisma.FieldRef<"Ambassador", 'String'>
+  readonly tiktokUsername: Prisma.FieldRef<"Ambassador", 'String'>
+  readonly about: Prisma.FieldRef<"Ambassador", 'String'>
   readonly agreementVersion: Prisma.FieldRef<"Ambassador", 'String'>
   readonly agreementAcceptedAt: Prisma.FieldRef<"Ambassador", 'DateTime'>
 }

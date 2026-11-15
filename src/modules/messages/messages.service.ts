@@ -124,6 +124,7 @@ const getAllPreMessages = async (chatId: string, currentUserId: string, options:
                   id: true,
                   title: true,
                   finalPrice: true,
+                  donation_percent : true,
                   stock: true,
                   images: {
                     take: 1,

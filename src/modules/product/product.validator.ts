@@ -137,7 +137,7 @@ export const acceptOfferValidator = [
     .withMessage('offerId must be a valid UUID'),
 ]
 
-export const declineCounterOfferValidator = [
+export const counterOfferValidator = [
   body('offerId')
     .isString()
     .withMessage('offerId must be a string')
@@ -149,6 +149,15 @@ export const declineCounterOfferValidator = [
   body('offerPrice')
     .isFloat({ min: 0 })
     .withMessage('offerPrice must be a positive number'),
+]
+export const declineOfferValidator = [
+  body('offerId')
+    .isString()
+    .withMessage('offerId must be a string')
+    .notEmpty()
+    .withMessage('offerId is required')
+    .isUUID()
+    .withMessage('offerId must be a valid UUID')
 ]
 
 export const dropPriceValidator = [

@@ -16,6 +16,12 @@ export const excludedCharityRoles: Role[] = [
     // Role.CHARITY_SHOP,
 ];
 
+export const excludedOnlyViewerRoles: Role[] = [
+    Role.CHARITABLE_ORGANIZATION,
+    Role.CHARITY_SHOP,
+    Role.ECO_FRIENDLY_STORE
+];
+
 router.get("/", auth(Role.ADMIN), orderControler.orders);
 router.get("/stats", auth(Role.ADMIN), orderControler.orderStats);
 
@@ -23,21 +29,21 @@ router.post("/",
     rateLimiter(),
     validateOrderProducts,
     req_validator(),
-    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    auth(...(allRoles.filter(role => !excludedOnlyViewerRoles.includes(role)))),
     orderControler.addNewOrder);
 
 router.post("/offer",
     rateLimiter(),
     validateOfferOrder,
     req_validator(),
-    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    auth(...(allRoles.filter(role => !excludedOnlyViewerRoles.includes(role)))),
     orderControler.addNewOfferOrder);
 
 router.post("/listing",
     rateLimiter(),
     validateSingleOrder,
     req_validator(),
-    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    auth(...(allRoles.filter(role => !excludedOnlyViewerRoles.includes(role)))),
     orderControler.addNewSingleOrder);
 
 router.post("/shipping-label/:orderId",

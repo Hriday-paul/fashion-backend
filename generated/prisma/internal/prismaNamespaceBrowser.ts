@@ -140,6 +140,7 @@ export const AssistentSellScalarFieldEnum = {
   itemsTitle: 'itemsTitle',
   itemsCount: 'itemsCount',
   contactNumber: 'contactNumber',
+  email: 'email',
   itemsDetails: 'itemsDetails',
   priceType: 'priceType',
   targetPrice: 'targetPrice',
@@ -945,6 +946,9 @@ export const AmbassadorScalarFieldEnum = {
   representedBrand: 'representedBrand',
   representedOrganization: 'representedOrganization',
   authorizationDocumentKey: 'authorizationDocumentKey',
+  instagramUsername: 'instagramUsername',
+  tiktokUsername: 'tiktokUsername',
+  about: 'about',
   agreementVersion: 'agreementVersion',
   agreementAcceptedAt: 'agreementAcceptedAt'
 } as const

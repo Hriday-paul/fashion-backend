@@ -52,6 +52,7 @@ export type AssistentSellMinAggregateOutputType = {
   itemsTitle: string | null
   itemsCount: number | null
   contactNumber: string | null
+  email: string | null
   itemsDetails: string | null
   priceType: $Enums.PriceType | null
   targetPrice: number | null
@@ -75,6 +76,7 @@ export type AssistentSellMaxAggregateOutputType = {
   itemsTitle: string | null
   itemsCount: number | null
   contactNumber: string | null
+  email: string | null
   itemsDetails: string | null
   priceType: $Enums.PriceType | null
   targetPrice: number | null
@@ -98,6 +100,7 @@ export type AssistentSellCountAggregateOutputType = {
   itemsTitle: number
   itemsCount: number
   contactNumber: number
+  email: number
   itemsDetails: number
   priceType: number
   targetPrice: number
@@ -145,6 +148,7 @@ export type AssistentSellMinAggregateInputType = {
   itemsTitle?: true
   itemsCount?: true
   contactNumber?: true
+  email?: true
   itemsDetails?: true
   priceType?: true
   targetPrice?: true
@@ -168,6 +172,7 @@ export type AssistentSellMaxAggregateInputType = {
   itemsTitle?: true
   itemsCount?: true
   contactNumber?: true
+  email?: true
   itemsDetails?: true
   priceType?: true
   targetPrice?: true
@@ -191,6 +196,7 @@ export type AssistentSellCountAggregateInputType = {
   itemsTitle?: true
   itemsCount?: true
   contactNumber?: true
+  email?: true
   itemsDetails?: true
   priceType?: true
   targetPrice?: true
@@ -301,6 +307,7 @@ export type AssistentSellGroupByOutputType = {
   itemsTitle: string
   itemsCount: number
   contactNumber: string | null
+  email: string | null
   itemsDetails: string | null
   priceType: $Enums.PriceType
   targetPrice: number | null
@@ -347,6 +354,7 @@ export type AssistentSellWhereInput = {
   itemsTitle?: Prisma.StringFilter<"AssistentSell"> | string
   itemsCount?: Prisma.IntFilter<"AssistentSell"> | number
   contactNumber?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
+  email?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
   itemsDetails?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
   priceType?: Prisma.EnumPriceTypeFilter<"AssistentSell"> | $Enums.PriceType
   targetPrice?: Prisma.FloatNullableFilter<"AssistentSell"> | number | null
@@ -376,6 +384,7 @@ export type AssistentSellOrderByWithRelationInput = {
   itemsTitle?: Prisma.SortOrder
   itemsCount?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   itemsDetails?: Prisma.SortOrderInput | Prisma.SortOrder
   priceType?: Prisma.SortOrder
   targetPrice?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -408,6 +417,7 @@ export type AssistentSellWhereUniqueInput = Prisma.AtLeast<{
   itemsTitle?: Prisma.StringFilter<"AssistentSell"> | string
   itemsCount?: Prisma.IntFilter<"AssistentSell"> | number
   contactNumber?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
+  email?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
   itemsDetails?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
   priceType?: Prisma.EnumPriceTypeFilter<"AssistentSell"> | $Enums.PriceType
   targetPrice?: Prisma.FloatNullableFilter<"AssistentSell"> | number | null
@@ -437,6 +447,7 @@ export type AssistentSellOrderByWithAggregationInput = {
   itemsTitle?: Prisma.SortOrder
   itemsCount?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   itemsDetails?: Prisma.SortOrderInput | Prisma.SortOrder
   priceType?: Prisma.SortOrder
   targetPrice?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -468,6 +479,7 @@ export type AssistentSellScalarWhereWithAggregatesInput = {
   itemsTitle?: Prisma.StringWithAggregatesFilter<"AssistentSell"> | string
   itemsCount?: Prisma.IntWithAggregatesFilter<"AssistentSell"> | number
   contactNumber?: Prisma.StringNullableWithAggregatesFilter<"AssistentSell"> | string | null
+  email?: Prisma.StringNullableWithAggregatesFilter<"AssistentSell"> | string | null
   itemsDetails?: Prisma.StringNullableWithAggregatesFilter<"AssistentSell"> | string | null
   priceType?: Prisma.EnumPriceTypeWithAggregatesFilter<"AssistentSell"> | $Enums.PriceType
   targetPrice?: Prisma.FloatNullableWithAggregatesFilter<"AssistentSell"> | number | null
@@ -491,6 +503,7 @@ export type AssistentSellCreateInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -518,6 +531,7 @@ export type AssistentSellUncheckedCreateInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -545,6 +559,7 @@ export type AssistentSellUpdateInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -572,6 +587,7 @@ export type AssistentSellUncheckedUpdateInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -599,6 +615,7 @@ export type AssistentSellCreateManyInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -622,6 +639,7 @@ export type AssistentSellUpdateManyMutationInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -643,6 +661,7 @@ export type AssistentSellUncheckedUpdateManyInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -666,6 +685,7 @@ export type AssistentSellCountOrderByAggregateInput = {
   itemsTitle?: Prisma.SortOrder
   itemsCount?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   itemsDetails?: Prisma.SortOrder
   priceType?: Prisma.SortOrder
   targetPrice?: Prisma.SortOrder
@@ -700,6 +720,7 @@ export type AssistentSellMaxOrderByAggregateInput = {
   itemsTitle?: Prisma.SortOrder
   itemsCount?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   itemsDetails?: Prisma.SortOrder
   priceType?: Prisma.SortOrder
   targetPrice?: Prisma.SortOrder
@@ -723,6 +744,7 @@ export type AssistentSellMinOrderByAggregateInput = {
   itemsTitle?: Prisma.SortOrder
   itemsCount?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   itemsDetails?: Prisma.SortOrder
   priceType?: Prisma.SortOrder
   targetPrice?: Prisma.SortOrder
@@ -969,6 +991,7 @@ export type AssistentSellCreateWithoutPicturesInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -995,6 +1018,7 @@ export type AssistentSellUncheckedCreateWithoutPicturesInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -1037,6 +1061,7 @@ export type AssistentSellUpdateWithoutPicturesInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1063,6 +1088,7 @@ export type AssistentSellUncheckedUpdateWithoutPicturesInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1089,6 +1115,7 @@ export type AssistentSellCreateWithoutCharitiesInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -1115,6 +1142,7 @@ export type AssistentSellUncheckedCreateWithoutCharitiesInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -1157,6 +1185,7 @@ export type AssistentSellUpdateWithoutCharitiesInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1183,6 +1212,7 @@ export type AssistentSellUncheckedUpdateWithoutCharitiesInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1209,6 +1239,7 @@ export type AssistentSellCreateWithoutListingsInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -1235,6 +1266,7 @@ export type AssistentSellUncheckedCreateWithoutListingsInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -1277,6 +1309,7 @@ export type AssistentSellUpdateWithoutListingsInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1303,6 +1336,7 @@ export type AssistentSellUncheckedUpdateWithoutListingsInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1329,6 +1363,7 @@ export type AssistentSellCreateWithoutSellerInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -1355,6 +1390,7 @@ export type AssistentSellUncheckedCreateWithoutSellerInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -1410,6 +1446,7 @@ export type AssistentSellScalarWhereInput = {
   itemsTitle?: Prisma.StringFilter<"AssistentSell"> | string
   itemsCount?: Prisma.IntFilter<"AssistentSell"> | number
   contactNumber?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
+  email?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
   itemsDetails?: Prisma.StringNullableFilter<"AssistentSell"> | string | null
   priceType?: Prisma.EnumPriceTypeFilter<"AssistentSell"> | $Enums.PriceType
   targetPrice?: Prisma.FloatNullableFilter<"AssistentSell"> | number | null
@@ -1433,6 +1470,7 @@ export type AssistentSellCreateWithoutSellerAddressInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -1459,6 +1497,7 @@ export type AssistentSellUncheckedCreateWithoutSellerAddressInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -1511,6 +1550,7 @@ export type AssistentSellCreateWithoutShipmentInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -1537,6 +1577,7 @@ export type AssistentSellUncheckedCreateWithoutShipmentInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -1579,6 +1620,7 @@ export type AssistentSellUpdateWithoutShipmentInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1605,6 +1647,7 @@ export type AssistentSellUncheckedUpdateWithoutShipmentInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1631,6 +1674,7 @@ export type AssistentSellCreateManySellerInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -1653,6 +1697,7 @@ export type AssistentSellUpdateWithoutSellerInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1679,6 +1724,7 @@ export type AssistentSellUncheckedUpdateWithoutSellerInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1705,6 +1751,7 @@ export type AssistentSellUncheckedUpdateManyWithoutSellerInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1727,6 +1774,7 @@ export type AssistentSellCreateManySellerAddressInput = {
   itemsTitle: string
   itemsCount?: number
   contactNumber?: string | null
+  email?: string | null
   itemsDetails?: string | null
   priceType?: $Enums.PriceType
   targetPrice?: number | null
@@ -1749,6 +1797,7 @@ export type AssistentSellUpdateWithoutSellerAddressInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1775,6 +1824,7 @@ export type AssistentSellUncheckedUpdateWithoutSellerAddressInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1801,6 +1851,7 @@ export type AssistentSellUncheckedUpdateManyWithoutSellerAddressInput = {
   itemsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   itemsCount?: Prisma.IntFieldUpdateOperationsInput | number
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemsDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priceType?: Prisma.EnumPriceTypeFieldUpdateOperationsInput | $Enums.PriceType
   targetPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1872,6 +1923,7 @@ export type AssistentSellSelect<ExtArgs extends runtime.Types.Extensions.Interna
   itemsTitle?: boolean
   itemsCount?: boolean
   contactNumber?: boolean
+  email?: boolean
   itemsDetails?: boolean
   priceType?: boolean
   targetPrice?: boolean
@@ -1902,6 +1954,7 @@ export type AssistentSellSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   itemsTitle?: boolean
   itemsCount?: boolean
   contactNumber?: boolean
+  email?: boolean
   itemsDetails?: boolean
   priceType?: boolean
   targetPrice?: boolean
@@ -1927,6 +1980,7 @@ export type AssistentSellSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   itemsTitle?: boolean
   itemsCount?: boolean
   contactNumber?: boolean
+  email?: boolean
   itemsDetails?: boolean
   priceType?: boolean
   targetPrice?: boolean
@@ -1952,6 +2006,7 @@ export type AssistentSellSelectScalar = {
   itemsTitle?: boolean
   itemsCount?: boolean
   contactNumber?: boolean
+  email?: boolean
   itemsDetails?: boolean
   priceType?: boolean
   targetPrice?: boolean
@@ -1970,7 +2025,7 @@ export type AssistentSellSelectScalar = {
   length_cm?: boolean
 }
 
-export type AssistentSellOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemsTitle" | "itemsCount" | "contactNumber" | "itemsDetails" | "priceType" | "targetPrice" | "additionalNotes" | "donationPct" | "donationAnonymous" | "deliveryCharge" | "status" | "sellerId" | "sellerAddressId" | "createdAt" | "updatedAt" | "weight_kg" | "hight_cm" | "width_cm" | "length_cm", ExtArgs["result"]["assistentSell"]>
+export type AssistentSellOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemsTitle" | "itemsCount" | "contactNumber" | "email" | "itemsDetails" | "priceType" | "targetPrice" | "additionalNotes" | "donationPct" | "donationAnonymous" | "deliveryCharge" | "status" | "sellerId" | "sellerAddressId" | "createdAt" | "updatedAt" | "weight_kg" | "hight_cm" | "width_cm" | "length_cm", ExtArgs["result"]["assistentSell"]>
 export type AssistentSellInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pictures?: boolean | Prisma.AssistentSell$picturesArgs<ExtArgs>
   charities?: boolean | Prisma.AssistentSell$charitiesArgs<ExtArgs>
@@ -2004,6 +2059,7 @@ export type $AssistentSellPayload<ExtArgs extends runtime.Types.Extensions.Inter
     itemsTitle: string
     itemsCount: number
     contactNumber: string | null
+    email: string | null
     itemsDetails: string | null
     priceType: $Enums.PriceType
     targetPrice: number | null
@@ -2453,6 +2509,7 @@ export interface AssistentSellFieldRefs {
   readonly itemsTitle: Prisma.FieldRef<"AssistentSell", 'String'>
   readonly itemsCount: Prisma.FieldRef<"AssistentSell", 'Int'>
   readonly contactNumber: Prisma.FieldRef<"AssistentSell", 'String'>
+  readonly email: Prisma.FieldRef<"AssistentSell", 'String'>
   readonly itemsDetails: Prisma.FieldRef<"AssistentSell", 'String'>
   readonly priceType: Prisma.FieldRef<"AssistentSell", 'PriceType'>
   readonly targetPrice: Prisma.FieldRef<"AssistentSell", 'Float'>

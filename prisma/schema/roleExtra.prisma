@@ -80,6 +80,9 @@ model Ambassador {
   representedBrand         String?
   representedOrganization  String?
   authorizationDocumentKey String?
+  instagramUsername String?
+  tiktokUsername String?
+  about String?
   agreementVersion         String?
   agreementAcceptedAt      DateTime?
 

@@ -173,9 +173,9 @@ export const roleVerificationValidator = [
 
   // AMBASSADOR
   requiredString("ambassadorType", Role.AMBASSADOR),
-  optionalString("representedBrand", Role.AMBASSADOR),
-  optionalString("representedOrganization", Role.AMBASSADOR),
-  optionalString("authorizationDocumentKey", Role.AMBASSADOR),
+  optionalString("instagramUsername", Role.AMBASSADOR),
+  optionalString("tiktokUsername", Role.AMBASSADOR),
+  optionalString("about", Role.AMBASSADOR),
   optionalString("agreementVersion", Role.AMBASSADOR),
 
   // PROFESSIONAL_SELLER

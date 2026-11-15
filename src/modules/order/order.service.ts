@@ -767,7 +767,7 @@ const addNewOfferOrder = async (
         const extra_donation = 0;
         const unit_price = p?.finalPrice;
 
-        const itemRatio = unit_price / itemsTotalPrice;
+        const itemRatio = itemsTotalPrice > 0 ? unit_price / itemsTotalPrice : 0;
 
         const allocateUnitPrice = offer?.offeredPrice * itemRatio;
 

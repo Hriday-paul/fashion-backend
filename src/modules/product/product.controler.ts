@@ -299,12 +299,21 @@ const acceptOfferAsSeller = catchAsync(async (req: Request, res: Response) => {
         data: result,
     });
 });
-const declineCounterOfferAsSeller = catchAsync(async (req: Request, res: Response) => {
-    const result = await productService.declineCounterOfferAsSeller(req.body, req?.user);
+const declineOfferAsSeller = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.declineOfferAsSeller(req.body, req?.user);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
         message: 'Offer declined successfully',
+        data: result,
+    });
+});
+const counterOfferAsSeller = catchAsync(async (req: Request, res: Response) => {
+    const result = await productService.counterOfferAsSeller(req.body, req?.user);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Offer sent successfully',
         data: result,
     });
 });
@@ -333,6 +342,7 @@ export const productControler = {
 
     makeAnOfferAsBuyer,
     acceptOfferAsSeller,
-    declineCounterOfferAsSeller,
+    declineOfferAsSeller,
+    counterOfferAsSeller,
     dltAProduct,
 }

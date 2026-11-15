@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { productControler } from "./product.controler";
 import parseData from "../../middleware/parseData";
-import { acceptOfferValidator, addProductValidator, declineCounterOfferValidator, dropPriceValidator, makeofferValidator, productByTypeValidator } from "./product.validator";
+import { acceptOfferValidator, addProductValidator, counterOfferValidator, declineOfferValidator, dropPriceValidator, makeofferValidator, productByTypeValidator } from "./product.validator";
 import req_validator from "../../middleware/req_validation";
 import { image_Upload } from "../../utils/s3";
 import auth, { PublicAuth } from "../../middleware/auth";
@@ -40,14 +40,15 @@ router.get("/similar-from-seller/:productId", PublicAuth(), productControler.sim
 router.get("/same-category/:productId", PublicAuth(), productControler.sameCategoryProducts);
 router.get("/same-color/:productId", PublicAuth(), productControler.sameColorProducts);
 
-router.post("/offer",  rateLimiter(), makeofferValidator, req_validator(), auth(...allRoles), productControler.makeAnOfferAsBuyer);
-router.post("/offer/accept",  rateLimiter(), acceptOfferValidator, req_validator(), auth(...allRoles), productControler.acceptOfferAsSeller);
-router.post("/offer/decline",  rateLimiter(), declineCounterOfferValidator, req_validator(), auth(...allRoles), productControler.declineCounterOfferAsSeller);
+router.post("/offer", rateLimiter(), makeofferValidator, req_validator(), auth(...allRoles), productControler.makeAnOfferAsBuyer);
+router.post("/offer/accept", rateLimiter(), acceptOfferValidator, req_validator(), auth(...allRoles), productControler.acceptOfferAsSeller);
+router.post("/offer/decline", rateLimiter(), declineOfferValidator, req_validator(), auth(...allRoles), productControler.declineOfferAsSeller);
+router.post("/offer/counter", rateLimiter(), counterOfferValidator, req_validator(), auth(...allRoles), productControler.counterOfferAsSeller);
 
 router.post("/price/drop", rateLimiter(), dropPriceValidator, req_validator(), auth(...allRoles), productControler.dropPriceForAProduct);
 
 router.get("/:id", PublicAuth(), productControler.productDetails);
 
-router.delete("/:productId",  rateLimiter(), auth(Role.ADMIN), productControler.dltAProduct);
+router.delete("/:productId", rateLimiter(), auth(Role.ADMIN), productControler.dltAProduct);
 
 export const productRouts = router;
