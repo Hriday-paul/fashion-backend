@@ -134,7 +134,7 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, stock, authenticate, ...moreFields } = query;
+    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, materials, stock, authenticate, ...moreFields } = query;
 
     const cacheQuery: { [key: string]: unknown } = { limit, skip, sortBy, sortOrder, page };
 
@@ -202,12 +202,12 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
             },
         });
     }
-    if (meterials) {
-        const splitMeterials = (meterials as string).toLowerCase().split(",").map((s) => s.trim()).filter(Boolean).sort();
-        cacheQuery.meterials = splitMeterials;
+    if (materials) {
+        const splitMaterials = (materials as string).split(",").map((s) => s.trim()).filter(Boolean).sort();
+        cacheQuery.materials = splitMaterials;
         AndConditions.push({
-            meterials: {
-                hasSome: splitMeterials
+            materials: {
+                some: { materialId: { in: splitMaterials } }
             },
         });
     }
@@ -334,7 +334,7 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, showItemInCart, stock, authenticate, allowDonation, ...moreFields } = query;
+    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, materials, showItemInCart, stock, authenticate, allowDonation, ...moreFields } = query;
 
     const cacheQuery: { [key: string]: unknown } = { limit, skip, sortBy, sortOrder, page };
 
@@ -404,14 +404,14 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
         });
         cacheQuery.colors = splitColors;
     }
-    if (meterials) {
-        const splitMeterials = (meterials as string).split(",").map((s) => s.trim()).filter(Boolean).sort();
+    if (materials) {
+        const splitMaterials = (materials as string).split(",").map((s) => s.trim()).filter(Boolean).sort();
         AndConditions.push({
-            meterials: {
-                hasSome: splitMeterials
+            materials: {
+                some: { materialId: { in: splitMaterials } }
             },
         });
-        cacheQuery.meterials = splitMeterials;
+        cacheQuery.materials = splitMaterials;
     }
 
     if (minPrice || maxPrice) {
@@ -2455,8 +2455,39 @@ const dltAProduct = async (productId: string, currentUser: { id: string, userNam
     await redisKeys.incrementProductsVersion();
 }
 
+const markProductSold = async (productId: string, currentUser: { id: string, userName: string, role: string }) => {
+    const product = await prisma.product.findFirst({
+        where: {
+            id: productId,
+            isDeleted: false
+        },
+        select: { id: true, userId: true, stock: true }
+    });
+    if (!product) {
+        throw new AppError(httpStatus.NOT_FOUND, "Product does not exist");
+    }
+
+    //check if the product belongs to the current user
+    if (product.userId !== currentUser.id && currentUser.role !== Role.ADMIN) {
+        throw new AppError(httpStatus.FORBIDDEN, "You are not authorized to update this listing");
+    }
+
+    if (product.stock < 1) {
+        throw new AppError(httpStatus.CONFLICT, "This listing is already marked as sold");
+    }
+
+    await prisma.product.update({
+        where: { id: productId },
+        data: { stock: 0 }
+    });
+
+    //increment redis product version for cache invalidation
+    await redisKeys.incrementProductsVersion();
+}
+
 export const productService = {
     addNewProduct,
+    markProductSold,
 
     allProducts,
     authenticateProducts,

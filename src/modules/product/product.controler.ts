@@ -57,7 +57,7 @@ const addNewProduct = catchAsync(async (req: Request, res: Response) => {
 
 const allProducts = catchAsync(async (req: Request, res: Response) => {
 
-    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials", "stock", "authenticate"])
+    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "materials", "stock", "authenticate"])
     const options = pick(req.query, PaginateOptions);
 
     const result = await productService.allProducts(query, options, req.user?.id);
@@ -81,6 +81,17 @@ const dltAProduct = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const markProductSold = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await productService.markProductSold(req.params.productId, req.user);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Listing marked as sold',
+        data: result,
+    });
+});
+
 const authenticateProducts = catchAsync(async (req: Request, res: Response) => {
 
     const options = pick(req.query, PaginateOptions);
@@ -97,7 +108,7 @@ const authenticateProducts = catchAsync(async (req: Request, res: Response) => {
 
 const myProducts = catchAsync(async (req: Request, res: Response) => {
 
-    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials", "authenticate"])
+    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "materials", "authenticate"])
     const options = pick(req.query, PaginateOptions);
 
     const result = await productService.productsByUserId(query, options, req.user.id, req.user?.id);
@@ -112,7 +123,7 @@ const myProducts = catchAsync(async (req: Request, res: Response) => {
 
 const productsByUserName = catchAsync(async (req: Request, res: Response) => {
 
-    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "meterials", "stock", "showItemInCart", "authenticate", "allowDonation"])
+    const query = pick(req.query, ["searchTerm", "category", "minPrice", "maxPrice", "conditions", "brands", "sizes", "colors", "materials", "stock", "showItemInCart", "authenticate", "allowDonation"])
     const options = pick(req.query, PaginateOptions);
 
     const result = await productService.productsByUserName(query, options, req.params.username, req.user?.id);
@@ -345,4 +356,5 @@ export const productControler = {
     declineOfferAsSeller,
     counterOfferAsSeller,
     dltAProduct,
+    markProductSold,
 }

@@ -47,8 +47,10 @@ router.post("/offer/counter", rateLimiter(), counterOfferValidator, req_validato
 
 router.post("/price/drop", rateLimiter(), dropPriceValidator, req_validator(), auth(...allRoles), productControler.dropPriceForAProduct);
 
+router.patch("/:productId/mark-sold", rateLimiter(), auth(...allRoles), productControler.markProductSold);
+
 router.get("/:id", PublicAuth(), productControler.productDetails);
 
-router.delete("/:productId", rateLimiter(), auth(Role.ADMIN), productControler.dltAProduct);
+router.delete("/:productId", rateLimiter(), auth(...allRoles), productControler.dltAProduct);
 
 export const productRouts = router;
