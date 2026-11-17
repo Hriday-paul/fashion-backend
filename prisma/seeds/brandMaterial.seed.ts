@@ -3,8 +3,12 @@ import { PrismaClient } from "@prisma/client";
 
 export async function CategorySeed(prisma: PrismaClient) {
 
-    //removed cotton
+
     const material = [
+        {
+            "name": "Cotton",
+            "order": 1
+        },
         {
             "name": "Organic Cotton",
             "order": 2
@@ -209,7 +213,7 @@ export async function CategorySeed(prisma: PrismaClient) {
             "name": "Mixed Materials",
             "order": 52
         },
-        
+
         {
             "name": "Unidentified",
             "order": 53
@@ -220,7 +224,7 @@ export async function CategorySeed(prisma: PrismaClient) {
         }
     ]
 
-    //removed old navy
+
     const brands = [
         {
             "name": "032c",
@@ -2341,6 +2345,10 @@ export async function CategorySeed(prisma: PrismaClient) {
         {
             "name": "Oh Polly",
             "order": 530
+        },
+        {
+            "name": "Old Navy",
+            "order": 531
         },
         {
             "name": "Oliver Goldsmith",
