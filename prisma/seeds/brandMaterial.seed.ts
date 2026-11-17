@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 
-export async function CategorySeed(prisma: PrismaClient) {
+export async function BrandmaterialySeed(prisma: PrismaClient) {
 
 
     const material = [

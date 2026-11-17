@@ -1,5 +1,6 @@
 import prisma from "../../src/shared/prisma";
 import { BandgeSeed } from "./badge.seed";
+import { BrandmaterialySeed } from "./brandMaterial.seed";
 import { CategorySeed } from "./category.seed";
 import { KeywordSeed } from "./keyword.seed";
 import { UserSeed } from "./user.seed";
@@ -13,7 +14,9 @@ async function main() {
     // await KeywordSeed(prisma);
 
     // await UserSeed(prisma);
-    
+
+    await BrandmaterialySeed(prisma);
+
 }
 
 main()
