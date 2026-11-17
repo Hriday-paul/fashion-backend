@@ -15,7 +15,7 @@ async function main() {
 
     // await UserSeed(prisma);
 
-    await BrandmaterialySeed(prisma);
+    // await BrandmaterialySeed(prisma);
 
 }
 
