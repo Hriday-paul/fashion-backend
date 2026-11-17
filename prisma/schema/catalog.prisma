@@ -11,7 +11,7 @@ model Category {
 
     brands BrandByCategory[]
     materials materialByCategory[]
-    sizeCategoryHierarchyGroups SizeCategoryHierarchyGroup[]
+    sizes SizeCategoryGroup[]
 
     suggestion ParcelSuggestion?
 
@@ -89,46 +89,79 @@ model Material {
     @@map("materials")
 }
 
-model SizeCategoryHierarchyGroup {
+model SizeCategoryGroup {
     id         String @id @default(uuid())
     categoryId String
-    sizeId    String
+    sizeGroupId    String?
+    letterSizeGroupId String?
 
     category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-    size    Size    @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+    sizeGroup    SizeGroup?    @relation(fields: [sizeGroupId], references: [id], onDelete: Cascade)
+    letterSizeGroup    LetterSizeGroup?    @relation(fields: [letterSizeGroupId], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    @@map("size_category_hierarchy_group")
-    @@index([categoryId, sizeId])
-    @@index([sizeId, categoryId])
-    @@unique([categoryId, sizeId])
+    @@map("size_category_group")
+    @@index([categoryId, sizeGroupId])
+    @@index([sizeGroupId, categoryId])
+    @@index([letterSizeGroupId])
+    @@unique([categoryId, sizeGroupId])
+    @@unique([categoryId, letterSizeGroupId])
+}
+
+model SizeGroup{
+    id   String @id @default(uuid())
+
+    groupName String
+    sizes Size[]
+
+    sizeCategories SizeCategoryGroup[]
+    
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    @@map("sizeGroups")
+}
+
+model LetterSizeGroup{
+    id   String @id @default(uuid())
+
+    groupName String
+    sizes Size[]
+
+    letterSizeCategoryGroup SizeCategoryGroup[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    @@map("letterSizeGroups")
 }
 
 model Size {
     id   String @id @default(uuid())
-    title String
+    title String //can be ignore or store US value
 
     UK String?
     US String?
     EU String?
+    FR String?
+    IT String?
 
     order Int @default(autoincrement())
 
     products Product[]
 
-    // Parent catalog (optional)
-    parentId String?
-    parent   Size?  @relation("SizeHierarchy", fields: [parentId], references: [id])
-    children Size[] @relation("SizeHierarchy")
+    groupId String?
+    sizeGroup   SizeGroup?  @relation( fields: [groupId], references: [id], onDelete: Cascade)
 
-    sizeCategoryHierarchyGroups SizeCategoryHierarchyGroup[]
+    letterGroupId String?
+    letterSizeGroup   LetterSizeGroup?  @relation( fields: [letterGroupId], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     @@map("sizes")
+    @@index(groupId)
 }
 
 model Keyword {

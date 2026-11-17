@@ -6,7 +6,7 @@ import { UserSeed } from "./user.seed";
 
 async function main() {
 
-    await BandgeSeed(prisma);
+    // await BandgeSeed(prisma);
 
     // await CategorySeed(prisma);
 
