@@ -49,6 +49,20 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
         throw new AppError(httpStatus.CONFLICT, "Please, select next catalog")
     }
 
+    //the size must match the chosen format: LETTER uses the letter size group, other formats the size group
+    const size = await prisma.size.findUnique({ where: { id: payload?.sizeId } });
+    if (!size) {
+        throw new AppError(httpStatus.NOT_FOUND, "Selected size doesn't exist")
+    }
+    // callers that do not send a format (assisted sell) get one derived from the size
+    if (!morePayload.SizeFormat) {
+        morePayload.SizeFormat = size.letterGroupId ? "LETTER" : "US";
+    }
+    const isLetterFormat = morePayload.SizeFormat === "LETTER";
+    if (isLetterFormat !== Boolean(size.letterGroupId)) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Selected size doesn't match the size format")
+    }
+
     //get category hierarchy list
     const categories = await categoryService.getParentChain({ categoryId: payload?.categoryId });
     const hierarchy = categories.map(cat => cat?.id);
@@ -203,8 +217,8 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
             },
         });
     }
-    if (materials) {
-        const splitMaterials = (materials as string).split(",").map((s) => s.trim()).filter(Boolean).sort();
+    const splitMaterials = materials ? (materials as string).split(",").map((s) => s.trim()).filter(Boolean).sort() : [];
+    if (splitMaterials.length > 0) {
         cacheQuery.materials = splitMaterials;
         AndConditions.push({
             materials: {
@@ -405,8 +419,8 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
         });
         cacheQuery.colors = splitColors;
     }
-    if (materials) {
-        const splitMaterials = (materials as string).split(",").map((s) => s.trim()).filter(Boolean).sort();
+    const splitMaterials = materials ? (materials as string).split(",").map((s) => s.trim()).filter(Boolean).sort() : [];
+    if (splitMaterials.length > 0) {
         AndConditions.push({
             materials: {
                 some: { materialId: { in: splitMaterials } }
@@ -1022,15 +1036,21 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
         await redisPub.del(recentViewCacheKey);
     }
 
-    const sizechart = await prisma.size.findMany({
-        where: {
-            sizeCategoryHierarchyGroups: {
-                some: {
-                    categoryId: details?.categoryId
-                }
+    // size chart = the full group the product size belongs to (size group or letter group)
+    const sizeWithGroup = details?.sizeId
+        ? await prisma.size.findUnique({
+            where: { id: details.sizeId },
+            include: {
+                sizeGroup: { include: { sizes: { orderBy: { order: "asc" } } } },
+                letterSizeGroup: { include: { sizes: { orderBy: { order: "asc" } } } },
             }
-        }
-    })
+        })
+        : null;
+
+    const chartGroup = sizeWithGroup?.sizeGroup ?? sizeWithGroup?.letterSizeGroup ?? null;
+    const sizechart = chartGroup
+        ? { groupName: chartGroup.groupName, isLetter: Boolean(sizeWithGroup?.letterSizeGroup), sizes: chartGroup.sizes }
+        : null;
 
     const result = {
         ...details,

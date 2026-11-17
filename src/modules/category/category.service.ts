@@ -26,6 +26,9 @@ const deleteCategory = async (categoryId: string) => {
     //increment category version for cache invalidation
     await redisKeys.incrementCategoriesVersion();
 
+    //category assignments cascade, so cached sizes are stale
+    await redisKeys.incrementSizesVersion();
+
     return res;
 }
 

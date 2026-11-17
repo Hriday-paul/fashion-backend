@@ -35,6 +35,11 @@ export const addProductValidator: ValidationChain[] = [
     .notEmpty().withMessage("Size is required")
     .isUUID().withMessage("Invalid size ID"),
 
+  body("SizeFormat")
+    .trim()
+    .notEmpty().withMessage("Size format is required")
+    .isIn(["UK", "US", "EU", "FR", "IT", "LETTER"]).withMessage("Invalid size format"),
+
   body("categoryId")
     .trim()
     .notEmpty().withMessage("Category is required")

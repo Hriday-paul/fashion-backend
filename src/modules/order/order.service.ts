@@ -2300,7 +2300,7 @@ const orders = async (query: Record<string, unknown>, options: TPaginationOption
                             },
                             size: {
                                 select: {
-                                    title: true
+                                    title: true, UK: true, US: true, EU: true, FR: true, IT: true
                                 }
                             },
                             _count: true
@@ -2541,7 +2541,7 @@ const ordersAsASeller = async (sellerId: string, query: Record<string, unknown>,
                             },
                             size: {
                                 select: {
-                                    title: true
+                                    title: true, UK: true, US: true, EU: true, FR: true, IT: true
                                 }
                             },
                             _count: true
@@ -2777,7 +2777,7 @@ const ordersAsABuyer = async (buyerId: string, query: Record<string, unknown>, o
                             },
                             size: {
                                 select: {
-                                    title: true
+                                    title: true, UK: true, US: true, EU: true, FR: true, IT: true
                                 }
                             },
                             _count: true
@@ -3050,7 +3050,7 @@ const authenticationOrders = async (query: Record<string, unknown>, options: TPa
                             },
                             size: {
                                 select: {
-                                    title: true
+                                    title: true, UK: true, US: true, EU: true, FR: true, IT: true
                                 }
                             },
                             _count: true
@@ -4902,7 +4902,7 @@ const orderDetails = async (orderNumber: string) => {
                             },
                             size: {
                                 select: {
-                                    title: true
+                                    title: true, UK: true, US: true, EU: true, FR: true, IT: true
                                 }
                             },
                         },
