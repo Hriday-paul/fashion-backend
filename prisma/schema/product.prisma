@@ -14,7 +14,7 @@ model Product {
     brand   Brand  @relation(fields: [brandId], references: [id], onDelete: Cascade)
 
     sizeId String
-    size   Size   @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+    size   Size   @relation(fields: [sizeId], references: [id], onDelete: Restrict)
     SizeFormat SizeFormat @default(US)
 
     categoryId         String

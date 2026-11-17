@@ -683,7 +683,8 @@ type ProductOtherPayload = {
     images: { key: string, url: string }[],
     charities: string[],
     donationPrivacy: boolean,
-    assistentSellId: string
+    assistentSellId: string,
+    meterials : string[]
 }
 
 const addNewListing = async (payload: Product & ProductOtherPayload) => {

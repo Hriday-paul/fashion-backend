@@ -11,7 +11,7 @@ model Category {
 
     brands BrandByCategory[]
     materials materialByCategory[]
-    sizes SizeCategoryGroup[]
+    size SizeCategoryGroup?
 
     suggestion ParcelSuggestion?
 
@@ -91,23 +91,20 @@ model Material {
 
 model SizeCategoryGroup {
     id         String @id @default(uuid())
-    categoryId String
+    categoryId String @unique
     sizeGroupId    String?
     letterSizeGroupId String?
 
     category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-    sizeGroup    SizeGroup?    @relation(fields: [sizeGroupId], references: [id], onDelete: Cascade)
-    letterSizeGroup    LetterSizeGroup?    @relation(fields: [letterSizeGroupId], references: [id], onDelete: Cascade)
+    sizeGroup    SizeGroup?    @relation(fields: [sizeGroupId], references: [id], onDelete: SetNull)
+    letterSizeGroup    LetterSizeGroup?    @relation(fields: [letterSizeGroupId], references: [id], onDelete: SetNull)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     @@map("size_category_group")
-    @@index([categoryId, sizeGroupId])
-    @@index([sizeGroupId, categoryId])
+    @@index([sizeGroupId])
     @@index([letterSizeGroupId])
-    @@unique([categoryId, sizeGroupId])
-    @@unique([categoryId, letterSizeGroupId])
 }
 
 model SizeGroup{

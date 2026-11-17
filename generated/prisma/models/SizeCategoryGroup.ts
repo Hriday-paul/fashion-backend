@@ -209,12 +209,10 @@ export type SizeCategoryGroupOrderByWithRelationInput = {
 
 export type SizeCategoryGroupWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  categoryId_sizeGroupId?: Prisma.SizeCategoryGroupCategoryIdSizeGroupIdCompoundUniqueInput
-  categoryId_letterSizeGroupId?: Prisma.SizeCategoryGroupCategoryIdLetterSizeGroupIdCompoundUniqueInput
+  categoryId?: string
   AND?: Prisma.SizeCategoryGroupWhereInput | Prisma.SizeCategoryGroupWhereInput[]
   OR?: Prisma.SizeCategoryGroupWhereInput[]
   NOT?: Prisma.SizeCategoryGroupWhereInput | Prisma.SizeCategoryGroupWhereInput[]
-  categoryId?: Prisma.StringFilter<"SizeCategoryGroup"> | string
   sizeGroupId?: Prisma.StringNullableFilter<"SizeCategoryGroup"> | string | null
   letterSizeGroupId?: Prisma.StringNullableFilter<"SizeCategoryGroup"> | string | null
   createdAt?: Prisma.DateTimeFilter<"SizeCategoryGroup"> | Date | string
@@ -222,7 +220,7 @@ export type SizeCategoryGroupWhereUniqueInput = Prisma.AtLeast<{
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   sizeGroup?: Prisma.XOR<Prisma.SizeGroupNullableScalarRelationFilter, Prisma.SizeGroupWhereInput> | null
   letterSizeGroup?: Prisma.XOR<Prisma.LetterSizeGroupNullableScalarRelationFilter, Prisma.LetterSizeGroupWhereInput> | null
-}, "id" | "categoryId_sizeGroupId" | "categoryId_letterSizeGroupId">
+}, "id" | "categoryId">
 
 export type SizeCategoryGroupOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -252,7 +250,7 @@ export type SizeCategoryGroupCreateInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutSizesInput
+  category: Prisma.CategoryCreateNestedOneWithoutSizeInput
   sizeGroup?: Prisma.SizeGroupCreateNestedOneWithoutSizeCategoriesInput
   letterSizeGroup?: Prisma.LetterSizeGroupCreateNestedOneWithoutLetterSizeCategoryGroupInput
 }
@@ -270,7 +268,7 @@ export type SizeCategoryGroupUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutSizesNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutSizeNestedInput
   sizeGroup?: Prisma.SizeGroupUpdateOneWithoutSizeCategoriesNestedInput
   letterSizeGroup?: Prisma.LetterSizeGroupUpdateOneWithoutLetterSizeCategoryGroupNestedInput
 }
@@ -308,24 +306,9 @@ export type SizeCategoryGroupUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type SizeCategoryGroupListRelationFilter = {
-  every?: Prisma.SizeCategoryGroupWhereInput
-  some?: Prisma.SizeCategoryGroupWhereInput
-  none?: Prisma.SizeCategoryGroupWhereInput
-}
-
-export type SizeCategoryGroupOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
-}
-
-export type SizeCategoryGroupCategoryIdSizeGroupIdCompoundUniqueInput = {
-  categoryId: string
-  sizeGroupId: string
-}
-
-export type SizeCategoryGroupCategoryIdLetterSizeGroupIdCompoundUniqueInput = {
-  categoryId: string
-  letterSizeGroupId: string
+export type SizeCategoryGroupNullableScalarRelationFilter = {
+  is?: Prisma.SizeCategoryGroupWhereInput | null
+  isNot?: Prisma.SizeCategoryGroupWhereInput | null
 }
 
 export type SizeCategoryGroupCountOrderByAggregateInput = {
@@ -355,46 +338,46 @@ export type SizeCategoryGroupMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type SizeCategoryGroupCreateNestedManyWithoutCategoryInput = {
-  create?: Prisma.XOR<Prisma.SizeCategoryGroupCreateWithoutCategoryInput, Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput> | Prisma.SizeCategoryGroupCreateWithoutCategoryInput[] | Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.SizeCategoryGroupCreateOrConnectWithoutCategoryInput | Prisma.SizeCategoryGroupCreateOrConnectWithoutCategoryInput[]
-  createMany?: Prisma.SizeCategoryGroupCreateManyCategoryInputEnvelope
-  connect?: Prisma.SizeCategoryGroupWhereUniqueInput | Prisma.SizeCategoryGroupWhereUniqueInput[]
+export type SizeCategoryGroupListRelationFilter = {
+  every?: Prisma.SizeCategoryGroupWhereInput
+  some?: Prisma.SizeCategoryGroupWhereInput
+  none?: Prisma.SizeCategoryGroupWhereInput
 }
 
-export type SizeCategoryGroupUncheckedCreateNestedManyWithoutCategoryInput = {
-  create?: Prisma.XOR<Prisma.SizeCategoryGroupCreateWithoutCategoryInput, Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput> | Prisma.SizeCategoryGroupCreateWithoutCategoryInput[] | Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.SizeCategoryGroupCreateOrConnectWithoutCategoryInput | Prisma.SizeCategoryGroupCreateOrConnectWithoutCategoryInput[]
-  createMany?: Prisma.SizeCategoryGroupCreateManyCategoryInputEnvelope
-  connect?: Prisma.SizeCategoryGroupWhereUniqueInput | Prisma.SizeCategoryGroupWhereUniqueInput[]
+export type SizeCategoryGroupOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
-export type SizeCategoryGroupUpdateManyWithoutCategoryNestedInput = {
-  create?: Prisma.XOR<Prisma.SizeCategoryGroupCreateWithoutCategoryInput, Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput> | Prisma.SizeCategoryGroupCreateWithoutCategoryInput[] | Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.SizeCategoryGroupCreateOrConnectWithoutCategoryInput | Prisma.SizeCategoryGroupCreateOrConnectWithoutCategoryInput[]
-  upsert?: Prisma.SizeCategoryGroupUpsertWithWhereUniqueWithoutCategoryInput | Prisma.SizeCategoryGroupUpsertWithWhereUniqueWithoutCategoryInput[]
-  createMany?: Prisma.SizeCategoryGroupCreateManyCategoryInputEnvelope
-  set?: Prisma.SizeCategoryGroupWhereUniqueInput | Prisma.SizeCategoryGroupWhereUniqueInput[]
-  disconnect?: Prisma.SizeCategoryGroupWhereUniqueInput | Prisma.SizeCategoryGroupWhereUniqueInput[]
-  delete?: Prisma.SizeCategoryGroupWhereUniqueInput | Prisma.SizeCategoryGroupWhereUniqueInput[]
-  connect?: Prisma.SizeCategoryGroupWhereUniqueInput | Prisma.SizeCategoryGroupWhereUniqueInput[]
-  update?: Prisma.SizeCategoryGroupUpdateWithWhereUniqueWithoutCategoryInput | Prisma.SizeCategoryGroupUpdateWithWhereUniqueWithoutCategoryInput[]
-  updateMany?: Prisma.SizeCategoryGroupUpdateManyWithWhereWithoutCategoryInput | Prisma.SizeCategoryGroupUpdateManyWithWhereWithoutCategoryInput[]
-  deleteMany?: Prisma.SizeCategoryGroupScalarWhereInput | Prisma.SizeCategoryGroupScalarWhereInput[]
+export type SizeCategoryGroupCreateNestedOneWithoutCategoryInput = {
+  create?: Prisma.XOR<Prisma.SizeCategoryGroupCreateWithoutCategoryInput, Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput>
+  connectOrCreate?: Prisma.SizeCategoryGroupCreateOrConnectWithoutCategoryInput
+  connect?: Prisma.SizeCategoryGroupWhereUniqueInput
 }
 
-export type SizeCategoryGroupUncheckedUpdateManyWithoutCategoryNestedInput = {
-  create?: Prisma.XOR<Prisma.SizeCategoryGroupCreateWithoutCategoryInput, Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput> | Prisma.SizeCategoryGroupCreateWithoutCategoryInput[] | Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.SizeCategoryGroupCreateOrConnectWithoutCategoryInput | Prisma.SizeCategoryGroupCreateOrConnectWithoutCategoryInput[]
-  upsert?: Prisma.SizeCategoryGroupUpsertWithWhereUniqueWithoutCategoryInput | Prisma.SizeCategoryGroupUpsertWithWhereUniqueWithoutCategoryInput[]
-  createMany?: Prisma.SizeCategoryGroupCreateManyCategoryInputEnvelope
-  set?: Prisma.SizeCategoryGroupWhereUniqueInput | Prisma.SizeCategoryGroupWhereUniqueInput[]
-  disconnect?: Prisma.SizeCategoryGroupWhereUniqueInput | Prisma.SizeCategoryGroupWhereUniqueInput[]
-  delete?: Prisma.SizeCategoryGroupWhereUniqueInput | Prisma.SizeCategoryGroupWhereUniqueInput[]
-  connect?: Prisma.SizeCategoryGroupWhereUniqueInput | Prisma.SizeCategoryGroupWhereUniqueInput[]
-  update?: Prisma.SizeCategoryGroupUpdateWithWhereUniqueWithoutCategoryInput | Prisma.SizeCategoryGroupUpdateWithWhereUniqueWithoutCategoryInput[]
-  updateMany?: Prisma.SizeCategoryGroupUpdateManyWithWhereWithoutCategoryInput | Prisma.SizeCategoryGroupUpdateManyWithWhereWithoutCategoryInput[]
-  deleteMany?: Prisma.SizeCategoryGroupScalarWhereInput | Prisma.SizeCategoryGroupScalarWhereInput[]
+export type SizeCategoryGroupUncheckedCreateNestedOneWithoutCategoryInput = {
+  create?: Prisma.XOR<Prisma.SizeCategoryGroupCreateWithoutCategoryInput, Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput>
+  connectOrCreate?: Prisma.SizeCategoryGroupCreateOrConnectWithoutCategoryInput
+  connect?: Prisma.SizeCategoryGroupWhereUniqueInput
+}
+
+export type SizeCategoryGroupUpdateOneWithoutCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.SizeCategoryGroupCreateWithoutCategoryInput, Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput>
+  connectOrCreate?: Prisma.SizeCategoryGroupCreateOrConnectWithoutCategoryInput
+  upsert?: Prisma.SizeCategoryGroupUpsertWithoutCategoryInput
+  disconnect?: Prisma.SizeCategoryGroupWhereInput | boolean
+  delete?: Prisma.SizeCategoryGroupWhereInput | boolean
+  connect?: Prisma.SizeCategoryGroupWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SizeCategoryGroupUpdateToOneWithWhereWithoutCategoryInput, Prisma.SizeCategoryGroupUpdateWithoutCategoryInput>, Prisma.SizeCategoryGroupUncheckedUpdateWithoutCategoryInput>
+}
+
+export type SizeCategoryGroupUncheckedUpdateOneWithoutCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.SizeCategoryGroupCreateWithoutCategoryInput, Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput>
+  connectOrCreate?: Prisma.SizeCategoryGroupCreateOrConnectWithoutCategoryInput
+  upsert?: Prisma.SizeCategoryGroupUpsertWithoutCategoryInput
+  disconnect?: Prisma.SizeCategoryGroupWhereInput | boolean
+  delete?: Prisma.SizeCategoryGroupWhereInput | boolean
+  connect?: Prisma.SizeCategoryGroupWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SizeCategoryGroupUpdateToOneWithWhereWithoutCategoryInput, Prisma.SizeCategoryGroupUpdateWithoutCategoryInput>, Prisma.SizeCategoryGroupUncheckedUpdateWithoutCategoryInput>
 }
 
 export type SizeCategoryGroupCreateNestedManyWithoutSizeGroupInput = {
@@ -502,44 +485,38 @@ export type SizeCategoryGroupCreateOrConnectWithoutCategoryInput = {
   create: Prisma.XOR<Prisma.SizeCategoryGroupCreateWithoutCategoryInput, Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput>
 }
 
-export type SizeCategoryGroupCreateManyCategoryInputEnvelope = {
-  data: Prisma.SizeCategoryGroupCreateManyCategoryInput | Prisma.SizeCategoryGroupCreateManyCategoryInput[]
-  skipDuplicates?: boolean
-}
-
-export type SizeCategoryGroupUpsertWithWhereUniqueWithoutCategoryInput = {
-  where: Prisma.SizeCategoryGroupWhereUniqueInput
+export type SizeCategoryGroupUpsertWithoutCategoryInput = {
   update: Prisma.XOR<Prisma.SizeCategoryGroupUpdateWithoutCategoryInput, Prisma.SizeCategoryGroupUncheckedUpdateWithoutCategoryInput>
   create: Prisma.XOR<Prisma.SizeCategoryGroupCreateWithoutCategoryInput, Prisma.SizeCategoryGroupUncheckedCreateWithoutCategoryInput>
+  where?: Prisma.SizeCategoryGroupWhereInput
 }
 
-export type SizeCategoryGroupUpdateWithWhereUniqueWithoutCategoryInput = {
-  where: Prisma.SizeCategoryGroupWhereUniqueInput
+export type SizeCategoryGroupUpdateToOneWithWhereWithoutCategoryInput = {
+  where?: Prisma.SizeCategoryGroupWhereInput
   data: Prisma.XOR<Prisma.SizeCategoryGroupUpdateWithoutCategoryInput, Prisma.SizeCategoryGroupUncheckedUpdateWithoutCategoryInput>
 }
 
-export type SizeCategoryGroupUpdateManyWithWhereWithoutCategoryInput = {
-  where: Prisma.SizeCategoryGroupScalarWhereInput
-  data: Prisma.XOR<Prisma.SizeCategoryGroupUpdateManyMutationInput, Prisma.SizeCategoryGroupUncheckedUpdateManyWithoutCategoryInput>
+export type SizeCategoryGroupUpdateWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sizeGroup?: Prisma.SizeGroupUpdateOneWithoutSizeCategoriesNestedInput
+  letterSizeGroup?: Prisma.LetterSizeGroupUpdateOneWithoutLetterSizeCategoryGroupNestedInput
 }
 
-export type SizeCategoryGroupScalarWhereInput = {
-  AND?: Prisma.SizeCategoryGroupScalarWhereInput | Prisma.SizeCategoryGroupScalarWhereInput[]
-  OR?: Prisma.SizeCategoryGroupScalarWhereInput[]
-  NOT?: Prisma.SizeCategoryGroupScalarWhereInput | Prisma.SizeCategoryGroupScalarWhereInput[]
-  id?: Prisma.StringFilter<"SizeCategoryGroup"> | string
-  categoryId?: Prisma.StringFilter<"SizeCategoryGroup"> | string
-  sizeGroupId?: Prisma.StringNullableFilter<"SizeCategoryGroup"> | string | null
-  letterSizeGroupId?: Prisma.StringNullableFilter<"SizeCategoryGroup"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"SizeCategoryGroup"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"SizeCategoryGroup"> | Date | string
+export type SizeCategoryGroupUncheckedUpdateWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sizeGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  letterSizeGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SizeCategoryGroupCreateWithoutSizeGroupInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutSizesInput
+  category: Prisma.CategoryCreateNestedOneWithoutSizeInput
   letterSizeGroup?: Prisma.LetterSizeGroupCreateNestedOneWithoutLetterSizeCategoryGroupInput
 }
 
@@ -577,11 +554,23 @@ export type SizeCategoryGroupUpdateManyWithWhereWithoutSizeGroupInput = {
   data: Prisma.XOR<Prisma.SizeCategoryGroupUpdateManyMutationInput, Prisma.SizeCategoryGroupUncheckedUpdateManyWithoutSizeGroupInput>
 }
 
+export type SizeCategoryGroupScalarWhereInput = {
+  AND?: Prisma.SizeCategoryGroupScalarWhereInput | Prisma.SizeCategoryGroupScalarWhereInput[]
+  OR?: Prisma.SizeCategoryGroupScalarWhereInput[]
+  NOT?: Prisma.SizeCategoryGroupScalarWhereInput | Prisma.SizeCategoryGroupScalarWhereInput[]
+  id?: Prisma.StringFilter<"SizeCategoryGroup"> | string
+  categoryId?: Prisma.StringFilter<"SizeCategoryGroup"> | string
+  sizeGroupId?: Prisma.StringNullableFilter<"SizeCategoryGroup"> | string | null
+  letterSizeGroupId?: Prisma.StringNullableFilter<"SizeCategoryGroup"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"SizeCategoryGroup"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"SizeCategoryGroup"> | Date | string
+}
+
 export type SizeCategoryGroupCreateWithoutLetterSizeGroupInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutSizesInput
+  category: Prisma.CategoryCreateNestedOneWithoutSizeInput
   sizeGroup?: Prisma.SizeGroupCreateNestedOneWithoutSizeCategoriesInput
 }
 
@@ -619,38 +608,6 @@ export type SizeCategoryGroupUpdateManyWithWhereWithoutLetterSizeGroupInput = {
   data: Prisma.XOR<Prisma.SizeCategoryGroupUpdateManyMutationInput, Prisma.SizeCategoryGroupUncheckedUpdateManyWithoutLetterSizeGroupInput>
 }
 
-export type SizeCategoryGroupCreateManyCategoryInput = {
-  id?: string
-  sizeGroupId?: string | null
-  letterSizeGroupId?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type SizeCategoryGroupUpdateWithoutCategoryInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sizeGroup?: Prisma.SizeGroupUpdateOneWithoutSizeCategoriesNestedInput
-  letterSizeGroup?: Prisma.LetterSizeGroupUpdateOneWithoutLetterSizeCategoryGroupNestedInput
-}
-
-export type SizeCategoryGroupUncheckedUpdateWithoutCategoryInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  sizeGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  letterSizeGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type SizeCategoryGroupUncheckedUpdateManyWithoutCategoryInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  sizeGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  letterSizeGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
 export type SizeCategoryGroupCreateManySizeGroupInput = {
   id?: string
   categoryId: string
@@ -663,7 +620,7 @@ export type SizeCategoryGroupUpdateWithoutSizeGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutSizesNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutSizeNestedInput
   letterSizeGroup?: Prisma.LetterSizeGroupUpdateOneWithoutLetterSizeCategoryGroupNestedInput
 }
 
@@ -695,7 +652,7 @@ export type SizeCategoryGroupUpdateWithoutLetterSizeGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutSizesNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutSizeNestedInput
   sizeGroup?: Prisma.SizeGroupUpdateOneWithoutSizeCategoriesNestedInput
 }
 

@@ -22,6 +22,7 @@ type ProductOtherPayload = {
     images: { key: string, url: string }[],
     charities: string[],
     donationPrivacy: boolean,
+    meterials : string[]
 }
 
 const addNewProduct = async (payload: Product & ProductOtherPayload, role: string, userId: string) => {
