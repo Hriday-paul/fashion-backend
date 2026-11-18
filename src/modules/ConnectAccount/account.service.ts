@@ -6,6 +6,7 @@ import config from "../../config";
 import { WithdrawQueue } from "../../queues/withdraw.queue";
 import { jobs } from "../../queues/jobs.name";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
+import { Prisma } from "../../../generated/prisma/client";
 
 const accountBalance = async (userId: string) => {
     const balance = await prisma.wallet.findFirst({ where: { sellerId: userId } });
@@ -184,14 +185,32 @@ const requestToWithdraw = async (userId: string, amount: number) => {
 
 }
 
-const transactionHistory = async (userId: string, options: TPaginationOptions) => {
+const transactionHistory = async (userId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
+    const { direction } = query;
+
+    const AndConditions: Prisma.WalletTransactionWhereInput[] = [{
+        userId: userId
+    }];
+
+    if (direction) {
+        if (direction == "IN") {
+            AndConditions.push({
+                direction: "IN"
+            });
+        } else if (direction == "OUT") {
+            AndConditions.push({
+                direction: "OUT"
+            });
+        }
+    }
+
+    const whereConditions: Prisma.WalletTransactionWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
+
     const payouts = await prisma.walletTransaction.findMany({
-        where: {
-            userId: userId
-        },
+        where: whereConditions,
         skip,
         take: limit,
         orderBy: {

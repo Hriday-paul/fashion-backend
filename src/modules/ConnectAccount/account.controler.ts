@@ -72,8 +72,9 @@ const requestToWithdraw = catchAsync(async (req, res) => {
 });
 
 const transactionHistory = catchAsync(async (req, res) => {
+    const query = pick(req.query, ["direction"]);
     const options = pick(req.query, PaginateOptions);
-    const result = await accountService.transactionHistory(req?.user?.id, options);
+    const result = await accountService.transactionHistory(req?.user?.id, query, options);
     sendResponse(res, {
         success: true,
         statusCode: httpStatus.OK,
