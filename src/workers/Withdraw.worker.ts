@@ -12,7 +12,7 @@ export const withDrawWorker = new Worker("withdraw-balance", async (job: Job<{ u
 
     const transfer = await stripe.transfers.create({
         amount: Math.round(amount * 100),
-        currency: 'usd',
+        currency: 'GBP',
         destination: connectAccountId,
     }, {
         // idempotencyKey: idempotencyKey

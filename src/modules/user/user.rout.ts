@@ -24,7 +24,6 @@ router.patch(
     auth(...allRoles),
     image_Upload.fields([
         { name: "picture", maxCount: 1 },
-        { name: "banner", maxCount: 1 },
         { name: "charityThumbnail", maxCount: 1 },
         { name: "charityImgs", maxCount: 8 }
     ]),

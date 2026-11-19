@@ -19,11 +19,6 @@ export const addProductValidator: ValidationChain[] = [
     .notEmpty().withMessage("discountPct is required")
     .isFloat({ min: 0, max: 100 }).withMessage("discountPct must be between 0 to 100"),
 
-  body("currency")
-    .optional()
-    .trim()
-    .isISO4217().withMessage("Currency must be a valid ISO 4217 currency code (e.g. USD, EUR)"),
-
   // Relations (IDs)
   body("brandId")
     .trim()

@@ -8,7 +8,6 @@ model DirectDonation {
   charity   User   @relation("charity", fields: [charityId], references: [id], onDelete: Restrict)
 
   amount   Float @default(0)
-  currency String  @default("USD")
 
   thanksMsg DonationThanksMSg?
 

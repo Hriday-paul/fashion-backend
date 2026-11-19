@@ -28,7 +28,7 @@ const donationCheckout = async (
   payload: DirectDonation,
   userId: string
 ) => {
-  const { donatedAt, currency, updatedAt, ...body } = payload;
+  const { donatedAt, updatedAt, ...body } = payload;
 
   if (userId == body?.charityId) {
     throw new AppError(

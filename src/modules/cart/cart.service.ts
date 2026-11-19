@@ -469,7 +469,7 @@ const getRates = async ({ origin, destination, items }: { origin: BillingDetails
                 "weight": "kg",
                 "dimensions": "cm"
             },
-            "output_currency": "USD"
+            "output_currency": "GBP"
         },
         "parcels": [
             {
@@ -483,7 +483,7 @@ const getRates = async ({ origin, destination, items }: { origin: BillingDetails
                             "width": item?.width_cm,
                             "length": item?.length_cm
                         },
-                        "declared_currency": "USD",
+                        "declared_currency": "GBP",
                         "declared_customs_value": item?.finalPrice || 0
                     }
                 }),

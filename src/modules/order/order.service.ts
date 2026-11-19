@@ -80,7 +80,7 @@ export const placeOrderShipment = async ({ origin, destination, items, courierSe
                 "weight": "kg",
                 "dimensions": "cm"
             },
-            "output_currency": "USD"
+            "output_currency": "GBP"
         },
         "parcels": [
             {
@@ -96,7 +96,7 @@ export const placeOrderShipment = async ({ origin, destination, items, courierSe
                             "length": item?.length_cm
                         },
                         "actual_weight": item?.weight_kg,
-                        "declared_currency": "USD",
+                        "declared_currency": "GBP",
                         "declared_customs_value": item?.finalPrice || 0,
                     }
                 }),
@@ -3548,7 +3548,7 @@ const updateOrderShipment = async ({ orderItems, shipment_id, parcelId }: { ship
                             "width": item?.product?.width_cm,
                             "length": item?.product?.length_cm
                         },
-                        "declared_currency": "USD",
+                        "declared_currency": "GBP",
                         "declared_customs_value": item?.product?.finalPrice || 0,
                         "actual_weight": item?.product?.weight_kg,
                     }
@@ -4686,7 +4686,7 @@ const generateOrderAuthShipment = async (adminId: string, orderId: string) => {
                 "weight": "kg",
                 "dimensions": "cm"
             },
-            "output_currency": "USD",
+            "output_currency": "GBP",
             "buy_label": true,
             "buy_label_synchronous": true,
             "printing_options": {
@@ -4707,7 +4707,7 @@ const generateOrderAuthShipment = async (adminId: string, orderId: string) => {
                             "length": item?.product?.length_cm
                         },
                         "actual_weight": item?.product?.weight_kg,
-                        "declared_currency": "USD",
+                        "declared_currency": "GBP",
                         "declared_customs_value": item?.unitPrice || 0,
                     }
 

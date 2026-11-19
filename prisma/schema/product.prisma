@@ -8,7 +8,6 @@ model Product {
     price       Float  @default(0) // original/main price
     discountPct Float  @default(0) // e.g. 20 = 20%
     finalPrice  Float  @default(0) // computed and stored
-    currency    String @default("USD")
 
     brandId String
     brand   Brand  @relation(fields: [brandId], references: [id], onDelete: Cascade)

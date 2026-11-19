@@ -59,7 +59,6 @@ export type ProductMinAggregateOutputType = {
   price: number | null
   discountPct: number | null
   finalPrice: number | null
-  currency: string | null
   brandId: string | null
   sizeId: string | null
   SizeFormat: $Enums.SizeFormat | null
@@ -89,7 +88,6 @@ export type ProductMaxAggregateOutputType = {
   price: number | null
   discountPct: number | null
   finalPrice: number | null
-  currency: string | null
   brandId: string | null
   sizeId: string | null
   SizeFormat: $Enums.SizeFormat | null
@@ -119,7 +117,6 @@ export type ProductCountAggregateOutputType = {
   price: number
   discountPct: number
   finalPrice: number
-  currency: number
   brandId: number
   sizeId: number
   SizeFormat: number
@@ -180,7 +177,6 @@ export type ProductMinAggregateInputType = {
   price?: true
   discountPct?: true
   finalPrice?: true
-  currency?: true
   brandId?: true
   sizeId?: true
   SizeFormat?: true
@@ -210,7 +206,6 @@ export type ProductMaxAggregateInputType = {
   price?: true
   discountPct?: true
   finalPrice?: true
-  currency?: true
   brandId?: true
   sizeId?: true
   SizeFormat?: true
@@ -240,7 +235,6 @@ export type ProductCountAggregateInputType = {
   price?: true
   discountPct?: true
   finalPrice?: true
-  currency?: true
   brandId?: true
   sizeId?: true
   SizeFormat?: true
@@ -360,7 +354,6 @@ export type ProductGroupByOutputType = {
   price: number
   discountPct: number
   finalPrice: number
-  currency: string
   brandId: string
   sizeId: string
   SizeFormat: $Enums.SizeFormat
@@ -416,7 +409,6 @@ export type ProductWhereInput = {
   price?: Prisma.FloatFilter<"Product"> | number
   discountPct?: Prisma.FloatFilter<"Product"> | number
   finalPrice?: Prisma.FloatFilter<"Product"> | number
-  currency?: Prisma.StringFilter<"Product"> | string
   brandId?: Prisma.StringFilter<"Product"> | string
   sizeId?: Prisma.StringFilter<"Product"> | string
   SizeFormat?: Prisma.EnumSizeFormatFilter<"Product"> | $Enums.SizeFormat
@@ -464,7 +456,6 @@ export type ProductOrderByWithRelationInput = {
   price?: Prisma.SortOrder
   discountPct?: Prisma.SortOrder
   finalPrice?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
   brandId?: Prisma.SortOrder
   sizeId?: Prisma.SortOrder
   SizeFormat?: Prisma.SortOrder
@@ -515,7 +506,6 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   price?: Prisma.FloatFilter<"Product"> | number
   discountPct?: Prisma.FloatFilter<"Product"> | number
   finalPrice?: Prisma.FloatFilter<"Product"> | number
-  currency?: Prisma.StringFilter<"Product"> | string
   brandId?: Prisma.StringFilter<"Product"> | string
   sizeId?: Prisma.StringFilter<"Product"> | string
   SizeFormat?: Prisma.EnumSizeFormatFilter<"Product"> | $Enums.SizeFormat
@@ -563,7 +553,6 @@ export type ProductOrderByWithAggregationInput = {
   price?: Prisma.SortOrder
   discountPct?: Prisma.SortOrder
   finalPrice?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
   brandId?: Prisma.SortOrder
   sizeId?: Prisma.SortOrder
   SizeFormat?: Prisma.SortOrder
@@ -604,7 +593,6 @@ export type ProductScalarWhereWithAggregatesInput = {
   price?: Prisma.FloatWithAggregatesFilter<"Product"> | number
   discountPct?: Prisma.FloatWithAggregatesFilter<"Product"> | number
   finalPrice?: Prisma.FloatWithAggregatesFilter<"Product"> | number
-  currency?: Prisma.StringWithAggregatesFilter<"Product"> | string
   brandId?: Prisma.StringWithAggregatesFilter<"Product"> | string
   sizeId?: Prisma.StringWithAggregatesFilter<"Product"> | string
   SizeFormat?: Prisma.EnumSizeFormatWithAggregatesFilter<"Product"> | $Enums.SizeFormat
@@ -637,7 +625,6 @@ export type ProductCreateInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -680,7 +667,6 @@ export type ProductUncheckedCreateInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -723,7 +709,6 @@ export type ProductUpdateInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -766,7 +751,6 @@ export type ProductUncheckedUpdateInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -809,7 +793,6 @@ export type ProductCreateManyInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -842,7 +825,6 @@ export type ProductUpdateManyMutationInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -870,7 +852,6 @@ export type ProductUncheckedUpdateManyInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -918,7 +899,6 @@ export type ProductCountOrderByAggregateInput = {
   price?: Prisma.SortOrder
   discountPct?: Prisma.SortOrder
   finalPrice?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
   brandId?: Prisma.SortOrder
   sizeId?: Prisma.SortOrder
   SizeFormat?: Prisma.SortOrder
@@ -964,7 +944,6 @@ export type ProductMaxOrderByAggregateInput = {
   price?: Prisma.SortOrder
   discountPct?: Prisma.SortOrder
   finalPrice?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
   brandId?: Prisma.SortOrder
   sizeId?: Prisma.SortOrder
   SizeFormat?: Prisma.SortOrder
@@ -994,7 +973,6 @@ export type ProductMinOrderByAggregateInput = {
   price?: Prisma.SortOrder
   discountPct?: Prisma.SortOrder
   finalPrice?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
   brandId?: Prisma.SortOrder
   sizeId?: Prisma.SortOrder
   SizeFormat?: Prisma.SortOrder
@@ -1418,7 +1396,6 @@ export type ProductCreateWithoutAssistentSellInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -1460,7 +1437,6 @@ export type ProductUncheckedCreateWithoutAssistentSellInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -1531,7 +1507,6 @@ export type ProductScalarWhereInput = {
   price?: Prisma.FloatFilter<"Product"> | number
   discountPct?: Prisma.FloatFilter<"Product"> | number
   finalPrice?: Prisma.FloatFilter<"Product"> | number
-  currency?: Prisma.StringFilter<"Product"> | string
   brandId?: Prisma.StringFilter<"Product"> | string
   sizeId?: Prisma.StringFilter<"Product"> | string
   SizeFormat?: Prisma.EnumSizeFormatFilter<"Product"> | $Enums.SizeFormat
@@ -1564,7 +1539,6 @@ export type ProductCreateWithoutCategoryInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -1606,7 +1580,6 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -1674,7 +1647,6 @@ export type ProductCreateWithoutBrandInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -1716,7 +1688,6 @@ export type ProductUncheckedCreateWithoutBrandInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
   categoryId: string
@@ -1784,7 +1755,6 @@ export type ProductCreateWithoutSizeInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -1826,7 +1796,6 @@ export type ProductUncheckedCreateWithoutSizeInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   SizeFormat?: $Enums.SizeFormat
   categoryId: string
@@ -1894,7 +1863,6 @@ export type ProductCreateWithoutChatItemsInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -1936,7 +1904,6 @@ export type ProductUncheckedCreateWithoutChatItemsInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -1994,7 +1961,6 @@ export type ProductUpdateWithoutChatItemsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2036,7 +2002,6 @@ export type ProductUncheckedUpdateWithoutChatItemsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -2078,7 +2043,6 @@ export type ProductCreateWithoutOrderItemsInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -2120,7 +2084,6 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -2178,7 +2141,6 @@ export type ProductUpdateWithoutOrderItemsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2220,7 +2182,6 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -2262,7 +2223,6 @@ export type ProductCreateWithoutMaterialsInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -2304,7 +2264,6 @@ export type ProductUncheckedCreateWithoutMaterialsInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -2362,7 +2321,6 @@ export type ProductUpdateWithoutMaterialsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2404,7 +2362,6 @@ export type ProductUncheckedUpdateWithoutMaterialsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -2446,7 +2403,6 @@ export type ProductCreateWithoutImagesInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -2488,7 +2444,6 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -2546,7 +2501,6 @@ export type ProductUpdateWithoutImagesInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2588,7 +2542,6 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -2630,7 +2583,6 @@ export type ProductCreateWithoutCharitiesInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -2672,7 +2624,6 @@ export type ProductUncheckedCreateWithoutCharitiesInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -2730,7 +2681,6 @@ export type ProductUpdateWithoutCharitiesInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2772,7 +2722,6 @@ export type ProductUncheckedUpdateWithoutCharitiesInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -2814,7 +2763,6 @@ export type ProductCreateWithoutFavouritesInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -2856,7 +2804,6 @@ export type ProductUncheckedCreateWithoutFavouritesInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -2914,7 +2861,6 @@ export type ProductUpdateWithoutFavouritesInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2956,7 +2902,6 @@ export type ProductUncheckedUpdateWithoutFavouritesInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -2998,7 +2943,6 @@ export type ProductCreateWithoutCartItemsInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -3040,7 +2984,6 @@ export type ProductUncheckedCreateWithoutCartItemsInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -3098,7 +3041,6 @@ export type ProductUpdateWithoutCartItemsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3140,7 +3082,6 @@ export type ProductUncheckedUpdateWithoutCartItemsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -3182,7 +3123,6 @@ export type ProductCreateWithoutOfferItemsInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -3224,7 +3164,6 @@ export type ProductUncheckedCreateWithoutOfferItemsInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -3282,7 +3221,6 @@ export type ProductUpdateWithoutOfferItemsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3324,7 +3262,6 @@ export type ProductUncheckedUpdateWithoutOfferItemsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -3366,7 +3303,6 @@ export type ProductCreateWithoutViewersInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -3408,7 +3344,6 @@ export type ProductUncheckedCreateWithoutViewersInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -3466,7 +3401,6 @@ export type ProductUpdateWithoutViewersInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3508,7 +3442,6 @@ export type ProductUncheckedUpdateWithoutViewersInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -3550,7 +3483,6 @@ export type ProductCreateWithoutQuestionsInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -3592,7 +3524,6 @@ export type ProductUncheckedCreateWithoutQuestionsInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -3650,7 +3581,6 @@ export type ProductUpdateWithoutQuestionsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3692,7 +3622,6 @@ export type ProductUncheckedUpdateWithoutQuestionsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -3734,7 +3663,6 @@ export type ProductCreateWithoutUserInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   SizeFormat?: $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductCreatecatagory_hierarchyInput | string[]
   condition: string
@@ -3776,7 +3704,6 @@ export type ProductUncheckedCreateWithoutUserInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -3844,7 +3771,6 @@ export type ProductCreateManyAssistentSellInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -3876,7 +3802,6 @@ export type ProductUpdateWithoutAssistentSellInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3918,7 +3843,6 @@ export type ProductUncheckedUpdateWithoutAssistentSellInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -3960,7 +3884,6 @@ export type ProductUncheckedUpdateManyWithoutAssistentSellInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -3992,7 +3915,6 @@ export type ProductCreateManyCategoryInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -4024,7 +3946,6 @@ export type ProductUpdateWithoutCategoryInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4066,7 +3987,6 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -4108,7 +4028,6 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -4140,7 +4059,6 @@ export type ProductCreateManyBrandInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
   categoryId: string
@@ -4172,7 +4090,6 @@ export type ProductUpdateWithoutBrandInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4214,7 +4131,6 @@ export type ProductUncheckedUpdateWithoutBrandInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4256,7 +4172,6 @@ export type ProductUncheckedUpdateManyWithoutBrandInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4288,7 +4203,6 @@ export type ProductCreateManySizeInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   SizeFormat?: $Enums.SizeFormat
   categoryId: string
@@ -4320,7 +4234,6 @@ export type ProductUpdateWithoutSizeInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4362,7 +4275,6 @@ export type ProductUncheckedUpdateWithoutSizeInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4404,7 +4316,6 @@ export type ProductUncheckedUpdateManyWithoutSizeInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4436,7 +4347,6 @@ export type ProductCreateManyUserInput = {
   price?: number
   discountPct?: number
   finalPrice?: number
-  currency?: string
   brandId: string
   sizeId: string
   SizeFormat?: $Enums.SizeFormat
@@ -4468,7 +4378,6 @@ export type ProductUpdateWithoutUserInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
   catagory_hierarchy?: Prisma.ProductUpdatecatagory_hierarchyInput | string[]
   condition?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4510,7 +4419,6 @@ export type ProductUncheckedUpdateWithoutUserInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -4552,7 +4460,6 @@ export type ProductUncheckedUpdateManyWithoutUserInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   finalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
   brandId?: Prisma.StringFieldUpdateOperationsInput | string
   sizeId?: Prisma.StringFieldUpdateOperationsInput | string
   SizeFormat?: Prisma.EnumSizeFormatFieldUpdateOperationsInput | $Enums.SizeFormat
@@ -4696,7 +4603,6 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   price?: boolean
   discountPct?: boolean
   finalPrice?: boolean
-  currency?: boolean
   brandId?: boolean
   sizeId?: boolean
   SizeFormat?: boolean
@@ -4745,7 +4651,6 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   price?: boolean
   discountPct?: boolean
   finalPrice?: boolean
-  currency?: boolean
   brandId?: boolean
   sizeId?: boolean
   SizeFormat?: boolean
@@ -4783,7 +4688,6 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   price?: boolean
   discountPct?: boolean
   finalPrice?: boolean
-  currency?: boolean
   brandId?: boolean
   sizeId?: boolean
   SizeFormat?: boolean
@@ -4821,7 +4725,6 @@ export type ProductSelectScalar = {
   price?: boolean
   discountPct?: boolean
   finalPrice?: boolean
-  currency?: boolean
   brandId?: boolean
   sizeId?: boolean
   SizeFormat?: boolean
@@ -4847,7 +4750,7 @@ export type ProductSelectScalar = {
   length_cm?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "discountPct" | "finalPrice" | "currency" | "brandId" | "sizeId" | "SizeFormat" | "categoryId" | "catagory_hierarchy" | "condition" | "tags" | "color" | "care_instructions" | "stock" | "allow_offer" | "return_window" | "donation_percent" | "donationAnonymous" | "isDeleted" | "userId" | "assistentSellId" | "createdAt" | "updatedAt" | "weight_kg" | "hight_cm" | "width_cm" | "length_cm", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "discountPct" | "finalPrice" | "brandId" | "sizeId" | "SizeFormat" | "categoryId" | "catagory_hierarchy" | "condition" | "tags" | "color" | "care_instructions" | "stock" | "allow_offer" | "return_window" | "donation_percent" | "donationAnonymous" | "isDeleted" | "userId" | "assistentSellId" | "createdAt" | "updatedAt" | "weight_kg" | "hight_cm" | "width_cm" | "length_cm", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
@@ -4907,7 +4810,6 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     price: number
     discountPct: number
     finalPrice: number
-    currency: string
     brandId: string
     sizeId: string
     SizeFormat: $Enums.SizeFormat
@@ -5375,7 +5277,6 @@ export interface ProductFieldRefs {
   readonly price: Prisma.FieldRef<"Product", 'Float'>
   readonly discountPct: Prisma.FieldRef<"Product", 'Float'>
   readonly finalPrice: Prisma.FieldRef<"Product", 'Float'>
-  readonly currency: Prisma.FieldRef<"Product", 'String'>
   readonly brandId: Prisma.FieldRef<"Product", 'String'>
   readonly sizeId: Prisma.FieldRef<"Product", 'String'>
   readonly SizeFormat: Prisma.FieldRef<"Product", 'SizeFormat'>

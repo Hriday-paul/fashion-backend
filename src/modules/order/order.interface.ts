@@ -85,7 +85,7 @@ export interface IShipment {
                         "contains_battery_pi966": true,
                         "contains_battery_pi967": true,
                         "contains_liquids": true,
-                        "declared_currency": "USD",
+                        "declared_currency": "GBP",
                         "declared_customs_value": 20,
                         "description": "item",
                         "dimensions": {

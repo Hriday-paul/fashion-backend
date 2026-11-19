@@ -26,9 +26,15 @@ const updateProfile = async (payload: UserPayload, user: { userId: string, role:
 
     const { userId } = user;
 
-    const { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode, support_email, dltGalleries = [], charityImgs = [], charityThumbnail, image, bannerUrl, bannerKey } = payload;
+    // the banner (charityThumbnail) is only for charity, charity shop and eco-friendly store,
+    // whether it came from an uploaded file or from the JSON body
+    if (payload.charityThumbnail && !([Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE] as string[]).includes(user.role)) {
+        throw new AppError(httpStatus.FORBIDDEN, 'Banner is not available for your account type');
+    }
 
-    const updateFields: Partial<User> = { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode, support_email, bannerUrl, bannerKey };
+    const { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode, support_email, dltGalleries = [], charityImgs = [], charityThumbnail, image } = payload;
+
+    const updateFields: Partial<User> = { phone, fname, lname, business_tags, website, facebook, instagram, twitter, tiktok, mission, description, country, state, city, address, zip_code, fcmToken, bio, vacationMode, support_email };
 
     // Remove undefined or null fields to prevent overwriting existing values with null
     Object.keys(updateFields).forEach((key) => {
@@ -322,6 +328,7 @@ const userDetails = async (userName: string, currentUserId?: string) => {
                 }
             },
             charityGalleries: true,
+            charityThumbnail: true,
         },
     });
 

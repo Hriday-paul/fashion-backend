@@ -9,7 +9,6 @@ model Wallet {
   // balance = withdrawable amount
   balance                Decimal  @default(0) @db.Decimal(12, 2)
 
-  // currency               String   @default("USD")
   stripeConnectAccountId String?
 
   lastPayoutAt           DateTime?

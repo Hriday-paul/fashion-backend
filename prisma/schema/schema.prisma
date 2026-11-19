@@ -68,8 +68,6 @@ model User {
 
   picture           ProfilePicture?
 
-  bannerUrl String?
-  bannerKey String?
 
   account_documents AccountDocument[]
   mission           String?
