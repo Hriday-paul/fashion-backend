@@ -20,10 +20,6 @@ const createMessages = async (payload: Message & TFile) => {
   const chat = await prisma.chat.findFirst({
     where: {
       id: chatId,
-      OR: [
-        { user1Id: morePayload.senderId },
-        { user2Id: morePayload.senderId }
-      ]
     }
   });
 
@@ -58,11 +54,12 @@ const createMessages = async (payload: Message & TFile) => {
           picture: { select: { url: true } },
           userName: true
         }
-      }
+      },
+      SystemMessage : true,
     }
   })
 
-  SendMessageHandle((global as any).socketio, result, () => { })
+  SendMessageHandle((global as any).socketio, { ...result, user1Id: chat?.user1Id, user2Id: chat?.user2Id }, () => { })
 
   return result;
 };
@@ -127,6 +124,7 @@ const getAllPreMessages = async (chatId: string, currentUserId: string, options:
                   id: true,
                   title: true,
                   finalPrice: true,
+                  donation_percent : true,
                   stock: true,
                   images: {
                     take: 1,
@@ -153,7 +151,8 @@ const getAllPreMessages = async (chatId: string, currentUserId: string, options:
             }
           }
         }
-      }
+      },
+      SystemMessage: true
     },
     orderBy: {
       createdAt: "desc"

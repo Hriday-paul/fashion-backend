@@ -22,6 +22,7 @@ type ProductOtherPayload = {
     images: { key: string, url: string }[],
     charities: string[],
     donationPrivacy: boolean,
+    meterials : string[]
 }
 
 const addNewProduct = async (payload: Product & ProductOtherPayload, role: string, userId: string) => {
@@ -46,6 +47,20 @@ const addNewProduct = async (payload: Product & ProductOtherPayload, role: strin
     //checking have child category
     if (category?.children && category?.children?.length > 0) {
         throw new AppError(httpStatus.CONFLICT, "Please, select next catalog")
+    }
+
+    //the size must match the chosen format: LETTER uses the letter size group, other formats the size group
+    const size = await prisma.size.findUnique({ where: { id: payload?.sizeId } });
+    if (!size) {
+        throw new AppError(httpStatus.NOT_FOUND, "Selected size doesn't exist")
+    }
+    // callers that do not send a format (assisted sell) get one derived from the size
+    if (!morePayload.SizeFormat) {
+        morePayload.SizeFormat = size.letterGroupId ? "LETTER" : "US";
+    }
+    const isLetterFormat = morePayload.SizeFormat === "LETTER";
+    if (isLetterFormat !== Boolean(size.letterGroupId)) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Selected size doesn't match the size format")
     }
 
     //get category hierarchy list
@@ -134,7 +149,7 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, stock, authenticate, ...moreFields } = query;
+    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, materials, stock, authenticate, ...moreFields } = query;
 
     const cacheQuery: { [key: string]: unknown } = { limit, skip, sortBy, sortOrder, page };
 
@@ -202,12 +217,12 @@ const allProducts = async (query: Record<string, unknown>, options: TPaginationO
             },
         });
     }
-    if (meterials) {
-        const splitMeterials = (meterials as string).toLowerCase().split(",").map((s) => s.trim()).filter(Boolean).sort();
-        cacheQuery.meterials = splitMeterials;
+    const splitMaterials = materials ? (materials as string).split(",").map((s) => s.trim()).filter(Boolean).sort() : [];
+    if (splitMaterials.length > 0) {
+        cacheQuery.materials = splitMaterials;
         AndConditions.push({
-            meterials: {
-                hasSome: splitMeterials
+            materials: {
+                some: { materialId: { in: splitMaterials } }
             },
         });
     }
@@ -334,7 +349,7 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, meterials, showItemInCart, stock, authenticate, allowDonation, ...moreFields } = query;
+    const { searchTerm, category, minPrice, maxPrice, conditions, brands, sizes, colors, materials, showItemInCart, stock, authenticate, allowDonation, ...moreFields } = query;
 
     const cacheQuery: { [key: string]: unknown } = { limit, skip, sortBy, sortOrder, page };
 
@@ -404,14 +419,14 @@ const productsByUserId = async (query: Record<string, unknown>, options: TPagina
         });
         cacheQuery.colors = splitColors;
     }
-    if (meterials) {
-        const splitMeterials = (meterials as string).split(",").map((s) => s.trim()).filter(Boolean).sort();
+    const splitMaterials = materials ? (materials as string).split(",").map((s) => s.trim()).filter(Boolean).sort() : [];
+    if (splitMaterials.length > 0) {
         AndConditions.push({
-            meterials: {
-                hasSome: splitMeterials
+            materials: {
+                some: { materialId: { in: splitMaterials } }
             },
         });
-        cacheQuery.meterials = splitMeterials;
+        cacheQuery.materials = splitMaterials;
     }
 
     if (minPrice || maxPrice) {
@@ -1021,15 +1036,21 @@ const productDetails = async (productId: string, req: Request, userId?: string) 
         await redisPub.del(recentViewCacheKey);
     }
 
-    const sizechart = await prisma.size.findMany({
-        where: {
-            sizeCategoryHierarchyGroups: {
-                some: {
-                    categoryId: details?.categoryId
-                }
+    // size chart = the full group the product size belongs to (size group or letter group)
+    const sizeWithGroup = details?.sizeId
+        ? await prisma.size.findUnique({
+            where: { id: details.sizeId },
+            include: {
+                sizeGroup: { include: { sizes: { orderBy: { order: "asc" } } } },
+                letterSizeGroup: { include: { sizes: { orderBy: { order: "asc" } } } },
             }
-        }
-    })
+        })
+        : null;
+
+    const chartGroup = sizeWithGroup?.sizeGroup ?? sizeWithGroup?.letterSizeGroup ?? null;
+    const sizechart = chartGroup
+        ? { groupName: chartGroup.groupName, isLetter: Boolean(sizeWithGroup?.letterSizeGroup), sizes: chartGroup.sizes }
+        : null;
 
     const result = {
         ...details,
@@ -1794,7 +1815,8 @@ const makeAnOfferAsBuyer = async (
                 receiverId: user2Id,
                 senderId: currentUserId,
                 offerId: offer.id,
-                chatId: chat.id
+                chatId: chat.id,
+                type: "OFFER",
             },
             include: {
                 files: true,
@@ -1831,6 +1853,7 @@ const makeAnOfferAsBuyer = async (
                                         stock: true,
                                         id: true,
                                         title: true,
+                                        donation_percent: true,
                                         images: {
                                             take: 1,
                                             orderBy: {
@@ -1866,7 +1889,7 @@ const makeAnOfferAsBuyer = async (
     // Send realtime message
     SendMessageHandle(
         (global as any).socketio,
-        result.msg,
+        { ...result.msg, user1Id: chat?.user1Id, user2Id: chat?.user2Id },
         () => { }
     );
 
@@ -1897,7 +1920,7 @@ const makeAnOfferAsBuyer = async (
         }
     });
 
-    return result;
+    return chat;
 };
 
 const acceptOfferAsSeller = async (offerId: string, currentUser: { id: string, userName: string }) => {
@@ -1980,6 +2003,7 @@ const acceptOfferAsSeller = async (offerId: string, currentUser: { id: string, u
                                     stock: true,
                                     id: true,
                                     title: true,
+                                    donation_percent: true,
                                     images: {
                                         take: 1,
                                         select: {
@@ -2002,12 +2026,13 @@ const acceptOfferAsSeller = async (offerId: string, currentUser: { id: string, u
                         }
                     }
                 }
-            }
+            },
+            chat: true
         }
     })
 
     if (msg) {
-        UpdateMessageHandle((global as any).socketio, msg, () => { })
+        UpdateMessageHandle((global as any).socketio, { ...msg, user1Id: msg?.chat?.user1Id, user2Id: msg?.chat?.user2Id }, () => { })
     }
 
     //send notification to the buyer about the offer
@@ -2035,9 +2060,9 @@ const acceptOfferAsSeller = async (offerId: string, currentUser: { id: string, u
 
 }
 
-const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPrice: number }, currentUser: { id: string, userName: string }) => {
+const declineOfferAsSeller = async (payload: { offerId: string }, currentUser: { id: string, userName: string }) => {
 
-    const { offerId, offerPrice } = payload;
+    const { offerId } = payload;
     const { id: currentUserId, userName: currentUserName } = currentUser;
 
     const offer = await offerService.offerDetils(offerId);
@@ -2082,32 +2107,14 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
             }
         });
 
-        // Create a new offer with the counter offer price
-        const newOffer = await tx.offer.create({
-            data: {
-                buyerId: offer.buyerId,
-                sellerId: offer.sellerId,
-                offeredPrice: offerPrice,
-                actualPrice: items?.reduce((sum, p) => sum + p.finalPrice, 0),
-                offerItems: {
-                    create: items?.map(p => ({
-                        productId: p?.id,
-                        quantity: 1
-                    }))
-                },
-                expiredAt: moment().add(24, 'hours').toDate(), // set expiration time to 24 hours from now
-                sendByBuyer: false,
-                status: "ACCEPTED"
-            }
-        });
-
         // Create a message to notify the buyer about the counter offer
-        const msg = await tx.message.create({
-            data: {
+        const msg = await tx.message.findFirst({
+            where: {
                 receiverId: offer?.buyerId,
                 senderId: offer?.sellerId,
-                offerId: newOffer?.id,
-                chatId: chat?.id
+                offerId: rejectedOffer?.id,
+                chatId: chat?.id,
+                type: "OFFER"
             },
             include: {
                 files: true,
@@ -2144,6 +2151,7 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
                                         stock: true,
                                         id: true,
                                         title: true,
+                                        donation_percent: true,
                                         images: {
                                             take: 1,
                                             select: {
@@ -2170,7 +2178,7 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
             }
         })
 
-        return { newMsg: msg, rejectedOffer, newOffer };
+        return { newMsg: msg, rejectedOffer };
 
     })
 
@@ -2215,6 +2223,171 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
                                         stock: true,
                                         id: true,
                                         title: true,
+                                        donation_percent: true,
+                                        images: {
+                                            take: 1,
+                                            select: {
+                                                id: true,
+                                                url: true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        seller: {
+                            select: {
+                                id: true,
+                                userName: true,
+                                picture: {
+                                    select: {
+                                        url: true
+                                    }
+                                }
+                            }
+                        },
+                        buyer: {
+                            select: {
+                                fcmToken: true
+                            }
+                        }
+                    }
+                },
+                chat: true
+            }
+        })
+        if (oldMsg) {
+            UpdateMessageHandle((global as any).socketio, { ...oldMsg, user1Id: oldMsg?.chat?.user1Id, user2Id: oldMsg?.chat?.user2Id }, () => { })
+        }
+
+        const sellerUserName = oldMsg?.offer?.seller?.userName;
+
+        //send notification to the buyer about the offer
+        await notificationQueue.add(jobs.notification, {
+            allowPushNotification: true,
+            payload: {
+                title: `**${sellerUserName}** declined your offer`,
+                message: `**${sellerUserName}** declined your offer after reviewing request.`,
+                actorId: currentUserId,
+                receiverId: offer?.buyerId,
+                entityId: chat?.id,
+                entityType: "OFFER",
+                entityImgs: offer?.offerItems?.map(i => i?.product?.images[0]?.url),
+                type: "OFFER_REJECTED",
+                fcmToken: offer?.buyer?.fcmToken,
+                groupKeyId: offer?.id
+            }
+        })
+    }
+
+    //dlt the offer cache
+    const offerCacheKey = await redisKeys.offerItemsKey({ offerId: result?.rejectedOffer?.id });
+    await redisPub.del(offerCacheKey);
+
+    return;
+}
+
+const counterOfferAsSeller = async (payload: { offerId: string, offerPrice: number }, currentUser: { id: string, userName: string }) => {
+
+    const { offerId, offerPrice } = payload;
+    const { id: currentUserId, userName: currentUserName } = currentUser;
+
+    const offer = await offerService.offerDetils(offerId);
+
+    if (!offer) {
+        throw new AppError(httpStatus.NOT_FOUND, "Offer does not exist");
+    }
+
+    if (offer.sellerId !== currentUserId) {
+        throw new AppError(httpStatus.FORBIDDEN, "You are not authorized to accept this offer");
+    }
+
+    const items = await prisma.product.findMany({
+        where: {
+            id: { in: offer?.offerItems?.map(item => item.product.id) },
+            isDeleted: false,
+            stock: { gt: 0 }
+        },
+        select: {
+            id: true,
+            finalPrice: true
+        }
+    });
+
+    if (items.length !== offer?.offerItems?.length) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Some items are no longer available");
+    }
+
+    const productIds = items.map(p => p?.id);
+
+    const chat = await chatService.createChat({ currentUserId: offer?.sellerId, user2Id: offer?.buyerId, products: productIds });
+
+    const result = await prisma.$transaction(async (tx) => {
+
+        // Create a new offer with the counter offer price
+        const newOffer = await tx.offer.create({
+            data: {
+                buyerId: offer.buyerId,
+                sellerId: offer.sellerId,
+                offeredPrice: offerPrice,
+                actualPrice: items?.reduce((sum, p) => sum + p.finalPrice, 0),
+                offerItems: {
+                    create: items?.map(p => ({
+                        productId: p?.id,
+                        quantity: 1
+                    }))
+                },
+                expiredAt: moment().add(24, 'hours').toDate(), // set expiration time to 24 hours from now
+                sendByBuyer: false,
+                status: "ACCEPTED"
+            }
+        });
+
+        // Create a message to notify the buyer about the counter offer
+        const msg = await tx.message.create({
+            data: {
+                receiverId: offer?.buyerId,
+                senderId: offer?.sellerId,
+                offerId: newOffer?.id,
+                chatId: chat?.id,
+                type: "OFFER"
+            },
+            include: {
+                files: true,
+                sender: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                receiver: {
+                    select: {
+                        id: true,
+                        picture: {
+                            select: {
+                                url: true
+                            }
+                        },
+                        userName: true
+                    }
+                },
+                offer: {
+                    include: {
+                        offerItems: {
+                            select: {
+                                id: true,
+                                product: {
+                                    select: {
+                                        finalPrice: true,
+                                        stock: true,
+                                        id: true,
+                                        title: true,
+                                        donation_percent: true,
                                         images: {
                                             take: 1,
                                             select: {
@@ -2240,13 +2413,13 @@ const declineCounterOfferAsSeller = async (payload: { offerId: string, offerPric
                 }
             }
         })
-        if (oldMsg) {
-            UpdateMessageHandle((global as any).socketio, oldMsg, () => { })
-        }
-    }
+
+        return { newMsg: msg, newOffer };
+
+    })
 
     //sending socket message to buyer about new offer
-    SendMessageHandle((global as any).socketio, result?.newMsg, () => { })
+    SendMessageHandle((global as any).socketio, { ...result?.newMsg, user1Id: chat?.user1Id, user2Id: chat?.user2Id }, () => { });
 
     //send notification to the buyer about the offer
     await notificationQueue.add(jobs.notification, {
@@ -2303,8 +2476,39 @@ const dltAProduct = async (productId: string, currentUser: { id: string, userNam
     await redisKeys.incrementProductsVersion();
 }
 
+const markProductSold = async (productId: string, currentUser: { id: string, userName: string, role: string }) => {
+    const product = await prisma.product.findFirst({
+        where: {
+            id: productId,
+            isDeleted: false
+        },
+        select: { id: true, userId: true, stock: true }
+    });
+    if (!product) {
+        throw new AppError(httpStatus.NOT_FOUND, "Product does not exist");
+    }
+
+    //check if the product belongs to the current user
+    if (product.userId !== currentUser.id && currentUser.role !== Role.ADMIN) {
+        throw new AppError(httpStatus.FORBIDDEN, "You are not authorized to update this listing");
+    }
+
+    if (product.stock < 1) {
+        throw new AppError(httpStatus.CONFLICT, "This listing is already marked as sold");
+    }
+
+    await prisma.product.update({
+        where: { id: productId },
+        data: { stock: 0 }
+    });
+
+    //increment redis product version for cache invalidation
+    await redisKeys.incrementProductsVersion();
+}
+
 export const productService = {
     addNewProduct,
+    markProductSold,
 
     allProducts,
     authenticateProducts,
@@ -2330,5 +2534,6 @@ export const productService = {
 
     makeAnOfferAsBuyer,
     acceptOfferAsSeller,
-    declineCounterOfferAsSeller
+    counterOfferAsSeller,
+    declineOfferAsSeller
 }

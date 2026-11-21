@@ -6,30 +6,30 @@ const materials = async (query: Record<string, unknown>) => {
 
     const AndConditions: Prisma.MaterialWhereInput[] = [];
 
-    const { categoryId } = query;
+    // const { categoryId } = query;
 
-    if (categoryId) {
+    // if (categoryId) {
 
-        const childCategoryIds = await categoryService.getChildChain(categoryId as string);
+    //     const childCategoryIds = await categoryService.getChildChain(categoryId as string);
 
-        if (childCategoryIds?.length > 0) {
-            AndConditions.push({
-                materialByCategories: {
-                    some: {
-                        categoryId: { in: childCategoryIds.map((category) => category.id) }
-                    }
-                }
-            });
-        } else {
-            AndConditions.push({
-                materialByCategories: {
-                    some: {
-                        categoryId: categoryId
-                    }
-                }
-            });
-        }
-    }
+    //     if (childCategoryIds?.length > 0) {
+    //         AndConditions.push({
+    //             materialByCategories: {
+    //                 some: {
+    //                     categoryId: { in: childCategoryIds.map((category) => category.id) }
+    //                 }
+    //             }
+    //         });
+    //     } else {
+    //         AndConditions.push({
+    //             materialByCategories: {
+    //                 some: {
+    //                     categoryId: categoryId
+    //                 }
+    //             }
+    //         });
+    //     }
+    // }
 
     const whereConditions: Prisma.MaterialWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
 

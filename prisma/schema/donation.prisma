@@ -8,7 +8,6 @@ model DirectDonation {
   charity   User   @relation("charity", fields: [charityId], references: [id], onDelete: Restrict)
 
   amount   Float @default(0)
-  currency String  @default("USD")
 
   thanksMsg DonationThanksMSg?
 
@@ -65,6 +64,11 @@ model ClothDonation {
 
   shipment Shipment?
 
+  hight_cm  Float @default(0)
+  width_cm  Float @default(0)
+  length_cm Float @default(0)
+  weight_kg Float @default(0)
+
   createdAt     DateTime              @default(now())
   updatedAt     DateTime              @updatedAt @default(now())
 
@@ -94,6 +98,7 @@ model ClothDonationPhoto{
 enum ThanksMessageType {
   SELL
   DIRECT
+  EXTRA
   CLOTH
 }
 
@@ -110,6 +115,9 @@ model DonationThanksMSg{
 
   clothDonationId String? @unique
   clothDonation   ClothDonation? @relation(fields: [clothDonationId], references: [id], onDelete: Cascade)
+
+  extraDonationId String? @unique
+  extraDonation   ExtraDonation? @relation(fields: [extraDonationId], references: [id], onDelete: Cascade)
 
   message   String
 

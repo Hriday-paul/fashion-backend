@@ -4,6 +4,7 @@ model AssistentSell{
     itemsTitle String
     itemsCount Int @default(0)
     contactNumber String?
+    email String?
     itemsDetails String?
     priceType PriceType @default(MARKET_PRICE)
     targetPrice Float? @default(0)

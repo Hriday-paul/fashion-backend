@@ -1,7 +1,7 @@
 model Payment {
   id     String  @id @default(uuid())
-  userId String?
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   total_amount Float @default(0) // total price
   paid_amount  Float @default(0) // how much customer paid
@@ -18,6 +18,9 @@ model Payment {
 
   donationId String? @unique
   donation   DirectDonation? @relation(fields: [donationId], references: [id], onDelete: SetNull)
+
+  shipmentId String? @unique
+  shipment   Shipment? @relation(fields: [shipmentId], references: [id], onDelete: SetNull)
 
   paymentType PaymentType @default(ORDER)
 
@@ -53,6 +56,7 @@ enum PaymentType {
   ORDER
   DONATION
   SUBSCRIPTION
+  SHIPMENT
 }
 
 enum PaymentStatus {

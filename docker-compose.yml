@@ -58,6 +58,7 @@ services:
       - redis_data:/data
 
   seed:
+    profiles: ["seed"]
     build:
       context: .
       dockerfile: Dockerfile

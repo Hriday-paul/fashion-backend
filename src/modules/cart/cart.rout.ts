@@ -16,18 +16,24 @@ export const excludedCharityRoles: Role[] = [
     // Role.CHARITY_SHOP,
 ];
 
+export const excludedOnlyViewerRoles: Role[] = [
+    Role.CHARITABLE_ORGANIZATION,
+    Role.CHARITY_SHOP,
+    Role.ECO_FRIENDLY_STORE
+];
+
 router.get("/", auth(...allRoles), cartControler.cartsByUser);
 
 router.post("/",
     rateLimiter({ max: 10 }),
     validateCartAdd,
     req_validator(),
-    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    auth(...(allRoles.filter(role => !excludedOnlyViewerRoles.includes(role)))),
     cartControler.addToCart);
 
 router.delete("/:productId",
     rateLimiter({ max: 10 }),
-    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    auth(...(allRoles.filter(role => !excludedOnlyViewerRoles.includes(role)))),
     cartControler.deleteCartItem);
 
 router.get("/checkout/:cartGroupId/summary", auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))), cartControler.checkoutSummary);

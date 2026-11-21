@@ -3,7 +3,7 @@ import auth from "../../middleware/auth";
 import { allRoles } from "../user/user.rout";
 import req_validator from "../../middleware/req_validation";
 import { orderControler } from "./order.controller";
-import { cancelItemsValidator, validateApproveCancelReq, validateOfferOrder, validateOrderAuthResult, validateOrderProducts, validateOrderReceivedmark } from "./order.validator";
+import { cancelItemsValidator, validateApproveCancelReq, validateOfferOrder, validateOrderAuthResult, validateOrderProducts, validateOrderReceivedmark, validateSingleOrder } from "./order.validator";
 import { Role } from "../../../generated/prisma/enums";
 import parseData from "../../middleware/parseData";
 import { image_Upload } from "../../utils/s3";
@@ -16,6 +16,12 @@ export const excludedCharityRoles: Role[] = [
     // Role.CHARITY_SHOP,
 ];
 
+export const excludedOnlyViewerRoles: Role[] = [
+    Role.CHARITABLE_ORGANIZATION,
+    Role.CHARITY_SHOP,
+    Role.ECO_FRIENDLY_STORE
+];
+
 router.get("/", auth(Role.ADMIN), orderControler.orders);
 router.get("/stats", auth(Role.ADMIN), orderControler.orderStats);
 
@@ -23,15 +29,22 @@ router.post("/",
     rateLimiter(),
     validateOrderProducts,
     req_validator(),
-    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    auth(...(allRoles.filter(role => !excludedOnlyViewerRoles.includes(role)))),
     orderControler.addNewOrder);
 
 router.post("/offer",
     rateLimiter(),
     validateOfferOrder,
     req_validator(),
-    auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
+    auth(...(allRoles.filter(role => !excludedOnlyViewerRoles.includes(role)))),
     orderControler.addNewOfferOrder);
+
+router.post("/listing",
+    rateLimiter(),
+    validateSingleOrder,
+    req_validator(),
+    auth(...(allRoles.filter(role => !excludedOnlyViewerRoles.includes(role)))),
+    orderControler.addNewSingleOrder);
 
 router.post("/shipping-label/:orderId",
     rateLimiter(),
@@ -101,28 +114,28 @@ router.patch("/items/cancel/decline",
     orderControler.declineCancelOrderItemBySeller);
 
 router.patch("/confirm-received",
-     rateLimiter(),
+    rateLimiter(),
     validateOrderReceivedmark,
     req_validator(),
     auth(...(allRoles.filter(role => !excludedCharityRoles.includes(role)))),
     orderControler.confirmOrderReceived);
 
 router.patch("/auth-received",
-    rateLimiter({max: 20}),
+    rateLimiter({ max: 20 }),
     validateOrderReceivedmark,
     req_validator(),
     auth(Role.ADMIN),
     orderControler.markOrderReceivedFromAuthCenter);
 
 router.patch("/auth-in-progress",
-     rateLimiter({max: 20}),
+    rateLimiter({ max: 20 }),
     validateOrderReceivedmark,
     req_validator(),
     auth(Role.ADMIN),
     orderControler.markOrderAuthInProgress);
 
 router.patch("/auth-result",
-     rateLimiter({max: 20}),
+    rateLimiter({ max: 20 }),
     validateOrderAuthResult,
     req_validator(),
     auth(Role.ADMIN),

@@ -25,7 +25,7 @@ export const createCheckoutSession = async (payload: IPayload) => {
   const paymentGatewayData = await stripe.checkout.sessions.create({
     line_items: payload?.products?.map(prod => ({
       price_data: {
-        currency: 'usd',
+        currency: 'gbp',
         product_data: {
           name: prod?.name,
           description: prod?.description,

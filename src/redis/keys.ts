@@ -242,6 +242,21 @@ export const redisKeys = {
         const version = await redisPub.incr(`categories:version`);
         return version;
     },
+    sizesVersionKey: async () => {
+        const key = "sizes:version";
+
+        // Initialize only if the key does not exist.
+        await redisPub.set(key, "1", { NX: true });
+
+        return (await redisPub.get(key))!;
+    },
+    incrementSizesVersion: async () => {
+        return redisPub.incr("sizes:version");
+    },
+    sizesKey: async ({ categoryId }: { categoryId?: string }) => {
+        const version = await redisKeys.sizesVersionKey();
+        return `sizes:v${version}:${categoryId || "all"}`;
+    },
     categoryParentsKey: async ({ categoryId }: { categoryId: string }) => {
         const version = await redisKeys.categoriesVersionKey();
         return `category-parents:${categoryId}:v${version}`;

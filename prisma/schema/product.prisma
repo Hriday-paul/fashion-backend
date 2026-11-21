@@ -8,13 +8,13 @@ model Product {
     price       Float  @default(0) // original/main price
     discountPct Float  @default(0) // e.g. 20 = 20%
     finalPrice  Float  @default(0) // computed and stored
-    currency    String @default("USD")
 
     brandId String
     brand   Brand  @relation(fields: [brandId], references: [id], onDelete: Cascade)
 
     sizeId String
-    size   Size   @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+    size   Size   @relation(fields: [sizeId], references: [id], onDelete: Restrict)
+    SizeFormat SizeFormat @default(US)
 
     categoryId         String
     category           Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
@@ -22,7 +22,7 @@ model Product {
 
     condition String
     tags      String[]
-    meterials String[]
+
     color     String
 
     care_instructions String[]
@@ -72,6 +72,15 @@ model Product {
     @@map("products")
 }
 
+enum SizeFormat {
+    UK
+    US
+    EU
+    FR
+    IT
+    LETTER
+}
+
 model ProductMaterial {
     id         String @id @default(uuid())
     productId  String
@@ -110,10 +119,10 @@ model ProductCharity {
     isAnonymous Boolean @default(false)
 
     productId String
-    product   Product @relation(fields: [productId], references: [id])
+    product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
     charityId String
-    charity   User   @relation(fields: [charityId], references: [id])
+    charity   User   @relation(fields: [charityId], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
 
@@ -260,11 +269,11 @@ model ProductView {
     productId  String
 
     userId String? // null = guest
-    user   User?   @relation(fields: [userId], references: [id])
+    user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
 
-    product Product @relation(fields: [productId], references: [id])
+    product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
     @@map("product_views")
 }

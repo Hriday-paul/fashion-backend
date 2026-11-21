@@ -10,6 +10,8 @@ import { clothDonationControler } from "./clothDonationControler";
 import {
     createClothDonationValidator,
     getClothDonationsQueryValidator,
+    getLabelValidator,
+    payShipingCostValidator,
     updateClothDonationStatusValidator
 } from "./clothDonation.validator";
 
@@ -53,6 +55,30 @@ router.patch(
     updateClothDonationStatusValidator,
     req_validator(),
     clothDonationControler.updateStatusAsCharity
+);
+
+router.post(
+    "/label",
+    rateLimiter(),
+    auth(...allRoles),
+    getLabelValidator,
+    req_validator(),
+    clothDonationControler.getShippinglabel
+);
+
+router.get(
+    "/shipment/rates/:donationReqId",
+    auth(...allRoles),
+    clothDonationControler.getRates
+);
+
+router.post(
+    "/shipment/checkout",
+    rateLimiter(),
+    auth(...allRoles),
+    payShipingCostValidator,
+    req_validator(),
+    clothDonationControler.payShipingCost
 );
 
 export const clothDonationRouts = router;

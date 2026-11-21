@@ -11,9 +11,12 @@ import config from '../../config';
 import moment from 'moment';
 import { jobs } from '../../queues/jobs.name';
 import { BadgeGenerateQueue } from '../../queues/badge.queue';
-import { RefundQueue } from '../../queues/refund.queue';
 import { notificationQueue } from '../../queues/notificaion.queue';
 import { StockUpdateQueue } from '../../queues/stockUpdate.queue';
+import { RefundQueue } from '../../queues/refund.queue';
+import { UpdatebalanceQueue } from '../../queues/balance.queue';
+import { SendMessageHandle } from '../../socket/handlers/MessageHandler';
+import { ExtraDonationQueue } from '../../queues/donation.queue';
 
 const stripe = new Stripe(config.stripe?.stripe_api_secret as string, {
   apiVersion: "2025-03-31.basil", // Valid API version
@@ -25,7 +28,7 @@ const donationCheckout = async (
   payload: DirectDonation,
   userId: string
 ) => {
-  const { donatedAt, currency, updatedAt, ...body } = payload;
+  const { donatedAt, updatedAt, ...body } = payload;
 
   if (userId == body?.charityId) {
     throw new AppError(
@@ -164,6 +167,7 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
               fcmToken: true
             }
           },
+          chatId: true,
         }
       },
       donation: {
@@ -171,6 +175,9 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
           charity: {
             select: {
               id: true,
+              userName: true,
+              fname: true,
+              lname: true,
               fcmToken: true,
             }
           },
@@ -200,11 +207,32 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
     return { url: `${config.BASE_URL}${config.cancel_url}`, message: "Payment failed, please try again" };
   }
 
+  const isOrderpayment = payment?.paymentType === "ORDER" && payment?.order;
+
+  const isDonationPayment = payment?.paymentType === "DONATION" && payment?.donation;
+  const isShipmentPayment = payment?.paymentType === "SHIPMENT" && payment?.shipmentId;
+
   try {
 
-    const isOrderpayment = payment?.paymentType === "ORDER" && payment?.order;
-
     await prisma.$transaction(async (transactionClient) => {
+
+
+      if (!payment?.userId) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Payment userId is missing");
+      }
+
+      let wallet = await transactionClient.wallet.findFirst({
+        where: { sellerId: payment?.userId }
+      });
+
+      if (!wallet) {
+        //create a new wallet for the user if not exist
+        wallet = await transactionClient.wallet.create({
+          data: {
+            sellerId: payment?.userId,
+          }
+        });
+      }
 
       //mark payment as complete
       await transactionClient.payment.update({
@@ -218,20 +246,126 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
         }
       });
 
-      //if donation payment, add balance to charity wallet
-      if (payment?.paymentType === "DONATION" && payment?.donation) {
+      const txType = isOrderpayment ? "PURCHASE" : "DONATION_SENT";
 
-        await transactionClient.wallet.upsert({
-          where: { sellerId: payment?.donation?.charityId },
-          create: {
-            balance: payment?.total_amount,
-            sellerId: payment?.donation?.charityId,
+      const balanceBefore = Number(wallet?.balance ?? 0);
+      const amount = Number(payment?.total_amount ?? 0);
+
+      //create a wallet transaction for the payment by payer
+      await transactionClient.walletTransaction.create({
+        data: {
+          amount: payment?.total_amount,
+          direction: "OUT",
+          txType: txType,
+          balanceBefore,
+          balanceAfter: amount,
+          walletId: wallet?.id,
+          userId: payment?.userId,
+          stripeBalanceTransactionId: paymentIntentId,
+          refId: isOrderpayment ? payment?.orderId : payment?.donationId,
+          description: isOrderpayment ? `Purchase of Products` : `Donation to charity`,
+          createdAt: new Date(),
+        }
+      });
+
+      //if payment is order created, crate a system message
+      if (isOrderpayment && payment?.order && payment?.order?.chatId) {
+
+        //for buyer
+        const msg_buyer = await transactionClient.message.create({
+          data: {
+            chatId: payment?.order?.chatId,
+            SystemMessage: {
+              create: {
+                title: `Purchase successful`,
+                text: `${payment?.order?.seller?.userName} will ship your items soon. We'll keep you updated on the progress.`,
+                msgForUserId: payment?.order?.buyerId,
+              }
+            },
+            type: "SYSTEM",
           },
-          update: {
-            balance: {
-              increment: payment?.total_amount
-            }
+          include: {
+            sender: {
+              select: {
+                id: true,
+                picture: {
+                  select: {
+                    url: true
+                  }
+                },
+                userName: true
+              }
+            },
+            receiver: {
+              select: {
+                id: true,
+                picture: {
+                  select: {
+                    url: true
+                  }
+                },
+                userName: true
+              }
+            },
+            SystemMessage: true
           }
+        })
+
+        //for seller
+        const msgSeller = await transactionClient.message.create({
+          data: {
+            chatId: payment?.order?.chatId,
+            SystemMessage: {
+              create: {
+                title: `Order placed successfully`,
+                text: `${payment?.order?.buyer?.userName} has placed an order. Please, ship the items soon. We'll keep you updated on the progress.`,
+                msgForUserId: payment?.order?.sellerId,
+              }
+            },
+            type: "SYSTEM",
+          },
+          include: {
+            sender: {
+              select: {
+                id: true,
+                picture: {
+                  select: {
+                    url: true
+                  }
+                },
+                userName: true
+              }
+            },
+            receiver: {
+              select: {
+                id: true,
+                picture: {
+                  select: {
+                    url: true
+                  }
+                },
+                userName: true
+              }
+            },
+            SystemMessage: true
+          }
+        })
+
+        const user1Id = payment?.order?.buyer?.id;
+        const user2Id = payment?.order?.seller?.id;
+
+        SendMessageHandle((global as any).socketio, { ...msg_buyer, user1Id, user2Id }, () => { })
+        SendMessageHandle((global as any).socketio, { ...msgSeller, user1Id, user2Id }, () => { })
+
+      }
+
+      //if payment is shipment payment, update shipment payment status to paid
+      else if (isShipmentPayment && payment?.shipmentId) {
+
+        //update shipment payment status to paid
+        await transactionClient.shipment.update({
+          where: { id: payment?.shipmentId },
+          data: { isPaid: true }
         });
 
       }
@@ -240,13 +374,23 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
 
     if (isOrderpayment && payment?.order) {
 
-      await StockUpdateQueue.add(jobs.stockUpdate, { orderId: payment?.order?.id });
+      //distrubute extra donations
+      await ExtraDonationQueue.add(jobs.extraDonatinDistribute, {
+        orderId: payment?.order?.id
+      }, {
+        jobId: `distribute-extra-donation-${payment?.order?.id}`,
+      });
+
+      await StockUpdateQueue.add(jobs.stockUpdate, { orderId: payment?.order?.id }, {
+        jobId: `stock-update-${payment?.order?.id}`
+      });
 
       const treeCredit = payment?.order?.treeCredit || 0;
 
       const tree_count = Math.floor(treeCredit / 4); // 1 tree for every $4 spent
+
       // generate badge for buyer, tree gift badge
-      await BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TREE_PLANTER", userId: payment?.order?.buyerId, increment: tree_count });
+      await BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "TREE_PLANTER", userId: payment?.order?.buyerId, increment: tree_count }, { jobId: `badge-generate-${payment?.order?.id}` });
 
 
       //send notification to the seller about order creation success
@@ -282,15 +426,27 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
           groupKeyId: null,
         }
       })
-
     }
 
-    if (payment?.paymentType === "DONATION" && payment?.donation) {
+    else if (isDonationPayment && payment?.donation) {
 
       if (payment?.donation?.donorId) {
         //generate badge for donor
         BadgeGenerateQueue.add(jobs.badgeGenerate, { type: "MONEY_DONOR", userId: payment?.donation?.donorId });
       }
+
+      const amount = PaymentSession.amount_total ? PaymentSession.amount_total / 100 : 0;
+
+      //create a wallet transaction for the charity with update balance
+      await UpdatebalanceQueue.add(jobs.updateBalance, {
+        userId: payment?.donation?.charityId,
+        amount: amount,
+        direction: "IN",
+        refId: paymentId,
+        type: "DONATION_RECEIVED",
+        description: `Donation Received`
+      },
+        { jobId: `direct-donation-${payment?.donation?.id}` });
 
       //send notification to the charity about donation received
       await notificationQueue.add(jobs.notification, {
@@ -318,12 +474,24 @@ const confirmPayment = async (query: Record<string, any>): Promise<{ url: string
 
   } catch (error: any) {
 
+    const totalAmount = payment?.total_amount.toFixed(2) || 0;
+
+    const notiMsg = isOrderpayment ? `Your purchase payment has been failed. **$${totalAmount}** has been refunded to your FASHI-ON wallet.` : `Your donation payment has been failed. **$${totalAmount}** has been refunded to your FASHI-ON wallet.`;
+
+    const tranMsg = isOrderpayment ? `Purchase Payment Refund` : `Donation Payment Refund`;
+
+    const amount = PaymentSession.amount_total ? PaymentSession.amount_total / 100 : 0;
+
     await RefundQueue.add(jobs.refund, {
       paymentId,
-      paymentIntentId,
       reason: error?.message ?? "System error",
-      triggeredBy: "System",
+      notificationMsg: notiMsg,
+      transactionMsg: tranMsg,
+      userId: payment?.userId,
       markPaymentRefunded: true,
+      amount: amount
+    }, {
+      jobId: `refund-${paymentId}`,
     });
 
     return { url: `${config.BASE_URL}${config.cancel_url}`, message: "Payment failed, please try again" };
@@ -647,6 +815,11 @@ const donationRaisedFromSell = async (options: TPaginationOptions, charityId: st
                 },
                 select: {
                   url: true
+                }
+              },
+              user: {
+                select: {
+                  picture: true
                 }
               }
             }

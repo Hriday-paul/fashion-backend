@@ -15,6 +15,7 @@ import { firebaseAdmin } from "../notification/notification.utils"
 import generateRandomString from "../../utils/generateRandomString"
 import { emailQueue } from "../../queues/email.queue"
 import { jobs } from "../../queues/jobs.name"
+import { notificationQueue } from "../../queues/notificaion.queue"
 
 type TUserMore = {
     password: string
@@ -23,7 +24,7 @@ type TUserMore = {
 }
 
 const createUser = async (payload: User & TUserMore) => {
-    const { phone, password, fname, lname, email, userName, role } = payload
+    const { phone, password, fname, lname, country, email, userName, role } = payload
 
     let isExist = await prisma.user.findFirst({ where: { email }, include: { auth: true } });
 
@@ -41,7 +42,7 @@ const createUser = async (payload: User & TUserMore) => {
     const hashedPassword = await bcrypt.hash(password + PEPPER, 15);
 
     const body = {
-        phone, fname, lname, email, userName
+        phone, fname, lname, email, userName, country
     }
 
     const user = await prisma.user.upsert({
@@ -158,15 +159,37 @@ const loginUser = async (payload: { email: string, password: string, fcmToken?: 
     //update last login time
     await prisma.auth.update({
         where: { userId: user?.id },
-        data: { last_loginAt: new Date() },
-    })
+        data: {
+            last_loginAt: new Date(),
+            logedIn: true
+        },
+    });
+
+    if (!user?.auth?.logedIn) {
+        // Send welcome notification to the user
+        await notificationQueue.add(jobs.notification, {
+            allowPushNotification: true,
+            payload: {
+                title: `Welcome to the Fashi-on!🎉`,
+                message: `Complete your profile by adding a profile picture, social links and personal details to make it your own.`,
+                actorId: user?.id,
+                receiverId: user?.id,
+                entityId: user?.userName,
+                entityType: "OTHER",
+                entityImgs: [],
+                type: "WELLCOME",
+                fcmToken: user?.fcmToken,
+                groupKeyId: null,
+            }
+        })
+    }
 
     const jwtPayload: { userId: string; role: Role } = {
         userId: user?.id,
         role: user?.auth?.role
     };
 
-    const role = user?.auth?.role
+    const role = user?.auth?.role;
 
     const userDoc = (user as any);
     delete userDoc.auth;
@@ -250,8 +273,9 @@ const socialSignUp = async (payload: {
     fname: string;
     userName: string;
     role: Role;
+    country: string
 }) => {
-    const { fname, userName, role, idToken } = payload;
+    const { fname, userName, role, idToken, country } = payload;
 
     const {
         email,
@@ -283,6 +307,7 @@ const socialSignUp = async (payload: {
         email,
         userName,
         phone: phone_number || null,
+        country
     };
 
     const PEPPER = config.password_pepper;
@@ -470,8 +495,30 @@ const socialLogin = async (payload: { idToken: string, fcmToken?: string }) => {
     //update last login time
     await prisma.auth.update({
         where: { userId: user?.id },
-        data: { last_loginAt: new Date() },
+        data: {
+            last_loginAt: new Date(),
+            logedIn: true
+        },
     })
+
+    if (!user?.auth?.logedIn) {
+        // Send welcome notification to the user
+        await notificationQueue.add(jobs.notification, {
+            allowPushNotification: true,
+            payload: {
+                title: `Welcome to the Fashi-on!🎉`,
+                message: `Complete your profile by adding a profile picture, social links and personal details to make it your own.`,
+                actorId: user?.id,
+                receiverId: user?.id,
+                entityId: user?.userName,
+                entityType: "OTHER",
+                entityImgs: [],
+                type: "WELLCOME",
+                fcmToken: user?.fcmToken,
+                groupKeyId: null,
+            }
+        })
+    }
 
     const jwtPayload: { userId: string; role: Role } = {
         userId: user?.id,

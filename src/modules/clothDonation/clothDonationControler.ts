@@ -106,10 +106,55 @@ const updateStatusAsCharity = catchAsync(async (req: Request, res: Response) => 
     });
 });
 
+const getRates = catchAsync(async (req: Request, res: Response) => {
+    const { donationReqId } = req.params;
+    const { id: cUserId } = req.user;
+
+    const rates = await clothDonationService.getRates(donationReqId, cUserId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Shipping rates fetched successfully",
+        data: rates,
+    });
+});
+
+const payShipingCost = catchAsync(async (req: Request, res: Response) => {
+    const { id: cUserId } = req.user;
+
+    const url = await clothDonationService.payShipingCost(req.body, cUserId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Shipping rates fetched successfully",
+        data: url,
+    });
+});
+
+const getShippinglabel = catchAsync(async (req: Request, res: Response) => {
+    const { id: cUserId } = req.user;
+
+    const { donationReqId } = req.body;
+
+    const url = await clothDonationService.getShippinglabel(donationReqId, cUserId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Shipping label fetched successfully",
+        data: url,
+    });
+});
+
 export const clothDonationControler = {
     createClothDonation,
     getDonationsAsDonor,
     getDonationsAsCharity,
     updateStatusAsCharity,
+    getRates,
+    getShippinglabel,
+    payShipingCost
 };
 

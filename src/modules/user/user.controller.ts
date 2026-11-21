@@ -7,6 +7,10 @@ import { uploadManyToS3, uploadToS3 } from "../../utils/s3";
 import pick from "../../shared/pick";
 import { PaginateOptions } from "../../helper/pagination.helper";
 import AppError from "../../error/AppError";
+import { Role } from "../../../generated/prisma/enums";
+
+// roles that can have a profile banner (stored as charityThumbnail)
+const bannerRoles: Role[] = [Role.CHARITABLE_ORGANIZATION, Role.CHARITY_SHOP, Role.ECO_FRIENDLY_STORE];
 
 //get all users
 const all_users = catchAsync(async (req: Request, res: Response) => {
@@ -48,6 +52,10 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
         req.body.image = image;
     }
     if (files?.charityThumbnail && files?.charityThumbnail.length > 0) {
+        // the profile banner is stored as charityThumbnail, only for these roles
+        if (!bannerRoles.includes(req.user.role as Role)) {
+            throw new AppError(httpStatus.FORBIDDEN, 'Banner is not available for your account type');
+        }
         const image = await uploadToS3({
             file: files.charityThumbnail[0],
             fileName: `images/user/`,

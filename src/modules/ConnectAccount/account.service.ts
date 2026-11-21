@@ -6,6 +6,7 @@ import config from "../../config";
 import { WithdrawQueue } from "../../queues/withdraw.queue";
 import { jobs } from "../../queues/jobs.name";
 import { paginationHelper, TPaginationOptions } from "../../helper/pagination.helper";
+import { Prisma } from "../../../generated/prisma/client";
 
 const accountBalance = async (userId: string) => {
     const balance = await prisma.wallet.findFirst({ where: { sellerId: userId } });
@@ -165,7 +166,7 @@ const requestToWithdraw = async (userId: string, amount: number) => {
         throw new AppError(httpStatus.NOT_FOUND, "Insufficient balance");
     }
 
-    if (wallet.balance < amount) {
+    if (wallet.balance.lessThan(amount)) {
         throw new AppError(httpStatus.BAD_REQUEST, "Insufficient balance");
     }
 
@@ -173,48 +174,43 @@ const requestToWithdraw = async (userId: string, amount: number) => {
         throw new AppError(httpStatus.BAD_REQUEST, "Payout account not connected");
     }
 
-    //check if there is already a pending withdraw request
-    let withDrawRequest = await prisma.walletPayout.findFirst({
-        where: {
-            walletId: wallet.id,
-            status: "PENDING",
-            userId: userId,
-            amount: amount
-        }
-    });
-
-    //create a withdraw request
-    withDrawRequest = await prisma.walletPayout.create({
-        data: {
-            amount: amount,
-            connectAccountId: wallet?.seller?.stripeAccountId,
-            walletId: wallet.id,
-            userId: userId,
-            status: "PENDING"
-        }
-    });
-
     //add job to withdraw queue
     await WithdrawQueue.add(jobs.withDrawBalance, {
-        withdrawId: withDrawRequest.id,
-        walletId: wallet.id,
         connectAccountId: wallet?.seller?.stripeAccountId,
-    }, {
-        jobId: `withdraw_${withDrawRequest.id}`,
+        userId,
+        amount
     });
 
     return;
 
 }
 
-const payoutHistory = async (userId: string, options: TPaginationOptions) => {
+const transactionHistory = async (userId: string, query: Record<string, unknown>, options: TPaginationOptions) => {
 
     const { limit, skip, sortBy, sortOrder, page } = paginationHelper.calculatePagination(options);
 
-    const payouts = await prisma.walletPayout.findMany({
-        where: {
-            userId: userId
-        },
+    const { direction } = query;
+
+    const AndConditions: Prisma.WalletTransactionWhereInput[] = [{
+        userId: userId
+    }];
+
+    if (direction) {
+        if (direction == "IN") {
+            AndConditions.push({
+                direction: "IN"
+            });
+        } else if (direction == "OUT") {
+            AndConditions.push({
+                direction: "OUT"
+            });
+        }
+    }
+
+    const whereConditions: Prisma.WalletTransactionWhereInput = AndConditions.length > 0 ? { AND: AndConditions } : {};
+
+    const payouts = await prisma.walletTransaction.findMany({
+        where: whereConditions,
         skip,
         take: limit,
         orderBy: {
@@ -222,7 +218,7 @@ const payoutHistory = async (userId: string, options: TPaginationOptions) => {
         },
     });
 
-    const total = await prisma.walletPayout.count({
+    const total = await prisma.walletTransaction.count({
         where: {
             userId: userId
         }
@@ -241,6 +237,6 @@ export const accountService = {
     refresh,
     returnUrl,
     getConnectedAccountData,
-    payoutHistory,
+    transactionHistory,
     requestToWithdraw
 };

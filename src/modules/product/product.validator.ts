@@ -19,11 +19,6 @@ export const addProductValidator: ValidationChain[] = [
     .notEmpty().withMessage("discountPct is required")
     .isFloat({ min: 0, max: 100 }).withMessage("discountPct must be between 0 to 100"),
 
-  body("currency")
-    .optional()
-    .trim()
-    .isISO4217().withMessage("Currency must be a valid ISO 4217 currency code (e.g. USD, EUR)"),
-
   // Relations (IDs)
   body("brandId")
     .trim()
@@ -34,6 +29,11 @@ export const addProductValidator: ValidationChain[] = [
     .trim()
     .notEmpty().withMessage("Size is required")
     .isUUID().withMessage("Invalid size ID"),
+
+  body("SizeFormat")
+    .trim()
+    .notEmpty().withMessage("Size format is required")
+    .isIn(["UK", "US", "EU", "FR", "IT", "LETTER"]).withMessage("Invalid size format"),
 
   body("categoryId")
     .trim()
@@ -137,7 +137,7 @@ export const acceptOfferValidator = [
     .withMessage('offerId must be a valid UUID'),
 ]
 
-export const declineCounterOfferValidator = [
+export const counterOfferValidator = [
   body('offerId')
     .isString()
     .withMessage('offerId must be a string')
@@ -149,6 +149,15 @@ export const declineCounterOfferValidator = [
   body('offerPrice')
     .isFloat({ min: 0 })
     .withMessage('offerPrice must be a positive number'),
+]
+export const declineOfferValidator = [
+  body('offerId')
+    .isString()
+    .withMessage('offerId must be a string')
+    .notEmpty()
+    .withMessage('offerId is required')
+    .isUUID()
+    .withMessage('offerId must be a valid UUID')
 ]
 
 export const dropPriceValidator = [

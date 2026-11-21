@@ -1,7 +1,7 @@
 import { Queue } from "bullmq";
 import { connectionInfo } from "../redis";
 
-export const WithdrawQueue = new Queue<{ withdrawId: string, walletId: string, connectAccountId: string }>("withdraw-balance", {
+export const WithdrawQueue = new Queue<{ userId: string, connectAccountId: string, amount: number }>("withdraw-balance", {
     connection: connectionInfo,
     defaultJobOptions: {
         attempts: 5,

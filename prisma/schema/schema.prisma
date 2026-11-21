@@ -15,6 +15,7 @@ model Auth {
   role              Role     @default(INDIVIDUAL_USER)
   status            Boolean  @default(true)
   isSocialLogin     Boolean  @default(false)
+  logedIn Boolean @default(false)
   isDeleted         Boolean  @default(false)
   isverified        Boolean  @default(false)
   isPhoneVerified     Boolean  @default(false)
@@ -66,6 +67,8 @@ model User {
   fcmToken String?
 
   picture           ProfilePicture?
+
+
   account_documents AccountDocument[]
   mission           String?
   business_tags     String[]
@@ -92,6 +95,7 @@ model User {
   products Product[]
 
   sellDonations    SellDonation[]
+  extraDonations    ExtraDonation[]
   productCharities ProductCharity[]
 
   assistentSellCharities AssistentSellCharity[]
@@ -151,13 +155,17 @@ model User {
 
   badges UserBadge[]
 
-  payoutRequests WalletPayout[]
-
   bundleDiscount    BundleDiscount?
 
   charityThumbnail           CharityThumbnail?
 
   donationThanksMsgs DonationThanksMSg[]
+
+  shipments Shipment[]
+
+  trnsactions WalletTransaction[]
+
+  systemMsgs SystemMessage[]
 
   charitableOrganization CharitableOrganization?
   charityShop            CharityShop?
@@ -298,10 +306,12 @@ enum NotificationEntityType {
   BADGE
   WITHDRAWAL
   ASSISTED_SELL
+  PAYMENT
   OTHER
 }
 
 enum NotificationType {
+  WELLCOME
   //for product
   PRODUCT_LIKE
   PRICE_DROP
@@ -348,6 +358,9 @@ enum NotificationType {
   //assisted sell
   ASSISTED_SELL_REQUEESTED
   ASSISTED_SELL_STATUS_UPDATED
+
+  REFUND
+  EARNING
 
   OTHER
 }

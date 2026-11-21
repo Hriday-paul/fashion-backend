@@ -63,9 +63,8 @@ const memberDonationStats = async (userName: string) => {
     const totalTreeDonationAmount = totalTreeDonation?._sum?.treeCredit || 0;
     const totalDirectDonationAmount = directMoneyDonation?._sum?.amount || 0;
 
-    const totalExtraDonation = await prisma.sellDonation.aggregate({
+    const totalExtraDonation = await prisma.extraDonation.aggregate({
         _sum: {
-            extra_money: true,
             amount: true,
         },
         where: {
@@ -74,11 +73,11 @@ const memberDonationStats = async (userName: string) => {
                     buyerId: user?.id,
                 },
             },
-            status: "PAID", // optional but recommended
+            status: "PAID",
         },
     });
 
-    const totalExtraDonated = totalExtraDonation._sum.extra_money || 0;
+    const totalExtraDonated = totalExtraDonation._sum.amount || 0;
     const totalPurchaseDonationContribute = totalExtraDonation._sum.amount || 0;
 
     const directDonation = totalDirectDonationAmount;
@@ -93,8 +92,6 @@ const memberDonationStats = async (userName: string) => {
         directDonation,
         total: totalSellDonationAmount + totalTreeDonationAmount + totalExtraDonated + clothDonation + directDonation
     }
-
-
 }
 
 const selldonations = async (userName: string) => {
@@ -442,16 +439,10 @@ const extraDonationsRaised = async (options: TPaginationOptions, userName: strin
         throw new AppError(httpstatus.NOT_FOUND, "User Does not exist")
     }
 
-    const extraDonationRaised = await prisma.sellDonation.findMany({
+    const extraDonationRaised = await prisma.extraDonation.findMany({
         where: {
             charityId: user?.id,
-            orderItem: {
-                order: {
-                    payment: {
-                        status: "SUCCESSED"
-                    }
-                }
-            }
+            status: "PAID"
         },
         skip,
         take: limit,
@@ -460,19 +451,44 @@ const extraDonationsRaised = async (options: TPaginationOptions, userName: strin
         },
         include: {
             thanksMessage: true,
+            orderItem: {
+                select: {
+                    order: {
+                        select: {
+                            buyer: {
+                                select: {
+                                    id: true,
+                                    userName: true,
+                                    picture: true
+                                }
+                            }
+                        }
+                    },
+                    product: {
+                        select: {
+                            id: true,
+                            title: true,
+                            images: {
+                                orderBy: {
+                                    order: "asc"
+                                },
+                                take: 1,
+                                select: {
+                                    url: true,
+                                    id: true
+                                }
+                            }
+                        }
+                    }
+                },
+            }
         }
     });
 
-    const total = await prisma.sellDonation.count({
+    const total = await prisma.extraDonation.count({
         where: {
             charityId: user?.id,
-            orderItem: {
-                order: {
-                    payment: {
-                        status: "SUCCESSED"
-                    }
-                }
-            }
+            status: "PAID"
         },
     });
 

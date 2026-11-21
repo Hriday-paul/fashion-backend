@@ -1,26 +1,50 @@
-import { body } from "express-validator";
+import { body, param, query } from "express-validator";
 
-export const addSizeToCategoryValidator = [
-    body('categoryId').trim().not().isEmpty().withMessage('categoryId is required').isUUID().withMessage('categoryId must be a valid UUID'),
+const formatRules = (prefix = "") => ["UK", "US", "EU", "FR", "IT"].map((key) =>
+    body(`${prefix}${key}`).trim().not().isEmpty().withMessage(`${key} size is required`)
+);
 
-    body('sizes')
-        .isArray({ min: 1 })
-        .withMessage('sizes must be an array and cannot be empty'),
+const groupName = body("groupName").trim().not().isEmpty().withMessage("groupName is required");
 
-    body('sizes.*.sizeId').trim().not().isEmpty().withMessage('sizeId is required').isUUID().withMessage('sizeId must be a valid UUID'),
-]
+export const createSizeGroupValidator = [
+    groupName,
+    body("sizes").isArray({ min: 1 }).withMessage("sizes must be an array and cannot be empty"),
+    ...formatRules("sizes.*."),
+];
 
-export const removeSizeFromCategoryValidator = [
-    body('categoryId').trim().not().isEmpty().withMessage('categoryId is required').isUUID().withMessage('categoryId must be a valid UUID'),
-    body('sizeId').trim().not().isEmpty().withMessage('sizeId is required').isUUID().withMessage('sizeId must be a valid UUID'),
-]
+export const groupNameValidator = [groupName];
 
-export const addNewSizeValidator = [
-    body('title').trim().not().isEmpty().withMessage('Intl size is required'),
-    body('UK').trim().not().isEmpty().withMessage('UK size is required'),
-    body('US').trim().not().isEmpty().withMessage('US size is required'),
-    body('EU').trim().not().isEmpty().withMessage('EU size is required'),
+export const addSizeValidator = [
+    param("id").isUUID().withMessage("id must be a valid UUID"),
+    ...formatRules(),
+];
 
-    //optional
-    body('parentId').optional().trim().isUUID().withMessage('parentId must be a valid UUID'),
-]
+export const createLetterGroupValidator = [
+    groupName,
+    body("sizes").isArray({ min: 1 }).withMessage("sizes must be an array and cannot be empty"),
+    body("sizes.*.value").trim().not().isEmpty().withMessage("size value is required"),
+];
+
+export const addLetterSizeValidator = [
+    body("value").trim().not().isEmpty().withMessage("size value is required"),
+];
+
+// letter sizes send `value`, other sizes send the five formats; the service enforces which one
+export const updateSizeValidator = [
+    param("sizeId").isUUID().withMessage("sizeId must be a valid UUID"),
+    body("value").optional().trim().not().isEmpty().withMessage("size value is required"),
+    ...["UK", "US", "EU", "FR", "IT"].map((key) =>
+        body(key).optional().trim().not().isEmpty().withMessage(`${key} size is required`)
+    ),
+];
+
+export const assignToCategoryValidator = [
+    body("categoryId").trim().isUUID().withMessage("categoryId must be a valid UUID"),
+    body("sizeGroupId").optional().trim().isUUID().withMessage("sizeGroupId must be a valid UUID"),
+    body("letterSizeGroupId").optional().trim().isUUID().withMessage("letterSizeGroupId must be a valid UUID"),
+];
+
+export const removeFromCategoryValidator = [
+    param("categoryId").isUUID().withMessage("categoryId must be a valid UUID"),
+    query("type").isIn(["size", "letter"]).withMessage("type must be size or letter"),
+];

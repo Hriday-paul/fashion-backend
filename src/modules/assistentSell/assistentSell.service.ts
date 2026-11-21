@@ -190,7 +190,7 @@ const myRequests = async (sellerId: string, query: Record<string, unknown>, opti
                     },
                     size: {
                         select: {
-                            title: true,
+                            title: true, UK: true, US: true, EU: true, FR: true, IT: true,
                             id: true
                         }
                     }
@@ -662,7 +662,7 @@ const listings = async (requestId: string, query: Record<string, unknown>, optio
             },
             size: {
                 select: {
-                    title: true,
+                    title: true, UK: true, US: true, EU: true, FR: true, IT: true,
                     id: true
                 }
             }
@@ -683,7 +683,8 @@ type ProductOtherPayload = {
     images: { key: string, url: string }[],
     charities: string[],
     donationPrivacy: boolean,
-    assistentSellId: string
+    assistentSellId: string,
+    meterials : string[]
 }
 
 const addNewListing = async (payload: Product & ProductOtherPayload) => {
@@ -862,7 +863,7 @@ const assitedSellsEarnings = async (query: Record<string, unknown>, options: TPa
                     },
                     size: {
                         select: {
-                            title: true
+                            title: true, UK: true, US: true, EU: true, FR: true, IT: true
                         }
                     }
                 }

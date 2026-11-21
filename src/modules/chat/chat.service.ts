@@ -205,11 +205,13 @@ const getMyChatList = async (userId: string, query?: Record<string, unknown>) =>
           },
           offer: {
             select: {
+              offeredPrice : true,
               status: true,
               sellerId: true,
               buyerId: true
             }
-          }
+          },
+          SystemMessage: true,
         }
       },
       _count: {
